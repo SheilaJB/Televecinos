@@ -1,0 +1,150 @@
+<!DOCTYPE html> 
+<html lang="es"> 
+    <head> 
+        <meta charset="UTF-8"> 
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> 
+        <script src="https://kit.fontawesome.com/6aca7755ca.js" crossorigin="anonymous"></script> 
+        <link rel="stylesheet" href="style.css"> <title>Registro | Televecinos Unidos</title> 
+    </head> 
+
+    <body> <!----------------------- Pantalla principal --------------------------> 
+        <div class="container d-flex justify-content-center align-items-center min-vh-100"> 
+            <!----------------------- Login --------------------------> 
+            <div class="row border rounded-5 p-3 bg-white shadow box-area"> 
+                <!--------------------------- Cuadro izquierda -----------------------------> 
+                <div class="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column left-box" style="background: #f8f8f953;"> <div class="featured-image mb-3" style="width: 250px; height: 250px; display: flex; justify-content: center; align-items: center;"> 
+                    <img src="logoTele.jpg" class="rounded-circle" style="max-width: 100%; max-height: 100%;"> 
+                </div> 
+            
+            </div> 
+                <!-------------------- ------ Cuadro derecha ----------------------------> 
+                <div class="col-md-6 right-box"> <div class="row align-items-center"> 
+                    <div class="header-text mb-4"> 
+                        <h2>Registro</h2> 
+                    </div> 
+                    <div class="input-group mb-3"> 
+                        <input type="text" id="nombre" class="form-control form-control-lg bg-light fs-6" placeholder="Nombre"> 
+                        <span class="input-group-text"><i class="fa-solid fa-user"></i></span> 
+                    </div> 
+                    <div class="input-group mb-3"> 
+                        <input type="text" id="apellido" class="form-control form-control-lg bg-light fs-6" placeholder="Apellido"> 
+                        <span class="input-group-text"><i class="fa-solid fa-user"></i></span> 
+                    </div> 
+                    <div class="input-group mb-3"> 
+                        <input type="text" id = "dni" class="form-control form-control-lg bg-light fs-6" placeholder="DNI"> 
+                        <span class="input-group-text"><i class="fa-solid fa-id-card"></i></span> 
+                    </div> 
+                    <div class="input-group mb-3"> 
+                        <input type="text" id ="direccion" class="form-control form-control-lg bg-light fs-6" placeholder="Dirección"> 
+                        <span class="input-group-text"><i class="fa-solid fa-location-dot"></i></span> 
+                    </div> 
+                    <div class="input-group mb-3"> 
+                        <input type="text" id = "distrito" class="form-control form-control-lg bg-light fs-6" placeholder="Distrito"> 
+                        <span class="input-group-text"><i class="fa-solid fa-location-dot"></i></span> 
+                    </div> 
+                    <div class="input-group mb-3"> 
+                        <input type="text" id = "urbanizacion" class="form-control form-control-lg bg-light fs-6" placeholder="Urbanización"> 
+                        <span class="input-group-text"><i class="fa-solid fa-map"></i></span>
+                    </div>
+                    <div class="input-group mb-3"> 
+                        <input type="text" id ="email" class="form-control form-control-lg bg-light fs-6" placeholder="Correo gmail"> 
+                        <span class="input-group-text"><i class="fa-solid fa-envelope"></i>
+                        
+                    </div>
+                    <div class="input-group mb-3"> 
+                        <button id="registerButton" class="btn btn-lg btn-primary w-100 fs-6">Registrarse</button> 
+                    </div> 
+                </div>
+            </div>
+        </div>
+
+        <!--Validaciones con javaScript-->
+        <script>
+            function validarCorreo(email) {
+                var expReg = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+                return expReg.test(email);
+            }
+
+            function validarDNI(dni) {
+                return /^\d{8}$/.test(dni); // Verifica que tenga exactamente 8 dígitos
+            }
+        
+            window.onload = function() {
+                var nombreField = document.getElementById('nombre');
+                var apellidoField = document.getElementById('apellido');
+                var dniField = document.getElementById('dni');
+                var direccionField = document.getElementById('direccion');
+                var distritoField = document.getElementById('distrito');
+                var urbanizacionField = document.getElementById('urbanizacion');
+                var emailField = document.getElementById('email');
+                var registerButton= document.getElementById('registerButton');
+                
+                // Función para actualizar el estado del botón de registro
+                function updateRegisterButtonState() {
+                    registerButton.disabled = nombreField.value === '' || 
+                                              apellidoField.value === '' || 
+                                              dniField.value === '' ||
+                                              direccionField.value === '' || 
+                                              distritoField.value === '' ||
+                                              urbanizacionField.value === '' || 
+                                              emailField.value === '';
+                }
+        
+                // Añadir el evento input a cada campo para actualizar el estado del botón
+                var fields = [nombreField, apellidoField, dniField, direccionField, distritoField, urbanizacionField, emailField];
+                fields.forEach(function(field) {
+                    field.addEventListener('input', updateRegisterButtonState);
+                });
+        
+                // Inicializar el estado del botón
+                updateRegisterButtonState();
+        
+                // Evento para manejar el registro
+                registerButton.addEventListener('click', function(event) {
+                    event.preventDefault(); // Previene la acción por defecto del botón de formulario
+        
+                    // Validaciones de campos vacíos
+                    if(nombreField.value === '') {
+                        alert('Por favor, llene el campo de nombre.');
+                        return;
+                    } else if(apellidoField.value === ''){
+                        alert('Por favor, llene el campo de apellido.');
+                        return;
+                    } else if(dniField.value === ''){
+                        alert('Por favor, llene el campo de DNI.');
+                        return;
+                    } else if(direccionField.value === ''){
+                        alert('Por favor, llene el campo de dirección.');
+                        return;
+                    } else if(distritoField.value === ''){
+                        alert('Por favor, llene el campo de distrito.');
+                        return;
+                    } else if(urbanizacionField.value === ''){
+                        alert('Por favor, llene el campo de urbanización.');
+                        return;
+                    } else if(emailField.value === ''){
+                        alert('Por favor, llene el campo de correo electrónico.');
+                        return;
+                    }
+        
+                    // Validación de correo electrónico
+                    if (!validarCorreo(emailField.value)) {
+                        alert("El correo electrónico NO es válido");
+                        return;
+                    }
+                    if (!validarDNI(dniField.value)) {
+                        alert("DNI tiene que contener 8 dígitos numéricos");
+                        return;
+                    }
+        
+                    // Si todo está correcto, puede seguir con la lógica de registro
+                    alert('¡Registro exitoso! Revise su bandeja de correo electrónico para confirmar su registro.');
+                    
+                });
+            };
+        </script>
+        
+    </body>
+</html>
