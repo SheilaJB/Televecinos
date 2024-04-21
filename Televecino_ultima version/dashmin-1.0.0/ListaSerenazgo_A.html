@@ -138,6 +138,20 @@
             <div style="background-color: #f8f9fa; padding: 20px; align-items: center;">
                 <div class="filtro" style="border: 1px solid #ccc; border-radius: 5px; padding: 10px; display: flex; align-items: center; background-color:#FFB703 ;">
                     <input type="text" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 20%; margin-right: 2%;" id="filtroInput" placeholder="Buscar...">
+                    <select id="filtroIncidencia" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 20%; margin-right: 2%;">
+                        <option selected disabled>Turno:</option>
+                        <option value="tipo1">Diurno</option>
+                        <option value="tipo1">Nocturno</option>
+                        
+                        
+                    </select>
+                    <select id="filtroIncidencia" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 20%; margin-right: 2%;">
+                        <option selected disabled>Tipo:</option>
+                        <option value="tipo1">Bicicleta</option>
+                        <option value="tipo1">A pie</option>
+                        <option value="tipo1">Canino</option>
+                        <option value="tipo1">Vehículo</option>
+                    </select>
                     <button type="button" class="btn btn-primary" onclick="filtrar()" style="padding: 10px;"><b>Filtrar</b></button>
                 </div>
                 <div class="table-responsive">
@@ -147,8 +161,10 @@
                                 <th scope="col">#</th>
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Apellido</th>
+                                <th scope="col">Turno</th>
+                                <th scope="col">Tipo</th>
                                 <th scope="col">Correo</th>
-                                <th scope="col">Evaluar Coordinadora</th>
+                                <th scope="col">Evaluar Serenazgo</th>
                                 
                             </tr>
                         </thead>
@@ -157,6 +173,8 @@
                                 <td>1</td>
                                 <td>Juan Fernando</td>
                                 <td>Pérez López</td>
+                                <td>Nocturno</td>
+                                <td>Canino</td>
                                 <td>Jjjffppll@gmail.com</td>
                                 <td style="width: 350px;">
                                     
@@ -185,6 +203,8 @@
                                 <td>1</td>
                                 <td>Juan Fernando</td>
                                 <td>Pérez López</td>
+                                <td>Nocturno</td>
+                                <td>A pie</td>
                                 <td>Jjjffppll@gmail.com</td>
                                 <td style="width: 350px;">
                                     
@@ -213,6 +233,8 @@
                                 <td>1</td>
                                 <td>Juan Fernando</td>
                                 <td>Pérez López</td>
+                                <td>Nocturno</td>
+                                <td>Bicicleta</td>
                                 <td>Jjjffppll@gmail.com</td>
                                 <td style="width: 350px;">
                                     
@@ -241,6 +263,8 @@
                                 <td>1</td>
                                 <td>Juan Fernando</td>
                                 <td>Pérez López</td>
+                                <td>Diurno</td>
+                                <td>A pie</td>
                                 <td>Jjjffppll@gmail.com</td>
                                 <td style="width: 350px;">
                                     
@@ -269,6 +293,8 @@
                                 <td>1</td>
                                 <td>Juan Fernando</td>
                                 <td>Pérez López</td>
+                                <td>Diurno</td>
+                                <td>Canino</td>
                                 <td>Jjjffppll@gmail.com</td>
                                 <td style="width: 350px;">
                                     
