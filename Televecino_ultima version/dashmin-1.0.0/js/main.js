@@ -217,6 +217,39 @@
             responsive: true
         }
     });
+
+    // Tipos de incidencias - Chart
+    var ctx7 = $("#type-incidents-urb-bar").get(0).getContext("2d");
+    var myChart7 = new Chart(ctx7, {
+        type: "bar",
+        data: {
+            labels: ["Rafael Escardó", "José de La Riva Agüero", " Juan XXIII", "Libertad", "Los Jardines de La Marina", "Las Leyendas", "Las Torres San Miguelito","Elmer Faucett","Maranga","Pando" ,"Parques de La Huaca", "Otro"],
+            datasets: [{
+                    label: "Seguridad pública",
+                    data: [40, 23, 60, 31, 70, 37, 80, 38, 74, 29, 47, 29],
+                    backgroundColor: "rgba(255, 183, 3, 1)"
+                },
+                {
+                    label: "Emergencia médica",
+                    data: [66, 65, 55, 70, 60, 75, 85, 80, 88, 95, 61, 73],
+                    backgroundColor: "rgba(251, 133, 0, 1)"
+                },
+                {
+                    label: "Infraestructura",
+                    data:  [85, 52, 48, 63, 43, 72, 78, 82, 64, 93, 80, 66],
+                    backgroundColor: "rgba(33, 158, 188, 1)"
+                },
+                {
+                    label: "Otro",
+                    data:  [47, 62, 58, 63, 50, 92, 78, 82, 58, 53, 55, 40],
+                    backgroundColor: "rgba(2, 48, 71, 1)"
+                }
+            ]
+            },
+        options: {
+            responsive: true
+        }
+    });
 /*
     // Single Line Chart
     var ctx7 = $("#line-chart").get(0).getContext("2d");
