@@ -144,20 +144,22 @@
         <div class="container-fluid pt-4 px-4">
             <td>
                 <button type="button" class="btn btn-danger m-2 btn-banear" onclick="confirmDelete()">
-                    Borrar incidencia <!-- Texto a lado del ícono -->
-                    <i class="fas fa-trash-alt"></i> <!-- Ícono de basurero de FontAwesome -->
+                    <i class="fas fa-trash-alt"></i>
+                    Borrar incidencia
                 </button>
                 <div id="popup1" class="popup1">
                     <div class="popup_contenido1">
                         <span class="close-btn" id="closePopupBtn1">&times;</span>
-                        <img src="img/advertencia.png" alt="check" width="48" height="48" style="margin-top: -10px;">
+                        <!--contenido pop up-->
+                        <h4>¿Por qué deseas eliminar esta incidencia? </h4>
 
-                        <p>¡Advertencia!</p>
-                        
-                        <p>La acción "Banear" será permanente, debe estar seguro de su desición al respecto</p>
-
-                        <a href="ListaSerenazgo_A.html"><button type="button" class="btn btn-success rounded-pill m-2">Cancelar</button></a>
-                        <button type="button" class="btn btn-danger rounded-pill m-2">Sí, banear</button>
+                        <!-- <p>La acción "Banear" será permanente, debe estar seguro de su desición al respecto</p> -->
+                        <div class="mb-3">
+                            <label for="descripcionIncidencia" class="form-label" style="color:#023047;"><b> </b></label>
+                            <textarea class="form-control" id="descripcionIncidencia" rows="2" placeholder="Elimino esta incidencia porque ..."></textarea>
+                        </div>
+                        <a href="listaIncidencias_S.html"><button type="button" class="btn btn-success rounded-pill m-2">Aceptar</button></a>
+                        <button type="button" class="btn btn-danger rounded-pill m-2">Cancelar</button>
 
                     </div>
                 </div>
