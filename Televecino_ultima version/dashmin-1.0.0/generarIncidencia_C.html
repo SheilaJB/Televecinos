@@ -160,6 +160,26 @@
                             </select><br>
                             <input type="text" id="otroInput" class="otro-input" placeholder="Escribe aquí"><br>
                         </div>
+                        <div class="campo" style="margin-bottom: -35px; ">
+                            <label for="urbanizacion">Urbanización:</label><br>
+                            <select id="urbanizacion" name="urbanizacion">
+                                <option value="opcion1">Rafael Escardó</option>
+                                <option value="opcion2">José de La Riva Agüero</option>
+                                <option value="opcion3">Juan XXIII, Libertad</option>
+                                <option value="opcion4">Los Jardines de La Marina</option>
+                                <option value="opcion5">Las Leyendas</option>
+                                <option value="opcion6">Las Torres San Miguelito</option>
+                                <option value="opcion7">Elmer Faucett</option>
+                                <option value="opcion8">Maranga</option>
+                                <option value="opcion9">Pando</option>
+                                <option value="opcion10">Maranga</option>
+                                <option value="opcion11">Parques de La Huaca</option>
+                                
+                                <option value="otro">Otro</option>
+                            </select><br>
+                            </select><br>
+                            <input type="text" id="otroInput1" class="otro-input" placeholder="Escribe aquí"><br>
+                        </div>
                         <div class="campo">
                             <label for="paraQuien">La incidencia será para: </label><br>
                             <div class="form-check">
@@ -301,6 +321,13 @@
             otroInput.style.display = 'block';
         } else {
             otroInput.style.display = 'none';
+        }
+    });
+    urbanizacion.addEventListener('change', function() {
+        if (urbanizacion.value === 'otro') {
+            otroInput1.style.display = 'block';
+        } else {
+            otroInput1.style.display = 'none';
         }
     });
 </script>
