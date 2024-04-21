@@ -144,8 +144,7 @@
         <div class="container-fluid pt-4 px-4">
             <td>
                 <button type="button" class="btn btn-danger m-2 btn-banear" onclick="confirmDelete()">
-                    <i class="fas fa-trash-alt"></i>
-                    Borrar incidencia
+                    🗑️Borrar incidencia
                 </button>
                 <div id="popup1" class="popup1">
                     <div class="popup_contenido1">
@@ -163,14 +162,20 @@
 
                     </div>
                 </div>
-
-
             </td>
             <td>
-                <button type="button" class="btn btn-false m-2" onclick="confirmDelete()">
-                    <span class="ml-2">Falsa </span> <!-- Texto a lado del ícono -->
-                    <i class="fas fa-ban"></i> <!-- Ícono de basurero de FontAwesome -->
+                <button type="button" class="btn btn-false m-2 btn-banear" onclick="confirmDelete()">
+                    ⛔ Falsa <!-- Texto a lado del ícono -->
                 </button>
+                <div id="popup1" class="popup1">
+                    <div class="popup_contenido1">
+                        <!--contenido pop up-->
+                        <h4>¿Estás seguro? </h4>
+                        <a href="listaIncidencias_S.html"><button type="button" class="btn btn-success rounded-pill m-2">Si</button></a>
+                        <a href="gestionar_Incidencia_S.html"><button type="button" class="btn btn-danger rounded-pill m-2">No</button></a>
+                        <!-- <button type="button" class="btn btn-danger rounded-pill m-2" >No</button> -->
+                    </div>
+                </div>
             </td>
             <div class="row g-4">
                 <div class="col-sm-12">
