@@ -30,6 +30,7 @@
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+    <link href="css/style_popup.css" rel="stylesheet">
     <link href="css/style_serenazgo.css" rel="stylesheet">
     <style>
         .popup {
@@ -155,13 +156,30 @@
         <!-- Form Start -->
         <div class="container-fluid pt-4 px-4">
             <td>
-                <button type="button" class="btn btn-danger m-2" onclick="confirmDelete()">
+                <button type="button" class="btn btn-danger m-2 btn-banear" onclick="confirmDelete()">
                     <span class="ml-2">Borrar incidencia</span> <!-- Texto a lado del ícono -->
                     <i class="fas fa-trash-alt"></i> <!-- Ícono de basurero de FontAwesome -->
                 </button>
+                <!--Pop up-->
+                <div id="popup1" class="popup1" >
+                    <div class="popup_contenido1">
+                        <span class="close-btn" id="closePopupBtn1">&times;</span>
+                        <img src="img/advertencia.png" alt="check" width="48" height="48" style="margin-top: -10px;">
+
+                        <p>¡Advertencia!</p>
+
+                        <p>La acción "Banear" será permanente, debe estar seguro de su desición al respecto</p>
+
+                        <a href="ListaSerenazgo_A.html"><button type="button" class="btn btn-success rounded-pill m-2">Cancelar</button></a>
+                        <button type="button" class="btn btn-danger rounded-pill m-2">Sí, banear</button>
+
+                    </div>
+                </div>
+
+
             </td>
             <td>
-                <button type="button" class="custom-btn" onclick="confirmDelete()">
+                <button type="button" class="btn btn-false m-2" onclick="confirmDelete()">
                     <span class="ml-2">Falsa </span> <!-- Texto a lado del ícono -->
                     <i class="fas fa-ban"></i> <!-- Ícono de basurero de FontAwesome -->
                 </button>
@@ -169,23 +187,14 @@
             <div class="row g-4">
                 <div class="col-sm-12">
                     <div class="rounded h-100 p-4" style=" background-color: #ffb703;">
-                        <form>
-                            <!---Nombre de la incidencia-->
-                            <div class="mb-3">
-                                <label for="nombreIncidencia" class="form-label" style="color:#023047;"><b>Ingrese un nombre de la incidencia:</b></label>
-                                <input type="text" class="form-control" id="nombreIncidencia" placeholder="Escribir">
-                            </div>
-
-                            <!---Descripción de la incidencia-->
-                            <div class="mb-3">
-                                <label for="descripcionIncidencia" class="form-label" style="color:#023047;"><b>Ingrese una descripción de la incidencia:</b></label>
-                                <textarea class="form-control" id="descripcionIncidencia" rows="2" placeholder="Escribir una breve descripción"></textarea>
-                            </div>
-                        </form>
+                        <!---Descripción de la incidencia-->
+                        <div class="mb-3">
+                            <label for="descripcionIncidencia" class="form-label" style="color:#023047;"><b>Ingrese una descripción de la solución a dar a la incidencia:</b></label>
+                            <textarea class="form-control" id="descripcionIncidencia" rows="2" placeholder="Escribir una breve descripción"></textarea>
+                        </div>
                     </div>
+
                 </div>
-
-
                 <div class="col-sm-12 col-sm-12 col-xl-6">
                     <div class="rounded h-100 p-4" style = "background-color:#219ebc;">
                         <!---Nombre del Serenazgo-->
@@ -193,9 +202,6 @@
                             <label for="nombreSerenazgo" class="form-label" style="color:#023047;"><b>Ingrese nombre del serenazgo:</b></label>
                             <input type="text" class="form-control" id="nombreSerenazgo" placeholder="Escribir">
                         </div>
-                       <!-- Marcar como falsa-->
-
-
 
                         <!----Criticidad de la incidencia----->
                         <label for="criticidad" class="form-label" style="color:#023047;"><b>Criticidad:</b></label>
@@ -337,6 +343,34 @@
 <!-- Template Javascript -->
 <script src="js/main.js"></script>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+        function desactivarStickyTop() {
+            navbar.classList.remove('sticky-top');
+        }
+
+        function activarStickyTop() {
+            navbar.classList.add('sticky-top');
+        }
+        document.addEventListener('click', function(event) {
+            if (event.target.classList.contains('btn-banear')) {
+                desactivarStickyTop();
+                var popup = event.target.nextElementSibling;
+                popup.style.display = 'block';
+            }
+        });
+
+        document.addEventListener('click', function(event) {
+            if (event.target.classList.contains('close-btn')) {
+                activarStickyTop();
+                var popup = event.target.closest('.popup1');
+                popup.style.display = 'none';
+            }
+        });
+    });
+
+</script>
 
 
 </body>
