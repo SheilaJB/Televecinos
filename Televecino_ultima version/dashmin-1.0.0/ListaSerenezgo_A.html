@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Solicitudes de registro</title>
+    <title>Lista de serenazgo</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -87,7 +87,7 @@
                             </div>
                         </div>
     
-                        <a href="panelDeSugerencias_A.html" class="nav-item nav-link"><i class="fa fa-lightbulb me-2 colorLetrasBarraLateral"></i><span style="font-size: 14px;">Panel de sugerencias</span></a>
+                        <a href="panelDeSugerencias.html" class="nav-item nav-link"><i class="fa fa-lightbulb me-2 colorLetrasBarraLateral"></i><span style="font-size: 14px;">Panel de sugerencias</span></a>
 
                 </div>
             </nav>
@@ -107,7 +107,7 @@
                 </a>
                 <a class="navbar-brand mx-4 mb-3 d-flex align-items-center" style="padding-top: 2%;">
                     <img class="rounded-circle" src="img/logo.jpg" alt="" style="width: 40px; height: 40px;">
-                    <h3 class="m-0 me-2 px-2" style="color:#023047;">Nuevas solicitudes</h3>
+                    <h3 class="m-0 me-2 px-2" style="color:#023047;">Lista de serenazgo</h3>
                 </a>
 
                 <div class="navbar-nav align-items-center ms-auto">
@@ -116,7 +116,6 @@
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <img class="rounded-circle me-lg-2" src="img/munisanmiguelLogo.jpg" alt="" style="width: 40px; height: 40px;">
                             <span class="d-none d-lg-inline-flex" style="color:#023047;"><b>Municipalidad de San Miguel</b></span>
-                        
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                             <a href="#" class="dropdown-item itemperfil">Mi perfil</a>
@@ -139,10 +138,6 @@
             <div style="background-color: #f8f9fa; padding: 20px; align-items: center;">
                 <div class="filtro" style="border: 1px solid #ccc; border-radius: 5px; padding: 10px; display: flex; align-items: center; background-color:#FFB703 ;">
                     <input type="text" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 20%; margin-right: 2%;" id="filtroInput" placeholder="Buscar...">
-                
-                    <input type="date" id="filtroFecha" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 20%; margin-right: 2%;">
-                    
-                    
                     <button type="button" class="btn btn-primary" onclick="filtrar()" style="padding: 10px;"><b>Filtrar</b></button>
                 </div>
                 <div class="table-responsive">
@@ -153,8 +148,7 @@
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Apellido</th>
                                 <th scope="col">Correo</th>
-                                <th scope="col">Fecha de registro</th>
-                                <th scope="col">Evaluar Ingreso</th>
+                                <th scope="col">Evaluar Coordinadora</th>
                                 
                             </tr>
                         </thead>
@@ -164,37 +158,26 @@
                                 <td>Juan Fernando</td>
                                 <td>Pérez López</td>
                                 <td>Jjjffppll@gmail.com</td>
-                                <td style="width: 150px;">03 Mayo 2079</td>
-                                <td style="width: 300px;">
+                                <td style="width: 350px;">
                                     
-                                    <button type="button" class="btn btn-success btn-sm m-2 btn-banear" >Aceptar</button>
+                                    <button type="button" class="btn btn-success btn-sm m-2">Enviar correo</button>
+                                    
+                                    <button type="button" class="btn btn-danger btn-sm m-2 btn-banear">Banear</button>
                                     <div id="popup1" class="popup1" >
                                         <div class="popup_contenido1">
                                             <span class="close-btn" id="closePopupBtn1">&times;</span>
-                                            <img src="img/check.png" alt="check" width="48" height="48" style="margin-top: -10px;">
-                                            
-                                            <p>¡Nuevo Vecino añadido!</p>
-                                            
-                                            <a href="NuevasSolicitudes.html"><button type="button" class="btn btn-primary rounded-pill m-2">Regresar</button></a>
-                                            
-                                        </div>
-                                    </div>
-                                    <button type="button" class="btn btn-danger btn-sm m-2 btn-banear">Rechazar</button>
-                                    <div id="popup2" class="popup1" >
-                                        <div class="popup_contenido1">
-                                            <span class="close-btn" id="closePopupBtn2">&times;</span>
                                             <img src="img/advertencia.png" alt="check" width="48" height="48" style="margin-top: -10px;">
                                             
                                             <p>¡Advertencia!</p>
 
-                                            <p>La acción tomada será permanente, ¿Está seguro de rechazar la solicitud de registro del vecino?</p>
+                                            <p>La acción "Banear" será permanente, debe estar seguro de su desición al respecto</p>
                                             
-                                            <a href="NuevasSolicitudes.html"><button type="button" class="btn btn-success rounded-pill m-2">Cancelar</button></a>
-                                            <button type="button" class="btn btn-danger rounded-pill m-2">Sí, rechazar</button>
+                                            <a href="NuevasSolicitudes_A.html"><button type="button" class="btn btn-success rounded-pill m-2">Cancelar</button></a>
+                                            <button type="button" class="btn btn-danger rounded-pill m-2">Sí, banear</button>
                                             
                                         </div>
                                     </div>
-                                    <a href="DetalleNewVecinos.html"><button type="button" class="btn btn-primary btn-sm m-2">Ver detalle</button></a>
+                                    <button type="button" class="btn btn-primary btn-sm m-2">Ver detalle</button>
                                     
                                 </td>
                             </tr>
@@ -203,37 +186,26 @@
                                 <td>Juan Fernando</td>
                                 <td>Pérez López</td>
                                 <td>Jjjffppll@gmail.com</td>
-                                <td style="width: 150px;">03 Mayo 2079</td>
-                                <td style="width: 300px;">
+                                <td style="width: 350px;">
                                     
-                                    <button type="button" class="btn btn-success btn-sm m-2 btn-banear" >Aceptar</button>
+                                    <button type="button" class="btn btn-success btn-sm m-2">Enviar correo</button>
+                                    
+                                    <button type="button" class="btn btn-danger btn-sm m-2 btn-banear">Banear</button>
                                     <div id="popup1" class="popup1" >
                                         <div class="popup_contenido1">
                                             <span class="close-btn" id="closePopupBtn1">&times;</span>
-                                            <img src="img/check.png" alt="check" width="48" height="48" style="margin-top: -10px;">
-                                            
-                                            <p>¡Nuevo Vecino añadido!</p>
-                                            
-                                            <a href="NuevasSolicitudes.html"><button type="button" class="btn btn-primary rounded-pill m-2">Regresar</button></a>
-                                            
-                                        </div>
-                                    </div>
-                                    <button type="button" class="btn btn-danger btn-sm m-2 btn-banear">Rechazar</button>
-                                    <div id="popup2" class="popup1" >
-                                        <div class="popup_contenido1">
-                                            <span class="close-btn" id="closePopupBtn2">&times;</span>
                                             <img src="img/advertencia.png" alt="check" width="48" height="48" style="margin-top: -10px;">
                                             
                                             <p>¡Advertencia!</p>
 
-                                            <p>La acción tomada será permanente, ¿Está seguro de rechazar la solicitud de registro del vecino?</p>
+                                            <p>La acción "Banear" será permanente, debe estar seguro de su desición al respecto</p>
                                             
-                                            <a href="NuevasSolicitudes.html"><button type="button" class="btn btn-success rounded-pill m-2">Cancelar</button></a>
-                                            <button type="button" class="btn btn-danger rounded-pill m-2">Sí, rechazar</button>
+                                            <a href="NuevasSolicitudes_A.html"><button type="button" class="btn btn-success rounded-pill m-2">Cancelar</button></a>
+                                            <button type="button" class="btn btn-danger rounded-pill m-2">Sí, banear</button>
                                             
                                         </div>
                                     </div>
-                                    <a href="DetalleNewVecinos.html"><button type="button" class="btn btn-primary btn-sm m-2">Ver detalle</button></a>
+                                    <button type="button" class="btn btn-primary btn-sm m-2">Ver detalle</button>
                                     
                                 </td>
                             </tr>
@@ -242,37 +214,26 @@
                                 <td>Juan Fernando</td>
                                 <td>Pérez López</td>
                                 <td>Jjjffppll@gmail.com</td>
-                                <td style="width: 150px;">03 Mayo 2079</td>
-                                <td style="width: 300px;">
+                                <td style="width: 350px;">
                                     
-                                    <button type="button" class="btn btn-success btn-sm m-2 btn-banear" >Aceptar</button>
+                                    <button type="button" class="btn btn-success btn-sm m-2">Enviar correo</button>
+                                    
+                                    <button type="button" class="btn btn-danger btn-sm m-2 btn-banear">Banear</button>
                                     <div id="popup1" class="popup1" >
                                         <div class="popup_contenido1">
                                             <span class="close-btn" id="closePopupBtn1">&times;</span>
-                                            <img src="img/check.png" alt="check" width="48" height="48" style="margin-top: -10px;">
-                                            
-                                            <p>¡Nuevo Vecino añadido!</p>
-                                            
-                                            <a href="NuevasSolicitudes.html"><button type="button" class="btn btn-primary rounded-pill m-2">Regresar</button></a>
-                                            
-                                        </div>
-                                    </div>
-                                    <button type="button" class="btn btn-danger btn-sm m-2 btn-banear">Rechazar</button>
-                                    <div id="popup2" class="popup1" >
-                                        <div class="popup_contenido1">
-                                            <span class="close-btn" id="closePopupBtn2">&times;</span>
                                             <img src="img/advertencia.png" alt="check" width="48" height="48" style="margin-top: -10px;">
                                             
                                             <p>¡Advertencia!</p>
 
-                                            <p>La acción tomada será permanente, ¿Está seguro de rechazar la solicitud de registro del vecino?</p>
+                                            <p>La acción "Banear" será permanente, debe estar seguro de su desición al respecto</p>
                                             
-                                            <a href="NuevasSolicitudes.html"><button type="button" class="btn btn-success rounded-pill m-2">Cancelar</button></a>
-                                            <button type="button" class="btn btn-danger rounded-pill m-2">Sí, rechazar</button>
+                                            <a href="NuevasSolicitudes_A.html"><button type="button" class="btn btn-success rounded-pill m-2">Cancelar</button></a>
+                                            <button type="button" class="btn btn-danger rounded-pill m-2">Sí, banear</button>
                                             
                                         </div>
                                     </div>
-                                    <a href="DetalleNewVecinos.html"><button type="button" class="btn btn-primary btn-sm m-2">Ver detalle</button></a>
+                                    <button type="button" class="btn btn-primary btn-sm m-2">Ver detalle</button>
                                     
                                 </td>
                             </tr>
@@ -281,37 +242,26 @@
                                 <td>Juan Fernando</td>
                                 <td>Pérez López</td>
                                 <td>Jjjffppll@gmail.com</td>
-                                <td style="width: 150px;">03 Mayo 2079</td>
-                                <td style="width: 300px;">
+                                <td style="width: 350px;">
                                     
-                                    <button type="button" class="btn btn-success btn-sm m-2 btn-banear" >Aceptar</button>
+                                    <button type="button" class="btn btn-success btn-sm m-2">Enviar correo</button>
+                                    
+                                    <button type="button" class="btn btn-danger btn-sm m-2 btn-banear">Banear</button>
                                     <div id="popup1" class="popup1" >
                                         <div class="popup_contenido1">
                                             <span class="close-btn" id="closePopupBtn1">&times;</span>
-                                            <img src="img/check.png" alt="check" width="48" height="48" style="margin-top: -10px;">
-                                            
-                                            <p>¡Nuevo Vecino añadido!</p>
-                                            
-                                            <a href="NuevasSolicitudes.html"><button type="button" class="btn btn-primary rounded-pill m-2">Regresar</button></a>
-                                            
-                                        </div>
-                                    </div>
-                                    <button type="button" class="btn btn-danger btn-sm m-2 btn-banear">Rechazar</button>
-                                    <div id="popup2" class="popup1" >
-                                        <div class="popup_contenido1">
-                                            <span class="close-btn" id="closePopupBtn2">&times;</span>
                                             <img src="img/advertencia.png" alt="check" width="48" height="48" style="margin-top: -10px;">
                                             
                                             <p>¡Advertencia!</p>
 
-                                            <p>La acción tomada será permanente, ¿Está seguro de rechazar la solicitud de registro del vecino?</p>
+                                            <p>La acción "Banear" será permanente, debe estar seguro de su desición al respecto</p>
                                             
-                                            <a href="NuevasSolicitudes.html"><button type="button" class="btn btn-success rounded-pill m-2">Cancelar</button></a>
-                                            <button type="button" class="btn btn-danger rounded-pill m-2">Sí, rechazar</button>
+                                            <a href="NuevasSolicitudes_A.html"><button type="button" class="btn btn-success rounded-pill m-2">Cancelar</button></a>
+                                            <button type="button" class="btn btn-danger rounded-pill m-2">Sí, banear</button>
                                             
                                         </div>
                                     </div>
-                                    <a href="DetalleNewVecinos.html"><button type="button" class="btn btn-primary btn-sm m-2">Ver detalle</button></a>
+                                    <button type="button" class="btn btn-primary btn-sm m-2">Ver detalle</button>
                                     
                                 </td>
                             </tr>
@@ -320,37 +270,26 @@
                                 <td>Juan Fernando</td>
                                 <td>Pérez López</td>
                                 <td>Jjjffppll@gmail.com</td>
-                                <td style="width: 150px;">03 Mayo 2079</td>
-                                <td style="width: 300px;">
+                                <td style="width: 350px;">
                                     
-                                    <button type="button" class="btn btn-success btn-sm m-2 btn-banear" >Aceptar</button>
+                                    <button type="button" class="btn btn-success btn-sm m-2">Enviar correo</button>
+                                    
+                                    <button type="button" class="btn btn-danger btn-sm m-2 btn-banear">Banear</button>
                                     <div id="popup1" class="popup1" >
                                         <div class="popup_contenido1">
                                             <span class="close-btn" id="closePopupBtn1">&times;</span>
-                                            <img src="img/check.png" alt="check" width="48" height="48" style="margin-top: -10px;">
-                                            
-                                            <p>¡Nuevo Vecino añadido!</p>
-                                            
-                                            <a href="NuevasSolicitudes.html"><button type="button" class="btn btn-primary rounded-pill m-2">Regresar</button></a>
-                                            
-                                        </div>
-                                    </div>
-                                    <button type="button" class="btn btn-danger btn-sm m-2 btn-banear">Rechazar</button>
-                                    <div id="popup2" class="popup1" >
-                                        <div class="popup_contenido1">
-                                            <span class="close-btn" id="closePopupBtn2">&times;</span>
                                             <img src="img/advertencia.png" alt="check" width="48" height="48" style="margin-top: -10px;">
                                             
                                             <p>¡Advertencia!</p>
 
-                                            <p>La acción tomada será permanente, ¿Está seguro de rechazar la solicitud de registro del vecino?</p>
+                                            <p>La acción "Banear" será permanente, debe estar seguro de su desición al respecto</p>
                                             
-                                            <a href="NuevasSolicitudes.html"><button type="button" class="btn btn-success rounded-pill m-2">Cancelar</button></a>
-                                            <button type="button" class="btn btn-danger rounded-pill m-2">Sí, rechazar</button>
+                                            <a href="NuevasSolicitudes_A.html"><button type="button" class="btn btn-success rounded-pill m-2">Cancelar</button></a>
+                                            <button type="button" class="btn btn-danger rounded-pill m-2">Sí, banear</button>
                                             
                                         </div>
                                     </div>
-                                    <a href="DetalleNewVecinos.html"><button type="button" class="btn btn-primary btn-sm m-2">Ver detalle</button></a>
+                                    <button type="button" class="btn btn-primary btn-sm m-2">Ver detalle</button>
                                     
                                 </td>
                             </tr>
