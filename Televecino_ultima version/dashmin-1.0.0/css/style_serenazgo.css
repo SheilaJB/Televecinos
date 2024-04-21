@@ -1,0 +1,27 @@
+/*boton falso*/
+.btn-false{
+    color:#fff;background-color:#E67E22;border-color:#E67E22
+}
+
+
+
+.btn-success-puedeGestionar {
+    color: #fff;
+    background-color: #198754;
+    border-color: #198754;
+}
+
+.btn-success-nopuedeGestionar {
+    color: #fff;
+    background-color: #c4263d;
+    border-color: #c4263d;
+}
+.BotonRegresar{
+    margin-top: 50px;
+    margin-left: 150px;
+}
+
+.BotonIrIncidencias{
+    margin-top: 30px;
+    margin-left: 145px;
+}
