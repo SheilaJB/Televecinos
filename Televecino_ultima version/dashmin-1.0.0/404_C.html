@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>DASHMIN - Bootstrap Admin Template</title>
+    <title>404 error</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -43,6 +43,7 @@
 
 
         <!-- Sidebar Start -->
+        <!-- Sidebar Start -->
         <div class="sidebar pe-4 pb-3" style="background-color: #8ecae6;">
             <nav class="navbar" style="background-color: #8ecae6;" >
                 <a href="index.html" class="navbar-brand mx-3 mb-3">
@@ -52,20 +53,34 @@
                     <img class="rounded-circle" src="img/Icon_perfil.png" alt="" style="width: 50px; height: 50px;">
                     <div class="ms-3" >
                         <h6 class="mb-0" style="color:#023047;"><b>Nombre Apellido</b></h6>
-                        <span class="text-muted"><b>Serenazgo</b></span>
+                        <span class="text-muted"><b>Coordinador</b></span>
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
-                    <a href="#"class="nav-item nav-link"><i class="fa fa-ban me-2"></i><b>Dashboard </b></a>
+                    <a href="Inicio_C.html" class="nav-item nav-link"><i class="fa fa-home me-2"></i>Inicio</a>
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle " data-bs-toggle="dropdown"><i class="fa fa-th-list me-2"></i><b>Incidencias</b></a>
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-calendar me-2"></i><b>Eventos</b></a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="#" class="dropdown-item"><b>Procesado</b></a>
-                            <a href="#" class="dropdown-item"><b>Rechazado</b></a>
+                        <a href="EventoGenerales_C.html" class="dropdown-item"><b>Eventos Generales</b></a>
+                        <a href="creacionEvento.html" class="dropdown-item"><b>Crear Evento</b></a>
+                        <a href="ListaEvent-Coordinador.html" class="dropdown-item"><b>Eventos Propios</b></a>
                         </div>
                     </div>
                     
-                    <a href="BanVecino.html"class="nav-item nav-link"><i class="fa fa-ban me-2"></i><b>Banear vecino</b></a>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle " data-bs-toggle="dropdown"><i class="fa fa-th-list me-2"></i><b>Incidencias</b></a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <a href="generarIncidencia_C.html" class="dropdown-item"><b>Crear Incidencia</b></a>
+                            <a href="listaIncidencias_C.html" class="dropdown-item"><b>Lista de Incidencias</b></a>
+                        </div>
+                    </div>
+                    
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-question-circle me-2"></i>Ayuda y Soporte</a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <a href="preguntasFrecuentes_C.html" class="dropdown-item">Preguntas Frecuentes</a>
+                        </div>
+                    </div>
                 </div>
             </nav>
         </div>
@@ -102,90 +117,21 @@
                 </div>
             </nav>
             <!-- Navbar End -->
-            <!-- Ingresar filtro: semana/mes/año-->
-            
-            <div class="filtro" style="border: 1px solid #ccc; border-radius: 5px; padding: 10px; display: flex; align-items: center; background-color:#FFB703 ;">
-                <select id="filtroFrecuencia" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 15%; margin-right: 2%;" >
-                    <option selected>Frecuencia</option>
-                    <option value="Semana">Semana</option>
-                    <option value="Mes">Mes</option>
-                    <option value="Anho">Año</option>
-                </select>
-                <!-- Alineación del botón con los selects -->
-                <button type="button" class="btn btn-primary" onclick="filtrar()" style="padding: 10px;"><b>Filtrar</b></button>
-            </div>
-            <!-- Tabla de tipos de incidencias -->
+
+            <!-- 404 Start -->
             <div class="container-fluid pt-4 px-4">
-                <div class="row g-4">
-                    <div class="col-sm-12 col-xl-6">
-                        <div class="bg-light text-center rounded p-4" style="border: 1px solid black; box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);">
-                            <div class="d-flex align-items-center justify-content-between mb-4">
-                                <h6 class="mb-0">Tipo de incidencia</h6>
-                                <a href="">Más detalles</a>
-                            </div>
-                            <canvas id="type-incidents-bar"></canvas>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-xl-6">
-                        <div class="bg-light text-center rounded p-4" style="border: 1px solid black; box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);">
-                            <div class="d-flex align-items-center justify-content-between mb-4">
-                                <h6 class="mb-0">Estado de las incidencias</h6>
-                                
-                                <a href="">Más detalles</a>
-                            </div>
-                            <canvas id="status-incidents"></canvas>
-                        </div>
+                <div class="row vh-100 bg-light rounded align-items-center justify-content-center mx-0">
+                    <div class="col-md-6 text-center p-4">
+                        <i class="bi bi-exclamation-triangle display-1 text-primary"></i>
+                        <h1 class="display-1 fw-bold">404</h1>
+                        <h1 class="mb-4">Pagina no encontrada</h1>
+                        <p class="mb-4">Lo sentimos, la página que has buscado no existe en nuestro sitio web.
+                            Tal vez puedas ir a nuestra página de inicio o intentar usar la búsqueda</p>
+                        <a class="btn btn-primary rounded-pill py-3 px-5" href="">Ir al inicio</a>
                     </div>
                 </div>
             </div>
-            
-
-            <!-- Tabla de tipos de incidencias  -->
-            <div class="container-fluid pt-4 px-4 " >
-                <div class="row g-4">
-                    <div class="col-sm-12 col-xl-6 w-25 h-40" >
-                        <div class="bg-light text-center rounded p-4" style="border: 1px solid black; box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);">
-                            <div class="d-flex align-items-center justify-content-between mb-4">
-                                <h6 class="mb-0">Seguridad pública</h6>
-                            </div>
-                            <canvas id="type-incidents-pie-1"></canvas>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-xl-6 w-25 h-40">
-                        <div class="bg-light text-center rounded p-4" style="border: 1px solid black; box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);">
-                            <div class="d-flex align-items-center justify-content-between mb-4">
-                                <h6 class="mb-0">Emergencia médica</h6>
-                            </div>
-                            <canvas id="type-incidents-pie-2"></canvas>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-xl-6 w-25 h-40">
-                        <div class="bg-light text-center rounded p-4" style="border: 1px solid black; box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);">
-                            <div class="d-flex align-items-center justify-content-between mb-4">
-                                <h6 class="mb-0">Infraestructura</h6>
-                            </div>
-                            <canvas id="type-incidents-pie-3"></canvas>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-xl-6 w-25 h-40">
-                        <div class="bg-light text-center rounded p-4" style="border: 1px solid black; box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);">
-                            <div class="d-flex align-items-center justify-content-between mb-4">
-                                <h6 class="mb-0">Otro</h6>
-                            </div>
-                            <canvas id="type-incidents-pie-4"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Sales Chart End -->
-
-            <!-- Recent Sales Start -->
-            <div class="container-fluid pt-4 px-4">
-                <!-- Habia una tabla -->
-            </div>
-            <!-- Recent Sales End -->
-
-
+            <!-- 404 End -->
 
 
             <!-- Footer Start -->
@@ -195,6 +141,7 @@
                         <div class="col-12 col-sm-6 text-center text-sm-start">
                             &copy; <a href="#">TelevecinosUnidos</a>, All Right Reserved. 
                         </div>
+                        
                     </div>
                 </div>
             </div>
