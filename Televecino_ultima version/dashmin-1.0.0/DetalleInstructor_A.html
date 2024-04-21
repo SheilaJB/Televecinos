@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>TELEVECINOS UNIDOS INICIO</title>
+    <title>Detalles del instructor</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -30,6 +30,75 @@
     <link href="css/style.css" rel="stylesheet">
     <link href="css/app.min.css" rel="stylesheet">
     <link href="css/style_vec.css" rel="stylesheet">
+    <link href="css/style_popup.css" rel="stylesheet">
+    <style>
+   
+    .container {
+        width: 80%;
+        margin: 50px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .bar {
+        position: relative;
+        background-color: #064668;
+        height: 40px;
+        line-height: 50px;
+        text-align: center;
+        color: #ffffff;
+        margin-bottom: 15px;
+        border-radius: 10px;
+        padding: 0 5%; /* Utilizamos porcentaje para hacerlo responsive */
+        max-width: 100%; /* Limitamos el ancho máximo para que no se desborde en pantallas pequeñas */
+    }
+    .bar::before {
+        content: attr(data-label); /* Inserta el contenido del atributo data-label */
+        position: absolute;
+        top: -15px; /* Ajusta la posición verticalmente */
+        left: 0;
+        width: 100%;
+        color: #29b2e8;
+        font-size: 11px;
+        font-weight: bold;
+    }
+
+    /* Estilo adicional para hacer que la barra ocupe el ancho completo en pantallas pequeñas */
+    @media only screen and (max-width: 600px) {
+        .bar {
+            padding: 0;
+        }
+    }
+
+    /* Estilos para los botones */
+    .button {
+        display: inline-block;
+        padding: 10px 20px;
+        margin-top: 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+    }
+
+    /* Colores para los botones */
+    .regresar {
+        background-color: #efdb04;
+        color: #fff;
+    }
+
+    .sendCorreo {
+        background-color: #27ae60;
+        color: #fff;
+    }
+
+    .banear {
+        background-color: #e74c3c;
+        color: #fff;
+    }
+</style>
 
 
 </head>
@@ -72,7 +141,7 @@
                         <div class="dropdown-menu bg-transparent border-0">
                             <a href="ListaSerenazgo_A.html" class="dropdown-item" style="font-size: 13.5px;">Lista de serenazgos</a>
 
-                            <a href="FormularioSerenazgo_A.html" class="dropdown-item"style="font-size: 13.5px;">Registrar nuevo serenazgo</a>
+                            <a href="FormularioSerenazgo.html" class="dropdown-item"style="font-size: 13.5px;">Registrar nuevo serenazgo</a>
                         </div>
                     </div>
                     <div class="nav-item dropdown">
@@ -93,7 +162,6 @@
                             <a href="preguntasFrecuentes_S_vistaAdmin.html" class="dropdown-item"style="font-size: 13.5px;">Dudas Serenazgos</a>
                         </div>
                     </div>
-
                 </div>
             </nav>
         </div>
@@ -103,7 +171,7 @@
         <!-- Content Start -->
         <div class="content">
             <!-- PARTE SUPERIOR INICIO -->
-            <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+            <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0" id="navbar">
                 <a href="" class="navbar-brand d-flex d-lg-none me-4">
                     <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
                 </a>
@@ -112,7 +180,7 @@
                 </a>
                 <a class="navbar-brand mx-4 mb-3 d-flex align-items-center" style="padding-top: 2%;">
                     <img class="rounded-circle" src="img/logo.jpg" alt="" style="width: 40px; height: 40px;">
-                    <h3 class="m-0 me-2 px-2" style="color:#023047;">¡Bienvenido, administrador!</h3>
+                    <h3 class="m-0 me-2 px-2" style="color:#023047;">Detalles del instructor</h3>
                 </a>
 
                 <div class="navbar-nav align-items-center ms-auto">
@@ -131,22 +199,6 @@
             </nav>
             <!-- PARTE SUPERIOR FINAL -->
 
-
-
-                    <!-- LLENAR-->
-            <!-- Imagen estática del inicio del admin -->
-            <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="img/fondoDeAdminInicio2.jpg" class="d-block w-100" alt="...">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5 class="titleCarousel">MUNICIPALIDAD DE SAN MIGUEL - Administración</h5>
-                            <p>Como administrador debe operar con transparencia, respetando la privacidad de los usuarios y manteniendo la neutralidad en la moderación del contenido. Es crucial combatir el discurso de odio y la desinformación, colaborar con las autoridades cuando sea necesario y garantizar un ambiente seguro y justo para todos los usuarios.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <!-- Bootstrap JS dependencies -->
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -156,60 +208,38 @@
 
             <!-- Fin de iamgen estatica -->
             <div style="background-color: #f8f9fa; padding: 20px; align-items: center;">
+                
 
-                <h3 class="mb-4">Funciones:</h3>
-                <div class="row row-cols-1 row-cols-md-3 g-4">
-                    <div class="col">
-                        <div class="card h-100 shadow" style="background-color: #8ECAE6;">
-                            <div class="card-body">
-                                <h5 class="card-title">Gestionar y evaluar las solicitudes de inscripción de nuevos usuarios</h5>
-                            </div>
+                <div class="container text-center">
+                    <img src="img/instructor.jpg" class="img-fluid mb-3" alt="Responsive image" width="200">
+                    <div class="bar" data-label="Tipo de Instructor">Deporte</div>
+                    <div class="bar" data-label="Area a instruir">Futbol</div>
+                    <div class="bar" data-label="Fecha de contratación">15/06/2024</div>
+                    <div class="bar" data-label="Nombre">Alexis Mariel</div>
+                    <div class="bar" data-label="Apellido">Herrera  Lopez</div>
+                    <div class="bar" data-label="DNI">46851236</div>
+                    <div class="bar" data-label="Dirección">Calle los jazmines 137</div>
+                    <div class="bar" data-label="Correo">robertbala@gmail.com</div>
+                    <div class="bar" data-label="Celular">917816612</div>
+                    <a href="ListaInstructores_A.html" class="button regresar">Regresar</a>
+                    <button class="button sendCorreo">Enviar Correo</button>
+                    <button class="button banear btn-banear">Remover</button>
+                    <div id="popup1" class="popup1" >
+                        <div class="popup_contenido1">
+                            <span class="close-btn" id="closePopupBtn1">&times;</span>
+                            <img src="img/advertencia.png" alt="check" width="48" height="48" style="margin-top: -10px;">
+                            
+                            <p>¡Advertencia!</p>
+
+                            <p>La acción "Remover" será permanente, debe estar seguro de su desición al respecto</p>
+                            
+                            <a href="NuevasSolicitudes.html"><button type="button" class="btn btn-success rounded-pill m-2">Cancelar</button></a>
+                            <button type="button" class="btn btn-danger rounded-pill m-2">Sí, banear</button>
+                            
                         </div>
                     </div>
-                    <div class="col">
-                        <div class="card h-100 shadow" style="background-color: #219EBC;">
-                            <div class="card-body">
-                                <h5 class="card-title">Crear las cuentas de los serenazgos y asignarles credenciales temporales</h5>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card h-100 shadow" style="background-color: #FFB703;">
-                            <div class="card-body">
-                                <h5 class="card-title">Asignar el rol de coordinador a los vecinos designados previamente</h5>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card h-100 shadow" style="background-color: #FB8500;">
-                            <div class="card-body">
-                                <h5 class="card-title">Gestionar el envío de correos de confirmación de creación de nuevos usuarios de la página</h5>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card h-100 shadow" style="background-color: #8ECAE6;">
-                            <div class="card-body">
-                                <h5 class="card-title">Banear a los usuarios de la página y solicitudes de registro previa evaluación</h5>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card h-100 shadow" style="background-color: #FB8500;">
-                            <div class="card-body">
-                                <h5 class="card-title">Leer las sugerencias que escriban los miembros de la página</h5>
-
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
-
-
-
+ 
                 <script>
                     $(document).ready(function(){
                         $('.row').slick({
@@ -227,15 +257,6 @@
 
 
             <!-- Content End -->
-
-
-
-
-
-
-
-
-
 
             <!-- Footer Start -->
             <div class="container-fluid pt-4 px-4">
@@ -275,6 +296,34 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+        function desactivarStickyTop() {
+            navbar.classList.remove('sticky-top');
+        }
+        
+        function activarStickyTop() {
+            navbar.classList.add('sticky-top');
+        }
+        document.addEventListener('click', function(event) {
+            if (event.target.classList.contains('btn-banear')) {
+                desactivarStickyTop();
+                var popup = event.target.nextElementSibling;
+                popup.style.display = 'block';
+            }
+        });
+        
+        document.addEventListener('click', function(event) {
+            if (event.target.classList.contains('close-btn')) {
+                activarStickyTop();
+                var popup = event.target.closest('.popup1');
+                popup.style.display = 'none';
+            }
+        });
+        });
+        
+    </script>
 </body>
 
 </html>
