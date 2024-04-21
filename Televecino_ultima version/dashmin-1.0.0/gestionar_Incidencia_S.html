@@ -30,8 +30,9 @@
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+    <link href="css/app.min.css" rel="stylesheet">
+    <link href="css/style_vec.css" rel="stylesheet">
     <link href="css/style_popup.css" rel="stylesheet">
-    <link href="css/style_serenazgo.css" rel="stylesheet">
     <style>
         .popup {
             display: none;
@@ -123,7 +124,7 @@
     <!-- Content Start -->
     <div class="content">
         <!-- Navbar Start -->
-        <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+        <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0" id="navbar">
             <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
                 <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
             </a>
@@ -157,17 +158,16 @@
         <div class="container-fluid pt-4 px-4">
             <td>
                 <button type="button" class="btn btn-danger m-2 btn-banear" onclick="confirmDelete()">
-                    <span class="ml-2">Borrar incidencia</span> <!-- Texto a lado del ícono -->
+                    Borrar incidencia <!-- Texto a lado del ícono -->
                     <i class="fas fa-trash-alt"></i> <!-- Ícono de basurero de FontAwesome -->
                 </button>
-                <!--Pop up-->
-                <div id="popup1" class="popup1" >
+                <div id="popup1" class="popup1">
                     <div class="popup_contenido1">
                         <span class="close-btn" id="closePopupBtn1">&times;</span>
                         <img src="img/advertencia.png" alt="check" width="48" height="48" style="margin-top: -10px;">
 
                         <p>¡Advertencia!</p>
-
+                        
                         <p>La acción "Banear" será permanente, debe estar seguro de su desición al respecto</p>
 
                         <a href="ListaSerenazgo_A.html"><button type="button" class="btn btn-success rounded-pill m-2">Cancelar</button></a>
