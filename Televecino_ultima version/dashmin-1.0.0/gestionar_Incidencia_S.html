@@ -158,7 +158,7 @@
                             <textarea class="form-control" id="descripcionIncidencia" rows="2" placeholder="Elimino esta incidencia porque ..."></textarea>
                         </div>
                         <a href="listaIncidencias_S.html"><button type="button" class="btn btn-success rounded-pill m-2">Aceptar</button></a>
-                        <button type="button" class="btn btn-danger rounded-pill m-2">Cancelar</button>
+                        <button type="button" class="btn btn-danger rounded-pill m-2" onclick="cerrarPopup()">Cancelar</button>
 
                     </div>
                 </div>
@@ -172,7 +172,7 @@
                         <!--contenido pop up-->
                         <h4>¿Estás seguro? </h4>
                         <a href="listaIncidencias_S.html"><button type="button" class="btn btn-success rounded-pill m-2">Si</button></a>
-                        <a href="gestionar_Incidencia_S.html"><button type="button" class="btn btn-danger rounded-pill m-2">No</button></a>
+                        <a href="gestionar_Incidencia_S.html"><button type="button" class="btn btn-danger rounded-pill m-2" >No</button></a>
                         <!-- <button type="button" class="btn btn-danger rounded-pill m-2" >No</button> -->
                     </div>
                 </div>
@@ -363,8 +363,13 @@
     });
 
 </script>
-
-
+<!--cerrar pop up -->
+<script>
+    function cerrarPopup() {
+        var popup = document.getElementById("popup1");
+        popup.style.display = "none";
+    }
+</script>
 </body>
 
 </html>
