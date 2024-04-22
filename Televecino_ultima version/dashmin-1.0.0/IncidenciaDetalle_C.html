@@ -200,18 +200,19 @@
                     <form>
                         <div class="campo">
                             <label for="lugarExacto">Lugar Exacto</label><br>
-                            <input type="text" id="lugarExacto" name="lugarExacto" placeholder="Escribe aquí"><br>
+                            <a type="text" id="lugarExacto" name="lugarExacto" >Libertad</a><br>
                         </div>
-
+                        <br>
                         <div class="campo">
                             <label for="referencia">Referencia</label><br>
-                            <input type="text" id="referencia" name="referencia" placeholder="Escribe aquí"><br>
+                            <a type="text" id="referencia" name="referencia" >Al frente del parque</a><br>
                         </div>
-
+                        <br>
                         <div class="campo">
                             <label for="contacto">Contacto (opcional)</label><br>
-                            <input type="text" id="contacto" name="contacto" placeholder="Escribe aquí"><br>
+                            <a type="text" id="contacto" name="contacto" >967550147</a><br>
                         </div>
+                        <br>
                         <div class="campo">
                             <label for="paraQuien">¿Requiere ambulancia? </label><br>
                             <div class="form-check">
@@ -221,13 +222,7 @@
                                     Sí
                                 </label>
                             </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="gridRadios"
-                                       id="gridRadios2" value="option2">
-                                <label class="form-check-label" for="gridRadios2">
-                                    No
-                                </label>
-                            </div>
+                            
                         </div>
                         <div class="m-n2">
                             <button type="button" class="btn btn-secondary m-2" id="openPopupBtn">Reportar incidencia</button>
@@ -238,7 +233,7 @@
                                 <img src="img/check.png" alt="check" width="48" height="48" style="margin-top: -10px;">
                                 <h2 style="margin-top: 20px;">Éxito</h2>
                                 <p>Se ha reportado la incidencia</p>
-                                <a href="listaIncidencias.html">
+                                <a href="listaIncidencias_C.html">
                                     <a href="listaIncidencias_C.html"><button type="button" class="btn btn-primary rounded-pill m-2">Regresar</button></a>
                                 </a>
                             </div>
@@ -251,7 +246,7 @@
             <div class="bg-light rounded-top p-4">
                 <div class="row">
                     <div class="col-12 col-sm-6 text-center text-sm-start">
-                        &copy; <a href="#">TelevecinosUnidos</a>, All Right Reserved.
+                        &copy; <a href="#">TelevecinoUnidos</a>, All Right Reserved.
                     </div>
                 </div>
             </div>
@@ -278,54 +273,7 @@
 
 <!-- Template Javascript -->
 <script src="js/main.js"></script>
-<script>
-    const openPopupBtn = document.getElementById('openPopupBtn');
-    const closePopupBtn = document.getElementById('closePopupBtn');
-    const navbar = document.getElementById('navbar');
-    const popup = document.getElementById('popup');
-    const tipoIncidencia = document.getElementById('tipoIncidencia');
-    const otroInput = document.getElementById('otroInput');
 
-    openPopupBtn.addEventListener('click', () => {
-        popup.style.display = 'block';
-    });
-
-    closePopupBtn.addEventListener('click', () => {
-        popup.style.display = 'none';
-    });
-    function desactivarStickyTop() {
-        navbar.classList.remove('sticky-top');
-    }
-
-    function activarStickyTop() {
-        navbar.classList.add('sticky-top');
-    }
-
-    document.getElementById('openPopupBtn').addEventListener('click', function() {
-        desactivarStickyTop();
-        popup.style.display = 'block';
-    });
-
-    document.getElementById('closePopupBtn').addEventListener('click', function() {
-        activarStickyTop();
-        popup.style.display = 'none';
-    });
-
-    tipoIncidencia.addEventListener('change', function() {
-        if (tipoIncidencia.value === 'otro') {
-            otroInput.style.display = 'block';
-        } else {
-            otroInput.style.display = 'none';
-        }
-    });
-    urbanizacion.addEventListener('change', function() {
-        if (urbanizacion.value === 'otro') {
-            otroInput1.style.display = 'block';
-        } else {
-            otroInput1.style.display = 'none';
-        }
-    });
-</script>
 
 </body>
 

@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Evento más información</title>
+    <title>Inicio</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -90,17 +90,16 @@
                 <a href="#" class="sidebar-toggler flex-shrink-0">
                     <i class="fa fa-bars"></i>
                 </a>
-                <a class="navbar-brand mx-4 mb-3 d-flex align-items-center" style = "padding-top: 2%;">
+                <a class="navbar-brand mx-4 mb-3 d-flex align-items-center" style="padding-top: 2%;">
                     <img class="rounded-circle" src="img/logo.jpg" alt="" style="width: 40px; height: 40px;">
                     <h3 class="m-0 me-2 px-2" style="color:#023047;">¡Bienvenido, coordinador!</h3>
                 </a>
-                
                 <div class="navbar-nav align-items-center ms-auto">
                     
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <img class="rounded-circle me-lg-2" src="img/Icon_perfil.png" alt="" style="width: 40px; height: 40px;">
-                            <span class="d-none d-lg-inline-flex" style="color:#023047;"><b>Nombre Apellido</b></span>
+                            <span class="d-none d-lg-inline-flex">Nombre Apellido</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                             <a href="perfil_C.html" class="dropdown-item">Mi perfil</a>
@@ -110,148 +109,152 @@
                 </div>
             </nav>
             <!-- Navbar End -->
-            <!-- Navbar End -->
 
           
-            <!-- Mostrar información del evento-->
-             
-            
-            <!-- Form Start -->
-            <!---Nombre del evento-->
-            
+            <!-- Mostrar inicio de coordinador-->
             <div class="container-fluid pt-4 px-4">
-                <a class="form-label" style="color:#023047; font-size: 40px;" ><b>Descubre el Vóley: ¡Aprende, Juega y Disfruta!</b></a>
-            </div>
-            <div class="container-fluid pt-4 px-4">
-                <div class="row g-4">
-                    <div class="col-sm-12">
-                        <div class="rounded h-100 p-4" style=" background-color: #ffb703;">
-                            <form>
-                                <!---Descripción del evento-->
-                                <div class="mb-3">
-                                    <label for="descripcionEvento" class="form-label" style="color:#023047;">
-                                        <b>Descripción:</b>
-                                        <br>
-                                        <a style="text-align: justify;">¡Descubre el Vóley! Únete a nosotros para aprender, jugar y disfrutar de este emocionante deporte. Nuestro evento ofrece una oportunidad única para todos, desde principiantes hasta expertos, de sumergirse en el mundo del vóley. Con actividades divertidas, competiciones amistosas y sesiones de entrenamiento, te garantizamos una experiencia inolvidable. ¡No te pierdas esta emocionante oportunidad de ser parte de la acción del vóley!</a>
-                                    </label>
-                                    
-                                </div>
-                            </form>
+                <div class="row g-4 ">
+                    <div class="col-sm-6" class="bg-light" >
+                        <div style="padding: 25px;">
+                            <img src="img/Coordinador.png" alt="" style="width: 450px; height: 300px">
                         </div>
                     </div>
-
-                    
-                    <!----Subir foto---->
-                    <div class="col-sm-12 col-sm-12 col-xl-6">
-                        <div class="bg-light rounded h-100 p-4">
-                            <div class="mb-3">
-                                <img src="img/Deporte/markus-spiske-BfphcCvhl6E-unsplash.jpg" class="img-responsive" alt="" style="width: 100%; height: auto;"  />
-                            </div>
-                            
-                        </div>
-
-                    </div>
-                    <!---Info del profe, lugar y fecha-->
-                    <div class="col-sm-12 col-xl-6">
-                        <div class="rounded h-100 p-4" style = "background-color:#219ebc;">
-                            <!---Nombre del coordinador-->
-                            <div class="mb-3">
-                                <label for="nombreCoordinador" class="form-label" style="color:#023047;"><b>Coordinador(a):</b></label>
-                                <br>
-                                <a style="color: white;"> Nombre Apellido_1 Apellido_2</a>
-                            </div>
-                            <!---Lugar del evento-->
-                            <div class="mb-3">
-                                <label for="lugarEvento" class="form-label" style="color:#023047;"><b>Lugar del evento:</b></label>
-                                <br>
-                                <a style="color: white;">Avenida/Calle/Jiron</a>
-                            </div>
-                            <!----Frecuencia del evento----->
-                            <label for="frecuenciaEvento" class="form-label" style="color:#023047;"><b>Frecuencia del evento:</b></label>
-                            <br>
-                            <a style="color: white;">Semanal</a>
-                            <br>
-                            <!----Cantidad de vacantes disponibles----->
-                            <label for="cantVacantes" class="form-label" style="color:#023047;"><b><br>Cantidad de vacantes:</b> </label>
-                            <br>
-                            <a style="color: white;">30</a>
-                            
-                        </div>
-                        <script>
-                            // Función que se ejecutará al cargar la ventana
-                            window.onload = function() {
-                                var selectElement = document.getElementById('cantVacantes');
-                    
-                                // Crear opciones de 10 a 30
-                                for(var i = 10; i <= 30; i++) {
-                                    var option = new Option(i, i);
-                                    selectElement.add(option);
-                                }
-                            };
-                        </script>
-                    </div>
-
-
-                    <!----Lista de Materiales---->
-                    <div class="col-sm-12 col-xl-6">
-                        
-                    </div>
-                    
-                        
-
-                    <!-- Fecha/Hora/ -->
-                    <div class="col-sm-12 col-xl-6">
-                        <div class="rounded h-100 p-4" style = "background-color: #8ecae6;">
-                            <!-- Contenedor para la previsualización de la imagen -->
-                            <div class="mb-3">
-                                <img id="preview" src="#" alt="Vista previa de la imagen" class="img-thumbnail" style="display: none;">
-                            </div>
-                            <!-- Fecha del evento -->
-                            <div class="mb-3">
-                                <label for="fechaInicioEvento" class="form-label" style="color:#023047;"><b>Fecha de inicio:</b></label>
-                                <br>
-                                <a style="color: white;"> 03/04/2024</a>
-                            </div>
-                            <div class="mb-3">
-                                <label for="fechaFinEvento" class="form-label" style="color:#023047;"><b>Fecha de finalización:</b></label>
-                                <br>
-                                <a style="color: white;"> 01/05/2024</a>
-                            </div>
-
-                            <!-- Hora de inicio del evento -->
-                            <div class="mb-3">
-                                <label for="horaInicioEvento" class="form-label" style="color:#023047;"><b>Hora de inicio:</b></label>
-                                <br>
-                                <a style="color: white;"> 11:00</a>
-                            </div>
-
-                            <!-- Hora de finalización del evento -->
-                            <div class="mb-3">
-                                <label for="horaFinEvento" class="form-label" style="color:#023047;"><b>Hora de finalización:</b></label>
-                                <br>
-                                <a style="color: white;"> 13:00</a>
-                            </div>
-
+                    <div class="col-sm-6  ">
+                        <div style="padding: 30px;" >
+                            <a><b>Bienvenido coordinador(a)</b></a>
+                            <p style="text-align:justify;">
+                                En su rol como coordinador (a), su responsabilidad principal consiste en idear y ejecutar eventos que promuevan la participación y el bienestar en la comunidad, centrándose principalmente en las categorías de Deporte y Cultura. 
+                                Unas de las características distintivas de su función como coordinador son:
+                                <ol>
+                                    <li>Creación de eventos</li>
+                                    <li>Actualización de información para un evento</li>
+                                    <li>Ampliación de vacantes en eventos </li>
+                                    <li>Bloquear a un vecino por comportamiento inapropiado </li>
+                                </ol>
+                            </p>
                         </div>
                     </div>
-                    <!-- Boton de Volver-->
-                    <div style="text-align: right; margin-right: 100px; padding-top: 2%;">
-                        <a href="EventoGenerales_C.html" ><button type="submit" class="btn btn-primary bg-primary" style=" border-color: #023047; color: #ffffff;"><b>Volver</b></button></a>
-                    </div>
                 </div>
             </div>
-            <!-- Form End -->
-
-
-
-
             
             
+            
+            <!-- Recent Sales Start -->
+            
+            <div style="padding: 30px;">
+                <!-- Mostrar mis eventos inscritos-->
+                <div class="bg-light text-center rounded p-4" >
+                    <div class="d-flex align-items-center  justify-content-between mb-4">
+                        <h6 class="mb-0">Mis últimas incidencias </h6>
+                        <a href="listaIncidencias_C.html" >Mostrar todas mis incidencias</a>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table text-start align-middle table-bordered table-hover mb-0">
+                            <thead>
+                            <tr class="text-dark" >
+
+                                <th scope="col ">Incidencia</th>
+                                <th scope="col">Estado</th>
+                                <th scope="col">Fecha</th>
+                                <th scope="col">Criticidad</th>
+                                <th scope="col">Ver detalles</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+
+                                <td>Nombre incidencia 1</td>
+                                <td>Evaluada</td>
+                                <td>1/05/24</td>
+                                <td>Urgente</td>
+
+                                <td><button type="button" class="btn btn-info m-2 letraBoton">Detalles</button></td>
+                            </tr>
+                            <tr>
+
+                                <td>Nombre incidencia 2</td>
+                                <td>Falsa</td>
+                                <td>2/05/24</td>
+                                <td>Medio</td>
+
+                                <td><button type="button" class="btn btn-info m-2 letraBoton">Detalles</button></td>
+                            </tr>
+                            <tr>
+
+                                <td>Nombre incidencia 3</td>
+                                <td>No evaluda </td>
+                                <td>3/05/24</td>
+                                <td>-</td>
+
+
+                                <td><button type="button" class="btn btn-info m-2 letraBoton">Detalles</button></td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div style="padding: 30px;">
+                <!-- Mostrar mis eventos inscritos-->
+                <div class="bg-light text-center rounded p-4" >
+                    <div class="d-flex align-items-center  justify-content-between mb-4">
+                        <h6 class="mb-0">Mis eventos del mes </h6>
+                        <a href="ListaEvent-Coordinador.html" >Mostrar todos mis eventos</a>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table text-start align-middle table-bordered table-hover mb-0">
+                            <thead>
+                            <tr class="text-dark" >
+
+                                <th scope="col ">Evento</th>
+                                <th scope="col">Tipo</th>
+                                <th scope="col">Fecha de inicio</th>
+                                <th scope="col">Frecuencia</th>
+                                <th scope="col">Ver detalles</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+
+                                <td>Voley</td>
+                                <td>Deporte</td>
+                                <td>1/05/24</td>
+                                <td>Diario</td>
+                                <td><a href="eventoPropio.html"><button type="button" class="btn btn-info m-2 letraBoton">Detalles</button></td></a>
+                            </tr>
+                            <tr>
+
+                                <td>Danza</td>
+                                <td>Cultura</td>
+                                <td>1/05/24</td>
+                                <td>Lunes-Miercoles</td>
+                                <td><a href="eventoPropio.html"><button type="button" class="btn btn-info m-2 letraBoton">Detalles</button></td></a>
+                            </tr>
+                            <tr>
+
+                                <td>Futbol</td>
+                                <td>Deporte</td>
+                                <td>1/05/24</td>
+                                <td>Martes-Jueves</td>
+                                <td><a href="eventoPropio.html"><button type="button" class="btn btn-info m-2 letraBoton">Detalles</button></td></a>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            
+
             <!-- Footer Start -->
             <div class="container-fluid pt-4 px-4">
                 <div class="bg-light rounded-top p-4">
-                    <div class="col-12 col-sm-6 text-center text-sm-start">
-                        &copy; <a href="#">Televecinos</a>, All Right Reserved. 
+                    <div class="row">
+                        <div class="col-12 col-sm-6 text-center text-sm-start">
+                            &copy; <a href="#">TelevecinosUnidos</a>, All Right Reserved. 
+                        </div>
                     </div>
                 </div>
             </div>
@@ -278,6 +281,8 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick-theme.css"/>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.34/moment-timezone-with-data.min.js'></script>
+
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
