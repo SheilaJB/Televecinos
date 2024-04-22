@@ -54,41 +54,32 @@
             <a href="index.html" class="navbar-brand mx-3 mb-3">
                 <h4 class="text-primary"><b>Televecinos Unidos</b></h4>
             </a>
-            <!-- Sección del perfil del usuario en el sidebar-->
-            <div class="d-flex align-items-center ms-4 mb-4"   >
-                <img class="rounded-circle" src="img/Icon_perfil.png" alt="Icono del perfil del usuario" style="width: 50px; height: 50px;">
-                <div class="ms-3">
-                    <h6 class="mb-0" style="color:#023047;"><b>Nombre y Apellido</b></h6>
-                    <span style="font-size: 80%" style="color:#023047;"><b>Vecino</b></span>
+            <div class="d-flex align-items-center ms-4 mb-4"  >
+                <img class="rounded-circle" src="img/Icon_perfil.png" alt="" style="width: 50px; height: 50px;">
+                <div class="ms-3" >
+                    <h6 class="mb-0" style="color:#023047;"><b>Nombre Apellido</b></h6>
+                    <span class="text-muted"><b>Coordinador</b></span>
                 </div>
             </div>
-            <!-- Fin del perfil del usuario en el sidebar-->
             <div class="navbar-nav w-100">
-                <div class="navbar-nav w-100">
-                    <a href="inicioVecino.html" class="nav-item nav-link"><i class="fa fa-home me-2"></i><b>Inicio</b></a>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-calendar me-2"></i>Eventos</a>
-                        <div class="dropdown-menu bg-transparent border-0">
-                            <a href="Evento-D-Vecino.html" class="dropdown-item"><b>Deporte</b></a>
-                            <a href="Evento-C-Vecino.html" class="dropdown-item"><b>Cultura</b></a>
-                            <a href="ListaEvent-Vecino.html" class="dropdown-item"><b>Eventos inscriptos</b></a>
-                        </div>
-                    </div>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"><i class="fa fa-th-list me-2"></i><b>Incidencias</b></a>
-                        <div class="dropdown-menu bg-transparent border-0">
-                            <a href="generarIncidencia_V.html" class="dropdown-item active"><b>Reportar incidencia</b></a>
-                            <a href="listaIncidencias_V.html" class="dropdown-item"><b>Lista de incidencias</b></a>
-                        </div>
-                    </div>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-question-circle me-2"></i><b>Ayuda y Soporte</b></a>
-                        <div class="dropdown-menu bg-transparent border-0">
-                            <a href="preguntasFrecuentes_V.html" class="dropdown-item"><b>Preguntas Frecuentes</b></a>
-
-                        </div>
+                <a href="Inicio_C.html" class="nav-item nav-link"><i class="fa fa-home me-2"></i><b>Inicio</b></a>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-calendar me-2"></i><b>Eventos</b></a>
+                    <div class="dropdown-menu bg-transparent border-0">
+                    <a href="EventoGenerales_C.html" class="dropdown-item"><b>Eventos Generales</b></a>
+                    <a href="creacionEvento.html" class="dropdown-item"><b>Crear Evento</b></a>
+                    <a href="ListaEvent-Coordinador.html" class="dropdown-item"><b>Eventos Propios</b></a>
                     </div>
                 </div>
+                
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"><i class="fa fa-th-list me-2"></i><b>Incidencias</b></a>
+                    <div class="dropdown-menu bg-transparent border-0">
+                        <a href="generarIncidencia_C.html" class="dropdown-item"><b>Crear Incidencia</b></a>
+                        <a href="listaIncidencias_C.html" class="dropdown-item"><b>Lista de Incidencias</b></a>
+                    </div>
+                </div>
+                <a href="preguntasFrecuentes_C.html" class="nav-item nav-link font-al"><i class="fa fa-home me-2" ></i><b>Preguntas Frecuentes</b></a>
             </div>
         </nav>
     </div>
@@ -105,19 +96,20 @@
             <a href="#" class="sidebar-toggler flex-shrink-0">
                 <i class="fa fa-bars"></i>
             </a>
-            <a class="navbar-brand mx-4 mb-3 d-flex align-items-center" style="padding-top: 2%;">
+            <a class="navbar-brand mx-4 mb-3 d-flex align-items-center" style = "padding-top: 2%;">
                 <img class="rounded-circle" src="img/logo.jpg" alt="" style="width: 40px; height: 40px;">
-                <h3 class="m-0 me-2 px-2" style="color:#023047;">¡Bienvenido, televecino!</h3>
+                <h3 class="m-0 me-2 px-2" style="color:#023047;">¡Bienvenido, coordinador!</h3>
             </a>
+            
             <div class="navbar-nav align-items-center ms-auto">
                 
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                         <img class="rounded-circle me-lg-2" src="img/Icon_perfil.png" alt="" style="width: 40px; height: 40px;">
-                        <span class="d-none d-lg-inline-flex">Nombre Apellido</span>
+                        <span class="d-none d-lg-inline-flex" style="color:#023047;"><b>Nombre Apellido</b></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                        <a href="perfil_V.html" class="dropdown-item">Mi perfil</a>
+                        <a href="perfil_C.html" class="dropdown-item">Mi perfil</a>
                         <a href="index.html" class="dropdown-item">Cerrar sesión</a>
                     </div>
                 </div>
@@ -208,18 +200,19 @@
                     <form>
                         <div class="campo">
                             <label for="lugarExacto">Lugar Exacto</label><br>
-                            <input type="text" id="lugarExacto" name="lugarExacto" placeholder="Escribe aquí"><br>
+                            <a type="text" id="lugarExacto" name="lugarExacto" >Libertad</a><br>
                         </div>
-
+                        <br>
                         <div class="campo">
                             <label for="referencia">Referencia</label><br>
-                            <input type="text" id="referencia" name="referencia" placeholder="Escribe aquí"><br>
+                            <a type="text" id="referencia" name="referencia" >Al frente del parque</a><br>
                         </div>
-
+                        <br>
                         <div class="campo">
                             <label for="contacto">Contacto (opcional)</label><br>
-                            <input type="text" id="contacto" name="contacto" placeholder="Escribe aquí"><br>
+                            <a type="text" id="contacto" name="contacto" >967550147</a><br>
                         </div>
+                        <br>
                         <div class="campo">
                             <label for="paraQuien">¿Requiere ambulancia? </label><br>
                             <div class="form-check">
@@ -229,13 +222,7 @@
                                     Sí
                                 </label>
                             </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="gridRadios"
-                                       id="gridRadios2" value="option2">
-                                <label class="form-check-label" for="gridRadios2">
-                                    No
-                                </label>
-                            </div>
+                            
                         </div>
                         <div class="m-n2">
                             <button type="button" class="btn btn-secondary m-2" id="openPopupBtn">Reportar incidencia</button>
@@ -246,8 +233,8 @@
                                 <img src="img/check.png" alt="check" width="48" height="48" style="margin-top: -10px;">
                                 <h2 style="margin-top: 20px;">Éxito</h2>
                                 <p>Se ha reportado la incidencia</p>
-                                <a href="listaIncidencias.html">
-                                    <a href="listaIncidencias_V.html"><button type="button" class="btn btn-primary rounded-pill m-2">Regresar</button></a>
+                                <a href="listaIncidencias_C.html">
+                                    <a href="listaIncidencias_C.html"><button type="button" class="btn btn-primary rounded-pill m-2">Regresar</button></a>
                                 </a>
                             </div>
                         </div>
@@ -259,7 +246,7 @@
             <div class="bg-light rounded-top p-4">
                 <div class="row">
                     <div class="col-12 col-sm-6 text-center text-sm-start">
-                        &copy; <a href="#">TelevecinosUnidos</a>, All Right Reserved.
+                        &copy; <a href="#">TelevecinoUnidos</a>, All Right Reserved.
                     </div>
                 </div>
             </div>
@@ -286,54 +273,7 @@
 
 <!-- Template Javascript -->
 <script src="js/main.js"></script>
-<script>
-    const openPopupBtn = document.getElementById('openPopupBtn');
-    const closePopupBtn = document.getElementById('closePopupBtn');
-    const navbar = document.getElementById('navbar');
-    const popup = document.getElementById('popup');
-    const tipoIncidencia = document.getElementById('tipoIncidencia');
-    const otroInput = document.getElementById('otroInput');
 
-    openPopupBtn.addEventListener('click', () => {
-        popup.style.display = 'block';
-    });
-
-    closePopupBtn.addEventListener('click', () => {
-        popup.style.display = 'none';
-    });
-    function desactivarStickyTop() {
-        navbar.classList.remove('sticky-top');
-    }
-
-    function activarStickyTop() {
-        navbar.classList.add('sticky-top');
-    }
-
-    document.getElementById('openPopupBtn').addEventListener('click', function() {
-        desactivarStickyTop();
-        popup.style.display = 'block';
-    });
-
-    document.getElementById('closePopupBtn').addEventListener('click', function() {
-        activarStickyTop();
-        popup.style.display = 'none';
-    });
-
-    tipoIncidencia.addEventListener('change', function() {
-        if (tipoIncidencia.value === 'otro') {
-            otroInput.style.display = 'block';
-        } else {
-            otroInput.style.display = 'none';
-        }
-    });
-    urbanizacion.addEventListener('change', function() {
-        if (urbanizacion.value === 'otro') {
-            otroInput1.style.display = 'block';
-        } else {
-            otroInput1.style.display = 'none';
-        }
-    });
-</script>
 
 </body>
 

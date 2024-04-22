@@ -29,6 +29,58 @@
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+
+    <style>
+        .container {
+            width: 80%;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .bar {
+            position: relative;
+            background-color: #064668;
+            height: 40px;
+            line-height: 50px;
+            text-align: center;
+            color: #ffffff;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            padding: 0 5%; /* Utilizamos porcentaje para hacerlo responsive */
+            max-width: 100%; /* Limitamos el ancho máximo para que no se desborde en pantallas pequeñas */
+        }
+        .bar::before {
+            content: attr(data-label); /* Inserta el contenido del atributo data-label */
+            position: absolute;
+            top: -15px; /* Ajusta la posición verticalmente */
+            left: 0;
+            width: 100%;
+            color: #29b2e8;
+            font-size: 11px;
+            font-weight: bold;
+        }
+    
+        /* Estilo adicional para hacer que la barra ocupe el ancho completo en pantallas pequeñas */
+        @media only screen and (max-width: 600px) {
+            .bar {
+                padding: 0;
+            }
+        }
+    
+        /* Estilos para los botones */
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+    </style>
 </head>
 
 <body>
@@ -58,7 +110,7 @@
                 </div>
                 <!-- Fin del perfil del usuario en el sidebar-->
                 <div class="navbar-nav w-100">
-                    <a href="Inicio.html" class="nav-item nav-link"><i class="fa fa-home me-2"></i>Inicio</a>
+                    <a href="inicioVecino.html" class="nav-item nav-link"><i class="fa fa-home me-2"></i>Inicio</a>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-calendar me-2"></i>Eventos</a>
                         <div class="dropdown-menu bg-transparent border-0">
@@ -118,23 +170,24 @@
             <!-- Navbar End -->
 
             <!---Content--->
+            
             <div class="container-fluid d-flex justify-content-center align-items-center vh-100">
-                <div class="Profile text-center">
-                    <img src="img/user.png" class="img-fluid mb-3" alt="Responsive image">
-                    <!-- Nombre del coordinador -->
-                    <div class="mb-3">
-                        <label type="text" class="form-control" id="nombreCoordinador">Nombre Apellido</label>
-                    </div>
-                    <!-- DNI -->
-                    <div class="mb-3">
-                        <label type="text" class="form-control" id="dni">DNI XXXXXXXX</label>
-                    </div>
-                    <!-- Correo electrónico -->
-                    <div class="mb-3">
-                        <label type="text" class="form-control" id="correo">correo@gmail.com</label>
-                    </div>
-                </div>
-            </div>
+                
+                <div class="container text-center">
+                    <img src="img/user.png"class="img-fluid mb-3" alt="Responsive image" width="200">
+                    <div class="bar" data-label="Nombre">Alexis Mariel</div>
+                    <div class="bar" data-label="Apellido">Herrera  Lopez</div>
+                    <div class="bar" data-label="DNI">46851236</div>
+                    <div class="bar" data-label="Dirección">Calle los jazmines 137</div>
+                    <div class="bar" data-label="Distrito">San Miguel</div>
+                    <div class="bar" data-label="Urbanización">Pando 10</div>
+                    <div class="bar" data-label="Correo">robertbala@gmail.com</div>
+                    <a href="inicioVecino.html"><button class="button regresar">Regresar</button></a>
+                </div> 
+            </div> 
+
+
+
             <div class="container-fluid pt-4 px-4" >
                 <div class="bg-light rounded-top p-4">
                     <div class="row">
