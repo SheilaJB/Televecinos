@@ -184,9 +184,15 @@
                     <!--<label for="body">Comience a redactar:</label>--->
                     <textarea class="form-control" id="Texto"  name = "Texto" rows="20" placeholder="Comience a redactar aquí ..."></textarea>
                     <div class="m-n2" style="padding-top: 5%; ">
-                        <button type="button" class="btn btn-secondary m-2" id="openPopupBtn">Enviar correo</button>
+                        <button type="button" class="btn btn-warning m-2 text-white" onclick="regresar()">Regresar</button>
+                        <button type="button" class="btn btn-success m-2" id="openPopupBtn">Enviar correo</button>
                     </div>
                 </div>
+                <script>
+                    function regresar(){
+                        window.location.href="ListaInstructores_A.html";
+                    }
+                </script>
 
                 <!-- Popup -->
                 <div id="popup" class="popup" >
