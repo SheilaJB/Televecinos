@@ -1,8 +1,8 @@
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Correo</title>
+    <title>Detalles del serenazgo</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -31,8 +31,8 @@
     <link href="css/app.min.css" rel="stylesheet">
     <link href="css/style_vec.css" rel="stylesheet">
     <link href="css/style_popup.css" rel="stylesheet">
-
     <style>
+
         .popup {
             display: none;
             position: fixed;
@@ -66,6 +66,8 @@
         }
 
     </style>
+
+
 </head>
 
 <body>
@@ -90,7 +92,6 @@
                     <img class="rounded-circle" src="img/munisanmiguelLogo.jpg" alt="" style="width: 40px; height: 40px;">
                     <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
                 </div>
-
                 <div class="ms-3">
                     <h6 class="mb-0">Municipalidad de San Miguel</h6>
                     <span>Administrador</span>
@@ -107,7 +108,7 @@
                     <div class="dropdown-menu bg-transparent border-0">
                         <a href="ListaSerenazgo_A.html" class="dropdown-item" style="font-size: 13.5px;">Lista de serenazgos</a>
 
-                        <a href="FormularioSerenazgo_A.html" class="dropdown-item"style="font-size: 13.5px;">Registrar nuevo serenazgo</a>
+                        <a href="FormularioSerenazgo.html" class="dropdown-item"style="font-size: 13.5px;">Registrar nuevo serenazgo</a>
                     </div>
                 </div>
                 <div class="nav-item dropdown">
@@ -128,7 +129,6 @@
                         <a href="preguntasFrecuentes_S_vistaAdmin.html" class="dropdown-item"style="font-size: 13.5px;">Dudas Serenazgos</a>
                     </div>
                 </div>
-
             </div>
         </nav>
     </div>
@@ -147,7 +147,7 @@
             </a>
             <a class="navbar-brand mx-4 mb-3 d-flex align-items-center" style="padding-top: 2%;">
                 <img class="rounded-circle" src="img/logo.jpg" alt="" style="width: 40px; height: 40px;">
-                <h3 class="m-0 me-2 px-2" style="color:#023047;">Televecinos Unidos</h3>
+                <h3 class="m-0 me-2 px-2" style="color:#023047;">Detalles del serenazgo</h3>
             </a>
 
             <div class="navbar-nav align-items-center ms-auto">
@@ -158,52 +158,13 @@
                         <span class="d-none d-lg-inline-flex" style="color:#023047;"><b>Municipalidad de San Miguel</b></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                        <a href="#" class="dropdown-item itemperfil">Mi perfil</a>
-                        <a href="login/login.html" class="dropdown-item itemperfil">Cerrar Sesión</a>
+                        <a href="perfil_A.html" class="dropdown-item">Mi perfil</a>
+                        <a href="index.html" class="dropdown-item">Cerrar sesión</a>
                     </div>
                 </div>
             </div>
         </nav>
         <!-- PARTE SUPERIOR FINAL -->
-
-        <!--email vecino-->
-        <div style="background-color: #f8f9fa; padding: 20px; align-items: center;">
-            <!--correo-->
-            <div class="container" style="padding-top: 20px">
-                <h3>REDACTAR CORREO</h3>
-                <h5>Correo a enviar: </h5>
-                <div class="form-group">
-                    <label for="asunto">Asunto</label>
-                    <input type="text" id="asunto" name="Asunto" class="form-control" placeholder="Ingrese el asunto del correo">
-                </div>
-                <div class="form-group">
-                    <label for="email">Para:</label>
-                    <input type="text" id="email" name="email" class="form-control" placeholder="Ingrese el correo gmail destino">
-                </div>
-                <div class="form-group" style = "padding-top: 2%">
-                    <!--<label for="body">Comience a redactar:</label>--->
-                    <textarea class="form-control" id="Texto"  name = "Texto" rows="20" placeholder="Comience a redactar aquí ..."></textarea>
-                    <div class="m-n2" style="padding-top: 5%; ">
-                        <button type="button" class="btn btn-secondary m-2" id="openPopupBtn">Enviar correo</button>
-                    </div>
-                </div>
-
-                <!-- Popup -->
-                <div id="popup" class="popup" >
-                    <div class="popup_contenido">
-                        <span class="close-btn" id="closePopupBtn">&times;</span>
-                        <img src="img/check.png" alt="check" width="48" height="48" style="margin-top: -10px;">
-                        <h2 style="margin-top: 20px;">Éxito</h2>
-                        <p>Se ha enviado el correo de manera exitosa</p>
-                        <a href="#">
-                            <a href="ListaCoordinadorasDeportes_A.html"><button type="button" class="btn btn-primary rounded-pill m-2">Regresar</button></a>
-                        </a>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
 
         <!-- Bootstrap JS dependencies -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -212,36 +173,93 @@
 
 
 
-        <!-- Fin de iamgen estatica -->
+
+        <!-- Inicio de Contenido -->
         <div style="background-color: #f8f9fa; padding: 20px; align-items: center;">
+            <div class="container text-center">
+                <img src="img/serenazgo.jpg" class="img-fluid mb-3" alt="Imagen Serenazgo" width="200">
 
+                <!-- Formulario -->
+                <form id="serenazgoForm">
+                    <label for="tipo" class="form-label" style="color:#023047;"><b>Tipo de serenazgo:</b></label>
+                    <select id="tipo" class="form-select mb-3" aria-label="Seleccione un tipo">
+                        <option selected>Seleccione un turno:</option>
+                        <option value="1">Bicicleta</option>
+                        <option value="2">A pie</option>
+                        <option value="3">Canino</option>
+                        <option value="4">Vehículo</option>
+                    </select>
 
-            <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.css">
-            <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick-theme.css">
-            <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-            <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.min.js"></script>
-        </div>
+                    <label for="turno" class="form-label" style="color:#023047;"><b>Elegir turno:</b></label>
+                    <select id="turno" class="form-select mb-3" aria-label="Seleccione un turno">
+                        <option selected>Seleccione un turno:</option>
+                        <option value="1">Diurno</option>
+                        <option value="2">Nocturno</option>
+                    </select>
 
-
-        <!-- Content End -->
-
-        <!-- Footer Start -->
-        <div class="container-fluid pt-4 px-4">
-            <div class="bg-light rounded-top p-4">
-                <div class="row">
-                    <div class="col-12 col-sm-6 text-center text-sm-start">
-                        &copy; <a href="#">Televecinos Unidos</a>, All Right Reserved.
+                    <div class="mb-3">
+                        <label for="fechaNombramiento" class="form-label" style="color:#023047;"><b>Fecha de Nombramiento:</b></label>
+                        <input type="date" class="form-control" id="fechaNombramiento" name="fecha_nombramiento">
                     </div>
 
-                </div>
+                    <label for="nombre" class="form-label" style="color:#023047;"><b>Nombre del serenazgo</b></label>
+                    <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Ingrese el nombre del serenazgo">
+
+                    <label for="apellido" class="form-label" style="color:#023047;"><b>Apellido del serenazgo</b></label>
+                    <input type="text" id="apellido" name="apellido" class="form-control" placeholder="Ingrese el apellido del serenazgo">
+
+                    <label for="dni" class="form-label" style="color:#023047;"><b>DNI del serenazgo</b></label>
+                    <input type="text" id="dni" name="dni" class="form-control" placeholder="Ingrese el DNI del serenazgo">
+
+                    <label for="direccion" class="form-label" style="color:#023047;"><b>Dirección del serenazgo</b></label>
+                    <input type="text" id="direccion" name="direccion" class="form-control" placeholder="Ingrese la dirección domiciliaria del serenazgo">
+
+                    <label for="distrito" class="form-label" style="color:#023047;"><b>Distrito del serenazgo</b></label>
+                    <input type="text" id="distrito" name="distrito" class="form-control" placeholder="Ingrese el distrito del serenazgo">
+
+                    <label for="urbanizacion" class="form-label" style="color:#023047;"><b>Urbanización del serenazgo</b></label>
+                    <input type="text" id="urbanizacion" name="urbanizacion" class="form-control" placeholder="Ingrese la urbanización del serenazgo">
+
+                    <label for="correo" class="form-label" style="color:#023047;"><b>Correo del serenazgo</b></label>
+                    <input type="text" id="correo" name="correo" class="form-control" placeholder="Ingrese el correo electrónico del serenazgo">
+
+
+                    <div class="form-group" style = "padding-top: 2%">
+                        <div class="m-n2" style="padding-bottom: 5%; ">
+                            <button type="button" class="btn btn-warning m-2 text-white" onclick="regresar()">Regresar</button>
+                            <button type="button" class="btn btn-success m-2" id="openPopupBtn" >Registrar</button>
+                        </div>
+                    </div>
+
+                    <script>
+                        function regresar(){
+                            window.location.href="ListaSerenazgo_A.html";
+                        }
+                    </script>
+
+                    <!-- Popup -->
+                    <div id="popup" class="popup" >
+                        <div class="popup_contenido">
+                            <span class="close-btn" id="closePopupBtn">&times;</span>
+                            <img src="img/check.png" alt="check" width="48" height="48" style="margin-top: -10px;">
+                            <h2 style="margin-top: 20px;">Éxito</h2>
+                            <p>Se ha registrado un nuevo serenazgo</p>
+                            <a href="#">
+                                <a href="ListaSerenazgo_A.html"><button type="button" class="btn btn-primary rounded-pill m-2">Regresar</button></a>
+                            </a>
+                        </div>
+                    </div>
+
+                </form>
+
+
             </div>
         </div>
-        <!-- Footer End -->
+
     </div>
     <!-- Content End -->
 
-
-    <!-- Back to Top -->
+    <!-- Botón de Volver Arriba -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 </div>
 
@@ -258,6 +276,7 @@
 
 <!-- Template Javascript -->
 <script src="js/main.js"></script>
+<script src="js/custom.js"></script>
 
 <script>
     const openPopupBtn = document.getElementById('openPopupBtn');
@@ -293,8 +312,5 @@
 
 </script>
 
-
-
 </body>
-
 </html>
