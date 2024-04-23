@@ -31,6 +31,7 @@
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
     <link href="css/style_vec.css" rel="stylesheet">
+    <link href="css/style_serenazgo.css" rel="stylesheet">
 
 </head>
 
@@ -142,14 +143,14 @@
             <!-- Ingresar filtro: semana/mes/año-->
             
             <div class="filtro" style="border: 1px solid #ccc; border-radius: 5px; padding: 10px; display: flex; align-items: center; background-color:#FFB703 ;">
-                <select id="filtroFrecuencia" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 15%; margin-right: 2%;" >
+                <select class = "posicionBotonFiltrar1" id="filtroFrecuencia" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 15%; margin-right: 2%;" >
                     <option selected>Frecuencia</option>
                     <option value="Día">Día</option>
                     <option value="Semana">Semana</option>
                     <option value="Mes">Mes</option>
                 </select>
                 <!-- Alineación del botón con los selects -->
-                <button type="button" class="btn btn-primary" onclick="filtrar()" style="padding: 10px;"><b>Filtrar</b></button>
+                <button type="button" class="btn btn-primary posicionBotonFiltrar2" onclick="filtrar()" style="padding: 10px;"><b>Filtrar</b></button>
             </div>
             <!-- Tabla de tipos de incidencias -->
             <div class="container-fluid pt-4 px-4">
