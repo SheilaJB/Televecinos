@@ -6,8 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="bc5c85c9-42c1-4ad9-aedf-1f543da382b3" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Televecino_ultima version/dashmin-1.0.0/Dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/Televecino_ultima version/dashmin-1.0.0/Dashboard.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Televecino_ultima version/dashmin-1.0.0/css/style_serenazgo.css" beforeDir="false" afterPath="$PROJECT_DIR$/Televecino_ultima version/dashmin-1.0.0/css/style_serenazgo.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Televecino_ultima version/dashmin-1.0.0/NuevasSolicitudes_A.html" beforeDir="false" afterPath="$PROJECT_DIR$/Televecino_ultima version/dashmin-1.0.0/NuevasSolicitudes_A.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Televecino_ultima version/dashmin-1.0.0/inicioAdmin.html" beforeDir="false" afterPath="$PROJECT_DIR$/Televecino_ultima version/dashmin-1.0.0/inicioAdmin.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Televecino_ultima version/dashmin-1.0.0/inicioSerenazgo.html" beforeDir="false" afterPath="$PROJECT_DIR$/Televecino_ultima version/dashmin-1.0.0/inicioSerenazgo.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,7 +76,7 @@
       <workItem from="1713793815429" duration="8000" />
       <workItem from="1713797478747" duration="475000" />
       <workItem from="1713798167831" duration="208000" />
-      <workItem from="1713833506891" duration="3643000" />
+      <workItem from="1713833506891" duration="4619000" />
     </task>
     <servers />
   </component>
