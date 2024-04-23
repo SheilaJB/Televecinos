@@ -100,46 +100,9 @@
                 </div>
             </nav>
             <!-- Navbar End -->
-            <!-- Ingresar filtro: semana/mes/año-->
-            
-            <div class="filtro" style="border: 1px solid #ccc; border-radius: 5px; padding: 10px; display: flex; align-items: center; background-color:#FFB703 ;">
-                <select id="filtroFrecuencia" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 15%; margin-right: 2%;" >
-                    <option selected>Frecuencia</option>
-                    <option value="Semana">Semana</option>
-                    <option value="Mes">Mes</option>
-                    <option value="Anho">Año</option>
-                </select>
-                <!-- Alineación del botón con los selects -->
-                <button type="button" class="btn btn-primary" onclick="filtrar()" style="padding: 10px;"><b>Filtrar</b></button>
-            </div>
-            <!-- Tabla de tipos de incidencias -->
-            <div class="container-fluid pt-4 px-4">
-                <div class="row g-4">
-                    <div class="col-sm-12 col-xl-6">
-                        <div class="bg-light text-center rounded p-4" style="border: 1px solid black; box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);">
-                            <div class="d-flex align-items-center justify-content-between mb-4">
-                                <h6 class="mb-0">Tipo de incidencia</h6>
-                                <a href="">Más detalles</a>
-                            </div>
-                            <canvas id="type-incidents-bar"></canvas>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-xl-6">
-                        <div class="bg-light text-center rounded p-4" style="border: 1px solid black; box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);">
-                            <div class="d-flex align-items-center justify-content-between mb-4">
-                                <h6 class="mb-0">Estado de las incidencias</h6>
-                                
-                                <a href="">Más detalles</a>
-                            </div>
-                            <canvas id="status-incidents"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
 
-            <!-- Tabla de tipos de incidencias  -->
-            <div class="container-fluid pt-4 px-4 " >
+            <!-- Tabla de resumen  -->
+            <div class="container-fluid pt-4 px-4 " style="padding: 20px;">
                 <div class="row g-4">
                     <div class="col-sm-12 col-xl-6 w-25 h-40" >
                         <div class="bg-light text-center rounded p-4" style="border: 1px solid black; box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);">
@@ -175,6 +138,46 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Ingresar filtro: semana/mes/año-->
+            
+            <div class="filtro" style="border: 1px solid #ccc; border-radius: 5px; padding: 10px; display: flex; align-items: center; background-color:#FFB703 ;">
+                <select id="filtroFrecuencia" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 15%; margin-right: 2%;" >
+                    <option selected>Frecuencia</option>
+                    <option value="Día">Día</option>
+                    <option value="Semana">Semana</option>
+                    <option value="Mes">Mes</option>
+                </select>
+                <!-- Alineación del botón con los selects -->
+                <button type="button" class="btn btn-primary" onclick="filtrar()" style="padding: 10px;"><b>Filtrar</b></button>
+            </div>
+            <!-- Tabla de tipos de incidencias -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-light text-center rounded p-4" style="border: 1px solid black; box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);">
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h6 class="mb-0">Tipo de incidencia</h6>
+                                <a href="listaIncidencias_S.html">Más detalles</a>
+                            </div>
+                            <canvas id="type-incidents-bar"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-light text-center rounded p-4" style="border: 1px solid black; box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);">
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h6 class="mb-0">Estado de las incidencias</h6>
+                                
+                                <a href="listaIncidencias_S.html">Más detalles</a>
+                            </div>
+                            <canvas id="status-incidents"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+
+
             <div class="container-fluid pt-4 px-4">
                 <div class="col-sm-12 col-xl-6 w-100 h-100">
                     <div class="bg-light text-center rounded p-4" style="border: 1px solid black; box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);">
