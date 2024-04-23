@@ -29,6 +29,67 @@
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+
+    <style>
+        .container {
+            width: 80%;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .bar {
+            position: relative;
+            background-color: #064668;
+            height: 40px;
+            line-height: 50px;
+            text-align: center;
+            color: #ffffff;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            padding: 0 5%; /* Utilizamos porcentaje para hacerlo responsive */
+            max-width: 100%; /* Limitamos el ancho máximo para que no se desborde en pantallas pequeñas */
+        }
+        .bar::before {
+            content: attr(data-label); /* Inserta el contenido del atributo data-label */
+            position: absolute;
+            top: -15px; /* Ajusta la posición verticalmente */
+            left: 0;
+            width: 100%;
+            color: #29b2e8;
+            font-size: 11px;
+            font-weight: bold;
+        }
+    
+        /* Estilo adicional para hacer que la barra ocupe el ancho completo en pantallas pequeñas */
+        @media only screen and (max-width: 600px) {
+            .bar {
+                padding: 0;
+            }
+        }
+    
+        /* Estilos para los botones */
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .regresar {
+            background-color: #efdb04;
+            color: #fff;
+         }
+        .modperfil {
+            background-color: #27ae60;
+            color: #fff;
+         }
+    </style>
 </head>
 
 <body>
@@ -92,7 +153,7 @@
                             <span class="d-none d-lg-inline-flex" style="color:#023047;"><b>Nombre Apellido</b></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                            <a href="#" class="dropdown-item">Mi perfil</a>
+                            <a href="perfil_S.html" class="dropdown-item">Mi perfil</a>
                             <a href="index.html" class="dropdown-item">Cerrar sesión</a>
                         </div>
                     </div>
@@ -101,24 +162,55 @@
             <!-- Navbar End -->
 
             <!---Content--->
-            <div class="container-fluid d-flex justify-content-center align-items-center vh-100">
-                <div class="Profile text-center">
-                    <img src="img/serenazgo.jpg" class="img-fluid mb-3" alt="Responsive image">
-                    <!-- Nombre del coordinador -->
-                    <div class="mb-3">
-                        <label type="text" class="form-control" id="nombreCoordinador">Nombre Apellido</label>
-                    </div>
-                    <!-- DNI -->
-                    <div class="mb-3">
-                        <label type="text" class="form-control" id="dni">DNI XXXXXXXX</label>
-                    </div>
-                    <!-- Correo electrónico -->
-                    <div class="mb-3">
-                        <label type="text" class="form-control" id="correo">correo@gmail.com</label>
+            <div style="background-color: #f8f9fa; padding: 20px; align-items: center;">
+                
+
+                <div class="container text-center">
+                    <img src="img/serenazgo.jpg" class="img-fluid mb-3" alt="Responsive image" width="200">
+                    <div class="bar" data-label="Tipo de serenazgo">Unidad Canina</div>
+                    <div class="bar" data-label="Turno">Diurno</div>
+                    <div class="bar" data-label="Fecha de nombramiento">15/06/2024</div>
+                    <div class="bar" data-label="Nombre">Alexis Mariel</div>
+                    <div class="bar" data-label="Apellido">Herrera  Lopez</div>
+                    <div class="bar" data-label="DNI">46851236</div>
+                    <div class="bar" data-label="Dirección">Calle los jazmines 137</div>
+                    <div class="bar" data-label="Distrito">San Miguel</div>
+                    <div class="bar" data-label="Urbanización">Pando 10</div>
+                    <div class="bar" data-label="Correo">robertbala@gmail.com</div>
+                    
+                    <a href="inicioSerenazgo.html"><button class="button regresar">Regresar</button></a>
+                   
+                </div>
+ 
+                <script>
+                    $(document).ready(function(){
+                        $('.row').slick({
+                            infinite: true,
+                            slidesToShow: 3,
+                            slidesToScroll: 1
+                        });
+                    })
+                    ;</script>
+                <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.css">
+                <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick-theme.css">
+                <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.min.js"></script>
+            </div>
+
+
+            <!-- Content End -->
+
+            <!-- Footer Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="bg-light rounded-top p-4">
+                    <div class="row">
+                        <div class="col-12 col-sm-6 text-center text-sm-start">
+                            &copy; <a href="#">Televecinos Unidos</a>, All Right Reserved.
+                        </div>
+
                     </div>
                 </div>
             </div>
-            
 
             
         </div>   
