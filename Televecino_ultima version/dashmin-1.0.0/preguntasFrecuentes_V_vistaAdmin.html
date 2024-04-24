@@ -29,7 +29,9 @@
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+    <link href="css/app.min.css" rel="stylesheet">
     <link href="css/style_vec.css" rel="stylesheet">
+    <link href="css/style_popup.css" rel="stylesheet">
 
 </head>
 
@@ -102,7 +104,7 @@
     <!-- Content Start -->
     <div class="content">
         <!-- Navbar Start -->
-        <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+        <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0" id="navbar">
             <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
                 <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
             </a>
@@ -136,6 +138,18 @@
             <div class="bg-light rounded h-100 p-4" >
                 <div class="alert alert-info" role="alert" style="background-color: #ffb703;">
                     <b>Preguntas frecuentes</b>
+                    <button class="btn btn-success btn-sm-2 edit-btn" style="margin-left: 750px" >Editar</button>
+                    <button type="button" class="btn btn-primary btn-sm-2 save-btn d-none btn-banear" style="margin-left: 750px">Guardar cambios</button>
+                    
+                    <div id="popup1" class="popup1" >
+                        <div class="popup_contenido1">
+                            <span class="close-btn" id="closePopupBtn">&times;</span>
+                            <img src="img/check.png" alt="check" width="48" height="48" style="margin-top: -10px;">
+                            <h2 style="margin-top: 20px;">Éxito</h2>
+                            <p>Cambios guardados</p>
+        
+                        </div>
+                    </div>
                 </div>
 
                 <div class="accordion" id="accordionExample">
@@ -217,7 +231,7 @@
                      <b>Ponte en contacto con nosotros</b>
                 </div>
 
-                <div class="h-100 bg-light rounded p-4">
+                <div >
                     <div class="d-flex align-items-center justify-content-between mb-2">
                         <h6 class="mb-0">Administradores</h6>
 
@@ -248,30 +262,24 @@
                             </div>
                             <span>a20213830@pucp.edu.pe</span>
                         </div>
+                        
                     </div>
-
+                    <!-- Footer Start -->
+                    <div class="container-fluid pt-4 px-4">
+                        <div class="bg-light rounded-top p-4">
+                            <div class="row">
+                                <div class="col-12 col-sm-6 text-center text-sm-start">
+                                    &copy; <a href="#">TelevecinosUnidos</a>, All Right Reserved. 
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Footer End -->
                 </div>
 
             </div>
             <!-- Other Elements End -->
-
-
-
-
-
-
-            <!-- Footer Start -->
-            <div class="container-fluid pt-4 px-4">
-                <div class="bg-light rounded-top p-4">
-                    <div class="row">
-                        <div class="col-12 col-sm-6 text-center text-sm-start">
-                            &copy; <a href="#">TelevecinosUnidos</a>, All Right Reserved. 
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
-            <!-- Footer End -->
         </div>
         <!-- Content End -->
 
@@ -293,6 +301,47 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+        function desactivarStickyTop() {
+            navbar.classList.remove('sticky-top');
+        }
+        
+        function activarStickyTop() {
+            navbar.classList.add('sticky-top');
+        }
+        document.addEventListener('click', function(event) {
+            if (event.target.classList.contains('btn-banear')) {
+                desactivarStickyTop();
+                var popup = event.target.nextElementSibling;
+                popup.style.display = 'block';
+            }
+        });
+        
+        document.addEventListener('click', function(event) {
+            if (event.target.classList.contains('close-btn')) {
+                activarStickyTop();
+                var popup = event.target.closest('.popup1');
+                popup.style.display = 'none';
+            }
+        });
+        });
+        
+    </script>
+    <script>
+        $(document).ready(function(){
+            $('.edit-btn').click(function(){
+                $('.response').attr('contenteditable', 'true').focus();
+                $('.save-btn').removeClass('d-none');
+            });
+    
+            $('.save-btn').click(function(){
+                $('.response').removeAttr('contenteditable');
+                $(this).addClass('d-none');
+            });
+        });
+    </script>
 </body>
 
 </html>
