@@ -117,9 +117,9 @@
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
-                    <a href="InicioCoordinador.html" class="nav-item nav-link active"><i class="fa fa-home me-2"></i><span style="font-size: 13.5px;"><b>Inicio</b></span></a>
+                    <a href="InicioCoordinador.html" class="nav-item nav-link "><i class="fa fa-home me-2"></i><span style="font-size: 13.5px;"><b>Inicio</b></span></a>
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-calendar me-2"></i><span style="font-size: 13.5px;"><b>Eventos</b></span></a>
+                        <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"><i class="fa fa-calendar me-2"></i><span style="font-size: 13.5px;"><b>Eventos</b></span></a>
                         <div class="dropdown-menu bg-transparent border-0">
                         <a href="EventoGenerales_C.html" class="dropdown-item"><span style="font-size: 13.5px;"><b>Eventos generales</b></span></a>
                         <a href="creacionEvento.html" class="dropdown-item"><span style="font-size: 13.5px;"><b>Crear evento</b></span></a>
@@ -176,21 +176,28 @@
             <div>
                 <h3 style="text-align: left; margin-top:20px;margin-bottom:20px;padding: 20px">Lista de inscritos</h3>
             </div>
-            <div style="background-color: #f8f9fa; padding: 20px; align-items: center;">
-                <div class="bg-light rounded h-100 p-4" style="font-weight: bold;">
-                    <!--Filtro-->
-                    <div class="filtro" style="border: 1px solid #ccc; border-radius: 5px; padding: 10px; display: flex; align-items: center; background-color:#FFB703 ;">
-                        <input type="text" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 20%; margin-right: 2%;" id="filtroInput" placeholder="Buscar...">
-                        <select id="filtroCategoria" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 20%; margin-right: 2%;">
-                            <option selected>Frecuencia</option>
-                            <option value="Diaria">Diaria</option>
-                            <option value="Interdiaria">Interdiaria</option>
-                            <option value="Mensual">Semanal</option>
-                        </select>
-                        
-                        <!-- Alineación del botón con los selects -->
-                        <button type="button" class="btn btn-primary" onclick="filtrar()" style="padding: 10px;"><b>Filtrar</b></button>
+            <div style="background-color: #f8f9fa; padding: 10px; align-items: center;">
+                <!--Filtro-->
+                
+                <div style="background-color: #FFB703 ; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
+                    <div class="row " style="margin-right:10px;">
+                        <div class="col-md-3 mb-2">
+                            <input type="text" style="width: 100%; " class="form-control" id="filtroInput" placeholder="Buscar...">
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <select id="filtroCategoria" class="form-select" style="width: 100%; ">
+                                <option selected>Frecuencia</option>
+                                <option value="diaria">Diaria</option>
+                                <option value="interdiaria">Interdiaria</option>
+                                <option value="semanal">Semanal</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <button type="button" class="btn btn-primary w-100"style="width: 100%; " onclick="filtrar()"><b>Filtrar</b></button>
+                        </div>
                     </div>
+                </div>
+                <div class="bg-light rounded h-100 p-4" style="font-weight: bold;">
                     
                     <div class="table-responsive">
                         <table class="table" style="background-color: transparent;">
@@ -299,25 +306,29 @@
 
             <!-- Botón para hacer cambios del evento -->
             <div style="text-align: right; margin-right: 100px; padding-top: 2%;">
+                <button type="submit" class="btn btn-primary" style="background-color: #023047; border-color: #023047; color: #ffffff;" onclick="crearEvento()"><b>Atrás</b></button>
                 <button type="submit" class="btn btn-primary" style="background-color: #023047; border-color: #023047; color: #ffffff;" onclick="guardarCambios()"><b>Guardar Cambios</b></button>
             </div>
+            <!--Regresar-->
+            
             <script>
                 function guardarCambios() {
                     window.location.href = 'listaEvent-Coordinador.html';
                 }
             </script>
-
+            <script>
+                function crearEvento() {
+                    window.location.href = 'editarEvento.html';
+                }    
+            </script>
             <!-- Footer Start -->
             <div class="container-fluid pt-4 px-4">
                 <div class="bg-light rounded-top p-4">
                     <div class="row">
                         <div class="col-12 col-sm-6 text-center text-sm-start">
-                            &copy; <a href="#">Televecinos</a>, All Right Reserved. 
+                            &copy; <a href="#">TelevecinosUnidos</a>, All Right Reserved. 
                         </div>
-                        <div class="col-12 col-sm-6 text-center text-sm-end">
-                            <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-                            Designed By <a href="https://htmlcodex.com">HTML Codex</a>
-                        </div>
+                        
                     </div>
                 </div>
             </div>

@@ -63,7 +63,7 @@
                 </div>
             </div>
             <div class="navbar-nav w-100">
-                <a href="InicioCoordinador.html" class="nav-item nav-link active"><i class="fa fa-home me-2"></i><span style="font-size: 13.5px;"><b>Inicio</b></span></a>
+                <a href="InicioCoordinador.html" class="nav-item nav-link "><i class="fa fa-home me-2"></i><span style="font-size: 13.5px;"><b>Inicio</b></span></a>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-calendar me-2"></i><span style="font-size: 13.5px;"><b>Eventos</b></span></a>
                     <div class="dropdown-menu bg-transparent border-0">
@@ -74,7 +74,7 @@
                 </div>
                 
                 <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle " data-bs-toggle="dropdown"><i class="fa fa-th-list me-2"></i><span style="font-size: 13.5px;"><b>Incidencias</b></span></a>
+                    <a href="#" class="nav-link dropdown-toggle active " data-bs-toggle="dropdown"><i class="fa fa-th-list me-2"></i><span style="font-size: 13.5px;"><b>Incidencias</b></span></a>
                     <div class="dropdown-menu bg-transparent border-0">
                         <a href="generarIncidencia_C.html" class="dropdown-item"><span style="font-size: 13.5px;"><b>Crear incidencia</b></span></a>
                         <a href="listaIncidencias_C.html" class="dropdown-item"><span style="font-size: 13.5px;"><b>Lista de incidencias</b></span></a>
@@ -129,35 +129,41 @@
         </div>
         <div style="background-color: #f8f9fa; padding: 20px; align-items: center;">
             <!-- Filtro -->
-            <div class="filtro" style="border: 1px solid #ccc; border-radius: 5px; padding: 10px; display: flex; align-items: center; background-color:#FFB703 ;">
-                <!-- Barra de búsqueda -->
-                <input type="text" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 30%; margin-right: 2%;" id="filtroInput" placeholder="Buscar...">
-                
-                <!-- Selector de fecha -->
-                <input type="date" class="form-control" id="filtroFecha" name="Fecha" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 20%; margin-right: 2%;">
-                
-                <!-- Selector de tipo de incidencia -->
-                <select id="filtroIncidencia" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 20%; margin-right: 2%;">
-                    <option selected disabled>Tipo de Incidencia:</option>
-                    <option value="tipo1">Seguridad Publica</option>
-                    <option value="tipo2">Emergencia pública</option>
-                    <option value="tipo3">Infraestructura y Servicios Públicos</option>
-                    <option value="tipo3">Otro</option>
-                </select>
-                
-                <!-- Selector de estado -->
-                <select id="filtroEstado" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 20%; margin-right: 2%;">
-                    <option selected disabled>Estado</option>
-                    <option value="pendiente">Pendiente</option>
-                    <option value="enCurso">En curso</option>
-                    <option value="cancelado">Cancelado</option>
-                    <option value="rechazado">Rechazado</option>
-                    <option value="procesado">Procesado</option>
-                </select>
-                
-                <!-- Botón de filtrado -->
-                <button type="button" class="btn btn-primary" onclick="filtrar()" style="padding: 10px;"><b>Filtrar</b></button>
+            
+            <div style="background-color: #FFB703 ; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-md-3 mb-2">
+                        <input type="text" class="form-control" id="filtroInput" placeholder="Buscar...">
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <input type="date" class="form-control" id="filtroFecha">
+                    </div>
+                    <div class="col-md-2 mb-2">
+                        <select id="filtroIncidencia" class="form-select">
+                            <option selected disabled>Tipo de Incidencia:</option>
+                            <option value="tipo1">Seguridad Publica</option>
+                            <option value="tipo2">Emergencia pública</option>
+                            <option value="tipo3">Infraestructura y Servicios Públicos</option>
+                            <option value="tipo3">Otro</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <select id="filtroEstado"  class="form-select">
+                            <option selected disabled>Estado</option>
+                            <option value="pendiente">Pendiente</option>
+                            <option value="enCurso">En curso</option>
+                            <option value="cancelado">Cancelado</option>
+                            <option value="rechazado">Rechazado</option>
+                            <option value="procesado">Procesado</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2 mb-2">
+                        <button type="button" class="btn btn-primary w-100" onclick="filtrar()"><b>Filtrar</b></button>
+                    </div>
+                    
+                </div>
             </div>
+
             <div class="table-responsive">
                 <table class="table" style="background-color: transparent;">
                     <thead>

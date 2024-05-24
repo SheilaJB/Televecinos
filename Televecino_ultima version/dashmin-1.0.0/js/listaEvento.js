@@ -41,7 +41,7 @@ function deleteEvent(eventId) {
 };
 
 function editEvent() {
-    window.location.href = 'editarEvento.html';
+    window.location.href = 'eventoPropio.html';
 }
 function viewEvent() {
     // Mostrar ventana emergente con mensaje de éxito

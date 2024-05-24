@@ -57,9 +57,9 @@
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
-                    <a href="InicioCoordinador.html" class="nav-item nav-link active"><i class="fa fa-home me-2"></i><span style="font-size: 13.5px;"><b>Inicio</b></span></a>
+                    <a href="InicioCoordinador.html" class="nav-item nav-link "><i class="fa fa-home me-2"></i><span style="font-size: 13.5px;"><b>Inicio</b></span></a>
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-calendar me-2"></i><span style="font-size: 13.5px;"><b>Eventos</b></span></a>
+                        <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"><i class="fa fa-calendar me-2"></i><span style="font-size: 13.5px;"><b>Eventos</b></span></a>
                         <div class="dropdown-menu bg-transparent border-0">
                         <a href="EventoGenerales_C.html" class="dropdown-item"><span style="font-size: 13.5px;"><b>Eventos generales</b></span></a>
                         <a href="creacionEvento.html" class="dropdown-item"><span style="font-size: 13.5px;"><b>Crear evento</b></span></a>
@@ -147,20 +147,34 @@
                     Sumérgete en la acción con nuestros eventos deportivos. ¡Desde emocionantes partidos hasta desafiantes competiciones, tenemos algo para cada aficionado al deporte! ¡No te pierdas la diversión y únete a nosotros para vivir experiencias inolvidables!
                 </p>
             </div>
-            <div style="background-color: #f8f9fa; padding: 20px; align-items: center;">  
-                <div class="filtro" style=" border: 1px solid #ccc; border-radius: 5px; padding: 10px;">
-                    <input type="text" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 30%; margin-right: 2%;" id="filtroInput" placeholder="Buscar...">
-                    <select id="filtroEstado" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 30%;">
-                        <option value="disponible">Disponible</option>
-                        <option value="cancelado">En curso</option>
-                        <option value="finalizado">Finalizado</option>
-                    </select>
-                    <button type="button"style=" text-align:rigth"class="btn btn-primary" onclick="filtrar()">Filtrar</button>
-                    
-                </div> 
-                <div class="row my-4" style="margin-bottom: 30px;">
+            
+            <div style="background-color: #FFB703 ; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
+                <div class="row justify-content-auto align-items-auto">
+                    <div class="col-md-3 mb-2">
+                        <input type="text" class="form-control" id="filtroInput" placeholder="Buscar...">
+                    </div>
+    
+                    <div class="col-md-3 mb-2">
+                        <select id="filtroEstado" class="form-select">
+                            <option selected>Estado</option>
+                            <option value="disponible">Disponible</option>
+                            <option value="enCurso">En curso</option>
+                            <option value="finalizado">Finalizado</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2 mb-2">
+                        <button type="button" class="btn btn-primary w-100" onclick="filtrar()"><b>Filtrar</b></button>
+                    </div>
+                    <div class="col-md-2 mb-2">
+                        <button type="button" class="btn btn-primary w-100" onclick="crearEvento()"><b>Crear evento</b></button>
+                    </div>
+                </div>
+            </div>
+            <div style="background-color: #f8f9fa; padding: 20px; " >  
+         
+                <div class="row my-4" style="margin-bottom: 10px;">
                     <div class="col-md-3 mb-4">
-                        <div class="card" style="max-width: 14rem; margin: auto;border-radius: 15px;">
+                        <div class="card" style="max-width: 20rem; margin: auto;border-radius: 15px;">
                             <img src="img/Deporte/pexels-pixabay-248547.jpg" alt="Evento de deporte" style="max-height: 180px;"class="card-img-top rounded-top">
                             <div class="card-body" style="height: 15rem;">
                                 <h5 class="card-title" style="text-align: left;">Nombre del evento</h5>
@@ -175,7 +189,7 @@
                         </div>
                     </div> 
                     <div class="col-md-3 mb-4">
-                        <div class="card" style="max-width: 14rem; margin: auto;border-radius: 15px;" >
+                        <div class="card" style="max-width: 20rem; margin: auto;border-radius: 15px;" >
                             <img src="img/Deporte/bruce-mars-gJtDg6WfMlQ-unsplash.jpg" alt="Evento de deporte" style="max-height: 180px;"class="card-img-top rounded-top">
                             <div class="card-body" style="height: 15rem;">
                                 <h5 class="card-title" style="text-align: left;">Nombre del evento</h5>
@@ -190,7 +204,7 @@
                         </div>
                     </div> 
                     <div class="col-md-3 mb-4">
-                        <div class="card" style="max-width: 14rem; margin: auto;border-radius: 15px;">
+                        <div class="card" style="max-width: 20rem; margin: auto;border-radius: 15px;">
                             <img src="img/Deporte/girl-posing-with-volley-ball.jpg" alt="Evento de deporte" style="max-height: 180px;"class="card-img-top rounded-top">
                             <div class="card-body" style="height: 15rem;">
                                 <h5 class="card-title" style="text-align: left;">Nombre del evento</h5>
@@ -205,7 +219,7 @@
                         </div>
                     </div> 
                     <div class="col-md-3 mb-4">
-                        <div class="card" style="max-width: 14rem; margin: auto;border-radius: 15px;">
+                        <div class="card" style="max-width: 20rem; margin: auto;border-radius: 15px;">
                             <img src="img/Deporte/markus-spiske-BfphcCvhl6E-unsplash.jpg" alt="Evento de deporte" style="max-height: 180px;"class="card-img-top rounded-top">
                             <div class="card-body" style="height: 15rem;">
                                 <h5 class="card-title" style="text-align: left;">Nombre del evento</h5>
@@ -220,9 +234,9 @@
                         </div>
                     </div>             
                 </div>   
-                <div class="row my-4" style="margin-bottom: 30px;">
+                <div class="row my-4" style="margin-bottom: 10px;">
                     <div class="col-md-3 mb-4">
-                        <div class="card" style="max-width: 14rem; margin: auto;border-radius: 15px;">
+                        <div class="card" style="max-width: 20rem; margin: auto;border-radius: 15px;">
                             <img src="img/Deporte/markus-spiske-WUehAgqO5hE-unsplash.jpg" alt="Evento de deporte" style="max-height: 180px;"class="card-img-top rounded-top">
                             <div class="card-body" style="height: 15rem;">
                                 <h5 class="card-title" style="text-align: left;">Nombre del evento</h5>
@@ -237,7 +251,7 @@
                         </div>
                     </div> 
                     <div class="col-md-3 mb-4">
-                        <div class="card" style="max-width: 14rem; margin: auto;border-radius: 15px;" >
+                        <div class="card" style="max-width: 20rem; margin: auto;border-radius: 15px;" >
                             <img src="img/Deporte/pexels-tirachard-kumtanom-347134.jpg" alt="Evento de deporte" style="max-height: 180px;"class="card-img-top rounded-top">
                             <div class="card-body" style="height: 15rem;">
                                 <h5 class="card-title" style="text-align: left;">Nombre del evento</h5>
@@ -252,7 +266,7 @@
                         </div>
                     </div> 
                     <div class="col-md-3 mb-4">
-                        <div class="card" style="max-width: 14rem; margin: auto;border-radius: 15px;">
+                        <div class="card" style="max-width: 20rem; margin: auto;border-radius: 15px;">
                             <img src="img/Deporte/chino-rocha-2FKTyJqfWX8-unsplash.jpg" alt="Evento de deporte" style="max-height: 180px;"class="card-img-top rounded-top">
                             <div class="card-body" style="height: 15rem;">
                                 <h5 class="card-title" style="text-align: left;">Nombre del evento</h5>
@@ -266,7 +280,7 @@
                         </div>
                     </div> 
                     <div class="col-md-3 mb-4">
-                        <div class="card" style="max-width: 14rem; margin: auto;border-radius: 15px;">
+                        <div class="card" style="max-width: 20rem; margin: auto;border-radius: 15px;">
                             <img src="img/Deporte/wesley-tingey-dKCKiC0BQtU-unsplash.jpg" alt="Evento de deporte" style="max-height: 180px;"class="card-img-top rounded-top">
                             <div class="card-body" style="height: 15rem;">
                                 <h5 class="card-title" style="text-align: left;">Nombre del evento</h5>
@@ -281,9 +295,9 @@
                         </div>
                     </div>             
                 </div> 
-                <div class="row my-4" style="margin-bottom: 30px;">
+                <div class="row my-4" style="margin-bottom: 10px;">
                     <div class="col-md-3 mb-4">
-                        <div class="card" style="max-width: 14rem; margin: auto;border-radius: 15px;">
+                        <div class="card" style="max-width: 20rem; margin: auto;border-radius: 15px;">
                             <img src="img/Deporte/pexels-pixabay-248547.jpg" alt="Evento de deporte" style="max-height: 180px;"class="card-img-top rounded-top">
                             <div class="card-body" style="height: 15rem;">
                                 <h5 class="card-title" style="text-align: left;">Nombre del evento</h5>
@@ -298,7 +312,7 @@
                         </div>
                     </div> 
                     <div class="col-md-3 mb-4">
-                        <div class="card" style="max-width: 14rem; margin: auto;border-radius: 15px;" >
+                        <div class="card" style="max-width: 20rem; margin: auto;border-radius: 15px;" >
                             <img src="img/Deporte/pexels-pixabay-248547.jpg" alt="Evento de deporte" style="max-height: 180px;"class="card-img-top rounded-top">
                             <div class="card-body" style="height: 15rem;">
                                 <h5 class="card-title" style="text-align: left;">Nombre del evento</h5>
@@ -313,7 +327,7 @@
                         </div>
                     </div> 
                     <div class="col-md-3 mb-4">
-                        <div class="card" style="max-width: 14rem; margin: auto;border-radius: 15px;">
+                        <div class="card" style="max-width: 20rem; margin: auto;border-radius: 15px;">
                             <img src="img/Deporte/pexels-pixabay-248547.jpg" alt="Evento de deporte" style="max-height: 180px;"class="card-img-top rounded-top">
                             <div class="card-body" style="height: 15rem;">
                                 <h5 class="card-title" style="text-align: left;">Nombre del evento</h5>
@@ -328,7 +342,7 @@
                         </div>
                     </div> 
                     <div class="col-md-3 mb-4">
-                        <div class="card" style="max-width: 14rem; margin: auto;border-radius: 15px;">
+                        <div class="card" style="max-width: 20rem; margin: auto;border-radius: 15px;">
                             <img src="img/Deporte/pexels-pixabay-248547.jpg" alt="Evento de deporte" style="max-height: 180px;"class="card-img-top rounded-top">
                             <div class="card-body" style="height: 15rem;">
                                 <h5 class="card-title" style="text-align: left;">Nombre del evento</h5>
