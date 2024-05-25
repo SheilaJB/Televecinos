@@ -6,6 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="bc5c85c9-42c1-4ad9-aedf-1f543da382b3" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Televecino_ultima version/dashmin-1.0.0/BanVecino.html" beforeDir="false" afterPath="$PROJECT_DIR$/Televecino_ultima version/dashmin-1.0.0/BanVecino.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Televecino_ultima version/dashmin-1.0.0/Dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/Televecino_ultima version/dashmin-1.0.0/Dashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Televecino_ultima version/dashmin-1.0.0/inicioSerenazgo.html" beforeDir="false" afterPath="$PROJECT_DIR$/Televecino_ultima version/dashmin-1.0.0/inicioSerenazgo.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Televecino_ultima version/dashmin-1.0.0/preguntasFrecuentes_S.html" beforeDir="false" afterPath="$PROJECT_DIR$/Televecino_ultima version/dashmin-1.0.0/preguntasFrecuentes_S.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,6 +82,10 @@
       <workItem from="1713842078644" duration="625000" />
       <workItem from="1713873914796" duration="2746000" />
       <workItem from="1713879237040" duration="70000" />
+      <workItem from="1713973682529" duration="274000" />
+      <workItem from="1714191200189" duration="5000" />
+      <workItem from="1716669800593" duration="250000" />
+      <workItem from="1716680193286" duration="967000" />
     </task>
     <servers />
   </component>
