@@ -6,11 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="bc5c85c9-42c1-4ad9-aedf-1f543da382b3" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Televecino_ultima version/dashmin-1.0.0/Evento-C-Vecino.html" beforeDir="false" afterPath="$PROJECT_DIR$/Televecino_ultima version/dashmin-1.0.0/Evento-C-Vecino.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Televecino_ultima version/dashmin-1.0.0/Evento-D-Vecino.html" beforeDir="false" afterPath="$PROJECT_DIR$/Televecino_ultima version/dashmin-1.0.0/Evento-D-Vecino.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Televecino_ultima version/dashmin-1.0.0/ListaEvent-Vecino.html" beforeDir="false" afterPath="$PROJECT_DIR$/Televecino_ultima version/dashmin-1.0.0/ListaEvent-Vecino.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Televecino_ultima version/dashmin-1.0.0/generarIncidencia_V.html" beforeDir="false" afterPath="$PROJECT_DIR$/Televecino_ultima version/dashmin-1.0.0/generarIncidencia_V.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Televecino_ultima version/dashmin-1.0.0/inicioVecino.html" beforeDir="false" afterPath="$PROJECT_DIR$/Televecino_ultima version/dashmin-1.0.0/inicioVecino.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Televecino_ultima version/dashmin-1.0.0/listaIncidencias_V.html" beforeDir="false" afterPath="$PROJECT_DIR$/Televecino_ultima version/dashmin-1.0.0/listaIncidencias_V.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Televecino_ultima version/dashmin-1.0.0/perfil_S.html" beforeDir="false" afterPath="$PROJECT_DIR$/Televecino_ultima version/dashmin-1.0.0/perfil_S.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Televecino_ultima version/dashmin-1.0.0/perfil_V.html" beforeDir="false" afterPath="$PROJECT_DIR$/Televecino_ultima version/dashmin-1.0.0/perfil_V.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Televecino_ultima version/dashmin-1.0.0/preguntasFrecuentes_V.html" beforeDir="false" afterPath="$PROJECT_DIR$/Televecino_ultima version/dashmin-1.0.0/preguntasFrecuentes_V.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,7 +85,7 @@
       <workItem from="1713973682529" duration="274000" />
       <workItem from="1714191200189" duration="5000" />
       <workItem from="1716669800593" duration="250000" />
-      <workItem from="1716680193286" duration="2721000" />
+      <workItem from="1716680193286" duration="3361000" />
     </task>
     <servers />
   </component>
