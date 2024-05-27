@@ -43,6 +43,7 @@ function deleteEvent(eventId) {
 function editEvent() {
     window.location.href = 'eventoPropio.html';
 }
+
 function viewEvent() {
     // Mostrar ventana emergente con mensaje de éxito
     window.location.href = 'EventoGenerales_C.html';
