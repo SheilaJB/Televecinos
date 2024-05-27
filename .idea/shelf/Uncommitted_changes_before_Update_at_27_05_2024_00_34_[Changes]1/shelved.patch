@@ -1,0 +1,287 @@
+Index: Televecino_ultima version/dashmin-1.0.0/verInicidencia_C.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!DOCTYPE html>\r\n<html lang=\"en\">\r\n\r\n<head>\r\n    <meta charset=\"utf-8\">\r\n    <title>Ver Incidencia</title>\r\n    <meta content=\"width=device-width, initial-scale=1.0\" name=\"viewport\">\r\n    <meta content=\"\" name=\"keywords\">\r\n    <meta content=\"\" name=\"description\">\r\n\r\n    <!-- Favicon -->\r\n    <link href=\"img/favicon.ico\" rel=\"icon\">\r\n\r\n    <!-- Google Web Fonts -->\r\n    <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\r\n    <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\r\n    <link href=\"https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap\" rel=\"stylesheet\">\r\n\r\n    <!-- Icon Font Stylesheet -->\r\n    <link href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css\" rel=\"stylesheet\">\r\n    <link href=\"https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css\" rel=\"stylesheet\">\r\n\r\n    <!-- Libraries Stylesheet -->\r\n    <link href=\"lib/owlcarousel/assets/owl.carousel.min.css\" rel=\"stylesheet\">\r\n    <link href=\"lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css\" rel=\"stylesheet\" />\r\n\r\n    <!-- Customized Bootstrap Stylesheet -->\r\n    <link href=\"css/bootstrap.min.css\" rel=\"stylesheet\">\r\n\r\n    <!-- Template Stylesheet -->\r\n    <link href=\"css/style.css\" rel=\"stylesheet\">\r\n    <link href=\"css/app.min.css\" rel=\"stylesheet\">\r\n    <link rel=\"stylesheet\" href=\"css/style_incidencias.css\">\r\n    <link href=\"css/style_vec.css\" rel=\"stylesheet\">\r\n\r\n\r\n\r\n</head>\r\n\r\n<body>\r\n<div class=\"container-xxl position-relative bg-white d-flex p-0\">\r\n    <!-- Spinner Start -->\r\n    <div id=\"spinner\" class=\"show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center\">\r\n        <div class=\"spinner-border text-primary\" style=\"width: 3rem; height: 3rem;\" role=\"status\">\r\n            <span class=\"sr-only\">Loading...</span>\r\n        </div>\r\n    </div>\r\n    <!-- Spinner End -->\r\n\r\n\r\n    <!-- Sidebar Start -->\r\n    <div class=\"sidebar pe-4 pb-3\" style=\"background-color: #8ecae6;\">\r\n        <nav class=\"navbar\" style=\"background-color: #8ecae6;\" >\r\n            <a class=\"navbar-brand mx-3 mb-3\">\r\n                <h4 class=\"text-primary\"><b>Televecinos Unidos</b></h4>\r\n            </a>\r\n            <div class=\"d-flex align-items-center ms-4 mb-4\"  >\r\n                <img class=\"rounded-circle\" src=\"img/coordinadora.jpg\" alt=\"\" style=\"width: 50px; height: 50px;\">\r\n                <div class=\"ms-3\" >\r\n                    <h6 class=\"mb-0\" style=\"color:#023047;\"><b>Nombre Apellido</b></h6>\r\n                    <span class=\"text-muted\"><b>Coordinador</b></span>\r\n                </div>\r\n            </div>\r\n            <div class=\"navbar-nav w-100\">\r\n                <a href=\"InicioCoordinador.html\" class=\"nav-item nav-link\"><i class=\"fa fa-home me-2\"></i><b>Inicio</b></a>\r\n                <div class=\"nav-item dropdown\">\r\n                    <a href=\"#\" class=\"nav-link dropdown-toggle\" data-bs-toggle=\"dropdown\"><i class=\"fa fa-calendar me-2\"></i><b>Eventos</b></a>\r\n                    <div class=\"dropdown-menu bg-transparent border-0\">\r\n                    <a href=\"EventoGenerales_C.html\" class=\"dropdown-item\"><b>Eventos Generales</b></a>\r\n                    <a href=\"creacionEvento.html\" class=\"dropdown-item\"><b>Crear Evento</b></a>\r\n                    <a href=\"ListaEvent-Coordinador.html\" class=\"dropdown-item\"><b>Eventos Propios</b></a>\r\n                    </div>\r\n                </div>\r\n                \r\n                <div class=\"nav-item dropdown\">\r\n                    <a href=\"#\" class=\"nav-link dropdown-toggle active\" data-bs-toggle=\"dropdown\"><i class=\"fa fa-th-list me-2\"></i><b>Incidencias</b></a>\r\n                    <div class=\"dropdown-menu bg-transparent border-0\">\r\n                        <a href=\"generarIncidencia_C.html\" class=\"dropdown-item\"><b>Crear Incidencia</b></a>\r\n                        <a href=\"listaIncidencias_C.html\" class=\"dropdown-item\"><b>Lista de Incidencias</b></a>\r\n                    </div>\r\n                </div>\r\n                <a href=\"preguntasFrecuentes_C.html\" class=\"nav-item nav-link font-al\"><i class=\"fa fa-home me-2\" ></i><b>Preguntas Frecuentes</b></a>\r\n            </div>\r\n        </nav>\r\n    </div>\r\n    <!-- Sidebar End -->\r\n\r\n\r\n    <!-- Content Start -->\r\n    <div class=\"content\">\r\n        <!-- Navbar Start -->\r\n        <nav class=\"navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0\" id=\"navbar\">\r\n            <a href=\"index.html\" class=\"navbar-brand d-flex d-lg-none me-4\">\r\n                <h2 class=\"text-primary mb-0\"><i class=\"fa fa-hashtag\"></i></h2>\r\n            </a>\r\n            <a href=\"#\" class=\"sidebar-toggler flex-shrink-0\">\r\n                <i class=\"fa fa-bars\"></i>\r\n            </a>\r\n            <a class=\"navbar-brand mx-4 mb-3 d-flex align-items-center\" style = \"padding-top: 2%;\">\r\n                <img class=\"rounded-circle\" src=\"img/logo.jpg\" alt=\"\" style=\"width: 40px; height: 40px;\">\r\n                <h3 class=\"m-0 me-2 px-2\" style=\"color:#023047;\">¡Bienvenido, coordinador!</h3>\r\n            </a>\r\n            \r\n            <div class=\"navbar-nav align-items-center ms-auto\">\r\n                \r\n                <div class=\"nav-item dropdown\">\r\n                    <a href=\"#\" class=\"nav-link dropdown-toggle\" data-bs-toggle=\"dropdown\">\r\n                        <img class=\"rounded-circle me-lg-2\" src=\"img/coordinadora.jpg\" alt=\"\" style=\"width: 40px; height: 40px;\">\r\n                        <span class=\"d-none d-lg-inline-flex\" style=\"color:#023047;\"><b>Nombre Apellido</b></span>\r\n                    </a>\r\n                    <div class=\"dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0\">\r\n                        <a href=\"perfil_C.html\" class=\"dropdown-item\">Mi perfil</a>\r\n                        <a href=\"index.html\" class=\"dropdown-item\">Cerrar sesión</a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </nav>\r\n        <!-- Navbar End -->\r\n        <!-- PARTE SUPERIOR FINAL -->\r\n\r\n\r\n\r\n        <!-- LLENAR-->\r\n        <!-- Footer Start -->\r\n\r\n        <div class=\"container-fluid pt-4 px-4\">\r\n            <div class=\"container\">\r\n                <div class=\"columna columna1\">\r\n                    <div class=\"campo\">\r\n                        <h2>Ver información de la incidencia</h2>\r\n                    </div>\r\n\r\n                    <form>\r\n                        <div class=\"rounded h-100 p-4\" style = \"background-color: #8ecae6;\">\r\n                            <div class=\"mb-3\">\r\n                                <img id=\"preview\" src=\"#\" alt=\"Vista previa de la imagen\" class=\"img-thumbnail\" style=\"display: none;\">\r\n                            </div>\r\n                            <div class=\"mb-3\">\r\n                                <label for=\"NombreIncidencia\" class=\"form-label\" style=\"color:#023047;\"><b>Nombre de la incidencia</b></label>\r\n                                <br>\r\n                                <a style=\"color: white;\"> Accidente de transito</a>\r\n                            </div>\r\n                            <div class=\"mb-3\">\r\n                                <label for=\"TipoIncidencia\" class=\"form-label\" style=\"color:#023047;\"><b>Tipo de incidencia</b></label>\r\n                                <br>\r\n                                <a style=\"color: white;\">• Emergencia Médica</a>\r\n                            </div>\r\n\r\n    \r\n                            <div class=\"mb-3\">\r\n                                <label for=\"esPara\" class=\"form-label\" style=\"color:#023047;\"><b>La incidencia es para:</b></label>\r\n                                <br>\r\n                                <a style=\"color: white;\">• Para otra persona</a>\r\n                            </div>\r\n\r\n                            <div class=\"mb-3\">\r\n                                <label for=\"lugarExacto\" class=\"form-label\" style=\"color:#023047;\"><b>Lugar exacto:</b></label>\r\n                                <br>\r\n                                <a style=\"color: white;\"> Av Universitaria #YYYY</a>\r\n                            </div>\r\n                            <div class=\"mb-3\">\r\n                                <label for=\"referencia\" class=\"form-label\" style=\"color:#023047;\"><b>Referencia</b></label>\r\n                                <br>\r\n                                <a style=\"color: white;\">Frente a la PUCP</a>\r\n                            </div>\r\n                            <div class=\"mb-3\">\r\n                                <label for=\"contacto\" class=\"form-label\" style=\"color:#023047;\"><b>Contacto</b></label>\r\n                                <br>\r\n                                <a style=\"color: white;\">916546561</a>\r\n                            </div>\r\n                            <div class=\"mb-3\">\r\n                                <label for=\"ambulancia\" class=\"form-label\" style=\"color:#023047;\"><b>¿Se requiere ambulancia?</b></label>\r\n                                <br>\r\n                                <a style=\"color: white;\">Sí</a>\r\n                            </div>\r\n                            <div class=\"mb-3\">\r\n                                <label for=\"fechaGenereación\" class=\"form-label\" style=\"color:#023047;\"><b>Fecha y hora de la generación de incidencia:</b></label>\r\n                                <br>\r\n                                <a style=\"color: white;\">17/04/24 a las 18:00:00</a>\r\n                            </div>\r\n\r\n                        </div>\r\n                    </form>\r\n                </div>\r\n                <div class=\"columna columna2\" style=\"margin-top: 85px;\">\r\n                    <form>\r\n                        <label for=\"imagenAcc\" class=\"form-label\" style=\"color:#023047;\"><b>Foto del incidente</b></label>\r\n                        <div class=\"bg-light rounded h-100 p-4\">\r\n                            <div class=\"mb-3\">\r\n                                <img src=\"img/accidente.jpg\" class=\"img-responsive\" alt=\"\" style=\"width: 100%; height: auto;\"  />\r\n                            </div>\r\n                        </div>\r\n                        <a href=\"listaIncidencias_C.html\">\r\n                            <div class=\"m-n2\">\r\n                                <button type=\"button\" class=\"btn btn-secondary m-2\" id=\"openPopupBtn\">Regresar</button>\r\n                            </div>\r\n                        </a>\r\n                        \r\n                    </form>\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <div class=\"container-fluid pt-4 px-4\" >\r\n            <div class=\"bg-light rounded-top p-4\">\r\n                <div class=\"row\">\r\n                    <div class=\"col-12 col-sm-6 text-center text-sm-start\">\r\n                        &copy; <a href=\"#\">TelevecinosUnidos</a>, All Right Reserved.\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <!-- Content End -->\r\n\r\n\r\n    <!-- Back to Top -->\r\n    <a href=\"#\" class=\"btn btn-lg btn-primary btn-lg-square back-to-top\"><i class=\"bi bi-arrow-up\"></i></a>\r\n</div>\r\n\r\n\r\n<!-- JavaScript Libraries -->\r\n<script src=\"https://code.jquery.com/jquery-3.4.1.min.js\"></script>\r\n<script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js\"></script>\r\n<script src=\"lib/chart/chart.min.js\"></script>\r\n<script src=\"lib/easing/easing.min.js\"></script>\r\n<script src=\"lib/waypoints/waypoints.min.js\"></script>\r\n<script src=\"lib/owlcarousel/owl.carousel.min.js\"></script>\r\n<script src=\"lib/tempusdominus/js/moment.min.js\"></script>\r\n<script src=\"lib/tempusdominus/js/moment-timezone.min.js\"></script>\r\n<script src=\"lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js\"></script>\r\n\r\n<!-- Template Javascript -->\r\n<script src=\"js/main.js\"></script>\r\n\r\n</body>\r\n\r\n</html>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Televecino_ultima version/dashmin-1.0.0/verInicidencia_C.html b/Televecino_ultima version/dashmin-1.0.0/verInicidencia_C.html
+--- a/Televecino_ultima version/dashmin-1.0.0/verInicidencia_C.html	
++++ b/Televecino_ultima version/dashmin-1.0.0/verInicidencia_C.html	
+@@ -3,7 +3,7 @@
+ 
+ <head>
+     <meta charset="utf-8">
+-    <title>Ver Incidencia</title>
++    <title>Ver incidencia</title>
+     <meta content="width=device-width, initial-scale=1.0" name="viewport">
+     <meta content="" name="keywords">
+     <meta content="" name="description">
+@@ -29,12 +29,8 @@
+ 
+     <!-- Template Stylesheet -->
+     <link href="css/style.css" rel="stylesheet">
+-    <link href="css/app.min.css" rel="stylesheet">
+-    <link rel="stylesheet" href="css/style_incidencias.css">
+     <link href="css/style_vec.css" rel="stylesheet">
+ 
+-
+-
+ </head>
+ 
+ <body>
+@@ -48,38 +44,39 @@
+     <!-- Spinner End -->
+ 
+ 
++    <!-- BARRA AZUL DE LA IZQUIERDA INICIO-->
+     <!-- Sidebar Start -->
+     <div class="sidebar pe-4 pb-3" style="background-color: #8ecae6;">
+         <nav class="navbar" style="background-color: #8ecae6;" >
+-            <a class="navbar-brand mx-3 mb-3">
+-                <h4 class="text-primary"><b>Televecinos Unidos</b></h4>
++            <a class="navbar-brand mx-3 mt-3">
++                <h4 style="color:#023047"><b>Televecinos Unidos</b></h4>
+             </a>
+             <div class="d-flex align-items-center ms-4 mb-4"  >
+                 <img class="rounded-circle" src="img/coordinadora.jpg" alt="" style="width: 50px; height: 50px;">
+-                <div class="ms-3" >
++                <div class="ms-3 m-3" >
+                     <h6 class="mb-0" style="color:#023047;"><b>Nombre Apellido</b></h6>
+                     <span class="text-muted"><b>Coordinador</b></span>
+                 </div>
+             </div>
+             <div class="navbar-nav w-100">
+-                <a href="InicioCoordinador.html" class="nav-item nav-link"><i class="fa fa-home me-2"></i><b>Inicio</b></a>
++                <a href="InicioCoordinador.html" class="nav-item nav-link "><i class="fa fa-home me-2"></i><span style="font-size: 13.5px;"><b>Inicio</b></span></a>
+                 <div class="nav-item dropdown">
+-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-calendar me-2"></i><b>Eventos</b></a>
++                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-calendar me-2"></i><span style="font-size: 13.5px;"><b>Eventos</b></span></a>
+                     <div class="dropdown-menu bg-transparent border-0">
+-                    <a href="EventoGenerales_C.html" class="dropdown-item"><b>Eventos Generales</b></a>
+-                    <a href="creacionEvento.html" class="dropdown-item"><b>Crear Evento</b></a>
+-                    <a href="ListaEvent-Coordinador.html" class="dropdown-item"><b>Eventos Propios</b></a>
++                        <a href="EventoGenerales_C.html" class="dropdown-item"><span style="font-size: 13.5px;"><b>Eventos generales</b></span></a>
++                        <a href="creacionEvento.html" class="dropdown-item"><span style="font-size: 13.5px;"><b>Crear evento</b></span></a>
++                        <a href="ListaEvent-Coordinador.html" class="dropdown-item"><span style="font-size: 13.5px;"><b>Eventos propios</b></span></a>
+                     </div>
+                 </div>
+-                
++
+                 <div class="nav-item dropdown">
+-                    <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"><i class="fa fa-th-list me-2"></i><b>Incidencias</b></a>
++                    <a href="#" class="nav-link dropdown-toggle " data-bs-toggle="dropdown"><i class="fa fa-th-list me-2"></i><span style="font-size: 13.5px;"><b>Incidencias</b></span></a>
+                     <div class="dropdown-menu bg-transparent border-0">
+-                        <a href="generarIncidencia_C.html" class="dropdown-item"><b>Crear Incidencia</b></a>
+-                        <a href="listaIncidencias_C.html" class="dropdown-item"><b>Lista de Incidencias</b></a>
++                        <a href="generarIncidencia_C.html" class="dropdown-item"><span style="font-size: 13.5px;"><b>Crear incidencia</b></span></a>
++                        <a href="listaIncidencias_C.html" class="dropdown-item"><span style="font-size: 13.5px;"><b>Lista de incidencias</b></span></a>
+                     </div>
+                 </div>
+-                <a href="preguntasFrecuentes_C.html" class="nav-item nav-link font-al"><i class="fa fa-home me-2" ></i><b>Preguntas Frecuentes</b></a>
++                <a href="preguntasFrecuentes_C.html" class="nav-item nav-link font-al active"><i class="fa fa-question-circle me-2" ></i><span style="font-size: 13.5px;"><b>Preguntas frecuentes</b></span></a>
+             </div>
+         </nav>
+     </div>
+@@ -89,20 +86,16 @@
+     <!-- Content Start -->
+     <div class="content">
+         <!-- Navbar Start -->
+-        <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0" id="navbar">
+-            <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
+-                <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
+-            </a>
++        <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+             <a href="#" class="sidebar-toggler flex-shrink-0">
+                 <i class="fa fa-bars"></i>
+             </a>
+-            <a class="navbar-brand mx-4 mb-3 d-flex align-items-center" style = "padding-top: 2%;">
++            <a class="navbar-brand mx-4 mb-3 d-flex align-items-center" style="padding-top: 2%;">
+                 <img class="rounded-circle" src="img/logo.jpg" alt="" style="width: 40px; height: 40px;">
+                 <h3 class="m-0 me-2 px-2" style="color:#023047;">¡Bienvenido, coordinador!</h3>
+             </a>
+-            
+             <div class="navbar-nav align-items-center ms-auto">
+-                
++
+                 <div class="nav-item dropdown">
+                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                         <img class="rounded-circle me-lg-2" src="img/coordinadora.jpg" alt="" style="width: 40px; height: 40px;">
+@@ -125,81 +118,80 @@
+ 
+         <div class="container-fluid pt-4 px-4">
+             <div class="container">
+-                <div class="columna columna1">
+-                    <div class="campo">
+-                        <h2>Ver información de la incidencia</h2>
+-                    </div>
+-
+-                    <form>
+-                        <div class="rounded h-100 p-4" style = "background-color: #8ecae6;">
+-                            <div class="mb-3">
+-                                <img id="preview" src="#" alt="Vista previa de la imagen" class="img-thumbnail" style="display: none;">
+-                            </div>
+-                            <div class="mb-3">
+-                                <label for="NombreIncidencia" class="form-label" style="color:#023047;"><b>Nombre de la incidencia</b></label>
+-                                <br>
+-                                <a style="color: white;"> Accidente de transito</a>
+-                            </div>
+-                            <div class="mb-3">
+-                                <label for="TipoIncidencia" class="form-label" style="color:#023047;"><b>Tipo de incidencia</b></label>
+-                                <br>
+-                                <a style="color: white;">• Emergencia Médica</a>
+-                            </div>
+-
+-    
+-                            <div class="mb-3">
+-                                <label for="esPara" class="form-label" style="color:#023047;"><b>La incidencia es para:</b></label>
+-                                <br>
+-                                <a style="color: white;">• Para otra persona</a>
+-                            </div>
+-
+-                            <div class="mb-3">
+-                                <label for="lugarExacto" class="form-label" style="color:#023047;"><b>Lugar exacto:</b></label>
+-                                <br>
+-                                <a style="color: white;"> Av Universitaria #YYYY</a>
+-                            </div>
+-                            <div class="mb-3">
+-                                <label for="referencia" class="form-label" style="color:#023047;"><b>Referencia</b></label>
+-                                <br>
+-                                <a style="color: white;">Frente a la PUCP</a>
+-                            </div>
+-                            <div class="mb-3">
+-                                <label for="contacto" class="form-label" style="color:#023047;"><b>Contacto</b></label>
+-                                <br>
+-                                <a style="color: white;">916546561</a>
+-                            </div>
+-                            <div class="mb-3">
+-                                <label for="ambulancia" class="form-label" style="color:#023047;"><b>¿Se requiere ambulancia?</b></label>
+-                                <br>
+-                                <a style="color: white;">Sí</a>
+-                            </div>
+-                            <div class="mb-3">
+-                                <label for="fechaGenereación" class="form-label" style="color:#023047;"><b>Fecha y hora de la generación de incidencia:</b></label>
+-                                <br>
+-                                <a style="color: white;">17/04/24 a las 18:00:00</a>
+-                            </div>
+-
+-                        </div>
+-                    </form>
+-                </div>
+-                <div class="columna columna2" style="margin-top: 85px;">
+-                    <form>
+-                        <label for="imagenAcc" class="form-label" style="color:#023047;"><b>Foto del incidente</b></label>
+-                        <div class="bg-light rounded h-100 p-4">
+-                            <div class="mb-3">
+-                                <img src="img/accidente.jpg" class="img-responsive" alt="" style="width: 100%; height: auto;"  />
+-                            </div>
+-                        </div>
+-                        <a href="listaIncidencias_C.html">
+-                            <div class="m-n2">
+-                                <button type="button" class="btn btn-secondary m-2" id="openPopupBtn">Regresar</button>
+-                            </div>
+-                        </a>
+-                        
+-                    </form>
++                <div class="row">
++                    <div class="col-md-6">
++                        <div class="campo">
++                            <h2>Ver información de la incidencia</h2>
++                        </div>
++                        <form>
++                            <div class="rounded h-100 p-4" style="background-color: #8ecae6;">
++                                <div class="mb-3">
++                                    <img id="preview" src="#" alt="Vista previa de la imagen" class="img-thumbnail" style="display: none;">
++                                </div>
++                                <div class="mb-3">
++                                    <label for="NombreIncidencia" class="form-label" style="color:#023047;"><b>Nombre de la incidencia</b></label>
++                                    <br>
++                                    <a style="color: white;">Accidente de transito</a>
++                                </div>
++                                <div class="mb-3">
++                                    <label for="TipoIncidencia" class="form-label" style="color:#023047;"><b>Tipo de incidencia</b></label>
++                                    <br>
++                                    <a style="color: white;">• Emergencia Médica</a>
++                                </div>
++                                <div class="mb-3">
++                                    <label for="esPara" class="form-label" style="color:#023047;"><b>La incidencia es para:</b></label>
++                                    <br>
++                                    <a style="color: white;">• Para otra persona</a>
++                                </div>
++                                <div class="mb-3">
++                                    <label for="lugarExacto" class="form-label" style="color:#023047;"><b>Lugar exacto:</b></label>
++                                    <br>
++                                    <a style="color: white;">Av Universitaria #YYYY</a>
++                                </div>
++                                <div class="mb-3">
++                                    <label for="referencia" class="form-label" style="color:#023047;"><b>Referencia</b></label>
++                                    <br>
++                                    <a style="color: white;">Frente a la PUCP</a>
++                                </div>
++                                <div class="mb-3">
++                                    <label for="contacto" class="form-label" style="color:#023047;"><b>Contacto</b></label>
++                                    <br>
++                                    <a style="color: white;">916546561</a>
++                                </div>
++                                <div class="mb-3">
++                                    <label for="ambulancia" class="form-label" style="color:#023047;"><b>¿Se requiere ambulancia?</b></label>
++                                    <br>
++                                    <a style="color: white;">Sí</a>
++                                </div>
++                                <div class="mb-3">
++                                    <label for="fechaGeneracion" class="form-label" style="color:#023047;"><b>Fecha y hora de la generación de incidencia:</b></label>
++                                    <br>
++                                    <a style="color: white;">17/04/24 a las 18:00:00</a>
++                                </div>
++                            </div>
++                        </form>
++                    </div>
++                    <div class="col-md-6" style="margin-top: 85px;">
++                        <form>
++                            <label for="imagenAcc" class="form-label" style="color:#023047;"><b>Foto del incidente</b></label>
++                            <div class="bg-light rounded h-100 p-4">
++                                <div class="mb-3">
++                                    <img src="img/accidente.jpg" class="img-responsive" alt="" style="width: 100%; height: auto;" />
++                                </div>
++                            </div>
++
++                            <div class="d-flex justify-content-end">
++                                <a href="listaIncidencias_C.html">
++                                <button type="button" class="btn btn-secondary m-2 d-flex justify-content-between align-items-center" id="openPopupBtn">Regresar</button>
++                                </a>
++                            </div>
++
++                        </form>
++                    </div>
+                 </div>
+             </div>
+         </div>
++        <!-- Footer Start -->
+         <div class="container-fluid pt-4 px-4" >
+             <div class="bg-light rounded-top p-4">
+                 <div class="row">
+@@ -209,6 +201,7 @@
+                 </div>
+             </div>
+         </div>
++        <!-- Footer End -->
+     </div>
+     <!-- Content End -->
+ 
+@@ -217,7 +210,6 @@
+     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+ </div>
+ 
+-
+ <!-- JavaScript Libraries -->
+ <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+@@ -231,7 +223,6 @@
+ 
+ <!-- Template Javascript -->
+ <script src="js/main.js"></script>
+-
+ </body>
+ 
+ </html>
+\ No newline at end of file
