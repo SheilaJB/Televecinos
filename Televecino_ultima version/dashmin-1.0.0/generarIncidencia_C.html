@@ -33,7 +33,7 @@
     <link rel="stylesheet" href="css/style_incidencias.css">
     <link href="css/style_vec.css" rel="stylesheet">
 
-
+    <link rel="stylesheet" href="path/to/bootstrap.min.css">
 
 </head>
 
@@ -136,8 +136,9 @@
 
                             <div class="mb-3">
                                 <label for="foto" class="boton-subir">Subir foto</label><br>
-                                <input class="form-control" type="file" id="formFile">
+                                <input class="form-control" type="file" id="formFile" accept="image/*">
                             </div>
+                            <script src="path/to/bootstrap.bundle.min.js"></script>
                         </div>
                         <div class="campo" style="margin-bottom: -35px; ">
                             <label for="tipoIncidencia">Tipo de incidencia:</label><br>
@@ -147,8 +148,7 @@
                                 <option value="opcion3">Infraestructura y Servicios Públicos</option>
                                 <option value="otro">Otro</option>
                             </select><br>
-                            </select><br>
-                            <input type="text" id="otroInput" class="otro-input" placeholder="Escribe aquí"><br>
+                            <br>
                         </div>
                         <div class="campo" style="margin-bottom: -35px; ">
                             <label for="urbanizacion">Urbanización:</label><br>
@@ -167,15 +167,15 @@
                                 <option value="opcion11">Parques de La Huaca</option>
                                 
                                 <option value="otro">Otro</option>
-                            </select><br>
-                            </select><br>
-                            <input type="text" id="otroInput1" class="otro-input" placeholder="Escribe aquí"><br>
+                            </select>
+                            <br>
+                            <br>
                         </div>
                         <div class="campo">
                             <label for="paraQuien">La incidencia será para: </label><br>
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="gridRadios"
-                                       id="gridRadios1" value="option1" checked>
+                                       id="gridRadios1" value="option1">
                                 <label class="form-check-label" for="gridRadios1">
                                     Para mi
                                 </label>
@@ -188,14 +188,12 @@
                                 </label>
                             </div>
                         </div>
-
-
                     </form>
                 </div>
                 <div class="columna columna2" style="margin-top: 102px;">
                     <form>
                         <div class="campo">
-                            <label for="lugarExacto">Lugar Exacto</label><br>
+                            <label for="lugarExacto">Lugar exacto</label><br>
                             <input type="text" id="lugarExacto" name="lugarExacto" placeholder="Escribe aquí"><br>
                         </div>
 
@@ -212,7 +210,7 @@
                             <label for="paraQuien">¿Requiere ambulancia? </label><br>
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="gridRadios"
-                                       id="gridRadios1" value="option1" checked>
+                                       id="gridRadios1" value="option1">
                                 <label class="form-check-label" for="gridRadios1">
                                     Sí
                                 </label>
@@ -225,6 +223,7 @@
                                 </label>
                             </div>
                         </div>
+
                         <div class="m-n2">
                             <button type="button" class="btn btn-secondary m-2" id="openPopupBtn">Reportar incidencia</button>
                         </div>
