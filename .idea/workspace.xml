@@ -6,6 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="bc5c85c9-42c1-4ad9-aedf-1f543da382b3" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Televecino_ultima version/dashmin-1.0.0/EventoGenerales_C.html" beforeDir="false" afterPath="$PROJECT_DIR$/Televecino_ultima version/dashmin-1.0.0/EventoGenerales_C.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Televecino_ultima version/dashmin-1.0.0/listaIncidencias_C.html" beforeDir="false" afterPath="$PROJECT_DIR$/Televecino_ultima version/dashmin-1.0.0/listaIncidencias_C.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Televecino_ultima version/dashmin-1.0.0/listaInscritos.html" beforeDir="false" afterPath="$PROJECT_DIR$/Televecino_ultima version/dashmin-1.0.0/listaInscritos.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,7 +77,7 @@
       <workItem from="1714191200189" duration="5000" />
       <workItem from="1716669800593" duration="250000" />
       <workItem from="1716680193286" duration="4013000" />
-      <workItem from="1716784647279" duration="2760000" />
+      <workItem from="1716784647279" duration="3503000" />
     </task>
     <servers />
   </component>
