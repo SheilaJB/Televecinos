@@ -1,0 +1,477 @@
+Index: Televecino_ultima version/dashmin-1.0.0/actualizarIncidencia_C.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!DOCTYPE html>\r\n<html lang=\"en\">\r\n\r\n<head>\r\n    <meta charset=\"utf-8\">\r\n    <title>Actualziar Incidencia</title>\r\n    <meta content=\"width=device-width, initial-scale=1.0\" name=\"viewport\">\r\n    <meta content=\"\" name=\"keywords\">\r\n    <meta content=\"\" name=\"description\">\r\n\r\n    <!-- Favicon -->\r\n    <link href=\"img/favicon.ico\" rel=\"icon\">\r\n\r\n    <!-- Google Web Fonts -->\r\n    <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\r\n    <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\r\n    <link href=\"https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap\" rel=\"stylesheet\">\r\n    \r\n    <!-- Icon Font Stylesheet -->\r\n    <link href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css\" rel=\"stylesheet\">\r\n    <link href=\"https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css\" rel=\"stylesheet\">\r\n\r\n    <!-- Libraries Stylesheet -->\r\n    <link href=\"lib/owlcarousel/assets/owl.carousel.min.css\" rel=\"stylesheet\">\r\n    <link href=\"lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css\" rel=\"stylesheet\" />\r\n\r\n    <!-- Customized Bootstrap Stylesheet -->\r\n    <link href=\"css/bootstrap.min.css\" rel=\"stylesheet\">\r\n\r\n    <!-- Template Stylesheet -->\r\n    <link href=\"css/style.css\" rel=\"stylesheet\">\r\n    <link href=\"css/app.min.css\" rel=\"stylesheet\">\r\n    <link rel=\"stylesheet\" href=\"css/style_incidencias.css\">\r\n    <link href=\"css/style_vec.css\" rel=\"stylesheet\">\r\n    \r\n    \r\n\r\n\r\n</head>\r\n\r\n<body>\r\n    <div class=\"container-xxl position-relative bg-white d-flex p-0\">\r\n        <!-- Spinner Start -->\r\n        <div id=\"spinner\" class=\"show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center\">\r\n            <div class=\"spinner-border text-primary\" style=\"width: 3rem; height: 3rem;\" role=\"status\">\r\n                <span class=\"sr-only\">Loading...</span>\r\n            </div>\r\n        </div>\r\n        <!-- Spinner End -->\r\n\r\n\r\n        <!-- Sidebar Start -->\r\n        <div class=\"sidebar pe-4 pb-3\" style=\"background-color: #8ecae6;\">\r\n            <nav class=\"navbar\" style=\"background-color: #8ecae6;\" >\r\n                <a class=\"navbar-brand mx-3 mt-3\">\r\n                    <h4 style=\"color:#023047\"><b>Televecinos Unidos</b></h4>\r\n                </a>\r\n                <div class=\"d-flex align-items-center ms-4 mb-4\"  >\r\n                    <img class=\"rounded-circle\" src=\"img/coordinadora.jpg\" alt=\"\" style=\"width: 50px; height: 50px;\">\r\n                    <div class=\"ms-3 m-3\" >\r\n                        <h6 class=\"mb-0\" style=\"color:#023047;\"><b>Nombre Apellido</b></h6>\r\n                        <span class=\"text-muted\"><b>Coordinador</b></span>\r\n                    </div>\r\n                </div>\r\n                <div class=\"navbar-nav w-100\">\r\n                    <a href=\"InicioCoordinador.html\" class=\"nav-item nav-link active\"><i class=\"fa fa-home me-2\"></i><span style=\"font-size: 13.5px;\"><b>Inicio</b></span></a>\r\n                    <div class=\"nav-item dropdown\">\r\n                        <a href=\"#\" class=\"nav-link dropdown-toggle\" data-bs-toggle=\"dropdown\"><i class=\"fa fa-calendar me-2\"></i><span style=\"font-size: 13.5px;\"><b>Eventos</b></span></a>\r\n                        <div class=\"dropdown-menu bg-transparent border-0\">\r\n                        <a href=\"EventoGenerales_C.html\" class=\"dropdown-item\"><span style=\"font-size: 13.5px;\"><b>Eventos generales</b></span></a>\r\n                        <a href=\"creacionEvento.html\" class=\"dropdown-item\"><span style=\"font-size: 13.5px;\"><b>Crear evento</b></span></a>\r\n                        <a href=\"ListaEvent-Coordinador.html\" class=\"dropdown-item\"><span style=\"font-size: 13.5px;\"><b>Eventos propios</b></span></a>\r\n                        </div>\r\n                    </div>\r\n                    \r\n                    <div class=\"nav-item dropdown\">\r\n                        <a href=\"#\" class=\"nav-link dropdown-toggle \" data-bs-toggle=\"dropdown\"><i class=\"fa fa-th-list me-2\"></i><span style=\"font-size: 13.5px;\"><b>Incidencias</b></span></a>\r\n                        <div class=\"dropdown-menu bg-transparent border-0\">\r\n                            <a href=\"generarIncidencia_C.html\" class=\"dropdown-item\"><span style=\"font-size: 13.5px;\"><b>Crear incidencia</b></span></a>\r\n                            <a href=\"listaIncidencias_C.html\" class=\"dropdown-item\"><span style=\"font-size: 13.5px;\"><b>Lista de incidencias</b></span></a>\r\n                        </div>\r\n                    </div>\r\n                    <a href=\"preguntasFrecuentes_C.html\" class=\"nav-item nav-link font-al\"><i class=\"fa fa-question-circle me-2\" ></i><span style=\"font-size: 13.5px;\"><b>Preguntas frecuentes</b></span></a>\r\n                </div>\r\n            </nav>\r\n        </div>\r\n        <!-- Sidebar End -->\r\n\r\n\r\n        <!-- Content Start -->\r\n        <div class=\"content\">\r\n            <!-- Navbar Start -->\r\n            <nav class=\"navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0\">\r\n                <a href=\"#\" class=\"sidebar-toggler flex-shrink-0\">\r\n                    <i class=\"fa fa-bars\"></i>\r\n                </a>\r\n                <a class=\"navbar-brand mx-4 mb-3 d-flex align-items-center\" style=\"padding-top: 2%;\">\r\n                    <img class=\"rounded-circle\" src=\"img/logo.jpg\" alt=\"\" style=\"width: 40px; height: 40px;\">\r\n                    <h3 class=\"m-0 me-2 px-2\" style=\"color:#023047;\">¡Bienvenido, coordinador!</h3>\r\n                </a>\r\n                <div class=\"navbar-nav align-items-center ms-auto\">\r\n                    \r\n                    <div class=\"nav-item dropdown\">\r\n                        <a href=\"#\" class=\"nav-link dropdown-toggle\" data-bs-toggle=\"dropdown\">\r\n                            <img class=\"rounded-circle me-lg-2\" src=\"img/coordinadora.jpg\" alt=\"\" style=\"width: 40px; height: 40px;\">\r\n                            <span class=\"d-none d-lg-inline-flex\" style=\"color:#023047;\"><b>Nombre Apellido</b></span>\r\n                        </a>\r\n                        <div class=\"dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0\">\r\n                            <a href=\"perfil_C.html\" class=\"dropdown-item\">Mi perfil</a>\r\n                            <a href=\"index.html\" class=\"dropdown-item\">Cerrar sesión</a>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n            </nav>\r\n            <!-- Navbar End -->\r\n            <!-- PARTE SUPERIOR FINAL -->\r\n\r\n\r\n\r\n            <!-- LLENAR-->\r\n            <!-- Footer Start -->\r\n            \r\n            <div class=\"container-fluid pt-4 px-4\">\r\n                <div class=\"container\">\r\n                    <div class=\"columna columna1\">\r\n                        <div class=\"campo\">\r\n                            <h2>Reporte de incidencias</h2>\r\n                            <h2 style=\"font-size: large;\">Actualice los siguientes datos</h2>\r\n                        </div>\r\n                        \r\n                        <form>\r\n                          <div class=\"campo\">\r\n                            <label for=\"nombreIncidencia\">Nombre de la incidencia:</label><br>\r\n                            <input type=\"text\" id=\"nombreIncidencia\" name=\"nombreIncidencia\" placeholder=\"Escribe aquí\"><br>\r\n                          </div>  \r\n                          <div class=\"campo\">\r\n                            <div class=\"mb-3\">\r\n                                <label for=\"foto\" class=\"boton-subir\">Subir foto</label><br>\r\n                                <input class=\"form-control\" type=\"file\" id=\"formFile\">\r\n                            </div>\r\n                          </div> \r\n                          <div class=\"campo\" style=\"margin-bottom: -35px; \">\r\n                            <label for=\"tipoIncidencia\">Tipo de incidencia:</label><br>\r\n                                <select id=\"tipoIncidencia\" name=\"tipoIncidencia\">\r\n                                <option value=\"opcion1\">Opción 1</option>\r\n                                <option value=\"opcion2\">Opción 2</option>\r\n                                <option value=\"opcion3\">Opción 3</option>\r\n                                <option value=\"otro\">Otro</option>\r\n                                </select><br>\r\n                            </select><br>\r\n                            <input type=\"text\" id=\"otroInput\" class=\"otro-input\" placeholder=\"Escribe aquí\"><br>\r\n                          </div> \r\n                          <div class=\"campo\">\r\n                            <label for=\"paraQuien\">La incidencia será para: </label><br>\r\n                            <div class=\"form-check\">\r\n                                <input class=\"form-check-input\" type=\"radio\" name=\"gridRadios\"\r\n                                    id=\"gridRadios1\" value=\"option1\" checked>\r\n                                <label class=\"form-check-label\" for=\"gridRadios1\">\r\n                                    Para mi\r\n                                </label>\r\n                            </div>\r\n                            <div class=\"form-check\">\r\n                                <input class=\"form-check-input\" type=\"radio\" name=\"gridRadios\"\r\n                                    id=\"gridRadios2\" value=\"option2\">\r\n                                <label class=\"form-check-label\" for=\"gridRadios2\">\r\n                                    Para otra persona \r\n                                </label>\r\n                            </div>\r\n                          </div> \r\n                \r\n                          \r\n                        </form>\r\n                        <div class=\"m-n2\">\r\n                            <button type=\"button\" class=\"btn btn-danger m-2\" id=\"openPopupBtn1\">Cancelar incidencia</button>\r\n                            <div id=\"popup\" class=\"popup\" >\r\n                                <div class=\"popup_contenido\">\r\n                                    <span class=\"close-btn\" id=\"closePopupBtn1\">&times;</span>\r\n                                    <img src=\"img/check.png\" alt=\"check\" width=\"48\" height=\"48\" style=\"margin-top: -10px;\">\r\n                                    <h2 style=\"margin-top: 20px;\">Éxito</h2>\r\n                                    <p>Se ha cancelado la incidencia</p>\r\n                                    <a href=\"listaIncidencias_C.html\">\r\n                                        <button type=\"button\" class=\"btn btn-primary rounded-pill m-2\">Regresar</button>\r\n                                    </a>\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n                            \r\n                    </div>\r\n                    <div class=\"columna columna2\" style=\"margin-top: 102px;\">\r\n                        <form>\r\n                            <div class=\"campo\">\r\n                                <label for=\"lugarExacto\">Lugar Exacto</label><br>\r\n                                <input type=\"text\" id=\"lugarExacto\" name=\"lugarExacto\" placeholder=\"Escribe aquí\"><br>\r\n                            </div> \r\n\r\n                            <div class=\"campo\">\r\n                                <label for=\"referencia\">Referencia</label><br>\r\n                                <input type=\"text\" id=\"referencia\" name=\"referencia\" placeholder=\"Escribe aquí\"><br>\r\n                            </div> \r\n\r\n                            <div class=\"campo\">\r\n                                <label for=\"contacto\">Contacto (opcional)</label><br>\r\n                                <input type=\"text\" id=\"contacto\" name=\"contacto\" placeholder=\"Escribe aquí\"><br>\r\n                            </div> \r\n                            <div class=\"campo\">\r\n                                <label for=\"paraQuien\">¿Requiere ambulancia? </label><br>\r\n                                <div class=\"form-check\">\r\n                                    <input class=\"form-check-input\" type=\"radio\" name=\"gridRadios\"\r\n                                        id=\"gridRadios1\" value=\"option1\" checked>\r\n                                    <label class=\"form-check-label\" for=\"gridRadios1\">\r\n                                        Sí\r\n                                    </label>\r\n                                </div>\r\n                                <div class=\"form-check\">\r\n                                    <input class=\"form-check-input\" type=\"radio\" name=\"gridRadios\"\r\n                                        id=\"gridRadios2\" value=\"option2\">\r\n                                    <label class=\"form-check-label\" for=\"gridRadios2\">\r\n                                        No\r\n                                    </label>\r\n                                </div>\r\n                              </div> \r\n                          </form>\r\n                          <div class=\"m-n2\">\r\n                            <button type=\"button\" class=\"btn btn-secondary m-2\" id=\"openPopupBtn2\">Guardar cambios</button>\r\n                            <div id=\"popup2\" class=\"popup2\" >\r\n                                <div class=\"popup_contenido\">\r\n                                    <span class=\"close-btn\" id=\"closePopupBtn2\">&times;</span>\r\n                                    <img src=\"img/check.png\" alt=\"check\" width=\"48\" height=\"48\" style=\"margin-top: -10px;\">\r\n                                    <h2 style=\"margin-top: 20px;\">Éxito</h2>\r\n                                    <p>Se ha actualizado la incidencia</p>\r\n                                    \r\n                                    <a href=\"listaIncidencias_C.html\">\r\n                                        <button type=\"button\" class=\"btn btn-primary rounded-pill m-2\">Regresar</button>\r\n                                    </a>\r\n                                    \r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n                  </div>\r\n            </div>\r\n            <div class=\"container-fluid pt-4 px-4\" >\r\n                <div class=\"bg-light rounded-top p-4\">\r\n                    <div class=\"row\">\r\n                        <div class=\"col-12 col-sm-6 text-center text-sm-start\">\r\n                            &copy; <a href=\"#\">TelevecinosUnidos</a>, All Right Reserved. \r\n                        </div>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <!-- Content End -->\r\n\r\n\r\n        <!-- Back to Top -->\r\n        <a href=\"#\" class=\"btn btn-lg btn-primary btn-lg-square back-to-top\"><i class=\"bi bi-arrow-up\"></i></a>\r\n    </div>\r\n    \r\n    \r\n\r\n    <!-- JavaScript Libraries -->\r\n    <script src=\"https://code.jquery.com/jquery-3.4.1.min.js\"></script>\r\n    <script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js\"></script>\r\n    <script src=\"lib/chart/chart.min.js\"></script>\r\n    <script src=\"lib/easing/easing.min.js\"></script>\r\n    <script src=\"lib/waypoints/waypoints.min.js\"></script>\r\n    <script src=\"lib/owlcarousel/owl.carousel.min.js\"></script>\r\n    <script src=\"lib/tempusdominus/js/moment.min.js\"></script>\r\n    <script src=\"lib/tempusdominus/js/moment-timezone.min.js\"></script>\r\n    <script src=\"lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js\"></script>\r\n\r\n    <!-- Template Javascript -->\r\n    <script src=\"js/main.js\"></script>\r\n    <script>\r\n        const openPopupBtn1 = document.getElementById('openPopupBtn1');\r\n        const openPopupBtn2 = document.getElementById('openPopupBtn2');\r\n        const closePopupBtn1 = document.getElementById('closePopupBtn1');\r\n        const closePopupBtn2 = document.getElementById('closePopupBtn2');\r\n        const navbar = document.getElementById('navbar');\r\n        const popup = document.getElementById('popup');\r\n        const popup2 = document.getElementById('popup2');\r\n        const tipoIncidencia = document.getElementById('tipoIncidencia');\r\n        const otroInput = document.getElementById('otroInput');\r\n\r\n        openPopupBtn1.addEventListener('click', () => {\r\n            popup.style.display = 'block';\r\n        });\r\n        openPopupBtn2.addEventListener('click', () => {\r\n            popup2.style.display = 'block';\r\n        });\r\n\r\n        closePopupBtn1.addEventListener('click', () => {\r\n            popup.style.display = 'none';\r\n        });\r\n        closePopupBtn2.addEventListener('click', () => {\r\n            popup2.style.display = 'none';\r\n        });\r\n        function desactivarStickyTop() {\r\n            navbar.classList.remove('sticky-top');\r\n        }\r\n\r\n        function activarStickyTop() {\r\n            navbar.classList.add('sticky-top');\r\n        }\r\n\r\n        document.getElementById('openPopupBtn1').addEventListener('click', function() {\r\n            desactivarStickyTop();\r\n            popup.style.display = 'block';\r\n        });\r\n        document.getElementById('openPopupBtn2').addEventListener('click', function() {\r\n            desactivarStickyTop();\r\n            popup.style.display = 'block';\r\n        });\r\n\r\n        document.getElementById('closePopupBtn1').addEventListener('click', function() {\r\n            activarStickyTop();\r\n            popup.style.display = 'none';\r\n        });\r\n        document.getElementById('closePopupBtn2').addEventListener('click', function() {\r\n            activarStickyTop();\r\n            popup.style.display = 'none';\r\n        });\r\n\r\n        tipoIncidencia.addEventListener('change', function() {\r\n            if (tipoIncidencia.value === 'otro') {\r\n                otroInput.style.display = 'block';\r\n                } else {\r\n                    otroInput.style.display = 'none';\r\n                }\r\n        });\r\n      </script>\r\n    \r\n    \r\n</body>\r\n\r\n</html>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Televecino_ultima version/dashmin-1.0.0/actualizarIncidencia_C.html b/Televecino_ultima version/dashmin-1.0.0/actualizarIncidencia_C.html
+--- a/Televecino_ultima version/dashmin-1.0.0/actualizarIncidencia_C.html	
++++ b/Televecino_ultima version/dashmin-1.0.0/actualizarIncidencia_C.html	
+@@ -3,7 +3,7 @@
+ 
+ <head>
+     <meta charset="utf-8">
+-    <title>Actualziar Incidencia</title>
++    <title>Actualizar Incidencia</title>
+     <meta content="width=device-width, initial-scale=1.0" name="viewport">
+     <meta content="" name="keywords">
+     <meta content="" name="description">
+@@ -15,7 +15,7 @@
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+-    
++
+     <!-- Icon Font Stylesheet -->
+     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+@@ -32,9 +32,38 @@
+     <link href="css/app.min.css" rel="stylesheet">
+     <link rel="stylesheet" href="css/style_incidencias.css">
+     <link href="css/style_vec.css" rel="stylesheet">
+-    
+-    
+ 
++    <style>
++        .popup {
++            display: none;
++            position: fixed;
++            top: 0;
++            left: 0;
++            width: 100%;
++            height: 100%;
++            background-color: rgba(0, 0, 0, 0.5);
++            z-index: 999;
++        }
++        .popup-content {
++            background-color: white;
++            width: 50%;
++            max-width: 400px;
++            margin: 100px auto;
++            padding: 20px;
++            border-radius: 10px;
++            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
++            text-align: center;
++            position: relative;
++        }
++        .close-btn {
++            position: absolute;
++            top: 5px;
++            right: 10px;
++            font-size: 24px;
++            cursor: pointer;
++            color: rgb(0, 0, 0);
++        }
++    </style>
+ 
+ </head>
+ 
+@@ -51,7 +80,7 @@
+ 
+         <!-- Sidebar Start -->
+         <div class="sidebar pe-4 pb-3" style="background-color: #8ecae6;">
+-            <nav class="navbar" style="background-color: #8ecae6;" >
++            <nav  class="navbar" style="background-color: #8ecae6;" >
+                 <a class="navbar-brand mx-3 mt-3">
+                     <h4 style="color:#023047"><b>Televecinos Unidos</b></h4>
+                 </a>
+@@ -72,7 +101,7 @@
+                         <a href="ListaEvent-Coordinador.html" class="dropdown-item"><span style="font-size: 13.5px;"><b>Eventos propios</b></span></a>
+                         </div>
+                     </div>
+-                    
++
+                     <div class="nav-item dropdown">
+                         <a href="#" class="nav-link dropdown-toggle " data-bs-toggle="dropdown"><i class="fa fa-th-list me-2"></i><span style="font-size: 13.5px;"><b>Incidencias</b></span></a>
+                         <div class="dropdown-menu bg-transparent border-0">
+@@ -88,7 +117,7 @@
+ 
+ 
+         <!-- Content Start -->
+-        <div class="content">
++        <div id="navbar" class="content">
+             <!-- Navbar Start -->
+             <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+                 <a href="#" class="sidebar-toggler flex-shrink-0">
+@@ -99,7 +128,7 @@
+                     <h3 class="m-0 me-2 px-2" style="color:#023047;">¡Bienvenido, coordinador!</h3>
+                 </a>
+                 <div class="navbar-nav align-items-center ms-auto">
+-                    
++
+                     <div class="nav-item dropdown">
+                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                             <img class="rounded-circle me-lg-2" src="img/coordinadora.jpg" alt="" style="width: 40px; height: 40px;">
+@@ -119,56 +148,78 @@
+ 
+             <!-- LLENAR-->
+             <!-- Footer Start -->
+-            
++
+             <div class="container-fluid pt-4 px-4">
+                 <div class="container">
+                     <div class="columna columna1">
+                         <div class="campo">
+-                            <h2>Reporte de incidencias</h2>
++                            <h2>Reporte de incidencia</h2>
+                             <h2 style="font-size: large;">Actualice los siguientes datos</h2>
+                         </div>
+-                        
++
+                         <form>
+                           <div class="campo">
+                             <label for="nombreIncidencia">Nombre de la incidencia:</label><br>
+                             <input type="text" id="nombreIncidencia" name="nombreIncidencia" placeholder="Escribe aquí"><br>
+-                          </div>  
+-                          <div class="campo">
+-                            <div class="mb-3">
+-                                <label for="foto" class="boton-subir">Subir foto</label><br>
+-                                <input class="form-control" type="file" id="formFile">
+-                            </div>
+-                          </div> 
+-                          <div class="campo" style="margin-bottom: -35px; ">
+-                            <label for="tipoIncidencia">Tipo de incidencia:</label><br>
++                          </div>
++                            <div class="campo">
++
++                                <div class="mb-3">
++                                    <label for="foto" class="boton-subir">Subir foto</label><br>
++                                    <input class="form-control" type="file" id="formFile" accept="image/*">
++                                </div>
++                                <script src="path/to/bootstrap.bundle.min.js"></script>
++                            </div>
++                            <div class="campo" style="margin-bottom: -35px; ">
++                                <label for="tipoIncidencia">Tipo de incidencia:</label><br>
+                                 <select id="tipoIncidencia" name="tipoIncidencia">
+-                                <option value="opcion1">Opción 1</option>
+-                                <option value="opcion2">Opción 2</option>
+-                                <option value="opcion3">Opción 3</option>
+-                                <option value="otro">Otro</option>
++                                    <option value="opcion1">Seguridad Pública</option>
++                                    <option value="opcion2">Emergencia Médica</option>
++                                    <option value="opcion3">Infraestructura y Servicios Públicos</option>
++                                    <option value="otro">Otro</option>
+                                 </select><br>
+-                            </select><br>
+-                            <input type="text" id="otroInput" class="otro-input" placeholder="Escribe aquí"><br>
+-                          </div> 
+-                          <div class="campo">
+-                            <label for="paraQuien">La incidencia será para: </label><br>
+-                            <div class="form-check">
+-                                <input class="form-check-input" type="radio" name="gridRadios"
+-                                    id="gridRadios1" value="option1" checked>
+-                                <label class="form-check-label" for="gridRadios1">
+-                                    Para mi
+-                                </label>
+-                            </div>
+-                            <div class="form-check">
+-                                <input class="form-check-input" type="radio" name="gridRadios"
+-                                    id="gridRadios2" value="option2">
+-                                <label class="form-check-label" for="gridRadios2">
+-                                    Para otra persona 
+-                                </label>
+-                            </div>
+-                          </div> 
+-                
+-                          
++                                <br>
++                            </div>
++                            <div class="campo" style="margin-bottom: -35px; ">
++                                <label for="urbanizacion">Urbanización:</label><br>
++                                <select id="urbanizacion" name="urbanizacion">
++                                    <option value="opcion1">Rafael Escardó</option>
++                                    <option value="opcion2">José de La Riva Agüero</option>
++                                    <option value="opcion3">Juan XXIII</option>
++                                    <option value="opcion3">Libertad</option>
++                                    <option value="opcion4">Los Jardines de La Marina</option>
++                                    <option value="opcion5">Las Leyendas</option>
++                                    <option value="opcion6">Las Torres San Miguelito</option>
++                                    <option value="opcion7">Elmer Faucett</option>
++                                    <option value="opcion8">Maranga</option>
++                                    <option value="opcion9">Pando</option>
++                                    <option value="opcion10">Maranga</option>
++                                    <option value="opcion11">Parques de La Huaca</option>
++
++                                    <option value="otro">Otro</option>
++                                </select>
++                                <br>
++                                <br>
++                            </div>
++                            <div class="campo">
++                                <label for="paraQuien">La incidencia será para: </label><br>
++                                <div class="form-check">
++                                    <input class="form-check-input" type="radio" name="gridRadios"
++                                           id="gridRadios1" value="option1">
++                                    <label class="form-check-label" for="gridRadios1">
++                                        Para mi
++                                    </label>
++                                </div>
++                                <div class="form-check">
++                                    <input class="form-check-input" type="radio" name="gridRadios"
++                                           id="gridRadios2" value="option2">
++                                    <label class="form-check-label" for="gridRadios2">
++                                        Para otra persona
++                                    </label>
++                                </div>
++                            </div>
++
++
+                         </form>
+                         <div class="m-n2">
+                             <button type="button" class="btn btn-danger m-2" id="openPopupBtn1">Cancelar incidencia</button>
+@@ -184,58 +235,67 @@
+                                 </div>
+                             </div>
+                         </div>
+-                            
++
+                     </div>
+                     <div class="columna columna2" style="margin-top: 102px;">
+                         <form>
+                             <div class="campo">
+-                                <label for="lugarExacto">Lugar Exacto</label><br>
++                                <label for="lugarExacto">Lugar exacto</label><br>
+                                 <input type="text" id="lugarExacto" name="lugarExacto" placeholder="Escribe aquí"><br>
+-                            </div> 
++                            </div>
+ 
+                             <div class="campo">
+                                 <label for="referencia">Referencia</label><br>
+                                 <input type="text" id="referencia" name="referencia" placeholder="Escribe aquí"><br>
+-                            </div> 
++                            </div>
+ 
+                             <div class="campo">
+                                 <label for="contacto">Contacto (opcional)</label><br>
+                                 <input type="text" id="contacto" name="contacto" placeholder="Escribe aquí"><br>
+-                            </div> 
++                            </div>
+                             <div class="campo">
+                                 <label for="paraQuien">¿Requiere ambulancia? </label><br>
+                                 <div class="form-check">
+                                     <input class="form-check-input" type="radio" name="gridRadios"
+-                                        id="gridRadios1" value="option1" checked>
++                                           id="gridRadios1" value="option1">
+                                     <label class="form-check-label" for="gridRadios1">
+                                         Sí
+                                     </label>
+                                 </div>
+                                 <div class="form-check">
+                                     <input class="form-check-input" type="radio" name="gridRadios"
+-                                        id="gridRadios2" value="option2">
++                                           id="gridRadios2" value="option2">
+                                     <label class="form-check-label" for="gridRadios2">
+                                         No
+                                     </label>
+                                 </div>
+-                              </div> 
+-                          </form>
+-                          <div class="m-n2">
+-                            <button type="button" class="btn btn-secondary m-2" id="openPopupBtn2">Guardar cambios</button>
+-                            <div id="popup2" class="popup2" >
++                            </div>
++
++                            <div class="m-n2">
++                                <button type="button" class="btn btn-secondary m-2" onclick="confirmDelete()">Reportar incidencia</button>
++
++                                <div id="popup1" class="popup1">
++                                    <div class="popup_contenido1">
++                                        <!--contenido pop up-->
++                                        <h4>¿Estás seguro? </h4>
++                                        <a href="listaIncidencias_C.html"><button type="button" class="btn btn-success rounded-pill m-2">Si</button></a>
++                                        <a href="actualizarIncidencia_C.html"><button type="button" class="btn btn-danger rounded-pill m-2" >No</button></a>
++                                        <!-- <button type="button" class="btn btn-danger rounded-pill m-2" >No</button> -->
++                                    </div>
++                                </div>
++                            </div>
++                            <div id="popup" class="popup" >
+                                 <div class="popup_contenido">
+-                                    <span class="close-btn" id="closePopupBtn2">&times;</span>
++                                    <span class="close-btn" id="closePopupBtn">&times;</span>
+                                     <img src="img/check.png" alt="check" width="48" height="48" style="margin-top: -10px;">
+                                     <h2 style="margin-top: 20px;">Éxito</h2>
+-                                    <p>Se ha actualizado la incidencia</p>
+-                                    
+-                                    <a href="listaIncidencias_C.html">
+-                                        <button type="button" class="btn btn-primary rounded-pill m-2">Regresar</button>
++                                    <p>Se ha reportado la incidencia</p>
++                                    <a href="listaIncidencias.html">
++                                        <a href="listaIncidencias_C.html"><button type="button" class="btn btn-primary rounded-pill m-2">Regresar</button></a>
+                                     </a>
+-                                    
+                                 </div>
+                             </div>
+-                        </div>
++                        </form>
+                     </div>
+                   </div>
+             </div>
+@@ -243,7 +303,7 @@
+                 <div class="bg-light rounded-top p-4">
+                     <div class="row">
+                         <div class="col-12 col-sm-6 text-center text-sm-start">
+-                            &copy; <a href="#">TelevecinosUnidos</a>, All Right Reserved. 
++                            &copy; <a href="#">TelevecinosUnidos</a>, All Right Reserved.
+                         </div>
+                     </div>
+                 </div>
+@@ -251,12 +311,59 @@
+         </div>
+         <!-- Content End -->
+ 
++        <!-- Popup de Confirmación para cancelar -->
++        <div id="createConfirmationPopup" class="popup">
++            <div class="popup-content">
++                <span class="close-btn" id="closeCreatePopupBtn">&times;</span>
++                <img src="img/check.png" alt="check" width="48" height="48" style="margin-top: -10px;">
++                <h2>Evaluación Exitosa</h2>
++                <p>El incidente ha sido evaluado con éxito.</p>
++                <button onclick="mostrarMensajeExito()" class="btn btn-secondary">Regresar</button>
++            </div>
++        </div>
++        <script>
++            const closeCreatePopupBtn = document.getElementById('closeCreatePopupBtn');
++            const createConfirmationPopup = document.getElementById('createConfirmationPopup');
++            const mainContent = document.querySelector('.content'); // Selecciona el contenido principal que quieres deshabilitar
++
++            // Función para deshabilitar interacciones
++            function disableInteractions() {
++                mainContent.style.pointerEvents = 'none';
++                mainContent.style.opacity = '0.4'; // Opcional: reduce la opacidad para un efecto visual de desactivado
++            }
++
++            // Función para habilitar interacciones
++            function enableInteractions() {
++                mainContent.style.pointerEvents = 'all';
++                mainContent.style.opacity = '1'; // Restaura la opacidad
++            }
++
++
++            // Función para cerrar el popup y potencialmente redirigir al usuario
++            function closeCreatePopup() {
++                createConfirmationPopup.style.display = 'none';
++                enableInteractions();
++                //redirigir al usuario o recargar la página
++                window.location.href = 'listaIncidencias_S.html';
++            }
++
++            // Evento para cerrar el popup cuando se presiona el botón de cerrar
++            closeCreatePopupBtn.addEventListener('click', closeCreatePopup);
++
++            // Función para mostrar el mensaje de éxito al crear un evento
++            function mostrarMensajeExito() {
++                createConfirmationPopup.style.display = 'block';
++                disableInteractions();
++            }
++
++        </script>
++
+ 
+         <!-- Back to Top -->
+         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+     </div>
+-    
+-    
++
++
+ 
+     <!-- JavaScript Libraries -->
+     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+@@ -272,65 +379,41 @@
+     <!-- Template Javascript -->
+     <script src="js/main.js"></script>
+     <script>
+-        const openPopupBtn1 = document.getElementById('openPopupBtn1');
+-        const openPopupBtn2 = document.getElementById('openPopupBtn2');
+-        const closePopupBtn1 = document.getElementById('closePopupBtn1');
+-        const closePopupBtn2 = document.getElementById('closePopupBtn2');
+-        const navbar = document.getElementById('navbar');
+-        const popup = document.getElementById('popup');
+-        const popup2 = document.getElementById('popup2');
+-        const tipoIncidencia = document.getElementById('tipoIncidencia');
+-        const otroInput = document.getElementById('otroInput');
++        document.addEventListener('DOMContentLoaded', function() {
+ 
+-        openPopupBtn1.addEventListener('click', () => {
+-            popup.style.display = 'block';
+-        });
+-        openPopupBtn2.addEventListener('click', () => {
+-            popup2.style.display = 'block';
+-        });
+-
+-        closePopupBtn1.addEventListener('click', () => {
+-            popup.style.display = 'none';
+-        });
+-        closePopupBtn2.addEventListener('click', () => {
+-            popup2.style.display = 'none';
+-        });
+-        function desactivarStickyTop() {
+-            navbar.classList.remove('sticky-top');
+-        }
++            function desactivarStickyTop() {
++                navbar.classList.remove('sticky-top');
++            }
+ 
+-        function activarStickyTop() {
+-            navbar.classList.add('sticky-top');
+-        }
+-
+-        document.getElementById('openPopupBtn1').addEventListener('click', function() {
+-            desactivarStickyTop();
+-            popup.style.display = 'block';
+-        });
+-        document.getElementById('openPopupBtn2').addEventListener('click', function() {
+-            desactivarStickyTop();
+-            popup.style.display = 'block';
+-        });
++            function activarStickyTop() {
++                navbar.classList.add('sticky-top');
++            }
++            document.addEventListener('click', function(event) {
++                if (event.target.classList.contains('btn-banear')) {
++                    desactivarStickyTop();
++                    var popup = event.target.nextElementSibling;
++                    popup.style.display = 'block';
++                }
++            });
+ 
+-        document.getElementById('closePopupBtn1').addEventListener('click', function() {
+-            activarStickyTop();
+-            popup.style.display = 'none';
+-        });
+-        document.getElementById('closePopupBtn2').addEventListener('click', function() {
+-            activarStickyTop();
+-            popup.style.display = 'none';
++            document.addEventListener('click', function(event) {
++                if (event.target.classList.contains('close-btn')) {
++                    activarStickyTop();
++                    var popup = event.target.closest('.popup1');
++                    popup.style.display = 'none';
++                }
++            });
+         });
+ 
+-        tipoIncidencia.addEventListener('change', function() {
+-            if (tipoIncidencia.value === 'otro') {
+-                otroInput.style.display = 'block';
+-                } else {
+-                    otroInput.style.display = 'none';
+-                }
+-        });
+-      </script>
+-    
+-    
++    </script>
++    <!--cerrar pop up -->
++    <script>
++        function cerrarPopup() {
++            var popup = document.getElementById("popup1");
++            popup.style.display = "none";
++        }
++    </script>
++
+ </body>
+ 
+ </html>
+\ No newline at end of file
