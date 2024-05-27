@@ -262,13 +262,14 @@
 
                             <div class="m-n2">
                                 <button type="button" class="btn btn-secondary m-2" onclick="mostrarPopup()">Reportar incidencia</button>
-                                <div class="popup" id="popupActualizar">
+                                <div id="popup" class="popup">
                                     <div class="popup_contenido">
-                                        <span class="close-btn" onclick="cerrarPopup()">&times;</span>
-                                        <h3>Confirmar actualización</h3>
+                                        <!--contenido pop up-->
+                                        <h3>Confirmar Actualización</h3>
                                         <h4>¿Estás seguro? </h4>
                                         <a href="listaIncidencias_C.html"><button type="button" class="btn btn-success rounded-pill m-2">Si</button></a>
                                         <a href="actualizarIncidencia_C.html"><button type="button" class="btn btn-danger rounded-pill m-2" >No</button></a>
+                                        <!-- <button type="button" class="btn btn-danger rounded-pill m-2" >No</button> -->
                                     </div>
                                 </div>
 
@@ -278,6 +279,44 @@
                     </div>
                   </div>
             </div>
+            <script>
+                const closeCreatePopupBtn = document.getElementById('closeCreatePopupBtn');
+                const createConfirmationPopup = document.getElementById('createConfirmationPopup');
+                const mainContent = document.querySelector('.content'); // Selecciona el contenido principal que quieres deshabilitar
+
+                // Función para deshabilitar interacciones
+                function disableInteractions() {
+                    mainContent.style.pointerEvents = 'none';
+                    mainContent.style.opacity = '0.4'; // Opcional: reduce la opacidad para un efecto visual de desactivado
+                }
+
+                // Función para habilitar interacciones
+                function enableInteractions() {
+                    mainContent.style.pointerEvents = 'all';
+                    mainContent.style.opacity = '1'; // Restaura la opacidad
+                }
+
+
+                // Función para cerrar el popup y potencialmente redirigir al usuario
+                function closeCreatePopup() {
+                    createConfirmationPopup.style.display = 'none';
+                    enableInteractions();
+                    //redirigir al usuario o recargar la página
+                    window.location.href = 'listaIncidencias_S.html';
+                }
+
+                // Evento para cerrar el popup cuando se presiona el botón de cerrar
+                closeCreatePopupBtn.addEventListener('click', closeCreatePopup);
+
+                // Función para mostrar el mensaje de éxito al crear un evento
+                function mostrarMensajeExito() {
+                    createConfirmationPopup.style.display = 'block';
+                    disableInteractions();
+                }
+
+            </script>
+
+
             <div class="container-fluid pt-4 px-4" >
                 <div class="bg-light rounded-top p-4">
                     <div class="row">
@@ -291,17 +330,6 @@
         <!-- Content End -->
 
 
-        <!-- Popup Management -->
-        <script>
-            function mostrarPopup() {
-                document.getElementById("popupActualizar").style.display = "block";
-            }
-
-            function cerrarPopup() {
-                document.getElementById("popupActualizar").style.display = "none";
-            }
-
-        </script>
 
 
         <!-- Back to Top -->
@@ -323,6 +351,41 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            function desactivarStickyTop() {
+                navbar.classList.remove('sticky-top');
+            }
+
+            function activarStickyTop() {
+                navbar.classList.add('sticky-top');
+            }
+            document.addEventListener('click', function(event) {
+                if (event.target.classList.contains('btn-secondary')) {
+                    desactivarStickyTop();
+                    var popup = event.target.nextElementSibling;
+                    popup.style.display = 'block';
+                }
+            });
+
+            document.addEventListener('click', function(event) {
+                if (event.target.classList.contains('close-btn')) {
+                    activarStickyTop();
+                    var popup = event.target.closest('.popup');
+                    popup.style.display = 'none';
+                }
+            });
+        });
+
+    </script>
+    <!--cerrar pop up -->
+    <script>
+        function cerrarPopup() {
+            var popup = document.getElementById("popup");
+            popup.style.display = "none";
+        }
+    </script>
 
 </body>
 
