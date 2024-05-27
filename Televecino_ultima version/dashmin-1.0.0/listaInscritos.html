@@ -181,19 +181,11 @@
                 
                 <div style="background-color: #FFB703 ; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
                     <div class="row " style="margin-right:10px;">
-                        <div class="col-md-8 mb-2">
+                        <div class="col-md-10 mb-2">
                             <input type="text" style="width: 100%; " class="form-control" id="filtroInput" placeholder="Buscar...">
                         </div>
                         <div class="col-md-2 mb-2">
-                            <select id="filtroCategoria" class="form-select" style="width: 100%; ">
-                                <option selected>Frecuencia</option>
-                                <option value="diaria">Diaria</option>
-                                <option value="interdiaria">Interdiaria</option>
-                                <option value="semanal">Semanal</option>
-                            </select>
-                        </div>
-                        <div class="col-md-2 mb-2">
-                            <button type="button" class="btn btn-primary w-100"style="width: 100%; " onclick="filtrar()"><b>Filtrar</b></button>
+                            <button type="button" class="btn btn-primary w-100"style="width: 100%; " onclick="filtrar()"><b>Buscar</b></button>
                         </div>
                     </div>
                 </div>
@@ -204,18 +196,16 @@
                             <thead>
                                 <tr>
                                     <th scope="col">N°</th>
-                                    <th scope="col">Nombre y Apellido</th>
-                                    <th scope="col">Fecha de inicio</th>
-                                    <th scope="col">Frecuencia</th>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Apellido</th>
                                     <th scope="col">Borrar</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <th scope="row">1</th>
-                                    <td>Ana Perez</td>
-                                    <td>13- Enero</td>
-                                    <td>Diaria</td>                                 
+                                    <td>Ana</td>
+                                    <td>Perez</td>
                                     <td>
                                         <button type="button" class="btn btn-danger m-2" onclick="confirmDelete(1)">
                                             <i class="fas fa-trash-alt"></i> <!-- Ícono de basurero de FontAwesome -->
@@ -225,21 +215,18 @@
                                 </tr>
                                 <tr>
                                     <th scope="row">2</th>
-                                    <td>Luis Delgado</td>
-                                    <td>21- Enero</td>
-                                    <td>Interdiaria</td>                                 
+                                    <td>Luis</td>
+                                    <td>Delgado</td>
                                     <td>
                                         <button type="button" class="btn btn-danger m-2" onclick="confirmDelete(2)">
                                             <i class="fas fa-trash-alt"></i> <!-- Ícono de basurero de FontAwesome -->
                                         </button>                                        
                                     </td>
-                                    
                                 </tr>
                                 <tr>
                                     <th scope="row">3</th>
-                                    <td>Juan Flores</td>
-                                    <td>01- Febrero</td>
-                                    <td>Semanal</td>                                 
+                                    <td>Juan</td>
+                                    <td>Flores</td>
                                     <td>
                                         <button type="button" class="btn btn-danger m-2" onclick="confirmDelete(3)">
                                             <i class="fas fa-trash-alt"></i> <!-- Ícono de basurero de FontAwesome -->
