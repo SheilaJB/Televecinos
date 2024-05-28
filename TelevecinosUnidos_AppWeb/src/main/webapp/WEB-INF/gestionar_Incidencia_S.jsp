@@ -1,0 +1,396 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Gestionar incidencia</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style_serenazgo.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/app.min.css" rel="stylesheet">
+    <link href="css/style_vec.css" rel="stylesheet">
+    <link href="css/style_popup.css" rel="stylesheet">
+    <style>
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+        .popup-content {
+            background-color: white;
+            width: 50%;
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            position: relative;
+        }
+        .close-btn {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            font-size: 24px;
+            cursor: pointer;
+            color: rgb(0, 0, 0);
+        }
+    </style>
+</head>
+
+<body>
+<div class="container-xxl position-relative bg-white d-flex p-0">
+    <!-- Spinner Start -->
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <!-- Spinner End -->
+
+
+    <!-- BARRA AZUL DE LA IZQUIERDA INICIO-->
+    <!-- Sidebar Start -->
+    <div class="sidebar pe-4 pb-3" style="background-color: #8ecae6;">
+        <nav class="navbar" style="background-color: #8ecae6;" >
+            <a class="navbar-brand mx-3 mt-3">
+                <h4 style="color:#023047"><b>Televecinos Unidos</b></h4>
+            </a>
+            <div class="d-flex align-items-center ms-4 mb-4"  >
+                <img class="rounded-circle" src="img/serenazgo.jpg" alt="" style="width: 50px; height: 50px;">
+                <div class="ms-3 m-3" >
+                    <h6 class="mb-0" style="color:#023047;"><b>Nombre Apellido</b></h6>
+                    <span class="text-muted"><b>Serenazgo</b></span>
+                </div>
+            </div>
+            <div class="navbar-nav w-100">
+                <a href="inicioSerenazgo.html" class="nav-item nav-link "><i class="fa fa-home me-2"></i><span style="font-size: 13.5px;"><b>Inicio</b></a>
+                <a href="Dashboard.html"class="nav-item nav-link "><i class="fa fa-chart-bar me-2"></i><span style="font-size: 13.5px;"><b>Dashboard</b></a>
+                <a href="listaIncidencias_S.html" class="nav-item nav-link active "><i class="fa fa-th-list me-2"></i><span style="font-size: 13.5px;"><b>Incidencias</b></a>
+                <a href="BanVecino.html"class="nav-item nav-link"><i class="fa fa-ban me-2"></i><span style="font-size: 13.5px;"><b>Banear vecino</b></a>
+                <a href="preguntasFrecuentes_S.html"class="nav-item nav-link "><i class="fa fa-question-circle me-2"></i><span style="font-size: 13.5px;"><b>Preguntas frecuentes</b></a>
+            </div>
+        </nav>
+    </div>
+    <!-- Sidebar End -->
+    <!-- BARRA AZUL DE LA IZQUIERDA FINAL -->
+
+
+    <!-- Content Start -->
+    <div class="content">
+        <!-- Navbar Start -->
+        <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0" id="navbar">
+
+            <a href="#" class="sidebar-toggler flex-shrink-0">
+                <i class="fa fa-bars"></i>
+            </a>
+            <a class="navbar-brand mx-4 mb-3 d-flex align-items-center" style = "padding-top: 2%;">
+                <img class="rounded-circle" src="img/logo.jpg" alt="" style="width: 40px; height: 40px;">
+                <h3 class="m-0 me-2 px-2" style="color:#023047;">¡Bienvenido, serenazgo!</h3>
+            </a>
+
+            <div class="navbar-nav align-items-center ms-auto">
+
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                        <img class="rounded-circle me-lg-2" src="img/Icon_perfil.png" alt="" style="width: 40px; height: 40px;">
+                        <span class="d-none d-lg-inline-flex" style="color:#023047;"><b>Nombre Apellido</b></span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                        <a href="perfil_C.html" class="dropdown-item">Mi perfil</a>
+                        <a href="index.html" class="dropdown-item">Cerrar sesión</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <!-- Navbar End -->
+
+
+        <h2 class="mb-2 text-center" style = "padding-top: 3%;" style="color:#023047;">Evaluación de incidencia</h2>
+        <!-- Form Start -->
+        <div class="container-fluid pt-4 px-4">
+            <td>
+                <button type="button" class="btn btn-danger m-2 btn-banear" onclick="confirmDelete()">
+                    🗑️Borrar incidencia
+                </button>
+                <div id="popup1" class="popup1">
+                    <div class="popup_contenido1">
+                        <span class="close-btn" id="closePopupBtn1">&times;</span>
+                        <!--contenido pop up-->
+                        <h4>¿Por qué deseas eliminar esta incidencia? </h4>
+
+                        <!-- <p>La acción "Banear" será permanente, debe estar seguro de su desición al respecto</p> -->
+                        <div class="mb-3">
+                            <label for="descripcionIncidencia" class="form-label" style="color:#023047;"><b> </b></label>
+                            <textarea class="form-control" id="descripcionIncidencia" rows="2" placeholder="Elimino esta incidencia porque ..."></textarea>
+                        </div>
+                        <a href="listaIncidencias_S.html"><button type="button" class="btn btn-success rounded-pill m-2">Aceptar</button></a>
+                        <button type="button" class="btn btn-danger rounded-pill m-2" onclick="cerrarPopup()">Cancelar</button>
+
+                    </div>
+                </div>
+            </td>
+            <td>
+                <button type="button" class="btn btn-false m-2 btn-banear" onclick="confirmDelete()">
+                    ⛔ Falsa <!-- Texto a lado del ícono -->
+                </button>
+                <div id="popup1" class="popup1">
+                    <div class="popup_contenido1">
+                        <!--contenido pop up-->
+                        <h4>¿Estás seguro? </h4>
+                        <a href="listaIncidencias_S.html"><button type="button" class="btn btn-success rounded-pill m-2">Si</button></a>
+                        <a href="gestionar_Incidencia_S.html"><button type="button" class="btn btn-danger rounded-pill m-2" >No</button></a>
+                        <!-- <button type="button" class="btn btn-danger rounded-pill m-2" >No</button> -->
+                    </div>
+                </div>
+            </td>
+            <div class="row g-4">
+                <div class="col-sm-12">
+                    <div class="rounded h-100 p-4" style=" background-color: #ffb703;">
+                        <!---Descripción de la incidencia-->
+                        <div class="mb-3">
+                            <label for="descripcionIncidencia" class="form-label" style="color:#023047;"><b>Ingrese una descripción de la solución a dar a la incidencia:</b></label>
+                            <textarea class="form-control" id="descripcionIncidencia" rows="2" placeholder="Escribir una breve descripción"></textarea>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-sm-12 col-sm-12 col-xl-6">
+                    <div class="rounded h-100 p-4" style = "background-color:#219ebc;">
+                        <!---Nombre del Serenazgo-->
+                        <div class="mb-3">
+                            <label for="nombreSerenazgo" class="form-label" style="color:#023047;"><b>Ingrese nombre del serenazgo:</b></label>
+                            <input type="text" class="form-control" id="nombreSerenazgo" placeholder="Escribir">
+                        </div>
+
+                        <!----Criticidad de la incidencia----->
+                        <label for="criticidad" class="form-label" style="color:#023047;"><b>Criticidad:</b></label>
+                        <select id="criticidad" class="form-select mb-3" aria-label="Default select example" onchange="mostrarOpciones()">
+                            <option selected>Seleccione la criticidad de la incidencia </option>
+                            <option value="1">Bajo</option>
+                            <option value="2">Medio</option>
+                            <option value="3">Alto</option>
+                        </select>
+                        <!----Personal para la incidencia----->
+                        <label for="personal_Incidencia" class="form-label" style="color:#023047;"><b>Personal:</b></label>
+                        <select id="personal_Incidencia" class="form-select mb-3" aria-label="Default select example" onchange="mostrarOpciones()">
+                            <option selected>Seleccione el personal para la incidencia </option>
+                            <option value="3">Ambulancia</option>
+
+                            <option value="1">Policia</option>
+                            <option value="2">Bomberos</option>
+                        </select>
+
+                        <div id="inputContainer" style="display: none;">
+                            <input type="text" class="form-control" id="nombrePersonal" placeholder="">
+                        </div>
+
+                        <script>
+                            function mostrarOpciones() {
+                                var select = document.getElementById("personal_Incidencia");
+                                var inputContainer = document.getElementById("inputContainer");
+                                var inputField = document.getElementById("nombrePersonal");
+
+                                if (select.value == "1") {
+                                    inputField.placeholder = "Ingrese el nombre de la comisaría";
+                                    inputContainer.style.display = "block";
+                                } else if (select.value == "3") {
+                                    inputField.placeholder = "Ingrese el nombre del personal en turno";
+                                    inputContainer.style.display = "block";
+                                } else {
+                                    inputContainer.style.display = "none";
+                                }
+                            }
+                        </script>
+
+
+                    </div>
+
+                </div>
+
+                <div class="col-sm-12 col-xl-6">
+                    <div class="bg-light rounded h-100 p-4">
+                        <!----Movilidad de la incidencia----->
+                        <label for="movilidad" class="form-label" style="color:#023047;"><b>Movilidad:</b></label>
+                        <select id="movilidad" class="form-select mb-3" aria-label="Default select example" onchange="mostrarOpciones()">
+                            <option selected>Seleccione la movilidad para la incidencia </option>
+                            <option value="1">Bicicleta</option>
+                            <option value="2">A pie</option>
+                            <option value="3">Canino</option>
+                            <option value="3">Vehículo</option>
+                        </select>
+                        <!----Estado de la incidencia----->
+                        <label for="movilidad" class="form-label" style="color:#023047;"><b>Estado de la incidencia:</b></label>
+                        <select id="movilidad" class="form-select mb-3" aria-label="Default select example" onchange="mostrarOpciones()">
+                            <option selected>Seleccione el estado de la incidencia </option>
+                            <option value="1">Pendiente</option>
+                            <option value="2">Procesado</option>
+
+                        </select>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- Form End -->
+
+        <!-- Botón para guardar evaluación de incidencia -->
+        <div style="text-align: right; margin-right: 100px; padding-top: 2%;">
+            <button type="submit" class="btn btn-primary" style="background-color: #023047; border-color: #023047; color: #ffffff;" onclick="mostrarMensajeExito()"><b>Guardar</b></button>
+        </div>
+
+        <script>
+            function mostrarMensajeExito() {
+                // Mostrar ventana emergente con mensaje de éxito
+                alert("La incidencia fue evaluada exitosamente.");
+                window.location.href = 'ListaEvent-Coordinador.html'; <!--REVISAR-->
+            }
+        </script>
+
+        <!-- Footer Start -->
+        <div class="container-fluid pt-4 px-4">
+            <div class="bg-light rounded-top p-4">
+                <div class="row">
+                    <div class="col-12 col-sm-6 text-center text-sm-start">
+                        &copy; <a href="#">TelevecinosUnidos</a>, All Right Reserved.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer End -->
+    </div>
+    <!-- Content End -->
+    <!-- Popup de Confirmación para crear Eventos -->
+    <div id="createConfirmationPopup" class="popup">
+        <div class="popup-content">
+            <span class="close-btn" id="closeCreatePopupBtn">&times;</span>
+            <img src="img/check.png" alt="check" width="48" height="48" style="margin-top: -10px;">
+            <h2>Evaluación Exitosa</h2>
+            <p>El incidente ha sido evaluado con éxito.</p>
+            <button onclick="closeCreatePopup()" class="btn btn-secondary">Regresar</button>
+        </div>
+    </div>
+    <script>
+        const closeCreatePopupBtn = document.getElementById('closeCreatePopupBtn');
+        const createConfirmationPopup = document.getElementById('createConfirmationPopup');
+        const mainContent = document.querySelector('.content'); // Selecciona el contenido principal que quieres deshabilitar
+
+        // Función para deshabilitar interacciones
+        function disableInteractions() {
+            mainContent.style.pointerEvents = 'none';
+            mainContent.style.opacity = '0.4'; // Opcional: reduce la opacidad para un efecto visual de desactivado
+        }
+
+        // Función para habilitar interacciones
+        function enableInteractions() {
+            mainContent.style.pointerEvents = 'all';
+            mainContent.style.opacity = '1'; // Restaura la opacidad
+        }
+
+
+        // Función para cerrar el popup y potencialmente redirigir al usuario
+        function closeCreatePopup() {
+            createConfirmationPopup.style.display = 'none';
+            enableInteractions();
+            //redirigir al usuario o recargar la página
+            window.location.href = 'listaIncidencias_S.html';
+        }
+
+        // Evento para cerrar el popup cuando se presiona el botón de cerrar
+        closeCreatePopupBtn.addEventListener('click', closeCreatePopup);
+
+        // Función para mostrar el mensaje de éxito al crear un evento
+        function mostrarMensajeExito() {
+            createConfirmationPopup.style.display = 'block';
+            disableInteractions();
+        }
+
+    </script>
+
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+</div>
+
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="lib/chart/chart.min.js"></script>
+<script src="lib/easing/easing.min.js"></script>
+<script src="lib/waypoints/waypoints.min.js"></script>
+<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="lib/tempusdominus/js/moment.min.js"></script>
+<script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+<script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+<!-- Template Javascript -->
+<script src="js/main.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+        function desactivarStickyTop() {
+            navbar.classList.remove('sticky-top');
+        }
+
+        function activarStickyTop() {
+            navbar.classList.add('sticky-top');
+        }
+        document.addEventListener('click', function(event) {
+            if (event.target.classList.contains('btn-banear')) {
+                desactivarStickyTop();
+                var popup = event.target.nextElementSibling;
+                popup.style.display = 'block';
+            }
+        });
+
+        document.addEventListener('click', function(event) {
+            if (event.target.classList.contains('close-btn')) {
+                activarStickyTop();
+                var popup = event.target.closest('.popup1');
+                popup.style.display = 'none';
+            }
+        });
+    });
+
+</script>
+<!--cerrar pop up -->
+<script>
+    function cerrarPopup() {
+        var popup = document.getElementById("popup1");
+        popup.style.display = "none";
+    }
+</script>
+</body>
+
+</html>

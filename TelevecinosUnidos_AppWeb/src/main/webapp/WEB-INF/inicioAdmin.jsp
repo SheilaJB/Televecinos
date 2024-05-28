@@ -1,0 +1,276 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>TELEVECINOS UNIDOS INICIO</title>
+    <meta content="width=device-width, initial-scale=1.0"  name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/app.min.css" rel="stylesheet">
+    <link href="css/style_vec.css" rel="stylesheet">
+
+
+</head>
+
+<body>
+<div class="container-xxl position-relative bg-white d-flex p-0">
+    <!-- Spinner Start -->
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <!-- Spinner End -->
+
+
+    <!-- BARRA AZUL DE LA IZQUIERDA INICIO-->
+    <div class="sidebar pe-4 pb-3" style="background-color: #8ecae6;">
+        <nav class="navbar" style="background-color: #8ecae6;" >
+            <a href="" class="navbar-brand mx-3 mb-3">
+                <h4 class="text-primary"><b>Televecinos Unidos</b></h4>
+            </a>
+            <div class="d-flex align-items-center ms-4 mb-4">
+                <div class="position-relative">
+                    <img class="rounded-circle" src="img/munisanmiguelLogo.jpg" alt="" style="width: 40px; height: 40px;">
+                    <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
+                </div>
+                <div class="ms-3">
+                    <h6 class="mb-0">Municipalidad de San Miguel</h6>
+                    <span>Administrador</span>
+                </div>
+            </div>
+            <!-- Seleccionar Opciones -->
+            <div class="navbar-nav w-100">
+                <a href="inicioAdmin.html" class="nav-item nav-link active colorLetrasBarraLateral"><i  class="fa fa-home me-2 colorLetrasBarraLateral"></i>Inicio</a>
+
+                <a href="NuevasSolicitudes_A.html" class="nav-item nav-link "><i class="fa fa-clipboard-list me-2 colorLetrasBarraLateral"></i><span style="font-size: 14px;">Nuevas solicitudes</span></a>
+                <a href="ListaVecinos_A.html" class="nav-item nav-link"><i class="fa fa-user-friends me-2 colorLetrasBarraLateral"></i><span style="font-size: 14px;">Lista de vecinos</span></a>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-shield-alt me-2 colorLetrasBarraLateral"></i><span style="font-size: 13.5px;">Personal serenazgo</span></a>
+                    <div class="dropdown-menu bg-transparent border-0">
+                        <a href="ListaSerenazgo_A.html" class="dropdown-item" style="font-size: 13.5px;">Lista de serenazgos</a>
+
+                        <a href="FormularioSerenazgo_A.html" class="dropdown-item"style="font-size: 13.5px;">Registrar nuevo serenazgo</a>
+                    </div>
+                </div>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-chalkboard-teacher me-2 colorLetrasBarraLateral"></i><span style="font-size: 13.3px;">Area de coordinación</span></a>
+                    <div class="dropdown-menu bg-transparent border-0">
+                        <a href="ListaCoordinadorasCultura_A.html" class="dropdown-item"style="font-size: 13.5px;">Coordinadoras cultura</a>
+                        <a href="ListaCoordinadorasDeportes_A.html" class="dropdown-item"style="font-size: 13.5px;">Coordinadoras deportes</a>
+                        <a href="ListaInstructores_A.html" class="dropdown-item"style="font-size: 13.5px;">Instructores</a>
+                        <a href="registroSerenazgo.html" class="dropdown-item"style="font-size: 13.5px;">Registrar nuevo instructor</a>
+                    </div>
+                </div>
+
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-question-circle me-2 colorLetrasBarraLateral"></i><span style="font-size: 13.3px;">Preguntas frecuentes</span></a>
+                    <div class="dropdown-menu bg-transparent border-0">
+                        <a href="preguntasFrecuentes_V_vistaAdmin.html" class="dropdown-item"style="font-size: 13.5px;">Dudas Vecinos</a>
+                        <a href="preguntasFrecuentes_C_vistaAdmin.html" class="dropdown-item"style="font-size: 13.5px;">Dudas Coordinadoras</a>
+                        <a href="preguntasFrecuentes_S_vistaAdmin.html" class="dropdown-item"style="font-size: 13.5px;">Dudas Serenazgos</a>
+                    </div>
+                </div>
+
+            </div>
+        </nav>
+    </div>
+    <!-- BARRA AZUL DE LA IZQUIERDA FINAL -->
+
+
+    <!-- Content Start -->
+    <div class="content">
+        <!-- PARTE SUPERIOR INICIO -->
+        <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+            <a href="" class="navbar-brand d-flex d-lg-none me-4">
+                <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
+            </a>
+            <a href="#" class="sidebar-toggler flex-shrink-0">
+                <i class="fa fa-bars"></i>
+            </a>
+            <a class="navbar-brand mx-4 mb-3 d-flex align-items-center" style="padding-top: 2%;">
+                <img class="rounded-circle" src="img/logo.jpg" alt="" style="width: 40px; height: 40px;">
+                <h3 class="m-0 me-2 px-2" style="color:#023047;">¡Bienvenido, administrador!</h3>
+            </a>
+
+            <div class="navbar-nav align-items-center ms-auto">
+
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                        <img class="rounded-circle me-lg-2" src="img/munisanmiguelLogo.jpg" alt="" style="width: 40px; height: 40px;">
+                        <span class="d-none d-lg-inline-flex" style="color:#023047;"><b>Municipalidad de San Miguel</b></span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                        <a href="perfil_A.html" class="dropdown-item">Mi perfil</a>
+                        <a href="index.html" class="dropdown-item">Cerrar sesión</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <!-- PARTE SUPERIOR FINAL -->
+
+
+
+        <!-- LLENAR-->
+        <!-- Imagen estática del inicio del admin -->
+        <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="img/fondoDeAdminInicio2.jpg" class="d-block w-100" alt="...">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5 class="titleCarousel">MUNICIPALIDAD DE SAN MIGUEL - Administración</h5>
+                        <p>Como administrador debe operar con transparencia, respetando la privacidad de los usuarios y manteniendo la neutralidad en la moderación del contenido. Es crucial combatir el discurso de odio y la desinformación, colaborar con las autoridades cuando sea necesario y garantizar un ambiente seguro y justo para todos los usuarios.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bootstrap JS dependencies -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+
+        <!-- Fin de iamgen estatica -->
+        <div style="background-color: #f8f9fa; padding: 20px; align-items: center;">
+
+            <!---cambio de cuadros-->
+            <h3 class="mb-4">Funciones:</h3>
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                <div class="col">
+                    <div class="card h-100 shadow" style="background-color: #8ECAE6;">
+                        <div class="card-body">
+                            <h5 class="card-title">Gestionar y evaluar las solicitudes de inscripción de nuevos usuarios</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100 shadow" style="background-color: #219EBC;">
+                        <div class="card-body">
+                            <h5 class="card-title">Crear las cuentas de los serenazgos y asignarles credenciales temporales</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100 shadow" style="background-color: #FFB703;">
+                        <div class="card-body">
+                            <h5 class="card-title">Asignar el rol de coordinador a los vecinos designados previamente</h5>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100 shadow" style="background-color: #FB8500;">
+                        <div class="card-body">
+                            <h5 class="card-title">Gestionar el envío de correos de confirmación de creación de nuevos usuarios de la página</h5>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100 shadow" style="background-color: #8ECAE6;">
+                        <div class="card-body">
+                            <h5 class="card-title">Banear a los usuarios de la página y solicitudes de registro previa evaluación</h5>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100 shadow" style="background-color: #FB8500;">
+                        <div class="card-body">
+                            <h5 class="card-title">Leer las sugerencias que escriban los miembros de la página</h5>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+            <script>
+                $(document).ready(function(){
+                    $('.row').slick({
+                        infinite: true,
+                        slidesToShow: 3,
+                        slidesToScroll: 1
+                    });
+                })
+                ;</script>
+            <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.css">
+            <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick-theme.css">
+            <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.min.js"></script>
+        </div>
+
+
+        <!-- Content End -->
+
+
+
+
+
+
+
+
+
+
+        <!-- Footer Start -->
+        <div class="container-fluid pt-4 px-4">
+            <div class="bg-light rounded-top p-4">
+                <div class="row">
+                    <div class="col-12 col-sm-6 text-center text-sm-start">
+                        &copy; <a href="#">Televecinos Unidos</a>, All Right Reserved.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer End -->
+    </div>
+    <!-- Content End -->
+
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+</div>
+
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="lib/chart/chart.min.js"></script>
+<script src="lib/easing/easing.min.js"></script>
+<script src="lib/waypoints/waypoints.min.js"></script>
+<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="lib/tempusdominus/js/moment.min.js"></script>
+<script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+<script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+<!-- Template Javascript -->
+<script src="js/main.js"></script>
+</body>
+
+</html>
