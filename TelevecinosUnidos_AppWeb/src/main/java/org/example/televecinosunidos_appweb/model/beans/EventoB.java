@@ -1,9 +1,8 @@
 package org.example.televecinosunidos_appweb.model.beans;
 
-public class Evento {
+public class EventoB {
     private int idEvento;
     private String nombre;
-    private String descripcion;
     private String descripcion;
     private String lugar;
     private int Coordinador_idUsuario;

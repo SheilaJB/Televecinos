@@ -10,7 +10,9 @@ import java.io.IOException;
 public class CoordinadorServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        String vista = "/WEB-INF/inicioSerenazgo.jsp";
+        RequestDispatcher rd = request.getRequestDispatcher(vista);
+        rd.forward(request, response);
     }
 
     @Override
