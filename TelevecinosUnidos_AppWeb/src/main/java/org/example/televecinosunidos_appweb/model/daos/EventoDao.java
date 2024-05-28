@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class EventoDao {
 
-    public ArrayList<EventoB> listaEventos(){
+    public ArrayList<EventoB> listarEventosPropios(){
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -20,18 +20,17 @@ public class EventoDao {
         String password = "root";
 
         String sql = "aaaaaaaaaaaaaaaNiloApura";
-        ArrayList<EventoB> listaEventos = new ArrayList<EventoB>();
+        ArrayList<EventoB> listaEventosPropios = new ArrayList<EventoB>();
 
 
         try(Connection conn = DriverManager.getConnection(url,username,password); Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql);) {//usamos try con recursos
 
             while(rs.next()){
                 EventoB evento = new EventoB();
-                evento.setNombre(rs.getString(1));
-                evento.setDescripcion(rs.getString(2));
-                evento.setLugar(rs.getString(3));
-                evento.setFecha_inicio(rs.getString(4));
-                //falta terminar pero necesito el querie
+                evento.setIdEvento(rs.getInt(1));
+                evento.setNombre(rs.getString(2));
+                evento.setFecha_inicio(rs.getString(3));
+                evento.setEventEstados_idEventEstados(rs.getInt(4));
             }
 
 
@@ -39,6 +38,6 @@ public class EventoDao {
             throw new RuntimeException(e);
         }
 
-        return listaEventos;
+        return listaEventosPropios;
     }
 }
