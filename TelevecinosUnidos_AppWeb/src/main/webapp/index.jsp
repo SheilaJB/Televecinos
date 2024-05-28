@@ -18,7 +18,7 @@
     <div class="row border rounded-5 p-3 bg-white shadow box-area">
         <div class="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column">
             <div class="featured-image mb-3" style="width: 250px; height: 250px; display: flex; justify-content: center; align-items: center;">
-                <img src="logoTele.jpg" class="rounded-circle ms-3" style="max-width: 150%; max-height: 150%;">
+                <img src="img/logoTele.jpg" class="rounded-circle ms-3" style="max-width: 150%; max-height: 150%;">
             </div>
         </div>
 
