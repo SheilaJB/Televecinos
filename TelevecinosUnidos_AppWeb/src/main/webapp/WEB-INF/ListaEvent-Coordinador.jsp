@@ -5,8 +5,7 @@
 <%@ page import="org.example.televecinosunidos_appweb.model.beans.EventoB" %>
 
 
-
-<jsp:useBean id="lista" scope="request" type="ArrayList<EventoB>"/>
+<% ArrayList<EventoB> lista = (ArrayList<EventoB>) request.getAttribute("lista");%>
 
 <!DOCTYPE html>
 <html lang="en">

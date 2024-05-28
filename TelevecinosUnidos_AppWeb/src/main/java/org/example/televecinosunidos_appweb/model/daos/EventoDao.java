@@ -15,11 +15,11 @@ public class EventoDao {
             throw new RuntimeException(e);
         }
 
-        String url = "jdbc:mysql://localhost:3306/televecino";
+        String url = "jdbc:mysql://localhost:3306/mydb";
         String username = "root";
         String password = "root";
 
-        String sql = "aaaaaaaaaaaaaaaNiloApura";
+        String sql = "select * from eventos";
         ArrayList<EventoB> listaEventosPropios = new ArrayList<EventoB>();
 
 

@@ -13,10 +13,12 @@ import java.util.ArrayList;
 public class CoordinadorServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-            EventoDao eventoDao = new EventoDao();
+        EventoDao eventoDao = new EventoDao();
         ArrayList<EventoB> listaEventosPropios = eventoDao.listarEventosPropios();
-        String vista = "inicioCoordinador.jsp";
         request.setAttribute("lista",listaEventosPropios);
+
+        String vista = "ListaEvent-Coordinador.jsp";
+
         RequestDispatcher rd = request.getRequestDispatcher(vista);
         rd.forward(request, response);
     }
