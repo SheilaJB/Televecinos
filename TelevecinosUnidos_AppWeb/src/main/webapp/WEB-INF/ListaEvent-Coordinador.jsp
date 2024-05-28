@@ -1,4 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<%@ page import="java.io.PrintWriter" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="org.example.televecinosunidos_appweb.model.beans.EventoB" %>
+
+
+
+<% ArrayList<EventoB> listaEventosPropios = (ArrayList<EventoB>) request.getAttribute("lista"); %>
+
 <!DOCTYPE html>
 <html lang="en">
 
