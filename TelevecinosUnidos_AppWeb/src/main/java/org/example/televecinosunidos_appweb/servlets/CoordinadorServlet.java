@@ -15,7 +15,7 @@ public class CoordinadorServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             EventoDao eventoDao = new EventoDao();
         ArrayList<EventoB> listaEventosPropios = eventoDao.listarEventosPropios();
-        String vista = "/WEB-INF/inicioCoordinador.jsp";
+        String vista = "inicioCoordinador.jsp";
         request.setAttribute("lista",listaEventosPropios);
         RequestDispatcher rd = request.getRequestDispatcher(vista);
         rd.forward(request, response);

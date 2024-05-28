@@ -6,7 +6,7 @@
 
 
 
-<jsp:useBean id="lista" scope="request" type="ArrayList<EventoDao>"/>
+<jsp:useBean id="lista" scope="request" type="ArrayList<EventoB>"/>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -222,144 +222,28 @@
                             <td><%=eventoB.getFecha_inicio() %></td>
                             <td><%=eventoB.getEventEstados_idEventEstados() %></td>
                         </tr>
+                        <td>
+                            <button type="button" class="btn btn-info m-2"  onclick="viewEvent()">
+                                <i class="fas fa-eye"></i> <!-- Ícono de ojo de FontAwesome -->
+                            </button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-success m-2" onclick="editEvent()">
+                                <i class="fas fa-pencil-alt"></i> <!-- Ícono de lápiz de FontAwesome -->
+                            </button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger m-2" onclick="confirmDelete()">
+                                <i class="fas fa-trash-alt"></i> <!-- Ícono de basurero de FontAwesome -->
+                            </button>
+                        </td>
                         <% } %>
 
 
-                            <td>
-                                <button type="button" class="btn btn-info m-2"  onclick="viewEvent()">
-                                    <i class="fas fa-eye"></i> <!-- Ícono de ojo de FontAwesome -->
-                                </button>
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-success m-2" onclick="editEvent()">
-                                    <i class="fas fa-pencil-alt"></i> <!-- Ícono de lápiz de FontAwesome -->
-                                </button>
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-danger m-2" onclick="confirmDelete()">
-                                    <i class="fas fa-trash-alt"></i> <!-- Ícono de basurero de FontAwesome -->
-                                </button>
-                            </td>
+
 
                         </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Voley</td>
-                            <td>21-Enero</td>
-                            <td>Disponible</td>
-                            <td>
-                                <button type="button" class="btn btn-info m-2"  onclick="viewEvent()">
-                                    <i class="fas fa-eye"></i> <!-- Ícono de ojo de FontAwesome -->
-                                </button>
-                            </td>
 
-                            <td>
-                                <button type="button" class="btn btn-success m-2" onclick="editEvent()">
-                                    <i class="fas fa-pencil-alt"></i> <!-- Ícono de lápiz de FontAwesome -->
-                                </button>
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-danger m-2" onclick="confirmDelete()">
-                                    <i class="fas fa-trash-alt"></i> <!-- Ícono de basurero de FontAwesome -->
-                                </button>
-
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Voley</td>
-                            <td>21-Enero</td>
-                            <td>Disponible</td>
-                            <td>
-                                <button type="button" class="btn btn-info m-2"  onclick="viewEvent()">
-                                    <i class="fas fa-eye"></i> <!-- Ícono de ojo de FontAwesome -->
-                                </button>
-
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-success m-2" onclick="editEvent()">
-                                    <i class="fas fa-pencil-alt"></i> <!-- Ícono de lápiz de FontAwesome -->
-                                </button>
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-danger m-2" onclick="confirmDelete()">
-                                    <i class="fas fa-trash-alt"></i> <!-- Ícono de basurero de FontAwesome -->
-                                </button>
-
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <th scope="row">4</th>
-                            <td>Voley</td>
-                            <td>21-Enero</td>
-                            <td>Disponible</td>
-                            <td>
-                                <button type="button" class="btn btn-info m-2"  onclick="viewEvent()">
-                                    <i class="fas fa-eye"></i> <!-- Ícono de ojo de FontAwesome -->
-                                </button>
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-success m-2" onclick="editEvent()">
-                                    <i class="fas fa-pencil-alt"></i> <!-- Ícono de lápiz de FontAwesome -->
-                                </button>
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-danger m-2" onclick="confirmDelete()">
-                                    <i class="fas fa-trash-alt"></i> <!-- Ícono de basurero de FontAwesome -->
-                                </button>
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <th scope="row">5</th>
-                            <td>Voley</td>
-                            <td>21-Enero</td>
-                            <td>Disponible</td>
-                            <td>
-                                <button type="button" class="btn btn-info m-2"  onclick="viewEvent()">
-                                    <i class="fas fa-eye"></i> <!-- Ícono de ojo de FontAwesome -->
-                                </button>
-                            </td>
-
-                            <td>
-                                <button type="button" class="btn btn-success m-2" onclick="editEvent()">
-                                    <i class="fas fa-pencil-alt"></i> <!-- Ícono de lápiz de FontAwesome -->
-                                </button>
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-danger m-2" onclick="confirmDelete()">
-                                    <i class="fas fa-trash-alt"></i> <!-- Ícono de basurero de FontAwesome -->
-                                </button>
-
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <th scope="row">6</th>
-                            <td>Voley</td>
-                            <td>21-Enero</td>
-                            <td>Disponible</td>
-                            <td>
-                                <button type="button" class="btn btn-info m-2"  onclick="viewEvent()">
-                                    <i class="fas fa-eye"></i> <!-- Ícono de ojo de FontAwesome -->
-                                </button>
-
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-success m-2" onclick="editEvent()">
-                                    <i class="fas fa-pencil-alt" ></i> <!-- Ícono de lápiz de FontAwesome -->
-                                </button>
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-danger m-2" onclick="confirmDelete()">
-                                    <i class="fas fa-trash-alt" ></i> <!-- Ícono de basurero de FontAwesome -->
-                                </button>
-
-                            </td>
-
-                        </tr>
                         </tbody>
                     </table>
                 </div>
