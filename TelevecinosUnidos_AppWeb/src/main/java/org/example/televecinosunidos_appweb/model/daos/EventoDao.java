@@ -15,7 +15,7 @@ public class EventoDao {
             throw new RuntimeException(e);
         }
 
-        String url = "jdbc:mysql://localhost:3306/hr";
+        String url = "jdbc:mysql://localhost:3306/televecino";
         String username = "root";
         String password = "root";
 
