@@ -10,13 +10,10 @@ import java.io.IOException;
 public class SerenazgoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String vista = "/WEB-INF/inicioSerenazgo.jsp";
-        RequestDispatcher rd = request.getRequestDispatcher(vista);//le pongo la información
-        rd.forward(request,response);//vista comienza  a correr
+        String vista = "/inicioSerenazgo.jsp";
+        RequestDispatcher rd = request.getRequestDispatcher(vista);
+        rd.forward(request, response);
     }
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-    }
 }
