@@ -19,7 +19,7 @@ public class EventoDao {
         String username = "root";
         String password = "root";
 
-        String sql = "select * from eventos";
+        String sql = "select * from eventos"; // falta cambiar el querie
         ArrayList<EventoB> listaEventosPropios = new ArrayList<EventoB>();
 
 
@@ -30,7 +30,7 @@ public class EventoDao {
                 evento.setIdEvento(rs.getInt(1));
                 evento.setNombre(rs.getString(2));
                 evento.setFecha_inicio(rs.getString(3));
-                evento.setEventEstados_idEventEstados(rs.getInt(4));
+                evento.setEstadoString(rs.getString(4));
             }
 
 

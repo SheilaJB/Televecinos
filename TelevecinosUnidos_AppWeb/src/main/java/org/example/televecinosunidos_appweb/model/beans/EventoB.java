@@ -17,6 +17,16 @@ public class EventoB {
     private int TipoEvento_idTipoEvento;
     private int ProfesoresEvento_idProfesoresEvento;
 
+    private String estadoString;
+
+    public String getEstadoString() {
+        return estadoString;
+    }
+
+    public void setEstadoString(String estadoString) {
+        this.estadoString = estadoString;
+    }
+
     public int getIdEvento() {
         return idEvento;
     }
