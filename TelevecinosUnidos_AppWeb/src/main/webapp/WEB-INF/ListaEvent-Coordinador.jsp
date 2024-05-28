@@ -6,7 +6,7 @@
 
 
 
-<% ArrayList<EventoB> listaEventosPropios = (ArrayList<EventoB>) request.getAttribute("lista"); %>
+<jsp:useBean id="lista" scope="request" type="ArrayList<EventoDao>"/>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -214,11 +214,17 @@
                         </tr>
                         </thead>
                         <tbody>
+
+                        <%for(EventoB eventoB : lista){%>
                         <tr>
-                            <th scope="row">1</th>
-                            <td>Voley</td>
-                            <td>21-Enero</td>
-                            <td>Disponible</td>
+                            <th scope="row"><%=eventoB.getIdEvento() %></th>
+                            <td><%=eventoB.getNombre() %></td>
+                            <td><%=eventoB.getFecha_inicio() %></td>
+                            <td><%=eventoB.getEventEstados_idEventEstados() %></td>
+                        </tr>
+                        <% } %>
+
+
                             <td>
                                 <button type="button" class="btn btn-info m-2"  onclick="viewEvent()">
                                     <i class="fas fa-eye"></i> <!-- Ícono de ojo de FontAwesome -->
