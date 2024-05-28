@@ -1,6 +1,6 @@
 package org.example.televecinosunidos_appweb.model.beans;
 
-public class EstadosIncidencia {
+public class EstadosIncidenciaB {
     private int idEstadosIncidencia;
     private String estado;
 
