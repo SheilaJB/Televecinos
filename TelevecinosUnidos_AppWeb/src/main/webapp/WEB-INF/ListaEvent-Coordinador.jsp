@@ -203,7 +203,7 @@
                     <table class="table" style="background-color: transparent;">
                         <thead>
                         <tr>
-                            <th scope="col">N°</th>
+
                             <th scope="col">Nombre</th>
                             <th scope="col">Fecha de inicio</th>
                             <th scope="col">Estado</th>
@@ -214,34 +214,18 @@
                         </thead>
                         <tbody>
 
-                        <%for(EventoB eventoB : lista){%>
-                        <tr>
-                            <th scope="row"><%=eventoB.getIdEvento() %></th>
-                            <td><%=eventoB.getNombre() %></td>
-                            <td><%=eventoB.getFecha_inicio() %></td>
-                            <td><%=eventoB.getEstadoString() %></td>
-                        </tr>
-                        <td>
-                            <button type="button" class="btn btn-info m-2"  onclick="viewEvent()">
-                                <i class="fas fa-eye"></i> <!-- Ícono de ojo de FontAwesome -->
-                            </button>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-success m-2" onclick="editEvent()">
-                                <i class="fas fa-pencil-alt"></i> <!-- Ícono de lápiz de FontAwesome -->
-                            </button>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-danger m-2" onclick="confirmDelete()">
-                                <i class="fas fa-trash-alt"></i> <!-- Ícono de basurero de FontAwesome -->
-                            </button>
-                        </td>
-                        <% } %>
+                            <%for(EventoB eventoB : lista){%>
+                            <tr>
+                                <td><%=eventoB.getNombre() %></td>
+                                <td><%=eventoB.getFecha_inicio() %></td>
+                                <td><%=eventoB.getEstadoString() %></td>
+                                <td><button type="button" class="btn btn-info m-2"  onclick="viewEvent()"><i class="fas fa-eye"></i></button></td>
+                                <td><button type="button" class="btn btn-success m-2" onclick="editEvent()"><i class="fas fa-pencil-alt"></i></button></td>
+                                <td><button type="button" class="btn btn-danger m-2" onclick="confirmDelete()"><i class="fas fa-trash-alt"></i></button></td>
+                            </tr>
+                            <% } %>
 
 
-
-
-                        </tr>
 
                         </tbody>
                     </table>

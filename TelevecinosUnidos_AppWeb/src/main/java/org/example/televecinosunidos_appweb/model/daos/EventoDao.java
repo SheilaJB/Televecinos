@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class EventoDao {
 
-    public ArrayList<EventoB> listarEventosPropios(){
+    public ArrayList<EventoB> listarEventosPropios() {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -20,32 +20,32 @@ public class EventoDao {
         String password = "root";
 
         String sql =
-                    "SELECT"+
-                    "e.idEventos AS 'ID Evento',"+
-                    "e.nombre AS 'Nombre',"+
-                    "DATE_FORMAT(e.fecha_inicio, '%d %M') AS 'Fecha de Inicio',"+
-                    "es.estadosEvento AS 'Estado'"+
-                    "FROM"+
-                    "Eventos e"+
-                    "JOIN"+
-                    "EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados"+
-                    "WHERE"+
-                    "e.TipoEvento_idTipoEvento = 2;";
+                "SELECT " +
+                        "e.idEventos AS 'ID Evento', " +
+                        "e.nombre AS 'Nombre', " +
+                        "DATE_FORMAT(e.fecha_inicio, '%d %M') AS 'Fecha de Inicio', " +
+                        "es.estadosEvento AS 'Estado' " +
+                        "FROM " +
+                        "Eventos e " +
+                        "JOIN " +
+                        "EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
+                        "WHERE " +
+                        "e.TipoEvento_idTipoEvento = 2;";
 
+        ArrayList<EventoB> listaEventosPropios = new ArrayList<>();
 
-        ArrayList<EventoB> listaEventosPropios = new ArrayList<EventoB>();
+        try (Connection conn = DriverManager.getConnection(url, username, password);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
 
-
-        try(Connection conn = DriverManager.getConnection(url,username,password); Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql);) {//usamos try con recursos
-
-            while(rs.next()){
+            while (rs.next()) {
                 EventoB evento = new EventoB();
-                evento.setIdEvento(rs.getInt(1));
-                evento.setNombre(rs.getString(2));
-                evento.setFecha_inicio(rs.getString(3));
-                evento.setEstadoString(rs.getString(4));
+                evento.setIdEvento(rs.getInt("ID Evento"));
+                evento.setNombre(rs.getString("Nombre"));
+                evento.setFecha_inicio(rs.getString("Fecha de Inicio"));
+                evento.setEstadoString(rs.getString("Estado"));
+                listaEventosPropios.add(evento); // Asegurarse de añadir el evento a la lista
             }
-
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
