@@ -14,53 +14,53 @@
 </head>
 <body>
 
-<div class="container d-flex justify-content-center align-items-center min-vh-100">
-    <div class="row border rounded-5 p-3 bg-white shadow box-area">
-        <div class="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column">
-            <div class="featured-image mb-3" style="width: 250px; height: 250px; display: flex; justify-content: center; align-items: center;">
-                <img src="logoTele.jpg" class="rounded-circle ms-3" style="max-width: 150%; max-height: 150%;">
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="row border rounded-5 p-3 bg-white shadow box-area">
+            <div class="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column">
+                <div class="featured-image mb-3" style="width: 250px; height: 250px; display: flex; justify-content: center; align-items: center;">
+                    <img src="img/logoTele.jpg" class="rounded-circle ms-3" style="max-width: 150%; max-height: 150%;">
+                </div>
             </div>
-        </div>
 
-        <div class="col-md-6 right-box">
-            <div class="row align-items-center">
-                <div class="welcome-text mb-4">
-                    <h2>Bienvenido</h2>
-                    <p>Inicia sesión con tu cuenta</p>
-                </div>
-                <div class="input-group mb-3">
-                    <input type="email" id="email" class="form-control form-control-lg bg-light fs-6" placeholder="Dirección gmail">
-                    <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
-                </div>
-                <div class="input-group mb-1">
-                    <input type="password" id="password" class="form-control form-control-lg bg-light fs-6" placeholder="Contraseña">
-                    <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
-                </div>
-                <div class="input-group mb-5 d-flex justify-content-between">
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="formCheck">
-                        <label for="formCheck" class="form-check-label text-secondary"><small>Recuérdame</small></label>
+            <div class="col-md-6 right-box">
+                <div class="row align-items-center">
+                    <div class="welcome-text mb-4">
+                        <h2>Bienvenido</h2>
+                        <p>Inicia sesión con tu cuenta</p>
                     </div>
-                    <div class="forgot">
-                        <small><a href="olvidasteContrasena.html">¿Olvidaste tu contraseña?</a></small>
+                    <div class="input-group mb-3">
+                        <input type="email" id="email" class="form-control form-control-lg bg-light fs-6" placeholder="Dirección gmail">
+                        <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
                     </div>
-                </div>
-                <div class="input-group mb-3">
-                    <button id="loginButton" class="btn btn-lg btn-primary w-100 fs-6" value = "Validar Correo" onclick = "validarCorreo(fomr.email.value)">Iniciar sesión</button>
-                </div>
-                <div class="row" align="center">
-                    <small>¿No tienes una cuenta?</small>
-                    <small><a href="registro.html">Regístrate aquí</a></small>
-                </div>
-                <div class="social-icons mt-3">
-                    <a href="https://twitter.com/MuniSanMiguelPE"><i class="fab fa-twitter"></i></a>
-                    <a href="https://www.facebook.com/municipalidadsanmiguel/?locale=es_LA"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://www.instagram.com/municipalidadsanmiguel/"><i class="fab fa-instagram"></i></a>
+                    <div class="input-group mb-1">
+                        <input type="password" id="password" class="form-control form-control-lg bg-light fs-6" placeholder="Contraseña">
+                        <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
+                    </div>
+                    <div class="input-group mb-5 d-flex justify-content-between">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="formCheck">
+                            <label for="formCheck" class="form-check-label text-secondary"><small>Recuérdame</small></label>
+                        </div>
+                        <div class="forgot">
+                            <small><a href="olvidasteContrasena.html">¿Olvidaste tu contraseña?</a></small>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <button id="loginButton" class="btn btn-lg btn-primary w-100 fs-6" value = "Validar Correo" onclick = "validarCorreo(fomr.email.value)">Iniciar sesión</button>
+                    </div>
+                    <div class="row" align="center">
+                        <small>¿No tienes una cuenta?</small>
+                        <small><a href="registro.html">Regístrate aquí</a></small>
+                    </div>
+                    <div class="social-icons mt-3">
+                        <a href="https://twitter.com/MuniSanMiguelPE"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.facebook.com/municipalidadsanmiguel/?locale=es_LA"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/municipalidadsanmiguel/"><i class="fab fa-instagram"></i></a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 <!---Validar correo eleectrónico-->
 <script>
     function validarCorreo(email) {
