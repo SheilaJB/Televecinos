@@ -18,6 +18,15 @@ public class EventoB {
     private int ProfesoresEvento_idProfesoresEvento;
 
     private String estadoString;
+    private String frecuenciaString;
+
+    public String getFrecuenciaString() {
+        return frecuenciaString;
+    }
+
+    public void setFrecuenciaString(String frecuenciaString) {
+        this.frecuenciaString = frecuenciaString;
+    }
 
     public String getEstadoString() {
         return estadoString;

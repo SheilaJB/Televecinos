@@ -15,7 +15,7 @@ public class EventoDao {
             throw new RuntimeException(e);
         }
 
-        String url = "jdbc:mysql://localhost:3306/mydb";
+        String url = "jdbc:mysql://localhost:3306/televecinosdb";
         String username = "root";
         String password = "root";
 
@@ -24,13 +24,16 @@ public class EventoDao {
                         "e.idEventos AS 'ID Evento', " +
                         "e.nombre AS 'Nombre', " +
                         "DATE_FORMAT(e.fecha_inicio, '%d %M') AS 'Fecha de Inicio', " +
-                        "es.estadosEvento AS 'Estado' " +
+                        "es.estadosEvento AS 'Estado', " +
+                        "ef.tipoFrecuencia AS 'Frecuencia' " +
                         "FROM " +
                         "Eventos e " +
                         "JOIN " +
                         "EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
+                        "JOIN " +
+                        "EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
                         "WHERE " +
-                        "e.TipoEvento_idTipoEvento = 2;";
+                        "e.TipoEvento_idTipoEvento = 2;"; //tipo 2 para mostrar solo los eventos de deportes
 
         ArrayList<EventoB> listaEventosPropios = new ArrayList<>();
 
@@ -44,6 +47,7 @@ public class EventoDao {
                 evento.setNombre(rs.getString("Nombre"));
                 evento.setFecha_inicio(rs.getString("Fecha de Inicio"));
                 evento.setEstadoString(rs.getString("Estado"));
+                evento.setFrecuenciaString(rs.getString("Frecuencia"));
                 listaEventosPropios.add(evento); // Asegurarse de añadir el evento a la lista
             }
 
