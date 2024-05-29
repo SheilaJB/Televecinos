@@ -185,7 +185,7 @@
                         <th scope="col">Seguridad pública</th>
                         <td>Pendiente</td>
                         <td>
-                            <a href="actualizarIncidencia_C.html">
+                            <a href="VistaServlet?idVista=actualizarIncidenciaC">
                                 <button type="button" class="btn btn-success m-2" onclick="editEvent(1)">
                                     <i class="fas fa-pencil-alt"></i> <!-- Ícono de lápiz de FontAwesome -->
                                 </button>
