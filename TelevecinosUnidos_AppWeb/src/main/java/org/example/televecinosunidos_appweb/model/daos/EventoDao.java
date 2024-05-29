@@ -19,7 +19,20 @@ public class EventoDao {
         String username = "root";
         String password = "root";
 
-        String sql = "select * from eventos"; // falta cambiar el querie
+        String sql =
+                    "SELECT"+
+                    "e.idEventos AS 'ID Evento',"+
+                    "e.nombre AS 'Nombre',"+
+                    "DATE_FORMAT(e.fecha_inicio, '%d %M') AS 'Fecha de Inicio',"+
+                    "es.estadosEvento AS 'Estado'"+
+                    "FROM"+
+                    "Eventos e"+
+                    "JOIN"+
+                    "EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados"+
+                    "WHERE"+
+                    "e.TipoEvento_idTipoEvento = 2;";
+
+
         ArrayList<EventoB> listaEventosPropios = new ArrayList<EventoB>();
 
 

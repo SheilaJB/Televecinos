@@ -219,7 +219,7 @@
                             <th scope="row"><%=eventoB.getIdEvento() %></th>
                             <td><%=eventoB.getNombre() %></td>
                             <td><%=eventoB.getFecha_inicio() %></td>
-                            <td><%=eventoB.getEventEstados_idEventEstados() %></td>
+                            <td><%=eventoB.getEstadoString() %></td>
                         </tr>
                         <td>
                             <button type="button" class="btn btn-info m-2"  onclick="viewEvent()">
