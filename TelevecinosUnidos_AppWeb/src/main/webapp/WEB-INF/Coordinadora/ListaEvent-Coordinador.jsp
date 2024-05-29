@@ -148,8 +148,8 @@
                     <div class="col-md-2 mb-2">
                         <select id="filtroCategoria" class="form-select" onchange="filtrar()">
                             <option selected value="">Frecuencia</option>
-                            <option value="diaria">Semanal</option>
-                            <option value="interdiaria">Dos veces por semana</option>
+                            <option value="Semanal">Semanal</option>
+                            <option value="Dos veces por semana">Dos veces por semana</option>
 
                         </select>
                     </div>
