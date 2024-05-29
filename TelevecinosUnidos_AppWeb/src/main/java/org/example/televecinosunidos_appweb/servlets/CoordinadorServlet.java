@@ -18,7 +18,7 @@ public class CoordinadorServlet extends HttpServlet {
         ArrayList<EventoB> listaEventosPropios = eventoDao.listarEventosPropios();
         request.setAttribute("lista",listaEventosPropios);
 
-        String vista = "WEB-INF/ListaEvent-Coordinador.jsp";
+        String vista = "WEB-INF/Coordinadora/ListaEvent-Coordinador.jsp";
 
         RequestDispatcher rd = request.getRequestDispatcher(vista);
         rd.forward(request, response);

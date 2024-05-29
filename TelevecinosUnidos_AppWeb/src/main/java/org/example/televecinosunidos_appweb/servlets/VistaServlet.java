@@ -14,11 +14,26 @@ public class VistaServlet extends HttpServlet {
         String vista = "";
         switch(idVista){
             case "inicioCoordinador":
-                vista = "WEB-INF/InicioCoordinador.jsp";
+                vista = "WEB-INF/Coordinadora/InicioCoordinador.jsp";
                 break;
-            case "":
+            case "eventoGeneralesC":
+                vista = "WEB-INF/Coordinadora/EventoGenerales_C.jsp";
                 break;
-
+            case "creacionEventoC":
+                vista = "WEB-INF/Coordinadora/creacionEvento.jsp";
+                break;
+            case "listaEventoCoordinador":
+                vista = "WEB-INF/Coordinadora/ListaEvent-Coordinador.jsp";
+                break;
+            case "generarIncidenciaC":
+                vista = "WEB-INF/Coordinadora/generarIncidencia_C.jsp";
+                break;
+            case "listaIncidenciaC":
+                vista = "WEB-INF/Coordinadora/listaIncidencias_C.jsp";
+                break;
+            case "preguntasFrecuentesC":
+                vista = "WEB-INF/Coordinadora/preguntasFrecuentes_C.jsp";
+                break;
         }
 
         RequestDispatcher rd = request.getRequestDispatcher(vista);
