@@ -90,7 +90,7 @@
                     <div class="dropdown-menu bg-transparent border-0">
                         <a href="VistaServlet?idVista=eventoGeneralesC" class="dropdown-item"><span style="font-size: 13.5px;"><b>Eventos generales</b></span></a>
                         <a href="VistaServlet?idVista=creacionEventoC" class="dropdown-item"><span style="font-size: 13.5px;"><b>Crear evento</b></span></a>
-                        <a href="VistaServlet?idVista=listaEventoCoordinador" class="dropdown-item"><span style="font-size: 13.5px;"><b>Eventos propios</b></span></a>
+                        <a href="VistaServlet?idVista=listaEventoCoordinador" class="dropdown-item active"><span style="font-size: 13.5px;"><b>Eventos propios</b></span></a>
                     </div>
                 </div>
                 <div class="nav-item dropdown">
