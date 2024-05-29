@@ -32,7 +32,12 @@
                     <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
                 </div>
                 <div class="input-group mb-3">
-                    <button id="sendButton" class="btn btn-lg btn-primary w-100 fs-6">Enviar</button>
+                    <button id="sendButton" class="btn btn-lg btn-primary w-100 fs-6" onclick="generarContrasenha()">Enviar</button>
+                    <script>
+                        function generarContrasenha() {
+                            window.location.href = 'nuevaContrasena.html';
+                        }
+                    </script>
                 </div>
             </div>
         </div>
