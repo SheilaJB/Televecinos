@@ -5,7 +5,7 @@ import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import org.example.televecinosunidos_appweb.model.beans.EventoB;
 import org.example.televecinosunidos_appweb.model.daos.EventoDao;
-import org.example.televecinosunidos_appweb.WEB-INF.*;
+
 
 import java.io.IOException;
 import java.util.ArrayList;
