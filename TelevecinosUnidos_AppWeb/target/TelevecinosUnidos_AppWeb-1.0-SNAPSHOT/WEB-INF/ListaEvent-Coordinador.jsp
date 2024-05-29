@@ -84,7 +84,7 @@
                 </div>
             </div>
             <div class="navbar-nav w-100">
-                <a href="InicioCoordinador.html" class="nav-item nav-link"><i class="fa fa-home me-2"></i><span style="font-size: 13.5px;"><b>Inicio</b></span></a>
+                <a href="VistaServlet?idVista=1" class="nav-item nav-link"><i class="fa fa-home me-2"></i><span style="font-size: 13.5px;"><b>Inicio</b></span></a>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"><i class="fa fa-calendar me-2"></i><span style="font-size: 13.5px;"><b>Eventos</b></span></a>
                     <div class="dropdown-menu bg-transparent border-0">
@@ -218,7 +218,7 @@
                     for (var i = 1; i < tr.length; i++) {
                         var tdNombre = tr[i].getElementsByTagName('td')[0];
                         var tdEstado = tr[i].getElementsByTagName('td')[2];
-                        var tdFrecuencia = tr[i].getElementsByTagName('td')[1];
+                        var tdFrecuencia = tr[i].getElementsByTagName('td')[3];
                         if (tdNombre && tdEstado && tdFrecuencia) {
                             var txtValueNombre = tdNombre.textContent || tdNombre.innerText;
                             var txtValueEstado = tdEstado.textContent || tdEstado.innerText;
