@@ -1,45 +1,33 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
 <%@ page import="java.io.PrintWriter" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="org.example.televecinosunidos_appweb.model.beans.EventoB" %>
-
-
 <% ArrayList<EventoB> lista = (ArrayList<EventoB>) request.getAttribute("lista");%>
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <title>Eventos-Coordinador</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
-
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
-
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
-
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-
     <!-- Libraries Stylesheet -->
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
     <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
-
     <!-- Customized Bootstrap Stylesheet -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
     <link href="css/style_vec.css" rel="stylesheet">
-
     <style>
         .popup {
             display: none;
@@ -71,9 +59,7 @@
             color: rgb(0, 0, 0);
         }
     </style>
-
 </head>
-
 <body>
 <div class="container-xxl position-relative bg-white d-flex p-0">
     <!-- Spinner Start -->
@@ -83,7 +69,6 @@
         </div>
     </div>
     <!-- Spinner End -->
-
 
     <!-- Sidebar Start -->
     <div class="sidebar pe-4 pb-3" style="background-color: #8ecae6;">
@@ -108,7 +93,6 @@
                         <a href="ListaEvent-Coordinador.html" class="dropdown-item"><span style="font-size: 13.5px;"><b>Eventos propios</b></span></a>
                     </div>
                 </div>
-
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle " data-bs-toggle="dropdown"><i class="fa fa-th-list me-2"></i><span style="font-size: 13.5px;"><b>Incidencias</b></span></a>
                     <div class="dropdown-menu bg-transparent border-0">
@@ -122,7 +106,6 @@
     </div>
     <!-- Sidebar End -->
 
-
     <!-- Content Start -->
     <div class="content">
         <!-- Navbar Start -->
@@ -135,7 +118,6 @@
                 <h3 class="m-0 me-2 px-2" style="color:#023047;">¡Bienvenido, coordinador!</h3>
             </a>
             <div class="navbar-nav align-items-center ms-auto">
-
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                         <img class="rounded-circle me-lg-2" src="img/coordinadora.jpg" alt="" style="width: 40px; height: 40px;">
@@ -150,40 +132,34 @@
         </nav>
         <!-- Navbar End -->
 
-
-
-        <!-- Lista de eventos-->
-
+        <!-- Lista de eventos -->
         <div class="container text-center">
             <div id="Nombre del evento">
                 <h1 style="text-align: center; margin-top:50px;margin-bottom:50px;"><b>Eventos propios</b></h1>
             </div>
         </div>
         <div style="background-color: #f8f9fa; padding: 10px; align-items: center;">
-            <!--Filtro-->
-            <div style="background-color: #FFB703 ; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
+            <!-- Filtro -->
+            <div style="background-color: #FFB703; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
                 <div class="row justify-content-center align-items-center">
                     <div class="col-md-3 mb-2">
-                        <input type="text" class="form-control" id="filtroInput" placeholder="Buscar...">
+                        <input type="text" class="form-control" id="filtroInput" placeholder="Buscar..." onkeyup="filtrar()">
                     </div>
                     <div class="col-md-2 mb-2">
-                        <select id="filtroCategoria" class="form-select">
-                            <option selected>Frecuencia</option>
+                        <select id="filtroCategoria" class="form-select" onchange="filtrar()">
+                            <option selected value="">Frecuencia</option>
                             <option value="diaria">Diaria</option>
                             <option value="interdiaria">Interdiaria</option>
                             <option value="semanal">Semanal</option>
                         </select>
                     </div>
                     <div class="col-md-3 mb-2">
-                        <select id="filtroEstado" class="form-select">
-                            <option selected>Estado</option>
-                            <option value="disponible">Disponible</option>
-                            <option value="enCurso">En curso</option>
-                            <option value="finalizado">Finalizado</option>
+                        <select id="filtroEstado" class="form-select" onchange="filtrar()">
+                            <option selected value="">Estado</option>
+                            <option value="Disponible">Disponible</option>
+                            <option value="En curso">En curso</option>
+                            <option value="Finalizado">Finalizado</option>
                         </select>
-                    </div>
-                    <div class="col-md-2 mb-2">
-                        <button type="button" class="btn btn-primary w-100" onclick="filtrar()"><b>Filtrar</b></button>
                     </div>
                     <div class="col-md-2 mb-2">
                         <button type="button" class="btn btn-primary w-100" onclick="crearEvento()"><b>Crear evento</b></button>
@@ -192,7 +168,6 @@
             </div>
 
             <div class="bg-light rounded h-100 p-4" style="font-weight: bold;">
-
                 <script>
                     function crearEvento() {
                         window.location.href = 'creacionEvento.html';
@@ -200,10 +175,9 @@
                 </script>
 
                 <div class="table-responsive">
-                    <table class="table" style="background-color: transparent;">
+                    <table id="eventosTable" class="table" style="background-color: transparent;">
                         <thead>
                         <tr>
-
                             <th scope="col">Nombre</th>
                             <th scope="col">Fecha de inicio</th>
                             <th scope="col">Estado</th>
@@ -213,93 +187,52 @@
                         </tr>
                         </thead>
                         <tbody>
-
-                            <%for(EventoB eventoB : lista){%>
-                            <tr>
-                                <td><%=eventoB.getNombre() %></td>
-                                <td><%=eventoB.getFecha_inicio() %></td>
-                                <td><%=eventoB.getEstadoString() %></td>
-                                <td><button type="button" class="btn btn-info m-2"  onclick="viewEvent()"><i class="fas fa-eye"></i></button></td>
-                                <td><button type="button" class="btn btn-success m-2" onclick="editEvent()"><i class="fas fa-pencil-alt"></i></button></td>
-                                <td><button type="button" class="btn btn-danger m-2" onclick="confirmDelete()"><i class="fas fa-trash-alt"></i></button></td>
-                            </tr>
-                            <% } %>
-
-
-
+                        <% for(EventoB eventoB : lista){ %>
+                        <tr>
+                            <td><%= eventoB.getNombre() %></td>
+                            <td><%= eventoB.getFecha_inicio() %></td>
+                            <td><%= eventoB.getEstadoString() %></td>
+                            <td><button type="button" class="btn btn-info m-2" onclick="viewEvent()"><i class="fas fa-eye"></i></button></td>
+                            <td><button type="button" class="btn btn-success m-2" onclick="editEvent()"><i class="fas fa-pencil-alt"></i></button></td>
+                            <td><button type="button" class="btn btn-danger m-2" onclick="confirmDelete()"><i class="fas fa-trash-alt"></i></button></td>
+                        </tr>
+                        <% } %>
                         </tbody>
                     </table>
                 </div>
-                <!----Modal de bootstrap para la confirmación de la eliminación------>
-                <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="deleteConfirmationModalLabel">¡Advertencia!</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                El evento seleccionado será eliminado permanentemente. ¿Estás seguro de eliminar el evento?
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                <!-- El ID del evento a eliminar se establecerá dinámicamente al abrir el modal -->
-                                <a href="ListaEvent-Coordinador.html"></a><button type="button" class="btn btn-primary" id="confirmDeleteButton">Aceptar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!---Falta funcionalidad---->
-                <script src="js/listaEvento.js"></script>
-
-            </div>
-            <div  style="display: flex; justify-content: center; align-items: center; margin-top:10px">
-                <section class="paginacion" >
-                    <ul style="list-style: none;padding: 0;margin: 0;display: flex;">
-                        <div style="background-color: white ; padding: 5px; margin:10px">
-                            <li style="margin: 0 5px;"><a class="link-opacity-50-hover" class="link-opacity-50-hover" href="#" class="active">1</a></li>
-                        </div>
-                        <div style="background-color:white ; padding: 5px;margin:10px">
-                            <li style="margin: 0 5px;"><a class="link-opacity-50-hover" class="link-opacity-50-hover" href="#" class="active">2</a></li>
-                        </div>
-                        <div style="background-color: white ; padding: 5px;margin:10px">
-                            <li style="margin: 0 5px;"><a class="link-opacity-50-hover" class="link-opacity-50-hover" href="#" class="active">3</a></li>
-                        </div>
-                    </ul>
-                </section>
             </div>
         </div>
 
-        <!-- Filtro-->
-        <div id="Barra-Filtro" >
+        <!-- Filtro -->
+        <div id="Barra-Filtro">
             <script>
                 function filtrar() {
-                    var input, filtro, ul, li, txtValue, categoria, estado;
-                    input = document.getElementById('filtroInput');
-                    filtro = input.value.toUpperCase();
-                    ul = document.getElementById("lista");
-                    li = ul.getElementsByTagName('li');
-                    categoria = document.getElementById('filtroCategoria').value;
-                    estado = document.getElementById('filtroEstado').value;
-                    for (var i = 0; i < li.length; i++) {
-                        txtValue = li[i].textContent || li[i].innerText;
-                        var visible = true;
-                        if (txtValue.toUpperCase().indexOf(filtro) === -1) {
-                            visible = false;
+                    var input = document.getElementById('filtroInput').value.toUpperCase();
+                    var categoria = document.getElementById('filtroCategoria').value.toUpperCase();
+                    var estado = document.getElementById('filtroEstado').value.toUpperCase();
+                    var table = document.getElementById('eventosTable');
+                    var tr = table.getElementsByTagName('tr');
+
+                    for (var i = 1; i < tr.length; i++) {
+                        var tdNombre = tr[i].getElementsByTagName('td')[0];
+                        var tdEstado = tr[i].getElementsByTagName('td')[2];
+                        if (tdNombre && tdEstado) {
+                            var txtValueNombre = tdNombre.textContent || tdNombre.innerText;
+                            var txtValueEstado = tdEstado.textContent || tdEstado.innerText;
+                            var visible = true;
+
+                            if (input && txtValueNombre.toUpperCase().indexOf(input) === -1) {
+                                visible = false;
+                            }
+                            if (estado && txtValueEstado.toUpperCase().indexOf(estado) === -1) {
+                                visible = false;
+                            }
+                            tr[i].style.display = visible ? '' : 'none';
                         }
-                        if (categoria !== 'todos' && !txtValue.includes(categoria)) {
-                            visible = false;
-                        }
-                        if (estado !== 'todos' && !txtValue.includes(estado)) {
-                            visible = false;
-                        }
-                        li[i].style.display = visible ? "" : "none";
                     }
                 }
             </script>
         </div>
-
 
         <!-- Footer Start -->
         <div class="container-fluid pt-4 px-4">
@@ -308,7 +241,6 @@
                     <div class="col-12 col-sm-6 text-center text-sm-start">
                         &copy; <a href="#">Televecinos</a>, All Right Reserved.
                     </div>
-
                 </div>
             </div>
         </div>
@@ -317,7 +249,7 @@
     <!-- Content End -->
 
     <!-- Popup de Confirmación para Eliminar Eventos -->
-    <div id="deleteConfirmationPopup" class="popup" >
+    <div id="deleteConfirmationPopup" class="popup">
         <div class="popup-content">
             <span class="close-btn" id="closeDeletePopupBtn">&times;</span>
             <img src="img/warning.png" alt="check" width="48" height="48" style="margin-top: -10px;">
@@ -367,8 +299,6 @@
         }
     </script>
 
-
-
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 </div>
@@ -391,5 +321,4 @@
 <!-- Template Javascript -->
 <script src="js/main.js"></script>
 </body>
-
 </html>
