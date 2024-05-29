@@ -10,11 +10,17 @@ import java.io.IOException;
 public class VistaServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int idVista = Integer.parseInt(request.getParameter("idVista"));
+        String idVista = (request.getParameter("idVista"));
         String vista = "";
-        if (idVista == 1) {
-            vista = "WEB-INF/InicioCoordinador.jsp";
+        switch(idVista){
+            case "inicioCoordinador":
+                vista = "WEB-INF/InicioCoordinador.jsp";
+                break;
+            case "":
+                break;
+
         }
+
         RequestDispatcher rd = request.getRequestDispatcher(vista);
         rd.forward(request, response);
     }

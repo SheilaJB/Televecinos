@@ -84,7 +84,7 @@
                 </div>
             </div>
             <div class="navbar-nav w-100">
-                <a href="VistaServlet?idVista=1" class="nav-item nav-link"><i class="fa fa-home me-2"></i><span style="font-size: 13.5px;"><b>Inicio</b></span></a>
+                <a href="VistaServlet?idVista=inicioVecino" class="nav-item nav-link"><i class="fa fa-home me-2"></i><span style="font-size: 13.5px;"><b>Inicio</b></span></a>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"><i class="fa fa-calendar me-2"></i><span style="font-size: 13.5px;"><b>Eventos</b></span></a>
                     <div class="dropdown-menu bg-transparent border-0">
