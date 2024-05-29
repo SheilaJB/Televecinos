@@ -17,7 +17,7 @@ public class EventoDao {
 
         String url = "jdbc:mysql://localhost:3306/televecinosdb";
         String username = "root";
-        String password = "1234";
+        String password = "root";
 
         String sql =
                 "SELECT " +

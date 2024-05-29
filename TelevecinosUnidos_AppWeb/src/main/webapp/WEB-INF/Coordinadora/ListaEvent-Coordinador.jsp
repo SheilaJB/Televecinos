@@ -124,8 +124,8 @@
                         <span class="d-none d-lg-inline-flex" style="color:#023047;"><b>Nombre Apellido</b></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                        <a href="perfil_C.html" class="dropdown-item">Mi perfil</a>
-                        <a href="index.html" class="dropdown-item">Cerrar sesión</a>
+                        <a href="VistaServlet?idVista=perfilC" class="dropdown-item">Mi perfil</a>
+                        <a href="VistaServlet?idVista=Index" class="dropdown-item">Cerrar sesión</a>
                     </div>
                 </div>
             </div>
@@ -148,8 +148,8 @@
                     <div class="col-md-2 mb-2">
                         <select id="filtroCategoria" class="form-select" onchange="filtrar()">
                             <option selected value="">Frecuencia</option>
-                            <option value="diaria">Semanal</option>
-                            <option value="interdiaria">Dos veces por semana</option>
+                            <option value="Semanal">Semanal</option>
+                            <option value="Dos veces por semana">Dos veces por semana</option>
 
                         </select>
                     </div>
