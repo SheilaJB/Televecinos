@@ -148,9 +148,9 @@
                     <div class="col-md-2 mb-2">
                         <select id="filtroCategoria" class="form-select" onchange="filtrar()">
                             <option selected value="">Frecuencia</option>
-                            <option value="diaria">Diaria</option>
-                            <option value="interdiaria">Interdiaria</option>
-                            <option value="semanal">Semanal</option>
+                            <option value="diaria">Semanal</option>
+                            <option value="interdiaria">Dos veces por semana</option>
+
                         </select>
                     </div>
                     <div class="col-md-3 mb-2">
@@ -181,6 +181,7 @@
                             <th scope="col">Nombre</th>
                             <th scope="col">Fecha de inicio</th>
                             <th scope="col">Estado</th>
+                            <th scope="col">Frecuencia</th>
                             <th scope="col">Visualizar</th>
                             <th scope="col">Editar</th>
                             <th scope="col">Borrar</th>
@@ -192,6 +193,7 @@
                             <td><%= eventoB.getNombre() %></td>
                             <td><%= eventoB.getFecha_inicio() %></td>
                             <td><%= eventoB.getEstadoString() %></td>
+                            <td><%= eventoB.getFrecuenciaString() %></td>
                             <td><button type="button" class="btn btn-info m-2" onclick="viewEvent()"><i class="fas fa-eye"></i></button></td>
                             <td><button type="button" class="btn btn-success m-2" onclick="editEvent()"><i class="fas fa-pencil-alt"></i></button></td>
                             <td><button type="button" class="btn btn-danger m-2" onclick="confirmDelete()"><i class="fas fa-trash-alt"></i></button></td>
@@ -216,15 +218,20 @@
                     for (var i = 1; i < tr.length; i++) {
                         var tdNombre = tr[i].getElementsByTagName('td')[0];
                         var tdEstado = tr[i].getElementsByTagName('td')[2];
-                        if (tdNombre && tdEstado) {
+                        var tdFrecuencia = tr[i].getElementsByTagName('td')[3];
+                        if (tdNombre && tdEstado && tdFrecuencia) {
                             var txtValueNombre = tdNombre.textContent || tdNombre.innerText;
                             var txtValueEstado = tdEstado.textContent || tdEstado.innerText;
+                            var txtValueFrecuencia = tdFrecuencia.textContent || tdFrecuencia.innerText;
                             var visible = true;
 
                             if (input && txtValueNombre.toUpperCase().indexOf(input) === -1) {
                                 visible = false;
                             }
                             if (estado && txtValueEstado.toUpperCase().indexOf(estado) === -1) {
+                                visible = false;
+                            }
+                            if (categoria && txtValueFrecuencia.toUpperCase().indexOf(categoria) === -1) {
                                 visible = false;
                             }
                             tr[i].style.display = visible ? '' : 'none';
