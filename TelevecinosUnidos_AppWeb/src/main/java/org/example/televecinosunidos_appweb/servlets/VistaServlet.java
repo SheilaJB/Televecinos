@@ -10,8 +10,9 @@ import java.io.IOException;
 public class VistaServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String idVista = (request.getParameter("idVista"));
+
         String vista = "";
+        String idVista = request.getParameter("idVista")==null?"inicioCoordinador":request.getParameter("idVista");//siempre va a haber un action, que va a ser lista por defecto
         switch(idVista){
             case "inicioCoordinador":
                 vista = "WEB-INF/Coordinadora/InicioCoordinador.jsp";
@@ -40,6 +41,9 @@ public class VistaServlet extends HttpServlet {
 
             case "preguntasFrecuentesC":
                 vista = "WEB-INF/Coordinadora/preguntasFrecuentes_C.jsp";
+                break;
+            case "eventoPropio":
+                vista = "WEB-INF/Coordinadora/eventoPropio.jsp";
                 break;
         }
 

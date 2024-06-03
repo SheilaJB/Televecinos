@@ -16,12 +16,23 @@ public class CoordinadorServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         EventoDao eventoDao = new EventoDao();
         ArrayList<EventoB> listaEventosPropios = eventoDao.listarEventosPropios();
-        request.setAttribute("lista",listaEventosPropios);
+        String vista = "";
 
-        String vista = "WEB-INF/Coordinadora/ListaEvent-Coordinador.jsp";
+        String action = request.getParameter("action")==null?"lista":request.getParameter("action");
+        switch (action) {
+            case "lista":
+                vista = "WEB-INF/Coordinadora/ListaEvent-Coordinador.jsp";
+                request.setAttribute("lista",listaEventosPropios);
+                request.getRequestDispatcher(vista).forward(request, response);
+                break;
+            case "verEvento":
+                String idEvento = request.getParameter("idEvento");
+                vista = "WEB-INF/Coordinadora/eventoPropio.jsp";
+                request.setAttribute("evento",eventoDao.buscarEventoPorId(idEvento));
+                request.getRequestDispatcher(vista).forward(request, response);
+                break;
 
-        RequestDispatcher rd = request.getRequestDispatcher(vista);
-        rd.forward(request, response);
+        }
     }
 
     @Override
