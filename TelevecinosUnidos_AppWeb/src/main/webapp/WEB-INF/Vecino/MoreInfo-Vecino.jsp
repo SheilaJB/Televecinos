@@ -239,9 +239,8 @@
                     <!-- Botón para crear evento -->
                     <h3>Selecciona la frecuencia: </h3>
                     <select id="tipoIncidencia" name="tipoIncidencia">
-                        <option value="opcion1">Lunes-Miércoles-Viernes</option>
+                        <option value="opcion1">Lunes-Miércoles</option>
                         <option value="opcion1">Martes-Jueves</option>
-                        <option value="opcion1">No tiene frecuencia</option>
                     </select>
 
 
@@ -291,86 +290,6 @@
             </div>
         </div>
         <!-- Form End -->
-
-
-        <!-- Eventos próximos-->
-        <div id="Prox_Eventos " class="container-fluid pt-4 px-4">
-            <h3 style="text-align: center; margin-top:50px;margin-bottom:50px;">¡Descubre nuestros próximos eventos!</h3>
-
-            <div class="rounded h-100 p-4" style=" background-color: #ffb703; padding: 20px; align-items: center;">
-                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-indicators">
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                    </div>
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <div class="row">
-                                <div class="col"class="mb-3" >
-                                    <img src="img/Deporte/ninas-jugando-voleibol.jpg" class="d-block w-100" alt="Slide 1">
-                                </div>
-                                <div class="col" >
-                                    <h4 style="text-align: center;" style="color:#023047;"> Titulo</h4>
-                                    <p style="text-align: justify;color:white;">
-                                        El sol se asomaba tímidamente entre las nubes dispersas, pintando de tonos dorados el paisaje que se extendía ante mis ojos.
-                                        El suave murmullo del viento me envolvía mientras caminaba por el sendero cubierto de hojas secas.
-                                    </p>
-                                    <a class="link-opacity-50-hover" style="font-size: small;"href="#">Más información aquí</a>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="row">
-                                <div class="col" >
-                                    <img src="img/Deporte/girl-posing-with-volley-ball.jpg" class="d-block w-100" alt="Slide 1">
-                                </div>
-                                <div class="col">
-                                    <h4 style="text-align: center;"> Reseña</h4>
-                                    <p style="text-align: justify;">
-                                        El sol se asomaba tímidamente entre las nubes dispersas, pintando de tonos dorados el paisaje que se extendía ante mis ojos.
-                                        El suave murmullo del viento me envolvía mientras caminaba por el sendero cubierto de hojas secas.
-                                        El aroma fresco del bosque me recordaba a la infancia, evocando recuerdos perdidos en el tiempo.
-                                        Cada paso me acercaba un poco más a la paz interior que tanto anhelaba, dejando atrás el bullicio del mundo moderno y sumergiéndome en la tranquilidad de la naturaleza
-                                    </p>
-                                    <a class="link-opacity-50-hover" style="font-size: small;"href="#">Más información aquí</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="row">
-                                <div class="col" >
-                                    <img src="img/Deporte/girls-training-volleyball-field.jpg" class="d-block w-100" alt="Slide 1">
-                                </div>
-                                <div class="col" >
-                                    <h4 style="text-align: center;"> Titulo</h4>
-
-                                    <p style="text-align: justify;">
-                                        El sol se asomaba tímidamente entre las nubes dispersas, pintando de tonos dorados el paisaje que se extendía ante mis ojos.
-                                        El suave murmullo del viento me envolvía mientras caminaba por el sendero cubierto de hojas secas.
-                                        El aroma fresco del bosque me recordaba a la infancia, evocando recuerdos perdidos en el tiempo.
-                                        Cada paso me acercaba un poco más a la paz interior que tanto anhelaba, dejando atrás el bullicio del mundo moderno y sumergiéndome en la tranquilidad de la naturaleza
-                                    </p>
-                                    <a class="link-opacity-50-hover" style="font-size: small;"href="#">Más información aquí</a>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
-                </div>
-
-
-            </div>
-        </div>
 
         <!-- Footer Start -->
         <div class="container-fluid pt-4 px-4">
