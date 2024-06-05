@@ -78,6 +78,7 @@ public class EventoDao {
         String password = "root";
 
         String sql = "SELECT " +
+                "e.idEventos AS id_evento, " +
                 "e.descripcion AS descripcion_evento, " +
                 "u.nombre AS nombre_coordinador, " +
                 "u.apellido AS apellido_coordinador, " +
@@ -85,8 +86,10 @@ public class EventoDao {
                 "ef.tipoFrecuencia AS frecuencia, " +
                 "e.cantidadVacantes AS cantidad_vacantes, " +
                 "e.cantDisponibles AS cantidad_disponibles, " +
-                "DATE(e.fecha_inicio) AS fecha_inicio, " +
-                "DATE(e.fecha_fin) AS fecha_fin, " +
+                "DATE_FORMAT(e.fecha_inicio, '%d %M') AS fecha_inicio, " +
+                "DATE_FORMAT(e.fecha_fin, '%d %M') AS fecha_fin, " +
+                "pf.nombre AS nombreProfesor," +
+                "pf.apellido AS apellidoProfesor,"+
                 "TIME(e.fecha_inicio) AS hora_inicio, " +
                 "TIME(e.fecha_fin) AS hora_fin " +
                 "FROM " +
@@ -95,6 +98,8 @@ public class EventoDao {
                 "Usuario u ON e.Coordinador_idUsuario = u.idUsuario " +
                 "JOIN " +
                 "EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
+                "JOIN " +
+                "profesoresevento pf ON e.ProfesoresEvento_idProfesoresEvento = pf.idProfesoresEvento" +
                 "WHERE e.idEventos = ?";
 
 
@@ -107,16 +112,29 @@ public class EventoDao {
             try(ResultSet rs = pstmt.executeQuery()){
                 while (rs.next()) {
                     evento = new EventoB();
-                    evento.setDescripcion(rs.getString(1));
-                    evento.setNombre(rs.getString(2));
-                    evento.setLugar(rs.getString(3));
-                    evento.setFecha_inicio(rs.getString(4));
-                    evento.setFecha_fin(rs.getString(5));
-                    evento.setCantidadVacantes(rs.getInt(6));
-                    evento.setFoto(rs.getString(8));
+                    evento.setidEvento(rs.getInt(1));
+                    evento.setDescripcion(rs.getString(2));
+                    evento.setNombre(rs.getString(3));
+                    evento.setApellido(rs.getString("apellido_coordinador"));
+                    evento.setLugar(rs.getString(5));
+                    evento.setFrecuenciaString(rs.getString(6));
+                    evento.setCantidadVacantes(rs.getInt(7));
+                    evento.setCantDisponibles(rs.getInt("cantidad_disponibles"));
+
+                    evento.setFecha_inicio(rs.getString(9));
+                    evento.setFecha_fin(rs.getString(10));
+
+                    evento.setNombreProfesor(rs.getString("nombreProfesor"));
+                    evento.setApellidoProfesor(rs.getString("apellidoProfesor"));
+
+                    evento.setHora_inicio(rs.getString("hora_incio"));
+                    evento.setHora_fin(rs.getString("hora_fin"));
+                    /* evento.setFoto(rs.getString(8));
                     evento.setListaMateriales(rs.getString(9));
+
+
                     evento.setEventFrecuencia_idEventFrecuencia(rs.getInt(10));
-                    evento.setProfesoresEvento_idProfesoresEvento(rs.getInt(11));
+                    evento.setProfesoresEvento_idProfesoresEvento(rs.getInt(11));*/
 
                 }
             }

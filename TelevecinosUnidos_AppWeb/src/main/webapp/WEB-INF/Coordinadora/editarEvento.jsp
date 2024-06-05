@@ -5,7 +5,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Crear Evento</title>
+    <title>Editar Evento</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -119,7 +119,7 @@
             <div class="row g-4">
                 <div class="col-sm-12">
                     <div class="rounded h-100 p-4" style=" background-color: #ffb703;">
-                        <form>
+                        <form method="post" action="<%=request.getContextPath()%>/CoordinadorServlet?action=editar">
                             <!---Nombre del evento-->
                             <div class="mb-3">
                                 <label for="nombreEvento" class="form-label" style="color:#023047;"><b>Ingrese un nombre del evento:</b></label>

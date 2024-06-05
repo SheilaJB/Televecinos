@@ -3,11 +3,15 @@ package org.example.televecinosunidos_appweb.model.beans;
 public class EventoB {
     private int idEvento;
     private String nombre;
+    private String apellido;
     private String descripcion;
     private String lugar;
     private int Coordinador_idUsuario;
     private String fecha_inicio;
     private String fecha_fin;
+
+    private String hora_inicio;
+    private String hora_fin;
     private int cantidadVacantes;
     private int cantDisponibles;
     private String foto;
@@ -19,6 +23,9 @@ public class EventoB {
 
     private String estadoString;
     private String frecuenciaString;
+
+    private String nombreProfesor;
+    private String apellidoProfesor;
 
     public String getFrecuenciaString() {
         return frecuenciaString;
@@ -154,5 +161,53 @@ public class EventoB {
 
     public void setProfesoresEvento_idProfesoresEvento(int profesoresEvento_idProfesoresEvento) {
         ProfesoresEvento_idProfesoresEvento = profesoresEvento_idProfesoresEvento;
+    }
+
+    public int getIdEvento() {
+        return idEvento;
+    }
+
+    public void setIdEvento(int idEvento) {
+        this.idEvento = idEvento;
+    }
+
+    public String getNombreProfesor() {
+        return nombreProfesor;
+    }
+
+    public void setNombreProfesor(String nombreProfesor) {
+        this.nombreProfesor = nombreProfesor;
+    }
+
+    public String getApellidoProfesor() {
+        return apellidoProfesor;
+    }
+
+    public void setApellidoProfesor(String apellidoProfesor) {
+        this.apellidoProfesor = apellidoProfesor;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public String getHora_inicio() {
+        return hora_inicio;
+    }
+
+    public void setHora_inicio(String hora_inicio) {
+        this.hora_inicio = hora_inicio;
+    }
+
+    public String getHora_fin() {
+        return hora_fin;
+    }
+
+    public void setHora_fin(String hora_fin) {
+        this.hora_fin = hora_fin;
     }
 }
