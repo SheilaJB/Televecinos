@@ -142,7 +142,7 @@
             <!-- Filtro -->
             <div style="background-color: #FFB703; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
                 <div class="row justify-content-center align-items-center">
-                    <div class="col-md-3 mb-2">
+                    <div class="col-md-5 mb-2">
                         <input type="text" class="form-control" id="filtroInput" placeholder="Buscar..." onkeyup="filtrar()">
                     </div>
                     <div class="col-md-2 mb-2">
@@ -162,7 +162,9 @@
                         </select>
                     </div>
                     <div class="col-md-2 mb-2">
-                        <button type="button" class="btn btn-primary w-100" onclick="crearEvento()"><b>Crear evento</b></button>
+                        <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=crearEvento" class="btn btn-primary w-100">
+                            <b>Crear evento</b>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -194,7 +196,7 @@
                             <td><%= eventoB.getFecha_inicio() %></td>
                             <td><%= eventoB.getEstadoString() %></td>
                             <td><%= eventoB.getFrecuenciaString() %></td>
-                            <td><a href="<%=request.getContextPath()%>/CoordinadorServlet?action=verEvento&idEvento=<%=eventoB.getIdEvento()%>"><button type="button" class="btn btn-info m-2" onclick="viewEvent()"><i class="fas fa-eye"></i></button></a></td>
+                            <td><a href="<%=request.getContextPath()%>/CoordinadorServlet?action=verEvento&idEvento=<%=eventoB.getidEvento()%>"><button type="button" class="btn btn-info m-2" onclick="viewEvent()"><i class="fas fa-eye"></i></button></a></td>
                             <td><button type="button" class="btn btn-success m-2" onclick="editEvent()"><i class="fas fa-pencil-alt"></i></button></td>
                             <td><button type="button" class="btn btn-danger m-2" onclick="confirmDelete()"><i class="fas fa-trash-alt"></i></button></td>
                         </tr>

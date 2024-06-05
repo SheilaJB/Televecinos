@@ -36,12 +36,12 @@ public class EventoB {
         this.estadoString = estadoString;
     }
 
-    public int getIdEvento() {
+    public int getidEvento() {
         return idEvento;
     }
 
-    public void setIdEvento(int idEvento) {
-        this.idEvento = idEvento;
+    public void setidEvento(int idEventos) {
+        this.idEvento = idEventos;
     }
 
     public String getNombre() {
