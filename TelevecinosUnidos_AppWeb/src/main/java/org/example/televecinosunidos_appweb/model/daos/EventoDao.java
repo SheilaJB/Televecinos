@@ -147,7 +147,7 @@ public class EventoDao {
 
     //Function crear evento
     public void crearEvento(String nombre, String descripcion, int Coordinador_idUsuario,
-                            int ProfesoresEvento_idProfesoresEvento, String lugar, int frecuencia,
+                            int ProfesoresEvento_idProfesoresEvento, String lugar, String frecuencia,
                             int cantidadVacantes, String fecha_inicio, String fecha_fin, String foto, String listaMateriales, int EventFrecuencia_idEventFrecuencia ) {
 
         try {

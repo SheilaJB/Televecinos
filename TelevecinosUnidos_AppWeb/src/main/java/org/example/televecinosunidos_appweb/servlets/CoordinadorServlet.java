@@ -70,13 +70,14 @@ public class CoordinadorServlet extends HttpServlet {
                 String Coordinador_idUsuario = request.getParameter("Coordinador_idUsuario");
                 String fecha_inicio = request.getParameter("fecha_inicio");
                 String fecha_fin = request.getParameter("fecha_fin");
+                String frecuencia = request.getParameter("frecuencia");
                 String cantidadVacantes = request.getParameter("cantidadVacantes");
                 String foto = request.getParameter("foto");
                 String listaMateriales = request.getParameter("listaMateriales");
                 String EventFrecuencia_idEventFrecuencia = request.getParameter("EventFrecuencia_idEventFrecuencia");
                 String ProfesoresEvento_idProfesoresEvento = request.getParameter("ProfesoresEvento_idProfesoresEvento");
 
-                /*
+
                 boolean isAllValid = true;
 
                 if(nombre.length() > 35){
@@ -87,50 +88,77 @@ public class CoordinadorServlet extends HttpServlet {
                     isAllValid = false;
                 }*/
 
-                /*
+
                 if(isAllValid){
 
-                    Job job = jobDao.buscarPorId(jobId);
+                    //Job job = jobDao.buscarPorId(jobId);
+                    EventoB eventoB = eventoDao.buscarEventoPorId(nombre);
 
-                    if(job == null){
-                        jobDao.crear(jobId,jobTitle,Integer.parseInt(minSalary),Integer.parseInt(maxSalary));
-                        response.sendRedirect(request.getContextPath() + "/JobServlet");
+                    if(eventoB == null){
+                        //jobDao.crear(jobId,jobTitle,Integer.parseInt(minSalary),Integer.parseInt(maxSalary));
+
+                        eventoDao.crearEvento(nombre, descripcion, Integer.parseInt(Coordinador_idUsuario),
+                        Integer.parseInt(ProfesoresEvento_idProfesoresEvento), lugar, frecuencia,
+                        Integer.parseInt(cantidadVacantes), fecha_inicio, fecha_fin, foto, listaMateriales, Integer.parseInt(EventFrecuencia_idEventFrecuencia));
+                        response.sendRedirect(request.getContextPath() + "/CoordinadorServlet");
                     }else{
-                        request.getRequestDispatcher("job/form_new.jsp").forward(request,response);
+                        request.getRequestDispatcher("WEB-INF/Coordinadora/creacionEvento.jsp").forward(request,response);
                     }
                 }else{
-                    request.getRequestDispatcher("job/form_new.jsp").forward(request,response);
+                    request.getRequestDispatcher("WEB-INF/Coordinadora/creacionEvento.jsp").forward(request,response);
                 }
                 break;
             case "e": //voy a actualizar
-                String jobId2 = request.getParameter("jobId");
-                String jobTitle2 = request.getParameter("jobTitle");
-                String minSalary2 = request.getParameter("minSalary");
-                String maxSalary2 = request.getParameter("maxSalary");
+                String nombre2 = request.getParameter("nombre");
+                String descripcion2 = request.getParameter("descripcion");
+                String lugar2 = request.getParameter("lugar");
+                String Coordinador_idUsuario2 = request.getParameter("Coordinador_idUsuario");
+                String fecha_inicio2 = request.getParameter("fecha_inicio");
+                String fecha_fin2 = request.getParameter("fecha_fin");
+                String frecuencia2 = request.getParameter("frecuencia");
+                String cantidadVacantes2 = request.getParameter("cantidadVacantes");
+                String foto2 = request.getParameter("foto");
+                String listaMateriales2 = request.getParameter("listaMateriales");
+                String EventFrecuencia_idEventFrecuencia2 = request.getParameter("EventFrecuencia_idEventFrecuencia");
+                String ProfesoresEvento_idProfesoresEvento2 = request.getParameter("ProfesoresEvento_idProfesoresEvento");
+
 
                 boolean isAllValid2 = true;
 
-                if(jobTitle2.length() > 35){
+                /*if(jobTitle2.length() > 35){
                     isAllValid2 = false;
-                }
+                }*/
 
-                if(jobId2.length() > 10){
+                if(nombre2.length() > 10){
                     isAllValid2 = false;
                 }
                 if(isAllValid2){
-                    Job job = new Job();
-                    job.setJobId(jobId2);
-                    job.setJobTitle(jobTitle2);
-                    job.setMinSalary(Integer.parseInt(minSalary2));
-                    job.setMaxSalary(Integer.parseInt(maxSalary2));
 
-                    jobDao.actualizar(job);
-                    response.sendRedirect(request.getContextPath() + "/JobServlet");
+                    EventoB eventoB = new EventoB();
+
+                    eventoB.setNombre(nombre2);
+                    eventoB.setDescripcion(descripcion2);
+                    eventoB.setLugar(lugar2);
+                    //eventoB.setCoordinador_idUsuario(Coordinador_idUsuario2); ACA VERIFICAR, integer.parseint???
+                    eventoB.setFecha_inicio(fecha_inicio2);
+                    eventoB.setFecha_fin(fecha_fin2);
+                    eventoB.setFrecuenciaString(frecuencia2);
+                   // eventoB.setCantidadVacantes(cantidadVacantes2); ACA VERIFICAR
+                    eventoB.setFoto(foto2);
+                    eventoB.setListaMateriales(listaMateriales2);
+                    eventoB.setEventFrecuencia_idEventFrecuencia(Integer.parseInt(EventFrecuencia_idEventFrecuencia2));
+                    eventoB.setProfesoresEvento_idProfesoresEvento(Integer.parseInt(ProfesoresEvento_idProfesoresEvento2));
+
+
+                    //falta crear el metodo actualizar en el dao
+                   // EventoDao.actualizar(eventoB);
+                    response.sendRedirect(request.getContextPath() + "/CoordinadorServlet");
                 }else{
-                    request.setAttribute("job",jobDao.buscarPorId(jobId2));
-                    request.getRequestDispatcher("job/form_edit.jsp").forward(request,response);
+                    //request.setAttribute("job",jobDao.buscarPorId(jobId2));
+                    request.setAttribute("job",eventoDao.buscarEventoPorId(nombre2));
+                    request.getRequestDispatcher("WEB-INF/Coordinadora/creacionEvento.jsp").forward(request,response);
                 }
-                break;*/
+                break;
 
             /*case "s":
                 String textBuscar = request.getParameter("textoBuscar");
