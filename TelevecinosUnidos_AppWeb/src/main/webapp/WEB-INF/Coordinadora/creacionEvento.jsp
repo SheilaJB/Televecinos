@@ -1,4 +1,8 @@
+<%@ page import="org.example.televecinosunidos_appweb.model.beans.ProfesoresEvento" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page pageEncoding="UTF-8" %>
+<% ArrayList<ProfesoresEvento> lista = (ArrayList<ProfesoresEvento>) request.getAttribute("lista");%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -143,237 +147,235 @@
 
         <h2 class="mb-2 text-center" style = "padding-top: 3%;" style="color:#023047;">Creación de un nuevo evento</h2>
         <!-- Form Start -->
-        <div class="container-fluid pt-4 px-4">
-            <div class="row g-4">
-                <div class="col-sm-12">
-                    <div class="rounded h-100 p-4" style=" background-color: #ffb703;">
-                        <form>
-                            <!---Nombre del evento-->
-                            <div class="mb-3">
-                                <label for="nombreEvento" class="form-label" style="color:#023047;"><b>Ingrese un nombre del evento:</b></label>
-                                <input type="text" class="form-control" id="nombreEvento" placeholder="Escribir">
-                            </div>
+        <form method="post" action="<%=request.getContextPath()%>/CoordinadorServlet">
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+                    <div class="col-sm-12">
+                        <div class="rounded h-100 p-4" style=" background-color: #ffb703;">
+                                <!---Nombre del evento-->
+                                <div class="mb-3">
+                                    <label for="nombreEvento" class="form-label" style="color:#023047;" ><b>Ingrese un nombre del evento:</b></label>
+                                    <input type="text" class="form-control" id="nombreEvento" placeholder="Escribir" name="nombreEvento">
+                                </div>
 
-                            <!---Descripción del evento-->
-                            <div class="mb-3">
-                                <label for="descripcionEvento" class="form-label" style="color:#023047;"><b>Ingrese una descripción del evento:</b></label>
-                                <textarea class="form-control" id="descripcionEvento" rows="2" placeholder="Escribir una breve descripción"></textarea>
-                            </div>
-                            <!---Nombre del coordinador-->
-                            <div class="mb-3">
-                                <label for="nombreCoordinador" class="form-label" style="color:#023047;"><b>Ingrese nombre del coordinador:</b></label>
-                                <input type="text" class="form-control" id="nombreCoordinador" placeholder="Escribir">
-                            </div>
-                        </form>
+                                <!---Descripción del evento-->
+                                <div class="mb-3">
+                                    <label for="descripcionEvento" class="form-label" style="color:#023047;" ><b>Ingrese una descripción del evento:</b></label>
+                                    <textarea class="form-control" id="descripcionEvento" rows="2" placeholder="Escribir una breve descripción" name="descripcionEvento"></textarea>
+                                </div>
+                                <!---Nombre del coordinador-->
+                                <div class="mb-3">
+                                    <label for="nombreCoordinador" class="form-label" style="color:#023047;" ><b>Ingrese nombre del coordinador:</b></label>
+                                    <input type="text" class="form-control" id="nombreCoordinador" placeholder="Escribir" name="idCoordinador">
+                                </div>
+                        </div>
                     </div>
-                </div>
 
 
-                <div class="col-sm-12 col-sm-12 col-xl-6">
-                    <div class="rounded h-100 p-4" style = "background-color:#219ebc;">
+                    <div class="col-sm-12 col-sm-12 col-xl-6">
+                        <div class="rounded h-100 p-4" style = "background-color:#219ebc;">
+                                <!---Nombre del profesor-->
+                                <div class="mb-3">
+                                    <label for="nombreInstructor" class="form-label" style="color:#023047;" ><b>Ingrese nombre del profesor:</b></label>
+                                    <select id="nombreInstructor" class="form-select mb-3" aria-label="Default select example" name="nombreProfesor">
+                                        <option selected>Seleccione un instructor</option>
+                                        <% int i = 1; %>
+                                        <% for (ProfesoresEvento pEvento : lista) { %>
+                                        <option value="<%= pEvento.getIdProfesoresEvento() %>"><%= pEvento.getNombre() %> <%= pEvento.getApellido() %></option>
+                                            <% i++;%>
+                                        <% } %>
 
-                        <!---Nombre del profesor-->
-                        <div class="mb-3">
-                            <label for="nombreInstructor" class="form-label" style="color:#023047;"><b>Ingrese nombre del profesor:</b></label>
-                            <select id="nombreInstructor" class="form-select mb-3" aria-label="Default select example">
-                                <option selected>Seleccione un instructor</option>
-                                <option value="1">Pablo Ramirez</option>
-                                <option value="2">Renato Campos</option>
-                                <option value="3">Mael Salazar</option>
-                            </select>
+                                    </select>
+                                </div>
+                                <!---Lugar del evento-->
+                                <div class="mb-3">
+                                    <label for="lugarEvento" class="form-label" style="color:#023047;"><b>Lugar del evento:</b></label>
+                                    <input type="text" class="form-control" id="lugarEvento" placeholder="Escribir" name="lugar">
+                                </div>
+                                <!----Frecuencia del evento----->
+                                <label for="frecuenciaEvento" class="form-label" style="color:#023047;"><b>Frecuencia del evento:</b></label>
+                                <select id="frecuenciaEvento" class="form-select mb-3" aria-label="Default select example" onchange="mostrarOpciones()" name="frecuencia">
+                                    <option selected>Seleccione la frecuencia del evento</option>
+                                    <option value="1">Dos veces por semana</option>
+                                    <option value="2">Semanal</option>
+                                </select>
+
+                                <div id="opcionesInterdiarias" style="display:none;">
+                                    <select id="diasInterdiarios" class="form-select mb-3" aria-label="Default select example">
+                                        <option selected>Seleccione la opción: </option>
+                                        <option value="1">Lunes-Miércoles</option>
+                                        <option value="2">Martes-Jueves</option>
+                                    </select>
+                                </div>
+
+                                <div id="opcionesSemanal" style="display:none;">
+                                    <label for="diaSemana" class="form-label" style="color:#023047;"><b>Elegir día:</b></label>
+                                    <select id="diaSemana" class="form-select mb-3" aria-label="Default select example">
+                                        <option selected>Seleccione el día a la semana:</option>
+                                        <option value="1">Lunes</option>
+                                        <option value="2">Martes</option>
+                                        <option value="3">Miércoles</option>
+                                        <option value="4">Jueves</option>
+                                        <option value="5">Viernes</option>
+                                    </select>
+                                </div>
+
+                                <script>
+                                    function mostrarOpciones() {
+                                        var frecuenciaSeleccionada = document.getElementById("frecuenciaEvento").value;
+                                        var opcionesInterdiarias = document.getElementById("opcionesInterdiarias");
+                                        var opcionesSemanal = document.getElementById("opcionesSemanal");
+
+                                        if (frecuenciaSeleccionada === "1") {
+                                            opcionesInterdiarias.style.display = "block";
+                                            opcionesSemanal.style.display = "none";
+                                        } else if (frecuenciaSeleccionada === "2") {
+                                            opcionesInterdiarias.style.display = "none";
+                                            opcionesSemanal.style.display = "block";
+                                        } else {
+                                            opcionesInterdiarias.style.display = "none";
+                                            opcionesSemanal.style.display = "none";
+                                        }
+                                    }
+                                </script>
+
+                                <!----Cantidad de vacantes disponibles----->
+                                <label for="cantVacantes" class="form-label" style="color:#023047;"><b>Cantidad de vacantes:</b> </label>
+                                <select id="cantVacantes" class="form-select mb-3" aria-label="Default select example" name="cantidadVacantes">
+                                    <option selected>Seleccione la cantidad de vacantes disponibles</option>
+                                    <!-- Las opciones se agregarán dinámicamente con JavaScript -->
+                                </select>
+                            </div>
+                            <script>
+                                // Función que se ejecutará al cargar la ventana
+                                window.onload = function() {
+                                    var selectElement = document.getElementById('cantVacantes');
+
+                                    // Crear opciones de 10 a 30
+                                    for(var i = 10; i <= 30; i++) {
+                                        var option = new Option(i, i);
+                                        selectElement.add(option);
+                                    }
+                                };
+                            </script>
                         </div>
-                        <!---Lugar del evento-->
-                        <div class="mb-3">
-                            <label for="lugarEvento" class="form-label" style="color:#023047;"><b>Lugar del evento:</b></label>
-                            <input type="text" class="form-control" id="lugarEvento" placeholder="Escribir">
+
+                        <div class="col-sm-12 col-xl-6">
+                            <div class="bg-light rounded h-100 p-4">
+                                <!-- Fecha del evento -->
+                                <div class="mb-3">
+                                    <label for="fechaInicioEvento" class="form-label" style="color:#023047;"><b>Fecha de inicio:</b></label>
+                                    <input type="date" class="form-control" id="fechaInicioEvento" name="fecha_inicio">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="fechaFinEvento" class="form-label" style="color:#023047;"><b>Fecha de finalización:</b></label>
+                                    <input type="date" class="form-control" id="fechaFinEvento" name="fecha_fin">
+                                </div>
+
+                                <!-- Hora de inicio del evento -->
+                                <div class="mb-3">
+                                    <label for="horaInicioEvento" class="form-label" style="color:#023047;"><b>Hora de inicio:</b></label>
+                                    <input type="time" class="form-control" id="horaInicioEvento" name="hora_inicio">
+                                </div>
+
+                                <!-- Hora de finalización del evento -->
+                                <div class="mb-3">
+                                    <label for="horaFinEvento" class="form-label" style="color:#023047;"><b>Hora de finalización:</b></label>
+                                    <input type="time" class="form-control" id="horaFinEvento" name="hora_fin">
+                                </div>
+                            </div>
+                    </div>
+
+
+                    <!----Subir foto---->
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="rounded h-100 p-4" style="background-color:#fb8500" >
+                            <h5 class="mb-4" style="color:#023047;"><b>Subir foto</b></h5>
+                            <div class="mb-3">
+                                <label for="subirFoto" class="form-label" style="color:#023047;"><b>Subir una foto en formato * .jpg .jpeg o .png</b></label>
+                                <input class="form-control" type="file" id="subirFoto" accept=".jpg, .jpeg, .png" name="foto">
+                            </div>
+                            <!-- Contenedor para la previsualización de la imagen -->
+                            <div class="mb-3">
+                                <img id="preview" src="#" alt="Vista previa de la imagen" class="img-thumbnail" style="display: none;">
+                            </div>
                         </div>
-                        <!----Frecuencia del evento----->
-                        <label for="frecuenciaEvento" class="form-label" style="color:#023047;"><b>Frecuencia del evento:</b></label>
-                        <select id="frecuenciaEvento" class="form-select mb-3" aria-label="Default select example" onchange="mostrarOpciones()">
-                            <option selected>Seleccione la frecuencia del evento</option>
-                            <option value="1">Dos veces por semana</option>
-                            <option value="2">Semanal</option>
-                        </select>
-
-                        <div id="opcionesInterdiarias" style="display:none;">
-                            <select id="diasInterdiarios" class="form-select mb-3" aria-label="Default select example">
-                                <option selected>Seleccione la opción: </option>
-                                <option value="1">Lunes-Miércoles</option>
-                                <option value="2">Martes-Jueves</option>
-                            </select>
-                        </div>
-
-                        <div id="opcionesSemanal" style="display:none;">
-                            <label for="diaSemana" class="form-label" style="color:#023047;"><b>Elegir día:</b></label>
-                            <select id="diaSemana" class="form-select mb-3" aria-label="Default select example">
-                                <option selected>Seleccione el día a la semana:</option>
-                                <option value="1">Lunes</option>
-                                <option value="2">Martes</option>
-                                <option value="3">Miércoles</option>
-                                <option value="4">Jueves</option>
-                                <option value="5">Viernes</option>
-                            </select>
-                        </div>
-
-                        <script>
-                            function mostrarOpciones() {
-                                var frecuenciaSeleccionada = document.getElementById("frecuenciaEvento").value;
-                                var opcionesInterdiarias = document.getElementById("opcionesInterdiarias");
-                                var opcionesSemanal = document.getElementById("opcionesSemanal");
-
-                                if (frecuenciaSeleccionada === "1") {
-                                    opcionesInterdiarias.style.display = "block";
-                                    opcionesSemanal.style.display = "none";
-                                } else if (frecuenciaSeleccionada === "2") {
-                                    opcionesInterdiarias.style.display = "none";
-                                    opcionesSemanal.style.display = "block";
-                                } else {
-                                    opcionesInterdiarias.style.display = "none";
-                                    opcionesSemanal.style.display = "none";
-                                }
-                            }
-                        </script>
-
-                        <!----Cantidad de vacantes disponibles----->
-                        <label for="cantVacantes" class="form-label" style="color:#023047;"><b>Cantidad de vacantes:</b> </label>
-                        <select id="cantVacantes" class="form-select mb-3" aria-label="Default select example">
-                            <option selected>Seleccione la cantidad de vacantes disponibles</option>
-                            <!-- Las opciones se agregarán dinámicamente con JavaScript -->
-                        </select>
                     </div>
                     <script>
-                        // Función que se ejecutará al cargar la ventana
-                        window.onload = function() {
-                            var selectElement = document.getElementById('cantVacantes');
-
-                            // Crear opciones de 10 a 30
-                            for(var i = 10; i <= 30; i++) {
-                                var option = new Option(i, i);
-                                selectElement.add(option);
+                        document.getElementById('subirFoto').addEventListener('change', function(event) {
+                            var file = event.target.files[0];
+                            if (file) {
+                                var reader = new FileReader();
+                                reader.onload = function(e) {
+                                    var imgElement = document.getElementById('preview');
+                                    imgElement.src = e.target.result;
+                                    imgElement.style.display = 'block'; // Muestra la imagen
+                                };
+                                reader.readAsDataURL(file);
                             }
-                        };
-                    </script>
-                </div>
-
-                <div class="col-sm-12 col-xl-6">
-                    <div class="bg-light rounded h-100 p-4">
-                        <!-- Fecha del evento -->
-                        <div class="mb-3">
-                            <label for="fechaInicioEvento" class="form-label" style="color:#023047;"><b>Fecha de inicio:</b></label>
-                            <input type="date" class="form-control" id="fechaInicioEvento" name="fecha_inicio">
-                        </div>
-                        <div class="mb-3">
-                            <label for="fechaFinEvento" class="form-label" style="color:#023047;"><b>Fecha de finalización:</b></label>
-                            <input type="date" class="form-control" id="fechaFinEvento" name="fecha_fin">
-                        </div>
-
-                        <!-- Hora de inicio del evento -->
-                        <div class="mb-3">
-                            <label for="horaInicioEvento" class="form-label" style="color:#023047;"><b>Hora de inicio:</b></label>
-                            <input type="time" class="form-control" id="horaInicioEvento" name="hora_inicio">
-                        </div>
-
-                        <!-- Hora de finalización del evento -->
-                        <div class="mb-3">
-                            <label for="horaFinEvento" class="form-label" style="color:#023047;"><b>Hora de finalización:</b></label>
-                            <input type="time" class="form-control" id="horaFinEvento" name="hora_fin">
-                        </div>
-                    </div>
-                </div>
-
-
-                <!----Subir foto---->
-                <div class="col-sm-12 col-xl-6">
-                    <div class="rounded h-100 p-4" style="background-color:#fb8500" >
-                        <h5 class="mb-4" style="color:#023047;"><b>Subir foto</b></h5>
-                        <div class="mb-3">
-                            <label for="subirFoto" class="form-label"style="color:#023047;"><b>Subir una foto en formato * .jpg .jpeg o .png</b></label>
-                            <input class="form-control" type="file" id="subirFoto" accept=".jpg, .jpeg, .png">
-                        </div>
-                        <!-- Contenedor para la previsualización de la imagen -->
-                        <div class="mb-3">
-                            <img id="preview" src="#" alt="Vista previa de la imagen" class="img-thumbnail" style="display: none;">
-                        </div>
-                    </div>
-                </div>
-                <script>
-                    document.getElementById('subirFoto').addEventListener('change', function(event) {
-                        var file = event.target.files[0];
-                        if (file) {
-                            var reader = new FileReader();
-                            reader.onload = function(e) {
-                                var imgElement = document.getElementById('preview');
-                                imgElement.src = e.target.result;
-                                imgElement.style.display = 'block'; // Muestra la imagen
-                            };
-                            reader.readAsDataURL(file);
-                        }
-                    });
-                </script>
-
-
-                <!-- Materiales -->
-                <div class="col-sm-12 col-xl-6">
-                    <div class="rounded h-100 p-4" style = "background-color: #8ecae6;">
-                        <div class="mb-3" id="materialesContainer">
-                            <label for="materialesEvento" class="form-label" style="color:#023047;"><b>Materiales:</b></label>
-                            <div class="input-group mb-3">
-                                <input type="text" class="form-control" name="materiales[]" placeholder="Presione + para añadir más materiales">
-                                <button class="btn btn-outline-secondary" type="button" id="addMaterial">+</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <script>
-                    document.addEventListener('DOMContentLoaded', function() {
-                        var materialesContainer = document.getElementById('materialesContainer');
-                        var addMaterialButton = document.getElementById('addMaterial');
-
-                        addMaterialButton.addEventListener('click', function() {
-                            var newInputGroup = document.createElement('div');
-                            newInputGroup.classList.add('input-group', 'mb-3');
-
-                            var newInput = document.createElement('input');
-                            newInput.type = 'text';
-                            newInput.name = 'materiales[]';
-                            newInput.classList.add('form-control');
-                            newInput.placeholder = 'Presione - para eliminar este material';
-
-                            var removeButton = document.createElement('button');
-                            removeButton.classList.add('btn', 'btn-outline-danger');
-                            removeButton.type = 'button';
-                            removeButton.textContent = '−';
-
-                            // Evento para eliminar el campo
-                            removeButton.addEventListener('click', function() {
-                                this.parentElement.remove();
-                            });
-
-                            newInputGroup.appendChild(newInput);
-                            newInputGroup.appendChild(removeButton);
-
-                            materialesContainer.appendChild(newInputGroup);
                         });
-                    });
-                </script>
+                    </script>
 
+
+                    <!-- Materiales -->
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="rounded h-100 p-4" style = "background-color: #8ecae6;">
+                                <label  class="form-label" style="color:#023047;"><b>Materiales:</b></label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" name="materiales" placeholder="Escriba los materiales a usar">
+                                </div>
+
+                        </div>
+                    </div>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            var materialesContainer = document.getElementById('materialesContainer');
+                            var addMaterialButton = document.getElementById('addMaterial');
+
+                            addMaterialButton.addEventListener('click', function() {
+                                var newInputGroup = document.createElement('div');
+                                newInputGroup.classList.add('input-group', 'mb-3');
+
+                                var newInput = document.createElement('input');
+                                newInput.type = 'text';
+                                newInput.name = 'materiales[]';
+                                newInput.classList.add('form-control');
+                                newInput.placeholder = 'Presione - para eliminar este material';
+
+                                var removeButton = document.createElement('button');
+                                removeButton.classList.add('btn', 'btn-outline-danger');
+                                removeButton.type = 'button';
+                                removeButton.textContent = '−';
+
+                                // Evento para eliminar el campo
+                                removeButton.addEventListener('click', function() {
+                                    this.parentElement.remove();
+                                });
+
+                                newInputGroup.appendChild(newInput);
+                                newInputGroup.appendChild(removeButton);
+
+                                materialesContainer.appendChild(newInputGroup);
+                            });
+                        });
+                    </script>
+
+                </div>
             </div>
-        </div>
-        <!-- Form End -->
+            <!-- Form End -->
 
-        <!-- Botón para crear evento -->
-        <div style="text-align: right; margin-right: 100px; padding-top: 2%;">
-            <button type="submit" class="btn btn-primary" style="background-color: #023047; border-color: #023047; color: #ffffff;" onclick="mostrarMensajeExito()"><b>Crear Evento</b></button>
-        </div>
-
-        <script>
-            function mostrarMensajeExito() {
-                // Mostrar ventana emergente con mensaje de éxito
-                alert("El evento fue creado exitosamente.");
-                window.location.href = 'ListaEvent-Coordinador.html';
-            }
-        </script>
-
+            <!-- Botón para crear evento -->
+            <div style="text-align: right; margin-right: 100px; padding-top: 2%;">
+                <button type="submit" class="btn btn-primary" style="background-color: #023047; border-color: #023047; color: #ffffff;" onclick="mostrarMensajeExito()"><b>Crear Evento</b></button>
+            </div>
+            <script>
+                function mostrarMensajeExito() {
+                    // Mostrar ventana emergente con mensaje de éxito
+                    alert("El evento fue creado exitosamente.");
+                    window.location.href = 'ListaEvent-Coordinador.html';
+                }
+            </script>
+        </form>
         <!-- Footer Start -->
         <div class="container-fluid pt-4 px-4">
             <div class="bg-light rounded-top p-4">

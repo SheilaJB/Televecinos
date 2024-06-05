@@ -3,7 +3,9 @@ package org.example.televecinosunidos_appweb.servlets;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+
 import org.example.televecinosunidos_appweb.model.beans.EventoB;
+import org.example.televecinosunidos_appweb.model.beans.ProfesoresEvento;
 import org.example.televecinosunidos_appweb.model.daos.EventoDao;
 
 
@@ -17,7 +19,6 @@ public class CoordinadorServlet extends HttpServlet {
         EventoDao eventoDao = new EventoDao();
         ArrayList<EventoB> listaEventosPropios = eventoDao.listarEventosPropios();
         String vista = "";
-
         String action = request.getParameter("action")==null?"lista":request.getParameter("action");
         switch (action) {
             case "lista":
@@ -30,6 +31,8 @@ public class CoordinadorServlet extends HttpServlet {
                 request.setAttribute("evento",eventoDao.buscarEventoPorId(idEvento));
                 break;
             case "crearEvento":
+                ArrayList<ProfesoresEvento> list =eventoDao.listarProfesores();
+                request.setAttribute("lista",list);
                 vista ="WEB-INF/Coordinadora/creacionEvento.jsp";
                 break;
             case "editarEvento":
@@ -54,8 +57,6 @@ public class CoordinadorServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
-
-
         //JobDao jobDao = new JobDao();
         EventoDao eventoDao =  new EventoDao();
 
@@ -64,49 +65,26 @@ public class CoordinadorServlet extends HttpServlet {
         switch (action){
             case "crear"://voy a crear un nuevo evento
 
-                String nombre = request.getParameter("nombre");
-                String descripcion = request.getParameter("descripcion");
+                String nombreEvento = request.getParameter("nombreEvento");
+                String descripcionEvento = request.getParameter("descripcionEvento");
                 String lugar = request.getParameter("lugar");
-                String Coordinador_idUsuario = request.getParameter("Coordinador_idUsuario");
+                String idCoordinador = "1";
+                String idProfesor = request.getParameter("nombreProfesor");
                 String fecha_inicio = request.getParameter("fecha_inicio");
                 String fecha_fin = request.getParameter("fecha_fin");
-                String frecuencia = request.getParameter("frecuencia");
+                String hora_inicio = request.getParameter("hora_inicio");
+                String hora_fin = request.getParameter("hora_fin");
+                String idFrecuencia = request.getParameter("frecuencia");
                 String cantidadVacantes = request.getParameter("cantidadVacantes");
                 String foto = request.getParameter("foto");
-                String listaMateriales = request.getParameter("listaMateriales");
-                String EventFrecuencia_idEventFrecuencia = request.getParameter("EventFrecuencia_idEventFrecuencia");
-                String ProfesoresEvento_idProfesoresEvento = request.getParameter("ProfesoresEvento_idProfesoresEvento");
+                String materiales = request.getParameter("materiales");
 
+                String fechaHoraInicioStr = fecha_inicio + " " + hora_inicio + ":00"; // formato: yyyy-MM-dd HH:mm:ss
+                String fechaHoraFinStr = fecha_fin + " " + hora_fin + ":00";          // formato: yyyy-MM-dd HH:mm:ss
+                int estado = 1;
+                 eventoDao.crearEvento(nombreEvento, descripcionEvento, Integer.parseInt(idCoordinador), Integer.parseInt(idProfesor),lugar,Integer.parseInt(cantidadVacantes), fechaHoraInicioStr, fechaHoraFinStr, foto, materiales, Integer.parseInt(idFrecuencia), estado);
+                response.sendRedirect(request.getContextPath() + "/CoordinadorServlet");
 
-                boolean isAllValid = true;
-
-                if(nombre.length() > 35){
-                    isAllValid = false;
-                }
-
-                /*if(idEvento.length() > 10){
-                    isAllValid = false;
-                }*/
-
-
-                if(isAllValid){
-
-                    //Job job = jobDao.buscarPorId(jobId);
-                    EventoB eventoB = eventoDao.buscarEventoPorId(nombre);
-
-                    if(eventoB == null){
-                        //jobDao.crear(jobId,jobTitle,Integer.parseInt(minSalary),Integer.parseInt(maxSalary));
-
-                        eventoDao.crearEvento(nombre, descripcion, Integer.parseInt(Coordinador_idUsuario),
-                        Integer.parseInt(ProfesoresEvento_idProfesoresEvento), lugar, frecuencia,
-                        Integer.parseInt(cantidadVacantes), fecha_inicio, fecha_fin, foto, listaMateriales, Integer.parseInt(EventFrecuencia_idEventFrecuencia));
-                        response.sendRedirect(request.getContextPath() + "/CoordinadorServlet");
-                    }else{
-                        request.getRequestDispatcher("WEB-INF/Coordinadora/creacionEvento.jsp").forward(request,response);
-                    }
-                }else{
-                    request.getRequestDispatcher("WEB-INF/Coordinadora/creacionEvento.jsp").forward(request,response);
-                }
                 break;
             case "e": //voy a actualizar
                 String nombre2 = request.getParameter("nombre");

@@ -9,7 +9,7 @@ public class EventoB {
     private int Coordinador_idUsuario;
     private String fecha_inicio;
     private String fecha_fin;
-
+    private String nombreEvento;
     private String hora_inicio;
     private String hora_fin;
     private int cantidadVacantes;
@@ -26,6 +26,14 @@ public class EventoB {
 
     private String nombreProfesor;
     private String apellidoProfesor;
+
+    public String getNombreEvento() {
+        return nombreEvento;
+    }
+
+    public void setNombreEvento(String nombreEvento) {
+        this.nombreEvento = nombreEvento;
+    }
 
     public String getFrecuenciaString() {
         return frecuenciaString;
