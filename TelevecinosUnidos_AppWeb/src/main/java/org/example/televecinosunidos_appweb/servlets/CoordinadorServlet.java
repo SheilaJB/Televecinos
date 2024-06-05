@@ -16,7 +16,7 @@ public class CoordinadorServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         EventoDao eventoDao = new EventoDao();
         ArrayList<EventoB> listaEventosPropios = eventoDao.listarEventosPropios();
-        String vista;
+        String vista = "";
 
         String action = request.getParameter("action")==null?"lista":request.getParameter("action");
         switch (action) {
@@ -34,14 +34,9 @@ public class CoordinadorServlet extends HttpServlet {
                 break;
             case "editarEvento":
                 String id = request.getParameter("id");
-                EventoB event = EventoDao.
+                EventoB event = eventoDao.buscarEventoPorId(id);
 
-                if(job != null){
-                    request.setAttribute("job",job);
-                    request.getRequestDispatcher("job/form_edit.jsp").forward(request,response);
-                }else{
-                    response.sendRedirect(request.getContextPath() + "/JobServlet");
-                }
+
                 break;
             default:
                 throw new IllegalArgumentException("Acción no reconocida: " + action);
