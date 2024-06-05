@@ -13,6 +13,49 @@ public class IncidenciasB {
     private int serenazgo_idSerenazgo;
     private int usuario_idUsuario;
     private int incidenciaPersonal;
+    private String fechaHora; // Corregido a camelCase
+    private String tipoIncidencia;
+    private String estadoIncidencia;
+
+    public int getIdIncidencias() {
+        return idIncidencias;
+    }
+
+    public void setIdIncidencias(int idIncidencias) {
+        this.idIncidencias = idIncidencias;
+    }
+
+    public String getNombreIncidencia() {
+        return nombreIncidencia;
+    }
+
+    public void setNombreIncidencia(String nombreIncidencia) {
+        this.nombreIncidencia = nombreIncidencia;
+    }
+
+    public String getLugarExacto() {
+        return lugarExacto;
+    }
+
+    public void setLugarExacto(String lugarExacto) {
+        this.lugarExacto = lugarExacto;
+    }
+
+    public String getReferencia() {
+        return referencia;
+    }
+
+    public void setReferencia(String referencia) {
+        this.referencia = referencia;
+    }
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
 
     public int getAmbulancia() {
         return ambulancia;
@@ -20,6 +63,14 @@ public class IncidenciasB {
 
     public void setAmbulancia(int ambulancia) {
         this.ambulancia = ambulancia;
+    }
+
+    public String getNumeroContacto() {
+        return numeroContacto;
+    }
+
+    public void setNumeroContacto(String numeroContacto) {
+        this.numeroContacto = numeroContacto;
     }
 
     public int getCriticidadIncidencia_idCriticidadIncidencia() {
@@ -38,62 +89,6 @@ public class IncidenciasB {
         this.estadosIncidencia_idEstadoIncidencia = estadosIncidencia_idEstadoIncidencia;
     }
 
-    public String getFoto() {
-        return foto;
-    }
-
-    public void setFoto(String foto) {
-        this.foto = foto;
-    }
-
-    public int getIdIncidencias() {
-        return idIncidencias;
-    }
-
-    public void setIdIncidencias(int idIncidencias) {
-        this.idIncidencias = idIncidencias;
-    }
-
-    public int getIncidenciaPersonal() {
-        return incidenciaPersonal;
-    }
-
-    public void setIncidenciaPersonal(int incidenciaPersonal) {
-        this.incidenciaPersonal = incidenciaPersonal;
-    }
-
-    public String getLugarExacto() {
-        return lugarExacto;
-    }
-
-    public void setLugarExacto(String lugarExacto) {
-        this.lugarExacto = lugarExacto;
-    }
-
-    public String getNombreIncidencia() {
-        return nombreIncidencia;
-    }
-
-    public void setNombreIncidencia(String nombreIncidencia) {
-        this.nombreIncidencia = nombreIncidencia;
-    }
-
-    public String getNumeroContacto() {
-        return numeroContacto;
-    }
-
-    public void setNumeroContacto(String numeroContacto) {
-        this.numeroContacto = numeroContacto;
-    }
-
-    public String getReferencia() {
-        return referencia;
-    }
-
-    public void setReferencia(String referencia) {
-        this.referencia = referencia;
-    }
-
     public int getSerenazgo_idSerenazgo() {
         return serenazgo_idSerenazgo;
     }
@@ -108,5 +103,37 @@ public class IncidenciasB {
 
     public void setUsuario_idUsuario(int usuario_idUsuario) {
         this.usuario_idUsuario = usuario_idUsuario;
+    }
+
+    public int getIncidenciaPersonal() {
+        return incidenciaPersonal;
+    }
+
+    public void setIncidenciaPersonal(int incidenciaPersonal) {
+        this.incidenciaPersonal = incidenciaPersonal;
+    }
+
+    public String getFechaHora() {
+        return fechaHora;
+    }
+
+    public void setFechaHora(String fechaHora) {
+        this.fechaHora = fechaHora;
+    }
+
+    public String getTipoIncidencia() {
+        return tipoIncidencia;
+    }
+
+    public void setTipoIncidencia(String tipoIncidencia) {
+        this.tipoIncidencia = tipoIncidencia;
+    }
+
+    public String getEstadoIncidencia() {
+        return estadoIncidencia;
+    }
+
+    public void setEstadoIncidencia(String estadoIncidencia) {
+        this.estadoIncidencia = estadoIncidencia;
     }
 }
