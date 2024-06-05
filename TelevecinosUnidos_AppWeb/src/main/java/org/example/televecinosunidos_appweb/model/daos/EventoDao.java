@@ -108,7 +108,15 @@ public class EventoDao {
                 while (rs.next()) {
                     evento = new EventoB();
                     evento.setDescripcion(rs.getString(1));
-
+                    evento.setNombre(rs.getString(2));
+                    evento.setLugar(rs.getString(3));
+                    evento.setFecha_inicio(rs.getString(4));
+                    evento.setFecha_fin(rs.getString(5));
+                    evento.setCantidadVacantes(rs.getInt(6));
+                    evento.setFoto(rs.getString(8));
+                    evento.setListaMateriales(rs.getString(9));
+                    evento.setEventFrecuencia_idEventFrecuencia(rs.getInt(10));
+                    evento.setProfesoresEvento_idProfesoresEvento(rs.getInt(11));
 
                 }
             }
@@ -164,7 +172,34 @@ public class EventoDao {
 
     }
 
+    /*public void actualizar(EventoB eventoB){
 
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        String url = "jdbc:mysql://localhost:3306/televecinos.db";
+        String username = "root";
+        String password = "root";
+
+        String sql = "update jobs set job_title = ?, min_salary = ?, max_salary = ? where job_id = ?";
+
+        try(Connection connection = DriverManager.getConnection(url,username,password);
+            PreparedStatement pstmt = connection.prepareStatement(sql)){
+
+            pstmt.setString(1,eventoB.getJobTitle());
+            pstmt.setInt(2,eventoB.getMinSalary());
+            pstmt.setInt(3,eventoB.getMaxSalary());
+            pstmt.setString(4,eventoB.getJobId());
+
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }*/
     //Function editar evento
     
 

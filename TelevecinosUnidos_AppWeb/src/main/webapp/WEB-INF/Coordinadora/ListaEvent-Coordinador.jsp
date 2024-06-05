@@ -197,7 +197,7 @@
                             <td><%= eventoB.getEstadoString() %></td>
                             <td><%= eventoB.getFrecuenciaString() %></td>
                             <td><a href="<%=request.getContextPath()%>/CoordinadorServlet?action=verEvento&idEvento=<%=eventoB.getidEvento()%>"><button type="button" class="btn btn-info m-2" onclick="viewEvent()"><i class="fas fa-eye"></i></button></a></td>
-                            <td><button type="button" class="btn btn-success m-2" onclick="editEvent()"><i class="fas fa-pencil-alt"></i></button></td>
+                            <td><a href="<%=request.getContextPath()%>/CoordinadorServlet?action=editarEvento&idEvento=<%=eventoB.getidEvento()%>"><button type="button" class="btn btn-success m-2" onclick="editEvent()"><i class="fas fa-pencil-alt"></i></button></a></td>
                             <td><button type="button" class="btn btn-danger m-2" onclick="confirmDelete()"><i class="fas fa-trash-alt"></i></button></td>
                         </tr>
                         <% } %>
