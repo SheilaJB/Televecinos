@@ -37,7 +37,7 @@ public class EventoDao {
                         "JOIN " +
                         "EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
                         "WHERE " +
-                        "e.TipoEvento_idTipoEvento = 2;"; //tipo 2 para mostrar solo los eventos de deportes
+                        "e.TipoEvento_idTipoEvento = 1;"; //tipo 2 para mostrar solo los eventos de deportes
 
         ArrayList<EventoB> listaEventosPropios = new ArrayList<>();
 
@@ -102,14 +102,12 @@ public class EventoDao {
                 "EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
                 "JOIN " +
                 "profesoresevento pf ON e.ProfesoresEvento_idProfesoresEvento = pf.idProfesoresEvento" +
-                "WHERE e.idEventos = ?";
-
-
+                "WHERE e.idEventos = 1";
 
         try (Connection conn = DriverManager.getConnection(url, username, password);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            pstmt.setString(1,idEvento);
+            int idEvent = Integer.parseInt(idEvento);
+            pstmt.setInt(1,idEvent);
 
             try(ResultSet rs = pstmt.executeQuery()){
                 while (rs.next()) {

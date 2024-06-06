@@ -56,7 +56,7 @@ public class CoordIncidServlet extends HttpServlet {
 
         switch (action) {
             case "crear":
-                String nombre = request.getParameter("nombre");
+                /*String nombre = request.getParameter("nombre");
                 String lugarExacto = request.getParameter("lugarExacto");
                 String referencia = request.getParameter("referencia");
                 String foto = request.getParameter("foto");
@@ -67,7 +67,7 @@ public class CoordIncidServlet extends HttpServlet {
 
                 incidenciaDao.crearIncidencia(nombre, lugarExacto, referencia, foto, ambulancia, numeroContacto, tipoIncidenciaId, incidenciaPersonal);
                 response.sendRedirect(request.getContextPath() + "/CoordIncidServlet");
-                break;
+                break;*/
             case "editar":
                 int id = Integer.parseInt(request.getParameter("idIncidencia"));
                 String nombre2 = request.getParameter("nombre");
@@ -82,8 +82,8 @@ public class CoordIncidServlet extends HttpServlet {
                 int usuarioId2 = Integer.parseInt(request.getParameter("usuarioId"));
                 boolean incidenciaPersonal2 = Boolean.parseBoolean(request.getParameter("incidenciaPersonal"));
 
-                IncidenciasB incidenciaB = new IncidenciasB(id, nombre2, lugarExacto2, referencia2, foto2, ambulancia2, numeroContacto2, criticidadId2, tipoIncidenciaId2, estadosIncidenciaId2, serenazgoId2, usuarioId2, incidenciaPersonal2, fechaHora2);
-                incidenciaDao.actualizarIncidencia(incidenciaB);
+                //IncidenciasB incidenciaB = new IncidenciasB(id, nombre2, lugarExacto2, referencia2, foto2, ambulancia2, numeroContacto2, criticidadId2, tipoIncidenciaId2, estadosIncidenciaId2, serenazgoId2, usuarioId2, incidenciaPersonal2, fechaHora2);
+                //incidenciaDao.actualizarIncidencia(incidenciaB);
                 response.sendRedirect(request.getContextPath() + "/IncidenciaServlet");
                 break;
         }
