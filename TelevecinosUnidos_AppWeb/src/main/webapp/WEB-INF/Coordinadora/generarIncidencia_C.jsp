@@ -90,7 +90,7 @@
     <!-- Content Start -->
     <div class="content">
         <!-- Navbar Start -->
-        <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+        <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0" id="navbar">
             <a href="#" class="sidebar-toggler flex-shrink-0">
                 <i class="fa fa-bars"></i>
             </a>
@@ -119,130 +119,124 @@
 
         <!-- LLENAR-->
         <!-- Footer Start -->
+        <form method="post" action="<%=request.getContextPath()%>/CoordIncidServlet">
+            <div class="container-fluid pt-4 px-4">
+                <div class="container">
+                    <div class="columna columna1">
+                        <div class="campo">
+                            <h2>Reportar incidencia</h2>
+                            <h2 style="font-size: large;">Complete los siguientes datos</h2>
+                        </div>
+                            <div class="campo">
+                                <label for="nombreIncidencia">Nombre de la incidencia:</label><br>
+                                <input type="text" id="nombreIncidencia" name="nombreIncidencia" placeholder="Escribe aquí"><br>
+                            </div>
+                            <div class="campo">
 
-        <div class="container-fluid pt-4 px-4">
-            <div class="container">
-                <div class="columna columna1">
-                    <div class="campo">
-                        <h2>Reportar incidencia</h2>
-                        <h2 style="font-size: large;">Complete los siguientes datos</h2>
+                                <div class="mb-3">
+                                    <label for="subirFoto" class="boton-subir">Subir foto</label><br>
+                                    <input class="form-control" type="file" id="subirFoto" accept=".jpg, .jpeg, .png" name="foto">
+                                </div>
+                                <script src="path/to/bootstrap.bundle.min.js"></script>
+                            </div>
+                            <div class="campo" style="margin-bottom: -35px; ">
+                                <label for="tipoIncidencia">Tipo de incidencia:</label><br>
+                                <select id="tipoIncidencia" name="tipoIncidencia">
+                                    <option value="opcion1">Seguridad Pública</option>
+                                    <option value="opcion2">Emergencia Médica</option>
+                                    <option value="opcion3">Infraestructura y Servicios Públicos</option>
+                                    <option value="otro">Otro</option>
+                                </select><br>
+                                <br>
+                            </div>
+                            <div class="campo" style="margin-bottom: -35px; ">
+                                <label for="urbanizacion">Urbanización:</label><br>
+                                <select id="urbanizacion" name="urbanizacion">
+                                    <option value="opcion1">Rafael Escardó</option>
+                                    <option value="opcion2">José de La Riva Agüero</option>
+                                    <option value="opcion3">Juan XXIII</option>
+                                    <option value="opcion3">Libertad</option>
+                                    <option value="opcion4">Los Jardines de La Marina</option>
+                                    <option value="opcion5">Las Leyendas</option>
+                                    <option value="opcion6">Las Torres San Miguelito</option>
+                                    <option value="opcion7">Elmer Faucett</option>
+                                    <option value="opcion8">Maranga</option>
+                                    <option value="opcion9">Pando</option>
+                                    <option value="opcion10">Maranga</option>
+                                    <option value="opcion11">Parques de La Huaca</option>
+
+                                    <option value="otro">Otro</option>
+                                </select>
+                                <br>
+                                <br>
+                            </div>
+                            <div class="form-group">
+                                <label for="paraQuien">La incidencia será para:</label><br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="paraQuien" id="paraMi" value="mi">
+                                    <label class="form-check-label" for="paraMi">
+                                        Para mi
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="paraQuien" id="paraOtraPersona" value="otraPersona">
+                                    <label class="form-check-label" for="paraOtraPersona">
+                                        Para otra persona
+                                    </label>
+                                </div>
+                            </div>
                     </div>
-
-                    <form>
-                        <div class="campo">
-                            <label for="nombreIncidencia">Nombre de la incidencia:</label><br>
-                            <input type="text" id="nombreIncidencia" name="nombreIncidencia" placeholder="Escribe aquí"><br>
-                        </div>
-                        <div class="campo">
-
-                            <div class="mb-3">
-                                <label for="foto" class="boton-subir">Subir foto</label><br>
-                                <input class="form-control" type="file" id="formFile" accept="image/*">
+                    <div class="columna columna2" style="margin-top: 102px;">
+                            <div class="campo">
+                                <label for="lugarExacto">Lugar exacto</label><br>
+                                <input type="text" id="lugarExacto" name="lugarExacto" placeholder="Escribe aquí"><br>
                             </div>
-                            <script src="path/to/bootstrap.bundle.min.js"></script>
-                        </div>
-                        <div class="campo" style="margin-bottom: -35px; ">
-                            <label for="tipoIncidencia">Tipo de incidencia:</label><br>
-                            <select id="tipoIncidencia" name="tipoIncidencia">
-                                <option value="opcion1">Seguridad Pública</option>
-                                <option value="opcion2">Emergencia Médica</option>
-                                <option value="opcion3">Infraestructura y Servicios Públicos</option>
-                                <option value="otro">Otro</option>
-                            </select><br>
-                            <br>
-                        </div>
-                        <div class="campo" style="margin-bottom: -35px; ">
-                            <label for="urbanizacion">Urbanización:</label><br>
-                            <select id="urbanizacion" name="urbanizacion">
-                                <option value="opcion1">Rafael Escardó</option>
-                                <option value="opcion2">José de La Riva Agüero</option>
-                                <option value="opcion3">Juan XXIII</option>
-                                <option value="opcion3">Libertad</option>
-                                <option value="opcion4">Los Jardines de La Marina</option>
-                                <option value="opcion5">Las Leyendas</option>
-                                <option value="opcion6">Las Torres San Miguelito</option>
-                                <option value="opcion7">Elmer Faucett</option>
-                                <option value="opcion8">Maranga</option>
-                                <option value="opcion9">Pando</option>
-                                <option value="opcion10">Maranga</option>
-                                <option value="opcion11">Parques de La Huaca</option>
 
-                                <option value="otro">Otro</option>
-                            </select>
-                            <br>
-                            <br>
-                        </div>
-                        <div class="campo">
-                            <label for="paraQuien">La incidencia será para: </label><br>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="gridRadios"
-                                       id="gridRadios1" value="option1">
-                                <label class="form-check-label" for="gridRadios1">
-                                    Para mi
-                                </label>
+                            <div class="campo">
+                                <label for="referencia">Referencia</label><br>
+                                <input type="text" id="referencia" name="referencia" placeholder="Escribe aquí"><br>
                             </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="gridRadios"
-                                       id="gridRadios2" value="option2">
-                                <label class="form-check-label" for="gridRadios2">
-                                    Para otra persona
-                                </label>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="columna columna2" style="margin-top: 102px;">
-                    <form>
-                        <div class="campo">
-                            <label for="lugarExacto">Lugar exacto</label><br>
-                            <input type="text" id="lugarExacto" name="lugarExacto" placeholder="Escribe aquí"><br>
-                        </div>
 
-                        <div class="campo">
-                            <label for="referencia">Referencia</label><br>
-                            <input type="text" id="referencia" name="referencia" placeholder="Escribe aquí"><br>
-                        </div>
+                            <div class="campo">
+                                <label for="contacto">Contacto (opcional)</label><br>
+                                <input type="text" id="contacto" name="contacto" placeholder="Escribe aquí"><br>
+                            </div>
+                            <div class="campo">
+                                <label for="paraQuien">¿Requiere ambulancia? </label><br>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="requerimientoAmblancia"
+                                           id="gridRadios1" value="option1">
+                                    <label class="form-check-label" for="gridRadios1">
+                                        Sí
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="requerimientoAmblancia"
+                                           id="gridRadios2" value="option2">
+                                    <label class="form-check-label" for="gridRadios2">
+                                        No
+                                    </label>
+                                </div>
+                            </div>
 
-                        <div class="campo">
-                            <label for="contacto">Contacto (opcional)</label><br>
-                            <input type="text" id="contacto" name="contacto" placeholder="Escribe aquí"><br>
-                        </div>
-                        <div class="campo">
-                            <label for="paraQuien">¿Requiere ambulancia? </label><br>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="gridRadios"
-                                       id="gridRadios1" value="option1">
-                                <label class="form-check-label" for="gridRadios1">
-                                    Sí
-                                </label>
+                            <div class="m-n2">
+                                <button type="submit" class="btn btn-secondary m-2" id="openPopupBtn">Reportar incidencia</button>
                             </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="gridRadios"
-                                       id="gridRadios2" value="option2">
-                                <label class="form-check-label" for="gridRadios2">
-                                    No
-                                </label>
+                            <div id="popup" class="popup" >
+                                <div class="popup_contenido">
+                                    <span class="close-btn" id="closePopupBtn">&times;</span>
+                                    <img src="img/check.png" alt="check" width="48" height="48" style="margin-top: -10px;">
+                                    <h2 style="margin-top: 20px;">Éxito</h2>
+                                    <p>Se ha reportado la incidencia</p>
+                                    <a href="listaIncidencias.html">
+                                        <a href="listaIncidencias_C.html"><button type="button" class="btn btn-primary rounded-pill m-2">Regresar</button></a>
+                                    </a>
+                                </div>
                             </div>
-                        </div>
-
-                        <div class="m-n2">
-                            <button type="button" class="btn btn-secondary m-2" id="openPopupBtn">Reportar incidencia</button>
-                        </div>
-                        <div id="popup" class="popup" >
-                            <div class="popup_contenido">
-                                <span class="close-btn" id="closePopupBtn">&times;</span>
-                                <img src="img/check.png" alt="check" width="48" height="48" style="margin-top: -10px;">
-                                <h2 style="margin-top: 20px;">Éxito</h2>
-                                <p>Se ha reportado la incidencia</p>
-                                <a href="listaIncidencias.html">
-                                    <a href="listaIncidencias_C.html"><button type="button" class="btn btn-primary rounded-pill m-2">Regresar</button></a>
-                                </a>
-                            </div>
-                        </div>
-                    </form>
+                    </div>
                 </div>
             </div>
-        </div>
+        </form>
         <div class="container-fluid pt-4 px-4" >
             <div class="bg-light rounded-top p-4">
                 <div class="row">

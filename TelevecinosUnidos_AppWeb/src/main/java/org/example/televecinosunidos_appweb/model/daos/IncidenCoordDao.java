@@ -104,4 +104,7 @@ public class IncidenCoordDao {
 
         return incidencia;
     }
+    public void generarIncidenica (){
+
+    }
 }

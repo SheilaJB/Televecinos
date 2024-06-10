@@ -14,21 +14,21 @@ public class CoordIncidServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         IncidenCoordDao incidenciaDao = new IncidenCoordDao();
-        ArrayList<IncidenciasB> listaIncidencias = incidenciaDao.listarIncidencia();
+        //ArrayList<IncidenciasB> listaIncidencias = incidenciaDao.listarIncidencia();
         String vista = "";
 
         String action = request.getParameter("action") == null ? "lista" : request.getParameter("action");
         switch (action) {
             case "listarIncidencia":
                 vista = "WEB-INF/Coordinadora/listaIncidencias_C.jsp";
-                request.setAttribute("lista", listaIncidencias);
+                //request.setAttribute("lista", listaIncidencias);
                 break;
             case "verIncidencia":
                 String idIncidencia = request.getParameter("idIncidencia");
                 vista = "WEB-INF/Coordinadora/verIncidencia_C.jsp";
                 request.setAttribute("incidencia", incidenciaDao.buscarIncidenciaPorId(idIncidencia));
                 break;
-            case "crearIncidencia":
+            case "generarIncidenciaC":
                 vista = "WEB-INF/Coordinadora/generarIncidencia_C.jsp";
                 break;
             case "editarIncidencia":
@@ -56,18 +56,46 @@ public class CoordIncidServlet extends HttpServlet {
 
         switch (action) {
             case "crear":
-                /*String nombre = request.getParameter("nombre");
+                String nombreIncidencia = request.getParameter("nombreIncidencia");
+                String foto = request.getParameter("foto");
+                String tipoIncidencia = request.getParameter("tipoIncidencia");
+                String urbanizacion = request.getParameter("urbanizacion");
+                String paraQuien = request.getParameter("paraQuien");
                 String lugarExacto = request.getParameter("lugarExacto");
                 String referencia = request.getParameter("referencia");
-                String foto = request.getParameter("foto");
-                boolean ambulancia = Boolean.parseBoolean(request.getParameter("ambulancia"));
-                String numeroContacto = request.getParameter("numeroContacto");
-                int tipoIncidenciaId = Integer.parseInt(request.getParameter("tipoIncidenciaId"));
-                boolean incidenciaPersonal = Boolean.parseBoolean(request.getParameter("incidenciaPersonal"));
+                String contacto = request.getParameter("contacto");
+                String requerimientoAmblancia = request.getParameter("requerimientoAmblancia");
+                int idTipoIncidencia = 0;
+                switch (tipoIncidencia) {
+                    case "Seguridad Pública":
+                        idTipoIncidencia = 1;
+                        break;
+                    case "Emergencia Médica":
+                        idTipoIncidencia = 2;
+                        break;
+                    case "Infraestructura y Servicios Públicos":
+                        idTipoIncidencia = 3;
+                }
+                Boolean boolParaQ = false;
+                switch (paraQuien){
+                    case "Para mi":
+                        boolParaQ = true;
+                        break;
+                    case "Para otra persona":
+                        boolParaQ = false;
+                        break;
+                }
+                Boolean boolAmbulancia = false;
+                switch (requerimientoAmblancia){
+                    case "Sí":
+                        boolAmbulancia = true;
+                        break;
+                    case "No":
+                        boolAmbulancia = false;
+                        break;
+                }
 
-                incidenciaDao.crearIncidencia(nombre, lugarExacto, referencia, foto, ambulancia, numeroContacto, tipoIncidenciaId, incidenciaPersonal);
-                response.sendRedirect(request.getContextPath() + "/CoordIncidServlet");
-                break;*/
+                break;
             case "editar":
                 int id = Integer.parseInt(request.getParameter("idIncidencia"));
                 String nombre2 = request.getParameter("nombre");

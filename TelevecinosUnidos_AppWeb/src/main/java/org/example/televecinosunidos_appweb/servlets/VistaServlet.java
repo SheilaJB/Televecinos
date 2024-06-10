@@ -26,9 +26,6 @@ public class VistaServlet extends HttpServlet {
             case "listaEventoCoordinador":
                 vista = "WEB-INF/Coordinadora/ListaEvent-Coordinador.jsp";
                 break;
-            case "generarIncidenciaC":
-                vista = "WEB-INF/Coordinadora/generarIncidencia_C.jsp";
-                break;
             case "listaIncidenciaC":
                 vista = "WEB-INF/Coordinadora/listaIncidencias_C.jsp";
                 break;
