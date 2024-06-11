@@ -2,7 +2,7 @@
 <%@ page import="java.io.PrintWriter" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="org.example.televecinosunidos_appweb.model.beans.EventoB" %>
-<% ArrayList<EventoB> lista = (ArrayList<EventoB>) request.getAttribute("lista");%>
+<% ArrayList<EventoB> lista = (ArrayList<EventoB>) request.getAttribute("lista"); %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -196,9 +196,9 @@
                             <td><%= eventoB.getFecha_inicio() %></td>
                             <td><%= eventoB.getEstadoString() %></td>
                             <td><%= eventoB.getFrecuenciaString() %></td>
-                            <td><a href="<%=request.getContextPath()%>/CoordinadorServlet?action=verEvento&idEvento=<%=eventoB.getidEvento()%>"><button type="button" class="btn btn-info m-2" onclick="viewEvent()"><i class="fas fa-eye"></i></button></a></td>
-                            <td><a href="<%=request.getContextPath()%>/CoordinadorServlet?action=editarEvento&idEvento=<%=eventoB.getidEvento()%>"><button type="button" class="btn btn-success m-2" onclick="editEvent()"><i class="fas fa-pencil-alt"></i></button></a></td>
-                            <td><button type="button" class="btn btn-danger m-2" onclick="confirmDelete()"><i class="fas fa-trash-alt"></i></button></td>
+                            <td><a href="<%=request.getContextPath()%>/CoordinadorServlet?action=verEvento&idEvento=<%=eventoB.getidEvento()%>"><button type="button" class="btn btn-info m-2"><i class="fas fa-eye"></i></button></a></td>
+                            <td><a href="<%=request.getContextPath()%>/CoordinadorServlet?action=editarEvento&idEvento=<%=eventoB.getidEvento()%>"><button type="button" class="btn btn-success m-2"><i class="fas fa-pencil-alt"></i></button></a></td>
+                            <td><button type="button" class="btn btn-danger m-2" onclick="confirmDelete(<%=eventoB.getidEvento()%>)"><i class="fas fa-trash-alt"></i></button></td>
                         </tr>
                         <% } %>
                         </tbody>
@@ -275,6 +275,7 @@
         const deleteConfirmationPopup = document.getElementById('deleteConfirmationPopup');
         const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
         const mainContent = document.querySelector('.content'); // Selecciona el contenido principal que quieres deshabilitar
+        let eventIdToDelete; // Variable para almacenar el ID del evento a eliminar
 
         // Función para deshabilitar interacciones
         function disableInteractions() {
@@ -296,13 +297,16 @@
 
         // Eventos para manejar el popup
         closeDeletePopupBtn.addEventListener('click', closeDeletePopup);
+
+        // Función para confirmar eliminación
         confirmDeleteBtn.addEventListener('click', function() {
-            console.log('Eliminar el evento'); // Implementar eliminación real aquí
+            window.location.href = '<%=request.getContextPath()%>/CoordinadorServlet?action=borrarEvento&idEvento=' + eventIdToDelete;
             closeDeletePopup();
         });
 
         // Función para abrir el popup de confirmación
-        function confirmDelete() {
+        function confirmDelete(eventId) {
+            eventIdToDelete = eventId; // Almacenar el ID del evento a eliminar
             deleteConfirmationPopup.style.display = 'block';
             disableInteractions();
         }

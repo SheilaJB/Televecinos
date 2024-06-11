@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class SerenazgoDao {
     //Función lista de serenazgos
-    public ArrayList<SerenazgoB> listarSerenazgos() {
+    /*public ArrayList<SerenazgoB> listarSerenazgos() {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -43,6 +43,6 @@ public class SerenazgoDao {
         }
 
         return listaEventosPropios;
-    }
+    }*/
 
 }
