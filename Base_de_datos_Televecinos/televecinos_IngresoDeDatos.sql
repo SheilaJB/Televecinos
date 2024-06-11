@@ -529,7 +529,6 @@ CREATE TABLE IF NOT EXISTS `televecinosDB`.`Incidencias` (
   CONSTRAINT `fk_Incidencias_TipoIncidencia1`
     FOREIGN KEY (`TipoIncidencia_idTipoIncidencia`)
     REFERENCES `televecinosDB`.`TipoIncidencia` (`idTipoIncidencia`)
-    REFERENCES `televecinosDB`.`TipoIncidencia` (`idTipoIncidencia`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

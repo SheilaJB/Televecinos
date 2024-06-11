@@ -9,7 +9,7 @@ public class SerenazgoB {
 
     private String apellido;
     private String dni;
-    private String dirección;
+    private String direccion;
     private String numTelefono;
     private Date fechaNacimiento;
     private int idTurnoSerenazgo;
@@ -66,12 +66,12 @@ public class SerenazgoB {
         this.dni = dni;
     }
 
-    public String getDirección() {
-        return dirección;
+    public String getDireccion() {
+        return direccion;
     }
 
-    public void setDirección(String dirección) {
-        this.dirección = dirección;
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
     public String getNumTelefono() {
