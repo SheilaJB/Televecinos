@@ -35,12 +35,13 @@ public class SerenazgoDao {
                 evento.setFecha_inicio(rs.getString("Fecha de Inicio"));
                 evento.setEstadoString(rs.getString("Estado"));
                 evento.setFrecuenciaString(rs.getString("Frecuencia"));
-                listaEventosPropios.add(evento); // Asegurarse de añadir el serenazgo a la lista
+                //listaEventosPropios.add(evento); // Asegurarse de añadir el serenazgo a la lista
             }
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
 
         return listaEventosPropios;
     }

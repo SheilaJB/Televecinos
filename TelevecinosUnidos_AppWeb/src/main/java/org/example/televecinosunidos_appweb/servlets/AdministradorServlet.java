@@ -15,6 +15,7 @@ public class AdministradorServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         SerenazgoDao serenazgoDao = new SerenazgoDao();
+        /*
         ArrayList<EventoB> listaEventosPropios = eventoDao.listarEventosPropios();
         String vista = "";
         String action = request.getParameter("action")==null?"lista":request.getParameter("action");
@@ -50,7 +51,7 @@ public class AdministradorServlet extends HttpServlet {
                 throw new IllegalArgumentException("Acción no reconocida: " + action);
         }
         request.getRequestDispatcher(vista).forward(request,response);
-
+        */
     }
 
     @Override
