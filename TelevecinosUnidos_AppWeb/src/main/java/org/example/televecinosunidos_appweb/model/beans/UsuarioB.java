@@ -9,12 +9,30 @@ public class UsuarioB {
     private String correo;
     private String contrasenia;
     private int urbanizacion_idUrbanizacion;
+    private String urbanizacionString;//para tablas pequeñas !
     private int tipoCoordinador_idTipoCoordinador;
     private int asistencia;
     private String avatar;
     private int PreguntasFrecuentes_idTable2;
     private int idRol;
+    private String rolStr;
     private int isBan;
+
+    public String getRolStr() {
+        return rolStr;
+    }
+
+    public void setRolStr(String rolStr) {
+        this.rolStr = rolStr;
+    }
+
+    public String getUrbanizacionString() {
+        return urbanizacionString;
+    }
+
+    public void setUrbanizacionString(String urbanizacionString) {
+        this.urbanizacionString = urbanizacionString;
+    }
 
     public String getApellido() {
         return apellido;
