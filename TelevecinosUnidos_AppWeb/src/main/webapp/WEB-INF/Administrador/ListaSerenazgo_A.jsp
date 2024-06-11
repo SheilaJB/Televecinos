@@ -48,60 +48,55 @@
     <!-- Spinner End -->
 
 
-    <!-- BARRA AZUL DE LA IZQUIERDA INICIO-->
     <div class="sidebar pe-4 pb-3" style="background-color: #8ecae6;">
         <nav class="navbar" style="background-color: #8ecae6;" >
-            <a href="" class="navbar-brand mx-3 mb-3">
-                <h4 class="text-primary"><b>Televecinos Unidos</b></h4>
+            <a class="navbar-brand mx-3 mt-3">
+                <h4 style="color:#023047"><b>Televecinos Unidos</b></h4>
             </a>
-            <div class="d-flex align-items-center ms-4 mb-4">
-                <div class="position-relative">
-                    <img class="rounded-circle" src="img/munisanmiguelLogo.jpg" alt="" style="width: 40px; height: 40px;">
-                    <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
-                </div>
-
-                <div class="ms-3">
-                    <h6 class="mb-0">Municipalidad de San Miguel</h6>
-                    <span>Administrador</span>
+            <div class="d-flex align-items-center ms-4 mb-4"  >
+                <img class="rounded-circle" src="img/munisanmiguelLogo.jpg" alt="" style="width: 50px; height: 50px;">
+                <div class="ms-3 m-3" >
+                    <h6 class="mb-0" style="color:#023047;"><b>Nombre Apellido</b></h6>
+                    <span class="text-muted"><b>Administrador</b></span>
                 </div>
             </div>
             <!-- Seleccionar Opciones -->
             <div class="navbar-nav w-100">
-                <a href="inicioAdmin.html" class="nav-item nav-link colorLetrasBarraLateral"><i  class="fa fa-home me-2 colorLetrasBarraLateral"></i>Inicio</a>
+                <a href="inicioAdmin.html" class="nav-item nav-link"><i class="fa fa-home me-2"></i><span style="font-size: 13.5px;"><b>Inicio</b></span></a>
 
-                <a href="NuevasSolicitudes_A.html" class="nav-item nav-link"><i class="fa fa-clipboard-list me-2 colorLetrasBarraLateral"></i><span style="font-size: 14px;">Nuevas solicitudes</span></a>
-                <a href="ListaVecinos_A.html" class="nav-item nav-link"><i class="fa fa-user-friends me-2 colorLetrasBarraLateral"></i><span style="font-size: 14px;">Lista de vecinos</span></a>
+                <a href="NuevasSolicitudes_A.html" class="nav-item nav-link"><i class="fa fa-clipboard-list me-2 "></i><span style="font-size: 13.5px;"><b>Nuevas solicitudes</b></span></a>
+                <a href="ListaVecinos_A.html" class="nav-item nav-link"><i class="fa fa-user-friends me-2 "></i><span style="font-size: 14px;"><b>Lista de vecinos</b></span></a>
                 <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-shield-alt me-2 colorLetrasBarraLateral"></i><span style="font-size: 13.5px;">Personal serenazgo</span></a>
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-shield-alt me-2 "></i><span style="font-size: 13.5px;"><b>Personal serenazgo</b></span></a>
                     <div class="dropdown-menu bg-transparent border-0">
-                        <a href="ListaSerenazgo_A.html" class="dropdown-item" style="font-size: 13.5px;">Lista de serenazgos</a>
+                        <a href="ListaSerenazgo_A.html" class="dropdown-item" style="font-size: 13.5px;"><b>Lista de serenazgos</b></a>
 
-                        <a href="registroSerenazgo.html" class="dropdown-item"style="font-size: 13.5px;">Registrar nuevo serenazgo</a>
+                        <a href="registroSerenazgo.html" class="dropdown-item"style="font-size: 13.5px;"><b>Registrar nuevo serenazgo</b></a>
                     </div>
                 </div>
                 <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-chalkboard-teacher me-2 colorLetrasBarraLateral"></i><span style="font-size: 13.3px;">Area de coordinación</span></a>
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-chalkboard-teacher me-2 colorLetrasBarraLateral"></i><span style="font-size: 13.3px;"><b>Area de coordinación</b></span></a>
                     <div class="dropdown-menu bg-transparent border-0">
-                        <a href="ListaCoordinadorasCultura_A.html" class="dropdown-item"style="font-size: 13.5px;">Coordinadoras cultura</a>
-                        <a href="ListaCoordinadorasDeportes_A.html" class="dropdown-item"style="font-size: 13.5px;">Coordinadoras deportes</a>
-                        <a href="ListaInstructores_A.html" class="dropdown-item"style="font-size: 13.5px;">Instructores</a>
-                        <a href="FormularioInstructores_A.html" class="dropdown-item"style="font-size: 13.5px;">Registrar nuevo instructor</a>
+                        <a href="ListaCoordinadorasCultura_A.html" class="dropdown-item"style="font-size: 13.5px;"><b>Coordinadoras cultura</b></a>
+                        <a href="ListaCoordinadorasDeportes_A.html" class="dropdown-item"style="font-size: 13.5px;"><b>Coordinadoras deportes</b></a>
+                        <a href="ListaInstructores_A.html" class="dropdown-item"style="font-size: 13.5px;"><b>Instructores</b></a>
+                        <a href="FormularioInstructores_A.html" class="dropdown-item"style="font-size: 13.5px;"><b>Registrar nuevo instructor</b></a>
                     </div>
                 </div>
 
                 <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-question-circle me-2 colorLetrasBarraLateral"></i><span style="font-size: 13.3px;">Preguntas frecuentes</span></a>
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-question-circle me-2 colorLetrasBarraLateral"></i><span style="font-size: 13.3px;"><b>Preguntas frecuentes</b></span></a>
                     <div class="dropdown-menu bg-transparent border-0">
-                        <a href="preguntasFrecuentes_V_vistaAdmin.html" class="dropdown-item"style="font-size: 13.5px;">Dudas Vecinos</a>
-                        <a href="preguntasFrecuentes_C_vistaAdmin.html" class="dropdown-item"style="font-size: 13.5px;">Dudas Coordinadoras</a>
-                        <a href="preguntasFrecuentes_S_vistaAdmin.html.html" class="dropdown-item"style="font-size: 13.5px;">Dudas Serenazgos</a>
+                        <a href="preguntasFrecuentes_V_vistaAdmin.html" class="dropdown-item"style="font-size: 13.5px;"><b>Dudas Vecinos</b></a>
+                        <a href="preguntasFrecuentes_C_vistaAdmin.html" class="dropdown-item"style="font-size: 13.5px;"><b>Dudas Coordinadoras</b></a>
+                        <a href="preguntasFrecuentes_S_vistaAdmin.html" class="dropdown-item"style="font-size: 13.5px;"><b>Dudas Serenazgos</b></a>
                     </div>
                 </div>
+
             </div>
         </nav>
     </div>
     <!-- BARRA AZUL DE LA IZQUIERDA FINAL -->
-
 
     <!-- Content Start -->
     <div class="content">
@@ -143,240 +138,126 @@
 
 
 
-        <!-- Fin de iamgen estatica -->
-        <div style="background-color: #f8f9fa; padding: 20px; align-items: center;">
-            <div class="filtro" style="border: 1px solid #ccc; border-radius: 5px; padding: 10px; display: flex; align-items: center; background-color:#FFB703 ;">
-                <input type="text" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 20%; margin-right: 2%;" id="filtroInput" placeholder="Buscar...">
-                <select id="filtroIncidencia" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 20%; margin-right: 2%;">
-                    <option selected disabled>Turno:</option>
-                    <option value="tipo1">Diurno</option>
-                    <option value="tipo1">Nocturno</option>
-
-
-                </select>
-                <select id="filtroIncidencia" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 20%; margin-right: 2%;">
-                    <option selected disabled>Tipo:</option>
-                    <option value="tipo1">Bicicleta</option>
-                    <option value="tipo1">A pie</option>
-                    <option value="tipo1">Canino</option>
-                    <option value="tipo1">Vehículo</option>
-                </select>
-                <button type="button" class="btn btn-primary" onclick="filtrar()" style="padding: 10px;"><b>Filtrar</b></button>
+        <!-- Lista de eventos -->
+        <div class="container text-center">
+            <div id="Nombre del evento">
+                <h1 style="text-align: center; margin-top:50px;margin-bottom:50px;"><b></b></h1>
             </div>
-            <div class="table-responsive">
-                <table class="table text-start align-middle table-bordered table-hover mb-0">
-                    <thead>
-                    <tr class="text-dark">
-                        <th scope="col">#</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Apellido</th>
-                        <th scope="col">Turno</th>
-                        <th scope="col">Tipo</th>
-                        <th scope="col">Correo</th>
-                        <th scope="col">Evaluar Serenazgo</th>
+        </div>
+        <div style="background-color: #f8f9fa; padding: 10px; align-items: center;">
+            <!-- Filtro -->
+            <div style="background-color: #FFB703; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-md-5 mb-2">
+                        <input type="text" class="form-control" id="filtroInput" placeholder="Buscar..." onkeyup="filtrar()">
+                    </div>
+                    <div class="col-md-2 mb-2">
+                        <select id="filtroCategoria" class="form-select" onchange="filtrar()">
+                            <option selected value="">Frecuencia</option>
+                            <option value="Semanal">Semanal</option>
+                            <option value="Dos veces por semana">Dos veces por semana</option>
 
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Juan Fernando</td>
-                        <td>Pérez López</td>
-                        <td>Nocturno</td>
-                        <td>Canino</td>
-                        <td>Jjjffppll@gmail.com</td>
-                        <td style="width: 350px;">
-
-                            <a href="correoparaSgA.html"><button type="button" class="btn btn-success btn-sm m-2">Enviar correo</button></a>
-
-                            <button type="button" class="btn btn-danger btn-sm m-2 btn-banear">Banear</button>
-                            <div id="popup1" class="popup1" >
-                                <div class="popup_contenido1">
-                                    <span class="close-btn" id="closePopupBtn1">&times;</span>
-                                    <img src="img/advertencia.png" alt="check" width="48" height="48" style="margin-top: -10px;">
-
-                                    <p>¡Advertencia!</p>
-
-                                    <p>La acción "Banear" será permanente, debe estar seguro de su desición al respecto</p>
-
-                                    <a href="ListaSerenazgo_A.html"><button type="button" class="btn btn-success rounded-pill m-2">Cancelar</button></a>
-                                    <button type="button" class="btn btn-danger rounded-pill m-2">Sí, banear</button>
-
-                                </div>
-                            </div>
-                            <a href="DetalleSerenazgo_A.html"><button type="button" class="btn btn-primary btn-sm m-2">Ver detalle</button></a>
-
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Juan Fernando</td>
-                        <td>Pérez López</td>
-                        <td>Nocturno</td>
-                        <td>A pie</td>
-                        <td>Jjjffppll@gmail.com</td>
-                        <td style="width: 350px;">
-
-                            <a href="correoparaSgA.html"><button type="button" class="btn btn-success btn-sm m-2">Enviar correo</button></a>
-
-                            <button type="button" class="btn btn-danger btn-sm m-2 btn-banear">Banear</button>
-                            <div id="popup1" class="popup1" >
-                                <div class="popup_contenido1">
-                                    <span class="close-btn" id="closePopupBtn1">&times;</span>
-                                    <img src="img/advertencia.png" alt="check" width="48" height="48" style="margin-top: -10px;">
-
-                                    <p>¡Advertencia!</p>
-
-                                    <p>La acción "Banear" será permanente, debe estar seguro de su desición al respecto</p>
-
-                                    <a href="ListaSerenazgo_A.html"><button type="button" class="btn btn-success rounded-pill m-2">Cancelar</button></a>
-                                    <button type="button" class="btn btn-danger rounded-pill m-2">Sí, banear</button>
-
-                                </div>
-                            </div>
-                            <a href="DetalleSerenazgo_A.html"><button type="button" class="btn btn-primary btn-sm m-2">Ver detalle</button></a>
-
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Juan Fernando</td>
-                        <td>Pérez López</td>
-                        <td>Nocturno</td>
-                        <td>Bicicleta</td>
-                        <td>Jjjffppll@gmail.com</td>
-                        <td style="width: 350px;">
-
-                            <a href="correoparaSgA.html"><button type="button" class="btn btn-success btn-sm m-2">Enviar correo</button></a>
-
-                            <button type="button" class="btn btn-danger btn-sm m-2 btn-banear">Banear</button>
-                            <div id="popup1" class="popup1" >
-                                <div class="popup_contenido1">
-                                    <span class="close-btn" id="closePopupBtn1">&times;</span>
-                                    <img src="img/advertencia.png" alt="check" width="48" height="48" style="margin-top: -10px;">
-
-                                    <p>¡Advertencia!</p>
-
-                                    <p>La acción "Banear" será permanente, debe estar seguro de su desición al respecto</p>
-
-                                    <a href="ListaSerenazgo_A.html"><button type="button" class="btn btn-success rounded-pill m-2">Cancelar</button></a>
-                                    <button type="button" class="btn btn-danger rounded-pill m-2">Sí, banear</button>
-
-                                </div>
-                            </div>
-                            <a href="DetalleSerenazgo_A.html"><button type="button" class="btn btn-primary btn-sm m-2">Ver detalle</button></a>
-
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Juan Fernando</td>
-                        <td>Pérez López</td>
-                        <td>Diurno</td>
-                        <td>A pie</td>
-                        <td>Jjjffppll@gmail.com</td>
-                        <td style="width: 350px;">
-
-                            <a href="correoparaSgA.html"><button type="button" class="btn btn-success btn-sm m-2">Enviar correo</button></a>
-
-                            <button type="button" class="btn btn-danger btn-sm m-2 btn-banear">Banear</button>
-                            <div id="popup1" class="popup1" >
-                                <div class="popup_contenido1">
-                                    <span class="close-btn" id="closePopupBtn1">&times;</span>
-                                    <img src="img/advertencia.png" alt="check" width="48" height="48" style="margin-top: -10px;">
-
-                                    <p>¡Advertencia!</p>
-
-                                    <p>La acción "Banear" será permanente, debe estar seguro de su desición al respecto</p>
-
-                                    <a href="ListaSerenazgo_A.html"><button type="button" class="btn btn-success rounded-pill m-2">Cancelar</button></a>
-                                    <button type="button" class="btn btn-danger rounded-pill m-2">Sí, banear</button>
-
-                                </div>
-                            </div>
-                            <a href="DetalleSerenazgo_A.html"><button type="button" class="btn btn-primary btn-sm m-2">Ver detalle</button></a>
-
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Juan Fernando</td>
-                        <td>Pérez López</td>
-                        <td>Diurno</td>
-                        <td>Canino</td>
-                        <td>Jjjffppll@gmail.com</td>
-                        <td style="width: 350px;">
-
-                            <a href="correoparaSgA.html"><button type="button" class="btn btn-success btn-sm m-2">Enviar correo</button></a>
-
-                            <button type="button" class="btn btn-danger btn-sm m-2 btn-banear">Banear</button>
-                            <div id="popup1" class="popup1" >
-                                <div class="popup_contenido1">
-                                    <span class="close-btn" id="closePopupBtn1">&times;</span>
-                                    <img src="img/advertencia.png" alt="check" width="48" height="48" style="margin-top: -10px;">
-
-                                    <p>¡Advertencia!</p>
-
-                                    <p>La acción "Banear" será permanente, debe estar seguro de su desición al respecto</p>
-
-                                    <a href="ListaSerenazgo_A.html"><button type="button" class="btn btn-success rounded-pill m-2">Cancelar</button></a>
-                                    <button type="button" class="btn btn-danger rounded-pill m-2">Sí, banear</button>
-
-                                </div>
-                            </div>
-                            <a href="DetalleSerenazgo_A.html"><button type="button" class="btn btn-primary btn-sm m-2">Ver detalle</button></a>
-
-                        </td>
-                    </tr>
-
-                    </tbody>
-                </table>
-            </div>
-            <div  style="display: flex; justify-content: center; align-items: center;">
-                <section class="paginacion" >
-                    <ul style="list-style: none;padding: 0;margin: 0;display: flex;">
-                        <div style="background-color: white ; padding: 5px; margin:10px">
-                            <li style="margin: 0 5px;"><a class="link-opacity-50-hover" class="link-opacity-50-hover" href="#" class="active">1</a></li>
-                        </div>
-                        <div style="background-color:white ; padding: 5px;margin:10px">
-                            <li style="margin: 0 5px;"><a class="link-opacity-50-hover" class="link-opacity-50-hover" href="#" class="active">2</a></li>
-                        </div>
-                        <div style="background-color: white ; padding: 5px;margin:10px">
-                            <li style="margin: 0 5px;"><a class="link-opacity-50-hover" class="link-opacity-50-hover" href="#" class="active">3</a></li>
-                        </div>
-                    </ul>
-                </section>
+                        </select>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <select id="filtroEstado" class="form-select" onchange="filtrar()">
+                            <option selected value="">Estado</option>
+                            <option value="Disponible">Disponible</option>
+                            <option value="En curso">En curso</option>
+                            <option value="Finalizado">Finalizado</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2 mb-2">
+                        <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=crearEvento" class="btn btn-primary w-100">
+                            <b>Crear evento</b>
+                        </a>
+                    </div>
+                </div>
             </div>
 
+            <div class="bg-light rounded h-100 p-4" style="font-weight: bold;">
+                <script>
+                    function crearEvento() {
+                        window.location.href = 'creacionEvento.html';
+                    }
+                </script>
 
-
-
-            <script>
-                $(document).ready(function(){
-                    $('.row').slick({
-                        infinite: true,
-                        slidesToShow: 3,
-                        slidesToScroll: 1
-                    });
-                })
-                ;</script>
-            <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.css">
-            <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick-theme.css">
-            <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-            <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.min.js"></script>
+                <div class="table-responsive">
+                    <table id="eventosTable" class="table" style="background-color: transparent;">
+                        <thead>
+                        <tr>
+                            <th scope="col">Nombre y Apellido</th>
+                            <th scope="col">Turno</th>
+                            <th scope="col">Tipo</th>
+                            <th scope="col">Telefono</th>
+                            <th scope="col">Enviar correo</th>
+                            <th scope="col">Banear</th>
+                            <th scope="col">ver Detalle</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <% for(EventoB eventoB : lista){ %>
+                        <tr>
+                            <td>a</td>
+                            <td>a</td>
+                            <td>a</td>
+                            <td>a</td>
+                            <td>a</td>
+                            <td><a href="<%=request.getContextPath()%>/CoordinadorServlet?action=verEvento&idEvento=<%=eventoB.getidEvento()%>"><button type="button" class="btn btn-info m-2" onclick="viewEvent()"><i class="fas fa-eye"></i></button></a></td>
+                            <td><a href="<%=request.getContextPath()%>/CoordinadorServlet?action=editarEvento&idEvento=<%=eventoB.getidEvento()%>"><button type="button" class="btn btn-success m-2" onclick="editEvent()"><i class="fas fa-pencil-alt"></i></button></a></td>
+                            <td><button type="button" class="btn btn-danger m-2" onclick="confirmDelete()"><i class="fas fa-trash-alt"></i></button></td>
+                        </tr>
+                        <% } %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
 
+        <!-- Filtro
+        <div id="Barra-Filtro">
+            <script>
+                function filtrar() {
+                    var input = document.getElementById('filtroInput').value.toUpperCase();
+                    var categoria = document.getElementById('filtroCategoria').value.toUpperCase();
+                    var estado = document.getElementById('filtroEstado').value.toUpperCase();
+                    var table = document.getElementById('eventosTable');
+                    var tr = table.getElementsByTagName('tr');
 
-        <!-- Content End -->
+                    for (var i = 1; i < tr.length; i++) {
+                        var tdNombre = tr[i].getElementsByTagName('td')[0];
+                        var tdEstado = tr[i].getElementsByTagName('td')[2];
+                        var tdFrecuencia = tr[i].getElementsByTagName('td')[3];
+                        if (tdNombre && tdEstado && tdFrecuencia) {
+                            var txtValueNombre = tdNombre.textContent || tdNombre.innerText;
+                            var txtValueEstado = tdEstado.textContent || tdEstado.innerText;
+                            var txtValueFrecuencia = tdFrecuencia.textContent || tdFrecuencia.innerText;
+                            var visible = true;
+
+                            if (input && txtValueNombre.toUpperCase().indexOf(input) === -1) {
+                                visible = false;
+                            }
+                            if (estado && txtValueEstado.toUpperCase().indexOf(estado) === -1) {
+                                visible = false;
+                            }
+                            if (categoria && txtValueFrecuencia.toUpperCase().indexOf(categoria) === -1) {
+                                visible = false;
+                            }
+                            tr[i].style.display = visible ? '' : 'none';
+                        }
+                    }
+                }
+            </script>
+        </div>
+        -->
 
         <!-- Footer Start -->
         <div class="container-fluid pt-4 px-4">
             <div class="bg-light rounded-top p-4">
                 <div class="row">
                     <div class="col-12 col-sm-6 text-center text-sm-start">
-                        &copy; <a href="#">Televecinos Unidos</a>, All Right Reserved.
+                        &copy; <a href="#">Televecinos</a>, All Right Reserved.
                     </div>
-
                 </div>
             </div>
         </div>
@@ -385,8 +266,44 @@
     <!-- Content End -->
 
 
-    <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+
+    <script>
+        $(document).ready(function(){
+            $('.row').slick({
+                infinite: true,
+                slidesToShow: 3,
+                slidesToScroll: 1
+            });
+        })
+        ;</script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick-theme.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.min.js"></script>
+</div>
+
+
+<!-- Content End -->
+
+<!-- Footer Start -->
+<div class="container-fluid pt-4 px-4">
+    <div class="bg-light rounded-top p-4">
+        <div class="row">
+            <div class="col-12 col-sm-6 text-center text-sm-start">
+                &copy; <a href="#">Televecinos Unidos</a>, All Right Reserved.
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- Footer End -->
+</div>
+<!-- Content End -->
+
+
+<!-- Back to Top -->
+<a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 </div>
 
 <!-- JavaScript Libraries -->

@@ -13,6 +13,25 @@ public class SerenazgoB {
     private String numTelefono;
     private Date fechaNacimiento;
     private int idTurnoSerenazgo;
+    private String turnoSerenazgoStr;
+    private String tipoSerenazgoStr;
+
+    public String getTurnoSerenazgoStr() {
+        return turnoSerenazgoStr;
+    }
+
+    public void setTurnoSerenazgoStr(String turnoSerenazgoStr) {
+        this.turnoSerenazgoStr = turnoSerenazgoStr;
+    }
+
+    public String getTipoSerenazgoStr() {
+        return tipoSerenazgoStr;
+    }
+
+    public void setTipoSerenazgoStr(String tipoSerenazgoStr) {
+        this.tipoSerenazgoStr = tipoSerenazgoStr;
+    }
+
     private int idTipoSerenazgo;
 
     public int getIdSerenazgo() {
