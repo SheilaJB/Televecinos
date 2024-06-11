@@ -1,4 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.util.*" %>
+<%@ page import="org.example.televecinosunidos_appweb.model.beans.SerenazgoB" %>
+
+<jsp:useBean id="lista" scope="request" type="ArrayList<SerenazgoB>"/><%-- Obtengo la lista de serenazgo--%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -189,6 +193,7 @@
                             <th scope="col">Nombre y Apellido</th>
                             <th scope="col">Turno</th>
                             <th scope="col">Tipo</th>
+                            <th scope="col">DNI</th>
                             <th scope="col">Telefono</th>
                             <th scope="col">Enviar correo</th>
                             <th scope="col">Banear</th>
@@ -196,16 +201,13 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <% for(EventoB eventoB : lista){ %>
+                        <% for(SerenazgoB serenazgoB : lista){ %>
                         <tr>
-                            <td>a</td>
-                            <td>a</td>
-                            <td>a</td>
-                            <td>a</td>
-                            <td>a</td>
-                            <td><a href="<%=request.getContextPath()%>/CoordinadorServlet?action=verEvento&idEvento=<%=eventoB.getidEvento()%>"><button type="button" class="btn btn-info m-2" onclick="viewEvent()"><i class="fas fa-eye"></i></button></a></td>
-                            <td><a href="<%=request.getContextPath()%>/CoordinadorServlet?action=editarEvento&idEvento=<%=eventoB.getidEvento()%>"><button type="button" class="btn btn-success m-2" onclick="editEvent()"><i class="fas fa-pencil-alt"></i></button></a></td>
-                            <td><button type="button" class="btn btn-danger m-2" onclick="confirmDelete()"><i class="fas fa-trash-alt"></i></button></td>
+                            <td><%=serenazgoB.getNombre() + " " + serenazgoB.getApellido()%></td>
+                            <td><%=serenazgoB.getTurnoSerenazgoStr() %></td>
+                            <td><%=serenazgoB.getTipoSerenazgoStr() %></td>
+                            <td><%=serenazgoB.getDni() %></td>
+                            <td><%=serenazgoB.getNumTelefono() %></td>
                         </tr>
                         <% } %>
                         </tbody>
