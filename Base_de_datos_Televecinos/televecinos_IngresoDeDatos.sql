@@ -65,18 +65,15 @@ INSERT INTO `televecinosDB`.`PreguntasFrecuentes` (`pregunta`, `repuesta`, `fech
 ('¿Cómo puedo recuperar mi contraseña?', 'Puede recuperar su contraseña desde la página de inicio de sesión.', '2024-01-11 00:00:00.000000'),
 ('¿Puedo asistir a eventos sin registrarme?', 'No, es necesario registrarse para asistir a los eventos.', '2024-01-15 00:00:00.000000');
 
--- -----------------------------------------------------
--- Table `televecinosDB`.`Rol`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `televecinosDB`.`Rol` (
-  `idRol` INT NOT NULL AUTO_INCREMENT,
-  `tipoRol` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`idRol`))
-ENGINE = InnoDB;
+
 
 -- Inserciones para la tabla Rol
-INSERT INTO `televecinosDB`.`Rol` (`tipoRol`) VALUES
-('Solicitante'), ('Vecino'), ('Coordinadora'), ('Serenazgo'), ('Administrador');
+INSERT INTO `televecinosDB`.`Rol` (`idRol`, `tipoRol`) VALUES
+('1', 'Solicitante'), 
+('2', 'Vecino'), 
+('3', 'Coordinadora'), 
+('4', 'Serenazgo'), 
+('5', 'Administrador');
 
 -- -----------------------------------------------------
 -- Table `televecinosDB`.`Usuario`
@@ -468,8 +465,12 @@ CREATE TABLE IF NOT EXISTS `televecinosDB`.`TipoIncidencia` (
 ENGINE = InnoDB;
 
 -- Inserciones para la tabla TipoIncidencia
-INSERT INTO `televecinosDB`.`EstadosIncidencia` (`estado`) VALUES
-('Seguridad Pública'), ('Emergencia pública'), ('Infraestructura y Servicios Publicos'), ('Otro');
+INSERT INTO `televecinosDB`.`tipoIncidencia` (`idTipoIncidencia`, `TipoIncidencia`) VALUES
+(1, 'Seguridad Pública'), 
+(2, 'Emergencia pública'), 
+(3, 'Infraestructura y Servicios Publicos'), 
+(4, 'Otro');
+
 
 -- -----------------------------------------------------
 -- Table `televecinosDB`.`EstadosIncidencia`
@@ -480,8 +481,8 @@ CREATE TABLE IF NOT EXISTS `televecinosDB`.`EstadosIncidencia` (
   PRIMARY KEY (`idEstadosIncidencia`))
 ENGINE = InnoDB;
 -- Inserciones para la tabla EstadosIncidencia
-INSERT INTO `televecinosDB`.`EstadosIncidencia` (`estado`) VALUES
-('Pendiente'), ('En Curso'), ('Cancelado'), ('Rechazado'), ('Procesado');
+INSERT INTO `televecinosDB`.`EstadosIncidencia` (`idEstadosIncidencia`, `estado`) VALUES
+(1,'Pendiente'), (2,'En Curso'), (3,'Cancelado'), (4,'Rechazado'), (5,'Procesado');
 
 -- -----------------------------------------------------
 -- Table `televecinosDB`.`Incidencias`
@@ -589,8 +590,8 @@ CREATE TABLE IF NOT EXISTS `televecinosDB`.`TurnoSerenazgo` (
 ENGINE = InnoDB;
 
 -- Inserciones para la tabla TurnoSerenazgo
-INSERT INTO `televecinosDB`.`TurnoSerenazgo` (`turno`) VALUES
-('Diurno'), ('Nocturno');
+INSERT INTO `televecinosDB`.`TurnoSerenazgo` (`idTurnoSerenazgo`,`turno`) VALUES
+(1,'Diurno'), (2,'Nocturno');
 
 -- -----------------------------------------------------
 -- Table `mtelevecinosDBydb`.`TipoSerenazgo`
@@ -601,8 +602,8 @@ CREATE TABLE IF NOT EXISTS `televecinosDB`.`TipoSerenazgo` (
   PRIMARY KEY (`idTipoSerenazgo`))
 ENGINE = InnoDB;
 -- Inserciones para la tabla TipoSerenazgo
-INSERT INTO `televecinosDB`.`TipoSerenazgo` (`tipo`) VALUES
-('Bicicleta'), ('A pie'), ('Canino'), ('Vehiculo');
+INSERT INTO `televecinosDB`.`TipoSerenazgo` (`idTipoSerenazgo`,`tipo`) VALUES
+(1,'Bicicleta'), (2,'A pie'), (3,'Canino'), (4,'Vehiculo');
 
 -- -----------------------------------------------------
 -- Table `televecinosDB`.`Serenazgo`
