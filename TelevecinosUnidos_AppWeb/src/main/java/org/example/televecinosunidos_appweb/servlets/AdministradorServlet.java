@@ -29,11 +29,11 @@ public class AdministradorServlet extends HttpServlet {
                 break;
             case "verSerenazgo":
                 String idSerenazgo = request.getParameter("idSerenazgo");
-                request.setAttribute("idSerenazgo",serenazgoDao.buscarSerenazgoPorId(idSerenazgo));
+                request.setAttribute("serenazgo",serenazgoDao.buscarSerenazgoPorId(idSerenazgo));
                 vista = "WEB-INF/Administrador/DetalleSerenazgo_A.jsp";
                 request.getRequestDispatcher(vista).forward(request, response);
                 break;
-            case "crearSerenazgo":
+            case "registrarSerenazgo":
                 request.getRequestDispatcher("WEB-INF/Administrador/registroSerenazgo.jsp").forward(request,response);
                 break;
             case "banearSerenazgo":
@@ -47,6 +47,21 @@ public class AdministradorServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html");
+        SerenazgoDao serenazgoDao = new SerenazgoDao();
+
+        String nombre = request.getParameter("nombre");
+        String apellido = request.getParameter("apellido");
+        String dni = request.getParameter("dni");
+        int turno = Integer.parseInt(request.getParameter("turno"));
+        int tipo = Integer.parseInt(request.getParameter("tipo"));
+
+        SerenazgoB serenazgoB = new SerenazgoB(nombre,apellido,dni,turno,tipo);
+
+        serenazgoDao.registrarSerenazgo(serenazgoB);
+
+
+
 
     }
 }

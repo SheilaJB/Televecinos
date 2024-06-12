@@ -13,8 +13,25 @@ public class SerenazgoB {
     private String numTelefono;
     private Date fechaNacimiento;
     private int idTurnoSerenazgo;
+    private int idTipoSerenazgo;
     private String turnoSerenazgoStr;
     private String tipoSerenazgoStr;
+
+
+
+    public SerenazgoB() {
+
+    }
+
+    public SerenazgoB(String nombre, String apellido, String dni,int turno, int tipo) {
+        this.apellido = apellido;
+
+        this.dni = dni;
+        this.nombre = nombre;
+
+        this.idTurnoSerenazgo = turno;
+        this.idTipoSerenazgo = tipo;
+    }
 
     public String getTurnoSerenazgoStr() {
         return turnoSerenazgoStr;
@@ -32,7 +49,7 @@ public class SerenazgoB {
         this.tipoSerenazgoStr = tipoSerenazgoStr;
     }
 
-    private int idTipoSerenazgo;
+
 
     public int getIdSerenazgo() {
         return idSerenazgo;

@@ -71,11 +71,11 @@
                 <a href="NuevasSolicitudes_A.html" class="nav-item nav-link"><i class="fa fa-clipboard-list me-2 "></i><span style="font-size: 13.5px;"><b>Nuevas solicitudes</b></span></a>
                 <a href="ListaVecinos_A.html" class="nav-item nav-link"><i class="fa fa-user-friends me-2 "></i><span style="font-size: 14px;"><b>Lista de vecinos</b></span></a>
                 <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-shield-alt me-2 "></i><span style="font-size: 13.5px;"><b>Personal serenazgo</b></span></a>
+                    <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"><i class="fa fa-shield-alt me-2 "></i><span style="font-size: 13.5px;"><b>Personal serenazgo</b></span></a>
                     <div class="dropdown-menu bg-transparent border-0">
-                        <a href="ListaSerenazgo_A.html" class="dropdown-item" style="font-size: 13.5px;"><b>Lista de serenazgos</b></a>
+                        <a href="ListaSerenazgo_A.html" class="dropdown-item active" style="font-size: 13.5px;"><b>Lista de serenazgos</b></a>
 
-                        <a href="registroSerenazgo.html" class="dropdown-item"style="font-size: 13.5px;"><b>Registrar nuevo serenazgo</b></a>
+                        <a href="<%=request.getContextPath()%>/AdministradorServlet?action=registrarSerenazgo"class="dropdown-item"style="font-size: 13.5px;"><b>Registrar nuevo serenazgo</b></a>
                     </div>
                 </div>
                 <div class="nav-item dropdown">
@@ -157,25 +157,22 @@
                     </div>
                     <div class="col-md-2 mb-2">
                         <select id="filtroCategoria" class="form-select" onchange="filtrar()">
-                            <option selected value="">Frecuencia</option>
-                            <option value="Semanal">Semanal</option>
-                            <option value="Dos veces por semana">Dos veces por semana</option>
-
-                        </select>
-                    </div>
-                    <div class="col-md-3 mb-2">
-                        <select id="filtroEstado" class="form-select" onchange="filtrar()">
-                            <option selected value="">Estado</option>
-                            <option value="Disponible">Disponible</option>
-                            <option value="En curso">En curso</option>
-                            <option value="Finalizado">Finalizado</option>
+                            <option selected value="">Turno</option>
+                            <option value="Semanal">Diurno</option>
+                            <option value="Dos veces por semana">Nocturno</option>
                         </select>
                     </div>
                     <div class="col-md-2 mb-2">
-                        <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=crearEvento" class="btn btn-primary w-100">
-                            <b>Crear evento</b>
-                        </a>
+                        <select id="filtroCategoria" class="form-select" onchange="filtrar()">
+                            <option selected value="">Tipo</option>
+                            <option value="Semanal">Canino</option>
+                            <option value="Bicicleta">Bicicleta</option>
+                            <option value="Vehiculo">Vehiculo</option>
+                            <option value="A pie<">A pie</option>
+                        </select>
                     </div>
+
+
                 </div>
             </div>
 
@@ -208,6 +205,9 @@
                             <td><%=serenazgoB.getTipoSerenazgoStr() %></td>
                             <td><%=serenazgoB.getDni() %></td>
                             <td><%=serenazgoB.getNumTelefono() %></td>
+                            <td><a href="<%=request.getContextPath()%>/*?action=verSerenazgo&idSerenazgo=<%=serenazgoB.getIdSerenazgo()%>"><button type="button" class="btn btn-success m-2"><i class="fas fa-envelope"></i></button></a></td>
+                            <td><a href="<%=request.getContextPath()%>/*?action=verSerenazgo&idSerenazgo=<%=serenazgoB.getIdSerenazgo()%>"><button type="button" class="btn btn-danger m-2" ><i class="fas fa-trash-alt"></i></button></a></td>
+                            <td><a href="<%=request.getContextPath()%>/AdministradorServlet?action=verSerenazgo&idSerenazgo=<%=serenazgoB.getIdSerenazgo()%>"><button type="button" class="btn btn-info m-2"><i class="fas fa-eye"></i></button></a></td>
                         </tr>
                         <% } %>
                         </tbody>
