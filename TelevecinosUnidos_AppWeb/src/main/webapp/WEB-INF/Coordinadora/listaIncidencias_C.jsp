@@ -1,4 +1,7 @@
+<%@ page import="org.example.televecinosunidos_appweb.model.beans.IncidenciasB" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<% ArrayList<IncidenciasB> lista = (ArrayList<IncidenciasB>) request.getAttribute("lista");%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -126,7 +129,9 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
         <div id="Nombre del evento">
-            <h3 style="text-align: left; margin-top:20px;margin-bottom:20px;padding: 20px">Lista de incidencias</h3>
+            <a href="<%=request.getContextPath()%>/VistaServlet">
+                <h3 style="text-align: left; margin-top:20px;margin-bottom:20px;padding: 20px">Lista de incidencias</h3>
+            </a>
         </div>
         <div style="background-color: #f8f9fa; padding: 20px; align-items: center;">
             <!-- Filtro -->
@@ -177,116 +182,25 @@
                         <th scope="col">Ver</th>
                     </tr>
                     </thead>
+
                     <tbody>
+                    <% for (IncidenciasB incidencia : lista) { %>
                     <tr>
-                        <td>Incidencia 1</td>
-                        <td>21-Enero</td>
-                        <td>17:53</td>
-                        <th scope="col">Seguridad pública</th>
-                        <td>Pendiente</td>
+                        <td><%=incidencia.getNombreIncidencia() %></td>
+                        <td><%=incidencia.getFecha() %></td>
+                        <td><%=incidencia.getHora() %></td>
+                        <th scope="col"><%=incidencia.getTipoIncidencia() %></th>
+                        <td><%=incidencia.getEstadoIncidencia() %></td>
+                        <td><a href="<%=request.getContextPath()%>/CoordIncidServlet?action=editarIncidencia&Id=<%=incidencia.getIdIncidencias()%>">
+                                <button type="button" class="btn btn-success m-2"><i class="fas fa-pencil-alt"></i></button>
+                            </a></td>
                         <td>
-                            <a href="VistaServlet?idVista=actualizarIncidenciaC">
-                                <button type="button" class="btn btn-success m-2" onclick="editEvent(1)">
-                                    <i class="fas fa-pencil-alt"></i> <!-- Ícono de lápiz de FontAwesome -->
-                                </button>
-                            </a>
-                        </td>
-                        <td>
-                            <a href="verInicidencia_C.html">
-                                <button type="button" class="btn btn-primary m-2" onclick="editEvent(1)">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                            </a>
-                        </td>
+                            vista =CverInicidencia_C.html
+                            <a href="<%=request.getContextPath()%>/CoordIncidServlet?action=verIncidencia&Id=<%=incidencia.getIdIncidencias()%>">
+                                <button type="button" class="btn btn-primary m-2"><i class="fas fa-eye"></i></button>
+                            </a></td>
                     </tr>
-                    <tr>
-                        <td>Incidencia 2</td>
-                        <td>21-Enero</td>
-                        <td>17:53</td>
-                        <th scope="col">Infraestructura y Servicios Públicos</th>
-                        <td>Procesado</td>
-                        <td>
-                            <a href="actualizarIncidencia_C.html">
-                                <button type="button" class="btn btn-success m-2" onclick="editEvent(1)">
-                                    <i class="fas fa-pencil-alt"></i> <!-- Ícono de lápiz de FontAwesome -->
-                                </button>
-                            </a>
-                        </td>
-                        <td>
-                            <a href="verInicidencia_C.html">
-                                <button type="button" class="btn btn-primary m-2" onclick="editEvent(1)">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                            </a>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>Incidencia 3</td>
-                        <td>21-Enero</td>
-                        <td>17:53</td>
-                        <th scope="col">Seguridad pública</th>
-                        <td>Rechazado</td>
-                        <td>
-                            <a href="actualizarIncidencia_C.html">
-                                <button type="button" class="btn btn-success m-2" onclick="editEvent(1)">
-                                    <i class="fas fa-pencil-alt"></i> <!-- Ícono de lápiz de FontAwesome -->
-                                </button>
-                            </a>
-                        </td>
-                        <td>
-                            <a href="verInicidencia_C.html">
-                                <button type="button" class="btn btn-primary m-2" onclick="editEvent(1)">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                            </a>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>Incidencia 4</td>
-                        <td>21-Enero</td>
-                        <td>17:53</td>
-                        <th scope="col">Emergencia pública</th>
-                        <td>Cancelado</td>
-                        <td>
-                            <a href="actualizarIncidencia_C.html">
-                                <button type="button" class="btn btn-success m-2" onclick="editEvent(1)">
-                                    <i class="fas fa-pencil-alt"></i> <!-- Ícono de lápiz de FontAwesome -->
-                                </button>
-                            </a>
-                        </td>
-                        <td>
-                            <a href="verInicidencia_C.html">
-                                <button type="button" class="btn btn-primary m-2" onclick="editEvent(1)">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                            </a>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>Incidencia 5</td>
-                        <td>21-Enero</td>
-                        <td>17:53</td>
-                        <th scope="col">Otro</th>
-                        <td>En curso</td>
-                        <td>
-                            <a href="actualizarIncidencia_C.html">
-                                <button type="button" class="btn btn-success m-2" onclick="editEvent(1)">
-                                    <i class="fas fa-pencil-alt"></i> <!-- Ícono de lápiz de FontAwesome -->
-                                </button>
-                            </a>
-                        </td>
-                        <td>
-                            <a href="verInicidencia_C.html">
-                                <button type="button" class="btn btn-primary m-2" onclick="editEvent(1)">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                            </a>
-                        </td>
-                    </tr>
-
+                    <% } %>
                     </tbody>
                 </table>
 

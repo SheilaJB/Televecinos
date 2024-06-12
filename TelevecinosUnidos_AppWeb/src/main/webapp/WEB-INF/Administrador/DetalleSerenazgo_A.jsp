@@ -1,5 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<%@ page import="java.util.*" %>
+<%@ page import="org.example.televecinosunidos_appweb.model.beans.SerenazgoB" %>
+<jsp:useBean id="serenazgo" scope="request" type="org.example.televecinosunidos_appweb.model.beans.SerenazgoB"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -214,18 +216,17 @@
 
             <div class="container text-center">
                 <img src="img/serenazgo.jpg" class="img-fluid mb-3" alt="Responsive image" width="200">
-                <div class="bar" data-label="Tipo de serenazgo">Unidad Canina</div>
-                <div class="bar" data-label="Turno">Diurno</div>
-                <div class="bar" data-label="Fecha de nombramiento">15/06/2024</div>
-                <div class="bar" data-label="Nombre">Alexis Mariel</div>
-                <div class="bar" data-label="Apellido">Herrera  Lopez</div>
-                <div class="bar" data-label="DNI">46851236</div>
-                <div class="bar" data-label="Dirección">Calle los jazmines 137</div>
-                <div class="bar" data-label="Distrito">San Miguel</div>
-                <div class="bar" data-label="Urbanización">Pando 10</div>
-                <div class="bar" data-label="Correo">robertbala@gmail.com</div>
+                <div class="bar" data-label="Nombre"><%=serenazgo.getNombre()%></div>
+                <div class="bar" data-label="Apellido"><%=serenazgo.getApellido()%></div>
+                <div class="bar" data-label="DNI"><%=serenazgo.getDni()%></div>
+                <div class="bar" data-label="Turno"><%=serenazgo.getTurnoSerenazgoStr()%></div>
+                <div class="bar" data-label="Tipo de serenazgo"><%=serenazgo.getTipoSerenazgoStr()%></div>
+                <div class="bar" data-label="Numero telefonico"><%=serenazgo.getNumTelefono()%></div>
 
-                <a href="ListaSerenazgo_A.html"><button class="button regresar">Regresar</button></a>
+
+
+
+                <a href="<%=request.getContextPath()%>/AdministradorServlet"><button class="button regresar">Regresar</button></a>
                 <a href="correoparaSgA.html"><button  class="button enviar btn-success">Enviar correo</button></a>
                 <button class="button banear btn-banear">Banear</button>
                 <div id="popup1" class="popup1" >

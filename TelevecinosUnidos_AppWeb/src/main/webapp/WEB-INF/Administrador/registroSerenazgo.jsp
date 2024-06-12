@@ -181,28 +181,7 @@
                 <img src="img/serenazgo.jpg" class="img-fluid mb-3" alt="Imagen Serenazgo" width="200">
 
                 <!-- Formulario -->
-                <form id="serenazgoForm">
-                    <label for="tipo" class="form-label" style="color:#023047;"><b>Tipo de serenazgo:</b></label>
-                    <select id="tipo" class="form-select mb-3" aria-label="Seleccione un tipo">
-                        <option selected>Seleccione un tipo:</option>
-                        <option value="1">Bicicleta</option>
-                        <option value="2">A pie</option>
-                        <option value="3">Canino</option>
-                        <option value="4">Vehículo</option>
-                    </select>
-
-                    <label for="turno" class="form-label" style="color:#023047;"><b>Elegir turno:</b></label>
-                    <select id="turno" class="form-select mb-3" aria-label="Seleccione un turno">
-                        <option selected>Seleccione un turno:</option>
-                        <option value="1">Diurno</option>
-                        <option value="2">Nocturno</option>
-                    </select>
-
-                    <div class="mb-3">
-                        <label for="fechaNombramiento" class="form-label" style="color:#023047;"><b>Fecha de Nombramiento:</b></label>
-                        <input type="date" class="form-control" id="fechaNombramiento" name="fecha_nombramiento">
-                    </div>
-
+                <form id="serenazgoForm" method="post" action="<%=request.getContextPath()%>/AdministradorServlet?action=registrarSerenazgo">
                     <label for="nombre" class="form-label" style="color:#023047;"><b>Nombre del serenazgo</b></label>
                     <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Ingrese el nombre del serenazgo">
 
@@ -212,6 +191,41 @@
                     <label for="dni" class="form-label" style="color:#023047;"><b>DNI del serenazgo</b></label>
                     <input type="text" id="dni" name="dni" class="form-control" placeholder="Ingrese el DNI del serenazgo">
 
+                    <label for="direccion" class="form-label" style="color:#023047;"><b>Direccion del serenazgo</b></label>
+                    <input type="text" id="direccion" name="direccion" class="form-control" placeholder="Ingrese la direccion del serenazgo">
+
+                    <label for="numTelefono" class="form-label" style="color:#023047;"><b>Numero de telefono</b></label>
+                    <input type="text" id="numTelefono" name="numTelefono" class="form-control" placeholder="Ingrese el numero de telefono del serenazgo">
+
+                    <label for="fechaNacimiento" class="form-label" style="color:#023047;"><b>Fecha de nacimiento</b></label>
+                    <input type="datetime-local" id="fechaNacimiento" name="fechaNacimiento" class="form-control" placeholder="Ingrese la fecha de nacimiento del serenazgo">
+
+                    <label for="turno" class="form-label" style="color:#023047;"><b>Elegir turno:</b></label>
+                    <select id="turno" class="form-select mb-3" name="turno" aria-label="Seleccione un turno">
+                        <option selected>Seleccione un turno:</option>
+                        <option value="1">Diurno</option>
+                        <option value="2">Nocturno</option>
+                    </select>
+
+
+
+                    <label for="tipo" class="form-label" style="color:#023047;"><b>Tipo de serenazgo:</b></label>
+                    <select id="tipo" class="form-select mb-3" name="tipo" aria-label="Seleccione un tipo">
+                        <option selected>Seleccione un tipo:</option>
+                        <option value="1">Bicicleta</option>
+                        <option value="2">A pie</option>
+                        <option value="3">Canino</option>
+                        <option value="4">Vehículo</option>
+                    </select>
+
+                    <label for="correo" class="form-label" style="color:#023047;"><b>Correo del serenazgo</b></label>
+                    <input type="text" id="correo" name="correo" class="form-control" placeholder="Ingrese el correo electrónico del serenazgo">
+                    <!--
+                    <div class="mb-3">
+                        <label for="fechaNombramiento" class="form-label" style="color:#023047;"><b>Fecha de Nombramiento:</b></label>
+                        <input type="date" class="form-control" id="fechaNombramiento" name="fecha_nombramiento">
+                    </div>
+
                     <label for="direccion" class="form-label" style="color:#023047;"><b>Dirección del serenazgo</b></label>
                     <input type="text" id="direccion" name="direccion" class="form-control" placeholder="Ingrese la dirección domiciliaria del serenazgo">
 
@@ -220,15 +234,15 @@
 
                     <label for="urbanizacion" class="form-label" style="color:#023047;"><b>Urbanización del serenazgo</b></label>
                     <input type="text" id="urbanizacion" name="urbanizacion" class="form-control" placeholder="Ingrese la urbanización del serenazgo">
+                    -->
 
-                    <label for="correo" class="form-label" style="color:#023047;"><b>Correo del serenazgo</b></label>
-                    <input type="text" id="correo" name="correo" class="form-control" placeholder="Ingrese el correo electrónico del serenazgo">
 
 
                     <div class="form-group" style = "padding-top: 2%">
                         <div class="m-n2" style="padding-bottom: 5%; ">
                             <button type="button" class="btn btn-warning m-2 text-white" onclick="regresar()">Regresar</button>
-                            <button type="button" class="btn btn-success m-2" id="openPopupBtn" >Registrar</button>
+
+                            <button type="submit" class="btn btn-success m-2" id="openPopupBtn" >Registrar</button>
                         </div>
                     </div>
 
@@ -246,7 +260,7 @@
                             <h2 style="margin-top: 20px;">Éxito</h2>
                             <p>Se ha registrado un nuevo serenazgo</p>
                             <a href="#">
-                                <a href="ListaSerenazgo_A.html"><button type="button" class="btn btn-primary rounded-pill m-2">Regresar</button></a>
+                                <a href="<%=request.getContextPath()%>/AdministradorServlet"><button type="button" class="btn btn-primary rounded-pill m-2">Regresar</button></a>
                             </a>
                         </div>
                     </div>
