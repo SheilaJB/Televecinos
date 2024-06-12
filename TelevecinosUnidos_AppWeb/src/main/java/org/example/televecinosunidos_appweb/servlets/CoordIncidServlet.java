@@ -14,20 +14,20 @@ public class CoordIncidServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         IncidenCoordDao incidenciaDao = new IncidenCoordDao();
-        ArrayList<IncidenciasB> listaIncidencias = incidenciaDao.listarIncidencia();
+        String action = request.getParameter("action") == null ? " listarIncidencia" : request.getParameter("action");
         String vista = "";
-        String action = request.getParameter("action") == null ? "lista" : request.getParameter("action");
 
         switch (action) {
             case "listarIncidencia":
-                vista = "WEB-INF/Coordinadora/listaIncidencias_C.jsp";
+                ArrayList<IncidenciasB> listaIncidencias = incidenciaDao.listarIncidencia();
                 request.setAttribute("lista", listaIncidencias);
-
+                vista = "WEB-INF/Coordinadora/listaIncidencias_C.jsp";
                 break;
             case "verIncidencia":
                 String idIncidencia = request.getParameter("idIncidencia");
+                IncidenciasB incidencia = incidenciaDao.buscarIncidenciaPorId(idIncidencia);
+                request.setAttribute("incidencia", incidencia);
                 vista = "WEB-INF/Coordinadora/verIncidencia_C.jsp";
-                request.setAttribute("incidencia", incidenciaDao.buscarIncidenciaPorId(idIncidencia));
                 break;
             case "generarIncidenciaC":
                 vista = "WEB-INF/Coordinadora/generarIncidencia_C.jsp";
@@ -41,7 +41,7 @@ public class CoordIncidServlet extends HttpServlet {
                 } else {
                     response.sendRedirect(request.getContextPath() + "/CoordIncidServlet");
                 }
-                break;
+                return;
             default:
                 throw new IllegalArgumentException("Acción no reconocida: " + action);
         }

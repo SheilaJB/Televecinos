@@ -15,14 +15,14 @@ public class IncidenCoordDao {
 
         String url = "jdbc:mysql://localhost:3306/televecinosdb";
         String username = "root";
-        String password = "root";
+        String password = "1234";
 
         String setLocaleSql = "SET lc_time_names = 'es_ES'";
         String sql = "SELECT " +
                 //"i.idIncidencias AS 'ID Incidencia', " +
                 "i.nombreIncidencia AS 'Nombre', " +
-                "DATE_FORMAT(i.fechaHora, '%d %M') AS 'Fecha', " +
-                "TIME_FORMAT(i.fechaHora, '%H:%i') AS 'Hora', " +
+                "DATE_FORMAT(i.fecha, '%d %M') AS 'Fecha', " +
+                "TIME_FORMAT(i.fecha, '%H:%i') AS 'Hora', " +
                 "ti.TipoIncidencia AS 'Tipo de Incidencia', " +
                 "ei.estado AS 'Estado Incidencia' " +
                 "FROM " +
@@ -56,10 +56,8 @@ public class IncidenCoordDao {
     }
 
 
-    public IncidenciasB buscarIncidenciaPorId(String idIncidencia  ) {
-
+    public IncidenciasB buscarIncidenciaPorId(String idIncidencia) {
         IncidenciasB incidencia = null;
-
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -69,28 +67,28 @@ public class IncidenCoordDao {
 
         String url = "jdbc:mysql://localhost:3306/televecinosdb";
         String username = "root";
-        String password = "root";
+        String password = "1234";
 
-        String setLocaleSql = "SET lc_time_names = 'es_ES'";
         String sql = "SELECT " +
                 "i.idIncidencias AS 'ID Incidencia', " +
                 "i.nombreIncidencia AS 'Nombre', " +
-                "DATE_FORMAT(i.fechaHora, '%d %M') AS 'Fecha', " +
-                "TIME_FORMAT(i.fechaHora, '%H:%i') AS 'Hora', " +
+                "DATE_FORMAT(i.fecha, '%d %M') AS 'Fecha', " +
+                "TIME_FORMAT(i.fecha, '%H:%i') AS 'Hora', " +
                 "ti.TipoIncidencia AS 'Tipo de Incidencia', " +
                 "ei.estado AS 'Estado Incidencia' " +
                 "FROM " +
                 "incidencias i " +
                 "JOIN tipoincidencia ti ON i.TipoIncidencia_idTipoIncidencia = ti.idTipoIncidencia " +
-                "JOIN estadosincidencia ei ON i.EstadosIncidencia_idEstadosIncidencia = ei.idEstadosIncidencia";
+                "JOIN estadosincidencia ei ON i.EstadosIncidencia_idEstadosIncidencia = ei.idEstadosIncidencia " +
+                "WHERE i.idIncidencias = ?";
 
         try (Connection conn = DriverManager.getConnection(url, username, password);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setString(1,idIncidencia);
+            pstmt.setString(1, idIncidencia);
 
-            try(ResultSet rs = pstmt.executeQuery()){
-                while (rs.next()) {
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
                     incidencia = new IncidenciasB();
                     incidencia.setIdIncidencias(rs.getInt("ID Incidencia"));
                     incidencia.setNombreIncidencia(rs.getString("Nombre"));

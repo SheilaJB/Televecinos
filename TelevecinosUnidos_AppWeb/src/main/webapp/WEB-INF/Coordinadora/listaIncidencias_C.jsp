@@ -1,7 +1,7 @@
 <%@ page import="org.example.televecinosunidos_appweb.model.beans.IncidenciasB" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<% ArrayList<IncidenciasB> lista = (ArrayList<IncidenciasB>) request.getAttribute("lista");%>
+<% ArrayList<IncidenciasB> lista = (ArrayList<IncidenciasB>) request.getAttribute("lista"); %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -119,10 +119,6 @@
         <!-- Navbar End -->
         <!-- PARTE SUPERIOR FINAL -->
 
-
-
-        <!-- LLENAR-->
-
         <!-- Bootstrap JS dependencies -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -135,7 +131,6 @@
         </div>
         <div style="background-color: #f8f9fa; padding: 20px; align-items: center;">
             <!-- Filtro -->
-
             <div style="background-color: #FFB703 ; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
                 <div class="row justify-content-center align-items-center">
                     <div class="col-md-4 mb-2">
@@ -147,10 +142,10 @@
                     <div class="col-md-2 mb-2">
                         <select id="filtroIncidencia" class="form-select">
                             <option selected disabled>Tipo de Incidencia:</option>
-                            <option value="tipo1">Seguridad Publica</option>
-                            <option value="tipo2">Emergencia pública</option>
+                            <option value="tipo1">Seguridad Pública</option>
+                            <option value="tipo2">Emergencia Médica</option>
                             <option value="tipo3">Infraestructura y Servicios Públicos</option>
-                            <option value="tipo3">Otro</option>
+                            <option value="tipo4">Otro</option>
                         </select>
                     </div>
                     <div class="col-md-2 mb-2">
@@ -182,45 +177,44 @@
                         <th scope="col">Ver</th>
                     </tr>
                     </thead>
-
                     <tbody>
-                    <% for (IncidenciasB incidencia : lista) { %>
+                    <% if (lista != null) {
+                        for (IncidenciasB incidencia : lista) { %>
                     <tr>
-                        <td><%=incidencia.getNombreIncidencia() %></td>
-                        <td><%=incidencia.getFecha() %></td>
-                        <td><%=incidencia.getHora() %></td>
-                        <th scope="col"><%=incidencia.getTipoIncidencia() %></th>
-                        <td><%=incidencia.getEstadoIncidencia() %></td>
-                        <td><a href="<%=request.getContextPath()%>/CoordIncidServlet?action=editarIncidencia&Id=<%=incidencia.getIdIncidencias()%>">
-                                <button type="button" class="btn btn-success m-2"><i class="fas fa-pencil-alt"></i></button>
-                            </a></td>
-                        <td>
-                            vista =CverInicidencia_C.html
-                            <a href="<%=request.getContextPath()%>/CoordIncidServlet?action=verIncidencia&Id=<%=incidencia.getIdIncidencias()%>">
-                                <button type="button" class="btn btn-primary m-2"><i class="fas fa-eye"></i></button>
-                            </a></td>
+                        <td><%= incidencia.getNombreIncidencia() %></td>
+                        <td><%= incidencia.getFecha() %></td>
+                        <td><%= incidencia.getHora() %></td>
+                        <td><%= incidencia.getTipoIncidencia() %></td>
+                        <td><%= incidencia.getEstadoIncidencia() %></td>
+                        <td><a href="<%=request.getContextPath()%>/CoordIncidServlet?action=editarIncidencia&idIncidencia=<%= incidencia.getIdIncidencias() %>">
+                            <button type="button" class="btn btn-success m-2"><i class="fas fa-pencil-alt"></i></button></a></td>
+                        <td><a href="<%=request.getContextPath()%>/CoordIncidServlet?action=verIncidencia&idIncidencia=<%= incidencia.getIdIncidencias() %>">
+                            <button type="button" class="btn btn-primary m-2"><i class="fas fa-eye"></i></button></a></td>
+                    </tr>
+                    <% }
+                    } else { %>
+                    <tr>
+                        <td colspan="7" class="text-center">No hay incidencias disponibles</td>
                     </tr>
                     <% } %>
                     </tbody>
                 </table>
-
             </div>
             <div  style="display: flex; justify-content: center; align-items: center;">
                 <section class="paginacion" >
                     <ul style="list-style: none;padding: 0;margin: 0;display: flex;">
                         <div style="background-color: white ; padding: 5px; margin:10px">
-                            <li style="margin: 0 5px;"><a class="link-opacity-50-hover" class="link-opacity-50-hover" href="#" class="active">1</a></li>
+                            <li style="margin: 0 5px;"><a class="link-opacity-50-hover" href="#" class="active">1</a></li>
                         </div>
                         <div style="background-color:white ; padding: 5px;margin:10px">
-                            <li style="margin: 0 5px;"><a class="link-opacity-50-hover" class="link-opacity-50-hover" href="#" class="active">2</a></li>
+                            <li style="margin: 0 5px;"><a class="link-opacity-50-hover" href="#" class="active">2</a></li>
                         </div>
                         <div style="background-color: white ; padding: 5px;margin:10px">
-                            <li style="margin: 0 5px;"><a class="link-opacity-50-hover" class="link-opacity-50-hover" href="#" class="active">3</a></li>
+                            <li style="margin: 0 5px;"><a class="link-opacity-50-hover" href="#" class="active">3</a></li>
                         </div>
                     </ul>
                 </section>
             </div>
-
         </div>
         <!-- Footer Start -->
         <div class="container-fluid pt-4 px-4">
@@ -237,10 +231,8 @@
 </div>
 <!-- Content End -->
 
-
 <!-- Back to Top -->
 <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
-</div>
 
 <!-- JavaScript Libraries -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
