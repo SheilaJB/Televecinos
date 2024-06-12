@@ -15,20 +15,21 @@ public class IncidenCoordDao {
 
         String url = "jdbc:mysql://localhost:3306/televecinosdb";
         String username = "root";
-        String password = "1234";
+        String password = "root";
 
         String setLocaleSql = "SET lc_time_names = 'es_ES'";
-        String sql = "SELECT " +
-                //"i.idIncidencias AS 'ID Incidencia', " +
-                "i.nombreIncidencia AS 'Nombre', " +
-                "DATE_FORMAT(i.fecha, '%d %M') AS 'Fecha', " +
-                "TIME_FORMAT(i.fecha, '%H:%i') AS 'Hora', " +
-                "ti.TipoIncidencia AS 'Tipo de Incidencia', " +
-                "ei.estado AS 'Estado Incidencia' " +
-                "FROM " +
-                "incidencias i " +
-                "JOIN tipoincidencia ti ON i.TipoIncidencia_idTipoIncidencia = ti.idTipoIncidencia " +
-                "JOIN estadosincidencia ei ON i.EstadosIncidencia_idEstadosIncidencia = ei.idEstadosIncidencia";
+        String sql = "SELECT \n" +
+                "    i.idIncidencias AS 'ID Incidencia', \n" +
+                "    i.nombreIncidencia AS 'Nombre', \n" +
+                "    DATE_FORMAT(i.fecha, '%d %M') AS 'Fecha', \n" +
+                "    TIME_FORMAT(i.fecha, '%H:%i') AS 'Hora', \n" +
+                "    ti.TipoIncidencia AS 'Tipo de Incidencia', \n" +
+                "    ei.estado AS 'Estado Incidencia' \n" +
+                "FROM \n" +
+                "    incidencias i \n" +
+                "JOIN tipoincidencia ti ON i.TipoIncidencia_idTipoIncidencia = ti.idTipoIncidencia \n" +
+                "JOIN estadosincidencia ei ON i.EstadosIncidencia_idEstadosIncidencia = ei.idEstadosIncidencia \n" +
+                "ORDER BY i.fecha DESC;";
 
         ArrayList<IncidenciasB> listaIncidencia = new ArrayList<>();
 
@@ -38,7 +39,7 @@ public class IncidenCoordDao {
             try (ResultSet rs = stmt.executeQuery(sql)) {
                 while (rs.next()) {
                     IncidenciasB incidencia = new IncidenciasB();
-                    //incidencia.setIdIncidencias(rs.getInt("ID Incidencia"));
+                    incidencia.setIdIncidencias(rs.getInt("ID Incidencia"));
                     incidencia.setNombreIncidencia(rs.getString("Nombre"));
                     incidencia.setFecha(rs.getString("Fecha"));
                     incidencia.setHora(rs.getString("Hora"));
@@ -67,7 +68,7 @@ public class IncidenCoordDao {
 
         String url = "jdbc:mysql://localhost:3306/televecinosdb";
         String username = "root";
-        String password = "1234";
+        String password = "root";
 
         String sql = "SELECT " +
                 "i.idIncidencias AS 'ID Incidencia', " +
