@@ -24,7 +24,7 @@ public class SerenazgoDao {
         String sql = "SELECT s.idSerenazgo, s.nombre, s.apellido,s.dni, sTurno.turno, sTipo.tipo, numTelefono " +
                 "FROM serenazgo s " +
                 "JOIN turnoserenazgo sTurno ON s.TurnoSerenazgo_idTurnoSerenazgo = sTurno.idTurnoSerenazgo " +
-                "JOIN tiposerenazgo sTipo ON s.TipoSerenazgo_idTipoSerenazgo";
+                "JOIN tiposerenazgo sTipo ON s.TipoSerenazgo_idTipoSerenazgo = sTipo.idTipoSerenazgo " ;
 
 
         ArrayList<SerenazgoB> listaSerenazgos = new ArrayList<>();

@@ -1,4 +1,4 @@
-/*package org.example.televecinosunidos_appweb.servlets;
+package org.example.televecinosunidos_appweb.servlets;
 
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
@@ -49,4 +49,4 @@ public class AdministradorServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
-}*/
+}
