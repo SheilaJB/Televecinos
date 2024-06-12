@@ -14,7 +14,7 @@ public class CoordIncidServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         IncidenCoordDao incidenciaDao = new IncidenCoordDao();
-        String action = request.getParameter("action") == null ? " listarIncidencia" : request.getParameter("action");
+        String action = request.getParameter("action") == null ? "listarIncidencia" : request.getParameter("action");
         String vista = "";
 
         switch (action) {
