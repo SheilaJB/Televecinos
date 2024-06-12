@@ -14,14 +14,15 @@ public class CoordIncidServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         IncidenCoordDao incidenciaDao = new IncidenCoordDao();
-        //ArrayList<IncidenciasB> listaIncidencias = incidenciaDao.listarIncidencia();
+        ArrayList<IncidenciasB> listaIncidencias = incidenciaDao.listarIncidencia();
         String vista = "";
-
         String action = request.getParameter("action") == null ? "lista" : request.getParameter("action");
+
         switch (action) {
             case "listarIncidencia":
                 vista = "WEB-INF/Coordinadora/listaIncidencias_C.jsp";
-                //request.setAttribute("lista", listaIncidencias);
+                request.setAttribute("lista", listaIncidencias);
+
                 break;
             case "verIncidencia":
                 String idIncidencia = request.getParameter("idIncidencia");

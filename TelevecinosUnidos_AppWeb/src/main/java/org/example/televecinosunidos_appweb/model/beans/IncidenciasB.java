@@ -13,9 +13,26 @@ public class IncidenciasB {
     private int serenazgo_idSerenazgo;
     private int usuario_idUsuario;
     private int incidenciaPersonal;
-    private String fechaHora; // Corregido a camelCase
+    private String fecha; // Corregido a camelCase
+    private  String hora;
     private String tipoIncidencia;
     private String estadoIncidencia;
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public String getHora() {
+        return hora;
+    }
+
+    public void setHora(String hora) {
+        this.hora = hora;
+    }
 
     public int getIdIncidencias() {
         return idIncidencias;
@@ -113,13 +130,6 @@ public class IncidenciasB {
         this.incidenciaPersonal = incidenciaPersonal;
     }
 
-    public String getFechaHora() {
-        return fechaHora;
-    }
-
-    public void setFechaHora(String fechaHora) {
-        this.fechaHora = fechaHora;
-    }
 
     public String getTipoIncidencia() {
         return tipoIncidencia;

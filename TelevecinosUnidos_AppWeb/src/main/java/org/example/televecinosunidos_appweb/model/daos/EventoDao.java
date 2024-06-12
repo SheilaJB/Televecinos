@@ -18,7 +18,7 @@ public class EventoDao {
 
         String url = "jdbc:mysql://localhost:3306/televecinosdb";
         String username = "root";
-        String password = "1234";
+        String password = "root";
 
         String sql = "SELECT e.idEventos AS 'ID Evento', e.nombre AS 'Nombre', DATE_FORMAT(e.fecha_inicio, '%d %M') AS 'Fecha de Inicio', " +
                 "es.estadosEvento AS 'Estado', ef.tipoFrecuencia AS 'Frecuencia' " +
@@ -60,7 +60,7 @@ public class EventoDao {
 
         String url = "jdbc:mysql://localhost:3306/televecinosdb";
         String username = "root";
-        String password = "1234";
+        String password = "root";
 
         String sql = "SELECT " +
                 "e.idEventos AS id_evento, " +
@@ -136,7 +136,7 @@ public class EventoDao {
 
         String url = "jdbc:mysql://localhost:3306/televecinosdb";
         String username = "root";
-        String password = "1234";
+        String password = "root";
         String sql = "INSERT INTO Eventos (nombre, descripcion, lugar, Coordinador_idUsuario, fecha_inicio, fecha_fin, " +
                 "cantidadVacantes, cantDisponibles, foto, listaMateriales, EventEstados_idEventEstados, " +
                 "EventFrecuencia_idEventFrecuencia, TipoEvento_idTipoEvento, ProfesoresEvento_idProfesoresEvento, eliminado) " +
@@ -177,7 +177,7 @@ public class EventoDao {
         ArrayList<ProfesoresEvento> lista = new ArrayList<>();
         String url = "jdbc:mysql://localhost:3306/televecinosdb";
         String username = "root";
-        String password = "1234";
+        String password = "root";
         String sql = "SELECT * FROM profesoresevento";
 
         try (Connection conn = DriverManager.getConnection(url, username, password);
@@ -208,7 +208,7 @@ public class EventoDao {
 
         String url = "jdbc:mysql://localhost:3306/televecinosdb";
         String username = "root";
-        String password = "1234";
+        String password = "root";
         String sql = "UPDATE Eventos SET nombre = ?, descripcion = ?, lugar = ?, " +
                 "fecha_inicio = ?, fecha_fin = ?, EventFrecuencia_idEventFrecuencia = ?, ProfesoresEvento_idProfesoresEvento = ?, " +
                 "cantidadVacantes = ?, foto = ?, listaMateriales = ? WHERE idEventos = ? AND eliminado = FALSE";
@@ -243,7 +243,7 @@ public class EventoDao {
 
         String url = "jdbc:mysql://localhost:3306/televecinosdb";
         String username = "root";
-        String password = "1234";
+        String password = "root";
         String sql = "UPDATE Eventos SET eliminado = TRUE WHERE idEventos = ?";
 
         try (Connection conn = DriverManager.getConnection(url, username, password);

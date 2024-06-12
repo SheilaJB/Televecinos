@@ -19,7 +19,7 @@ public class IncidenCoordDao {
 
         String setLocaleSql = "SET lc_time_names = 'es_ES'";
         String sql = "SELECT " +
-                "i.idIncidencias AS 'ID Incidencia', " +
+                //"i.idIncidencias AS 'ID Incidencia', " +
                 "i.nombreIncidencia AS 'Nombre', " +
                 "DATE_FORMAT(i.fechaHora, '%d %M') AS 'Fecha', " +
                 "TIME_FORMAT(i.fechaHora, '%H:%i') AS 'Hora', " +
@@ -38,12 +38,14 @@ public class IncidenCoordDao {
             try (ResultSet rs = stmt.executeQuery(sql)) {
                 while (rs.next()) {
                     IncidenciasB incidencia = new IncidenciasB();
-                    incidencia.setIdIncidencias(rs.getInt("ID Incidencia"));
+                    //incidencia.setIdIncidencias(rs.getInt("ID Incidencia"));
                     incidencia.setNombreIncidencia(rs.getString("Nombre"));
-                    incidencia.setFechaHora(rs.getString("Fecha") + " " + rs.getString("Hora"));
+                    incidencia.setFecha(rs.getString("Fecha"));
+                    incidencia.setHora(rs.getString("Hora"));
                     incidencia.setTipoIncidencia(rs.getString("Tipo de Incidencia"));
                     incidencia.setEstadoIncidencia(rs.getString("Estado Incidencia"));
                     listaIncidencia.add(incidencia); // Asegurarse de añadir la incidencia a la lista
+
                 }
             }
         } catch (SQLException e) {
@@ -90,10 +92,10 @@ public class IncidenCoordDao {
             try(ResultSet rs = pstmt.executeQuery()){
                 while (rs.next()) {
                     incidencia = new IncidenciasB();
-
                     incidencia.setIdIncidencias(rs.getInt("ID Incidencia"));
                     incidencia.setNombreIncidencia(rs.getString("Nombre"));
-                    incidencia.setFechaHora(rs.getString("Fecha") + " " + rs.getString("Hora"));
+                    incidencia.setFecha(rs.getString("Fecha"));
+                    incidencia.setHora(rs.getString("Hora"));
                     incidencia.setTipoIncidencia(rs.getString("Tipo de Incidencia"));
                     incidencia.setEstadoIncidencia(rs.getString("Estado Incidencia"));
                 }
