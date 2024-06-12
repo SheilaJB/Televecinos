@@ -23,12 +23,14 @@ public class SerenazgoB {
 
     }
 
-    public SerenazgoB(String nombre, String apellido, String dni,int turno, int tipo) {
+    public SerenazgoB(String nombre, String apellido, String dni,String direccion,String numTelefono, Date fechaNacimiento,int turno, int tipo) {
         this.apellido = apellido;
 
         this.dni = dni;
         this.nombre = nombre;
-
+        this.direccion = direccion;
+        this.numTelefono = numTelefono;
+        this.fechaNacimiento = fechaNacimiento;
         this.idTurnoSerenazgo = turno;
         this.idTipoSerenazgo = tipo;
     }

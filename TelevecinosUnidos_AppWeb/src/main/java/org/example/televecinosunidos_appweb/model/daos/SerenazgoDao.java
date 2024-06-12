@@ -5,6 +5,7 @@ import org.example.televecinosunidos_appweb.model.beans.ProfesoresEvento;
 import org.example.televecinosunidos_appweb.model.beans.SerenazgoB;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class SerenazgoDao {
@@ -110,8 +111,8 @@ public class SerenazgoDao {
         String username = "root";
         String password = "root";
 
-        String sql = "INSERT INTO `televecinosDB`.`Serenazgo` (`nombre`, `apellido`, `dni`, `TurnoSerenazgo_idTurnoSerenazgo`, `TipoSerenazgo_idTipoSerenazgo`) VALUES " +
-                "(?,?,?,?,?)";
+        String sql = "INSERT INTO `televecinosDB`.`Serenazgo` (`nombre`, `apellido`, `dni`, `direccion`, `numTelefono`,`fechaNacimiento`,`TurnoSerenazgo_idTurnoSerenazgo`, `TipoSerenazgo_idTipoSerenazgo`) VALUES " +
+                "(?,?,?,?,?,?,?,?)";
 
 
         try(Connection conn = DriverManager.getConnection(url,username,password); PreparedStatement pstmt = conn.prepareStatement(sql);) { // usando try con recursos
@@ -119,8 +120,13 @@ public class SerenazgoDao {
             pstmt.setString(1,serenazgoB.getNombre());
             pstmt.setString(2,serenazgoB.getApellido());
             pstmt.setString(3,serenazgoB.getDni());
-            pstmt.setInt(4,serenazgoB.getIdTurnoSerenazgo());
-            pstmt.setInt(5,serenazgoB.getIdTipoSerenazgo());
+            pstmt.setString(4,serenazgoB.getDireccion());
+            pstmt.setString(5,serenazgoB.getNumTelefono());
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            String fechaNacimientoStr = formatter.format(serenazgoB.getFechaNacimiento());
+            pstmt.setString(6,fechaNacimientoStr);
+            pstmt.setInt(7,serenazgoB.getIdTurnoSerenazgo());
+            pstmt.setInt(8,serenazgoB.getIdTipoSerenazgo());
 
             pstmt.executeUpdate();
 

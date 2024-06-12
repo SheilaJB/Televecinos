@@ -9,7 +9,10 @@ import org.example.televecinosunidos_appweb.model.beans.SerenazgoB;
 import org.example.televecinosunidos_appweb.model.daos.SerenazgoDao;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 @WebServlet(name = "AdministradorServlet", value = "/AdministradorServlet")
 public class AdministradorServlet extends HttpServlet {
@@ -49,19 +52,26 @@ public class AdministradorServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
         SerenazgoDao serenazgoDao = new SerenazgoDao();
-
         String nombre = request.getParameter("nombre");
         String apellido = request.getParameter("apellido");
         String dni = request.getParameter("dni");
+        String direccion = request.getParameter("direccion");
+        String numTelefono = request.getParameter("numTelefono");
+        String fechaNacimientoStr = request.getParameter("fechaNacimiento");
         int turno = Integer.parseInt(request.getParameter("turno"));
         int tipo = Integer.parseInt(request.getParameter("tipo"));
 
-        SerenazgoB serenazgoB = new SerenazgoB(nombre,apellido,dni,turno,tipo);
-
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd"); // Ajusta este formato a 'año-mes-día'
+        Date fechaNacimiento = null;
+        try {
+            fechaNacimiento = formatter.parse(fechaNacimientoStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        SerenazgoB serenazgoB = new SerenazgoB(nombre,apellido,dni,direccion,numTelefono,fechaNacimiento,turno,tipo);
         serenazgoDao.registrarSerenazgo(serenazgoB);
 
-
-
+        response.sendRedirect(request.getContextPath() + "/AdministradorServlet");
 
     }
 }

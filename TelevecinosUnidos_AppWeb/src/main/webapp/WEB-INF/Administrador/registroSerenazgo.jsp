@@ -191,6 +191,15 @@
                     <label for="dni" class="form-label" style="color:#023047;"><b>DNI del serenazgo</b></label>
                     <input type="text" id="dni" name="dni" class="form-control" placeholder="Ingrese el DNI del serenazgo">
 
+                    <label for="direccion" class="form-label" style="color:#023047;"><b>Direccion del serenazgo</b></label>
+                    <input type="text" id="direccion" name="direccion" class="form-control" placeholder="Ingrese la direccion del serenazgo">
+
+                    <label for="numTelefono" class="form-label" style="color:#023047;"><b>Numero de telefono</b></label>
+                    <input type="text" id="numTelefono" name="numTelefono" class="form-control" placeholder="Ingrese el numero de telefono del serenazgo">
+
+                    <label for="fechaNacimiento" class="form-label" style="color:#023047;"><b>Fecha de nacimiento</b></label>
+                    <input type="datetime-local" id="fechaNacimiento" name="fechaNacimiento" class="form-control" placeholder="Ingrese la fecha de nacimiento del serenazgo">
+
                     <label for="turno" class="form-label" style="color:#023047;"><b>Elegir turno:</b></label>
                     <select id="turno" class="form-select mb-3" name="turno" aria-label="Seleccione un turno">
                         <option selected>Seleccione un turno:</option>
@@ -232,6 +241,7 @@
                     <div class="form-group" style = "padding-top: 2%">
                         <div class="m-n2" style="padding-bottom: 5%; ">
                             <button type="button" class="btn btn-warning m-2 text-white" onclick="regresar()">Regresar</button>
+
                             <button type="submit" class="btn btn-success m-2" id="openPopupBtn" >Registrar</button>
                         </div>
                     </div>
