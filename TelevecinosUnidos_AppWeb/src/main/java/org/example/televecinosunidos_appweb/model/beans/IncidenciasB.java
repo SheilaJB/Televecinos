@@ -7,17 +7,26 @@ public class IncidenciasB {
     private String referencia;
     private String foto;
     private int ambulancia;
+    private  String urbanizacion;
+
+    public String getUrbanizacion() {
+        return urbanizacion;
+    }
+
+    public void setUrbanizacion(String urbanizacion) {
+        this.urbanizacion = urbanizacion;
+    }
+
     private String numeroContacto;
     private int criticidadIncidencia_idCriticidadIncidencia;
     private int estadosIncidencia_idEstadoIncidencia;
     private int serenazgo_idSerenazgo;
     private int usuario_idUsuario;
     private int incidenciaPersonal;
-    private String fecha; // Corregido a camelCase
+    private String fecha;
     private  String hora;
     private String tipoIncidencia;
     private String estadoIncidencia;
-
     public String getFecha() {
         return fecha;
     }

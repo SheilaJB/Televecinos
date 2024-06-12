@@ -16,7 +16,8 @@ CREATE TABLE IF NOT EXISTS `televecinosDB`.`Urbanizacion` (
   `nombre` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idUrbanizacion`))
 ENGINE = InnoDB;
-
+-- Inicializando desde 1
+ALTER TABLE `televecinosDB`.`Urbanizacion` AUTO_INCREMENT =1;
 -- datos para Urbanizacion
 INSERT INTO `televecinosDB`.`Urbanizacion` (`nombre`) VALUES
 ('Rafael Escardó'), 
@@ -40,7 +41,8 @@ CREATE TABLE IF NOT EXISTS `televecinosDB`.`TipoCoordinador` (
   `nombre` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idTipoCoordinador`))
 ENGINE = InnoDB;
-
+-- Inicializando desde 1
+ALTER TABLE `televecinosDB`.`TipoCoordinador` AUTO_INCREMENT =1;
 -- datos para tipo de coordinador
 INSERT INTO `televecinosDB`.`TipoCoordinador` (`nombre`) VALUES
 ('Coordinadora de Cultura'), ('Coordinadora de Deportes');
@@ -55,7 +57,8 @@ CREATE TABLE IF NOT EXISTS `televecinosDB`.`PreguntasFrecuentes` (
   `fechaModificacion` DATETIME(6) NOT NULL,
   PRIMARY KEY (`idtable2`))
 ENGINE = InnoDB;
-
+-- Inicializando desde 1
+ALTER TABLE `televecinosDB`.`PreguntasFrecuentes` AUTO_INCREMENT =1;
 -- Inserciones para la tabla PreguntasFrecuentes
 INSERT INTO `televecinosDB`.`PreguntasFrecuentes` (`pregunta`, `repuesta`, `fechaModificacion`) VALUES
 ('¿Cuál es el horario de atención?', 'Nuestro horario de atención es de 9am a 6pm.', '2024-01-02 00:00:00.000000'),
@@ -78,7 +81,7 @@ INSERT INTO `televecinosDB`.`Rol` (`idRol`, `tipoRol`) VALUES
 -- -----------------------------------------------------
 -- Table `televecinosDB`.`Usuario`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `televecinosDB`.`Usuario` (
+CREATE TABLE IF NOT EXISTS `televecinosdb`.`usuario` (
   `idUsuario` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(100) NOT NULL,
   `apellido` VARCHAR(100) NOT NULL,
@@ -86,40 +89,28 @@ CREATE TABLE IF NOT EXISTS `televecinosDB`.`Usuario` (
   `direccion` VARCHAR(150) NOT NULL,
   `correo` VARCHAR(100) NOT NULL,
   `contrasena` VARCHAR(45) NOT NULL,
-  `Urbanizacion_idUrbanizacion` INT NOT NULL,
-  `TipoCoordinador_idTipoCoordinador` INT NULL,
-  `asistencia` TINYINT NULL,
+  `TipoCoordinador_idTipoCoordinador` INT NULL DEFAULT NULL,
+  `asistencia` TINYINT NULL DEFAULT NULL,
   `avatar` LONGBLOB NOT NULL,
   `PreguntasFrecuentes_idtable2` INT NOT NULL,
   `Rol_idRol` INT NOT NULL,
-  `isBan` TINYINT NOT NULL DEFAULT 0,
+  `isBan` TINYINT NOT NULL DEFAULT '0',
   PRIMARY KEY (`idUsuario`),
-  INDEX `fk_Usuario_Urbanizacion_idx` (`Urbanizacion_idUrbanizacion` ASC) VISIBLE,
   INDEX `fk_Usuario_TipoCoordinador1_idx` (`TipoCoordinador_idTipoCoordinador` ASC) VISIBLE,
   INDEX `fk_Usuario_PreguntasFrecuentes1_idx` (`PreguntasFrecuentes_idtable2` ASC) VISIBLE,
   INDEX `fk_Usuario_Rol1_idx` (`Rol_idRol` ASC) VISIBLE,
-  CONSTRAINT `fk_Usuario_Urbanizacion`
-    FOREIGN KEY (`Urbanizacion_idUrbanizacion`)
-    REFERENCES `televecinosDB`.`Urbanizacion` (`idUrbanizacion`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Usuario_TipoCoordinador1`
-    FOREIGN KEY (`TipoCoordinador_idTipoCoordinador`)
-    REFERENCES `televecinosDB`.`TipoCoordinador` (`idTipoCoordinador`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
   CONSTRAINT `fk_Usuario_PreguntasFrecuentes1`
     FOREIGN KEY (`PreguntasFrecuentes_idtable2`)
-    REFERENCES `televecinosDB`.`PreguntasFrecuentes` (`idtable2`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    REFERENCES `televecinosdb`.`preguntasfrecuentes` (`idtable2`),
   CONSTRAINT `fk_Usuario_Rol1`
     FOREIGN KEY (`Rol_idRol`)
-    REFERENCES `televecinosDB`.`Rol` (`idRol`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    REFERENCES `televecinosdb`.`rol` (`idRol`),
+  CONSTRAINT `fk_Usuario_TipoCoordinador1`
+    FOREIGN KEY (`TipoCoordinador_idTipoCoordinador`)
+    REFERENCES `televecinosdb`.`tipocoordinador` (`idTipoCoordinador`))
 ENGINE = InnoDB;
-
+-- Inicializando desde 1
+ALTER TABLE `televecinosDB`.`Usuario` AUTO_INCREMENT =1;
 -- Inserciones para la tabla Usuario
 INSERT INTO `televecinosDB`.`Usuario` (
   `nombre`, 
@@ -128,7 +119,6 @@ INSERT INTO `televecinosDB`.`Usuario` (
   `direccion`, 
   `correo`, 
   `contrasena`, 
-  `Urbanizacion_idUrbanizacion`, 
   `TipoCoordinador_idTipoCoordinador`, 
   `asistencia`, 
   `avatar`, 
@@ -136,70 +126,70 @@ INSERT INTO `televecinosDB`.`Usuario` (
   `Rol_idRol`, 
   `isBan`
 ) VALUES
-('Luis', 'García', '12345678', 'Calle Alfonso Ugarte 127, Rafael Escardó', 'luis.garcia@example.com', 'password1', 1, 1, 1, 'avatar', 1, 1, 0),
-('César', 'Ramírez', '22345678', 'Avenida Patriotas 234, José de La Riva Agüero', 'cesar.ramirez@example.com', 'password2', 2, 2, 1, 'avatar', 2, 2, 0),
-('María', 'Fernández', '32345678', 'Jirón Amazonas 341, Juan XXIII', 'maria.fernandez@example.com', 'password3', 3, 1, 1, 'avatar', 3, 1, 0),
-('Ana', 'Rodríguez', '42345678', 'Calle Arica 452, Libertad', 'ana.rodriguez@example.com', 'password4', 4, 2, 1, 'avatar', 4, 2, 0),
-('Pedro', 'Martínez', '52345678', 'Avenida Ayacucho 563, Los Jardines de La Marina', 'pedro.martinez@example.com', 'password5', 5, 1, 1, 'avatar', 5, 1, 0),
-('Juan', 'López', '62345678', 'Jirón Chancay 674, Las Leyendas', 'juan.lopez@example.com', 'password6', 6, 2, 1, 'avatar', 6, 2, 0),
-('Carlos', 'González', '72345678', 'Calle Castilla 785, Las Torres San Miguelito', 'carlos.gonzalez@example.com', 'password7', 7, 1, 1, 'avatar', 7, 1, 0),
-('Sofía', 'Pérez', '82345678', 'Avenida de Los Precursores 896, Elmer Faucett', 'sofia.perez@example.com', 'password8', 8, 2, 1, 'avatar', 8, 2, 0),
-('Lucía', 'Díaz', '92345678', 'Jirón Puno 907, Maranga', 'lucia.diaz@example.com', 'password9', 9, 1, 1, 'avatar', 9, 1, 0),
-('Miguel', 'Hernández', '10345678', 'Calle Junín 1018, Pando', 'miguel.hernandez@example.com', 'password10', 10, 2, 1, 'avatar', 10, 2, 0),
-('Elena', 'Jiménez', '11345678', 'Avenida Bertoloto 1129, Parques de La Huaca', 'elena.jimenez@example.com', 'password11', 11, 1, 1, 'avatar', 11, 1, 0),
-('Valeria', 'Ruiz', '12345679', 'Jirón Tumbes 1240, Otro', 'valeria.ruiz@example.com', 'password12', 12, 2, 1, 'avatar', 12, 2, 0),
-('Diego', 'Morales', '13345678', 'Calle Libertad 1351, Rafael Escardó', 'diego.morales@example.com', 'password13', 1, 1, 1, 'avatar', 1, 1, 0),
-('Andrea', 'Ortiz', '14345678', 'Avenida La Marina 1462, José de La Riva Agüero', 'andrea.ortiz@example.com', 'password14', 2, 2, 1, 'avatar', 2, 2, 0),
-('Fernando', 'Castro', '15345678', 'Jirón Bolognesi 1573, Juan XXIII', 'fernando.castro@example.com', 'password15', 3, 1, 1, 'avatar', 3, 1, 0),
-('Gabriela', 'Torres', '16345678', 'Calle Tacna 1684, Libertad', 'gabriela.torres@example.com', 'password16', 4, 2, 1, 'avatar', 4, 2, 0),
-('Sergio', 'Flores', '17345678', 'Avenida Faucett 1795, Los Jardines de La Marina', 'sergio.flores@example.com', 'password17', 5, 1, 1, 'avatar', 5, 1, 0),
-('Isabel', 'Mendoza', '18345678', 'Jirón Inclán 1806, Las Leyendas', 'isabel.mendoza@example.com', 'password18', 6, 2, 1, 'avatar', 6, 2, 0),
-('Alejandro', 'Romero', '19345678', 'Calle Olaya 1917, Las Torres San Miguelito', 'alejandro.romero@example.com', 'password19', 7, 1, 1, 'avatar', 7, 1, 0),
-('Patricia', 'Vega', '20345678', 'Avenida Precursores 2028, Elmer Faucett', 'patricia.vega@example.com', 'password20', 8, 2, 1, 'avatar', 8, 2, 0),
-('Ricardo', 'Soto', '21345678', 'Jirón Manco Cápac 2139, Maranga', 'ricardo.soto@example.com', 'password21', 9, 1, 1, 'avatar', 9, 1, 0),
-('Paula', 'Silva', '22345678', 'Calle Independencia 2250, Pando', 'paula.silva@example.com', 'password22', 10, 2, 1, 'avatar', 10, 2, 0),
-('Hugo', 'Rojas', '23345678', 'Avenida Bertoloto 2361, Parques de La Huaca', 'hugo.rojas@example.com', 'password23', 11, 1, 1, 'avatar', 11, 1, 0),
-('Verónica', 'Peña', '24345678', 'Jirón Chancay 2472, Otro', 'veronica.pena@example.com', 'password24', 12, 2, 1, 'avatar', 12, 2, 0),
-('Oscar', 'Cruz', '25345678', 'Calle Grau 2583, Rafael Escardó', 'oscar.cruz@example.com', 'password25', 1, 1, 1, 'avatar', 1, 1, 0),
-('Javier', 'Reyes', '26345678', 'Avenida Los Patriotas 2694, José de La Riva Agüero', 'javier.reyes@example.com', 'password26', 2, 2, 1, 'avatar', 2, 2, 0),
-('Natalia', 'Campos', '27345678', 'Jirón Sucre 2705, Juan XXIII', 'natalia.campos@example.com', 'password27', 3, 1, 1, 'avatar', 3, 1, 0),
-('Cristina', 'Ramos', '28345678', 'Calle Salaverry 2816, Libertad', 'cristina.ramos@example.com', 'password28', 4, 2, 1, 'avatar', 4, 2, 0),
-('Pablo', 'Aguilar', '29345678', 'Avenida La Marina 2927, Los Jardines de La Marina', 'pablo.aguilar@example.com', 'password29', 5, 1, 1, 'avatar', 5, 1, 0),
-('Lorena', 'Guzmán', '30345678', 'Jirón Manco Cápac 3038, Las Leyendas', 'lorena.guzman@example.com', 'password30', 6, 2, 1, 'avatar', 6, 2, 0),
-('Luis', 'García', '12345670', 'Calle Alfonso Ugarte 127, Rafael Escardó', 'luis.garcia@example.com', 'password1', 1, 1, 1, 'avatar', 1, 1, 0),
-('César', 'Ramírez', '22345670', 'Avenida Patriotas 234, José de La Riva Agüero', 'cesar.ramirez@example.com', 'password2', 2, 2, 1, 'avatar', 2, 2, 0),
-('María', 'Fernández', '32345670', 'Jirón Amazonas 341, Juan XXIII', 'maria.fernandez@example.com', 'password3', 3, 1, 1, 'avatar', 3, 1, 0),
-('Ana', 'Rodríguez', '42345670', 'Calle Arica 452, Libertad', 'ana.rodriguez@example.com', 'password4', 4, 2, 1, 'avatar', 4, 2, 0),
-('Pedro', 'Martínez', '52345670', 'Avenida Ayacucho 563, Los Jardines de La Marina', 'pedro.martinez@example.com', 'password5', 5, 1, 1, 'avatar', 5, 1, 0),
-('Juan', 'López', '62345670', 'Jirón Chancay 674, Las Leyendas', 'juan.lopez@example.com', 'password6', 6, 2, 1, 'avatar', 6, 2, 0),
-('Carlos', 'González', '72345670', 'Calle Castilla 785, Las Torres San Miguelito', 'carlos.gonzalez@example.com', 'password7', 7, 1, 1, 'avatar', 7, 1, 0),
-('Sofía', 'Pérez', '82345670', 'Avenida de Los Precursores 896, Elmer Faucett', 'sofia.perez@example.com', 'password8', 8, 2, 1, 'avatar', 8, 2, 0),
-('Lucía', 'Díaz', '92345670', 'Jirón Puno 907, Maranga', 'lucia.diaz@example.com', 'password9', 9, 1, 1, 'avatar', 9, 1, 0),
-('Miguel', 'Hernández', '10345670', 'Calle Junín 1018, Pando', 'miguel.hernandez@example.com', 'password10', 10, 2, 1, 'avatar', 10, 2, 0),
-('Elena', 'Jiménez', '11345670', 'Avenida Bertoloto 1129, Parques de La Huaca', 'elena.jimenez@example.com', 'password11', 11, 1, 1, 'avatar', 11, 1, 0),
-('Valeria', 'Ruiz', '12345671', 'Jirón Tumbes 1240, Otro', 'valeria.ruiz@example.com', 'password12', 12, 2, 1, 'avatar', 12, 2, 0),
-('Diego', 'Morales', '13345670', 'Calle Libertad 1351, Rafael Escardó', 'diego.morales@example.com', 'password13', 1, 1, 1, 'avatar', 1, 1, 0),
-('Andrea', 'Ortiz', '14345670', 'Avenida La Marina 1462, José de La Riva Agüero', 'andrea.ortiz@example.com', 'password14', 2, 2, 1, 'avatar', 2, 2, 0),
-('Fernando', 'Castro', '15345670', 'Jirón Bolognesi 1573, Juan XXIII', 'fernando.castro@example.com', 'password15', 3, 1, 1, 'avatar', 3, 1, 0),
-('Gabriela', 'Torres', '16345670', 'Calle Tacna 1684, Libertad', 'gabriela.torres@example.com', 'password16', 4, 2, 1, 'avatar', 4, 2, 0),
-('Sergio', 'Flores', '17345670', 'Avenida Faucett 1795, Los Jardines de La Marina', 'sergio.flores@example.com', 'password17', 5, 1, 1, 'avatar', 5, 1, 0),
-('Isabel', 'Mendoza', '18345670', 'Jirón Inclán 1806, Las Leyendas', 'isabel.mendoza@example.com', 'password18', 6, 2, 1, 'avatar', 6, 2, 0),
-('Alejandro', 'Romero', '19345670', 'Calle Olaya 1917, Las Torres San Miguelito', 'alejandro.romero@example.com', 'password19', 7, 1, 1, 'avatar', 7, 1, 0),
-('Patricia', 'Vega', '20345670', 'Avenida Precursores 2028, Elmer Faucett', 'patricia.vega@example.com', 'password20', 8, 2, 1, 'avatar', 8, 2, 0),
-('Ricardo', 'Soto', '21345670', 'Jirón Manco Cápac 2139, Maranga', 'ricardo.soto@example.com', 'password21', 9, 1, 1, 'avatar', 9, 1, 0),
-('Paula', 'Silva', '22345670', 'Calle Independencia 2250, Pando', 'paula.silva@example.com', 'password22', 10, 2, 1, 'avatar', 10, 2, 0),
-('Hugo', 'Rojas', '23345670', 'Avenida Bertoloto 2361, Parques de La Huaca', 'hugo.rojas@example.com', 'password23', 11, 1, 1, 'avatar', 11, 1, 0),
-('Verónica', 'Peña', '24345670', 'Jirón Chancay 2472, Otro', 'veronica.pena@example.com', 'password24', 12, 2, 1, 'avatar', 12, 2, 0),
-('Oscar', 'Cruz', '25345670', 'Calle Grau 2583, Rafael Escardó', 'oscar.cruz@example.com', 'password25', 1, 1, 1, 'avatar', 1, 1, 0),
-('Javier', 'Reyes', '26345670', 'Avenida Los Patriotas 2694, José de La Riva Agüero', 'javier.reyes@example.com', 'password26', 2, 2, 1, 'avatar', 2, 2, 0),
-('Natalia', 'Campos', '27345670', 'Jirón Sucre 2705, Juan XXIII', 'natalia.campos@example.com', 'password27', 3, 1, 1, 'avatar', 3, 1, 0),
-('Cristina', 'Ramos', '28345670', 'Calle Salaverry 2816, Libertad', 'cristina.ramos@example.com', 'password28', 4, 2, 1, 'avatar', 4, 2, 0),
-('Pablo', 'Aguilar', '29345670', 'Avenida La Marina 2927, Los Jardines de La Marina', 'pablo.aguilar@example.com', 'password29', 5, 1, 1, 'avatar', 5, 1, 0),
-('Lorena', 'Guzmán', '30345670', 'Jirón Manco Cápac 3038, Las Leyendas', 'lorena.guzman@example.com', 'password30', 6, 2, 1, 'avatar', 6, 2, 0),
+('Luis', 'García', '12345678', 'Calle Alfonso Ugarte 127, Rafael Escardó', 'luis.garcia@example.com', 'password1', 1, 1, 'avatar', 1, 1, 0),
+('César', 'Ramírez', '22345678', 'Avenida Patriotas 234, José de La Riva Agüero', 'cesar.ramirez@example.com', 'password2', 2, 1, 'avatar', 2, 2, 0),
+('María', 'Fernández', '32345678', 'Jirón Amazonas 341, Juan XXIII', 'maria.fernandez@example.com', 'password3', 1, 1, 'avatar', 3, 1, 0),
+('Ana', 'Rodríguez', '42345678', 'Calle Arica 452, Libertad', 'ana.rodriguez@example.com', 'password4', 2, 1, 'avatar', 4, 2, 0),
+('Pedro', 'Martínez', '52345678', 'Avenida Ayacucho 563, Los Jardines de La Marina', 'pedro.martinez@example.com', 'password5', 1, 1, 'avatar', 5, 1, 0),
+('Juan', 'López', '62345678', 'Jirón Chancay 674, Las Leyendas', 'juan.lopez@example.com', 'password6',  2, 1, 'avatar', 6, 2, 0),
+('Carlos', 'González', '72345678', 'Calle Castilla 785, Las Torres San Miguelito', 'carlos.gonzalez@example.com', 'password7',  1, 1, 'avatar', 7, 1, 0),
+('Sofía', 'Pérez', '82345678', 'Avenida de Los Precursores 896, Elmer Faucett', 'sofia.perez@example.com', 'password8',  2, 1, 'avatar', 8, 2, 0),
+('Lucía', 'Díaz', '92345678', 'Jirón Puno 907, Maranga', 'lucia.diaz@example.com', 'password9', 1, 1, 'avatar', 9, 1, 0),
+('Miguel', 'Hernández', '10345678', 'Calle Junín 1018, Pando', 'miguel.hernandez@example.com', 'password10', 2, 1, 'avatar', 10, 2, 0),
+('Elena', 'Jiménez', '11345678', 'Avenida Bertoloto 1129, Parques de La Huaca', 'elena.jimenez@example.com', 'password11', 1, 1, 'avatar', 11, 1, 0),
+('Valeria', 'Ruiz', '12345679', 'Jirón Tumbes 1240, Otro', 'valeria.ruiz@example.com', 'password12', 2, 1, 'avatar', 12, 2, 0),
+('Diego', 'Morales', '13345678', 'Calle Libertad 1351, Rafael Escardó', 'diego.morales@example.com', 'password13',  1, 1, 'avatar', 1, 1, 0),
+('Andrea', 'Ortiz', '14345678', 'Avenida La Marina 1462, José de La Riva Agüero', 'andrea.ortiz@example.com', 'password14',  2, 1, 'avatar', 2, 2, 0),
+('Fernando', 'Castro', '15345678', 'Jirón Bolognesi 1573, Juan XXIII', 'fernando.castro@example.com', 'password15', 1, 1, 'avatar', 3, 1, 0),
+('Gabriela', 'Torres', '16345678', 'Calle Tacna 1684, Libertad', 'gabriela.torres@example.com', 'password16',  2, 1, 'avatar', 4, 2, 0),
+('Sergio', 'Flores', '17345678', 'Avenida Faucett 1795, Los Jardines de La Marina', 'sergio.flores@example.com', 'password17', 1, 1, 'avatar', 5, 1, 0),
+('Isabel', 'Mendoza', '18345678', 'Jirón Inclán 1806, Las Leyendas', 'isabel.mendoza@example.com', 'password18',  2, 1, 'avatar', 6, 2, 0),
+('Alejandro', 'Romero', '19345678', 'Calle Olaya 1917, Las Torres San Miguelito', 'alejandro.romero@example.com', 'password19', 1, 1, 'avatar', 7, 1, 0),
+('Patricia', 'Vega', '20345678', 'Avenida Precursores 2028, Elmer Faucett', 'patricia.vega@example.com', 'password20',  2, 1, 'avatar', 8, 2, 0),
+('Ricardo', 'Soto', '21345678', 'Jirón Manco Cápac 2139, Maranga', 'ricardo.soto@example.com', 'password21',  1, 1, 'avatar', 9, 1, 0),
+('Paula', 'Silva', '22345678', 'Calle Independencia 2250, Pando', 'paula.silva@example.com', 'password22',  2, 1, 'avatar', 10, 2, 0),
+('Hugo', 'Rojas', '23345678', 'Avenida Bertoloto 2361, Parques de La Huaca', 'hugo.rojas@example.com', 'password23',  1, 1, 'avatar', 11, 1, 0),
+('Verónica', 'Peña', '24345678', 'Jirón Chancay 2472, Otro', 'veronica.pena@example.com', 'password24', 2, 1, 'avatar', 12, 2, 0),
+('Oscar', 'Cruz', '25345678', 'Calle Grau 2583, Rafael Escardó', 'oscar.cruz@example.com', 'password25',  1, 1, 'avatar', 1, 1, 0),
+('Javier', 'Reyes', '26345678', 'Avenida Los Patriotas 2694, José de La Riva Agüero', 'javier.reyes@example.com', 'password26',  2, 1, 'avatar', 2, 2, 0),
+('Natalia', 'Campos', '27345678', 'Jirón Sucre 2705, Juan XXIII', 'natalia.campos@example.com', 'password27', 1, 1, 'avatar', 3, 1, 0),
+('Cristina', 'Ramos', '28345678', 'Calle Salaverry 2816, Libertad', 'cristina.ramos@example.com', 'password28', 2, 1, 'avatar', 4, 2, 0),
+('Pablo', 'Aguilar', '29345678', 'Avenida La Marina 2927, Los Jardines de La Marina', 'pablo.aguilar@example.com', 'password29',  1, 1, 'avatar', 5, 1, 0),
+('Lorena', 'Guzmán', '30345678', 'Jirón Manco Cápac 3038, Las Leyendas', 'lorena.guzman@example.com', 'password30',  2, 1, 'avatar', 6, 2, 0),
+('Luis', 'García', '12345670', 'Calle Alfonso Ugarte 127, Rafael Escardó', 'luis.garcia@example.com', 'password1',  1, 1, 'avatar', 1, 1, 0),
+('César', 'Ramírez', '22345670', 'Avenida Patriotas 234, José de La Riva Agüero', 'cesar.ramirez@example.com', 'password2', 2, 1, 'avatar', 2, 2, 0),
+('María', 'Fernández', '32345670', 'Jirón Amazonas 341, Juan XXIII', 'maria.fernandez@example.com', 'password3',  1, 1, 'avatar', 3, 1, 0),
+('Ana', 'Rodríguez', '42345670', 'Calle Arica 452, Libertad', 'ana.rodriguez@example.com', 'password4',2, 1, 'avatar', 4, 2, 0),
+('Pedro', 'Martínez', '52345670', 'Avenida Ayacucho 563, Los Jardines de La Marina', 'pedro.martinez@example.com', 'password5', 1, 1, 'avatar', 5, 1, 0),
+('Juan', 'López', '62345670', 'Jirón Chancay 674, Las Leyendas', 'juan.lopez@example.com', 'password6', 2, 1, 'avatar', 6, 2, 0),
+('Carlos', 'González', '72345670', 'Calle Castilla 785, Las Torres San Miguelito', 'carlos.gonzalez@example.com', 'password7', 1, 1, 'avatar', 7, 1, 0),
+('Sofía', 'Pérez', '82345670', 'Avenida de Los Precursores 896, Elmer Faucett', 'sofia.perez@example.com', 'password8',  2, 1, 'avatar', 8, 2, 0),
+('Lucía', 'Díaz', '92345670', 'Jirón Puno 907, Maranga', 'lucia.diaz@example.com', 'password9',  1, 1, 'avatar', 9, 1, 0),
+('Miguel', 'Hernández', '10345670', 'Calle Junín 1018, Pando', 'miguel.hernandez@example.com', 'password10',  2, 1, 'avatar', 10, 2, 0),
+('Elena', 'Jiménez', '11345670', 'Avenida Bertoloto 1129, Parques de La Huaca', 'elena.jimenez@example.com', 'password11',  1, 1, 'avatar', 11, 1, 0),
+('Valeria', 'Ruiz', '12345671', 'Jirón Tumbes 1240, Otro', 'valeria.ruiz@example.com', 'password12', 2, 1, 'avatar', 12, 2, 0),
+('Diego', 'Morales', '13345670', 'Calle Libertad 1351, Rafael Escardó', 'diego.morales@example.com', 'password13', 1, 1, 'avatar', 1, 1, 0),
+('Andrea', 'Ortiz', '14345670', 'Avenida La Marina 1462, José de La Riva Agüero', 'andrea.ortiz@example.com', 'password14', 2, 1, 'avatar', 2, 2, 0),
+('Fernando', 'Castro', '15345670', 'Jirón Bolognesi 1573, Juan XXIII', 'fernando.castro@example.com', 'password15',1, 1, 'avatar', 3, 1, 0),
+('Gabriela', 'Torres', '16345670', 'Calle Tacna 1684, Libertad', 'gabriela.torres@example.com', 'password16', 2, 1, 'avatar', 4, 2, 0),
+('Sergio', 'Flores', '17345670', 'Avenida Faucett 1795, Los Jardines de La Marina', 'sergio.flores@example.com', 'password17', 1, 1, 'avatar', 5, 1, 0),
+('Isabel', 'Mendoza', '18345670', 'Jirón Inclán 1806, Las Leyendas', 'isabel.mendoza@example.com', 'password18', 2, 1, 'avatar', 6, 2, 0),
+('Alejandro', 'Romero', '19345670', 'Calle Olaya 1917, Las Torres San Miguelito', 'alejandro.romero@example.com', 'password19',  1, 1, 'avatar', 7, 1, 0),
+('Patricia', 'Vega', '20345670', 'Avenida Precursores 2028, Elmer Faucett', 'patricia.vega@example.com', 'password20',  2, 1, 'avatar', 8, 2, 0),
+('Ricardo', 'Soto', '21345670', 'Jirón Manco Cápac 2139, Maranga', 'ricardo.soto@example.com', 'password21',  1, 1, 'avatar', 9, 1, 0),
+('Paula', 'Silva', '22345670', 'Calle Independencia 2250, Pando', 'paula.silva@example.com', 'password22',  2, 1, 'avatar', 10, 2, 0),
+('Hugo', 'Rojas', '23345670', 'Avenida Bertoloto 2361, Parques de La Huaca', 'hugo.rojas@example.com', 'password23',  1, 1, 'avatar', 11, 1, 0),
+('Verónica', 'Peña', '24345670', 'Jirón Chancay 2472, Otro', 'veronica.pena@example.com', 'password24', 2, 1, 'avatar', 12, 2, 0),
+('Oscar', 'Cruz', '25345670', 'Calle Grau 2583, Rafael Escardó', 'oscar.cruz@example.com', 'password25', 1, 1, 'avatar', 1, 1, 0),
+('Javier', 'Reyes', '26345670', 'Avenida Los Patriotas 2694, José de La Riva Agüero', 'javier.reyes@example.com', 'password26',  2, 1, 'avatar', 2, 2, 0),
+('Natalia', 'Campos', '27345670', 'Jirón Sucre 2705, Juan XXIII', 'natalia.campos@example.com', 'password27',1, 1, 'avatar', 3, 1, 0),
+('Cristina', 'Ramos', '28345670', 'Calle Salaverry 2816, Libertad', 'cristina.ramos@example.com', 'password28', 2, 1, 'avatar', 4, 2, 0),
+('Pablo', 'Aguilar', '29345670', 'Avenida La Marina 2927, Los Jardines de La Marina', 'pablo.aguilar@example.com', 'password29',1, 1, 'avatar', 5, 1, 0),
+('Lorena', 'Guzmán', '30345670', 'Jirón Manco Cápac 3038, Las Leyendas', 'lorena.guzman@example.com', 'password30', 2, 1, 'avatar', 6, 2, 0),
 
 
 -- Administrador------
-('Municipalidad', 'De san Miguel', '-', '-', 'lorena.guzman@example.com', 'admintelevecinos', 0, 0, 1, 'avatar', 6, 5, 0);
+('Municipalidad', 'De san Miguel', '-', '-', 'lorena.guzman@example.com', 'admintelevecinos',  0, 1, 'avatar', 6, 5, 0);
 
 
 
@@ -211,7 +201,8 @@ CREATE TABLE IF NOT EXISTS `televecinosDB`.`EventEstados` (
   `estadosEvento` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idEventEstados`))
 ENGINE = InnoDB;
-
+-- Inicializando desde 1
+ALTER TABLE `televecinosDB`.`EventEstados` AUTO_INCREMENT =1;
 -- Inserciones para la tabla EventEstados
 INSERT INTO `televecinosDB`.`EventEstados` (`estadosEvento`) VALUES
 ('Disponible'), ('En curso'), ('Finalizado');
@@ -226,6 +217,9 @@ CREATE TABLE IF NOT EXISTS `televecinosDB`.`EventFrecuencia` (
   `dia2` DATE NULL,
   PRIMARY KEY (`idEventFrecuencia`))
 ENGINE = InnoDB;
+
+-- Inicializando desde 1
+ALTER TABLE `televecinosDB`.`EventFrecuencia` AUTO_INCREMENT =1;
 
 -- Inserciones para la tabla EventFrecuencia
 INSERT INTO `televecinosDB`.`EventFrecuencia` (`tipoFrecuencia`, `dia1`, `dia2`) VALUES
@@ -271,7 +265,8 @@ CREATE TABLE IF NOT EXISTS `televecinosDB`.`TipoEvento` (
   `tipo` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idTipoEvento`))
 ENGINE = InnoDB;
-
+-- Inicializando desde 1
+ALTER TABLE `televecinosDB`.`TipoEvento` AUTO_INCREMENT =1;
 -- Inserciones para la tabla TipoEvento
 INSERT INTO `televecinosDB`.`TipoEvento` (`tipo`) VALUES
 ('Evento Cultural'),
@@ -288,7 +283,8 @@ CREATE TABLE IF NOT EXISTS `televecinosDB`.`ProfesoresEvento` (
   `curso` VARCHAR(150) NOT NULL,
   PRIMARY KEY (`idProfesoresEvento`))
 ENGINE = InnoDB;
-
+-- Inicializando desde 1
+ALTER TABLE `televecinosDB`.`ProfesoresEvento` AUTO_INCREMENT =1;
 -- Inserciones para la tabla ProfesoresEvento
 INSERT INTO `televecinosDB`.`ProfesoresEvento` (`nombre`, `apellido`, `curso`) VALUES
 -- Cursos de Cultura
@@ -368,7 +364,8 @@ CREATE TABLE IF NOT EXISTS `televecinosDB`.`Eventos` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-
+-- Inicializando desde 1
+ALTER TABLE `televecinosDB`.`Eventos`  AUTO_INCREMENT =1;
 -- Inserciones para la tabla Eventos (Eventos Culturales)
 INSERT INTO `televecinosDB`.`Eventos` 
 (`nombre`, `descripcion`, `lugar`, `Coordinador_idUsuario`, `fecha_inicio`, `fecha_fin`, `cantidadVacantes`, `cantDisponibles`, `foto`, `listaMateriales`, `EventEstados_idEventEstados`, `EventFrecuencia_idEventFrecuencia`, `TipoEvento_idTipoEvento`, `ProfesoresEvento_idProfesoresEvento`) VALUES
@@ -451,6 +448,9 @@ CREATE TABLE IF NOT EXISTS `televecinosDB`.`CriticidadIncidencia` (
   `criticidad` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idCriticidadIncidencia`))
 ENGINE = InnoDB;
+-- Inicializando desde 1
+ALTER TABLE `televecinosDB`.`CriticidadIncidencia` AUTO_INCREMENT =1;
+
 -- Inserciones para la tabla CriticidadIncidencia
 INSERT INTO `televecinosDB`.`CriticidadIncidencia` (`criticidad`) VALUES
 ('Baja'), ('Media'), ('Alta');
@@ -463,7 +463,8 @@ CREATE TABLE IF NOT EXISTS `televecinosDB`.`TipoIncidencia` (
   `TipoIncidencia` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idTipoIncidencia`))
 ENGINE = InnoDB;
-
+-- Inicializando desde 1
+ALTER TABLE `televecinosDB`.`tipoIncidencia` AUTO_INCREMENT =1;
 -- Inserciones para la tabla TipoIncidencia
 INSERT INTO `televecinosDB`.`tipoIncidencia` (`idTipoIncidencia`, `TipoIncidencia`) VALUES
 (1, 'Seguridad Pública'), 
@@ -487,16 +488,18 @@ INSERT INTO `televecinosDB`.`EstadosIncidencia` (`idEstadosIncidencia`, `estado`
 -- -----------------------------------------------------
 -- Table `televecinosDB`.`Incidencias`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `televecinosDB`.`Incidencias` (
+CREATE TABLE IF NOT EXISTS `televecinosdb`.`incidencias` (
   `idIncidencias` INT NOT NULL AUTO_INCREMENT,
   `nombreIncidencia` VARCHAR(100) NOT NULL,
+  `fecha` DATETIME NOT NULL,
   `lugarExacto` VARCHAR(100) NOT NULL,
+  `urbanizacion_idUrbanizacion` INT NOT NULL,
   `referencia` VARCHAR(150) NOT NULL,
   `foto` LONGBLOB NOT NULL,
   `ambulancia` TINYINT NOT NULL,
-  `numeroContacto` VARCHAR(45) NULL,
-  `CriticidadIncidencia_idCriticidadIncidencia` INT NOT NULL,
-  `TipoIncidencia_idTipoIncidencia` INT NOT NULL,
+  `numeroContacto` VARCHAR(45) NULL DEFAULT NULL,
+  `CriticidadIncidencia_idCriticidadIncidencia` INT NULL DEFAULT NULL,
+  `TipoIncidencia_idTipoIncidencia` INT NULL DEFAULT NULL,
   `EstadosIncidencia_idEstadosIncidencia` INT NOT NULL,
   `Serenazgo_idSerenazgo` INT NOT NULL,
   `Usuario_idUsuario` INT NOT NULL,
@@ -507,77 +510,63 @@ CREATE TABLE IF NOT EXISTS `televecinosDB`.`Incidencias` (
   INDEX `fk_Incidencias_Serenazgo1_idx` (`Serenazgo_idSerenazgo` ASC) VISIBLE,
   INDEX `fk_Incidencias_Usuario1_idx` (`Usuario_idUsuario` ASC) VISIBLE,
   INDEX `fk_Incidencias_TipoIncidencia1_idx` (`TipoIncidencia_idTipoIncidencia` ASC) VISIBLE,
+  INDEX `fk_incidencias_urbanizacion1_idx` (`urbanizacion_idUrbanizacion` ASC) VISIBLE,
   CONSTRAINT `fk_Incidencias_CriticidadIncidencia1`
     FOREIGN KEY (`CriticidadIncidencia_idCriticidadIncidencia`)
-    REFERENCES `televecinosDB`.`CriticidadIncidencia` (`idCriticidadIncidencia`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    REFERENCES `televecinosdb`.`criticidadincidencia` (`idCriticidadIncidencia`),
   CONSTRAINT `fk_Incidencias_EstadosIncidencia1`
     FOREIGN KEY (`EstadosIncidencia_idEstadosIncidencia`)
-    REFERENCES `televecinosDB`.`EstadosIncidencia` (`idEstadosIncidencia`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    REFERENCES `televecinosdb`.`estadosincidencia` (`idEstadosIncidencia`),
   CONSTRAINT `fk_Incidencias_Serenazgo1`
     FOREIGN KEY (`Serenazgo_idSerenazgo`)
-    REFERENCES `televecinosDB`.`Serenazgo` (`idSerenazgo`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Incidencias_Usuario1`
-    FOREIGN KEY (`Usuario_idUsuario`)
-    REFERENCES `televecinosDB`.`Usuario` (`idUsuario`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    REFERENCES `televecinosdb`.`serenazgo` (`idSerenazgo`),
   CONSTRAINT `fk_Incidencias_TipoIncidencia1`
     FOREIGN KEY (`TipoIncidencia_idTipoIncidencia`)
-    REFERENCES `televecinosDB`.`TipoIncidencia` (`idTipoIncidencia`)
+    REFERENCES `televecinosdb`.`tipoincidencia` (`idTipoIncidencia`),
+  CONSTRAINT `fk_Incidencias_Usuario1`
+    FOREIGN KEY (`Usuario_idUsuario`)
+    REFERENCES `televecinosdb`.`usuario` (`idUsuario`),
+  CONSTRAINT `fk_incidencias_urbanizacion1`
+    FOREIGN KEY (`urbanizacion_idUrbanizacion`)
+    REFERENCES `televecinosdb`.`urbanizacion` (`idUrbanizacion`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-
+-- Inicializando desde 1
+ALTER TABLE `televecinosDB`.`Incidencias` AUTO_INCREMENT =1;
 -- Inserciones para la tabla Incidencias
 INSERT INTO `televecinosDB`.`Incidencias` (
   `nombreIncidencia`, 
+  `fecha`, 
   `lugarExacto`, 
+  `urbanizacion_idUrbanizacion`,
   `referencia`, 
   `foto`, 
   `ambulancia`, 
   `numeroContacto`, 
   `CriticidadIncidencia_idCriticidadIncidencia`, 
+  `TipoIncidencia_idTipoIncidencia`, 
   `EstadosIncidencia_idEstadosIncidencia`, 
   `Serenazgo_idSerenazgo`, 
   `Usuario_idUsuario`, 
   `incidenciaPersonal`
 ) VALUES
-('Robo', 'Av. La Marina 1234, Urbanización Maranga', 'Cerca de la Plaza San Miguel', 'foto_1.jpg', 0, '987654321', 1, 1, 1, 1, 0),
-('Asalto', 'Av. Universitaria 5678, Urbanización Pando', 'Frente al Centro Comercial Plaza San Miguel', 'foto_2.jpg', 1, '987654322', 2, 2, 2, 2, 0),
-('Accidente de Tránsito', 'Jirón Pescadores 123, Urbanización San Miguelito', 'Intersección con Av. La Marina', 'foto_3.jpg', 1, '987654323', 3, 3, 3, 3, 0),
-('Incendio', 'Calle Bolognesi 456, Urbanización Parque de las Leyendas', 'Edificio Residencial', 'foto_4.jpg', 1, '987654324', 1, 4, 4, 4, 0),
-('Emergencia Médica', 'Av. Bertolotto 789, Urbanización San Miguel', 'Cerca del Hospital San José', 'foto_5.jpg', 0, '987654325', 2, 5, 5, 5, 1),
-('Violencia Doméstica', 'Jirón Mantaro 101, Urbanización Miramar', 'Vivienda Unifamiliar', 'foto_6.jpg', 0, '987654326', 3, 1, 6, 6, 1),
-('Robo', 'Calle Salaverry 102, Urbanización Maranga', 'En la esquina', 'foto_7.jpg', 0, '987654327', 1, 2, 7, 7, 0),
-('Asalto', 'Av. Faucett 103, Urbanización Pando', 'Cerca de la escuela', 'foto_8.jpg', 1, '987654328', 2, 3, 8, 8, 0),
-('Accidente de Tránsito', 'Jirón Libertad 104, Urbanización San Miguelito', 'Frente al parque', 'foto_9.jpg', 1, '987654329', 3, 4, 9, 9, 0),
-('Incendio', 'Calle Precursores 105, Urbanización Parque de las Leyendas', 'Cerca del mercado', 'foto_10.jpg', 1, '987654330', 1, 5, 10, 10, 0),
-('Emergencia Médica', 'Av. Costanera 106, Urbanización San Miguel', 'En la avenida principal', 'foto_11.jpg', 0, '987654331', 2, 1, 11, 11, 1),
-('Violencia Doméstica', 'Jirón Comercio 107, Urbanización Miramar', 'Detrás de la iglesia', 'foto_12.jpg', 0, '987654332', 3, 2, 12, 12, 1),
-('Robo', 'Calle 2 de Mayo 108, Urbanización Maranga', 'En el callejón', 'foto_13.jpg', 0, '987654333', 1, 3, 13, 13, 0),
-('Asalto', 'Av. Escardó 109, Urbanización Pando', 'Frente a la plaza', 'foto_14.jpg', 1, '987654334', 2, 4, 1, 1, 0),
-('Accidente de Tránsito', 'Jirón Alfonso Ugarte 110, Urbanización San Miguelito', 'En la intersección', 'foto_15.jpg', 1, '987654335', 3, 5, 2, 2, 0),
-('Incendio', 'Calle Mariscal Cáceres 111, Urbanización Parque de las Leyendas', 'En la zona residencial', 'foto_16.jpg', 1, '987654336', 1, 1, 3, 3, 0),
-('Emergencia Médica', 'Av. Rafael Escardó 112, Urbanización San Miguel', 'Cerca del parque central', 'foto_17.jpg', 0, '987654337', 2, 2, 4, 4, 1),
-('Violencia Doméstica', 'Jirón Puno 113, Urbanización Miramar', 'Cerca de la estación de policía', 'foto_18.jpg', 0, '987654338', 3, 3, 5, 5, 1),
-('Robo', 'Calle Arica 114, Urbanización Maranga', 'En la plaza', 'foto_19.jpg', 0, '987654339', 1, 4, 6, 6, 0),
-('Asalto', 'Av. Lima 115, Urbanización Pando', 'Cerca del centro comercial', 'foto_20.jpg', 1, '987654340', 2, 5, 7, 7, 0),
-('Accidente de Tránsito', 'Jirón Amazonas 116, Urbanización San Miguelito', 'Frente al cine', 'foto_21.jpg', 1, '987654341', 3, 1, 8, 8, 0),
-('Incendio', 'Calle Arequipa 117, Urbanización Parque de las Leyendas', 'En el edificio alto', 'foto_22.jpg', 1, '987654342', 1, 2, 9, 9, 0),
-('Emergencia Médica', 'Av. Ayacucho 118, Urbanización San Miguel', 'Junto al hospital', 'foto_23.jpg', 0, '987654343', 2, 3, 10, 10, 1),
-('Violencia Doméstica', 'Jirón Callao 119, Urbanización Miramar', 'En la casa esquinera', 'foto_24.jpg', 0, '987654344', 3, 4, 11, 11, 1),
-('Robo', 'Calle Moquegua 120, Urbanización Maranga', 'Cerca de la escuela', 'foto_25.jpg', 0, '987654345', 1, 5, 12, 12, 0),
-('Asalto', 'Av. Cusco 121, Urbanización Pando', 'Frente a la tienda', 'foto_26.jpg', 1, '987654346', 2, 1, 13, 13, 0),
-('Accidente de Tránsito', 'Jirón Loreto 122, Urbanización San Miguelito', 'Cerca del parque', 'foto_27.jpg', 1, '987654347', 3, 2, 1, 1, 0),
-('Incendio', 'Calle Huancavelica 123, Urbanización Parque de las Leyendas', 'En el barrio viejo', 'foto_28.jpg', 1, '987654348', 1, 3, 2, 2, 0),
-('Emergencia Médica', 'Av. Junín 124, Urbanización San Miguel', 'Cerca de la estación de tren', 'foto_29.jpg', 0, '987654349', 2, 4, 3, 3, 1),
-('Violencia Doméstica', 'Jirón Tacna 125, Urbanización Miramar', 'En la zona residencial', 'foto_30.jpg', 0, '987654350', 3, 5, 4, 4, 1);
+('Robo', '2024-01-01 12:00:00', 'Av. La Marina 1234',1, 'Cerca de la Plaza San Miguel', 'foto_1.jpg', 0, '987654321', 1, 1, 1, 1, 1, 0),
+('Asalto', '2024-01-02 13:00:00', 'Av. Universitaria 5678',3, 'Frente al Centro Comercial Plaza San Miguel', 'foto_2.jpg', 1, '987654322', 2, 2, 2, 2, 2, 0),
+('Accidente de Tránsito', '2024-01-03 14:00:00', 'Jirón Pescadores 123',5, 'Intersección con Av. La Marina', 'foto_3.jpg', 1, '987654323', 3, 3, 3, 3, 3, 0),
+('Incendio', '2024-01-04 15:00:00', 'Calle Bolognesi 456',7, 'Edificio Residencial', 'foto_4.jpg', 1, '987654324', 1, 4, 4, 4, 4, 0),
+('Emergencia Médica', '2024-01-05 16:00:00', 'Av. Bertolotto 789',9, 'Cerca del Hospital San José', 'foto_5.jpg', 0, '987654325', 2, 1, 5, 5, 5, 1),
+('Violencia Doméstica', '2024-01-06 17:00:00', 'Jirón Mantaro 101',11, 'Vivienda Unifamiliar', 'foto_6.jpg', 0, '987654326', 3, 1, 2, 6, 6, 1),
+('Robo', '2024-01-07 18:00:00', 'Calle Salaverry 102',12, 'En la esquina', 'foto_7.jpg', 0, '987654327', 1, 3,2, 7, 7, 0),
+('Asalto', '2024-01-08 19:00:00', 'Av. Faucett 103',10, 'Cerca de la escuela', 'foto_8.jpg', 1, '987654328', 2, 4,3, 8, 8, 0),
+('Accidente de Tránsito', '2024-01-09 20:00:00', 'Jirón Libertad 104',8, 'Frente al parque', 'foto_9.jpg', 1, '987654329', 3, 1,4, 9, 9, 0),
+('Incendio', '2024-01-10 21:00:00', 'Calle Precursores 105',6, 'Cerca del mercado', 'foto_10.jpg', 1, '987654330', 1, 2,1, 10, 10, 0),
+('Emergencia Médica', '2024-01-11 22:00:00', 'Av. Costanera 106',4, 'En la avenida principal', 'foto_11.jpg', 0, '987654331', 2, 3,2, 11, 11, 1),
+('Violencia Doméstica', '2024-01-12 23:00:00', 'Jirón Comercio 107',2, 'Detrás de la iglesia', 'foto_12.jpg', 0, '987654332', 3,4,1, 12, 12, 1),
+('Robo', '2024-01-13 12:30:00', 'Calle 2 de Mayo 108',1, 'En el callejón', 'foto_13.jpg', 0, '987654333', 1, 1,3, 13, 13, 0),
+('Asalto', '2024-01-14 13:30:00', 'Av. Escardó 109',3, 'Frente a la plaza', 'foto_14.jpg', 1, '987654334', 2, 2,4, 14, 14, 0),
+('Accidente de Tránsito', '2024-01-15 14:30:00', 'Jirón Alfonso Ugarte 110',5, 'En la intersección', 'foto_15.jpg', 1, '987654335', 3,3,5, 15, 15, 0);
+
 
 
 -- -----------------------------------------------------
@@ -632,7 +621,8 @@ CREATE TABLE IF NOT EXISTS `televecinosDB`.`Serenazgo` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-
+-- Inicializando desde 1
+ALTER TABLE `televecinosDB`.`Serenazgo` AUTO_INCREMENT =1;
 -- datos de serenazgos------
 INSERT INTO `televecinosDB`.`Serenazgo` (`nombre`, `apellido`, `dni`, `direccion`, `numTelefono`, `fechaNacimiento`, `TurnoSerenazgo_idTurnoSerenazgo`, `TipoSerenazgo_idTipoSerenazgo`) VALUES
 ('Juan', 'González', '12345678', 'Calle Alfonso Ugarte 127, San Miguel', '912345678', '1990-01-01', 1, 1),

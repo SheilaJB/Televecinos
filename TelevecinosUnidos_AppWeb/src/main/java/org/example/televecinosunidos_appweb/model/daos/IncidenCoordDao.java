@@ -108,4 +108,53 @@ public class IncidenCoordDao {
     public void generarIncidenica (){
 
     }
+
+    public void  actualizarIncidencia (IncidenciasB incidencia){
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        String url = "jdbc:mysql://localhost:3306/hr";
+        String username = "root";
+        String password = "root";
+        String sql ="UPDATE incidencias\n" +
+                "SET\n" +
+                "    nombreIncidencia = ?,\n" +
+                "    foto = ?,\n" +
+                "    TipoIncidencia_idTipoIncidencia = ?,\n" +
+                "    urbanizacion_idUrbanizacion = ?,\n" +
+                "    incidenciaPersonal = ?,\n" +
+                "    lugarExacto = ?,\n" +
+                "    referencia = ?,\n" +
+                "    numeroContacto = ?,\n" +
+                "    ambulancia = ?\n" +
+                "WHERE\n" +
+                "    idIncidencias = ?\n" +
+                "    AND EstadosIncidencia_idEstadosIncidencia = 1;";
+        //solo cuando el estado esta en pendiente se puede actualizar
+
+        try(Connection connection = DriverManager.getConnection(url,username,password);
+            PreparedStatement pstmt = connection.prepareStatement(sql)) {
+
+            pstmt.setString(1, incidencia.getNombreIncidencia());
+            pstmt.setString(2, incidencia.getFoto());
+            pstmt.setString(3, incidencia.getTipoIncidencia());
+            pstmt.setString(4, incidencia.getUrbanizacion());
+            pstmt.setInt(5, incidencia.getIncidenciaPersonal());
+            pstmt.setString(6, incidencia.getLugarExacto());
+            pstmt.setString(7, incidencia.getReferencia());
+            pstmt.setString(8, incidencia.getNumeroContacto());
+            pstmt.setInt(9, incidencia.getAmbulancia());
+            pstmt.setInt(10, incidencia.getIdIncidencias());
+            pstmt.executeUpdate();
+
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
 }

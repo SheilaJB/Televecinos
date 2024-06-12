@@ -186,10 +186,21 @@
                         <td><%= incidencia.getHora() %></td>
                         <td><%= incidencia.getTipoIncidencia() %></td>
                         <td><%= incidencia.getEstadoIncidencia() %></td>
-                        <td><a href="<%=request.getContextPath()%>/CoordIncidServlet?action=editarIncidencia&idIncidencia=<%= incidencia.getIdIncidencias() %>">
-                            <button type="button" class="btn btn-success m-2"><i class="fas fa-pencil-alt"></i></button></a></td>
-                        <td><a href="<%=request.getContextPath()%>/CoordIncidServlet?action=verIncidencia&idIncidencia=<%= incidencia.getIdIncidencias() %>">
-                            <button type="button" class="btn btn-primary m-2"><i class="fas fa-eye"></i></button></a></td>
+                        <% if ("Pendiente".equals(incidencia.getEstadoIncidencia())) { %>
+                        <td>
+                            <a href="<%=request.getContextPath()%>/CoordIncidServlet?action=editarIncidencia&idIncidencia=<%= incidencia.getIdIncidencias() %>">
+                                <button type="button" class="btn btn-success m-2"><i class="fas fa-pencil-alt"></i></button>
+                            </a>
+                        </td>
+                        <% } else { %>
+                        <td></td> <!-- Espacio en blanco si no se cumple la condición -->
+                        <% } %>
+
+                        <td>
+                            <a href="<%=request.getContextPath()%>/CoordIncidServlet?action=verIncidencia&idIncidencia=<%= incidencia.getIdIncidencias() %>">
+                                <button type="button" class="btn btn-primary m-2"><i class="fas fa-eye"></i></button>
+                            </a>
+                        </td>
                     </tr>
                     <% }
                     } else { %>
