@@ -14,18 +14,17 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-@WebServlet(name = "AdministradorServlet", value = "/AdministradorServlet")
+@WebServlet(name = "AdministradorServlet", urlPatterns = {"/AdministradorServlet", ""})
 public class AdministradorServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         SerenazgoDao serenazgoDao = new SerenazgoDao();
-
         ArrayList<SerenazgoB> listarSerenazgos = serenazgoDao.listarSerenazgos();
-
-        String action = request.getParameter("action")==null?"lista":request.getParameter("action");
+        String action = request.getParameter("action")==null?"inicioAdmin":request.getParameter("action");
         String vista ;
         switch (action) {
-            case "lista":
+            case "listaSerenazgo_A":
                 vista = "WEB-INF/Administrador/ListaSerenazgo_A.jsp";
                 request.setAttribute("lista",listarSerenazgos);
                 request.getRequestDispatcher(vista).forward(request, response);
@@ -41,9 +40,8 @@ public class AdministradorServlet extends HttpServlet {
                 break;
             case "banearSerenazgo":
                 break;
-
             default:
-                throw new IllegalArgumentException("Acción no reconocida: " + action);
+                request.getRequestDispatcher("WEB-INF/Administrador/" + action + ".jsp").forward(request,response);
         }
 
     }
