@@ -35,7 +35,7 @@ public class AdministradorServlet extends HttpServlet {
                 vista = "WEB-INF/Administrador/DetalleSerenazgo_A.jsp";
                 request.getRequestDispatcher(vista).forward(request, response);
                 break;
-            case "registrarSerenazgo":
+            case "registroSerenazgo":
                 request.getRequestDispatcher("WEB-INF/Administrador/registroSerenazgo.jsp").forward(request,response);
                 break;
             case "banearSerenazgo":

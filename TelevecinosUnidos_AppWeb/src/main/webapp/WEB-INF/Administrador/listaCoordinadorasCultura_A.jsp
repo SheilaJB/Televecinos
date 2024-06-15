@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Lista de instructores</title>
+    <title>Coordinadoras de cultura</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -48,89 +48,14 @@
 
 
     <!-- BARRA AZUL DE LA IZQUIERDA INICIO-->
-    <div class="sidebar pe-4 pb-3" style="background-color: #8ecae6;">
-        <nav class="navbar" style="background-color: #8ecae6;" >
-            <a href="" class="navbar-brand mx-3 mb-3">
-                <h4 class="text-primary"><b>Televecinos Unidos</b></h4>
-            </a>
-            <div class="d-flex align-items-center ms-4 mb-4">
-                <div class="position-relative">
-                    <img class="rounded-circle" src="img/munisanmiguelLogo.jpg" alt="" style="width: 40px; height: 40px;">
-                    <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
-                </div>
-
-                <div class="ms-3">
-                    <h6 class="mb-0">Municipalidad de San Miguel</h6>
-                    <span>Administrador</span>
-                </div>
-            </div>
-            <!-- Seleccionar Opciones -->
-            <div class="navbar-nav w-100">
-                <a href="inicioAdmin.html" class="nav-item nav-link colorLetrasBarraLateral"><i  class="fa fa-home me-2 colorLetrasBarraLateral"></i>Inicio</a>
-
-                <a href="NuevasSolicitudes_A.html" class="nav-item nav-link"><i class="fa fa-clipboard-list me-2 colorLetrasBarraLateral"></i><span style="font-size: 14px;">Nuevas solicitudes</span></a>
-                <a href="ListaVecinos_A.html" class="nav-item nav-link"><i class="fa fa-user-friends me-2 colorLetrasBarraLateral"></i><span style="font-size: 14px;">Lista de vecinos</span></a>
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-shield-alt me-2 colorLetrasBarraLateral"></i><span style="font-size: 13.5px;">Personal serenazgo</span></a>
-                    <div class="dropdown-menu bg-transparent border-0">
-                        <a href="ListaSerenazgo_A.html" class="dropdown-item" style="font-size: 13.5px;">Lista de serenazgos</a>
-
-                        <a href="registroSerenazgo.html" class="dropdown-item"style="font-size: 13.5px;">Registrar nuevo serenazgo</a>
-                    </div>
-                </div>
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-chalkboard-teacher me-2 colorLetrasBarraLateral"></i><span style="font-size: 13.3px;">Area de coordinación</span></a>
-                    <div class="dropdown-menu bg-transparent border-0">
-                        <a href="ListaCoordinadorasCultura_A.html" class="dropdown-item"style="font-size: 13.5px;">Coordinadoras cultura</a>
-                        <a href="ListaCoordinadorasDeportes_A.html" class="dropdown-item"style="font-size: 13.5px;">Coordinadoras deportes</a>
-                        <a href="ListaInstructores_A.html" class="dropdown-item"style="font-size: 13.5px;">Instructores</a>
-                        <a href="FormularioInstructores_A.html" class="dropdown-item"style="font-size: 13.5px;">Registrar nuevo instructor</a>
-                    </div>
-                </div>
-
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-question-circle me-2 colorLetrasBarraLateral"></i><span style="font-size: 13.3px;">Preguntas frecuentes</span></a>
-                    <div class="dropdown-menu bg-transparent border-0">
-                        <a href="preguntasFrecuentes_V_vistaAdmin.html" class="dropdown-item"style="font-size: 13.5px;">Dudas Vecinos</a>
-                        <a href="preguntasFrecuentes_C_vistaAdmin.html" class="dropdown-item"style="font-size: 13.5px;">Dudas Coordinadoras</a>
-                        <a href="preguntasFrecuentes_S_vistaAdmin.html" class="dropdown-item"style="font-size: 13.5px;">Dudas Serenazgos</a>
-                    </div>
-                </div>
-            </div>
-        </nav>
-    </div>
+    <jsp:include page="../includes/barraIzquierdaAdministrador.jsp"></jsp:include>
     <!-- BARRA AZUL DE LA IZQUIERDA FINAL -->
 
 
     <!-- Content Start -->
     <div class="content">
         <!-- PARTE SUPERIOR INICIO -->
-        <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0" id="navbar">
-            <a href="" class="navbar-brand d-flex d-lg-none me-4">
-                <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
-            </a>
-            <a href="#" class="sidebar-toggler flex-shrink-0">
-                <i class="fa fa-bars"></i>
-            </a>
-            <a class="navbar-brand mx-4 mb-3 d-flex align-items-center" style="padding-top: 2%;">
-                <img class="rounded-circle" src="img/logo.jpg" alt="" style="width: 40px; height: 40px;">
-                <h3 class="m-0 me-2 px-2" style="color:#023047;">Lista de instructores</h3>
-            </a>
-
-            <div class="navbar-nav align-items-center ms-auto">
-
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                        <img class="rounded-circle me-lg-2" src="img/munisanmiguelLogo.jpg" alt="" style="width: 40px; height: 40px;">
-                        <span class="d-none d-lg-inline-flex" style="color:#023047;"><b>Municipalidad de San Miguel</b></span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                        <a href="perfil_A.html" class="dropdown-item">Mi perfil</a>
-                        <a href="index.html" class="dropdown-item">Cerrar sesión</a>
-                    </div>
-                </div>
-            </div>
-        </nav>
+        <jsp:include page="../includes/navbar.jsp"></jsp:include>
         <!-- PARTE SUPERIOR FINAL -->
 
 
@@ -145,13 +70,6 @@
         <div style="background-color: #f8f9fa; padding: 20px; align-items: center;">
             <div class="filtro" style="border: 1px solid #ccc; border-radius: 5px; padding: 10px; display: flex; align-items: center; background-color:#FFB703 ;">
                 <input type="text" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 20%; margin-right: 2%;" id="filtroInput" placeholder="Buscar...">
-                <select id="filtroIncidencia" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 20%; margin-right: 2%;">
-                    <option selected disabled>Tipo:</option>
-                    <option value="tipo1">Deportes</option>
-                    <option value="tipo1">Cultura</option>
-
-
-                </select>
                 <button type="button" class="btn btn-primary" onclick="filtrar()" style="padding: 10px;"><b>Filtrar</b></button>
             </div>
             <div class="table-responsive">
@@ -161,9 +79,8 @@
                         <th scope="col">#</th>
                         <th scope="col">Nombre</th>
                         <th scope="col">Apellido</th>
-                        <th scope="col">Tipo</th>
                         <th scope="col">Correo</th>
-                        <th scope="col">Evaluar instructor</th>
+                        <th scope="col">Evaluar Coordinadora</th>
 
                     </tr>
                     </thead>
@@ -172,13 +89,12 @@
                         <td>1</td>
                         <td>Juan Fernando</td>
                         <td>Pérez López</td>
-                        <td>Eventos</td>
                         <td>Jjjffppll@gmail.com</td>
                         <td style="width: 350px;">
 
-                            <a href="correoparaInstrA.html"><button type="button" class="btn btn-success btn-sm m-2">Enviar correo</button></a>
+                            <a href="correoparaCoordA.html"><button type="button" class="btn btn-success btn-sm m-2">Enviar correo</button></a>
 
-                            <button type="button" class="btn btn-danger btn-sm m-2 btn-banear">Remover</button>
+                            <button type="button" class="btn btn-danger btn-sm m-2 btn-banear">Banear</button>
                             <div id="popup1" class="popup1" >
                                 <div class="popup_contenido1">
                                     <span class="close-btn" id="closePopupBtn1">&times;</span>
@@ -186,15 +102,14 @@
 
                                     <p>¡Advertencia!</p>
 
-                                    <p>¿Está seguro de Remover a este instructor?</p>
+                                    <p>La acción "Banear" será permanente, debe estar seguro de su desición al respecto</p>
 
-                                    <a href="ListaInstructores_A.html"><button type="button" class="btn btn-success rounded-pill m-2">Cancelar</button></a>
-                                    <button type="button" class="btn btn-danger rounded-pill m-2">Sí, remover</button>
+                                    <a href="ListaCoordinadorasCultura_A.html"><button type="button" class="btn btn-success rounded-pill m-2">Cancelar</button></a>
+                                    <button type="button" class="btn btn-danger rounded-pill m-2">Sí, banear</button>
 
                                 </div>
                             </div>
-                            <a href="DetalleInstructor_A.html" class="btn btn-primary btn-sm m-2">Ver detalle</a>
-
+                            <a href="DetalleCordinadora_A.html"><button type="button" class="btn btn-primary btn-sm m-2">Ver detalle</button></a>
 
                         </td>
                     </tr>
@@ -202,13 +117,13 @@
                         <td>1</td>
                         <td>Juan Fernando</td>
                         <td>Pérez López</td>
-                        <td>Eventos</td>
                         <td>Jjjffppll@gmail.com</td>
                         <td style="width: 350px;">
 
-                            <a href="correoparaInstrA.html"><button type="button" class="btn btn-success btn-sm m-2">Enviar correo</button></a>
+                            <a href="correoparaCoordA.html"><button type="button" class="btn btn-success btn-sm m-2">Enviar correo</button></a>
 
-                            <button type="button" class="btn btn-danger btn-sm m-2 btn-banear">Remover</button>
+
+                            <button type="button" class="btn btn-danger btn-sm m-2 btn-banear">Banear</button>
                             <div id="popup1" class="popup1" >
                                 <div class="popup_contenido1">
                                     <span class="close-btn" id="closePopupBtn1">&times;</span>
@@ -216,14 +131,14 @@
 
                                     <p>¡Advertencia!</p>
 
-                                    <p>¿Está seguro de Remover a este instructor?</p>
+                                    <p>La acción "Banear" será permanente, debe estar seguro de su desición al respecto</p>
 
-                                    <a href="ListaInstructores_A.html"><button type="button" class="btn btn-success rounded-pill m-2">Cancelar</button></a>
-                                    <button type="button" class="btn btn-danger rounded-pill m-2">Sí, remover</button>
+                                    <a href="ListaCoordinadorasCultura_A.html"><button type="button" class="btn btn-success rounded-pill m-2">Cancelar</button></a>
+                                    <button type="button" class="btn btn-danger rounded-pill m-2">Sí, banear</button>
 
                                 </div>
                             </div>
-                            <a href="DetalleInstructor_A.html" class="btn btn-primary btn-sm m-2">Ver detalle</a>
+                            <a href="DetalleCordinadora_A.html"><button type="button" class="btn btn-primary btn-sm m-2">Ver detalle</button></a>
 
                         </td>
                     </tr>
@@ -231,12 +146,13 @@
                         <td>1</td>
                         <td>Juan Fernando</td>
                         <td>Pérez López</td>
-                        <td>Eventos</td>
                         <td>Jjjffppll@gmail.com</td>
                         <td style="width: 350px;">
-                            <a href="correoparaInstrA.html"><button type="button" class="btn btn-success btn-sm m-2">Enviar correo</button></a>
 
-                            <button type="button" class="btn btn-danger btn-sm m-2 btn-banear">Remover</button>
+                            <a href="correoparaCoordA.html"><button type="button" class="btn btn-success btn-sm m-2">Enviar correo</button></a>
+
+
+                            <button type="button" class="btn btn-danger btn-sm m-2 btn-banear">Banear</button>
                             <div id="popup1" class="popup1" >
                                 <div class="popup_contenido1">
                                     <span class="close-btn" id="closePopupBtn1">&times;</span>
@@ -244,14 +160,14 @@
 
                                     <p>¡Advertencia!</p>
 
-                                    <p>¿Está seguro de Remover a este instructor?</p>
+                                    <p>La acción "Banear" será permanente, debe estar seguro de su desición al respecto</p>
 
-                                    <a href="ListaInstructores_A.html"><button type="button" class="btn btn-success rounded-pill m-2">Cancelar</button></a>
-                                    <button type="button" class="btn btn-danger rounded-pill m-2">Sí, remover</button>
+                                    <a href="ListaCoordinadorasCultura_A.html"><button type="button" class="btn btn-success rounded-pill m-2">Cancelar</button></a>
+                                    <button type="button" class="btn btn-danger rounded-pill m-2">Sí, banear</button>
 
                                 </div>
                             </div>
-                            <a href="DetalleInstructor_A.html" class="btn btn-primary btn-sm m-2">Ver detalle</a>
+                            <a href="DetalleCordinadora_A.html"><button type="button" class="btn btn-primary btn-sm m-2">Ver detalle</button></a>
 
                         </td>
                     </tr>
@@ -259,13 +175,13 @@
                         <td>1</td>
                         <td>Juan Fernando</td>
                         <td>Pérez López</td>
-                        <td>Eventos</td>
                         <td>Jjjffppll@gmail.com</td>
                         <td style="width: 350px;">
 
-                            <a href="correoparaInstrA.html"><button type="button" class="btn btn-success btn-sm m-2">Enviar correo</button></a>
+                            <a href="correoparaCoordA.html"><button type="button" class="btn btn-success btn-sm m-2">Enviar correo</button></a>
 
-                            <button type="button" class="btn btn-danger btn-sm m-2 btn-banear">Remover</button>
+
+                            <button type="button" class="btn btn-danger btn-sm m-2 btn-banear">Banear</button>
                             <div id="popup1" class="popup1" >
                                 <div class="popup_contenido1">
                                     <span class="close-btn" id="closePopupBtn1">&times;</span>
@@ -273,14 +189,14 @@
 
                                     <p>¡Advertencia!</p>
 
-                                    <p>¿Está seguro de Remover a este instructor?</p>
+                                    <p>La acción "Banear" será permanente, debe estar seguro de su desición al respecto</p>
 
-                                    <a href="ListaInstructores_A.html"><button type="button" class="btn btn-success rounded-pill m-2">Cancelar</button></a>
-                                    <button type="button" class="btn btn-danger rounded-pill m-2">Sí, remover</button>
+                                    <a href="ListaCoordinadorasCultura_A.html"><button type="button" class="btn btn-success rounded-pill m-2">Cancelar</button></a>
+                                    <button type="button" class="btn btn-danger rounded-pill m-2">Sí, banear</button>
 
                                 </div>
                             </div>
-                            <a href="DetalleInstructor_A.html" class="btn btn-primary btn-sm m-2">Ver detalle</a>
+                            <a href="DetalleCordinadora_A.html"><button type="button" class="btn btn-primary btn-sm m-2">Ver detalle</button></a>
 
                         </td>
                     </tr>
@@ -288,13 +204,13 @@
                         <td>1</td>
                         <td>Juan Fernando</td>
                         <td>Pérez López</td>
-                        <td>Eventos</td>
                         <td>Jjjffppll@gmail.com</td>
                         <td style="width: 350px;">
 
-                            <a href="correoparaInstrA.html"><button type="button" class="btn btn-success btn-sm m-2">Enviar correo</button></a>
+                            <a href="correoparaCoordA.html"><button type="button" class="btn btn-success btn-sm m-2">Enviar correo</button></a>
 
-                            <button type="button" class="btn btn-danger btn-sm m-2 btn-banear">Remover</button>
+
+                            <button type="button" class="btn btn-danger btn-sm m-2 btn-banear">Banear</button>
                             <div id="popup1" class="popup1" >
                                 <div class="popup_contenido1">
                                     <span class="close-btn" id="closePopupBtn1">&times;</span>
@@ -302,17 +218,18 @@
 
                                     <p>¡Advertencia!</p>
 
-                                    <p>¿Está seguro de Remover a este instructor?</p>
+                                    <p>La acción "Banear" será permanente, debe estar seguro de su desición al respecto</p>
 
-                                    <a href="ListaInstructores_A.html"><button type="button" class="btn btn-success rounded-pill m-2">Cancelar</button></a>
-                                    <button type="button" class="btn btn-danger rounded-pill m-2">Sí, remover</button>
+                                    <a href="ListaCoordinadorasCultura_A.html"><button type="button" class="btn btn-success rounded-pill m-2">Cancelar</button></a>
+                                    <button type="button" class="btn btn-danger rounded-pill m-2">Sí, banear</button>
 
                                 </div>
                             </div>
-                            <a href="DetalleInstructor_A.html" class="btn btn-primary btn-sm m-2">Ver detalle</a>
+                            <a href="DetalleCordinadora_A.html"><button type="button" class="btn btn-primary btn-sm m-2">Ver detalle</button></a>
 
                         </td>
                     </tr>
+
                     </tbody>
                 </table>
             </div>
@@ -360,6 +277,7 @@
                     <div class="col-12 col-sm-6 text-center text-sm-start">
                         &copy; <a href="#">Televecinos Unidos</a>, All Right Reserved.
                     </div>
+
                 </div>
             </div>
         </div>
