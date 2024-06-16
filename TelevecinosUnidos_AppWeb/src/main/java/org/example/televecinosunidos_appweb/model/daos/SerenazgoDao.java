@@ -8,26 +8,18 @@ import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-public class SerenazgoDao {
+public class SerenazgoDao extends BaseDao {
     //Función lista de serenazgos
     public ArrayList<SerenazgoB> listarSerenazgos() {
 
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
 
-        String url = "jdbc:mysql://localhost:3306/televecinosdb";
-        String username = "root";
-        String password = "root";
 
         String sql = "select * from Serenazgo " ;
 
 
         ArrayList<SerenazgoB> listaSerenazgos = new ArrayList<>();
 
-        try (Connection conn = DriverManager.getConnection(url, username, password);
+        try (Connection conn = getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
@@ -55,15 +47,7 @@ public class SerenazgoDao {
     public SerenazgoB buscarSerenazgoPorId(String idSerenazgo) {
         SerenazgoB serenazgoB= new SerenazgoB();
 
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
 
-        String url = "jdbc:mysql://localhost:3306/televecinosdb";
-        String username = "root";
-        String password = "root";
 
         String sql = "SELECT s.idSerenazgo, s.nombre, s.apellido,s.dni, sTurno.turno, sTipo.tipo, numTelefono " +
                 "FROM serenazgo s " +
@@ -72,7 +56,7 @@ public class SerenazgoDao {
                 "WHERE idSerenazgo = ?";
 
 
-        try (Connection conn = DriverManager.getConnection(url, username, password);
+        try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1,idSerenazgo);
@@ -98,21 +82,13 @@ public class SerenazgoDao {
 
 
     public void registrarSerenazgo(SerenazgoB serenazgoB) {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
 
-        String url = "jdbc:mysql://localhost:3306/televecinosdb";
-        String username = "root";
-        String password = "root";
 
         String sql = "INSERT INTO `televecinosDB`.`Serenazgo` (`nombre`, `apellido`, `dni`, `direccion`, `numTelefono`,`fechaNacimiento`,`TurnoSerenazgo_idTurnoSerenazgo`, `TipoSerenazgo_idTipoSerenazgo`) VALUES " +
                 "(?,?,?,?,?,?,?,?)";
 
 
-        try(Connection conn = DriverManager.getConnection(url,username,password); PreparedStatement pstmt = conn.prepareStatement(sql);) { // usando try con recursos
+        try(Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) { // usando try con recursos
 
             pstmt.setString(1,serenazgoB.getNombre());
             pstmt.setString(2,serenazgoB.getApellido());
