@@ -65,7 +65,7 @@
         }
     </style>
 </head>
-<body>
+<body onload="mostrarOpciones()">
 <div class="container-xxl position-relative bg-white d-flex p-0">
     <!-- Spinner Start -->
     <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
@@ -184,27 +184,27 @@
                             <label for="frecuenciaEvento" class="form-label" style="color:#023047;"><b>Frecuencia del evento:</b></label>
                             <select id="frecuenciaEvento" class="form-select mb-3" aria-label="Default select example" onchange="mostrarOpciones()" name="frecuencia">
                                 <option selected>Seleccione la frecuencia del evento</option>
-                                <option value="1"<%=evento.getFrecuenciaString().equals("Dos veces por semana") ? "selected" : ""%>>Dos veces por semana</option>
-                                <option value="2"<%=evento.getFrecuenciaString().equals("Semanal") ? "selected" : ""%>>Semanal</option>
+                                <option value="2" <%=evento.getFrecuenciaString().equals("Dos veces por semana") ? "selected" : ""%>>Dos veces por semana</option>
+                                <option value="1" <%=evento.getFrecuenciaString().equals("Semanal") ? "selected" : ""%>>Semanal</option>
                             </select>
 
                             <div id="opcionesInterdiarias" style="display:none;">
-                                <select id="diasInterdiarios" class="form-select mb-3" aria-label="Default select example">
+                                <select id="diasInterdiarios" class="form-select mb-3" aria-label="Default select example" name="opcionesDias">
                                     <option selected>Seleccione la opción: </option>
-                                    <option value="1">Lunes-Miércoles</option>
-                                    <option value="2">Martes-Jueves</option>
+                                    <option value="Lunes-Miércoles" <%=evento.getDiaEvento().equals("Lunes-Miércoles") ? "selected" : ""%>>Lunes-Miércoles</option>
+                                    <option value="Martes-Jueves" <%=evento.getDiaEvento().equals("Martes-Jueves") ? "selected" : ""%>>Martes-Jueves</option>
                                 </select>
                             </div>
 
                             <div id="opcionesSemanal" style="display:none;">
                                 <label for="diaSemana" class="form-label" style="color:#023047;"><b>Elegir día:</b></label>
-                                <select id="diaSemana" class="form-select mb-3" aria-label="Default select example">
+                                <select id="diaSemana" class="form-select mb-3" aria-label="Default select example" name="opcionesDias1">
                                     <option selected>Seleccione el día a la semana:</option>
-                                    <option value="1">Lunes</option>
-                                    <option value="2">Martes</option>
-                                    <option value="3">Miércoles</option>
-                                    <option value="4">Jueves</option>
-                                    <option value="5">Viernes</option>
+                                    <option value="Lunes" <%=evento.getDiaEvento().equals("Lunes") ? "selected" : ""%>>Lunes</option>
+                                    <option value="Martes" <%=evento.getDiaEvento().equals("Martes") ? "selected" : ""%>>Martes</option>
+                                    <option value="Miércoles" <%=evento.getDiaEvento().equals("Miércoles") ? "selected" : ""%>>Miércoles</option>
+                                    <option value="Jueves" <%=evento.getDiaEvento().equals("Jueves") ? "selected" : ""%>>Jueves</option>
+                                    <option value="Viernes" <%=evento.getDiaEvento().equals("Viernes") ? "selected" : ""%>>Viernes</option>
                                 </select>
                             </div>
 
@@ -214,10 +214,10 @@
                                     var opcionesInterdiarias = document.getElementById("opcionesInterdiarias");
                                     var opcionesSemanal = document.getElementById("opcionesSemanal");
 
-                                    if (frecuenciaSeleccionada === "1") {
+                                    if (frecuenciaSeleccionada === "2") {
                                         opcionesInterdiarias.style.display = "block";
                                         opcionesSemanal.style.display = "none";
-                                    } else if (frecuenciaSeleccionada === "2") {
+                                    } else if (frecuenciaSeleccionada === "1") {
                                         opcionesInterdiarias.style.display = "none";
                                         opcionesSemanal.style.display = "block";
                                     } else {
@@ -225,6 +225,10 @@
                                         opcionesSemanal.style.display = "none";
                                     }
                                 }
+
+                                window.onload = function() {
+                                    mostrarOpciones();
+                                };
                             </script>
 
                             <!---Cantidad de vacantes disponibles-->

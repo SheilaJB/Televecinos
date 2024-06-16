@@ -77,15 +77,37 @@ public class CoordinadorServlet extends HttpServlet {
                 String hora_inicio = request.getParameter("hora_inicio");
                 String hora_fin = request.getParameter("hora_fin");
                 String idFrecuencia = request.getParameter("frecuencia");
+                String opcionesDias = null;
+                if (idFrecuencia.equals("2")){
+                    opcionesDias = request.getParameter("opcionesDias");
+                }else{
+                    opcionesDias = request.getParameter("opcionesDias1");
+                }
+
                 String cantidadVacantes = request.getParameter("cantidadVacantes");
                 String foto = request.getParameter("foto");
                 String materiales = request.getParameter("materiales");
 
-                String fechaHoraInicioStr = fecha_inicio + " " + hora_inicio + ":00"; // formato: yyyy-MM-dd HH:mm:ss
-                String fechaHoraFinStr = fecha_fin + " " + hora_fin + ":00";          // formato: yyyy-MM-dd HH:mm:ss
+                EventoB eventoB0 = new EventoB();
+
+                eventoB0.setNombre(nombreEvento);
+                eventoB0.setDescripcion(descripcionEvento);
+                eventoB0.setLugar(lugar);
+                eventoB0.setCoordinador_idUsuario(Integer.parseInt(idCoordinador));
+                eventoB0.setProfesoresEvento_idProfesoresEvento(Integer.parseInt(idProfesor));
+                eventoB0.setFecha_inicio(fecha_inicio);
+                eventoB0.setFecha_fin(fecha_fin);
+                eventoB0.setHora_inicio(hora_inicio);
+                eventoB0.setHora_fin(hora_fin);
+                eventoB0.setEventFrecuencia_idEventFrecuencia(Integer.parseInt(idFrecuencia));
+                eventoB0.setDiaEvento(opcionesDias);
+                eventoB0.setCantidadVacantes(Integer.parseInt(cantidadVacantes));
+                eventoB0.setFoto(foto);
+                eventoB0.setListaMateriales(materiales);
+
+
                 int estado = 1;
-                eventoDao.crearEvento(nombreEvento, descripcionEvento, Integer.parseInt(idCoordinador), Integer.parseInt(idProfesor),
-                        lugar, Integer.parseInt(cantidadVacantes), fechaHoraInicioStr, fechaHoraFinStr, foto, materiales, Integer.parseInt(idFrecuencia), estado);
+                eventoDao.crearEvento(eventoB0);
                 response.sendRedirect(request.getContextPath() + "/CoordinadorServlet");
                 break;
 
@@ -97,12 +119,20 @@ public class CoordinadorServlet extends HttpServlet {
                 // int Coordinador_idUsuario = Integer.parseInt(request.getParameter("Coordinador_idUsuario"));
                 String fecha_inicio2 = request.getParameter("fecha_inicio");
                 String fecha_fin2 = request.getParameter("fecha_fin");
+                String hora_inicio2 = request.getParameter("hora_inicio");
+                String hora_fin2 = request.getParameter("hora_fin");
                 String frecuencia2 = request.getParameter("frecuencia");
                 int cantidadVacantes2 = Integer.parseInt(request.getParameter("cantidadVacantes"));
                 String foto2 = request.getParameter("foto");
                 String listaMateriales2 = request.getParameter("listaMateriales");
                 int EventFrecuencia_idEventFrecuencia2 = Integer.parseInt(request.getParameter("frecuencia"));
                 int ProfesoresEvento_idProfesoresEvento2 = Integer.parseInt(request.getParameter("ProfesoresEvento_idProfesoresEvento"));
+                String opcionesDias2 = null;
+                if (frecuencia2.equals("2")){
+                    opcionesDias2 = request.getParameter("opcionesDias");
+                }else{
+                    opcionesDias2 = request.getParameter("opcionesDias1");
+                }
 
                 EventoB eventoB = new EventoB();
                 eventoB.setIdEvento(idEvento);
@@ -118,6 +148,9 @@ public class CoordinadorServlet extends HttpServlet {
                 eventoB.setListaMateriales(listaMateriales2);
                 eventoB.setEventFrecuencia_idEventFrecuencia(EventFrecuencia_idEventFrecuencia2);
                 eventoB.setProfesoresEvento_idProfesoresEvento(ProfesoresEvento_idProfesoresEvento2);
+                eventoB.setDiaEvento(opcionesDias2);
+                eventoB.setHora_inicio(hora_inicio2);
+                eventoB.setHora_fin(hora_fin2);
 
                 eventoDao.actualizarEvento(eventoB);
                 response.sendRedirect(request.getContextPath() + "/CoordinadorServlet");

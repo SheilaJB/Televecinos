@@ -20,6 +20,15 @@ public class EventoB {
     private int EventFrecuencia_idEventFrecuencia;
     private int TipoEvento_idTipoEvento;
     private int ProfesoresEvento_idProfesoresEvento;
+    private String diaEvento;
+
+    public String getDiaEvento() {
+        return diaEvento;
+    }
+
+    public void setDiaEvento(String diaEvento) {
+        this.diaEvento = diaEvento;
+    }
 
     private String estadoString;
     private String frecuenciaString;

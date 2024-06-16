@@ -66,7 +66,7 @@ public class EventoDao {
                 "e.idEventos AS id_evento, " +
                 "e.nombre AS nombre, " +
                 "e.descripcion AS descripcion, " +
-                "u.idUsuario AS id_coordinador, " +  // Agregar id_coordinador
+                "u.idUsuario AS id_coordinador, " +
                 "u.nombre AS nombre_coordinador, " +
                 "u.apellido AS apellido_coordinador, " +
                 "e.lugar AS lugar, " +
@@ -76,12 +76,13 @@ public class EventoDao {
                 "e.foto AS foto, " +
                 "DATE_FORMAT(e.fecha_inicio, '%Y-%m-%d') AS fecha_inicio, " +
                 "DATE_FORMAT(e.fecha_fin, '%Y-%m-%d') AS fecha_fin, " +
-                "pf.idProfesoresEvento AS id_profesor, " +  // Agregar id_profesor
+                "pf.idProfesoresEvento AS id_profesor, " +
                 "pf.nombre AS nombreProfesor, " +
                 "pf.apellido AS apellidoProfesor, " +
-                "TIME(e.fecha_inicio) AS hora_inicio, " +
-                "TIME(e.fecha_fin) AS hora_fin, " +
-                "e.listaMateriales AS listaMateriales " +
+                "TIME(e.hora_inicio) AS hora_inicio, " +
+                "TIME(e.hora_fin) AS hora_fin, " +
+                "e.listaMateriales AS listaMateriales, " +
+                "e.diasEvento as diasEvento " + // Añadido espacio antes de FROM
                 "FROM " +
                 "Eventos e " +
                 "JOIN Usuario u ON e.Coordinador_idUsuario = u.idUsuario " +
@@ -114,6 +115,7 @@ public class EventoDao {
                     evento.setHora_fin(rs.getString("hora_fin"));
                     evento.setFoto(rs.getString("foto"));
                     evento.setListaMateriales(rs.getString("listaMateriales"));
+                    evento.setDiaEvento(rs.getString("diasEvento"));
                 }
             }
         } catch (SQLException e) {
@@ -125,9 +127,7 @@ public class EventoDao {
 
 
     // Function crear evento
-    public void crearEvento(String nombre, String descripcion, int Coordinador_idUsuario, int ProfesoresEvento_idProfesoresEvento,
-                            String lugar, int cantidadVacantes, String fecha_inicio, String fecha_fin, String foto,
-                            String listaMateriales, int EventFrecuencia_idEventFrecuencia, int estado) {
+    public void crearEvento(EventoB eventoB) {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
@@ -137,30 +137,36 @@ public class EventoDao {
         String url = "jdbc:mysql://localhost:3306/televecinosdb";
         String username = "root";
         String password = "root";
-        String sql = "INSERT INTO Eventos (nombre, descripcion, lugar, Coordinador_idUsuario, fecha_inicio, fecha_fin, " +
-                "cantidadVacantes, cantDisponibles, foto, listaMateriales, EventEstados_idEventEstados, " +
-                "EventFrecuencia_idEventFrecuencia, TipoEvento_idTipoEvento, ProfesoresEvento_idProfesoresEvento, eliminado) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, FALSE)";
+        String sql = "INSERT INTO `televecinosDB`.`eventos` \n" +
+                "(`nombre`, `descripcion`, `lugar`, `Coordinador_idUsuario`, `fecha_inicio`, `fecha_fin`, `cantidadVacantes`, `cantDisponibles`, `foto`, `listaMateriales`, `EventEstados_idEventEstados`, `EventFrecuencia_idEventFrecuencia`, `TipoEvento_idTipoEvento`, `ProfesoresEvento_idProfesoresEvento`, `hora_inicio`, `hora_fin`, `diasEvento`) \n" +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = DriverManager.getConnection(url, username, password);
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            int idCoordinador = 1;
             int tipoEvento = 1;
-            pstmt.setString(1, nombre);
-            pstmt.setString(2, descripcion);
-            pstmt.setString(3, lugar);
-            pstmt.setInt(4, Coordinador_idUsuario);
-            pstmt.setString(5, fecha_inicio);
-            pstmt.setString(6, fecha_fin);
-            pstmt.setInt(7, cantidadVacantes);
-            pstmt.setInt(8, cantidadVacantes);
-            pstmt.setString(9, foto);
-            pstmt.setString(10, listaMateriales);
-            pstmt.setInt(11, estado);
-            pstmt.setInt(12, EventFrecuencia_idEventFrecuencia);
+            int estadoEvento = 1;
+
+            pstmt.setString(1, eventoB.getNombre());
+            pstmt.setString(2, eventoB.getDescripcion());
+            pstmt.setString(3, eventoB.getLugar());
+            pstmt.setInt(4, idCoordinador);
+            pstmt.setString(5, eventoB.getFecha_inicio());
+            pstmt.setString(6, eventoB.getFecha_fin());
+            pstmt.setInt(7, eventoB.getCantidadVacantes());
+            pstmt.setInt(8, eventoB.getCantidadVacantes());
+            pstmt.setString(9, eventoB.getFoto());
+            pstmt.setString(10, eventoB.getListaMateriales());
+            pstmt.setInt(11, estadoEvento);
+            pstmt.setInt(12, eventoB.getEventFrecuencia_idEventFrecuencia());
             pstmt.setInt(13, tipoEvento);
-            pstmt.setInt(14, ProfesoresEvento_idProfesoresEvento);
+            pstmt.setInt(14, eventoB.getProfesoresEvento_idProfesoresEvento());
+            pstmt.setString(15, eventoB.getHora_inicio());
+            pstmt.setString(16, eventoB.getHora_fin());
+            pstmt.setString(17, eventoB.getDiaEvento());
 
             pstmt.executeUpdate();
+
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("Error al insertar en la base de datos", e);
@@ -211,7 +217,7 @@ public class EventoDao {
         String password = "root";
         String sql = "UPDATE Eventos SET nombre = ?, descripcion = ?, lugar = ?, " +
                 "fecha_inicio = ?, fecha_fin = ?, EventFrecuencia_idEventFrecuencia = ?, ProfesoresEvento_idProfesoresEvento = ?, " +
-                "cantidadVacantes = ?, foto = ?, listaMateriales = ? WHERE idEventos = ? AND eliminado = FALSE";
+                "cantidadVacantes = ?, foto = ?, listaMateriales = ?, hora_inicio = ?, hora_fin = ?, diasEvento = ? WHERE idEventos = ? AND eliminado = FALSE";
 
         try (Connection conn = DriverManager.getConnection(url, username, password);
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -226,7 +232,10 @@ public class EventoDao {
             ps.setInt(8, evento.getCantidadVacantes());
             ps.setString(9, evento.getFoto());
             ps.setString(10, evento.getListaMateriales());
-            ps.setInt(11, evento.getIdEvento());
+            ps.setString(11, evento.getHora_inicio());
+            ps.setString(12, evento.getHora_fin());
+            ps.setString(13, evento.getDiaEvento());
+            ps.setInt(14, evento.getIdEvento());
 
             ps.executeUpdate();
         } catch (SQLException e) {
