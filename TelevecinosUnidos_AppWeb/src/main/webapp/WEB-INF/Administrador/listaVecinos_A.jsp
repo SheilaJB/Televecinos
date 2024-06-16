@@ -67,7 +67,11 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 
-
+        <div class="container text-center">
+            <div id="Nombre del evento">
+                <h1 style="text-align: center; margin-top:50px;margin-bottom:50px;"><b></b></h1>
+            </div>
+        </div>
         <!-- Fin de iamgen estatica -->
         <div style="background-color: #f8f9fa; padding: 10px; align-items: center;">
             <!-- Filtro -->

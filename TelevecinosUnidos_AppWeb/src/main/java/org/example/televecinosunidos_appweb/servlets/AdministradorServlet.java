@@ -7,10 +7,7 @@ import org.example.televecinosunidos_appweb.model.beans.EventoB;
 import org.example.televecinosunidos_appweb.model.beans.ProfesoresEvento;
 import org.example.televecinosunidos_appweb.model.beans.SerenazgoB;
 import org.example.televecinosunidos_appweb.model.beans.UsuarioB;
-import org.example.televecinosunidos_appweb.model.daos.CoordinadoraDao;
-import org.example.televecinosunidos_appweb.model.daos.InstructorDao;
-import org.example.televecinosunidos_appweb.model.daos.SerenazgoDao;
-import org.example.televecinosunidos_appweb.model.daos.VecinoDao;
+import org.example.televecinosunidos_appweb.model.daos.*;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -27,6 +24,7 @@ public class AdministradorServlet extends HttpServlet {
         CoordinadoraDao coordinadoraDao = new CoordinadoraDao();
         VecinoDao vecinoDao = new VecinoDao();
         InstructorDao instructorDao = new InstructorDao();
+        SolicitanteDao solicitanteDao = new SolicitanteDao();
 
         ArrayList<SerenazgoB> listarSerenazgos = serenazgoDao.listarSerenazgos();
         String idCoordinadora;
@@ -92,7 +90,11 @@ public class AdministradorServlet extends HttpServlet {
             case "registroInstructor":
                 request.getRequestDispatcher("WEB-INF/Administrador/registroInstructor.jsp").forward(request,response);
                 break;
-
+            case "nuevasSolicitudes_A":
+                vista = "WEB-INF/Administrador/nuevasSolicitudes_A.jsp";
+                request.setAttribute("lista",solicitanteDao.listarSolicitantes());
+                request.getRequestDispatcher(vista).forward(request, response);
+                break;
 
 
             default:

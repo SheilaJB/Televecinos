@@ -1,10 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.util.*" %>
+<%@ page import="org.example.televecinosunidos_appweb.model.beans.UsuarioB" %>
+<jsp:useBean id="lista" scope="request" type="ArrayList<org.example.televecinosunidos_appweb.model.beans.UsuarioB>"/>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Solicitudes de registro</title>
+    <title>Nuevas solicitudes</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -47,6 +50,7 @@
     </div>
     <!-- Spinner End -->
 
+
     <!-- BARRA AZUL DE LA IZQUIERDA INICIO-->
     <jsp:include page="../includes/barraLateralAdministrador.jsp"></jsp:include>
     <!-- BARRA AZUL DE LA IZQUIERDA FINAL -->
@@ -63,262 +67,60 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 
-
+        <div class="container text-center">
+            <div id="Nombre del evento">
+                <h1 style="text-align: center; margin-top:50px;margin-bottom:50px;"><b></b></h1>
+            </div>
+        </div>
         <!-- Fin de iamgen estatica -->
-        <div style="background-color: #f8f9fa; padding: 20px; align-items: center;">
-            <div class="filtro" style="border: 1px solid #ccc; border-radius: 5px; padding: 10px; display: flex; align-items: center; background-color:#FFB703 ;">
-                <input type="text" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 20%; margin-right: 2%;" id="filtroInput" placeholder="Buscar...">
+        <div style="background-color: #f8f9fa; padding: 10px; align-items: center;">
+            <!-- Filtro -->
+            <div style="background-color: #FFB703; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-md-5 mb-2">
+                        <input type="text" class="form-control" id="filtroInput" placeholder="Buscar..." onkeyup="filtrar()">
+                    </div>
 
-                <input type="date" id="filtroFecha" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 20%; margin-right: 2%;">
 
 
-                <button type="button" class="btn btn-primary" onclick="filtrar()" style="padding: 10px;"><b>Filtrar</b></button>
-            </div>
-            <div class="table-responsive">
-                <table class="table text-start align-middle table-bordered table-hover mb-0">
-                    <thead>
-                    <tr class="text-dark">
-                        <th scope="col">#</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Apellido</th>
-                        <th scope="col">Correo</th>
-                        <th scope="col">Fecha de registro</th>
-                        <th scope="col">Evaluar Ingreso</th>
-
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Juan Fernando</td>
-                        <td>Pérez López</td>
-                        <td>Jjjffppll@gmail.com</td>
-                        <td style="width: 150px;">03 Mayo 2079</td>
-                        <td style="width: 300px;">
-
-                            <button type="button" class="btn btn-success btn-sm m-2 btn-banear" >Aceptar</button>
-                            <div id="popup1" class="popup1" >
-                                <div class="popup_contenido1">
-                                    <span class="close-btn" id="closePopupBtn1">&times;</span>
-                                    <img src="img/check.png" alt="check" width="48" height="48" style="margin-top: -10px;">
-
-                                    <p>¡Nuevo Vecino añadido!</p>
-
-                                    <a href="NuevasSolicitudes_A.html"><button type="button" class="btn btn-primary rounded-pill m-2">Regresar</button></a>
-
-                                </div>
-                            </div>
-                            <button type="button" class="btn btn-danger btn-sm m-2 btn-banear">Rechazar</button>
-                            <div id="popup2" class="popup1" >
-                                <div class="popup_contenido1">
-                                    <span class="close-btn" id="closePopupBtn2">&times;</span>
-                                    <img src="img/advertencia.png" alt="check" width="48" height="48" style="margin-top: -10px;">
-
-                                    <p>¡Advertencia!</p>
-
-                                    <p>La acción tomada será permanente, ¿Está seguro de rechazar la solicitud de registro del vecino?</p>
-
-                                    <a href="NuevasSolicitudes_A.html"><button type="button" class="btn btn-success rounded-pill m-2">Cancelar</button></a>
-                                    <button type="button" class="btn btn-danger rounded-pill m-2">Sí, rechazar</button>
-
-                                </div>
-                            </div>
-                            <a href="DetalleNewVecinos_A.html"><button type="button" class="btn btn-primary btn-sm m-2">Ver detalle</button></a>
-
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Juan Fernando</td>
-                        <td>Pérez López</td>
-                        <td>Jjjffppll@gmail.com</td>
-                        <td style="width: 150px;">03 Mayo 2079</td>
-                        <td style="width: 300px;">
-
-                            <button type="button" class="btn btn-success btn-sm m-2 btn-banear" >Aceptar</button>
-                            <div id="popup1" class="popup1" >
-                                <div class="popup_contenido1">
-                                    <span class="close-btn" id="closePopupBtn1">&times;</span>
-                                    <img src="img/check.png" alt="check" width="48" height="48" style="margin-top: -10px;">
-
-                                    <p>¡Nuevo Vecino añadido!</p>
-
-                                    <a href="NuevasSolicitudes_A.html"><button type="button" class="btn btn-primary rounded-pill m-2">Regresar</button></a>
-
-                                </div>
-                            </div>
-                            <button type="button" class="btn btn-danger btn-sm m-2 btn-banear">Rechazar</button>
-                            <div id="popup2" class="popup1" >
-                                <div class="popup_contenido1">
-                                    <span class="close-btn" id="closePopupBtn2">&times;</span>
-                                    <img src="img/advertencia.png" alt="check" width="48" height="48" style="margin-top: -10px;">
-
-                                    <p>¡Advertencia!</p>
-
-                                    <p>La acción tomada será permanente, ¿Está seguro de rechazar la solicitud de registro del vecino?</p>
-
-                                    <a href="NuevasSolicitudes_A.html"><button type="button" class="btn btn-success rounded-pill m-2">Cancelar</button></a>
-                                    <button type="button" class="btn btn-danger rounded-pill m-2">Sí, rechazar</button>
-
-                                </div>
-                            </div>
-                            <a href="DetalleNewVecinos_A.html"><button type="button" class="btn btn-primary btn-sm m-2">Ver detalle</button></a>
-
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Juan Fernando</td>
-                        <td>Pérez López</td>
-                        <td>Jjjffppll@gmail.com</td>
-                        <td style="width: 150px;">03 Mayo 2079</td>
-                        <td style="width: 300px;">
-
-                            <button type="button" class="btn btn-success btn-sm m-2 btn-banear" >Aceptar</button>
-                            <div id="popup1" class="popup1" >
-                                <div class="popup_contenido1">
-                                    <span class="close-btn" id="closePopupBtn1">&times;</span>
-                                    <img src="img/check.png" alt="check" width="48" height="48" style="margin-top: -10px;">
-
-                                    <p>¡Nuevo Vecino añadido!</p>
-
-                                    <a href="NuevasSolicitudes_A.html"><button type="button" class="btn btn-primary rounded-pill m-2">Regresar</button></a>
-
-                                </div>
-                            </div>
-                            <button type="button" class="btn btn-danger btn-sm m-2 btn-banear">Rechazar</button>
-                            <div id="popup2" class="popup1" >
-                                <div class="popup_contenido1">
-                                    <span class="close-btn" id="closePopupBtn2">&times;</span>
-                                    <img src="img/advertencia.png" alt="check" width="48" height="48" style="margin-top: -10px;">
-
-                                    <p>¡Advertencia!</p>
-
-                                    <p>La acción tomada será permanente, ¿Está seguro de rechazar la solicitud de registro del vecino?</p>
-
-                                    <a href="NuevasSolicitudes_A.html"><button type="button" class="btn btn-success rounded-pill m-2">Cancelar</button></a>
-                                    <button type="button" class="btn btn-danger rounded-pill m-2">Sí, rechazar</button>
-
-                                </div>
-                            </div>
-                            <a href="DetalleNewVecinos_A.html"><button type="button" class="btn btn-primary btn-sm m-2">Ver detalle</button></a>
-
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Juan Fernando</td>
-                        <td>Pérez López</td>
-                        <td>Jjjffppll@gmail.com</td>
-                        <td style="width: 150px;">03 Mayo 2079</td>
-                        <td style="width: 300px;">
-
-                            <button type="button" class="btn btn-success btn-sm m-2 btn-banear" >Aceptar</button>
-                            <div id="popup1" class="popup1" >
-                                <div class="popup_contenido1">
-                                    <span class="close-btn" id="closePopupBtn1">&times;</span>
-                                    <img src="img/check.png" alt="check" width="48" height="48" style="margin-top: -10px;">
-
-                                    <p>¡Nuevo Vecino añadido!</p>
-
-                                    <a href="NuevasSolicitudes_A.html"><button type="button" class="btn btn-primary rounded-pill m-2">Regresar</button></a>
-
-                                </div>
-                            </div>
-                            <button type="button" class="btn btn-danger btn-sm m-2 btn-banear">Rechazar</button>
-                            <div id="popup2" class="popup1" >
-                                <div class="popup_contenido1">
-                                    <span class="close-btn" id="closePopupBtn2">&times;</span>
-                                    <img src="img/advertencia.png" alt="check" width="48" height="48" style="margin-top: -10px;">
-
-                                    <p>¡Advertencia!</p>
-
-                                    <p>La acción tomada será permanente, ¿Está seguro de rechazar la solicitud de registro del vecino?</p>
-
-                                    <a href="NuevasSolicitudes_A.html"><button type="button" class="btn btn-success rounded-pill m-2">Cancelar</button></a>
-                                    <button type="button" class="btn btn-danger rounded-pill m-2">Sí, rechazar</button>
-
-                                </div>
-                            </div>
-                            <a href="DetalleNewVecinos_A.html"><button type="button" class="btn btn-primary btn-sm m-2">Ver detalle</button></a>
-
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Juan Fernando</td>
-                        <td>Pérez López</td>
-                        <td>Jjjffppll@gmail.com</td>
-                        <td style="width: 150px;">03 Mayo 2079</td>
-                        <td style="width: 300px;">
-
-                            <button type="button" class="btn btn-success btn-sm m-2 btn-banear" >Aceptar</button>
-                            <div id="popup1" class="popup1" >
-                                <div class="popup_contenido1">
-                                    <span class="close-btn" id="closePopupBtn1">&times;</span>
-                                    <img src="img/check.png" alt="check" width="48" height="48" style="margin-top: -10px;">
-
-                                    <p>¡Nuevo Vecino añadido!</p>
-
-                                    <a href="NuevasSolicitudes_A.html"><button type="button" class="btn btn-primary rounded-pill m-2">Regresar</button></a>
-
-                                </div>
-                            </div>
-                            <button type="button" class="btn btn-danger btn-sm m-2 btn-banear">Rechazar</button>
-                            <div id="popup2" class="popup1" >
-                                <div class="popup_contenido1">
-                                    <span class="close-btn" id="closePopupBtn2">&times;</span>
-                                    <img src="img/advertencia.png" alt="check" width="48" height="48" style="margin-top: -10px;">
-
-                                    <p>¡Advertencia!</p>
-
-                                    <p>La acción tomada será permanente, ¿Está seguro de rechazar la solicitud de registro del vecino?</p>
-
-                                    <a href="NuevasSolicitudes_A.html"><button type="button" class="btn btn-success rounded-pill m-2">Cancelar</button></a>
-                                    <button type="button" class="btn btn-danger rounded-pill m-2">Sí, rechazar</button>
-
-                                </div>
-                            </div>
-                            <a href="DetalleNewVecinos_A.html"><button type="button" class="btn btn-primary btn-sm m-2">Ver detalle</button></a>
-
-                        </td>
-                    </tr>
-
-                    </tbody>
-                </table>
-            </div>
-            <div  style="display: flex; justify-content: center; align-items: center;">
-                <section class="paginacion" >
-                    <ul style="list-style: none;padding: 0;margin: 0;display: flex;">
-                        <div style="background-color: white ; padding: 5px; margin:10px">
-                            <li style="margin: 0 5px;"><a class="link-opacity-50-hover" class="link-opacity-50-hover" href="#" class="active">1</a></li>
-                        </div>
-                        <div style="background-color:white ; padding: 5px;margin:10px">
-                            <li style="margin: 0 5px;"><a class="link-opacity-50-hover" class="link-opacity-50-hover" href="#" class="active">2</a></li>
-                        </div>
-                        <div style="background-color: white ; padding: 5px;margin:10px">
-                            <li style="margin: 0 5px;"><a class="link-opacity-50-hover" class="link-opacity-50-hover" href="#" class="active">3</a></li>
-                        </div>
-                    </ul>
-                </section>
+                </div>
             </div>
 
+            <div class="bg-light rounded h-100 p-4" style="font-weight: bold;">
+                <script>
+                    function crearEvento() {
+                        window.location.href = 'creacionEvento.html';
+                    }
+                </script>
 
+                <div class="table-responsive">
+                    <table id="eventosTable" class="table" style="background-color: transparent;">
+                        <thead>
+                        <tr>
+                            <th scope="col">Nombre y Apellido</th>
+                            <th scope="col">Direccion</th>
+                            <th scope="col">DNI</th>
+                            <th scope="col">Aceptar</th>
+                            <th scope="col">Denegar</th>
+                            <th scope="col">ver Detalle</th>
 
-
-            <script>
-                $(document).ready(function(){
-                    $('.row').slick({
-                        infinite: true,
-                        slidesToShow: 3,
-                        slidesToScroll: 1
-                    });
-                })
-                ;</script>
-            <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.css">
-            <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick-theme.css">
-            <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-            <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.min.js"></script>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <% for(UsuarioB usuarioB : lista){ %>
+                        <tr>
+                            <td><%=usuarioB.getNombre() + " " + usuarioB.getApellido()%></td>
+                            <td><%=usuarioB.getDireccion() %></td>
+                            <td><%=usuarioB.getDni() %></td>
+                            <td><a href="<%=request.getContextPath()%>/*?action=verSerenazgo&idSerenazgo=<%=usuarioB.getIdUsuario()%>"><button type="button" class="btn btn-success m-2"><i class="fas fa-envelope"></i></button></a></td>
+                            <td><a href="<%=request.getContextPath()%>/*?action=verSerenazgo&idSerenazgo=<%=usuarioB.getIdUsuario()%>"><button type="button" class="btn btn-danger m-2" ><i class="fas fa-trash-alt"></i></button></a></td>
+                            <td><a href="<%=request.getContextPath()%>/AdministradorServlet?action=DetalleVecinos_A&idVecino=<%=usuarioB.getIdUsuario()%>"><button type="button" class="btn btn-info m-2"><i class="fas fa-eye"></i></button></a></td>
+                        </tr>
+                        <% } %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
 
 
