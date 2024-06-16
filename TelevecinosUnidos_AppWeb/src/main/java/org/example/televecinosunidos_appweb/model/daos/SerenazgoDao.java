@@ -3,6 +3,7 @@ package org.example.televecinosunidos_appweb.model.daos;
 import org.example.televecinosunidos_appweb.model.beans.EventoB;
 import org.example.televecinosunidos_appweb.model.beans.ProfesoresEvento;
 import org.example.televecinosunidos_appweb.model.beans.SerenazgoB;
+import org.example.televecinosunidos_appweb.model.beans.UsuarioB;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;
@@ -14,7 +15,26 @@ public class SerenazgoDao extends BaseDao {
 
 
 
-        String sql = "select * from Serenazgo " ;
+        String sql = "SELECT \n" +
+                "    serenazgo.idSerenazgo,\n" +
+                "    serenazgo.numTelefono,\n" +
+                "    serenazgo.fechaNacimiento,\n" +
+                "    serenazgo.TurnoSerenazgo_idTurnoSerenazgo,\n" +
+                "    serenazgo.TipoSerenazgo_idTipoSerenazgo,\n" +
+                "    usuario.idUsuario,\n" +
+                "    usuario.nombre AS usuario_nombre,\n" +
+                "    usuario.apellido AS usuario_apellido,\n" +
+                "    usuario.dni AS usuario_dni,\n" +
+                "    usuario.direccion AS usuario_direccion,\n" +
+                "    usuario.correo AS usuario_correo,\n" +
+                "    usuario.contrasena AS usuario_contrasena,\n" +
+                "    usuario.PreguntasFrecuentes_idtable2 AS usuario_PreguntasFrecuentes_idtable2,\n" +
+                "    usuario.Rol_idRol AS usuario_Rol_idRol,\n" +
+                "    usuario.isBan AS usuario_isBan\n" +
+                "FROM \n" +
+                "    `televecinosdb`.`serenazgo`\n" +
+                "JOIN \n" +
+                "    `televecinosdb`.`usuario` ON serenazgo.usuario_idUsuario = usuario.idUsuario;\n" ;
 
 
         ArrayList<SerenazgoB> listaSerenazgos = new ArrayList<>();
@@ -26,14 +46,50 @@ public class SerenazgoDao extends BaseDao {
             while (rs.next()) {
                 SerenazgoB serenazgoB = new SerenazgoB();
                 serenazgoB.setIdSerenazgo(rs.getInt(1));
-                serenazgoB.setNombre(rs.getString(2));
-                serenazgoB.setApellido(rs.getString(3));
-                serenazgoB.setDni(rs.getString(4));
-                serenazgoB.setTurnoSerenazgoStr(rs.getString(5));
-                serenazgoB.setTipoSerenazgoStr(rs.getString(6));
-                //serenazgoB.setNumTelefono(rs.getString(7));
+                serenazgoB.setNumTelefono(rs.getString(2));
+                serenazgoB.setFechaNacimiento(rs.getString(3));
+                serenazgoB.setIdTurnoSerenazgo(rs.getInt(4));
+                serenazgoB.setIdTipoSerenazgo(rs.getInt(5));
+                UsuarioB us = new UsuarioB();
+                us.setIdUsuario(rs.getInt(6));
+                us.setNombre(rs.getString(7));
+                us.setApellido(rs.getString(8));
+                us.setDni(rs.getString(9));
+                us.setDireccion(rs.getString(10));
+                us.setCorreo(rs.getString(11));
+                us.setContrasenia(rs.getString(12));
+                us.setPreguntasFrecuentes_idTable2(rs.getInt(13));
+                us.setIdRol(rs.getInt(14));
+                serenazgoB.setUsuario(us);
 
-                listaSerenazgos.add(serenazgoB); // Asegurarse de añadir el serenazgo a la lista
+
+                switch (serenazgoB.getIdTipoSerenazgo()){
+                    case 1:
+                        serenazgoB.setTipoSerenazgoStr("Bicicleta");
+                        break;
+                    case 2:
+                        serenazgoB.setTipoSerenazgoStr("A pie");
+                        break;
+                    case 3:
+                        serenazgoB.setTipoSerenazgoStr("Canino");
+                        break;
+                    case 4:
+                        serenazgoB.setTipoSerenazgoStr("Vehiculo");
+                        break;
+                }
+
+                switch (serenazgoB.getIdTurnoSerenazgo()){
+                    case 1:
+                        serenazgoB.setTurnoSerenazgoStr("Diurno");
+                        break;
+                    case 2:
+                        serenazgoB.setTurnoSerenazgoStr("Nocturno");
+                        break;
+
+                }
+
+
+                listaSerenazgos.add(serenazgoB);
             }
 
         } catch (SQLException e) {
@@ -49,11 +105,27 @@ public class SerenazgoDao extends BaseDao {
 
 
 
-        String sql = "SELECT s.idSerenazgo, s.nombre, s.apellido,s.dni, sTurno.turno, sTipo.tipo, numTelefono " +
-                "FROM serenazgo s " +
-                "JOIN turnoserenazgo sTurno ON s.TurnoSerenazgo_idTurnoSerenazgo = sTurno.idTurnoSerenazgo " +
-                "JOIN tiposerenazgo sTipo ON s.TipoSerenazgo_idTipoSerenazgo = sTipo.idTipoSerenazgo " +
-                "WHERE idSerenazgo = ?";
+        String sql = "SELECT \n" +
+                "    serenazgo.idSerenazgo,\n" +
+                "    serenazgo.numTelefono,\n" +
+                "    serenazgo.fechaNacimiento,\n" +
+                "    serenazgo.TurnoSerenazgo_idTurnoSerenazgo,\n" +
+                "    serenazgo.TipoSerenazgo_idTipoSerenazgo,\n" +
+                "    usuario.idUsuario,\n" +
+                "    usuario.nombre AS usuario_nombre,\n" +
+                "    usuario.apellido AS usuario_apellido,\n" +
+                "    usuario.dni AS usuario_dni,\n" +
+                "    usuario.direccion AS usuario_direccion,\n" +
+                "    usuario.correo AS usuario_correo,\n" +
+                "    usuario.contrasena AS usuario_contrasena,\n" +
+                "    usuario.PreguntasFrecuentes_idtable2 AS usuario_PreguntasFrecuentes_idtable2,\n" +
+                "    usuario.Rol_idRol AS usuario_Rol_idRol,\n" +
+                "    usuario.isBan AS usuario_isBan\n" +
+                "FROM \n" +
+                "    `televecinosdb`.`serenazgo`\n" +
+                "JOIN \n" +
+                "    `televecinosdb`.`usuario` ON serenazgo.usuario_idUsuario = usuario.idUsuario\n" +
+                "WHERE idSerenazgo = ?;";
 
 
         try (Connection conn = getConnection();
@@ -62,15 +134,51 @@ public class SerenazgoDao extends BaseDao {
             pstmt.setString(1,idSerenazgo);
 
             try(ResultSet rs = pstmt.executeQuery()){
-                while (rs.next()){
+
+                if(rs.next()) {
                     serenazgoB.setIdSerenazgo(rs.getInt(1));
-                    serenazgoB.setNombre(rs.getString(2));
-                    serenazgoB.setApellido(rs.getString(3));
-                    serenazgoB.setDni(rs.getString(4));
-                    serenazgoB.setTurnoSerenazgoStr(rs.getString(5));
-                    serenazgoB.setTipoSerenazgoStr(rs.getString(6));
-                    serenazgoB.setNumTelefono(rs.getString(7));
+                    serenazgoB.setNumTelefono(rs.getString(2));
+                    serenazgoB.setFechaNacimiento(rs.getString(3));
+                    serenazgoB.setIdTurnoSerenazgo(rs.getInt(4));
+                    serenazgoB.setIdTipoSerenazgo(rs.getInt(5));
+                    UsuarioB us = new UsuarioB();
+                    us.setIdUsuario(rs.getInt(6));
+                    us.setNombre(rs.getString(7));
+                    us.setApellido(rs.getString(8));
+                    us.setDni(rs.getString(9));
+                    us.setDireccion(rs.getString(10));
+                    us.setCorreo(rs.getString(11));
+                    us.setContrasenia(rs.getString(12));
+                    us.setPreguntasFrecuentes_idTable2(rs.getInt(13));
+                    us.setIdRol(rs.getInt(14));
+                    serenazgoB.setUsuario(us);
+
+                    switch (serenazgoB.getIdTipoSerenazgo()){
+                        case 1:
+                            serenazgoB.setTipoSerenazgoStr("Bicicleta");
+                            break;
+                        case 2:
+                            serenazgoB.setTipoSerenazgoStr("A pie");
+                            break;
+                        case 3:
+                            serenazgoB.setTipoSerenazgoStr("Canino");
+                            break;
+                        case 4:
+                            serenazgoB.setTipoSerenazgoStr("Vehiculo");
+                            break;
+                    }
+
+                    switch (serenazgoB.getIdTurnoSerenazgo()){
+                        case 1:
+                            serenazgoB.setTurnoSerenazgoStr("Diurno");
+                            break;
+                        case 2:
+                            serenazgoB.setTurnoSerenazgoStr("Nocturno");
+                            break;
+
+                    }
                 }
+
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -83,23 +191,18 @@ public class SerenazgoDao extends BaseDao {
 
     public void registrarSerenazgo(SerenazgoB serenazgoB) {
 
-
-        String sql = "INSERT INTO `televecinosDB`.`Serenazgo` (`nombre`, `apellido`, `dni`, `direccion`, `numTelefono`,`fechaNacimiento`,`TurnoSerenazgo_idTurnoSerenazgo`, `TipoSerenazgo_idTipoSerenazgo`) VALUES " +
-                "(?,?,?,?,?,?,?,?)";
-
-
+        String sql = "INSERT INTO `televecinosdb`.`usuario` (`nombre`, `apellido`, `dni`, `direccion`, `correo`, `contrasena`,`PreguntasFrecuentes_idtable2`, `Rol_idRol`, `isBan`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try(Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) { // usando try con recursos
 
-            pstmt.setString(1,serenazgoB.getNombre());
-            pstmt.setString(2,serenazgoB.getApellido());
-            pstmt.setString(3,serenazgoB.getDni());
-            pstmt.setString(4,serenazgoB.getDireccion());
-            pstmt.setString(5,serenazgoB.getNumTelefono());
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            String fechaNacimientoStr = formatter.format(serenazgoB.getFechaNacimiento());
-            pstmt.setString(6,fechaNacimientoStr);
-            pstmt.setInt(7,serenazgoB.getIdTurnoSerenazgo());
-            pstmt.setInt(8,serenazgoB.getIdTipoSerenazgo());
+            pstmt.setString(1,serenazgoB.getUsuario().getNombre());
+            pstmt.setString(2,serenazgoB.getUsuario().getApellido());
+            pstmt.setString(3,serenazgoB.getUsuario().getDni());
+            pstmt.setString(4,serenazgoB.getUsuario().getDireccion());
+            pstmt.setString(5,serenazgoB.getUsuario().getCorreo());
+            pstmt.setString(6,serenazgoB.getUsuario().getContrasenia());
+            pstmt.setInt(7,serenazgoB.getUsuario().getPreguntasFrecuentes_idTable2());
+            pstmt.setInt(8,serenazgoB.getUsuario().getIdRol());
+            pstmt.setInt(9,serenazgoB.getUsuario().getIsBan());
 
             pstmt.executeUpdate();
 
@@ -108,5 +211,38 @@ public class SerenazgoDao extends BaseDao {
             throw new RuntimeException(e);
         }
 
+        String sql2 = "SELECT MAX(idUsuario) AS ultimo_idUsuario FROM televecinosdb.usuario;\n";
+        int lastUsuarioId = 1;
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql2)) {
+            if (rs.next()) {
+                lastUsuarioId = rs.getInt(1);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+
+        String sqlSerenazgo = "INSERT INTO `televecinosdb`.`serenazgo` (`numTelefono`, `fechaNacimiento`, `TurnoSerenazgo_idTurnoSerenazgo`, `TipoSerenazgo_idTipoSerenazgo`, `usuario_idUsuario`) VALUES (?, ?, ?, ?, ?)";
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sqlSerenazgo)) {
+            pstmt.setString(1,serenazgoB.getNumTelefono());
+            pstmt.setString(2,serenazgoB.getFechaNacimiento());
+            pstmt.setInt(3,serenazgoB.getIdTurnoSerenazgo());
+            pstmt.setInt(4,serenazgoB.getIdTipoSerenazgo());
+            pstmt.setInt(5, lastUsuarioId);
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+
+
     }
 }
+

@@ -128,10 +128,10 @@
                         <tbody>
                         <% for(SerenazgoB serenazgoB : lista){ %>
                         <tr>
-                            <td><%=serenazgoB.getNombre() + " " + serenazgoB.getApellido()%></td>
+                            <td><%=serenazgoB.getUsuario().getNombre() + " " + serenazgoB.getUsuario().getApellido()%></td>
                             <td><%=serenazgoB.getTurnoSerenazgoStr() %></td>
                             <td><%=serenazgoB.getTipoSerenazgoStr() %></td>
-                            <td><%=serenazgoB.getDni() %></td>
+                            <td><%=serenazgoB.getUsuario().getDni() %></td>
                             <td><%=serenazgoB.getNumTelefono() %></td>
                             <td><a href="<%=request.getContextPath()%>/*?action=verSerenazgo&idSerenazgo=<%=serenazgoB.getIdSerenazgo()%>"><button type="button" class="btn btn-success m-2"><i class="fas fa-envelope"></i></button></a></td>
                             <td><a href="<%=request.getContextPath()%>/*?action=verSerenazgo&idSerenazgo=<%=serenazgoB.getIdSerenazgo()%>"><button type="button" class="btn btn-danger m-2" ><i class="fas fa-trash-alt"></i></button></a></td>

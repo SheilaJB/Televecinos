@@ -6,6 +6,7 @@ import jakarta.servlet.annotation.*;
 import org.example.televecinosunidos_appweb.model.beans.EventoB;
 import org.example.televecinosunidos_appweb.model.beans.ProfesoresEvento;
 import org.example.televecinosunidos_appweb.model.beans.SerenazgoB;
+import org.example.televecinosunidos_appweb.model.beans.UsuarioB;
 import org.example.televecinosunidos_appweb.model.daos.SerenazgoDao;
 
 import java.io.IOException;
@@ -25,7 +26,7 @@ public class AdministradorServlet extends HttpServlet {
         String vista ;
         switch (action) {
             case "listaSerenazgo_A":
-                vista = "WEB-INF/Administrador/ListaSerenazgo_A.jsp";
+                vista = "WEB-INF/Administrador/listaSerenazgo_A.jsp";
                 request.setAttribute("lista",listarSerenazgos);
                 request.getRequestDispatcher(vista).forward(request, response);
                 break;
@@ -49,27 +50,61 @@ public class AdministradorServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
-        SerenazgoDao serenazgoDao = new SerenazgoDao();
-        String nombre = request.getParameter("nombre");
-        String apellido = request.getParameter("apellido");
-        String dni = request.getParameter("dni");
-        String direccion = request.getParameter("direccion");
-        String numTelefono = request.getParameter("numTelefono");
-        String fechaNacimientoStr = request.getParameter("fechaNacimiento");
-        int turno = Integer.parseInt(request.getParameter("turno"));
-        int tipo = Integer.parseInt(request.getParameter("tipo"));
+        String action = request.getParameter("action") == null ? "registrarSerenazgo" : request.getParameter("action");
+        switch (action){
+            case "registrarSerenazgo":
+                SerenazgoDao serenazgoDao = new SerenazgoDao();
+                String nombre = request.getParameter("nombre");
+                String apellido = request.getParameter("apellido");
+                String dni = request.getParameter("dni");
+                String direccion = request.getParameter("direccion");
+                String numTelefono = request.getParameter("numTelefono");
+                String fechaNacimiento = request.getParameter("fechaNacimiento");
+                int turno = Integer.parseInt(request.getParameter("turno"));
+                int tipo = Integer.parseInt(request.getParameter("tipo"));
+                String correo = request.getParameter("correo");
+                String contrasenia = request.getParameter("contrasenia");
+                int pregFrecuentes = 1;
+                int idRol = 4;
+                int isBan = 0;
 
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd"); // Ajusta este formato a 'año-mes-día'
-        Date fechaNacimiento = null;
-        try {
-            fechaNacimiento = formatter.parse(fechaNacimientoStr);
-        } catch (ParseException e) {
-            e.printStackTrace();
+
+                UsuarioB us = new UsuarioB();
+                us.setNombre(nombre);
+                us.setApellido(apellido);
+                us.setDni(dni);
+                us.setDireccion(direccion);
+                us.setCorreo(correo);
+                us.setContrasenia(contrasenia);
+                us.setPreguntasFrecuentes_idTable2(pregFrecuentes);
+                us.setIdRol(idRol);
+                us.setIsBan(isBan);
+
+                SerenazgoB serenazgoB = new SerenazgoB();
+                serenazgoB.setNumTelefono(numTelefono);
+                serenazgoB.setFechaNacimiento(fechaNacimiento);
+                serenazgoB.setIdTurnoSerenazgo(turno);
+                serenazgoB.setIdTipoSerenazgo(tipo);
+
+                serenazgoB.setUsuario(us);
+                serenazgoDao.registrarSerenazgo(serenazgoB);
+
+                response.sendRedirect(request.getContextPath() + "/AdministradorServlet");
+                break;
+            case "":
+                break;
         }
-        SerenazgoB serenazgoB = new SerenazgoB(nombre,apellido,dni,direccion,numTelefono,fechaNacimiento,turno,tipo);
-        serenazgoDao.registrarSerenazgo(serenazgoB);
 
-        response.sendRedirect(request.getContextPath() + "/AdministradorServlet");
+
+
+
+
+
+
+
+
+
+
 
     }
 }

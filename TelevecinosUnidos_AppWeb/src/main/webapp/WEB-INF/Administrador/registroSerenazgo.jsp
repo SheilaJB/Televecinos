@@ -120,11 +120,38 @@
                     <label for="direccion" class="form-label" style="color:#023047;"><b>Direccion del serenazgo</b></label>
                     <input type="text" id="direccion" name="direccion" class="form-control" placeholder="Ingrese la direccion del serenazgo">
 
+                    <label for="correo" class="form-label" style="color:#023047;"><b>correo</b></label>
+                    <input type="text" id="correo" name="correo" class="form-control" placeholder="Ingrese el correo del serenazgo">
+
+                    <label for="contrasenia" class="form-label" style="color:#023047;"><b>Contrasenia</b></label>
+                    <input type="text" id="contrasenia" name="contrasenia" class="form-control" placeholder="Ingrese la contrasenia del serenazgo">
+
+                    <!--quitar
+                    <label for="pregFrecuentes" class="form-label" style="color:#023047;"><b>pregFrec</b></label>
+                    <input type="text" id="pregFrecuentes" name="pregFrecuentes" class="form-control" placeholder="pregFrec">
+
+
+                    <label for="idRol" class="form-label" style="color:#023047;"><b>idRol</b></label>
+                    <input type="text" id="idRol" name="idRol" class="form-control" placeholder="idRol">
+
+
+                    <label for="isBan" class="form-label" style="color:#023047;"><b>isBan</b></label>
+                    <input type="text" id="isBan" name="isBan" class="form-control" placeholder="isban">
+
+
+
+                    <label for="idUsuario" class="form-label" style="color:#023047;"><b>idUsuario</b></label>
+                    <input type="text" id="idUsuario" name="idUsuario" class="form-control" placeholder="idUsuario">
+
+                    -->
+
+
                     <label for="numTelefono" class="form-label" style="color:#023047;"><b>Numero de telefono</b></label>
                     <input type="text" id="numTelefono" name="numTelefono" class="form-control" placeholder="Ingrese el numero de telefono del serenazgo">
 
                     <label for="fechaNacimiento" class="form-label" style="color:#023047;"><b>Fecha de nacimiento</b></label>
                     <input type="datetime-local" id="fechaNacimiento" name="fechaNacimiento" class="form-control" placeholder="Ingrese la fecha de nacimiento del serenazgo">
+
 
                     <label for="turno" class="form-label" style="color:#023047;"><b>Elegir turno:</b></label>
                     <select id="turno" class="form-select mb-3" name="turno" aria-label="Seleccione un turno">
@@ -144,23 +171,6 @@
                         <option value="4">Vehículo</option>
                     </select>
 
-                    <label for="correo" class="form-label" style="color:#023047;"><b>Correo del serenazgo</b></label>
-                    <input type="text" id="correo" name="correo" class="form-control" placeholder="Ingrese el correo electrónico del serenazgo">
-                    <!--
-                    <div class="mb-3">
-                        <label for="fechaNombramiento" class="form-label" style="color:#023047;"><b>Fecha de Nombramiento:</b></label>
-                        <input type="date" class="form-control" id="fechaNombramiento" name="fecha_nombramiento">
-                    </div>
-
-                    <label for="direccion" class="form-label" style="color:#023047;"><b>Dirección del serenazgo</b></label>
-                    <input type="text" id="direccion" name="direccion" class="form-control" placeholder="Ingrese la dirección domiciliaria del serenazgo">
-
-                    <label for="distrito" class="form-label" style="color:#023047;"><b>Distrito del serenazgo</b></label>
-                    <input type="text" id="distrito" name="distrito" class="form-control" placeholder="Ingrese el distrito del serenazgo">
-
-                    <label for="urbanizacion" class="form-label" style="color:#023047;"><b>Urbanización del serenazgo</b></label>
-                    <input type="text" id="urbanizacion" name="urbanizacion" class="form-control" placeholder="Ingrese la urbanización del serenazgo">
-                    -->
 
 
 

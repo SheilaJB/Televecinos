@@ -142,17 +142,22 @@
 
             <div class="container text-center">
                 <img src="img/serenazgo.jpg" class="img-fluid mb-3" alt="Responsive image" width="200">
-                <div class="bar" data-label="Nombre"><%=serenazgo.getNombre()%></div>
-                <div class="bar" data-label="Apellido"><%=serenazgo.getApellido()%></div>
-                <div class="bar" data-label="DNI"><%=serenazgo.getDni()%></div>
+                <div class="bar" data-label="ID"><%=serenazgo.getIdSerenazgo()%></div>
+                <div class="bar" data-label="Nombre"><%=serenazgo.getUsuario().getNombre()%></div>
+                <div class="bar" data-label="Apellido"><%=serenazgo.getUsuario().getApellido()%></div>
+                <div class="bar" data-label="DNI"><%=serenazgo.getUsuario().getDni()%></div>
+                <div class="bar" data-label="Direccion"><%=serenazgo.getUsuario().getDireccion()%></div>
+                <div class="bar" data-label="Correo"><%=serenazgo.getUsuario().getCorreo()%></div>
+                <div class="bar" data-label="Numero telefonico"><%=serenazgo.getNumTelefono()%></div>
+                <div class="bar" data-label="Fecha Nacimiento"><%=serenazgo.getFechaNacimiento()%></div>
                 <div class="bar" data-label="Turno"><%=serenazgo.getTurnoSerenazgoStr()%></div>
                 <div class="bar" data-label="Tipo de serenazgo"><%=serenazgo.getTipoSerenazgoStr()%></div>
-                <div class="bar" data-label="Numero telefonico"><%=serenazgo.getNumTelefono()%></div>
 
 
 
 
-                <a href="<%=request.getContextPath()%>/AdministradorServlet"><button class="button regresar">Regresar</button></a>
+
+                <a href="<%=request.getContextPath()%>/AdministradorServlet?action=listaSerenazgo_A"><button class="button regresar">Regresar</button></a>
                 <a href="correoparaSgA.html"><button  class="button enviar btn-success">Enviar correo</button></a>
                 <button class="button banear btn-banear">Banear</button>
                 <div id="popup1" class="popup1" >
