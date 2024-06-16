@@ -22,10 +22,7 @@ public class SerenazgoDao {
         String username = "root";
         String password = "root";
 
-        String sql = "SELECT s.idSerenazgo, s.nombre, s.apellido,s.dni, sTurno.turno, sTipo.tipo, numTelefono " +
-                "FROM serenazgo s " +
-                "JOIN turnoserenazgo sTurno ON s.TurnoSerenazgo_idTurnoSerenazgo = sTurno.idTurnoSerenazgo " +
-                "JOIN tiposerenazgo sTipo ON s.TipoSerenazgo_idTipoSerenazgo = sTipo.idTipoSerenazgo " ;
+        String sql = "select * from Serenazgo " ;
 
 
         ArrayList<SerenazgoB> listaSerenazgos = new ArrayList<>();
@@ -42,7 +39,7 @@ public class SerenazgoDao {
                 serenazgoB.setDni(rs.getString(4));
                 serenazgoB.setTurnoSerenazgoStr(rs.getString(5));
                 serenazgoB.setTipoSerenazgoStr(rs.getString(6));
-                serenazgoB.setNumTelefono(rs.getString(7));
+                //serenazgoB.setNumTelefono(rs.getString(7));
 
                 listaSerenazgos.add(serenazgoB); // Asegurarse de añadir el serenazgo a la lista
             }

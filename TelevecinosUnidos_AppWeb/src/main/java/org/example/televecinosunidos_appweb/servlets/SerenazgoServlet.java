@@ -10,9 +10,13 @@ import java.io.IOException;
 public class SerenazgoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String vista = "/inicioSerenazgo.jsp";
-        RequestDispatcher rd = request.getRequestDispatcher(vista);
-        rd.forward(request, response);
+        String action = request.getParameter("action")==null?"inicioSerenazgo":request.getParameter("action");
+
+        switch (action) {
+
+            default:
+                request.getRequestDispatcher("WEB-INF/Serenazgo/" + action + ".jsp").forward(request,response);
+        }
     }
 
 

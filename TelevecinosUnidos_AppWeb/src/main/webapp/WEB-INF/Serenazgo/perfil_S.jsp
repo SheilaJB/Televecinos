@@ -106,60 +106,16 @@
 
 
     <!-- BARRA AZUL DE LA IZQUIERDA INICIO-->
-    <!-- Sidebar Start -->
-    <div class="sidebar pe-4 pb-3" style="background-color: #8ecae6;">
-        <nav class="navbar" style="background-color: #8ecae6;" >
-            <a class="navbar-brand mx-3 mt-3">
-                <h4 style="color:#023047"><b>Televecinos Unidos</b></h4>
-            </a>
-            <div class="d-flex align-items-center ms-4 mb-4"  >
-                <img class="rounded-circle" src="img/serenazgo.jpg" alt="" style="width: 50px; height: 50px;">
-                <div class="ms-3 m-3" >
-                    <h6 class="mb-0" style="color:#023047;"><b>Nombre Apellido</b></h6>
-                    <span class="text-muted"><b>Serenazgo</b></span>
-                </div>
-            </div>
-            <div class="navbar-nav w-100">
-                <a href="inicioSerenazgo.html" class="nav-item nav-link"><i class="fa fa-home me-2"></i><span style="font-size: 13.5px;"><b>Inicio</b></a>
-                <a href="Dashboard.html"class="nav-item nav-link "><i class="fa fa-chart-bar me-2"></i><span style="font-size: 13.5px;"><b>Dashboard</b></a>
-                <a href="listaIncidencias_S.html" class="nav-item nav-link "><i class="fa fa-th-list me-2"></i><span style="font-size: 13.5px;"><b>Incidencias</b></a>
-                <a href="BanVecino.html"class="nav-item nav-link"><i class="fa fa-ban me-2"></i><span style="font-size: 13.5px;"><b>Banear vecino</b></a>
-                <a href="preguntasFrecuentes_S.html"class="nav-item nav-link "><i class="fa fa-question-circle me-2"></i><span style="font-size: 13.5px;"><b>Preguntas frecuentes</b></a>
-            </div>
-        </nav>
-    </div>
-    <!-- Sidebar End -->
+    <jsp:include page="../includes/barraLateralSerenazgo.jsp"></jsp:include>
     <!-- BARRA AZUL DE LA IZQUIERDA FINAL -->
 
 
     <!-- Content Start -->
     <div class="content">
         <!-- Navbar Start -->
-        <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
-
-            <a href="#" class="sidebar-toggler flex-shrink-0">
-                <i class="fa fa-bars"></i>
-            </a>
-            <a class="navbar-brand mx-4 mb-3 d-flex align-items-center" style = "padding-top: 2%;">
-                <img class="rounded-circle" src="img/logo.jpg" alt="" style="width: 40px; height: 40px;">
-                <h3 class="m-0 me-2 px-2" style="color:#023047;">¡Bienvenido, serenazgo!</h3>
-            </a>
-
-            <div class="navbar-nav align-items-center ms-auto">
-
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                        <img class="rounded-circle me-lg-2" src="img/serenazgo.jpg" alt="" style="width: 40px; height: 40px;">
-                        <span class="d-none d-lg-inline-flex" style="color:#023047;"><b>Nombre Apellido</b></span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                        <a href="perfil_S.html" class="dropdown-item">Mi perfil</a>
-                        <a href="index.html" class="dropdown-item">Cerrar sesión</a>
-                    </div>
-                </div>
-            </div>
-        </nav>
-        <!-- Navbar End -->
+        <!-- PARTE SUPERIOR INICIO -->
+        <jsp:include page="../includes/navbarSerenazgo.jsp"></jsp:include>
+        <!-- PARTE SUPERIOR FINAL -->
 
         <!---Content--->
         <div style="background-color: #f8f9fa; padding: 20px; align-items: center;">
