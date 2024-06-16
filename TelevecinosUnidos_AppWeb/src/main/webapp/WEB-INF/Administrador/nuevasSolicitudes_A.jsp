@@ -112,8 +112,8 @@
                             <td><%=usuarioB.getNombre() + " " + usuarioB.getApellido()%></td>
                             <td><%=usuarioB.getDireccion() %></td>
                             <td><%=usuarioB.getDni() %></td>
-                            <td><a href="<%=request.getContextPath()%>/*?action=verSerenazgo&idSerenazgo=<%=usuarioB.getIdUsuario()%>"><button type="button" class="btn btn-success m-2"><i class="fas fa-envelope"></i></button></a></td>
-                            <td><a href="<%=request.getContextPath()%>/*?action=verSerenazgo&idSerenazgo=<%=usuarioB.getIdUsuario()%>"><button type="button" class="btn btn-danger m-2" ><i class="fas fa-trash-alt"></i></button></a></td>
+                            <td><a href="<%=request.getContextPath()%>/*?action=verSerenazgo&idSerenazgo=<%=usuarioB.getIdUsuario()%>"><button type="button" class="btn btn-success m-2"><i class="fas fa-check"></i></button></a></td>
+                            <td><a href="<%=request.getContextPath()%>/*?action=verSerenazgo&idSerenazgo=<%=usuarioB.getIdUsuario()%>"><button type="button" class="btn btn-danger m-2" ><i class="fas fa-times"></i></button></a></td>
                             <td><a href="<%=request.getContextPath()%>/AdministradorServlet?action=DetalleVecinos_A&idVecino=<%=usuarioB.getIdUsuario()%>"><button type="button" class="btn btn-info m-2"><i class="fas fa-eye"></i></button></a></td>
                         </tr>
                         <% } %>

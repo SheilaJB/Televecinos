@@ -19,6 +19,7 @@ public class IncidenciasB {
 
     private String numeroContacto;
     private int criticidadIncidencia_idCriticidadIncidencia;
+    private int tipoIncidencia_idTipoIncidencia;
     private int estadosIncidencia_idEstadoIncidencia;
     private int serenazgo_idSerenazgo;
     private int usuario_idUsuario;
@@ -27,6 +28,15 @@ public class IncidenciasB {
     private  String hora;
     private String tipoIncidencia;
     private String estadoIncidencia;
+
+    public int getTipoIncidencia_idTipoIncidencia() {
+        return tipoIncidencia_idTipoIncidencia;
+    }
+
+    public void setTipoIncidencia_idTipoIncidencia(int tipoIncidencia_idTipoIncidencia) {
+        this.tipoIncidencia_idTipoIncidencia = tipoIncidencia_idTipoIncidencia;
+    }
+
     public String getFecha() {
         return fecha;
     }
