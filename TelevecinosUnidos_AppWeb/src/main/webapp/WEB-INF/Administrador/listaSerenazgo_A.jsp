@@ -70,7 +70,7 @@
 
 
 
-        <!-- Lista de eventos -->
+        <!-- Lista de serenazgo -->
         <div class="container text-center">
             <div id="Nombre del evento">
                 <h1 style="text-align: center; margin-top:50px;margin-bottom:50px;"><b></b></h1>

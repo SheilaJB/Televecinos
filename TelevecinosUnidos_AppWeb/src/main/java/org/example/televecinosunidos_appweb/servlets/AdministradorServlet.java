@@ -7,6 +7,7 @@ import org.example.televecinosunidos_appweb.model.beans.EventoB;
 import org.example.televecinosunidos_appweb.model.beans.ProfesoresEvento;
 import org.example.televecinosunidos_appweb.model.beans.SerenazgoB;
 import org.example.televecinosunidos_appweb.model.beans.UsuarioB;
+import org.example.televecinosunidos_appweb.model.daos.CoordinadoraDao;
 import org.example.televecinosunidos_appweb.model.daos.SerenazgoDao;
 
 import java.io.IOException;
@@ -21,7 +22,9 @@ public class AdministradorServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         SerenazgoDao serenazgoDao = new SerenazgoDao();
+        CoordinadoraDao coordinadoraDao = new CoordinadoraDao();
         ArrayList<SerenazgoB> listarSerenazgos = serenazgoDao.listarSerenazgos();
+        String idCoordinadora;
         String action = request.getParameter("action")==null?"inicioAdmin":request.getParameter("action");
         String vista ;
         switch (action) {
@@ -41,6 +44,33 @@ public class AdministradorServlet extends HttpServlet {
                 break;
             case "banearSerenazgo":
                 break;
+            case "listaCoordinadorasCultura_A":
+                vista = "WEB-INF/Administrador/listaCoordinadorasCultura_A.jsp";
+                ArrayList<UsuarioB> listarCoordinadorasCultura = coordinadoraDao.listarCoordinadorasCultura();
+                request.setAttribute("lista",listarCoordinadorasCultura);
+                request.getRequestDispatcher(vista).forward(request, response);
+                break;
+            case "listaCoordinadorasDeportes_A":
+                vista = "WEB-INF/Administrador/listaCoordinadorasDeportes_A.jsp";
+                ArrayList<UsuarioB> listarCoordinadorasDeportes = coordinadoraDao.listarCoordinadorasDeportes();
+                request.setAttribute("lista",listarCoordinadorasDeportes);
+                request.getRequestDispatcher(vista).forward(request, response);
+                break;
+            case "DetalleCoordinadoraCultura_A":
+                idCoordinadora = request.getParameter("idCoordinadora");
+                request.setAttribute("coordinadora",coordinadoraDao.buscarCoordinadoraPorId(idCoordinadora));
+                vista = "WEB-INF/Administrador/DetalleCoordinadoraCultura_A.jsp";
+                request.getRequestDispatcher(vista).forward(request, response);
+                break;
+            case "DetalleCoordinadoraDeportes_A":
+                idCoordinadora = request.getParameter("idCoordinadora");
+                request.setAttribute("coordinadora",coordinadoraDao.buscarCoordinadoraPorId(idCoordinadora));
+                vista = "WEB-INF/Administrador/DetalleCoordinadoraDeportes_A.jsp";
+                request.getRequestDispatcher(vista).forward(request, response);
+                break;
+
+
+
             default:
                 request.getRequestDispatcher("WEB-INF/Administrador/" + action + ".jsp").forward(request,response);
         }

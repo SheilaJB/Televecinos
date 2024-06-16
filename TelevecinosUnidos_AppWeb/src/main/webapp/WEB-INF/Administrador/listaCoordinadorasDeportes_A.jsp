@@ -1,9 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.util.*" %>
+<%@ page import="org.example.televecinosunidos_appweb.model.beans.UsuarioB" %>
+<jsp:useBean id="lista" scope="request" type="ArrayList<org.example.televecinosunidos_appweb.model.beans.UsuarioB>"/><%-- Obtengo la lista de coordi--%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Coordinadoras de Deportes</title>
+    <title>Coordinadoras de cultura</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -52,11 +55,13 @@
     <!-- BARRA AZUL DE LA IZQUIERDA FINAL -->
 
 
+
     <!-- Content Start -->
     <div class="content">
         <!-- PARTE SUPERIOR INICIO -->
         <jsp:include page="../includes/navbarAdministrador.jsp"></jsp:include>
         <!-- PARTE SUPERIOR FINAL -->
+
 
         <!-- Bootstrap JS dependencies -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -65,185 +70,63 @@
 
 
 
-        <!-- Fin de iamgen estatica -->
-        <div style="background-color: #f8f9fa; padding: 20px; align-items: center;">
-            <div class="filtro" style="border: 1px solid #ccc; border-radius: 5px; padding: 10px; display: flex; align-items: center; background-color:#FFB703 ;">
-                <input type="text" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 20%; margin-right: 2%;" id="filtroInput" placeholder="Buscar...">
-                <button type="button" class="btn btn-primary" onclick="filtrar()" style="padding: 10px;"><b>Filtrar</b></button>
+
+        <!-- Lista de coordinadoresCultura -->
+        <div class="container text-center">
+            <div id="Nombre del evento">
+                <h1 style="text-align: center; margin-top:50px;margin-bottom:50px;"><b></b></h1>
             </div>
-            <div class="table-responsive">
-                <table class="table text-start align-middle table-bordered table-hover mb-0">
-                    <thead>
-                    <tr class="text-dark">
-                        <th scope="col">#</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Apellido</th>
-                        <th scope="col">Correo</th>
-                        <th scope="col">Evaluar Coordinadora</th>
+        </div>
+        <div style="background-color: #f8f9fa; padding: 10px; align-items: center;">
+            <!-- Filtro -->
+            <div style="background-color: #FFB703; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-md-5 mb-2">
+                        <input type="text" class="form-control" id="filtroInput" placeholder="Buscar..." onkeyup="filtrar()">
+                    </div>
 
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Juan Fernando</td>
-                        <td>Pérez López</td>
-                        <td>Jjjffppll@gmail.com</td>
-                        <td style="width: 350px;">
 
-                            <a href="correoparaCoordDEPORTE.html"><button  class="btn enviar btn-success btn-sm m-2">Enviar correo</button></a>
 
-                            <button type="button" class="btn btn-danger btn-sm m-2 btn-banear">Banear</button>
-                            <div id="popup1" class="popup1" >
-                                <div class="popup_contenido1">
-                                    <span class="close-btn" id="closePopupBtn1">&times;</span>
-                                    <img src="img/advertencia.png" alt="check" width="48" height="48" style="margin-top: -10px;">
-
-                                    <p>¡Advertencia!</p>
-
-                                    <p>La acción "Banear" será permanente, debe estar seguro de su desición al respecto</p>
-
-                                    <a href="ListaCoordinadorasDeportes_A.html"><button type="button" class="btn btn-success rounded-pill m-2">Cancelar</button></a>
-                                    <button type="button" class="btn btn-danger rounded-pill m-2">Sí, banear</button>
-
-                                </div>
-                            </div>
-                            <a href="DetalleCordinadoraDeportes_A.html"><button type="button" class="btn btn-primary btn-sm m-2">Ver detalle</button></a>
-
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Juan Fernando</td>
-                        <td>Pérez López</td>
-                        <td>Jjjffppll@gmail.com</td>
-                        <td style="width: 350px;">
-
-                            <button type="button" class="btn btn-success btn-sm m-2">Enviar correo</button>
-
-                            <button type="button" class="btn btn-danger btn-sm m-2 btn-banear">Banear</button>
-                            <div id="popup1" class="popup1" >
-                                <div class="popup_contenido1">
-                                    <span class="close-btn" id="closePopupBtn1">&times;</span>
-                                    <img src="img/advertencia.png" alt="check" width="48" height="48" style="margin-top: -10px;">
-
-                                    <p>¡Advertencia!</p>
-
-                                    <p>La acción "Banear" será permanente, debe estar seguro de su desición al respecto</p>
-
-                                    <a href="ListaCoordinadorasDeportes_A.html"><button type="button" class="btn btn-success rounded-pill m-2">Cancelar</button></a>
-                                    <button type="button" class="btn btn-danger rounded-pill m-2">Sí, banear</button>
-
-                                </div>
-                            </div>
-                            <a href="DetalleCordinadoraDeportes_A.html"><button type="button" class="btn btn-primary btn-sm m-2">Ver detalle</button></a>
-
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Juan Fernando</td>
-                        <td>Pérez López</td>
-                        <td>Jjjffppll@gmail.com</td>
-                        <td style="width: 350px;">
-
-                            <button type="button" class="btn btn-success btn-sm m-2">Enviar correo</button>
-
-                            <button type="button" class="btn btn-danger btn-sm m-2 btn-banear">Banear</button>
-                            <div id="popup1" class="popup1" >
-                                <div class="popup_contenido1">
-                                    <span class="close-btn" id="closePopupBtn1">&times;</span>
-                                    <img src="img/advertencia.png" alt="check" width="48" height="48" style="margin-top: -10px;">
-
-                                    <p>¡Advertencia!</p>
-
-                                    <p>La acción "Banear" será permanente, debe estar seguro de su desición al respecto</p>
-
-                                    <a href="ListaCoordinadorasDeportes_A.html"><button type="button" class="btn btn-success rounded-pill m-2">Cancelar</button></a>
-                                    <button type="button" class="btn btn-danger rounded-pill m-2">Sí, banear</button>
-
-                                </div>
-                            </div>
-                            <a href="DetalleCordinadoraDeportes_A.html"><button type="button" class="btn btn-primary btn-sm m-2">Ver detalle</button></a>
-
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Juan Fernando</td>
-                        <td>Pérez López</td>
-                        <td>Jjjffppll@gmail.com</td>
-                        <td style="width: 350px;">
-
-                            <button type="button" class="btn btn-success btn-sm m-2">Enviar correo</button>
-
-                            <button type="button" class="btn btn-danger btn-sm m-2 btn-banear">Banear</button>
-                            <div id="popup1" class="popup1" >
-                                <div class="popup_contenido1">
-                                    <span class="close-btn" id="closePopupBtn1">&times;</span>
-                                    <img src="img/advertencia.png" alt="check" width="48" height="48" style="margin-top: -10px;">
-
-                                    <p>¡Advertencia!</p>
-
-                                    <p>La acción "Banear" será permanente, debe estar seguro de su desición al respecto</p>
-
-                                    <a href="ListaCoordinadorasDeportes_A.html"><button type="button" class="btn btn-success rounded-pill m-2">Cancelar</button></a>
-                                    <button type="button" class="btn btn-danger rounded-pill m-2">Sí, banear</button>
-
-                                </div>
-                            </div>
-                            <a href="DetalleCordinadoraDeportes_A.html"><button type="button" class="btn btn-primary btn-sm m-2">Ver detalle</button></a>
-
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Juan Fernando</td>
-                        <td>Pérez López</td>
-                        <td>Jjjffppll@gmail.com</td>
-                        <td style="width: 350px;">
-
-                            <button type="button" class="btn btn-success btn-sm m-2">Enviar correo</button>
-
-                            <button type="button" class="btn btn-danger btn-sm m-2 btn-banear">Banear</button>
-                            <div id="popup1" class="popup1" >
-                                <div class="popup_contenido1">
-                                    <span class="close-btn" id="closePopupBtn1">&times;</span>
-                                    <img src="img/advertencia.png" alt="check" width="48" height="48" style="margin-top: -10px;">
-
-                                    <p>¡Advertencia!</p>
-
-                                    <p>La acción "Banear" será permanente, debe estar seguro de su desición al respecto</p>
-
-                                    <a href="ListaCoordinadorasDeportes_A.html"><button type="button" class="btn btn-success rounded-pill m-2">Cancelar</button></a>
-                                    <button type="button" class="btn btn-danger rounded-pill m-2">Sí, banear</button>
-
-                                </div>
-                            </div>
-                            <a href="DetalleCordinadoraDeportes_A.html"><button type="button" class="btn btn-primary btn-sm m-2">Ver detalle</button></a>
-
-                        </td>
-                    </tr>
-
-                    </tbody>
-                </table>
-            </div>
-            <div  style="display: flex; justify-content: center; align-items: center;">
-                <section class="paginacion" >
-                    <ul style="list-style: none;padding: 0;margin: 0;display: flex;">
-                        <div style="background-color: white ; padding: 5px; margin:10px">
-                            <li style="margin: 0 5px;"><a class="link-opacity-50-hover" class="link-opacity-50-hover" href="#" class="active">1</a></li>
-                        </div>
-                        <div style="background-color:white ; padding: 5px;margin:10px">
-                            <li style="margin: 0 5px;"><a class="link-opacity-50-hover" class="link-opacity-50-hover" href="#" class="active">2</a></li>
-                        </div>
-                        <div style="background-color: white ; padding: 5px;margin:10px">
-                            <li style="margin: 0 5px;"><a class="link-opacity-50-hover" class="link-opacity-50-hover" href="#" class="active">3</a></li>
-                        </div>
-                    </ul>
-                </section>
+                </div>
             </div>
 
+            <div class="bg-light rounded h-100 p-4" style="font-weight: bold;">
+                <script>
+                    function crearEvento() {
+                        window.location.href = 'creacionEvento.html';
+                    }
+                </script>
+
+                <div class="table-responsive">
+                    <table id="eventosTable" class="table" style="background-color: transparent;">
+                        <thead>
+                        <tr>
+                            <th scope="col">Nombre y Apellido</th>
+                            <th scope="col">Direccion</th>
+                            <th scope="col">DNI</th>
+                            <th scope="col">Enviar correo</th>
+                            <th scope="col">Banear</th>
+                            <th scope="col">ver Detalle</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <% for(UsuarioB usuarioB : lista){ %>
+                        <tr>
+                            <td><%=usuarioB.getNombre() + " " + usuarioB.getApellido()%></td>
+                            <td><%=usuarioB.getDireccion() %></td>
+                            <td><%=usuarioB.getDni() %></td>
+                            <td><a href="<%=request.getContextPath()%>/*?action=verSerenazgo&idSerenazgo=<%=usuarioB.getIdUsuario()%>"><button type="button" class="btn btn-success m-2"><i class="fas fa-envelope"></i></button></a></td>
+                            <td><a href="<%=request.getContextPath()%>/*?action=verSerenazgo&idSerenazgo=<%=usuarioB.getIdUsuario()%>"><button type="button" class="btn btn-danger m-2" ><i class="fas fa-trash-alt"></i></button></a></td>
+                            <td><a href="<%=request.getContextPath()%>/AdministradorServlet?action=DetalleCoordinadoraDeportes_A&idCoordinadora=<%=usuarioB.getIdUsuario()%>"><button type="button" class="btn btn-info m-2"><i class="fas fa-eye"></i></button></a></td>
+                        </tr>
+                        <% } %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div>
 
 
 

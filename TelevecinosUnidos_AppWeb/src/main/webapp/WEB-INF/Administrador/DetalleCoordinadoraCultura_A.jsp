@@ -1,4 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.util.*" %>
+<jsp:useBean id="coordinadora" scope="request" type="org.example.televecinosunidos_appweb.model.beans.UsuarioB"/>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -140,16 +143,14 @@
 
             <div class="container text-center">
                 <img src="img/coordinadora.jpg" class="img-fluid mb-3" alt="Responsive image" width="200">
-                <div class="bar" data-label="Tipo de cordinadora">Coordinadora de cultura</div>
-                <div class="bar" data-label="Fecha de nombramiento">15/06/2024</div>
-                <div class="bar" data-label="Nombre">Alexis Mariel</div>
-                <div class="bar" data-label="Apellido">Herrera  Lopez</div>
-                <div class="bar" data-label="DNI">46851236</div>
-                <div class="bar" data-label="Dirección">Calle los jazmines 137</div>
-                <div class="bar" data-label="Distrito">San Miguel</div>
-                <div class="bar" data-label="Urbanización">Pando 10</div>
-                <div class="bar" data-label="Correo">robertbala@gmail.com</div>
-                <a href="ListaCoordinadorasCultura_A.html"><button class="button regresar">Regresar</button></a>
+                <div class="bar" data-label="Tipo de cordinadora">Cultura</div>
+                <div class="bar" data-label="Fecha de nombramiento">?</div>
+                <div class="bar" data-label="Nombre"><%=coordinadora.getNombre()%></div>
+                <div class="bar" data-label="Apellido"><%=coordinadora.getApellido()%></div>
+                <div class="bar" data-label="DNI"><%=coordinadora.getDni()%></div>
+                <div class="bar" data-label="Dirección"><%=coordinadora.getDireccion()%></div>
+                <div class="bar" data-label="Correo"><%=coordinadora.getCorreo()%></div>
+                <a href="<%=request.getContextPath()%>/AdministradorServlet?action=listaCoordinadorasCultura_A"><button class="button regresar">Regresar</button></a>
                 <a href="correoparaCoordA.html"><button  class="button enviar btn-success">Enviar correo</button></a>
                 <button class="button banear btn-banear">Banear</button>
                 <div id="popup1" class="popup1" >
