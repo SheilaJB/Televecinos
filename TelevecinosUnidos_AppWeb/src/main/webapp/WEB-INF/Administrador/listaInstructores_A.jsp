@@ -1,4 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.util.*" %>
+<%@ page import="org.example.televecinosunidos_appweb.model.beans.ProfesoresEvento" %>
+<jsp:useBean id="lista" scope="request" type="ArrayList<org.example.televecinosunidos_appweb.model.beans.ProfesoresEvento>"/>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -65,197 +69,53 @@
 
 
         <!-- Fin de iamgen estatica -->
-        <div style="background-color: #f8f9fa; padding: 20px; align-items: center;">
-            <div class="filtro" style="border: 1px solid #ccc; border-radius: 5px; padding: 10px; display: flex; align-items: center; background-color:#FFB703 ;">
-                <input type="text" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 20%; margin-right: 2%;" id="filtroInput" placeholder="Buscar...">
-                <select id="filtroIncidencia" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 20%; margin-right: 2%;">
-                    <option selected disabled>Tipo:</option>
-                    <option value="tipo1">Deportes</option>
-                    <option value="tipo1">Cultura</option>
+        <div style="background-color: #f8f9fa; padding: 10px; align-items: center;">
+            <!-- Filtro -->
+            <div style="background-color: #FFB703; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-md-5 mb-2">
+                        <input type="text" class="form-control" id="filtroInput" placeholder="Buscar..." onkeyup="filtrar()">
+                    </div>
 
 
-                </select>
-                <button type="button" class="btn btn-primary" onclick="filtrar()" style="padding: 10px;"><b>Filtrar</b></button>
-            </div>
-            <div class="table-responsive">
-                <table class="table text-start align-middle table-bordered table-hover mb-0">
-                    <thead>
-                    <tr class="text-dark">
-                        <th scope="col">#</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Apellido</th>
-                        <th scope="col">Tipo</th>
-                        <th scope="col">Correo</th>
-                        <th scope="col">Evaluar instructor</th>
 
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Juan Fernando</td>
-                        <td>Pérez López</td>
-                        <td>Eventos</td>
-                        <td>Jjjffppll@gmail.com</td>
-                        <td style="width: 350px;">
-
-                            <a href="correoparaInstrA.html"><button type="button" class="btn btn-success btn-sm m-2">Enviar correo</button></a>
-
-                            <button type="button" class="btn btn-danger btn-sm m-2 btn-banear">Remover</button>
-                            <div id="popup1" class="popup1" >
-                                <div class="popup_contenido1">
-                                    <span class="close-btn" id="closePopupBtn1">&times;</span>
-                                    <img src="img/advertencia.png" alt="check" width="48" height="48" style="margin-top: -10px;">
-
-                                    <p>¡Advertencia!</p>
-
-                                    <p>¿Está seguro de Remover a este instructor?</p>
-
-                                    <a href="ListaInstructores_A.html"><button type="button" class="btn btn-success rounded-pill m-2">Cancelar</button></a>
-                                    <button type="button" class="btn btn-danger rounded-pill m-2">Sí, remover</button>
-
-                                </div>
-                            </div>
-                            <a href="DetalleInstructor_A.html" class="btn btn-primary btn-sm m-2">Ver detalle</a>
-
-
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Juan Fernando</td>
-                        <td>Pérez López</td>
-                        <td>Eventos</td>
-                        <td>Jjjffppll@gmail.com</td>
-                        <td style="width: 350px;">
-
-                            <a href="correoparaInstrA.html"><button type="button" class="btn btn-success btn-sm m-2">Enviar correo</button></a>
-
-                            <button type="button" class="btn btn-danger btn-sm m-2 btn-banear">Remover</button>
-                            <div id="popup1" class="popup1" >
-                                <div class="popup_contenido1">
-                                    <span class="close-btn" id="closePopupBtn1">&times;</span>
-                                    <img src="img/advertencia.png" alt="check" width="48" height="48" style="margin-top: -10px;">
-
-                                    <p>¡Advertencia!</p>
-
-                                    <p>¿Está seguro de Remover a este instructor?</p>
-
-                                    <a href="ListaInstructores_A.html"><button type="button" class="btn btn-success rounded-pill m-2">Cancelar</button></a>
-                                    <button type="button" class="btn btn-danger rounded-pill m-2">Sí, remover</button>
-
-                                </div>
-                            </div>
-                            <a href="DetalleInstructor_A.html" class="btn btn-primary btn-sm m-2">Ver detalle</a>
-
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Juan Fernando</td>
-                        <td>Pérez López</td>
-                        <td>Eventos</td>
-                        <td>Jjjffppll@gmail.com</td>
-                        <td style="width: 350px;">
-                            <a href="correoparaInstrA.html"><button type="button" class="btn btn-success btn-sm m-2">Enviar correo</button></a>
-
-                            <button type="button" class="btn btn-danger btn-sm m-2 btn-banear">Remover</button>
-                            <div id="popup1" class="popup1" >
-                                <div class="popup_contenido1">
-                                    <span class="close-btn" id="closePopupBtn1">&times;</span>
-                                    <img src="img/advertencia.png" alt="check" width="48" height="48" style="margin-top: -10px;">
-
-                                    <p>¡Advertencia!</p>
-
-                                    <p>¿Está seguro de Remover a este instructor?</p>
-
-                                    <a href="ListaInstructores_A.html"><button type="button" class="btn btn-success rounded-pill m-2">Cancelar</button></a>
-                                    <button type="button" class="btn btn-danger rounded-pill m-2">Sí, remover</button>
-
-                                </div>
-                            </div>
-                            <a href="DetalleInstructor_A.html" class="btn btn-primary btn-sm m-2">Ver detalle</a>
-
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Juan Fernando</td>
-                        <td>Pérez López</td>
-                        <td>Eventos</td>
-                        <td>Jjjffppll@gmail.com</td>
-                        <td style="width: 350px;">
-
-                            <a href="correoparaInstrA.html"><button type="button" class="btn btn-success btn-sm m-2">Enviar correo</button></a>
-
-                            <button type="button" class="btn btn-danger btn-sm m-2 btn-banear">Remover</button>
-                            <div id="popup1" class="popup1" >
-                                <div class="popup_contenido1">
-                                    <span class="close-btn" id="closePopupBtn1">&times;</span>
-                                    <img src="img/advertencia.png" alt="check" width="48" height="48" style="margin-top: -10px;">
-
-                                    <p>¡Advertencia!</p>
-
-                                    <p>¿Está seguro de Remover a este instructor?</p>
-
-                                    <a href="ListaInstructores_A.html"><button type="button" class="btn btn-success rounded-pill m-2">Cancelar</button></a>
-                                    <button type="button" class="btn btn-danger rounded-pill m-2">Sí, remover</button>
-
-                                </div>
-                            </div>
-                            <a href="DetalleInstructor_A.html" class="btn btn-primary btn-sm m-2">Ver detalle</a>
-
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Juan Fernando</td>
-                        <td>Pérez López</td>
-                        <td>Eventos</td>
-                        <td>Jjjffppll@gmail.com</td>
-                        <td style="width: 350px;">
-
-                            <a href="correoparaInstrA.html"><button type="button" class="btn btn-success btn-sm m-2">Enviar correo</button></a>
-
-                            <button type="button" class="btn btn-danger btn-sm m-2 btn-banear">Remover</button>
-                            <div id="popup1" class="popup1" >
-                                <div class="popup_contenido1">
-                                    <span class="close-btn" id="closePopupBtn1">&times;</span>
-                                    <img src="img/advertencia.png" alt="check" width="48" height="48" style="margin-top: -10px;">
-
-                                    <p>¡Advertencia!</p>
-
-                                    <p>¿Está seguro de Remover a este instructor?</p>
-
-                                    <a href="ListaInstructores_A.html"><button type="button" class="btn btn-success rounded-pill m-2">Cancelar</button></a>
-                                    <button type="button" class="btn btn-danger rounded-pill m-2">Sí, remover</button>
-
-                                </div>
-                            </div>
-                            <a href="DetalleInstructor_A.html" class="btn btn-primary btn-sm m-2">Ver detalle</a>
-
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div  style="display: flex; justify-content: center; align-items: center;">
-                <section class="paginacion" >
-                    <ul style="list-style: none;padding: 0;margin: 0;display: flex;">
-                        <div style="background-color: white ; padding: 5px; margin:10px">
-                            <li style="margin: 0 5px;"><a class="link-opacity-50-hover" class="link-opacity-50-hover" href="#" class="active">1</a></li>
-                        </div>
-                        <div style="background-color:white ; padding: 5px;margin:10px">
-                            <li style="margin: 0 5px;"><a class="link-opacity-50-hover" class="link-opacity-50-hover" href="#" class="active">2</a></li>
-                        </div>
-                        <div style="background-color: white ; padding: 5px;margin:10px">
-                            <li style="margin: 0 5px;"><a class="link-opacity-50-hover" class="link-opacity-50-hover" href="#" class="active">3</a></li>
-                        </div>
-                    </ul>
-                </section>
+                </div>
             </div>
 
+            <div class="bg-light rounded h-100 p-4" style="font-weight: bold;">
+                <script>
+                    function crearEvento() {
+                        window.location.href = 'creacionEvento.html';
+                    }
+                </script>
 
+                <div class="table-responsive">
+                    <table id="eventosTable" class="table" style="background-color: transparent;">
+                        <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Nombre y Apellido</th>
+                            <th scope="col">Curso</th>
+
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <% for(ProfesoresEvento profesor : lista){ %>
+                        <tr>
+                            <td><%=profesor.getIdProfesoresEvento() %></td>
+                            <td><%=profesor.getNombre() + " " + profesor.getApellido()%></td>
+                            <td><%=profesor.getCurso() %></td>
+
+                        </tr>
+                        <% } %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div>
 
 
             <script>

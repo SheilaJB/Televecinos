@@ -8,6 +8,7 @@ import org.example.televecinosunidos_appweb.model.beans.ProfesoresEvento;
 import org.example.televecinosunidos_appweb.model.beans.SerenazgoB;
 import org.example.televecinosunidos_appweb.model.beans.UsuarioB;
 import org.example.televecinosunidos_appweb.model.daos.CoordinadoraDao;
+import org.example.televecinosunidos_appweb.model.daos.InstructorDao;
 import org.example.televecinosunidos_appweb.model.daos.SerenazgoDao;
 import org.example.televecinosunidos_appweb.model.daos.VecinoDao;
 
@@ -25,6 +26,8 @@ public class AdministradorServlet extends HttpServlet {
         SerenazgoDao serenazgoDao = new SerenazgoDao();
         CoordinadoraDao coordinadoraDao = new CoordinadoraDao();
         VecinoDao vecinoDao = new VecinoDao();
+        InstructorDao instructorDao = new InstructorDao();
+
         ArrayList<SerenazgoB> listarSerenazgos = serenazgoDao.listarSerenazgos();
         String idCoordinadora;
         String action = request.getParameter("action")==null?"inicioAdmin":request.getParameter("action");
@@ -81,6 +84,14 @@ public class AdministradorServlet extends HttpServlet {
                 vista = "WEB-INF/Administrador/DetalleVecinos_A.jsp";
                 request.getRequestDispatcher(vista).forward(request, response);
                 break;
+            case "listaInstructores_A":
+                vista = "WEB-INF/Administrador/listaInstructores_A.jsp";
+                request.setAttribute("lista",instructorDao.listarProfesores());
+                request.getRequestDispatcher(vista).forward(request, response);
+                break;
+            case "registroInstructor":
+                request.getRequestDispatcher("WEB-INF/Administrador/registroInstructor.jsp").forward(request,response);
+                break;
 
 
 
@@ -134,18 +145,19 @@ public class AdministradorServlet extends HttpServlet {
 
                 response.sendRedirect(request.getContextPath() + "/AdministradorServlet");
                 break;
-            case "":
+            case "registroInstructor":
+                InstructorDao instructorDao = new InstructorDao();
+                String nombre1 = request.getParameter("nombre");
+                String apellido1 = request.getParameter("apellido");
+                String curso = request.getParameter("curso");
+                ProfesoresEvento profesoresEvento = new ProfesoresEvento();
+                profesoresEvento.setNombre(nombre1);
+                profesoresEvento.setApellido(apellido1);
+                profesoresEvento.setCurso(curso);
+                instructorDao.registrarNuevoProfesor(profesoresEvento);
+                response.sendRedirect(request.getContextPath() + "/AdministradorServlet");
                 break;
         }
-
-
-
-
-
-
-
-
-
 
 
 

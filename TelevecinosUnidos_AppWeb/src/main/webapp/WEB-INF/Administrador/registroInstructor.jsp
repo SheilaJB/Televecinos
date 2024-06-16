@@ -108,7 +108,9 @@
                 <img src="img/instructor.jpg" class="img-fluid mb-3" alt="Imagen Serenazgo" width="200">
 
                 <!-- Formulario -->
-                <form id="serenazgoForm">
+                <form id="serenazgoForm" action="<%=request.getContextPath()%>/AdministradorServlet?action=registroInstructor">
+
+                    <!--
                     <label for="tipo" class="form-label" style="color:#023047;"><b>Tipo de instructor:</b></label>
                     <select id="tipo" class="form-select mb-3" aria-label="Seleccione un tipo">
                         <option selected>Seleccione un tipo:</option>
@@ -123,12 +125,6 @@
                         <input type="date" class="form-control" id="fechaNombramiento" name="fecha_nombramiento">
                     </div>
 
-                    <label for="nombre" class="form-label" style="color:#023047;"><b>Nombre del instructor</b></label>
-                    <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Ingrese el nombre del instructor">
-
-                    <label for="apellido" class="form-label" style="color:#023047;"><b>Apellido del instructor</b></label>
-                    <input type="text" id="apellido" name="apellido" class="form-control" placeholder="Ingrese el apellido del instructor">
-
                     <label for="dni" class="form-label" style="color:#023047;"><b>DNI del instructor</b></label>
                     <input type="text" id="dni" name="dni" class="form-control" placeholder="Ingrese el DNI del instructor">
 
@@ -140,18 +136,32 @@
 
                     <label for="nombre" class="form-label" style="color:#023047;"><b>Celular de contacto</b></label>
                     <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Ingrese el numero de celular del instructor">
+                    -->
+
+                    <label for="nombre" class="form-label" style="color:#023047;"><b>Nombre del instructor</b></label>
+                    <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Ingrese el nombre del instructor">
+
+                    <label for="apellido" class="form-label" style="color:#023047;"><b>Apellido del instructor</b></label>
+                    <input type="text" id="apellido" name="apellido" class="form-control" placeholder="Ingrese el apellido del instructor">
+
+                    <label for="curso" class="form-label" style="color:#023047;"><b>Curso del instructor</b></label>
+                    <input type="text" id="curso" name="curso" class="form-control" placeholder="Ingrese el curso del instructor">
+
+
+
+
 
 
                     <div class="form-group" style = "padding-top: 2%">
                         <div class="m-n2" style="padding-bottom: 5%; ">
                             <button type="button" class="btn btn-warning m-2 text-white" onclick="regresar()">Regresar</button>
-                            <button type="button" class="btn btn-success m-2" id="openPopupBtn" >Registrar</button>
+                            <button type="submit" class="btn btn-success m-2" id="openPopupBtn" >Registrar</button>
                         </div>
                     </div>
 
                     <script>
                         function regresar(){
-                            window.location.href="ListaInstructores_A.html";
+                            window.location.href="<%=request.getContextPath()%>/AdministradorServlet?action=listaInstructores_A";
                         }
                     </script>
 
@@ -163,7 +173,7 @@
                             <h2 style="margin-top: 20px;">Éxito</h2>
                             <p>Se ha registrado un nuevo instructor</p>
                             <a href="#">
-                                <a href="ListaInstructores_A.html"><button type="button" class="btn btn-primary rounded-pill m-2">Regresar</button></a>
+                                <a href="<%=request.getContextPath()%>/AdministradorServlet?action=listaInstructores_A"><button type="button" class="btn btn-primary rounded-pill m-2">Regresar</button></a>
                             </a>
                         </div>
                     </div>
