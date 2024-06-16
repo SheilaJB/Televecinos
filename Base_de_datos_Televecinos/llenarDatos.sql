@@ -83,22 +83,9 @@ INSERT INTO `televecinosDB`.`tipoIncidencia` (`idTipoIncidencia`, `TipoIncidenci
 
 
 
-INSERT INTO `televecinosDB`.`EventFrecuencia` (`tipoFrecuencia`, `dia1`, `dia2`) VALUES
-('Dos veces por semana', '2024-03-11', '2024-03-14'), 
-('Semanal', '2024-03-12', NULL),
-('Dos veces por semana', '2024-03-18', '2024-03-21'), 
-('Semanal', '2024-03-19', NULL),
-('Dos veces por semana', '2024-03-25', '2024-03-28'), 
-('Semanal', '2024-03-26', NULL),
-('Dos veces por semana', '2024-04-01', '2024-04-04'), 
-('Semanal', '2024-04-02', NULL),
-('Dos veces por semana', '2024-04-08', '2024-04-11'), 
-('Semanal', '2024-04-09', NULL),
-('Dos veces por semana', '2024-04-15', '2024-04-18'), 
-('Semanal', '2024-04-16', NULL),
-('Dos veces por semana', '2024-04-22', '2024-04-25'), 
-('Semanal', '2024-04-23', NULL),
-('Dos veces por semana', '2024-04-29', '2024-05-02');
+INSERT INTO `televecinosDB`.`EventFrecuencia` (`tipoFrecuencia`) VALUES
+('Semanal'),
+('Dos veces por semana');
 
 
 INSERT INTO `televecinosDB`.`TurnoSerenazgo` (`idTurnoSerenazgo`,`turno`) VALUES
@@ -170,23 +157,25 @@ INSERT INTO `televecinosDB`.`Serenazgo` (`numTelefono`, `fechaNacimiento`, `Turn
 ( '923456789', '1992-02-02', 2, 2,14),
 ( '934567890', '1994-03-03', 1, 3,15);
 
-INSERT INTO `televecinosDB`.`Eventos` 
-(`nombre`, `descripcion`, `lugar`, `Coordinador_idUsuario`, `fecha_inicio`, `fecha_fin`, `cantidadVacantes`, `cantDisponibles`, `foto`, `listaMateriales`, `EventEstados_idEventEstados`, `EventFrecuencia_idEventFrecuencia`, `TipoEvento_idTipoEvento`, `ProfesoresEvento_idProfesoresEvento`) VALUES
-('Conferencia Cultural sobre Historia del Arte', 'Una conferencia detallada sobre la evolución del arte a lo largo de los siglos', 'Museo Larco', 1, '2024-06-01 10:00:00', '2024-06-01 12:00:00', 100, 100, 'imagen1.jpg', 'Proyector, Apuntes', 2, 1, 1, 1),
-('Seminario de Arte Moderno', 'Exploración de las tendencias del arte moderno', 'Casa de la Cultura', 2, '2024-06-02 14:00:00', '2024-06-02 16:00:00', 50, 50, 'default.jpg', 'Bloc de notas, Lápices', 3, 2, 1, 2),
-('Taller de Escritura Creativa', 'Desarrolla tus habilidades en escritura creativa', 'Biblioteca Municipal de San Miguel', 3, '2024-06-03 09:00:00', '2024-06-03 11:00:00', 30, 30, 'default.jpg', 'Cuadernos, Plumas', 1, 1, 1, 3),
-('Webinar de Literatura Clásica', 'Discusión en línea sobre obras literarias clásicas', 'Online', 1, '2024-06-04 17:00:00', '2024-06-04 18:30:00', 200, 200, 'default.jpg', 'Computadora, Internet', 3, 1, 1, 4),
-('Foro de Filosofía Contemporánea', 'Debate sobre temas de filosofía contemporánea', 'Centro Cultural de San Miguel',2, '2024-06-05 10:00:00', '2024-06-05 12:00:00', 40, 40, 'default.jpg', 'Apuntes, Libros', 1, 1, 1, 5),
-('Mesa Redonda de Historia Mundial', 'Discusión sobre eventos históricos importantes', 'Auditorio Municipal', 3, '2024-06-06 14:00:00', '2024-06-06 16:00:00', 60, 60, 'default.jpg', 'Micrófonos, Proyector', 3, 1, 1, 6);
+-- Inserciones para la tabla Eventos (Culturales)
+INSERT INTO `televecinosDB`.`eventos` 
+(`nombre`, `descripcion`, `lugar`, `Coordinador_idUsuario`, `fecha_inicio`, `fecha_fin`, `cantidadVacantes`, `cantDisponibles`, `foto`, `listaMateriales`, `EventEstados_idEventEstados`, `EventFrecuencia_idEventFrecuencia`, `TipoEvento_idTipoEvento`, `ProfesoresEvento_idProfesoresEvento`, `hora_inicio`, `hora_fin`, `diasEvento`) 
+VALUES
+('Conferencia Cultural sobre Historia del Arte', 'Una conferencia detallada sobre la evolución del arte a lo largo de los siglos', 'Museo Larco', 1, '2024-06-01', '2024-06-01', 100, 100, 'imagen1.jpg', 'Proyector, Apuntes', 2, 1, 1, 1, '10:00:00', '12:00:00', 'Lunes'),
+('Seminario de Arte Moderno', 'Exploración de las tendencias del arte moderno', 'Casa de la Cultura', 2, '2024-06-02', '2024-06-02', 50, 50, 'default.jpg', 'Bloc de notas, Lápices', 3, 2, 1, 2, '14:00:00', '16:00:00', 'Martes-Jueves'),
+('Taller de Escritura Creativa', 'Desarrolla tus habilidades en escritura creativa', 'Biblioteca Municipal de San Miguel', 3, '2024-06-03', '2024-06-03', 30, 30, 'default.jpg', 'Cuadernos, Plumas', 1, 1, 1, 3, '09:00:00', '11:00:00', 'Jueves'),
+('Webinar de Literatura Clásica', 'Discusión en línea sobre obras literarias clásicas', 'Online', 1, '2024-06-04', '2024-06-04', 200, 200, 'default.jpg', 'Computadora, Internet', 3, 1, 1, 4, '17:00:00', '18:30:00', 'Viernes'),
+('Foro de Filosofía Contemporánea', 'Debate sobre temas de filosofía contemporánea', 'Centro Cultural de San Miguel', 2, '2024-06-05', '2024-06-05', 40, 40, 'default.jpg', 'Apuntes, Libros', 1, 1, 1, 5, '10:00:00', '12:00:00', 'Lunes'),
+('Mesa Redonda de Historia Mundial', 'Discusión sobre eventos históricos importantes', 'Auditorio Municipal', 3, '2024-06-06', '2024-06-06', 60, 60, 'default.jpg', 'Micrófonos, Proyector', 3, 1, 1, 6, '14:00:00', '16:00:00', 'Martes');
 
--- Inserciones para la tabla Eventos (Eventos Deportivos)
-INSERT INTO `televecinosDB`.`Eventos` 
-(`nombre`, `descripcion`, `lugar`, `Coordinador_idUsuario`, `fecha_inicio`, `fecha_fin`, `cantidadVacantes`, `cantDisponibles`, `foto`, `listaMateriales`, `EventEstados_idEventEstados`, `EventFrecuencia_idEventFrecuencia`, `TipoEvento_idTipoEvento`, `ProfesoresEvento_idProfesoresEvento`) VALUES
-('Conferencia Deportiva sobre Fútbol', 'Una conferencia sobre estrategias y tácticas en fútbol', 'Estadio San Miguel',4, '2024-06-01 15:00:00', '2024-06-01 17:00:00', 100, 100, 'default.jpg', 'Proyector, Apuntes', 2, 1, 2, 11),
-('Seminario de Nutrición Deportiva', 'Discusión sobre la importancia de la nutrición en el deporte', 'Casa del Deporte', 4, '2024-06-02 10:00:00', '2024-06-02 12:00:00', 50, 50, 'default.jpg', 'Bloc de notas, Lápices', 3, 1, 2, 12),
-('Taller de Entrenamiento Funcional', 'Entrenamiento intensivo para mejorar la condición física', 'Gimnasio Municipal', 5, '2024-06-03 08:00:00', '2024-06-03 10:00:00', 30, 30, 'default.jpg', 'Ropa deportiva, Agua', 1, 1, 2, 13),
-('Webinar de Psicología Deportiva', 'Conferencia en línea sobre la psicología aplicada al deporte', 'Online', 5, '2024-06-04 17:00:00', '2024-06-04 18:30:00', 200, 200, 'default.jpg', 'Computadora, Internet', 1, 1, 2, 14);
-
+-- Inserciones para la tabla Eventos (Deportivos)
+INSERT INTO `televecinosDB`.`eventos` 
+(`nombre`, `descripcion`, `lugar`, `Coordinador_idUsuario`, `fecha_inicio`, `fecha_fin`, `cantidadVacantes`, `cantDisponibles`, `foto`, `listaMateriales`, `EventEstados_idEventEstados`, `EventFrecuencia_idEventFrecuencia`, `TipoEvento_idTipoEvento`, `ProfesoresEvento_idProfesoresEvento`, `hora_inicio`, `hora_fin`, `diasEvento`) 
+VALUES
+('Conferencia Deportiva sobre Fútbol', 'Una conferencia sobre estrategias y tácticas en fútbol', 'Estadio San Miguel', 4, '2024-06-01', '2024-06-01', 100, 100, 'default.jpg', 'Proyector, Apuntes', 2, 2, 2, 11, '15:00:00', '17:00:00', 'Lunes-Miércoles'),
+('Seminario de Nutrición Deportiva', 'Discusión sobre la importancia de la nutrición en el deporte', 'Casa del Deporte', 4, '2024-06-02', '2024-06-02', 50, 50, 'default.jpg', 'Bloc de notas, Lápices', 3, 2, 2, 12, '10:00:00', '12:00:00', 'Martes-Jueves'),
+('Taller de Entrenamiento Funcional', 'Entrenamiento intensivo para mejorar la condición física', 'Gimnasio Municipal', 5, '2024-06-03', '2024-06-03', 30, 30, 'default.jpg', 'Ropa deportiva, Agua', 1, 2, 2, 13, '08:00:00', '10:00:00', 'Lunes-Miércoles'),
+('Webinar de Psicología Deportiva', 'Conferencia en línea sobre la psicología aplicada al deporte', 'Online', 5, '2024-06-04', '2024-06-04', 200, 200, 'default.jpg', 'Computadora, Internet', 1, 2, 2, 14, '17:00:00', '18:30:00', 'Martes-Jueves');
 
 INSERT INTO `televecinosDB`.`Incidencias` (
   `nombreIncidencia`, 
@@ -212,10 +201,4 @@ INSERT INTO `televecinosDB`.`Incidencias` (
 ('Violencia Doméstica', '2024-01-06 17:00:00', 'Jirón Mantaro 101',11, 'Vivienda Unifamiliar', 'foto_6.jpg', 0, '987654326', 3, 1, 2, 1, 15, 1),
 ('Robo', '2024-01-07 18:00:00', 'Calle Salaverry 102',12, 'En la esquina', 'foto_7.jpg', 0, '987654327', 1, 3,2, 2, 13, 0),
 ('Asalto', '2024-01-08 19:00:00', 'Av. Faucett 103',10, 'Cerca de la escuela', 'foto_8.jpg', 1, '987654328', 2, 4,3, 3, 14, 0);
-
-
-
-
-
-
 

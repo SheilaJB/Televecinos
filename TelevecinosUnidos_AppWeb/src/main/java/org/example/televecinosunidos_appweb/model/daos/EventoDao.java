@@ -142,7 +142,8 @@ public class EventoDao {
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = DriverManager.getConnection(url, username, password);
-             PreparedStatement pstmt = connection.prepareStatement(sql)) {
+             PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
             int idCoordinador = 1;
             int tipoEvento = 1;
             int estadoEvento = 1;
@@ -167,10 +168,26 @@ public class EventoDao {
 
             pstmt.executeUpdate();
 
+            // Obtener el id generado
+            try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    int idEvento = generatedKeys.getInt(1);
+
+                    // Llamar a otra función que requiere el id, fecha_inicio y fecha_fin
+                    fechas_evento(idEvento, eventoB.getFecha_inicio(), eventoB.getFecha_fin());
+                } else {
+                    throw new SQLException("Creating event failed, no ID obtained.");
+                }
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("Error al insertar en la base de datos", e);
         }
+    }
+
+    public void fechas_evento(int idEvento, String fechaInicio, String fechaFin) {
+        // Implementación de la función que utiliza idEvento, fechaInicio y fechaFin
     }
 
     public ArrayList<ProfesoresEvento> listarProfesores() {
