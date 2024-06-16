@@ -77,7 +77,6 @@
     </div>
     <!-- Spinner End -->
 
-
     <!-- BARRA AZUL DE LA IZQUIERDA INICIO-->
     <jsp:include page="../includes/barraLateralSerenazgo.jsp"></jsp:include>
     <!-- BARRA AZUL DE LA IZQUIERDA FINAL -->

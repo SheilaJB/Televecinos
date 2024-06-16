@@ -61,8 +61,6 @@
         <jsp:include page="../includes/navbarSerenazgo.jsp"></jsp:include>
         <!-- PARTE SUPERIOR FINAL -->
 
-
-
         <!-- LLENAR-->
         <!-- Footer Start -->
 
