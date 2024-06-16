@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<%@ page import="java.util.*" %>
+<jsp:useBean id="vecino" scope="request" type="org.example.televecinosunidos_appweb.model.beans.UsuarioB"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -138,14 +139,13 @@
 
             <div class="container text-center">
                 <img src="img/vecino.jpg" class="img-fluid mb-3" alt="Responsive image" width="200">
-                <div class="bar" data-label="Nombre">Alexis Mariel</div>
-                <div class="bar" data-label="Apellido">Herrera  Lopez</div>
-                <div class="bar" data-label="DNI">46851236</div>
-                <div class="bar" data-label="Dirección">Calle los jazmines 137</div>
-                <div class="bar" data-label="Distrito">San Miguel</div>
-                <div class="bar" data-label="Urbanización">Pando 10</div>
-                <div class="bar" data-label="Correo">robertbala@gmail.com</div>
-                <a href="ListaVecinos_A.html"><button class="button regresar">Regresar</button></a>
+                <div class="bar" data-label="ID"><%=vecino.getIdUsuario()%></div>
+                <div class="bar" data-label="Nombre"><%=vecino.getNombre()%></div>
+                <div class="bar" data-label="Apellido"><%=vecino.getApellido()%></div>
+                <div class="bar" data-label="DNI"><%=vecino.getDni()%></div>
+                <div class="bar" data-label="Dirección"><%=vecino.getDireccion()%></div>
+                <div class="bar" data-label="Correo"><%=vecino.getCorreo()%></div>
+                <a href="<%=request.getContextPath()%>/AdministradorServlet?action=listaVecinos_A"><button class="button regresar">Regresar</button></a>
 
                 <button class="button convertCoordinadora btn-banear">Promover a coordinadora</button>
                 <div id="popup1" class="popup1" >

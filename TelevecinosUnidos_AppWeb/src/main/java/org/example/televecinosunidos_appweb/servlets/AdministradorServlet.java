@@ -9,6 +9,7 @@ import org.example.televecinosunidos_appweb.model.beans.SerenazgoB;
 import org.example.televecinosunidos_appweb.model.beans.UsuarioB;
 import org.example.televecinosunidos_appweb.model.daos.CoordinadoraDao;
 import org.example.televecinosunidos_appweb.model.daos.SerenazgoDao;
+import org.example.televecinosunidos_appweb.model.daos.VecinoDao;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -23,6 +24,7 @@ public class AdministradorServlet extends HttpServlet {
 
         SerenazgoDao serenazgoDao = new SerenazgoDao();
         CoordinadoraDao coordinadoraDao = new CoordinadoraDao();
+        VecinoDao vecinoDao = new VecinoDao();
         ArrayList<SerenazgoB> listarSerenazgos = serenazgoDao.listarSerenazgos();
         String idCoordinadora;
         String action = request.getParameter("action")==null?"inicioAdmin":request.getParameter("action");
@@ -66,6 +68,17 @@ public class AdministradorServlet extends HttpServlet {
                 idCoordinadora = request.getParameter("idCoordinadora");
                 request.setAttribute("coordinadora",coordinadoraDao.buscarCoordinadoraPorId(idCoordinadora));
                 vista = "WEB-INF/Administrador/DetalleCoordinadoraDeportes_A.jsp";
+                request.getRequestDispatcher(vista).forward(request, response);
+                break;
+            case "listaVecinos_A":
+                vista = "WEB-INF/Administrador/listaVecinos_A.jsp";
+                request.setAttribute("lista",vecinoDao.listarVecinos());
+                request.getRequestDispatcher(vista).forward(request, response);
+                break;
+            case "DetalleVecinos_A":
+                String idVecino = request.getParameter("idVecino");
+                request.setAttribute("vecino",vecinoDao.buscarVecinoPorId(idVecino));
+                vista = "WEB-INF/Administrador/DetalleVecinos_A.jsp";
                 request.getRequestDispatcher(vista).forward(request, response);
                 break;
 
