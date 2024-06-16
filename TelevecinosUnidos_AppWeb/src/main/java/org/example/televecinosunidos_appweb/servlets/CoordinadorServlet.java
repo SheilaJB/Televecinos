@@ -101,7 +101,7 @@ public class CoordinadorServlet extends HttpServlet {
                 int cantidadVacantes2 = Integer.parseInt(request.getParameter("cantidadVacantes"));
                 String foto2 = request.getParameter("foto");
                 String listaMateriales2 = request.getParameter("listaMateriales");
-                int EventFrecuencia_idEventFrecuencia2 = Integer.parseInt(request.getParameter("EventFrecuencia_idEventFrecuencia"));
+                int EventFrecuencia_idEventFrecuencia2 = Integer.parseInt(request.getParameter("frecuencia"));
                 int ProfesoresEvento_idProfesoresEvento2 = Integer.parseInt(request.getParameter("ProfesoresEvento_idProfesoresEvento"));
 
                 EventoB eventoB = new EventoB();
