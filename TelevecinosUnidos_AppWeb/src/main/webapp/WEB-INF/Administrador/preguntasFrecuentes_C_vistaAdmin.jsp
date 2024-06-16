@@ -55,7 +55,7 @@
     <!-- Content Start -->
     <div class="content">
         <!-- PARTE SUPERIOR INICIO -->
-        <jsp:include page="../includes/navbar.jsp"></jsp:include>
+        <jsp:include page="../includes/navbarAdministrador.jsp"></jsp:include>
         <!-- PARTE SUPERIOR FINAL -->
 
         <!-- Other Elements Start -->
