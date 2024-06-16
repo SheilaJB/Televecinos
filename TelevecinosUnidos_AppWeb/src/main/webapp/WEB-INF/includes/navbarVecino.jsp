@@ -1,3 +1,4 @@
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <!-- Navbar Start -->
@@ -7,17 +8,17 @@
     </a>
     <a class="navbar-brand mx-4 mb-3 d-flex align-items-center" style="padding-top: 2%;">
         <img class="rounded-circle" src="img/logo.jpg" alt="" style="width: 40px; height: 40px;">
-        <h3 class="m-0 me-2 px-2" style="color:#023047;">¡Bienvenido, administrador!</h3>
+        <h3 class="m-0 me-2 px-2" style="color:#023047;">¡Bienvenido, televecino!</h3>
     </a>
     <div class="navbar-nav align-items-center ms-auto">
         <div class="nav-item dropdown">
             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                <img class="rounded-circle me-lg-2" src="img/munisanmiguelLogo.jpg" alt="" style="width: 40px; height: 40px;">
-                <span class="d-none d-lg-inline-flex" style="color:#023047;"><b>Administrador Televecinos</b></span>
+                <img class="rounded-circle me-lg-2" src="img/Icon_perfil.png" alt="" style="width: 40px; height: 40px;">
+                <span class="d-none d-lg-inline-flex" style="color:#023047;"><b>Nombre Apellido</b></span>
             </a>
             <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                <a href="<%=request.getContextPath()%>/AdministradorServlet?action=perfilA" class="dropdown-item">Mi perfil</a>
-                <a href="<%=request.getContextPath()%>/AdministradorServlet?action=Index" class="dropdown-item">Cerrar sesión</a>
+                <a href="<%=request.getContextPath()%>/VecinoServlet?action=perfilV" class="dropdown-item">Mi perfil</a>
+                <a href="<%=request.getContextPath()%>/VecinoServlet?action=Index" class="dropdown-item">Cerrar sesión</a>
             </div>
         </div>
     </div>
