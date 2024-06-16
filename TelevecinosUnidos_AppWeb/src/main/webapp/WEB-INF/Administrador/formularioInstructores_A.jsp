@@ -83,15 +83,15 @@
     <!-- Spinner End -->
 
 
-    <!-- BARRA AZUL DE LA IZQUIERDA INICIO-->
-    <jsp:include page="../includes/barraIzquierdaAdministrador.jsp"></jsp:include>
-    <!-- BARRA AZUL DE LA IZQUIERDA FINAL -->
 
+    <!-- BARRA AZUL DE LA IZQUIERDA INICIO-->
+    <jsp:include page="../includes/barraLateralAdministrador.jsp"></jsp:include>
+    <!-- BARRA AZUL DE LA IZQUIERDA FINAL -->
 
     <!-- Content Start -->
     <div class="content">
         <!-- PARTE SUPERIOR INICIO -->
-        <jsp:include page="../includes/navbar.jsp"></jsp:include>
+        <jsp:include page="../includes/navbarAdministrador.jsp"></jsp:include>
         <!-- PARTE SUPERIOR FINAL -->
 
         <!-- Bootstrap JS dependencies -->

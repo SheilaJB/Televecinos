@@ -117,88 +117,14 @@
 
 
     <!-- BARRA AZUL DE LA IZQUIERDA INICIO-->
-    <div class="sidebar pe-4 pb-3" style="background-color: #8ecae6;">
-        <nav class="navbar" style="background-color: #8ecae6;" >
-            <a href="" class="navbar-brand mx-3 mb-3">
-                <h4 class="text-primary"><b>Televecinos Unidos</b></h4>
-            </a>
-            <div class="d-flex align-items-center ms-4 mb-4">
-                <div class="position-relative">
-                    <img class="rounded-circle" src="img/munisanmiguelLogo.jpg" alt="" style="width: 40px; height: 40px;">
-                    <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
-                </div>
-                <div class="ms-3">
-                    <h6 class="mb-0">Municipalidad de San Miguel</h6>
-                    <span>Administrador</span>
-                </div>
-            </div>
-            <!-- Seleccionar Opciones -->
-            <div class="navbar-nav w-100">
-                <a href="inicioAdmin.html" class="nav-item nav-link colorLetrasBarraLateral"><i  class="fa fa-home me-2 colorLetrasBarraLateral"></i>Inicio</a>
-
-                <a href="NuevasSolicitudes_A.html" class="nav-item nav-link"><i class="fa fa-clipboard-list me-2 colorLetrasBarraLateral"></i><span style="font-size: 14px;">Nuevas solicitudes</span></a>
-                <a href="ListaVecinos_A.html" class="nav-item nav-link"><i class="fa fa-user-friends me-2 colorLetrasBarraLateral"></i><span style="font-size: 14px;">Lista de vecinos</span></a>
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-shield-alt me-2 colorLetrasBarraLateral"></i><span style="font-size: 13.5px;">Personal serenazgo</span></a>
-                    <div class="dropdown-menu bg-transparent border-0">
-                        <a href="ListaSerenazgo_A.html" class="dropdown-item" style="font-size: 13.5px;">Lista de serenazgos</a>
-
-                        <a href="registroSerenazgo.html" class="dropdown-item"style="font-size: 13.5px;">Registrar nuevo serenazgo</a>
-                    </div>
-                </div>
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-chalkboard-teacher me-2 colorLetrasBarraLateral"></i><span style="font-size: 13.3px;">Area de coordinación</span></a>
-                    <div class="dropdown-menu bg-transparent border-0">
-                        <a href="ListaCoordinadorasEventos_A.html" class="dropdown-item"style="font-size: 13.5px;">Coordinadoras eventos</a>
-                        <a href="ListaCoordinadorasDeportes_A.html" class="dropdown-item"style="font-size: 13.5px;">Coordinadoras deportes</a>
-                        <a href="ListaInstructores_A.html" class="dropdown-item"style="font-size: 13.5px;">Instructores</a>
-                        <a href="FormularioInstructores_A.html" class="dropdown-item"style="font-size: 13.5px;">Registrar nuevo instructor</a>
-                    </div>
-                </div>
-
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-question-circle me-2 colorLetrasBarraLateral"></i><span style="font-size: 13.3px;">Preguntas frecuentes</span></a>
-                    <div class="dropdown-menu bg-transparent border-0">
-                        <a href="preguntasFrecuentes_V_vistaAdmin.html" class="dropdown-item"style="font-size: 13.5px;">Dudas Vecinos</a>
-                        <a href="preguntasFrecuentes_C_vistaAdmin.html" class="dropdown-item"style="font-size: 13.5px;">Dudas Coordinadoras</a>
-                        <a href="preguntasFrecuentes_S_vistaAdmin.html" class="dropdown-item"style="font-size: 13.5px;">Dudas Serenazgos</a>
-                    </div>
-                </div>
-            </div>
-        </nav>
-    </div>
+    <jsp:include page="../includes/barraLateralAdministrador.jsp"></jsp:include>
     <!-- BARRA AZUL DE LA IZQUIERDA FINAL -->
 
 
     <!-- Content Start -->
     <div class="content">
         <!-- PARTE SUPERIOR INICIO -->
-        <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0" id="navbar">
-            <a href="" class="navbar-brand d-flex d-lg-none me-4">
-                <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
-            </a>
-            <a href="#" class="sidebar-toggler flex-shrink-0">
-                <i class="fa fa-bars"></i>
-            </a>
-            <a class="navbar-brand mx-4 mb-3 d-flex align-items-center" style="padding-top: 2%;">
-                <img class="rounded-circle" src="img/logo.jpg" alt="" style="width: 40px; height: 40px;">
-                <h3 class="m-0 me-2 px-2" style="color:#023047;">Detalles del solicitante</h3>
-            </a>
-
-            <div class="navbar-nav align-items-center ms-auto">
-
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                        <img class="rounded-circle me-lg-2" src="img/munisanmiguelLogo.jpg" alt="" style="width: 40px; height: 40px;">
-                        <span class="d-none d-lg-inline-flex" style="color:#023047;"><b>Municipalidad de San Miguel</b></span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                        <a href="perfil_A.html" class="dropdown-item">Mi perfil</a>
-                        <a href="index.html" class="dropdown-item">Cerrar sesión</a>
-                    </div>
-                </div>
-            </div>
-        </nav>
+        <jsp:include page="../includes/navbarAdministrador.jsp"></jsp:include>
         <!-- PARTE SUPERIOR FINAL -->
 
         <!-- Bootstrap JS dependencies -->
