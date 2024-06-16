@@ -188,7 +188,30 @@ INSERT INTO `televecinosDB`.`Eventos`
 ('Webinar de Psicología Deportiva', 'Conferencia en línea sobre la psicología aplicada al deporte', 'Online', 5, '2024-06-04 17:00:00', '2024-06-04 18:30:00', 200, 200, 'default.jpg', 'Computadora, Internet', 1, 1, 2, 14);
 
 
-
+INSERT INTO `televecinosDB`.`Incidencias` (
+  `nombreIncidencia`, 
+  `fecha`, 
+  `lugarExacto`, 
+  `urbanizacion_idUrbanizacion`,
+  `referencia`, 
+  `foto`, 
+  `ambulancia`, 
+  `numeroContacto`, 
+  `CriticidadIncidencia_idCriticidadIncidencia`, 
+  `TipoIncidencia_idTipoIncidencia`, 
+  `EstadosIncidencia_idEstadosIncidencia`, 
+  `Serenazgo_idSerenazgo`, 
+  `Usuario_idUsuario`, 
+  `incidenciaPersonal`
+) VALUES
+('Robo', '2024-01-01 12:00:00', 'Av. La Marina 1234',1, 'Cerca de la Plaza San Miguel', 'foto_1.jpg', 0, '987654321', 1, 1, 1, 1, 13, 0),
+('Asalto', '2024-01-02 13:00:00', 'Av. Universitaria 5678',3, 'Frente al Centro Comercial Plaza San Miguel', 'foto_2.jpg', 1, '987654322', 2, 2, 2, 2, 13, 0),
+('Accidente de Tránsito', '2024-01-03 14:00:00', 'Jirón Pescadores 123',5, 'Intersección con Av. La Marina', 'foto_3.jpg', 1, '987654323', 3, 3, 3, 3, 13, 0),
+('Incendio', '2024-01-04 15:00:00', 'Calle Bolognesi 456',7, 'Edificio Residencial', 'foto_4.jpg', 1, '987654324', 1, 4, 4, 3, 14, 0),
+('Emergencia Médica', '2024-01-05 16:00:00', 'Av. Bertolotto 789',9, 'Cerca del Hospital San José', 'foto_5.jpg', 0, '987654325', 2, 1, 5, 2, 15, 1),
+('Violencia Doméstica', '2024-01-06 17:00:00', 'Jirón Mantaro 101',11, 'Vivienda Unifamiliar', 'foto_6.jpg', 0, '987654326', 3, 1, 2, 1, 15, 1),
+('Robo', '2024-01-07 18:00:00', 'Calle Salaverry 102',12, 'En la esquina', 'foto_7.jpg', 0, '987654327', 1, 3,2, 2, 13, 0),
+('Asalto', '2024-01-08 19:00:00', 'Av. Faucett 103',10, 'Cerca de la escuela', 'foto_8.jpg', 1, '987654328', 2, 4,3, 3, 14, 0);
 
 
 

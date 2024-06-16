@@ -184,7 +184,7 @@
 
                     <script>
                         function regresar(){
-                            window.location.href="ListaSerenazgo_A.html";
+                            window.location.href="<%=request.getContextPath()%>/AdministradorServlet?action=listaSerenazgo_A";
                         }
                     </script>
 
