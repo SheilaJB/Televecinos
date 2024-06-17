@@ -230,10 +230,17 @@ public class AdministradorServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
+        UsuarioDao usuarioDao = new UsuarioDao();
+        SerenazgoDao serenazgoDao = new SerenazgoDao();
+        CoordinadoraDao coordinadoraDao = new CoordinadoraDao();
+        VecinoDao vecinoDao = new VecinoDao();
+        InstructorDao instructorDao = new InstructorDao();
+        SolicitanteDao solicitanteDao = new SolicitanteDao();
+
         String action = request.getParameter("action") == null ? "registrarSerenazgo" : request.getParameter("action");
         switch (action){
             case "registrarSerenazgo":
-                SerenazgoDao serenazgoDao = new SerenazgoDao();
+
                 String nombre = request.getParameter("nombre");
                 String apellido = request.getParameter("apellido");
                 String dni = request.getParameter("dni");
@@ -269,10 +276,10 @@ public class AdministradorServlet extends HttpServlet {
                 serenazgoB.setUsuario(us);
                 serenazgoDao.registrarSerenazgo(serenazgoB);
 
-                response.sendRedirect(request.getContextPath() + "/AdministradorServlet");
+                response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=listaSerenazgo_A");
                 break;
             case "registroInstructor":
-                InstructorDao instructorDao = new InstructorDao();
+
                 String nombre1 = request.getParameter("nombre");
                 String apellido1 = request.getParameter("apellido");
                 String curso = request.getParameter("curso");
@@ -281,7 +288,18 @@ public class AdministradorServlet extends HttpServlet {
                 profesoresEvento.setApellido(apellido1);
                 profesoresEvento.setCurso(curso);
                 instructorDao.registrarNuevoProfesor(profesoresEvento);
-                response.sendRedirect(request.getContextPath() + "/AdministradorServlet");
+                response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=listaInstructores_A");
+                break;
+            case "buscarVecinoPorNombre":
+                String textoBuscar = request.getParameter("textoBuscar");
+                if (textoBuscar == null) {
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=listaVecinos_A");
+                } else {
+                    request.setAttribute("textoBusqueda",textoBuscar);
+                    request.setAttribute("lista", vecinoDao.buscarVecinoPorNombre(textoBuscar));
+                    RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Administrador/listaVecinos_A.jsp");
+                    view.forward(request, response);
+                }
                 break;
         }
 

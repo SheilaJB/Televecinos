@@ -149,4 +149,44 @@ public class VecinoDao extends BaseDao{
     }
 
 
+    public ArrayList<UsuarioB> buscarVecinoPorNombre(String textoBuscar) {
+        String sql = "SELECT idUsuario, nombre, apellido, dni, direccion, correo " +
+                "FROM televecinosdb.usuario " +
+                "WHERE Rol_idRol = 2 AND isBan = 0 AND (nombre LIKE ? OR apellido LIKE ?)";
+
+
+
+        ArrayList<UsuarioB> listaVecinos = new ArrayList<>();
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, textoBuscar+ "%");
+            pstmt.setString(2, textoBuscar+ "%");
+
+            try(ResultSet rs = pstmt.executeQuery()){
+                while (rs.next()) {
+                    UsuarioB usuarioB = new UsuarioB();
+                    usuarioB.setIdUsuario(rs.getInt(1));
+                    usuarioB.setNombre(rs.getString(2));
+                    usuarioB.setApellido(rs.getString(3));
+                    usuarioB.setDni(rs.getString(4));
+                    usuarioB.setDireccion(rs.getString(5));
+                    usuarioB.setCorreo(rs.getString(6));
+
+
+                    listaVecinos.add(usuarioB);
+                }
+
+            }
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        return listaVecinos;
+
+
+    }
 }

@@ -188,7 +188,7 @@
                         }
                     </script>
 
-                    <!-- Popup -->
+                    <!--
                     <div id="popup" class="popup" >
                         <div class="popup_contenido">
                             <span class="close-btn" id="closePopupBtn">&times;</span>
@@ -200,6 +200,7 @@
                             </a>
                         </div>
                     </div>
+                    Popup -->
 
                 </form>
 

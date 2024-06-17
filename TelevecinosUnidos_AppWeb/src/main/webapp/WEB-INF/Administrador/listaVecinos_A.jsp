@@ -2,6 +2,8 @@
 <%@ page import="java.util.*" %>
 <%@ page import="org.example.televecinosunidos_appweb.model.beans.UsuarioB" %>
 <jsp:useBean id="lista" scope="request" type="ArrayList<org.example.televecinosunidos_appweb.model.beans.UsuarioB>"/>
+<jsp:useBean id="textoBusqueda" scope="request" type="java.lang.String" class="java.lang.String"/>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -77,10 +79,18 @@
             <!-- Filtro -->
             <div style="background-color: #FFB703; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
                 <div class="row justify-content-center align-items-center">
-                    <div class="col-md-5 mb-2">
-                        <input type="text" class="form-control" id="filtroInput" placeholder="Buscar..." onkeyup="filtrar()">
-                    </div>
 
+                    <form method="post" action="<%=request.getContextPath()%>/AdministradorServlet?action=buscarVecinoPorNombre">
+                        <div class="col-md-5 mb-2">
+                            <input type="text" class="form-control" id="filtroInput" placeholder="Buscar..." name="textoBuscar" value="<%=textoBusqueda%>"/>
+                            <button class="input-group-text" type="submit">
+                                <i class="bi bi-search"></i>
+                            </button>
+                            <a class="input-group-text" href="<%=request.getContextPath()%>/AdministradorServlet?action=listaVecinos_A">
+                                <i class="bi bi-x-circle"></i>
+                            </a>
+                        </div>
+                    </form>
 
 
                 </div>
