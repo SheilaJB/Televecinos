@@ -337,7 +337,7 @@ public class AdministradorServlet extends HttpServlet {
                     view.forward(request, response);
                 }
                 break;
-            case "buscarUsuariosBaneados":
+            case "buscarUsuariosBaneadosPorNombre":
                 textoBuscar= request.getParameter("textoBuscar");
                 if (textoBuscar == null) {
                     response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=usuariosBaneados_A");
@@ -345,6 +345,17 @@ public class AdministradorServlet extends HttpServlet {
                     request.setAttribute("textoBusqueda",textoBuscar);
                     request.setAttribute("lista", usuarioDao.listarBaneadosPorNombre(textoBuscar));
                     RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Administrador/usuariosBaneados_A.jsp");
+                    view.forward(request, response);
+                }
+                break;
+            case "buscarNuevasSolicitudesPorNombre":
+                textoBuscar= request.getParameter("textoBuscar");
+                if (textoBuscar == null) {
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=usuariosBaneados_A");
+                } else {
+                    request.setAttribute("textoBusqueda",textoBuscar);
+                    request.setAttribute("lista", solicitanteDao.listarSolicitantesPorNombre(textoBuscar));
+                    RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Administrador/nuevasSolicitudes_A.jsp");
                     view.forward(request, response);
                 }
                 break;

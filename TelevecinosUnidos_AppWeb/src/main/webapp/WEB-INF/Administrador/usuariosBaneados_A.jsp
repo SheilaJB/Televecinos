@@ -77,7 +77,7 @@
                     <!-- Filtro -->
                     <div style="background-color: #FFB703; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
                         <div class="row justify-content-center align-items-center">
-                            <form method="post" action="<%=request.getContextPath()%>/AdministradorServlet?action=buscarUsuariosBaneados">
+                            <form method="post" action="<%=request.getContextPath()%>/AdministradorServlet?action=buscarUsuariosBaneadosPorNombre">
                                 <div class="col-md-7 mb-2">
                                     <div class="input-group">
                                         <input type="text" class="form-control" id="filtroInput" placeholder="Buscar usuario baneado..." name="textoBuscar" value="<%=textoBusqueda%>"/>
