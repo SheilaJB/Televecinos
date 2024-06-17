@@ -5,17 +5,8 @@ import org.example.televecinosunidos_appweb.model.beans.IncidenciasB;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class IncidenCoordDao {
+public class IncidenCoordDao extends BaseDao{
     public ArrayList<IncidenciasB> listarIncidencia() {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
-        String url = "jdbc:mysql://localhost:3306/televecinosdb";
-        String username = "root";
-        String password = "root";
 
         String setLocaleSql = "SET lc_time_names = 'es_ES'";
         String sql = "SELECT \n" +
@@ -33,7 +24,7 @@ public class IncidenCoordDao {
 
         ArrayList<IncidenciasB> listaIncidencia = new ArrayList<>();
 
-        try (Connection conn = DriverManager.getConnection(url, username, password);
+        try (Connection conn = getConnection();
              Statement stmt = conn.createStatement()) {
             stmt.execute(setLocaleSql);
             try (ResultSet rs = stmt.executeQuery(sql)) {
@@ -60,16 +51,6 @@ public class IncidenCoordDao {
     public IncidenciasB buscarIncidenciaPorId(String idIncidencia) {
         IncidenciasB incidencia = null;
 
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
-        String url = "jdbc:mysql://localhost:3306/televecinosdb";
-        String username = "root";
-        String password = "root";
-
         String sql = "SELECT " +
                 "i.idIncidencias AS 'ID Incidencia', " +
                 "i.nombreIncidencia AS 'Nombre', " +
@@ -83,7 +64,7 @@ public class IncidenCoordDao {
                 "JOIN estadosincidencia ei ON i.EstadosIncidencia_idEstadosIncidencia = ei.idEstadosIncidencia " +
                 "WHERE i.idIncidencias = ?";
 
-        try (Connection conn = DriverManager.getConnection(url, username, password);
+        try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, idIncidencia);
@@ -111,15 +92,7 @@ public class IncidenCoordDao {
 
     public void  actualizarIncidencia (IncidenciasB incidencia){
 
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
 
-        String url = "jdbc:mysql://localhost:3306/hr";
-        String username = "root";
-        String password = "root";
         String sql ="UPDATE incidencias\n" +
                 "SET\n" +
                 "    nombreIncidencia = ?,\n" +
@@ -136,7 +109,7 @@ public class IncidenCoordDao {
                 "    AND EstadosIncidencia_idEstadosIncidencia = 1;";
         //solo cuando el estado esta en pendiente se puede actualizar
 
-        try(Connection connection = DriverManager.getConnection(url,username,password);
+        try(Connection connection = getConnection();
             PreparedStatement pstmt = connection.prepareStatement(sql)) {
 
             pstmt.setString(1, incidencia.getNombreIncidencia());
