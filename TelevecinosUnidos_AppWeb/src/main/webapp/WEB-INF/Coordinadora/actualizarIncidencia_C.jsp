@@ -86,6 +86,7 @@
     </div>
     <!-- Spinner End -->
 
+<<<<<<< HEAD
     <!-- Sidebar Start -->
     <div class="sidebar pe-4 pb-3" style="background-color: #8ecae6;">
         <nav class="navbar" style="background-color: #8ecae6;">
@@ -149,6 +150,22 @@
         <!-- Navbar End -->
         <!-- PARTE SUPERIOR FINAL -->
 
+=======
+    <!-- BARRA AZUL DE LA IZQUIERDA INICIO-->
+    <jsp:include page="../includes/barraLateralCoordinador.jsp"></jsp:include>
+
+    <!-- Content Start -->
+    <div id="navbar" class="content">
+
+
+
+        <!-- PARTE SUPERIOR FINAL -->
+
+        <!-- PARTE SUPERIOR INICIO -->
+        <jsp:include page="../includes/navbarCoordinador.jsp"></jsp:include>
+        <!-- PARTE SUPERIOR FINAL -->
+
+>>>>>>> f6f1d138967f4400fadf6a87fbdb6e4460b04e97
         <!-- LLENAR-->
         <form method="post" action="<%=request.getContextPath()%>/CoordIncidServlet?action=editar">
             <div class="container-fluid pt-4 px-4">
