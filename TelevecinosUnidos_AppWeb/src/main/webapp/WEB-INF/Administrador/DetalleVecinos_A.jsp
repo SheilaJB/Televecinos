@@ -164,6 +164,9 @@
 
                     </div>
                 </div>
+
+                <a href="<%=request.getContextPath()%>/AdministradorServlet?action=banearVecino&idVecino=<%=vecino.getIdUsuario()%>"><button class="button banear btn-banear">Banear</button></a>
+                <!--
                 <button class="button banear btn-banear">Banear</button>
                 <div id="popup1" class="popup1" >
                     <div class="popup_contenido1">
@@ -179,6 +182,7 @@
 
                     </div>
                 </div>
+                -->
             </div>
 
             <script>
