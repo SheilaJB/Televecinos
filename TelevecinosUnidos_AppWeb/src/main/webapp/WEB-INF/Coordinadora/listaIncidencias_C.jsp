@@ -130,7 +130,7 @@
         <% if (session.getAttribute("info") != null) { %>
         <div class="alert alert-success" role="alert">
             <%= session.getAttribute("info") %>
-        </div>gi
+        </div>
         <% session.removeAttribute("info"); %>
         <% } %>
         <div style="background-color: #f8f9fa; padding: 20px; align-items: center;">

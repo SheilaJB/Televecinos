@@ -36,7 +36,7 @@ public class IncidenCoordDao extends BaseDao{
                     incidencia.setHora(rs.getString("Hora"));
                     incidencia.setTipoIncidencia(rs.getString("Tipo de Incidencia"));
                     incidencia.setEstadoIncidencia(rs.getString("Estado Incidencia"));
-                    listaIncidencia.add(incidencia); // Asegurarse de añadir la incidencia a la lista
+                    listaIncidencia.add(incidencia);
 
                 }
             }
@@ -54,12 +54,19 @@ public class IncidenCoordDao extends BaseDao{
         String sql = "SELECT " +
                 "i.idIncidencias AS 'ID Incidencia', " +
                 "i.nombreIncidencia AS 'Nombre', " +
+                "i.lugarExacto, " +
+                "i.referencia, " +
+                "i.foto, " +
+                "i.ambulancia, " +
+                "i.numeroContacto, " +
+                "i.urbanizacion_idUrbanizacion, " +
+                "i.TipoIncidencia_idTipoIncidencia, " +
+                "i.incidenciaPersonal, " +
                 "DATE_FORMAT(i.fecha, '%d %M') AS 'Fecha', " +
                 "TIME_FORMAT(i.fecha, '%H:%i') AS 'Hora', " +
                 "ti.TipoIncidencia AS 'Tipo de Incidencia', " +
                 "ei.estado AS 'Estado Incidencia' " +
-                "FROM " +
-                "incidencias i " +
+                "FROM incidencias i " +
                 "JOIN tipoincidencia ti ON i.TipoIncidencia_idTipoIncidencia = ti.idTipoIncidencia " +
                 "JOIN estadosincidencia ei ON i.EstadosIncidencia_idEstadosIncidencia = ei.idEstadosIncidencia " +
                 "WHERE i.idIncidencias = ?";
@@ -74,6 +81,14 @@ public class IncidenCoordDao extends BaseDao{
                     incidencia = new IncidenciasB();
                     incidencia.setIdIncidencias(rs.getInt("ID Incidencia"));
                     incidencia.setNombreIncidencia(rs.getString("Nombre"));
+                    incidencia.setLugarExacto(rs.getString("lugarExacto"));
+                    incidencia.setReferencia(rs.getString("referencia"));
+                    incidencia.setFoto(rs.getString("foto"));
+                    incidencia.setAmbulancia(rs.getInt("ambulancia"));
+                    incidencia.setNumeroContacto(rs.getString("numeroContacto"));
+                    incidencia.setUrbanizacion(rs.getString("urbanizacion_idUrbanizacion"));
+                    incidencia.setTipoIncidencia(rs.getString("TipoIncidencia_idTipoIncidencia"));
+                    incidencia.setIncidenciaPersonal(rs.getInt("incidenciaPersonal"));
                     incidencia.setFecha(rs.getString("Fecha"));
                     incidencia.setHora(rs.getString("Hora"));
                     incidencia.setTipoIncidencia(rs.getString("Tipo de Incidencia"));
@@ -110,44 +125,28 @@ public class IncidenCoordDao extends BaseDao{
         }
     }
 
-    /*public void  actualizarIncidencia (IncidenciasB incidencia){
+    public void actualizarIncidencia(IncidenciasB incidencia) {
+        String sql = "UPDATE incidencias " +
+                "SET nombreIncidencia = ?, lugarExacto = ?, referencia = ?, foto = ?, " +
+                "ambulancia = ?, numeroContacto = ?, urbanizacion_idUrbanizacion = ?, " +
+                "TipoIncidencia_idTipoIncidencia = ?, incidenciaPersonal = ? " +
+                "WHERE idIncidencias = ? AND EstadosIncidencia_idEstadosIncidencia = 1;";
 
-
-        String sql ="UPDATE incidencias\n" +
-                "SET\n" +
-                "    nombreIncidencia = ?,\n" +
-                "    foto = ?,\n" +
-                "    TipoIncidencia_idTipoIncidencia = ?,\n" +
-                "    urbanizacion_idUrbanizacion = ?,\n" +
-                "    incidenciaPersonal = ?,\n" +
-                "    lugarExacto = ?,\n" +
-                "    referencia = ?,\n" +
-                "    numeroContacto = ?,\n" +
-                "    ambulancia = ?\n" +
-                "WHERE\n" +
-                "    idIncidencias = ?\n" +
-                "    AND EstadosIncidencia_idEstadosIncidencia = 1;";
-        //solo cuando el estado esta en pendiente se puede actualizar
-
-        try(Connection connection = getConnection();
-            PreparedStatement pstmt = connection.prepareStatement(sql)) {
-
+        try (Connection connection = getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, incidencia.getNombreIncidencia());
-            pstmt.setString(2, incidencia.getFoto());
-            pstmt.setString(3, incidencia.getTipoIncidencia());
-            pstmt.setString(4, incidencia.getUrbanizacion());
-            pstmt.setInt(5, incidencia.getIncidenciaPersonal());
-            pstmt.setString(6, incidencia.getLugarExacto());
-            pstmt.setString(7, incidencia.getReferencia());
-            pstmt.setString(8, incidencia.getNumeroContacto());
-            pstmt.setInt(9, incidencia.getAmbulancia());
+            pstmt.setString(2, incidencia.getLugarExacto());
+            pstmt.setString(3, incidencia.getReferencia());
+            pstmt.setString(4, incidencia.getFoto());
+            pstmt.setInt(5, incidencia.getAmbulancia());
+            pstmt.setString(6, incidencia.getNumeroContacto());
+            pstmt.setInt(7, Integer.parseInt(incidencia.getUrbanizacion()));
+            pstmt.setInt(8, Integer.parseInt(incidencia.getTipoIncidencia()));
+            pstmt.setInt(9, incidencia.getIncidenciaPersonal());
             pstmt.setInt(10, incidencia.getIdIncidencias());
             pstmt.executeUpdate();
-
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-
-    }*/
+    }
 }

@@ -1,4 +1,9 @@
+<%@ page import="org.example.televecinosunidos_appweb.model.beans.IncidenciasB" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page pageEncoding="UTF-8" %>
+<%
+    IncidenciasB incidenciaa = (IncidenciasB) request.getAttribute("incidenciaB");
+%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -46,6 +51,7 @@
             background-color: rgba(0, 0, 0, 0.5);
             z-index: 999;
         }
+
         .popup-content {
             background-color: white;
             width: 50%;
@@ -57,6 +63,7 @@
             text-align: center;
             position: relative;
         }
+
         .close-btn {
             position: absolute;
             top: 5px;
@@ -79,16 +86,15 @@
     </div>
     <!-- Spinner End -->
 
-
     <!-- Sidebar Start -->
     <div class="sidebar pe-4 pb-3" style="background-color: #8ecae6;">
-        <nav  class="navbar" style="background-color: #8ecae6;" >
+        <nav class="navbar" style="background-color: #8ecae6;">
             <a class="navbar-brand mx-3 mt-3">
                 <h4 style="color:#023047"><b>Televecinos Unidos</b></h4>
             </a>
-            <div class="d-flex align-items-center ms-4 mb-4"  >
+            <div class="d-flex align-items-center ms-4 mb-4">
                 <img class="rounded-circle" src="img/coordinadora.jpg" alt="" style="width: 50px; height: 50px;">
-                <div class="ms-3 m-3" >
+                <div class="ms-3 m-3">
                     <h6 class="mb-0" style="color:#023047;"><b>Nombre Apellido</b></h6>
                     <span class="text-muted"><b>Coordinador</b></span>
                 </div>
@@ -106,16 +112,15 @@
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"><i class="fa fa-th-list me-2"></i><span style="font-size: 13.5px;"><b>Incidencias</b></span></a>
                     <div class="dropdown-menu bg-transparent border-0">
-                        <a href="<%=request.getContextPath()%>/VistaServlet?idVista=generarIncidenciaC" class="dropdown-item"><span style="font-size: 13.5px;"><b>Crear incidencia</b></span></a>
-                        <a href="<%=request.getContextPath()%>/VistaServlet?idVista=listaIncidenciaC" class="dropdown-item"><span style="font-size: 13.5px;"><b>Lista de incidencias</b></span></a>
+                        <a href="<%=request.getContextPath()%>/CoordIncidServlet?action=generarIncidenciaC" class="dropdown-item"><span style="font-size: 13.5px;"><b>Crear incidencia</b></span></a>
+                        <a href="<%=request.getContextPath()%>/CoordIncidServlet?action=listarIncidencia" class="dropdown-item"><span style="font-size: 13.5px;"><b>Lista de incidencias</b></span></a>
                     </div>
                 </div>
-                <a href="<%=request.getContextPath()%>/VistaServlet?idVista=preguntasFrecuentesC" class="nav-item nav-link font-al"><i class="fa fa-question-circle me-2" ></i><span style="font-size: 13.5px;"><b>Preguntas frecuentes</b></span></a>
+                <a href="<%=request.getContextPath()%>/VistaServlet?idVista=preguntasFrecuentesC" class="nav-item nav-link font-al"><i class="fa fa-question-circle me-2"></i><span style="font-size: 13.5px;"><b>Preguntas frecuentes</b></span></a>
             </div>
         </nav>
     </div>
     <!-- Sidebar End -->
-
 
     <!-- Content Start -->
     <div id="navbar" class="content">
@@ -129,14 +134,13 @@
                 <h3 class="m-0 me-2 px-2" style="color:#023047;">¡Bienvenido, coordinador!</h3>
             </a>
             <div class="navbar-nav align-items-center ms-auto">
-
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                         <img class="rounded-circle me-lg-2" src="img/coordinadora.jpg" alt="" style="width: 40px; height: 40px;">
                         <span class="d-none d-lg-inline-flex" style="color:#023047;"><b>Nombre Apellido</b></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                        <<a href="VistaServlet?idVista=perfilC" class="dropdown-item">Mi perfil</a>
+                        <a href="VistaServlet?idVista=perfilC" class="dropdown-item">Mi perfil</a>
                         <a href="VistaServlet?idVista=Index" class="dropdown-item">Cerrar sesión</a>
                     </div>
                 </div>
@@ -145,190 +149,106 @@
         <!-- Navbar End -->
         <!-- PARTE SUPERIOR FINAL -->
 
-
-
         <!-- LLENAR-->
-        <!-- Footer Start -->
-
-        <div class="container-fluid pt-4 px-4">
-            <div class="container">
-                <div class="columna columna1">
-                    <div class="campo">
-                        <h2>Reporte de incidencia</h2>
-                        <h2 style="font-size: large;">Actualice los siguientes datos</h2>
-                    </div>
-
-                    <form>
+        <form method="post" action="<%=request.getContextPath()%>/CoordIncidServlet?action=editar">
+            <div class="container-fluid pt-4 px-4">
+                <div class="container">
+                    <div class="columna columna1">
+                        <div class="campo">
+                            <h2>Actualizar incidencia</h2>
+                            <h2 style="font-size: large;">Actualice los siguientes datos</h2>
+                        </div>
+                        <input type="hidden" name="idIncidencia" value="<%= incidenciaa != null ? incidenciaa.getIdIncidencias() : "" %>">
                         <div class="campo">
                             <label for="nombreIncidencia">Nombre de la incidencia:</label><br>
-                            <input type="text" id="nombreIncidencia" name="nombreIncidencia" placeholder="Escribe aquí"><br>
+                            <input type="text" id="nombreIncidencia" name="nombreIncidencia" placeholder="Escribe aquí" value="<%= incidenciaa != null ? incidenciaa.getNombreIncidencia() : "" %>"><br>
                         </div>
                         <div class="campo">
-
-                            <div class="mb-3">
-                                <label for="foto" class="boton-subir">Subir foto</label><br>
-                                <input class="form-control" type="file" id="formFile" accept="image/*">
-                            </div>
-                            <script src="path/to/bootstrap.bundle.min.js"></script>
+                            <label for="foto">Subir foto:</label><br>
+                            <input class="form-control" type="file" id="foto" accept=".jpg, .jpeg, .png" name="foto"><br>
                         </div>
-                        <div class="campo" style="margin-bottom: -35px; ">
+                        <div class="campo" style="margin-bottom: -35px;">
                             <label for="tipoIncidencia">Tipo de incidencia:</label><br>
-                            <select id="tipoIncidencia" name="tipoIncidencia">
-                                <option value="opcion1">Seguridad Pública</option>
-                                <option value="opcion2">Emergencia Médica</option>
-                                <option value="opcion3">Infraestructura y Servicios Públicos</option>
-                                <option value="otro">Otro</option>
+                            <select id="tipoIncidencia" name="TipoIncidencia_idTipoIncidencia">
+                                <option value="1" <%= incidenciaa != null && "Seguridad Pública".equals(incidenciaa.getTipoIncidencia()) ? "selected" : "" %>>Seguridad Pública</option>
+                                <option value="2" <%= incidenciaa != null && "Emergencia Médica".equals(incidenciaa.getTipoIncidencia()) ? "selected" : "" %>>Emergencia Médica</option>
+                                <option value="3" <%= incidenciaa != null && "Infraestructura y Servicios Públicos".equals(incidenciaa.getTipoIncidencia()) ? "selected" : "" %>>Infraestructura y Servicios Públicos</option>
+                                <option value="4" <%= incidenciaa != null && "Otro".equals(incidenciaa.getTipoIncidencia()) ? "selected" : "" %>>Otro</option>
                             </select><br>
                             <br>
                         </div>
-                        <div class="campo" style="margin-bottom: -35px; ">
+                        <div class="campo" style="margin-bottom: -35px;">
                             <label for="urbanizacion">Urbanización:</label><br>
-                            <select id="urbanizacion" name="urbanizacion">
-                                <option value="opcion1">Rafael Escardó</option>
-                                <option value="opcion2">José de La Riva Agüero</option>
-                                <option value="opcion3">Juan XXIII</option>
-                                <option value="opcion3">Libertad</option>
-                                <option value="opcion4">Los Jardines de La Marina</option>
-                                <option value="opcion5">Las Leyendas</option>
-                                <option value="opcion6">Las Torres San Miguelito</option>
-                                <option value="opcion7">Elmer Faucett</option>
-                                <option value="opcion8">Maranga</option>
-                                <option value="opcion9">Pando</option>
-                                <option value="opcion10">Maranga</option>
-                                <option value="opcion11">Parques de La Huaca</option>
-
-                                <option value="otro">Otro</option>
+                            <select id="urbanizacion" name="urbanizacion_idUrbanizacion">
+                                <option value="1" <%= incidenciaa != null && "Rafael Escardó".equals(incidenciaa.getUrbanizacion()) ? "selected" : "" %>>Rafael Escardó</option>
+                                <option value="2" <%= incidenciaa != null && "José de La Riva Agüero".equals(incidenciaa.getUrbanizacion()) ? "selected" : "" %>>José de La Riva Agüero</option>
+                                <option value="3" <%= incidenciaa != null && "Juan XXIII".equals(incidenciaa.getUrbanizacion()) ? "selected" : "" %>>Juan XXIII</option>
+                                <option value="4" <%= incidenciaa != null && "Libertad".equals(incidenciaa.getUrbanizacion()) ? "selected" : "" %>>Libertad</option>
+                                <option value="5" <%= incidenciaa != null && "Los Jardines de La Marina".equals(incidenciaa.getUrbanizacion()) ? "selected" : "" %>>Los Jardines de La Marina</option>
+                                <option value="6" <%= incidenciaa != null && "Las Leyendas".equals(incidenciaa.getUrbanizacion()) ? "selected" : "" %>>Las Leyendas</option>
+                                <option value="7" <%= incidenciaa != null && "Las Torres San Miguelito".equals(incidenciaa.getUrbanizacion()) ? "selected" : "" %>>Las Torres San Miguelito</option>
+                                <option value="8" <%= incidenciaa != null && "Elmer Faucett".equals(incidenciaa.getUrbanizacion()) ? "selected" : "" %>>Elmer Faucett</option>
+                                <option value="9" <%= incidenciaa != null && "Maranga".equals(incidenciaa.getUrbanizacion()) ? "selected" : "" %>>Maranga</option>
+                                <option value="10" <%= incidenciaa != null && "Pando".equals(incidenciaa.getUrbanizacion()) ? "selected" : "" %>>Pando</option>
+                                <option value="11" <%= incidenciaa != null && "Parques de La Huaca".equals(incidenciaa.getUrbanizacion()) ? "selected" : "" %>>Parques de La Huaca</option>
+                                <option value="12" <%= incidenciaa != null && "Otro".equals(incidenciaa.getUrbanizacion()) ? "selected" : "" %>>Otro</option>
                             </select>
                             <br>
                             <br>
                         </div>
-                        <div class="campo">
-                            <label for="paraQuien">La incidencia será para: </label><br>
+                        <div class="form-group">
+                            <label for="paraMi">La incidencia será para:</label><br>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="gridRadios"
-                                       id="gridRadios1" value="option1">
-                                <label class="form-check-label" for="gridRadios1">
+                                <input class="form-check-input" type="radio" name="incidenciaPersonal" id="paraMi" value="1" <%= incidenciaa != null && incidenciaa.getIncidenciaPersonal() == 1 ? "checked" : "" %>>
+                                <label class="form-check-label" for="paraMi">
                                     Para mi
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="gridRadios"
-                                       id="gridRadios2" value="option2">
-                                <label class="form-check-label" for="gridRadios2">
+                                <input class="form-check-input" type="radio" name="incidenciaPersonal" id="paraOtraPersona" value="0" <%= incidenciaa != null && incidenciaa.getIncidenciaPersonal() == 0 ? "checked" : "" %>>
+                                <label class="form-check-label" for="paraOtraPersona">
                                     Para otra persona
                                 </label>
                             </div>
                         </div>
-
-
-                    </form>
-                    <div class="m-n2">
-                        <a href="listaIncidencias_C.html"></ahref><button type="button" class="btn btn-danger m-2" onclick="">Cancelar incidencia</button> </a>
                     </div>
-
-                </div>
-                <div class="columna columna2" style="margin-top: 102px;">
-                    <form>
+                    <div class="columna columna2" style="margin-top: 102px;">
                         <div class="campo">
                             <label for="lugarExacto">Lugar exacto</label><br>
-                            <input type="text" id="lugarExacto" name="lugarExacto" placeholder="Escribe aquí"><br>
+                            <input type="text" id="lugarExacto" name="lugarExacto" placeholder="Escribe aquí" value="<%= incidenciaa != null ? incidenciaa.getLugarExacto() : "" %>"><br>
                         </div>
-
                         <div class="campo">
                             <label for="referencia">Referencia</label><br>
-                            <input type="text" id="referencia" name="referencia" placeholder="Escribe aquí"><br>
+                            <input type="text" id="referencia" name="referencia" placeholder="Escribe aquí" value="<%= incidenciaa != null ? incidenciaa.getReferencia() : "" %>"><br>
                         </div>
-
                         <div class="campo">
                             <label for="contacto">Contacto (opcional)</label><br>
-                            <input type="text" id="contacto" name="contacto" placeholder="Escribe aquí"><br>
+                            <input type="text" id="contacto" name="numeroContacto" placeholder="Escribe aquí" value="<%= incidenciaa != null ? incidenciaa.getNumeroContacto() : "" %>"><br>
                         </div>
                         <div class="campo">
-                            <label for="paraQuien">¿Requiere ambulancia? </label><br>
+                            <label>¿Requiere ambulancia?</label><br>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="gridRadios"
-                                       id="gridRadios1" value="option1">
+                                <input class="form-check-input" type="radio" name="ambulancia" id="gridRadios1" value="1" <%= incidenciaa != null && incidenciaa.getAmbulancia() == 1 ? "checked" : "" %>>
                                 <label class="form-check-label" for="gridRadios1">
                                     Sí
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="gridRadios"
-                                       id="gridRadios2" value="option2">
+                                <input class="form-check-input" type="radio" name="ambulancia" id="gridRadios2" value="0" <%= incidenciaa != null && incidenciaa.getAmbulancia() == 0 ? "checked" : "" %>>
                                 <label class="form-check-label" for="gridRadios2">
                                     No
                                 </label>
                             </div>
                         </div>
-
                         <div class="m-n2">
-                            <button type="button" class="btn btn-secondary m-2" onclick="mostrarPopup()">Reportar incidencia</button>
-                            <div id="popup" class="popup">
-                                <div class="popup_contenido">
-                                    <!--contenido pop up-->
-                                    <h3>Confirmar Actualización</h3>
-                                    <h4>¿Estás seguro? </h4>
-                                    <a href="listaIncidencias_C.html"><button type="button" class="btn btn-success rounded-pill m-2">Si</button></a>
-                                    <a href="actualizarIncidencia_C.html"><button type="button" class="btn btn-danger rounded-pill m-2" >No</button></a>
-                                    <!-- <button type="button" class="btn btn-danger rounded-pill m-2" >No</button> -->
-                                    <!-- Popup Management -->
-                                    <script>
-                                        function mostrarPopup() {
-                                            document.getElementById("popupActualizar").style.display = "block";
-                                        }
-
-                                        function cerrarPopup() {
-                                            document.getElementById("popupActualizar").style.display = "none";
-                                        }
-                                    </script>
-
-                                </div>
-                            </div>
+                            <button type="submit" class="btn btn-secondary m-2">Actualizar incidencia</button>
+                            <a href="<%=request.getContextPath()%>/CoordIncidServlet?action=listarIncidencia"><button type="button" class="btn btn-danger m-2">Cancelar</button></a>
                         </div>
-
-                    </form>
+                    </div>
                 </div>
             </div>
-        </div>
-        <script>
-            const closeCreatePopupBtn = document.getElementById('closeCreatePopupBtn');
-            const createConfirmationPopup = document.getElementById('createConfirmationPopup');
-            const mainContent = document.querySelector('.content'); // Selecciona el contenido principal que quieres deshabilitar
-
-            // Función para deshabilitar interacciones
-            function disableInteractions() {
-                mainContent.style.pointerEvents = 'none';
-                mainContent.style.opacity = '0.4'; // Opcional: reduce la opacidad para un efecto visual de desactivado
-            }
-
-            // Función para habilitar interacciones
-            function enableInteractions() {
-                mainContent.style.pointerEvents = 'all';
-                mainContent.style.opacity = '1'; // Restaura la opacidad
-            }
-
-
-            // Función para cerrar el popup y potencialmente redirigir al usuario
-            function closeCreatePopup() {
-                createConfirmationPopup.style.display = 'none';
-                enableInteractions();
-                //redirigir al usuario o recargar la página
-                window.location.href = 'listaIncidencias_S.html';
-            }
-
-            // Evento para cerrar el popup cuando se presiona el botón de cerrar
-            closeCreatePopupBtn.addEventListener('click', closeCreatePopup);
-
-            // Función para mostrar el mensaje de éxito al crear un evento
-            function mostrarMensajeExito() {
-                createConfirmationPopup.style.display = 'block';
-                disableInteractions();
-            }
-
-        </script>
-
-
-        <div class="container-fluid pt-4 px-4" >
+        </form>
+        <div class="container-fluid pt-4 px-4">
             <div class="bg-light rounded-top p-4">
                 <div class="row">
                     <div class="col-12 col-sm-6 text-center text-sm-start">
@@ -343,8 +263,6 @@
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 </div>
-
-
 
 <!-- JavaScript Libraries -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -361,7 +279,6 @@
 <script src="js/main.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-
         function desactivarStickyTop() {
             navbar.classList.remove('sticky-top');
         }
@@ -385,7 +302,6 @@
             }
         });
     });
-
 </script>
 <!--cerrar pop up -->
 <script>

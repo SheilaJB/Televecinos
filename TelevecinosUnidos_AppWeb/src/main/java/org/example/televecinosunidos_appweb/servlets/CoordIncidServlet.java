@@ -87,24 +87,34 @@ public class CoordIncidServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/CoordIncidServlet?action=listarIncidencia");
                 break;
 
-            /*case "editar":
+            case "editar":
                 int id = Integer.parseInt(request.getParameter("idIncidencia"));
-                String nombre2 = request.getParameter("nombre");
+                String nombreIncidencia2 = request.getParameter("nombreIncidencia");
+                String foto2 = request.getParameter("foto");
+                String tipoIncidencia2 = request.getParameter("TipoIncidencia_idTipoIncidencia");
+                String urbanizacion2 = request.getParameter("urbanizacion_idUrbanizacion");
+                int incidenciaPersonal2 = Integer.parseInt(request.getParameter("incidenciaPersonal"));
                 String lugarExacto2 = request.getParameter("lugarExacto");
                 String referencia2 = request.getParameter("referencia");
-                String foto2 = request.getParameter("foto");
-                boolean ambulancia2 = Boolean.parseBoolean(request.getParameter("ambulancia"));
                 String numeroContacto2 = request.getParameter("numeroContacto");
-                int tipoIncidenciaId2 = Integer.parseInt(request.getParameter("tipoIncidenciaId"));
-                int estadosIncidenciaId2 = Integer.parseInt(request.getParameter("estadosIncidenciaId"));
-                int serenazgoId2 = Integer.parseInt(request.getParameter("serenazgoId"));
-                int usuarioId2 = Integer.parseInt(request.getParameter("usuarioId"));
-                boolean incidenciaPersonal2 = Boolean.parseBoolean(request.getParameter("incidenciaPersonal"));
+                int ambulancia2 = Integer.parseInt(request.getParameter("ambulancia"));
 
-                //IncidenciasB incidenciaB = new IncidenciasB(id, nombre2, lugarExacto2, referencia2, foto2, ambulancia2, numeroContacto2, criticidadId2, tipoIncidenciaId2, estadosIncidenciaId2, serenazgoId2, usuarioId2, incidenciaPersonal2, fechaHora2);
-                //incidenciaDao.actualizarIncidencia(incidenciaB);
-                response.sendRedirect(request.getContextPath() + "/IncidenciaServlet");
-                break;*/
+                IncidenciasB incidenciaB = new IncidenciasB();
+                incidenciaB.setIdIncidencias(id);
+                incidenciaB.setNombreIncidencia(nombreIncidencia2);
+                incidenciaB.setFoto(foto2);
+                incidenciaB.setTipoIncidencia(tipoIncidencia2);
+                incidenciaB.setUrbanizacion(urbanizacion2);
+                incidenciaB.setIncidenciaPersonal(incidenciaPersonal2);
+                incidenciaB.setLugarExacto(lugarExacto2);
+                incidenciaB.setReferencia(referencia2);
+                incidenciaB.setNumeroContacto(numeroContacto2);
+                incidenciaB.setAmbulancia(ambulancia2);
+
+                incidenciaDao.actualizarIncidencia(incidenciaB);
+                request.getSession().setAttribute("info", "Incidencia editada de manera exitosa");
+                response.sendRedirect(request.getContextPath() + "/CoordIncidServlet?action=listarIncidencia");
+                break;
         }
     }
 }
