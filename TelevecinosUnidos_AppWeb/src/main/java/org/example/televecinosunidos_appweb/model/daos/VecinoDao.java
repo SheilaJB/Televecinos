@@ -85,6 +85,35 @@ public class VecinoDao extends BaseDao{
         }
     }
 
+    public void promoverACoordinadorDeportes (String idUsuario) throws SQLException {
+        String sql = "UPDATE televecinosdb.usuario SET TipoCoordinador_idTipoCoordinador = 2,Rol_idRol=3  WHERE idUsuario = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, idUsuario);
+            pstmt.executeUpdate();
+
+        }
+    }
+
+
+
+    public void promoverACoordinadorCultura (String idUsuario) throws SQLException {
+        String sql = "UPDATE televecinosdb.usuario SET TipoCoordinador_idTipoCoordinador = 1, Rol_idRol=3  WHERE idUsuario = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, idUsuario);
+            pstmt.executeUpdate();
+
+        }
+    }
+
+
+
+
     public ArrayList<UsuarioB> listarBaneados() {
 
         String sql = "SELECT idUsuario,nombre,apellido,dni,direccion,correo\n" +

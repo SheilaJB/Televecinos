@@ -74,7 +74,7 @@
         </div>
 
 
-
+        <!-- ARREGLAR EL TEMA DE SESSION Y POP UPS
         <% if (session.getAttribute("msg") != null) {%>
         <div class="alert alert-success" role="alert"><%=session.getAttribute("msg")%>
         </div>
@@ -83,7 +83,7 @@
         <div class="alert alert-danger" role="alert"><%=request.getParameter("err")%>
         </div>
         <% }%>
-
+        -->
 
 
 

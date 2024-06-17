@@ -192,6 +192,34 @@ public class AdministradorServlet extends HttpServlet {
                 }
                 break;
 
+            case "promoverAcoordinadorCultura":
+                vecinoId = request.getParameter("idVecino");
+                if (usuarioDao.obtenerUsuario(vecinoId) != null) {
+                    try {
+                        vecinoDao.promoverACoordinadorCultura(vecinoId);
+                        HttpSession httpSession = request.getSession();
+                        httpSession.setAttribute("msg","Vecino promovido exitosomente");
+                        response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=listaVecinos_A");
+                    } catch (SQLException e) {
+                        response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=listaVecinos_A&err=Error al promover");
+                    }
+                }
+                break;
+
+            case "promoverAcoordinadorDeporte":
+                vecinoId = request.getParameter("idVecino");
+                if (usuarioDao.obtenerUsuario(vecinoId) != null) {
+                    try {
+                        vecinoDao.promoverACoordinadorDeportes(vecinoId);
+                        HttpSession httpSession = request.getSession();
+                        httpSession.setAttribute("msg","Vecino promovido exitosomente");
+                        response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=listaVecinos_A");
+                    } catch (SQLException e) {
+                        response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=listaVecinos_A&err=Error al promover");
+                    }
+                }
+                break;
+
 
             default:
                 request.getRequestDispatcher("WEB-INF/Administrador/" + action + ".jsp").forward(request,response);

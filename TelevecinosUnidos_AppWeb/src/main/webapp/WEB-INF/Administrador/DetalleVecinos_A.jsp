@@ -146,7 +146,9 @@
                 <div class="bar" data-label="Dirección"><%=vecino.getDireccion()%></div>
                 <div class="bar" data-label="Correo"><%=vecino.getCorreo()%></div>
                 <a href="<%=request.getContextPath()%>/AdministradorServlet?action=listaVecinos_A"><button class="button regresar">Regresar</button></a>
-
+                <a href="<%=request.getContextPath()%>/AdministradorServlet?action=promoverAcoordinadorCultura&idVecino=<%=vecino.getIdUsuario()%>"><button class="button convertCoordinadora btn-banear">Promover a coordinadora cultura</button></a>
+                <a href="<%=request.getContextPath()%>/AdministradorServlet?action=promoverAcoordinadorDeporte&idVecino=<%=vecino.getIdUsuario()%>"><button class="button convertCoordinadora btn-banear">Promover a coordinadora deportes </button></a>
+                <!--
                 <button class="button convertCoordinadora btn-banear">Promover a coordinadora</button>
                 <div id="popup1" class="popup1" >
                     <div class="popup_contenido1">
@@ -164,7 +166,7 @@
 
                     </div>
                 </div>
-
+                -->
                 <a href="<%=request.getContextPath()%>/AdministradorServlet?action=banearVecino&idVecino=<%=vecino.getIdUsuario()%>"><button class="button banear btn-banear">Banear</button></a>
                 <!--
                 <button class="button banear btn-banear">Banear</button>
