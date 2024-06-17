@@ -178,4 +178,60 @@ public class UsuarioDao extends BaseDao{
 
         }
     }
+
+    public ArrayList<UsuarioB> listarBaneadosPorNombre(String textoBuscar) {
+
+        String sql = "SELECT idUsuario,nombre,apellido,dni,direccion,correo,Rol_idRol\n" +
+                "FROM televecinosdb.usuario \n" +
+                "where isBan=1 and (usuario.nombre like ? or usuario.apellido like ?)" ;
+
+
+        ArrayList<UsuarioB> listaBaneados = new ArrayList<>();
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, textoBuscar+ "%");
+            pstmt.setString(2, textoBuscar+ "%");
+
+            try(ResultSet rs = pstmt.executeQuery()){
+                while (rs.next()) {
+                    UsuarioB usuarioB = new UsuarioB();
+                    usuarioB.setIdUsuario(rs.getInt(1));
+                    usuarioB.setNombre(rs.getString(2));
+                    usuarioB.setApellido(rs.getString(3));
+                    usuarioB.setDni(rs.getString(4));
+                    usuarioB.setDireccion(rs.getString(5));
+                    usuarioB.setCorreo(rs.getString(6));
+                    int rolID = rs.getInt(7);
+                    switch (rolID){
+                        case 1:
+                            usuarioB.setRolStr("Solicitante");
+                            break;
+                        case 2:
+                            usuarioB.setRolStr("Vecino");
+                            break;
+                        case 3:
+                            usuarioB.setRolStr("Coordinadora");
+                            break;
+                        case 4:
+                            usuarioB.setRolStr("Serenazgo");
+                            break;
+
+                    }
+
+
+                    listaBaneados.add(usuarioB);
+            }
+
+
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        return listaBaneados;
+    }
 }

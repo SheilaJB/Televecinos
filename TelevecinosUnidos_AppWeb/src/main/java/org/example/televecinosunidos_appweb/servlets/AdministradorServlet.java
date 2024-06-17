@@ -238,7 +238,7 @@ public class AdministradorServlet extends HttpServlet {
         SolicitanteDao solicitanteDao = new SolicitanteDao();
 
         String action = request.getParameter("action") == null ? "registrarSerenazgo" : request.getParameter("action");
-
+        String textoBuscar;
 
         switch (action){
             case "registrarSerenazgo":
@@ -293,7 +293,7 @@ public class AdministradorServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=listaInstructores_A");
                 break;
             case "buscarVecinoPorNombre":
-                String textoBuscar= request.getParameter("textoBuscar");
+                textoBuscar= request.getParameter("textoBuscar");
                 if (textoBuscar == null) {
                     response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=listaVecinos_A");
                 } else {
@@ -305,13 +305,46 @@ public class AdministradorServlet extends HttpServlet {
                 break;
 
             case "buscarSerenazgoPorNombre":
-                String textoBuscar2= request.getParameter("textoBuscarSerenazgo");
-                if (textoBuscar2 == null) {
+                textoBuscar= request.getParameter("textoBuscarSerenazgo");
+                if (textoBuscar == null) {
                     response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=listaSerenazgo_A");
                 } else {
-                    request.setAttribute("textoBusqueda",textoBuscar2);
-                    request.setAttribute("lista", serenazgoDao.listarSerenazgosPorNombre(textoBuscar2));
+                    request.setAttribute("textoBusqueda",textoBuscar);
+                    request.setAttribute("lista", serenazgoDao.listarSerenazgosPorNombre(textoBuscar));
                     RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Administrador/listaSerenazgo_A.jsp");
+                    view.forward(request, response);
+                }
+                break;
+            case "buscarCoordiCulturaPorNombre":
+                textoBuscar= request.getParameter("textoBuscar");
+                if (textoBuscar == null) {
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=listaCoordinadorasCultura_A");
+                } else {
+                    request.setAttribute("textoBusqueda",textoBuscar);
+                    request.setAttribute("lista", coordinadoraDao.listarCoordinadorasCulturaPorNombre(textoBuscar));
+                    RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Administrador/listaCoordinadorasCultura_A.jsp");
+                    view.forward(request, response);
+                }
+                break;
+            case "buscarCoordiDeportesPorNombre":
+                textoBuscar= request.getParameter("textoBuscar");
+                if (textoBuscar == null) {
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=listaCoordinadorasDeportes_A");
+                } else {
+                    request.setAttribute("textoBusqueda",textoBuscar);
+                    request.setAttribute("lista", coordinadoraDao.listarCoordinadorasDeportesPorNombre(textoBuscar));
+                    RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Administrador/listaCoordinadorasDeportes_A.jsp");
+                    view.forward(request, response);
+                }
+                break;
+            case "buscarUsuariosBaneados":
+                textoBuscar= request.getParameter("textoBuscar");
+                if (textoBuscar == null) {
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=usuariosBaneados_A");
+                } else {
+                    request.setAttribute("textoBusqueda",textoBuscar);
+                    request.setAttribute("lista", usuarioDao.listarBaneadosPorNombre(textoBuscar));
+                    RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Administrador/usuariosBaneados_A.jsp");
                     view.forward(request, response);
                 }
                 break;
