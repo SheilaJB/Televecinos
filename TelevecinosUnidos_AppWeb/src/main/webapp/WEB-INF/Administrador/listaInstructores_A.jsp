@@ -2,7 +2,7 @@
 <%@ page import="java.util.*" %>
 <%@ page import="org.example.televecinosunidos_appweb.model.beans.ProfesoresEvento" %>
 <jsp:useBean id="lista" scope="request" type="ArrayList<org.example.televecinosunidos_appweb.model.beans.ProfesoresEvento>"/>
-
+<jsp:useBean id="textoBusqueda" scope="request" type="java.lang.String" class="java.lang.String"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -73,12 +73,18 @@
             <!-- Filtro -->
             <div style="background-color: #FFB703; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
                 <div class="row justify-content-center align-items-center">
-                    <div class="col-md-5 mb-2">
-                        <input type="text" class="form-control" id="filtroInput" placeholder="Buscar..." onkeyup="filtrar()">
-                    </div>
-
-
-
+                    <form method="post" action="<%=request.getContextPath()%>/AdministradorServlet?action=buscarCoordiCulturaPorNombre">
+                        <div class="col-md-7 mb-2">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="filtroInput" placeholder="Buscar coordinadora de cultura..." name="textoBuscar" value="<%=textoBusqueda%>"/>
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fas fa-search"></i> </button>
+                                <a class="btn btn-secondary" href="<%=request.getContextPath()%>/AdministradorServlet?action=listaCoordinadorasCultura_A">
+                                    Limpiar
+                                </a>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
 

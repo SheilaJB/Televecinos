@@ -57,4 +57,39 @@ public class InstructorDao extends BaseDao{
         }
 
     }
+
+    public ArrayList<ProfesoresEvento> listarProfesoresPorNombre(String textoBuscar) {
+        String sql = "SELECT * FROM televecinosdb.profesoresevento where nombre like ? or apellido like ?);" ;
+
+
+        ArrayList<ProfesoresEvento> lista = new ArrayList<>();
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, textoBuscar+ "%");
+            pstmt.setString(2, textoBuscar+ "%");
+            try(ResultSet rs = pstmt.executeQuery()){
+                while (rs.next()) {
+                    ProfesoresEvento profesoresEvento = new ProfesoresEvento();
+                    profesoresEvento.setIdProfesoresEvento(rs.getInt(1));
+                    profesoresEvento.setNombre(rs.getString(2));
+                    profesoresEvento.setApellido(rs.getString(3));
+                    profesoresEvento.setCurso(rs.getString(4));
+
+
+
+                    lista.add(profesoresEvento);
+                }
+
+            }
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        return lista;
+
+    }
 }
