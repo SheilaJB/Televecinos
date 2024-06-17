@@ -238,6 +238,8 @@ public class AdministradorServlet extends HttpServlet {
         SolicitanteDao solicitanteDao = new SolicitanteDao();
 
         String action = request.getParameter("action") == null ? "registrarSerenazgo" : request.getParameter("action");
+
+
         switch (action){
             case "registrarSerenazgo":
 
@@ -291,7 +293,7 @@ public class AdministradorServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=listaInstructores_A");
                 break;
             case "buscarVecinoPorNombre":
-                String textoBuscar = request.getParameter("textoBuscar");
+                String textoBuscar= request.getParameter("textoBuscar");
                 if (textoBuscar == null) {
                     response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=listaVecinos_A");
                 } else {
@@ -301,9 +303,19 @@ public class AdministradorServlet extends HttpServlet {
                     view.forward(request, response);
                 }
                 break;
+
+            case "buscarSerenazgoPorNombre":
+                String textoBuscar2= request.getParameter("textoBuscarSerenazgo");
+                if (textoBuscar2 == null) {
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=listaSerenazgo_A");
+                } else {
+                    request.setAttribute("textoBusqueda",textoBuscar2);
+                    request.setAttribute("lista", serenazgoDao.listarSerenazgosPorNombre(textoBuscar2));
+                    RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Administrador/listaSerenazgo_A.jsp");
+                    view.forward(request, response);
+                }
+                break;
+
         }
-
-
-
     }
 }

@@ -1,8 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.*" %>
 <%@ page import="org.example.televecinosunidos_appweb.model.beans.SerenazgoB" %>
+<jsp:useBean id="lista" scope="request" type="ArrayList<org.example.televecinosunidos_appweb.model.beans.SerenazgoB>"/>
+<jsp:useBean id="textoBusqueda" scope="request" type="java.lang.String" class="java.lang.String"/>
 
-<jsp:useBean id="lista" scope="request" type="ArrayList<SerenazgoB>"/><%-- Obtengo la lista de serenazgo--%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -80,36 +81,23 @@
             <!-- Filtro -->
             <div style="background-color: #FFB703; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
                 <div class="row justify-content-center align-items-center">
-                    <div class="col-md-5 mb-2">
-                        <input type="text" class="form-control" id="filtroInput" placeholder="Buscar..." onkeyup="filtrar()">
-                    </div>
-                    <div class="col-md-2 mb-2">
-                        <select id="filtroCategoria" class="form-select" onchange="filtrar()">
-                            <option selected value="">Turno</option>
-                            <option value="Semanal">Diurno</option>
-                            <option value="Dos veces por semana">Nocturno</option>
-                        </select>
-                    </div>
-                    <div class="col-md-2 mb-2">
-                        <select id="filtroCategoria" class="form-select" onchange="filtrar()">
-                            <option selected value="">Tipo</option>
-                            <option value="Semanal">Canino</option>
-                            <option value="Bicicleta">Bicicleta</option>
-                            <option value="Vehiculo">Vehiculo</option>
-                            <option value="A pie<">A pie</option>
-                        </select>
-                    </div>
-
-
+                    <form method="post" action="<%=request.getContextPath()%>/AdministradorServlet?action=buscarSerenazgoPorNombre">
+                        <div class="col-md-7 mb-2">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="filtroInput" placeholder="Buscar serenazgo..." name="textoBuscarSerenazgo" value="<%=textoBusqueda%>"/>
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fas fa-search"></i> </button>
+                                <a class="btn btn-secondary" href="<%=request.getContextPath()%>/AdministradorServlet?action=listaSerenazgo_A">
+                                    Limpiar
+                                </a>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
 
             <div class="bg-light rounded h-100 p-4" style="font-weight: bold;">
-                <script>
-                    function crearEvento() {
-                        window.location.href = 'creacionEvento.html';
-                    }
-                </script>
+
 
                 <div class="table-responsive">
                     <table id="eventosTable" class="table" style="background-color: transparent;">

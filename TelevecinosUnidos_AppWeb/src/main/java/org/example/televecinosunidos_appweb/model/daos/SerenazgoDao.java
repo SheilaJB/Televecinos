@@ -244,5 +244,101 @@ public class SerenazgoDao extends BaseDao {
 
 
     }
+
+    public ArrayList<SerenazgoB> listarSerenazgosPorNombre(String textoBuscar) {
+
+
+
+        String sql = "SELECT \n" +
+                "    serenazgo.idSerenazgo,\n" +
+                "    serenazgo.numTelefono,\n" +
+                "    serenazgo.fechaNacimiento,\n" +
+                "    serenazgo.TurnoSerenazgo_idTurnoSerenazgo,\n" +
+                "    serenazgo.TipoSerenazgo_idTipoSerenazgo,\n" +
+                "    usuario.idUsuario,\n" +
+                "    usuario.nombre AS usuario_nombre,\n" +
+                "    usuario.apellido AS usuario_apellido,\n" +
+                "    usuario.dni AS usuario_dni,\n" +
+                "    usuario.direccion AS usuario_direccion,\n" +
+                "    usuario.correo AS usuario_correo,\n" +
+                "    usuario.contrasena AS usuario_contrasena,\n" +
+                "    usuario.PreguntasFrecuentes_idtable2 AS usuario_PreguntasFrecuentes_idtable2,\n" +
+                "    usuario.Rol_idRol AS usuario_Rol_idRol,\n" +
+                "    usuario.isBan AS usuario_isBan\n" +
+                "FROM \n" +
+                "    `televecinosdb`.`serenazgo`\n" +
+                "JOIN \n" +
+                "    `televecinosdb`.`usuario` ON serenazgo.usuario_idUsuario = usuario.idUsuario\n" +
+                "where usuario.isBan = 0 and (usuario.nombre like ? or usuario.apellido like ?)";
+
+
+        ArrayList<SerenazgoB> listaSerenazgos = new ArrayList<>();
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, textoBuscar+ "%");
+            pstmt.setString(2, textoBuscar+ "%");
+            try(ResultSet rs = pstmt.executeQuery()){
+                while (rs.next()) {
+                    SerenazgoB serenazgoB = new SerenazgoB();
+                    serenazgoB.setIdSerenazgo(rs.getInt(1));
+                    serenazgoB.setNumTelefono(rs.getString(2));
+                    serenazgoB.setFechaNacimiento(rs.getString(3));
+                    serenazgoB.setIdTurnoSerenazgo(rs.getInt(4));
+                    serenazgoB.setIdTipoSerenazgo(rs.getInt(5));
+                    UsuarioB us = new UsuarioB();
+                    us.setIdUsuario(rs.getInt(6));
+                    us.setNombre(rs.getString(7));
+                    us.setApellido(rs.getString(8));
+                    us.setDni(rs.getString(9));
+                    us.setDireccion(rs.getString(10));
+                    us.setCorreo(rs.getString(11));
+                    us.setContrasenia(rs.getString(12));
+                    us.setPreguntasFrecuentes_idTable2(rs.getInt(13));
+                    us.setIdRol(rs.getInt(14));
+                    serenazgoB.setUsuario(us);
+
+
+                    switch (serenazgoB.getIdTipoSerenazgo()){
+                        case 1:
+                            serenazgoB.setTipoSerenazgoStr("Bicicleta");
+                            break;
+                        case 2:
+                            serenazgoB.setTipoSerenazgoStr("A pie");
+                            break;
+                        case 3:
+                            serenazgoB.setTipoSerenazgoStr("Canino");
+                            break;
+                        case 4:
+                            serenazgoB.setTipoSerenazgoStr("Vehiculo");
+                            break;
+                    }
+
+                    switch (serenazgoB.getIdTurnoSerenazgo()){
+                        case 1:
+                            serenazgoB.setTurnoSerenazgoStr("Diurno");
+                            break;
+                        case 2:
+                            serenazgoB.setTurnoSerenazgoStr("Nocturno");
+                            break;
+
+
+                    }
+
+                    listaSerenazgos.add(serenazgoB);
+            }
+
+
+
+
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        return listaSerenazgos;
+    }
 }
 
