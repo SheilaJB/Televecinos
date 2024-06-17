@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+it<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     String action = request.getParameter("action");
     if (action == null) {
