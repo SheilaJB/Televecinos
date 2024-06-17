@@ -108,7 +108,7 @@
                 <img src="img/instructor.jpg" class="img-fluid mb-3" alt="Imagen Serenazgo" width="200">
 
                 <!-- Formulario -->
-                <form id="serenazgoForm" action="<%=request.getContextPath()%>/AdministradorServlet?action=registroInstructor">
+                <form method="post" action="<%=request.getContextPath()%>/AdministradorServlet?action=registroInstructor">
 
                     <!--
                     <label for="tipo" class="form-label" style="color:#023047;"><b>Tipo de instructor:</b></label>
@@ -156,6 +156,7 @@
                         <div class="m-n2" style="padding-bottom: 5%; ">
                             <button type="button" class="btn btn-warning m-2 text-white" onclick="regresar()">Regresar</button>
                             <button type="submit" class="btn btn-success m-2" id="openPopupBtn" >Registrar</button>
+
                         </div>
                     </div>
 
@@ -165,7 +166,7 @@
                         }
                     </script>
 
-                    <!-- Popup -->
+                    <!-- Popup
                     <div id="popup" class="popup" >
                         <div class="popup_contenido">
                             <span class="close-btn" id="closePopupBtn">&times;</span>
@@ -173,10 +174,11 @@
                             <h2 style="margin-top: 20px;">Éxito</h2>
                             <p>Se ha registrado un nuevo instructor</p>
                             <a href="#">
-                                <a href="<%=request.getContextPath()%>/AdministradorServlet?action=listaInstructores_A"><button type="button" class="btn btn-primary rounded-pill m-2">Regresar</button></a>
+                                <a href="/AdministradorServlet?action=listaInstructores_A"><button type="button" class="btn btn-primary rounded-pill m-2">Regresar</button></a>
                             </a>
                         </div>
                     </div>
+                    -->
 
                 </form>
 
