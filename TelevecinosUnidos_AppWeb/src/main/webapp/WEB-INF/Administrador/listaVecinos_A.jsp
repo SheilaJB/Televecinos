@@ -82,10 +82,9 @@
                     <form method="post" action="<%=request.getContextPath()%>/AdministradorServlet?action=buscarVecinoPorNombre">
                         <div class="col-md-7 mb-2">
                             <div class="input-group">
-                                <input type="text" class="form-control" id="filtroInput" placeholder="Buscar..." name="textoBuscar" value="<%=textoBusqueda%>"/>
+                                <input type="text" class="form-control" id="filtroInput" placeholder="Buscar vecino..." name="textoBuscar" value="<%=textoBusqueda%>"/>
                                 <button class="btn btn-primary" type="submit">
-                                    Buscar
-                                </button>
+                                    <i class="fas fa-search"></i> </button>
                                 <a class="btn btn-secondary" href="<%=request.getContextPath()%>/AdministradorServlet?action=listaVecinos_A">
                                     Limpiar
                                 </a>
