@@ -11,7 +11,7 @@ public class VecinoDao extends BaseDao{
 
         String sql = "SELECT idUsuario,nombre,apellido,dni,direccion,correo\n" +
                 "FROM televecinosdb.usuario \n" +
-                "where Rol_idRol = 2" ;
+                "where Rol_idRol = 2 and isBan=0" ;
 
 
         ArrayList<UsuarioB> listaVecinos = new ArrayList<>();
@@ -72,4 +72,52 @@ public class VecinoDao extends BaseDao{
 
         return usuarioB;
     }
+
+    public void banearVecino (String idUsuario) throws SQLException {
+        String sql = "UPDATE televecinosdb.usuario SET isBan = 1 WHERE idUsuario = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, idUsuario);
+            pstmt.executeUpdate();
+
+        }
+    }
+
+    public ArrayList<UsuarioB> listarBaneados() {
+
+        String sql = "SELECT idUsuario,nombre,apellido,dni,direccion,correo\n" +
+                "FROM televecinosdb.usuario \n" +
+                "where isBan=1" ;
+
+
+        ArrayList<UsuarioB> listaBaneados = new ArrayList<>();
+
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                UsuarioB usuarioB = new UsuarioB();
+                usuarioB.setIdUsuario(rs.getInt(1));
+                usuarioB.setNombre(rs.getString(2));
+                usuarioB.setApellido(rs.getString(3));
+                usuarioB.setDni(rs.getString(4));
+                usuarioB.setDireccion(rs.getString(5));
+                usuarioB.setCorreo(rs.getString(6));
+
+
+                listaBaneados.add(usuarioB);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        return listaBaneados;
+    }
+
+
 }

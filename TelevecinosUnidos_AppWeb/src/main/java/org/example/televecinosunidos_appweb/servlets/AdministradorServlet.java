@@ -10,6 +10,7 @@ import org.example.televecinosunidos_appweb.model.beans.UsuarioB;
 import org.example.televecinosunidos_appweb.model.daos.*;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -94,6 +95,50 @@ public class AdministradorServlet extends HttpServlet {
                 vista = "WEB-INF/Administrador/nuevasSolicitudes_A.jsp";
                 request.setAttribute("lista",solicitanteDao.listarSolicitantes());
                 request.getRequestDispatcher(vista).forward(request, response);
+                break;
+            case "usuariosBaneados_A":
+                vista = "WEB-INF/Administrador/usuariosBaneados_A.jsp";
+                request.setAttribute("lista",vecinoDao.listarBaneados());
+                request.getRequestDispatcher(vista).forward(request, response);
+                break;
+            case "solicitanteAVecinoAceptar":
+                String solicitanteId = request.getParameter("idSolicitante");
+                if (solicitanteDao.obtenerSolicitante(solicitanteId) != null) {
+                    try {
+                        solicitanteDao.aceptarSolicitud(solicitanteId);
+                        HttpSession httpSession = request.getSession();
+                        httpSession.setAttribute("msg","Solicitud aprobada exitosamente");
+                        response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=nuevasSolicitudes_A");
+                    } catch (SQLException e) {
+                        response.sendRedirect(request.getContextPath() + "/AdministradorServlet?err=Error al aprobar solicitud");
+                    }
+                }
+                break;
+            case "solicitanteAVecinoDenegar":
+                String solicitanteId2 = request.getParameter("idSolicitante");
+                if (solicitanteDao.obtenerSolicitante(solicitanteId2) != null) {
+                    try {
+                        solicitanteDao.denegarSolicitud(solicitanteId2);
+                        HttpSession httpSession = request.getSession();
+                        httpSession.setAttribute("msg","Solicitud denegada exitosamente");
+                        response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=nuevasSolicitudes_A");
+                    } catch (SQLException e) {
+                        response.sendRedirect(request.getContextPath() + "/AdministradorServlet?err=Error al denegadar solicitud");
+                    }
+                }
+                break;
+            case "banearVecino":
+                String vecinoId = request.getParameter("idVecino");
+                if (solicitanteDao.obtenerSolicitante(vecinoId) != null) {
+                    try {
+                        vecinoDao.banearVecino(vecinoId);
+                        HttpSession httpSession = request.getSession();
+                        httpSession.setAttribute("msg","Vecino baneado exitosomente");
+                        response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=listaVecinos_A");
+                    } catch (SQLException e) {
+                        response.sendRedirect(request.getContextPath() + "/AdministradorServlet?err=Error al denegadar solicitud");
+                    }
+                }
                 break;
 
 

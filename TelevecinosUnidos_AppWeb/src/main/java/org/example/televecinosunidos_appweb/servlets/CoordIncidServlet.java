@@ -15,7 +15,7 @@ public class CoordIncidServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         IncidenCoordDao incidenciaDao = new IncidenCoordDao();
         String action = request.getParameter("action") == null ? "listarIncidencia" : request.getParameter("action");
-        String vista = "";
+        String vista;
 
         switch (action) {
             case "listarIncidencia":
@@ -97,7 +97,7 @@ public class CoordIncidServlet extends HttpServlet {
                 }
 
                 break;
-            case "editar":
+            /*case "editar":
                 int id = Integer.parseInt(request.getParameter("idIncidencia"));
                 String nombre2 = request.getParameter("nombre");
                 String lugarExacto2 = request.getParameter("lugarExacto");
@@ -114,7 +114,7 @@ public class CoordIncidServlet extends HttpServlet {
                 //IncidenciasB incidenciaB = new IncidenciasB(id, nombre2, lugarExacto2, referencia2, foto2, ambulancia2, numeroContacto2, criticidadId2, tipoIncidenciaId2, estadosIncidenciaId2, serenazgoId2, usuarioId2, incidenciaPersonal2, fechaHora2);
                 //incidenciaDao.actualizarIncidencia(incidenciaB);
                 response.sendRedirect(request.getContextPath() + "/IncidenciaServlet");
-                break;
+                break;*/
         }
     }
 }
