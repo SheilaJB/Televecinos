@@ -7,7 +7,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>Lista de vecinos</title>
+        <title>Usuarios Baneados</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="" name="keywords">
         <meta content="" name="description">
@@ -100,9 +100,8 @@
                                         <th scope="col">Nombre y Apellido</th>
                                         <th scope="col">Direccion</th>
                                         <th scope="col">DNI</th>
-                                        <th scope="col">Enviar correo</th>
-                                        <th scope="col">Banear</th>
-                                        <th scope="col">ver Detalle</th>
+                                        <th scope="col">Rol</th>
+                                        <th scope="col">Desbanear</th>
 
                                     </tr>
                                 </thead>
@@ -112,9 +111,8 @@
                                         <td><%=usuarioB.getNombre() + " " + usuarioB.getApellido()%></td>
                                         <td><%=usuarioB.getDireccion() %></td>
                                         <td><%=usuarioB.getDni() %></td>
-                                        <td><a href="<%=request.getContextPath()%>/*?action=verSerenazgo&idSerenazgo=<%=usuarioB.getIdUsuario()%>"><button type="button" class="btn btn-success m-2"><i class="fas fa-envelope"></i></button></a></td>
-                                        <td><a href="<%=request.getContextPath()%>/AdministradorServlet?action=banearVecino&idVecino=<%=usuarioB.getIdUsuario()%>"><button type="button" class="btn btn-danger m-2" ><i class="fas fa-ban"></i></button></a></td>
-                                        <td><a href="<%=request.getContextPath()%>/AdministradorServlet?action=DetalleVecinos_A&idVecino=<%=usuarioB.getIdUsuario()%>"><button type="button" class="btn btn-info m-2"><i class="fas fa-eye"></i></button></a></td>
+                                        <td><%=usuarioB.getRolStr() %></td>
+                                        <td><a href="<%=request.getContextPath()%>/AdministradorServlet?action=desbanearUsuario&idUsuario=<%=usuarioB.getIdUsuario()%>"><button type="button" class="btn btn-success m-2" ><i class="fas fa-unlock"></i></button></a></td>
                                     </tr>
                                     <% } %>
                                 </tbody>

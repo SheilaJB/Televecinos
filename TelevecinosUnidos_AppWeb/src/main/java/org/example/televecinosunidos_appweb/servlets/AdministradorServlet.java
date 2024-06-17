@@ -20,12 +20,13 @@ import java.util.Date;
 public class AdministradorServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        UsuarioDao usuarioDao = new UsuarioDao();
         SerenazgoDao serenazgoDao = new SerenazgoDao();
         CoordinadoraDao coordinadoraDao = new CoordinadoraDao();
         VecinoDao vecinoDao = new VecinoDao();
         InstructorDao instructorDao = new InstructorDao();
         SolicitanteDao solicitanteDao = new SolicitanteDao();
+
 
         ArrayList<SerenazgoB> listarSerenazgos = serenazgoDao.listarSerenazgos();
         String idCoordinadora;
@@ -45,8 +46,6 @@ public class AdministradorServlet extends HttpServlet {
                 break;
             case "registroSerenazgo":
                 request.getRequestDispatcher("WEB-INF/Administrador/registroSerenazgo.jsp").forward(request,response);
-                break;
-            case "banearSerenazgo":
                 break;
             case "listaCoordinadorasCultura_A":
                 vista = "WEB-INF/Administrador/listaCoordinadorasCultura_A.jsp";
@@ -98,7 +97,7 @@ public class AdministradorServlet extends HttpServlet {
                 break;
             case "usuariosBaneados_A":
                 vista = "WEB-INF/Administrador/usuariosBaneados_A.jsp";
-                request.setAttribute("lista",vecinoDao.listarBaneados());
+                request.setAttribute("lista",usuarioDao.listarBaneados());
                 request.getRequestDispatcher(vista).forward(request, response);
                 break;
             case "solicitanteAVecinoAceptar":
@@ -129,12 +128,64 @@ public class AdministradorServlet extends HttpServlet {
                 break;
             case "banearVecino":
                 String vecinoId = request.getParameter("idVecino");
-                if (solicitanteDao.obtenerSolicitante(vecinoId) != null) {
+                if (usuarioDao.obtenerUsuario(vecinoId) != null) {
                     try {
-                        vecinoDao.banearVecino(vecinoId);
+                        usuarioDao.banearUsuario(vecinoId);
                         HttpSession httpSession = request.getSession();
                         httpSession.setAttribute("msg","Vecino baneado exitosomente");
                         response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=listaVecinos_A");
+                    } catch (SQLException e) {
+                        response.sendRedirect(request.getContextPath() + "/AdministradorServlet?err=Error al denegadar solicitud");
+                    }
+                }
+                break;
+            case "banearCoordinadoraCultura":
+                String cordiCulturaId = request.getParameter("idCoordinadora");
+                if (usuarioDao.obtenerUsuario(cordiCulturaId) != null) {
+                    try {
+                        usuarioDao.banearUsuario(cordiCulturaId);
+                        HttpSession httpSession = request.getSession();
+                        httpSession.setAttribute("msg","Coordinadora baneada exitosomente");
+                        response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=listaCoordinadorasCultura_A");
+                    } catch (SQLException e) {
+                        response.sendRedirect(request.getContextPath() + "/AdministradorServlet?err=Error al denegadar solicitud");
+                    }
+                }
+                break;
+            case "banearCoordinadoraDeporte":
+                String cordiDeporteId = request.getParameter("idCoordinadora");
+                if (usuarioDao.obtenerUsuario(cordiDeporteId) != null) {
+                    try {
+                        usuarioDao.banearUsuario(cordiDeporteId);
+                        HttpSession httpSession = request.getSession();
+                        httpSession.setAttribute("msg","Coordinadora baneada exitosomente");
+                        response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=listaCoordinadorasDeportes_A");
+                    } catch (SQLException e) {
+                        response.sendRedirect(request.getContextPath() + "/AdministradorServlet?err=Error al denegadar solicitud");
+                    }
+                }
+                break;
+            case "banearSerenazgo":
+                String serenazgoId = request.getParameter("idSerenazgo");
+                if (usuarioDao.obtenerUsuario(serenazgoId) != null) {
+                    try {
+                        usuarioDao.banearUsuario(serenazgoId);
+                        HttpSession httpSession = request.getSession();
+                        httpSession.setAttribute("msg","Serenazgo baneado exitosomente");
+                        response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=listaSerenazgo_A");
+                    } catch (SQLException e) {
+                        response.sendRedirect(request.getContextPath() + "/AdministradorServlet?err=Error al denegadar solicitud");
+                    }
+                }
+                break;
+            case "desbanearUsuario":
+                String usuarioId = request.getParameter("idUsuario");
+                if (usuarioDao.obtenerUsuario(usuarioId) != null) {
+                    try {
+                        usuarioDao.desbanearUsuario(usuarioId);
+                        HttpSession httpSession = request.getSession();
+                        httpSession.setAttribute("msg","Usuario desbaneado exitosomente");
+                        response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=usuariosBaneados_A");
                     } catch (SQLException e) {
                         response.sendRedirect(request.getContextPath() + "/AdministradorServlet?err=Error al denegadar solicitud");
                     }
