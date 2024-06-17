@@ -1,5 +1,5 @@
 package org.example.televecinosunidos_appweb.servlets;
-
+/*
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -15,37 +15,37 @@ public class VistaServlet extends HttpServlet {
         String idVista = request.getParameter("idVista")==null?"inicioCoordinador":request.getParameter("idVista");//siempre va a haber un action, que va a ser lista por defecto
         switch(idVista){
             case "inicioCoordinador":
-                vista = "WEB-INF/Coordinadora/InicioCoordinador.jsp";
+                //vista = "WEB-INF/Coordinadora/InicioCoordinador.jsp";
                 break;
             case "eventoGeneralesC":
-                vista = "WEB-INF/Coordinadora/EventoGenerales_C.jsp";
+                //vista = "WEB-INF/Coordinadora/EventoGenerales_C.jsp";
                 break;
             case "creacionEventoC":
-                vista = "WEB-INF/Coordinadora/creacionEvento.jsp";
+                //vista = "WEB-INF/Coordinadora/creacionEvento.jsp";
                 break;
             case "listaEventoCoordinador":
-                vista = "WEB-INF/Coordinadora/ListaEvent-Coordinador.jsp";
+                //vista = "WEB-INF/Coordinadora/ListaEvent-Coordinador.jsp";
                 break;
             case "listaIncidenciaC":
-                vista = "WEB-INF/Coordinadora/listaIncidencias_C.jsp";
+                //vista = "WEB-INF/Coordinadora/listaIncidencias_C.jsp";
                 break;
             case "actualizarIncidenciaC":
-                vista = "WEB-INF/Coordinadora/actualizarIncidencia_C.jsp";
+                //vista = "WEB-INF/Coordinadora/actualizarIncidencia_C.jsp";
                 break;
             case "perfilC":
-                vista = "WEB-INF/Coordinadora/perfil_C.jsp";
+                //vista = "WEB-INF/Coordinadora/perfil_C.jsp";
                 break;
 
             case "preguntasFrecuentesC":
-                vista = "WEB-INF/Coordinadora/preguntasFrecuentes_C.jsp";
+                //vista = "WEB-INF/Coordinadora/preguntasFrecuentes_C.jsp";
                 break;
             case "eventoPropio":
-                vista = "WEB-INF/Coordinadora/eventoPropio.jsp";
+                //vista = "WEB-INF/Coordinadora/eventoPropio.jsp";
                 break;
         }
 
-        RequestDispatcher rd = request.getRequestDispatcher(vista);
-        rd.forward(request, response);
+        //RequestDispatcher rd = request.getRequestDispatcher(vista);
+       // rd.forward(request, response);
     }
 
     @Override
@@ -53,3 +53,4 @@ public class VistaServlet extends HttpServlet {
 
     }
 }
+*/

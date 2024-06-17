@@ -6,19 +6,10 @@ import org.example.televecinosunidos_appweb.model.beans.ProfesoresEvento;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class EventoDao {
+public class EventoDao extends BaseDao{
 
     //Función lista de eventos
     public ArrayList<EventoB> listarEventosPropios() {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
-        String url = "jdbc:mysql://localhost:3306/televecinosdb";
-        String username = "root";
-        String password = "root";
 
         String sql = "SELECT e.idEventos AS 'ID Evento', e.nombre AS 'Nombre', DATE_FORMAT(e.fecha_inicio, '%d %M') AS 'Fecha de Inicio', " +
                 "es.estadosEvento AS 'Estado', ef.tipoFrecuencia AS 'Frecuencia' " +
@@ -28,7 +19,7 @@ public class EventoDao {
 
         ArrayList<EventoB> listaEventosPropios = new ArrayList<>();
 
-        try (Connection conn = DriverManager.getConnection(url, username, password);
+        try (Connection conn = getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
@@ -52,15 +43,6 @@ public class EventoDao {
     //Function buscar un evento
     public EventoB buscarEventoPorId(String idEvento) {
         EventoB evento = null;
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
-        String url = "jdbc:mysql://localhost:3306/televecinosdb";
-        String username = "root";
-        String password = "root";
 
         String sql = "SELECT " +
                 "e.idEventos AS id_evento, " +
@@ -90,7 +72,7 @@ public class EventoDao {
                 "JOIN profesoresevento pf ON e.ProfesoresEvento_idProfesoresEvento = pf.idProfesoresEvento " +
                 "WHERE e.idEventos = ?";
 
-        try (Connection conn = DriverManager.getConnection(url, username, password);
+        try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             int idEvent = Integer.parseInt(idEvento);
             pstmt.setInt(1, idEvent);
@@ -128,20 +110,12 @@ public class EventoDao {
 
     // Function crear evento
     public void crearEvento(EventoB eventoB) {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
 
-        String url = "jdbc:mysql://localhost:3306/televecinosdb";
-        String username = "root";
-        String password = "root";
         String sql = "INSERT INTO `televecinosDB`.`eventos` \n" +
                 "(`nombre`, `descripcion`, `lugar`, `Coordinador_idUsuario`, `fecha_inicio`, `fecha_fin`, `cantidadVacantes`, `cantDisponibles`, `foto`, `listaMateriales`, `EventEstados_idEventEstados`, `EventFrecuencia_idEventFrecuencia`, `TipoEvento_idTipoEvento`, `ProfesoresEvento_idProfesoresEvento`, `hora_inicio`, `hora_fin`, `diasEvento`) \n" +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection connection = DriverManager.getConnection(url, username, password);
+        try (Connection connection = getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             int idCoordinador = 1;
@@ -191,19 +165,10 @@ public class EventoDao {
     }
 
     public ArrayList<ProfesoresEvento> listarProfesores() {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
         ArrayList<ProfesoresEvento> lista = new ArrayList<>();
-        String url = "jdbc:mysql://localhost:3306/televecinosdb";
-        String username = "root";
-        String password = "root";
         String sql = "SELECT * FROM profesoresevento";
 
-        try (Connection conn = DriverManager.getConnection(url, username, password);
+        try (Connection conn = getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
@@ -223,20 +188,12 @@ public class EventoDao {
     }
 
     public void actualizarEvento(EventoB evento) {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
 
-        String url = "jdbc:mysql://localhost:3306/televecinosdb";
-        String username = "root";
-        String password = "root";
         String sql = "UPDATE Eventos SET nombre = ?, descripcion = ?, lugar = ?, " +
                 "fecha_inicio = ?, fecha_fin = ?, EventFrecuencia_idEventFrecuencia = ?, ProfesoresEvento_idProfesoresEvento = ?, " +
                 "cantidadVacantes = ?, foto = ?, listaMateriales = ?, hora_inicio = ?, hora_fin = ?, diasEvento = ? WHERE idEventos = ? AND eliminado = FALSE";
 
-        try (Connection conn = DriverManager.getConnection(url, username, password);
+        try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, evento.getNombre());
             ps.setString(2, evento.getDescripcion());
@@ -261,18 +218,10 @@ public class EventoDao {
     }
 
     public boolean borrarEvento(int id) {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
 
-        String url = "jdbc:mysql://localhost:3306/televecinosdb";
-        String username = "root";
-        String password = "root";
         String sql = "UPDATE Eventos SET eliminado = TRUE WHERE idEventos = ?";
 
-        try (Connection conn = DriverManager.getConnection(url, username, password);
+        try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, id);
             ps.executeUpdate();
