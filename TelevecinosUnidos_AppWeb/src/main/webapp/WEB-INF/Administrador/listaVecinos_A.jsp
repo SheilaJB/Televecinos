@@ -79,29 +79,26 @@
             <!-- Filtro -->
             <div style="background-color: #FFB703; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
                 <div class="row justify-content-center align-items-center">
-
                     <form method="post" action="<%=request.getContextPath()%>/AdministradorServlet?action=buscarVecinoPorNombre">
-                        <div class="col-md-5 mb-2">
-                            <input type="text" class="form-control" id="filtroInput" placeholder="Buscar..." name="textoBuscar" value="<%=textoBusqueda%>"/>
-                            <button class="input-group-text" type="submit">
-                                <i class="bi bi-search"></i>
-                            </button>
-                            <a class="input-group-text" href="<%=request.getContextPath()%>/AdministradorServlet?action=listaVecinos_A">
-                                <i class="bi bi-x-circle"></i>
-                            </a>
+                        <div class="col-md-7 mb-2">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="filtroInput" placeholder="Buscar..." name="textoBuscar" value="<%=textoBusqueda%>"/>
+                                <button class="btn btn-primary" type="submit">
+                                    Buscar
+                                </button>
+                                <a class="btn btn-secondary" href="<%=request.getContextPath()%>/AdministradorServlet?action=listaVecinos_A">
+                                    Limpiar
+                                </a>
+                            </div>
                         </div>
                     </form>
-
-
                 </div>
             </div>
 
+
+
+
             <div class="bg-light rounded h-100 p-4" style="font-weight: bold;">
-                <script>
-                    function crearEvento() {
-                        window.location.href = 'creacionEvento.html';
-                    }
-                </script>
 
                 <div class="table-responsive">
                     <table id="eventosTable" class="table" style="background-color: transparent;">
