@@ -159,7 +159,7 @@ public class AdministradorServlet extends HttpServlet {
                         usuarioDao.banearUsuario(cordiDeporteId);
                         HttpSession httpSession = request.getSession();
                         httpSession.setAttribute("msg","Coordinadora baneada exitosomente");
-                        response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=listaCoordinadorasDeporte_A");
+                        response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=listaCoordinadorasDeportes_A");
                     } catch (SQLException e) {
                         response.sendRedirect(request.getContextPath() + "/AdministradorServlet?err=Error al denegadar solicitud");
                     }
