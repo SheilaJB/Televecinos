@@ -1,5 +1,6 @@
+<%@ page import="org.example.televecinosunidos_appweb.model.beans.IncidenciasB" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<jsp:useBean id="lista" scope="request" type="java.util.ArrayList<org.example.televecinosunidos_appweb.model.beans.IncidenciasB>" />
 <!DOCTYPE html>
 <html lang="en">
 
@@ -133,6 +134,7 @@
             <div class="table-responsive">
                 <table class="table" style="background-color: transparent;">
                     <thead>
+
                     <tr>
                         <th scope="col">Nombre de la incidencia</th>
                         <th scope="col">Fecha</th>
@@ -144,8 +146,26 @@
                         <th scope="col">Ver</th>
                     </tr>
                     </thead>
+
                     <tbody>
+                    <% for (IncidenciasB incidenciasB : lista) { %>
                     <tr>
+
+                        <td><%= incidenciasB.getNombreIncidencia()  %>
+                        </td>
+                        <td><%=incidenciasB.getFecha()%>
+                        </td>
+                        <td><%=incidenciasB.getTipoIncidencia_idTipoIncidenciaStr()%>
+                        </td>
+                        <td><%=incidenciasB.getCriticidadIncidencia_idCriticidadIncidenciaStr()%>
+                        </td>
+                        <td><%=incidenciasB.getUrbanizacion()%>
+                        </td>
+                        <td><%=incidenciasB.getEstadosIncidencia_idEstadoIncidenciaStr()%>
+                        </td>
+
+                        <td><a href="<%=request.getContextPath()%>/SerenazgoServlet?action=gestionar_Incidencia_S&id=<%=incidenciasB.getIdIncidencias()%>"><button type="button" class="btn btn-success-puedeGestionar m-2"><i class="fas fa-check"></i></button></a></td>
+                        <!--
                         <td>Incidencia 1</td>
                         <td>21-Enero</td>
                         <th scope="col">Seguridad pública</th>
@@ -155,7 +175,7 @@
                         <td>
                             <a href="gestionar_Incidencia_S.html">
                                 <button type="button" class="btn btn-success-puedeGestionar m-2" onclick="editEvent(1)">
-                                    <i class="fas fa-pencil-alt"></i> <!-- Ícono de lápiz de FontAwesome -->
+                                    <i class="fas fa-pencil-alt"></i>
                                 </button>
                             </a>
                         </td>
@@ -166,105 +186,13 @@
                                 </button>
                             </a>
                         </td>
-                    </tr>
-                    <tr>
-                        <td>Incidencia 2</td>
-                        <td>21-Enero</td>
-                        <th scope="col">Infraestructura y Servicios Públicos</th>
-                        <td><i class="me-2 colorLetrasBarraLateral"></i>Alta</a></td>
-                        <th scope="col">Elmer Faucett</th>
-                        <td><i class="fa me-2 colorLetrasBarraLateral"></i>Pendiente</a></td>
-                        <td>
-                            <a href="gestionar_Incidencia_S.html">
-                                <button type="button" class="btn btn-success-puedeGestionar m-2" onclick="editEvent(1)">
-                                    <i class="fas fa-pencil-alt"></i> <!-- Ícono de lápiz de FontAwesome -->
-                                </button>
-                            </a>
-                        </td>
-                        <td>
-                            <a href="verInicidencia_S.html">
-                                <button type="button" class="btn btn-primary m-2" onclick="editEvent(1)">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                            </a>
-                        </td>
+                    </tr> -->
+
                     </tr>
 
-
-
-
-                    <tr>
-                        <td>Incidencia 3</td>
-                        <td>21-Enero</td>
-
-                        <th scope="col">Otro</th>
-                        <td><i class="me-2 colorLetrasBarraLateral"></i>Alta</a></td>
-                        <th scope="col">Otro</th>
-                        <td><i class="fa me-2 colorLetrasBarraLateral"></i>En curso</a></td>
-                        <td>
-                            <a href="gestionar_Incidencia_S.html">
-                                <button type="button" class="btn btn-success m-2" onclick="editEvent(1)">
-                                    <i class="fas fa-pencil-alt"></i> <!-- Ícono de lápiz de FontAwesome -->
-                                </button>
-                            </a>
-                        </td>
-                        <td>
-                            <a href="verInicidencia_S.html">
-                                <button type="button" class="btn btn-primary m-2" onclick="editEvent(1)">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                            </a>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>Incidencia 4</td>
-                        <td>21-Enero</td>
-                        <th scope="col">Infraestructura y Servicios Públicos</th>
-                        <td><i class="me-2 colorLetrasBarraLateral"></i>Alta</a></td>
-                        <th scope="col">Libertad</th>
-                        <td><i class="fa me-2 colorLetrasBarraLateral"></i>Procesado</a></td>
-                        <td>
-                            <a href="">
-                                <button type="button" class="btn btn-success-nopuedeGestionar m-2" onclick="editEvent(1)">
-                                    <i class="fas fa-pencil-alt"></i> <!-- Ícono de lápiz de FontAwesome -->
-                                </button>
-                            </a>
-                        </td>
-                        <td>
-                            <a href="verInicidencia_S.html">
-                                <button type="button" class="btn btn-primary m-2" onclick="editEvent(1)">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                            </a>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>Incidencia 5</td>
-                        <td>21-Enero</td>
-                        <th scope="col">Emergencia pública</th>
-                        <td><i class="me-2 colorLetrasBarraLateral"></i>Baja</a></td>
-                        <th scope="col">José de La Riva Agüero</th>
-                        <td><i class="fa me-2 colorLetrasBarraLateral"></i>Procesado</a></td>
-                        <td>
-                            <a href="">
-                                <button type="button" class="btn btn-success-nopuedeGestionar m-2" onclick="editEvent(1)">
-                                    <i class="fas fa-pencil-alt"></i> <!-- Ícono de lápiz de FontAwesome -->
-                                </button>
-                            </a>
-                        </td>
-                        <td>
-                            <a href="verInicidencia_S.html">
-                                <button type="button" class="btn btn-primary m-2" onclick="editEvent(1)">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                            </a>
-                        </td>
-                    </tr>
-
-
+                    <% } %>
                     </tbody>
+
                 </table>
 
             </div>

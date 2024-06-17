@@ -10,7 +10,7 @@ public class CoordinadoraDao extends BaseDao{
     public ArrayList<UsuarioB> listarCoordinadorasCultura() {
         String sql = "SELECT idUsuario,nombre,apellido,dni,direccion,correo \n" +
                 "FROM televecinosdb.usuario \n" +
-                "WHERE Rol_idRol = 3 AND TipoCoordinador_idTipoCoordinador = 1;";
+                "WHERE Rol_idRol = 3 AND TipoCoordinador_idTipoCoordinador = 1 and isBan = 0;" ;
 
         ArrayList<UsuarioB> listaCoordinadoras = new ArrayList<>();
 
@@ -39,7 +39,7 @@ public class CoordinadoraDao extends BaseDao{
     public ArrayList<UsuarioB> listarCoordinadorasDeportes() {
         String sql = "SELECT idUsuario,nombre,apellido,dni,direccion,correo \n" +
                 "FROM televecinosdb.usuario \n" +
-                "WHERE Rol_idRol = 3 AND TipoCoordinador_idTipoCoordinador = 2;";
+                "WHERE Rol_idRol = 3 AND TipoCoordinador_idTipoCoordinador = 2 and isBan = 0;";
 
         ArrayList<UsuarioB> listaCoordinadoras = new ArrayList<>();
 

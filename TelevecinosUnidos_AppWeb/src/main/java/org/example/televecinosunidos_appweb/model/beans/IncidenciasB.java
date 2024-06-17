@@ -9,6 +9,16 @@ public class IncidenciasB {
     private int ambulancia;
     private  String urbanizacion;
 
+    private int idUrbanizacion;
+
+    public int getIdUrbanizacion() {
+        return idUrbanizacion;
+    }
+
+    public void setIdUrbanizacion(int idUrbanizacion) {
+        this.idUrbanizacion = idUrbanizacion;
+    }
+
     public String getUrbanizacion() {
         return urbanizacion;
     }
@@ -21,6 +31,35 @@ public class IncidenciasB {
     private int criticidadIncidencia_idCriticidadIncidencia;
     private int tipoIncidencia_idTipoIncidencia;
     private int estadosIncidencia_idEstadoIncidencia;
+
+    private String criticidadIncidencia_idCriticidadIncidenciaStr;
+    private String tipoIncidencia_idTipoIncidenciaStr;
+    private String estadosIncidencia_idEstadoIncidenciaStr;
+
+    public String getCriticidadIncidencia_idCriticidadIncidenciaStr() {
+        return criticidadIncidencia_idCriticidadIncidenciaStr;
+    }
+
+    public void setCriticidadIncidencia_idCriticidadIncidenciaStr(String criticidadIncidencia_idCriticidadIncidenciaStr) {
+        this.criticidadIncidencia_idCriticidadIncidenciaStr = criticidadIncidencia_idCriticidadIncidenciaStr;
+    }
+
+    public String getTipoIncidencia_idTipoIncidenciaStr() {
+        return tipoIncidencia_idTipoIncidenciaStr;
+    }
+
+    public void setTipoIncidencia_idTipoIncidenciaStr(String tipoIncidencia_idTipoIncidenciaStr) {
+        this.tipoIncidencia_idTipoIncidenciaStr = tipoIncidencia_idTipoIncidenciaStr;
+    }
+
+    public String getEstadosIncidencia_idEstadoIncidenciaStr() {
+        return estadosIncidencia_idEstadoIncidenciaStr;
+    }
+
+    public void setEstadosIncidencia_idEstadoIncidenciaStr(String estadosIncidencia_idEstadoIncidenciaStr) {
+        this.estadosIncidencia_idEstadoIncidenciaStr = estadosIncidencia_idEstadoIncidenciaStr;
+    }
+
     private int serenazgo_idSerenazgo;
     private int usuario_idUsuario;
     private int incidenciaPersonal;

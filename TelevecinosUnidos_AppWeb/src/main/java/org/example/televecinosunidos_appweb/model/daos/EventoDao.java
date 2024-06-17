@@ -3,6 +3,9 @@ package org.example.televecinosunidos_appweb.model.daos;
 import org.example.televecinosunidos_appweb.model.beans.EventoB;
 import org.example.televecinosunidos_appweb.model.beans.ProfesoresEvento;
 
+import java.time.LocalDate;
+import java.time.DayOfWeek;
+import java.time.temporal.TemporalAdjusters;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -142,13 +145,11 @@ public class EventoDao extends BaseDao{
 
             pstmt.executeUpdate();
 
-            // Obtener el id generado
             try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     int idEvento = generatedKeys.getInt(1);
 
-                    // Llamar a otra función que requiere el id, fecha_inicio y fecha_fin
-                    fechas_evento(idEvento, eventoB.getFecha_inicio(), eventoB.getFecha_fin());
+                    fechasEvento(idEvento, eventoB.getFecha_inicio(), eventoB.getFecha_fin(), eventoB.getEventFrecuencia_idEventFrecuencia(), eventoB.getDiaEvento());
                 } else {
                     throw new SQLException("Creating event failed, no ID obtained.");
                 }
@@ -160,8 +161,82 @@ public class EventoDao extends BaseDao{
         }
     }
 
-    public void fechas_evento(int idEvento, String fechaInicio, String fechaFin) {
-        // Implementación de la función que utiliza idEvento, fechaInicio y fechaFin
+    public void fechasEvento(int idEvento, String fechaInicio, String fechaFin, int frecuencia, String diaEvento) {
+        LocalDate inicio = LocalDate.parse(fechaInicio);
+        LocalDate fin = LocalDate.parse(fechaFin);
+
+
+        ArrayList<LocalDate> fechasEntre = new ArrayList<>();
+        ArrayList<LocalDate> fechasEntre2 = new ArrayList<>();
+        LocalDate fechaActual = inicio;
+        if(frecuencia == 1){
+            fechasEntre.add(inicio);
+            while (!fechaActual.isAfter(fin)) {
+                LocalDate siguienteFecha = fechaActual.with(TemporalAdjusters.next(fechaActual.getDayOfWeek()));
+                if (!siguienteFecha.isAfter(fin)) {
+                    fechasEntre.add(siguienteFecha);
+                }
+                fechaActual = siguienteFecha;
+            }
+        } else if (frecuencia == 2) {
+            while (!fechaActual.isAfter(fin)) {
+                fechasEntre.add(fechaActual);
+                LocalDate fechaDosDiasDespues = fechaActual.plusDays(2);
+                if (!fechaDosDiasDespues.isAfter(fin)) {
+                    fechasEntre2.add(fechaDosDiasDespues);
+                }else{
+                    fechasEntre2.add(null);
+                }
+                fechaActual = fechaActual.with(TemporalAdjusters.next(fechaActual.getDayOfWeek()));
+            }
+        }
+
+        for (int i = 0; i < fechasEntre.size(); i++) {
+            String url = "jdbc:mysql://localhost:3306/televecinosdb";
+            String username = "root";
+            String password = "root";
+            String sql = "INSERT INTO dias_evento (eventos_idEventos, dia1, dia2) VALUES (?, ?, ?)";
+            try (Connection connection = DriverManager.getConnection(url, username, password);
+                 PreparedStatement pstmt = connection.prepareStatement(sql)) {
+                if (frecuencia == 1){
+                    pstmt.setInt(1, idEvento);
+                    pstmt.setString(2, fechasEntre.get(i).toString());
+                    pstmt.setNull(3, java.sql.Types.INTEGER);
+                }else{
+                    pstmt.setInt(1, idEvento);
+                    pstmt.setString(2, fechasEntre.get(i).toString());
+                    if (fechasEntre2.get(i) != null) {
+                        pstmt.setString(3, fechasEntre2.get(i).toString());
+                    }else{
+                        pstmt.setNull(3, java.sql.Types.INTEGER);
+                    }
+
+                }
+                pstmt.executeUpdate();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+                throw new RuntimeException("Error al insertar en la base de datos", e);
+            }
+
+        }
+    }
+    public void eliminarFechasEventoPorIdEvento(int eventosId) {
+        String url = "jdbc:mysql://localhost:3306/televecinosdb";
+        String username = "root";
+        String password = "root";
+        String sql = "DELETE FROM dias_evento WHERE eventos_idEventos = ?";
+
+        try (Connection connection = DriverManager.getConnection(url, username, password);
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
+
+            pstmt.setInt(1, eventosId);
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error al eliminar días de evento en la base de datos", e);
+        }
     }
 
     public ArrayList<ProfesoresEvento> listarProfesores() {
@@ -194,7 +269,7 @@ public class EventoDao extends BaseDao{
                 "cantidadVacantes = ?, foto = ?, listaMateriales = ?, hora_inicio = ?, hora_fin = ?, diasEvento = ? WHERE idEventos = ? AND eliminado = FALSE";
 
         try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+             PreparedStatement ps = conn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, evento.getNombre());
             ps.setString(2, evento.getDescripcion());
             ps.setString(3, evento.getLugar());
@@ -212,6 +287,9 @@ public class EventoDao extends BaseDao{
             ps.setInt(14, evento.getIdEvento());
 
             ps.executeUpdate();
+
+            fechasEvento(evento.getIdEvento(), evento.getFecha_inicio(), evento.getFecha_fin(), evento.getEventFrecuencia_idEventFrecuencia(), evento.getDiaEvento());
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -34,7 +34,8 @@ public class SerenazgoDao extends BaseDao {
                 "FROM \n" +
                 "    `televecinosdb`.`serenazgo`\n" +
                 "JOIN \n" +
-                "    `televecinosdb`.`usuario` ON serenazgo.usuario_idUsuario = usuario.idUsuario;\n" ;
+                "    `televecinosdb`.`usuario` ON serenazgo.usuario_idUsuario = usuario.idUsuario\n" +
+                "where usuario.isBan = 0;";
 
 
         ArrayList<SerenazgoB> listaSerenazgos = new ArrayList<>();
@@ -102,7 +103,6 @@ public class SerenazgoDao extends BaseDao {
 
     public SerenazgoB buscarSerenazgoPorId(String idSerenazgo) {
         SerenazgoB serenazgoB= new SerenazgoB();
-
 
 
         String sql = "SELECT \n" +

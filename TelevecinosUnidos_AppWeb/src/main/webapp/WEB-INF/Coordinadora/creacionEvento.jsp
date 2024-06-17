@@ -66,6 +66,13 @@
             cursor: pointer;
             color: rgb(0, 0, 0);
         }
+        .error {
+            color: red;
+            display: none;
+        }
+        .highlight {
+            border-color: red;
+        }
     </style>
 </head>
 
@@ -146,144 +153,144 @@
 
 
         <h2 class="mb-2 text-center" style = "padding-top: 3%;" style="color:#023047;">Creación de un nuevo evento</h2>
+        <div id="error-message" class="error">Por favor, complete todos los campos obligatorios.</div>
         <!-- Form Start -->
         <form method="post" action="<%=request.getContextPath()%>/CoordinadorServlet">
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
                     <div class="col-sm-12">
                         <div class="rounded h-100 p-4" style=" background-color: #ffb703;">
-                                <!---Nombre del evento-->
-                                <div class="mb-3">
-                                    <label for="nombreEvento" class="form-label" style="color:#023047;" ><b>Ingrese un nombre del evento:</b></label>
-                                    <input type="text" class="form-control" id="nombreEvento" placeholder="Escribir" name="nombreEvento">
-                                </div>
+                            <!---Nombre del evento-->
+                            <div class="mb-3">
+                                <label for="nombreEvento" class="form-label" style="color:#023047;" ><b>Ingrese un nombre del evento:</b></label>
+                                <input type="text" class="form-control" id="nombreEvento" placeholder="Escribir" name="nombreEvento" required>
+                            </div>
 
-                                <!---Descripción del evento-->
-                                <div class="mb-3">
-                                    <label for="descripcionEvento" class="form-label" style="color:#023047;" ><b>Ingrese una descripción del evento:</b></label>
-                                    <textarea class="form-control" id="descripcionEvento" rows="2" placeholder="Escribir una breve descripción" name="descripcionEvento"></textarea>
-                                </div>
-                                <!---Nombre del coordinador-->
-                                <div class="mb-3">
-                                    <label for="nombreCoordinador" class="form-label" style="color:#023047;" ><b>Ingrese nombre del coordinador:</b></label>
-                                    <input type="text" class="form-control" id="nombreCoordinador" placeholder="Escribir" name="idCoordinador">
-                                </div>
+                            <!---Descripción del evento-->
+                            <div class="mb-3">
+                                <label for="descripcionEvento" class="form-label" style="color:#023047;" ><b>Ingrese una descripción del evento:</b></label>
+                                <textarea class="form-control" id="descripcionEvento" rows="2" placeholder="Escribir una breve descripción" name="descripcionEvento" required></textarea>
+                            </div>
+                            <!---Nombre del coordinador-->
+                            <div class="mb-3">
+                                <label for="nombreCoordinador" class="form-label" style="color:#023047;" ><b>Ingrese nombre del coordinador:</b></label>
+                                <input type="text" class="form-control" id="nombreCoordinador" placeholder="Escribir" name="idCoordinador" required>
+                            </div>
                         </div>
                     </div>
 
 
                     <div class="col-sm-12 col-sm-12 col-xl-6">
                         <div class="rounded h-100 p-4" style = "background-color:#219ebc;">
-                                <!---Nombre del profesor-->
-                                <div class="mb-3">
-                                    <label for="nombreInstructor" class="form-label" style="color:#023047;" ><b>Ingrese nombre del profesor:</b></label>
-                                    <select id="nombreInstructor" class="form-select mb-3" aria-label="Default select example" name="nombreProfesor">
-                                        <option selected>Seleccione un instructor</option>
-                                        <% int i = 1; %>
-                                        <% for (ProfesoresEvento pEvento : lista) { %>
-                                        <option value="<%= pEvento.getIdProfesoresEvento() %>"><%= pEvento.getNombre() %> <%= pEvento.getApellido() %></option>
-                                            <% i++;%>
-                                        <% } %>
-
-                                    </select>
-                                </div>
-                                <!---Lugar del evento-->
-                                <div class="mb-3">
-                                    <label for="lugarEvento" class="form-label" style="color:#023047;"><b>Lugar del evento:</b></label>
-                                    <input type="text" class="form-control" id="lugarEvento" placeholder="Escribir" name="lugar">
-                                </div>
-                                <!----Frecuencia del evento----->
-                                <label for="frecuenciaEvento" class="form-label" style="color:#023047;"><b>Frecuencia del evento:</b></label>
-                                <select id="frecuenciaEvento" class="form-select mb-3" aria-label="Default select example" onchange="mostrarOpciones()" name="frecuencia">
-                                    <option selected>Seleccione la frecuencia del evento</option>
-                                    <option value="2">Dos veces por semana</option>
-                                    <option value="1">Semanal</option>
-                                </select>
-
-                                <div id="opcionesInterdiarias" style="display:none;">
-                                    <select id="diasInterdiarios" class="form-select mb-3" aria-label="Default select example" name="opcionesDias">
-                                        <option selected>Seleccione la opción: </option>
-                                        <option value="Lunes-Miércoles">Lunes-Miércoles</option>
-                                        <option value="Martes-Jueves">Martes-Jueves</option>
-                                    </select>
-                                </div>
-
-                                <div id="opcionesSemanal" style="display:none;">
-                                    <label for="diaSemana" class="form-label" style="color:#023047;"><b>Elegir día:</b></label>
-                                    <select id="diaSemana" class="form-select mb-3" aria-label="Default select example" name="opcionesDias1">
-                                        <option selected>Seleccione el día a la semana:</option>
-                                        <option value="Lunes">Lunes</option>
-                                        <option value="Martes">Martes</option>
-                                        <option value="Miércoles">Miércoles</option>
-                                        <option value="Jueves">Jueves</option>
-                                        <option value="Viernes">Viernes</option>
-                                    </select>
-                                </div>
-
-                                <script>
-                                    function mostrarOpciones() {
-                                        var frecuenciaSeleccionada = document.getElementById("frecuenciaEvento").value;
-                                        var opcionesInterdiarias = document.getElementById("opcionesInterdiarias");
-                                        var opcionesSemanal = document.getElementById("opcionesSemanal");
-
-                                        if (frecuenciaSeleccionada === "2") {
-                                            opcionesInterdiarias.style.display = "block";
-                                            opcionesSemanal.style.display = "none";
-                                        } else if (frecuenciaSeleccionada === "1") {
-                                            opcionesInterdiarias.style.display = "none";
-                                            opcionesSemanal.style.display = "block";
-                                        } else {
-                                            opcionesInterdiarias.style.display = "none";
-                                            opcionesSemanal.style.display = "none";
-                                        }
-                                    }
-                                </script>
-
-                                <!----Cantidad de vacantes disponibles----->
-                                <label for="cantVacantes" class="form-label" style="color:#023047;"><b>Cantidad de vacantes:</b> </label>
-                                <select id="cantVacantes" class="form-select mb-3" aria-label="Default select example" name="cantidadVacantes">
-                                    <option selected>Seleccione la cantidad de vacantes disponibles</option>
-                                    <!-- Las opciones se agregarán dinámicamente con JavaScript -->
+                            <!---Nombre del profesor-->
+                            <div class="mb-3">
+                                <label for="nombreInstructor" class="form-label" style="color:#023047;" ><b>Ingrese nombre del profesor:</b></label>
+                                <select id="nombreInstructor" class="form-select mb-3" aria-label="Default select example" name="nombreProfesor" required>
+                                    <option value="" selected>Seleccione un instructor</option>
+                                    <% int i = 1; %>
+                                    <% for (ProfesoresEvento pEvento : lista) { %>
+                                    <option value="<%= pEvento.getIdProfesoresEvento() %>"><%= pEvento.getNombre() %> <%= pEvento.getApellido() %></option>
+                                    <% i++;%>
+                                    <% } %>
                                 </select>
                             </div>
+                            <!---Lugar del evento-->
+                            <div class="mb-3">
+                                <label for="lugarEvento" class="form-label" style="color:#023047;"><b>Lugar del evento:</b></label>
+                                <input type="text" class="form-control" id="lugarEvento" placeholder="Escribir" name="lugar" required>
+                            </div>
+                            <!----Frecuencia del evento----->
+                            <label for="frecuenciaEvento" class="form-label" style="color:#023047;"><b>Frecuencia del evento:</b></label>
+                            <select id="frecuenciaEvento" class="form-select mb-3" aria-label="Default select example" onchange="mostrarOpciones()" name="frecuencia" required>
+                                <option value="" selected>Seleccione la frecuencia del evento</option>
+                                <option value="2">Dos veces por semana</option>
+                                <option value="1">Semanal</option>
+                            </select>
+
+                            <div id="opcionesInterdiarias" style="display:none;">
+                                <select id="diasInterdiarios" class="form-select mb-3" aria-label="Default select example" name="opcionesDias">
+                                    <option value="" selected>Seleccione la opción: </option>
+                                    <option value="Lunes-Miércoles">Lunes-Miércoles</option>
+                                    <option value="Martes-Jueves">Martes-Jueves</option>
+                                </select>
+                            </div>
+
+                            <div id="opcionesSemanal" style="display:none;">
+                                <label for="diaSemana" class="form-label" style="color:#023047;"><b>Elegir día:</b></label>
+                                <select id="diaSemana" class="form-select mb-3" aria-label="Default select example" name="opcionesDias1">
+                                    <option value="" selected>Seleccione el día a la semana:</option>
+                                    <option value="Lunes">Lunes</option>
+                                    <option value="Martes">Martes</option>
+                                    <option value="Miércoles">Miércoles</option>
+                                    <option value="Jueves">Jueves</option>
+                                    <option value="Viernes">Viernes</option>
+                                </select>
+                            </div>
+
                             <script>
-                                // Función que se ejecutará al cargar la ventana
-                                window.onload = function() {
-                                    var selectElement = document.getElementById('cantVacantes');
+                                function mostrarOpciones() {
+                                    var frecuenciaSeleccionada = document.getElementById("frecuenciaEvento").value;
+                                    var opcionesInterdiarias = document.getElementById("opcionesInterdiarias");
+                                    var opcionesSemanal = document.getElementById("opcionesSemanal");
 
-                                    // Crear opciones de 10 a 30
-                                    for(var i = 10; i <= 30; i++) {
-                                        var option = new Option(i, i);
-                                        selectElement.add(option);
+                                    if (frecuenciaSeleccionada === "2") {
+                                        opcionesInterdiarias.style.display = "block";
+                                        opcionesSemanal.style.display = "none";
+                                    } else if (frecuenciaSeleccionada === "1") {
+                                        opcionesInterdiarias.style.display = "none";
+                                        opcionesSemanal.style.display = "block";
+                                    } else {
+                                        opcionesInterdiarias.style.display = "none";
+                                        opcionesSemanal.style.display = "none";
                                     }
-                                };
+                                }
                             </script>
+
+                            <!----Cantidad de vacantes disponibles----->
+                            <label for="cantVacantes" class="form-label" style="color:#023047;"><b>Cantidad de vacantes:</b> </label>
+                            <select id="cantVacantes" class="form-select mb-3" aria-label="Default select example" name="cantidadVacantes" required>
+                                <option value="" selected>Seleccione la cantidad de vacantes disponibles</option>
+                                <!-- Las opciones se agregarán dinámicamente con JavaScript -->
+                            </select>
                         </div>
+                        <script>
+                            // Función que se ejecutará al cargar la ventana
+                            window.onload = function() {
+                                var selectElement = document.getElementById('cantVacantes');
 
-                        <div class="col-sm-12 col-xl-6">
-                            <div class="bg-light rounded h-100 p-4">
-                                <!-- Fecha del evento -->
-                                <div class="mb-3">
-                                    <label for="fechaInicioEvento" class="form-label" style="color:#023047;"><b>Fecha de inicio:</b></label>
-                                    <input type="date" class="form-control" id="fechaInicioEvento" name="fecha_inicio">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="fechaFinEvento" class="form-label" style="color:#023047;"><b>Fecha de finalización:</b></label>
-                                    <input type="date" class="form-control" id="fechaFinEvento" name="fecha_fin">
-                                </div>
+                                // Crear opciones de 10 a 30
+                                for(var i = 10; i <= 30; i++) {
+                                    var option = new Option(i, i);
+                                    selectElement.add(option);
+                                }
+                            };
+                        </script>
+                    </div>
 
-                                <!-- Hora de inicio del evento -->
-                                <div class="mb-3">
-                                    <label for="horaInicioEvento" class="form-label" style="color:#023047;"><b>Hora de inicio:</b></label>
-                                    <input type="time" class="form-control" id="horaInicioEvento" name="hora_inicio">
-                                </div>
-
-                                <!-- Hora de finalización del evento -->
-                                <div class="mb-3">
-                                    <label for="horaFinEvento" class="form-label" style="color:#023047;"><b>Hora de finalización:</b></label>
-                                    <input type="time" class="form-control" id="horaFinEvento" name="hora_fin">
-                                </div>
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-light rounded h-100 p-4">
+                            <!-- Fecha del evento -->
+                            <div class="mb-3">
+                                <label for="fechaInicioEvento" class="form-label" style="color:#023047;"><b>Fecha de inicio:</b></label>
+                                <input type="date" class="form-control" id="fechaInicioEvento" name="fecha_inicio" required>
                             </div>
+                            <div class="mb-3">
+                                <label for="fechaFinEvento" class="form-label" style="color:#023047;"><b>Fecha de finalización:</b></label>
+                                <input type="date" class="form-control" id="fechaFinEvento" name="fecha_fin" required>
+                            </div>
+
+                            <!-- Hora de inicio del evento -->
+                            <div class="mb-3">
+                                <label for="horaInicioEvento" class="form-label" style="color:#023047;"><b>Hora de inicio:</b></label>
+                                <input type="time" class="form-control" id="horaInicioEvento" name="hora_inicio" required>
+                            </div>
+
+                            <!-- Hora de finalización del evento -->
+                            <div class="mb-3">
+                                <label for="horaFinEvento" class="form-label" style="color:#023047;"><b>Hora de finalización:</b></label>
+                                <input type="time" class="form-control" id="horaFinEvento" name="hora_fin" required>
+                            </div>
+                        </div>
                     </div>
 
 
@@ -320,10 +327,10 @@
                     <!-- Materiales -->
                     <div class="col-sm-12 col-xl-6">
                         <div class="rounded h-100 p-4" style = "background-color: #8ecae6;">
-                                <label  class="form-label" style="color:#023047;"><b>Materiales:</b></label>
-                                <div class="input-group mb-3">
-                                    <input type="text" class="form-control" name="materiales" placeholder="Escriba los materiales a usar">
-                                </div>
+                            <label  class="form-label" style="color:#023047;"><b>Materiales:</b></label>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" name="materiales" placeholder="Escriba los materiales a usar">
+                            </div>
 
                         </div>
                     </div>
@@ -366,13 +373,29 @@
 
             <!-- Botón para crear evento -->
             <div style="text-align: right; margin-right: 100px; padding-top: 2%;">
-                <button type="submit" class="btn btn-primary" style="background-color: #023047; border-color: #023047; color: #ffffff;" onclick="mostrarMensajeExito()"><b>Crear Evento</b></button>
+                <button type="submit" class="btn btn-primary" style="background-color: #023047; border-color: #023047; color: #ffffff;" onclick="return validarFormulario()"><b>Crear Evento</b></button>
             </div>
             <script>
-                function mostrarMensajeExito() {
-                    // Mostrar ventana emergente con mensaje de éxito
-                    alert("El evento fue creado exitosamente.");
-                    window.location.href = 'ListaEvent-Coordinador.html';
+                function validarFormulario() {
+                    var camposObligatorios = document.querySelectorAll('input[required], select[required], textarea[required]');
+                    var formularioValido = true;
+
+                    camposObligatorios.forEach(function(campo) {
+                        if (!campo.value.trim()) {
+                            campo.classList.add('highlight');
+                            formularioValido = false;
+                        } else {
+                            campo.classList.remove('highlight');
+                        }
+                    });
+
+                    if (!formularioValido) {
+                        document.getElementById('error-message').style.display = 'block';
+                    } else {
+                        document.getElementById('error-message').style.display = 'none';
+                    }
+
+                    return formularioValido;
                 }
             </script>
         </form>
