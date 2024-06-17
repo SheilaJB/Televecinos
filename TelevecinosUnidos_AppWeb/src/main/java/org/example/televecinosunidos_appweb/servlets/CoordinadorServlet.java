@@ -152,6 +152,7 @@ public class CoordinadorServlet extends HttpServlet {
                 eventoB.setHora_inicio(hora_inicio2);
                 eventoB.setHora_fin(hora_fin2);
 
+                eventoDao.eliminarFechasEventoPorIdEvento(idEvento);
                 eventoDao.actualizarEvento(eventoB);
                 response.sendRedirect(request.getContextPath() + "/CoordinadorServlet");
                 break;

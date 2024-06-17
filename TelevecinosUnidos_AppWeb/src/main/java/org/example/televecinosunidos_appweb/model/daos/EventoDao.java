@@ -220,8 +220,23 @@ public class EventoDao extends BaseDao{
             }
 
         }
+    }
+    public void eliminarFechasEventoPorIdEvento(int eventosId) {
+        String url = "jdbc:mysql://localhost:3306/televecinosdb";
+        String username = "root";
+        String password = "root";
+        String sql = "DELETE FROM dias_evento WHERE eventos_idEventos = ?";
 
+        try (Connection connection = DriverManager.getConnection(url, username, password);
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
 
+            pstmt.setInt(1, eventosId);
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error al eliminar días de evento en la base de datos", e);
+        }
     }
 
     public ArrayList<ProfesoresEvento> listarProfesores() {
@@ -254,7 +269,7 @@ public class EventoDao extends BaseDao{
                 "cantidadVacantes = ?, foto = ?, listaMateriales = ?, hora_inicio = ?, hora_fin = ?, diasEvento = ? WHERE idEventos = ? AND eliminado = FALSE";
 
         try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+             PreparedStatement ps = conn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, evento.getNombre());
             ps.setString(2, evento.getDescripcion());
             ps.setString(3, evento.getLugar());
@@ -272,6 +287,9 @@ public class EventoDao extends BaseDao{
             ps.setInt(14, evento.getIdEvento());
 
             ps.executeUpdate();
+
+            fechasEvento(evento.getIdEvento(), evento.getFecha_inicio(), evento.getFecha_fin(), evento.getEventFrecuencia_idEventFrecuencia(), evento.getDiaEvento());
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
