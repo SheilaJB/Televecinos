@@ -39,7 +39,7 @@
                     <a href="<%=request.getContextPath()%>/AdministradorServlet?action=registroInstructor" class="dropdown-item <%= action.equals("formularioInstructores_A") ? "active" : "" %>" style="font-size: 13.5px;"><b>Registrar nuevo instructor</b></a>
                 </div>
             </div>
-            <a href="<%=request.getContextPath()%>/AdministradorServlet?action=usuariosBaneados_A" class="nav-item nav-link <%= action.equals("usuariosBaneados_A") ? "active" : "" %>"><i class="fa fa-user-alt-slash me-2 colorLetrasBarraLateral"></i><span style="font-size: 14px;"><b>Nuevas solicitudes</b></span></a>
+            <a href="<%=request.getContextPath()%>/AdministradorServlet?action=usuariosBaneados_A" class="nav-item nav-link <%= action.equals("usuariosBaneados_A") ? "active" : "" %>"><i class="fa fa-user-alt-slash me-2 colorLetrasBarraLateral"></i><span style="font-size: 14px;"><b>Usuarios Baneados</b></span></a>
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle <%= (action.equals("preguntasFrecuentes_V_vistaAdmin") || action.equals("preguntasFrecuentes_C_vistaAdmin") || action.equals("preguntasFrecuentes_S_vistaAdmin")) ? "active" : "" %>" data-bs-toggle="dropdown"><i class="far fa-question-circle me-2 colorLetrasBarraLateral"></i><span style="font-size: 13.3px;"><b>Preguntas frecuentes</b></span></a>
                 <div class="dropdown-menu bg-transparent border-0">
