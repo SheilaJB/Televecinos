@@ -152,6 +152,8 @@
                 <div class="bar" data-label="Correo"><%=coordinadora.getCorreo()%></div>
                 <a href="<%=request.getContextPath()%>/AdministradorServlet?action=listaCoordinadorasCultura_A"><button class="button regresar">Regresar</button></a>
                 <a href="correoparaCoordA.html"><button  class="button enviar btn-success">Enviar correo</button></a>
+                <a href="<%=request.getContextPath()%>/AdministradorServlet?action=banearCoordinadoraCultura&idCoordinadora=<%=coordinadora.getIdUsuario()%>"><button class="button banear btn-banear">Banear</button></a>
+                <!--
                 <button class="button banear btn-banear">Banear</button>
                 <div id="popup1" class="popup1" >
                     <div class="popup_contenido1">
@@ -167,6 +169,7 @@
 
                     </div>
                 </div>
+                -->
             </div>
 
             <script>
