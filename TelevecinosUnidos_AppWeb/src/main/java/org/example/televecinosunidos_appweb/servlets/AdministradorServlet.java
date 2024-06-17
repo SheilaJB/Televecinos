@@ -96,16 +96,29 @@ public class AdministradorServlet extends HttpServlet {
                 request.setAttribute("lista",solicitanteDao.listarSolicitantes());
                 request.getRequestDispatcher(vista).forward(request, response);
                 break;
-            case "solicitanteAVecino":
+            case "solicitanteAVecinoAceptar":
                 String solicitanteId = request.getParameter("idSolicitante");
                 if (solicitanteDao.obtenerSolicitante(solicitanteId) != null) {
                     try {
-                        solicitanteDao.cambiarAVecino(solicitanteId);
+                        solicitanteDao.aceptarSolicitud(solicitanteId);
                         HttpSession httpSession = request.getSession();
                         httpSession.setAttribute("msg","Solicitud aprobada exitosamente");
                         response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=nuevasSolicitudes_A");
                     } catch (SQLException e) {
                         response.sendRedirect(request.getContextPath() + "/AdministradorServlet?err=Error al aprobar solicitud");
+                    }
+                }
+                break;
+            case "solicitanteAVecinoDenegar":
+                String solicitanteId2 = request.getParameter("idSolicitante");
+                if (solicitanteDao.obtenerSolicitante(solicitanteId2) != null) {
+                    try {
+                        solicitanteDao.denegarSolicitud(solicitanteId2);
+                        HttpSession httpSession = request.getSession();
+                        httpSession.setAttribute("msg","Solicitud denegada exitosamente");
+                        response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=nuevasSolicitudes_A");
+                    } catch (SQLException e) {
+                        response.sendRedirect(request.getContextPath() + "/AdministradorServlet?err=Error al denegadar solicitud");
                     }
                 }
                 break;
