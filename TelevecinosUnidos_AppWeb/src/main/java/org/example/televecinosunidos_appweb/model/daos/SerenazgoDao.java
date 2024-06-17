@@ -104,7 +104,6 @@ public class SerenazgoDao extends BaseDao {
         SerenazgoB serenazgoB= new SerenazgoB();
 
 
-
         String sql = "SELECT \n" +
                 "    serenazgo.idSerenazgo,\n" +
                 "    serenazgo.numTelefono,\n" +
