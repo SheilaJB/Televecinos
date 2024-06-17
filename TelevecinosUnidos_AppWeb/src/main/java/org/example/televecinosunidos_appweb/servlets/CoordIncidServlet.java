@@ -4,6 +4,7 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import org.example.televecinosunidos_appweb.model.beans.IncidenciasB;
+import org.example.televecinosunidos_appweb.model.beans.ProfesoresEvento;
 import org.example.televecinosunidos_appweb.model.daos.IncidenCoordDao;
 
 import java.io.IOException;
@@ -59,44 +60,33 @@ public class CoordIncidServlet extends HttpServlet {
             case "crear":
                 String nombreIncidencia = request.getParameter("nombreIncidencia");
                 String foto = request.getParameter("foto");
-                String tipoIncidencia = request.getParameter("tipoIncidencia");
-                String urbanizacion = request.getParameter("urbanizacion");
-                String paraQuien = request.getParameter("paraQuien");
+                String tipoIncidencia = request.getParameter("TipoIncidencia_idTipoIncidencia");
+                String urbanizacion = request.getParameter("urbanizacion_idUrbanizacion");
+                int incidenciaPersonal = Integer.parseInt(request.getParameter("incidenciaPersonal"));
                 String lugarExacto = request.getParameter("lugarExacto");
                 String referencia = request.getParameter("referencia");
-                String contacto = request.getParameter("contacto");
-                String requerimientoAmblancia = request.getParameter("requerimientoAmblancia");
-                int idTipoIncidencia = 0;
-                switch (tipoIncidencia) {
-                    case "Seguridad Pública":
-                        idTipoIncidencia = 1;
-                        break;
-                    case "Emergencia Médica":
-                        idTipoIncidencia = 2;
-                        break;
-                    case "Infraestructura y Servicios Públicos":
-                        idTipoIncidencia = 3;
-                }
-                Boolean boolParaQ = false;
-                switch (paraQuien){
-                    case "Para mi":
-                        boolParaQ = true;
-                        break;
-                    case "Para otra persona":
-                        boolParaQ = false;
-                        break;
-                }
-                Boolean boolAmbulancia = false;
-                switch (requerimientoAmblancia){
-                    case "Sí":
-                        boolAmbulancia = true;
-                        break;
-                    case "No":
-                        boolAmbulancia = false;
-                        break;
-                }
+                String numeroContacto = request.getParameter("numeroContacto");
+                int ambulancia = Integer.parseInt(request.getParameter("ambulancia"));
 
+                IncidenciasB incidencia = new IncidenciasB();
+                incidencia.setNombreIncidencia(nombreIncidencia);
+                incidencia.setFoto(foto);
+                incidencia.setTipoIncidencia(tipoIncidencia);
+                incidencia.setUrbanizacion(urbanizacion);
+                incidencia.setIncidenciaPersonal(incidenciaPersonal);
+                incidencia.setLugarExacto(lugarExacto);
+                incidencia.setReferencia(referencia);
+                incidencia.setNumeroContacto(numeroContacto);
+                incidencia.setAmbulancia(ambulancia);
+
+                incidenciaDao.generarIncidenciaC(incidencia);
+                // Agregar mensaje a la sesión
+                request.getSession().setAttribute("info", "Incidencia creada de manera exitosa");
+
+                // Redirigir a la lista de incidencias
+                response.sendRedirect(request.getContextPath() + "/CoordIncidServlet?action=listarIncidencia");
                 break;
+
             /*case "editar":
                 int id = Integer.parseInt(request.getParameter("idIncidencia"));
                 String nombre2 = request.getParameter("nombre");
