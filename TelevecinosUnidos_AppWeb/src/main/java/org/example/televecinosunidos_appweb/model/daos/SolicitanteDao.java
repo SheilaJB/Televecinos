@@ -10,7 +10,7 @@ public class SolicitanteDao extends BaseDao {
 
         String sql = "SELECT idUsuario,nombre,apellido,dni,direccion,correo\n" +
                 "FROM televecinosdb.usuario \n" +
-                "where Rol_idRol = 1" ;
+                "where Rol_idRol = 1 and isBan=0" ;
 
 
         ArrayList<UsuarioB> listaSolicitantes = new ArrayList<>();
@@ -41,11 +41,27 @@ public class SolicitanteDao extends BaseDao {
     }
 
 
-    public void cambiarAVecino(String solicitanteId) throws SQLException{
+    public void aceptarSolicitud(String solicitanteId) throws SQLException{
         String sql = "update usuario set Rol_idRol = 2 where idUsuario = ?";
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, solicitanteId);
+            pstmt.executeUpdate();
+        }
+
+    }
+
+    public void denegarSolicitud(String solicitanteId2) throws SQLException{
+        String sql = "update usuario set isBan = 1 where idUsuario = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, solicitanteId2);
+            pstmt.executeUpdate();
+        }
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, solicitanteId2);
+
             pstmt.executeUpdate();
         }
 
@@ -82,4 +98,6 @@ public class SolicitanteDao extends BaseDao {
 
         return usuarioB;
     }
+
+
 }

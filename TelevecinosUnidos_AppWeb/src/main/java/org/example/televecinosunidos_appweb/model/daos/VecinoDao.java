@@ -11,7 +11,7 @@ public class VecinoDao extends BaseDao{
 
         String sql = "SELECT idUsuario,nombre,apellido,dni,direccion,correo\n" +
                 "FROM televecinosdb.usuario \n" +
-                "where Rol_idRol = 2" ;
+                "where Rol_idRol = 2 and isBan=0" ;
 
 
         ArrayList<UsuarioB> listaVecinos = new ArrayList<>();
