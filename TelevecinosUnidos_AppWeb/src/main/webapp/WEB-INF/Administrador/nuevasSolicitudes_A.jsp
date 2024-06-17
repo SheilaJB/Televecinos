@@ -72,6 +72,22 @@
                 <h1 style="text-align: center; margin-top:50px;margin-bottom:50px;"><b></b></h1>
             </div>
         </div>
+
+
+
+        <% if (session.getAttribute("msg") != null) {%>
+        <div class="alert alert-success" role="alert"><%=session.getAttribute("msg")%>
+        </div>
+        <% session.removeAttribute("msg");} %>
+        <% if (request.getParameter("err") != null) {%>
+        <div class="alert alert-danger" role="alert"><%=request.getParameter("err")%>
+        </div>
+        <% }%>
+
+
+
+
+
         <!-- Fin de iamgen estatica -->
         <div style="background-color: #f8f9fa; padding: 10px; align-items: center;">
             <!-- Filtro -->
@@ -80,8 +96,6 @@
                     <div class="col-md-5 mb-2">
                         <input type="text" class="form-control" id="filtroInput" placeholder="Buscar..." onkeyup="filtrar()">
                     </div>
-
-
 
                 </div>
             </div>
@@ -112,7 +126,7 @@
                             <td><%=usuarioB.getNombre() + " " + usuarioB.getApellido()%></td>
                             <td><%=usuarioB.getDireccion() %></td>
                             <td><%=usuarioB.getDni() %></td>
-                            <td><a href="<%=request.getContextPath()%>/*?action=verSerenazgo&idSerenazgo=<%=usuarioB.getIdUsuario()%>"><button type="button" class="btn btn-success m-2"><i class="fas fa-check"></i></button></a></td>
+                            <td><a href="<%=request.getContextPath()%>/AdministradorServlet?action=solicitanteAVecino&idSolicitante=<%=usuarioB.getIdUsuario()%>"><button type="button" class="btn btn-success m-2"><i class="fas fa-check"></i></button></a></td>
                             <td><a href="<%=request.getContextPath()%>/*?action=verSerenazgo&idSerenazgo=<%=usuarioB.getIdUsuario()%>"><button type="button" class="btn btn-danger m-2" ><i class="fas fa-times"></i></button></a></td>
                             <td><a href="<%=request.getContextPath()%>/AdministradorServlet?action=DetalleVecinos_A&idVecino=<%=usuarioB.getIdUsuario()%>"><button type="button" class="btn btn-info m-2"><i class="fas fa-eye"></i></button></a></td>
                         </tr>

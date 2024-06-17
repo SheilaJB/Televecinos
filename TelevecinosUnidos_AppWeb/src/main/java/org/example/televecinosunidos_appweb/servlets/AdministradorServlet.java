@@ -10,6 +10,7 @@ import org.example.televecinosunidos_appweb.model.beans.UsuarioB;
 import org.example.televecinosunidos_appweb.model.daos.*;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -94,6 +95,19 @@ public class AdministradorServlet extends HttpServlet {
                 vista = "WEB-INF/Administrador/nuevasSolicitudes_A.jsp";
                 request.setAttribute("lista",solicitanteDao.listarSolicitantes());
                 request.getRequestDispatcher(vista).forward(request, response);
+                break;
+            case "solicitanteAVecino":
+                String solicitanteId = request.getParameter("idSolicitante");
+                if (solicitanteDao.obtenerSolicitante(solicitanteId) != null) {
+                    try {
+                        solicitanteDao.cambiarAVecino(solicitanteId);
+                        HttpSession httpSession = request.getSession();
+                        httpSession.setAttribute("msg","Solicitud aprobada exitosamente");
+                        response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=nuevasSolicitudes_A");
+                    } catch (SQLException e) {
+                        response.sendRedirect(request.getContextPath() + "/AdministradorServlet?err=Error al aprobar solicitud");
+                    }
+                }
                 break;
 
 
