@@ -86,16 +86,15 @@
     </div>
     <!-- Spinner End -->
 
-<<<<<<< HEAD
     <!-- Sidebar Start -->
     <div class="sidebar pe-4 pb-3" style="background-color: #8ecae6;">
-        <nav class="navbar" style="background-color: #8ecae6;">
+        <nav  class="navbar" style="background-color: #8ecae6;" >
             <a class="navbar-brand mx-3 mt-3">
                 <h4 style="color:#023047"><b>Televecinos Unidos</b></h4>
             </a>
-            <div class="d-flex align-items-center ms-4 mb-4">
+            <div class="d-flex align-items-center ms-4 mb-4"  >
                 <img class="rounded-circle" src="img/coordinadora.jpg" alt="" style="width: 50px; height: 50px;">
-                <div class="ms-3 m-3">
+                <div class="ms-3 m-3" >
                     <h6 class="mb-0" style="color:#023047;"><b>Nombre Apellido</b></h6>
                     <span class="text-muted"><b>Coordinador</b></span>
                 </div>
@@ -113,11 +112,11 @@
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"><i class="fa fa-th-list me-2"></i><span style="font-size: 13.5px;"><b>Incidencias</b></span></a>
                     <div class="dropdown-menu bg-transparent border-0">
-                        <a href="<%=request.getContextPath()%>/CoordIncidServlet?action=generarIncidenciaC" class="dropdown-item"><span style="font-size: 13.5px;"><b>Crear incidencia</b></span></a>
-                        <a href="<%=request.getContextPath()%>/CoordIncidServlet?action=listarIncidencia" class="dropdown-item"><span style="font-size: 13.5px;"><b>Lista de incidencias</b></span></a>
+                        <a href="<%=request.getContextPath()%>/VistaServlet?idVista=generarIncidenciaC" class="dropdown-item"><span style="font-size: 13.5px;"><b>Crear incidencia</b></span></a>
+                        <a href="<%=request.getContextPath()%>/VistaServlet?idVista=listaIncidenciaC" class="dropdown-item"><span style="font-size: 13.5px;"><b>Lista de incidencias</b></span></a>
                     </div>
                 </div>
-                <a href="<%=request.getContextPath()%>/VistaServlet?idVista=preguntasFrecuentesC" class="nav-item nav-link font-al"><i class="fa fa-question-circle me-2"></i><span style="font-size: 13.5px;"><b>Preguntas frecuentes</b></span></a>
+                <a href="<%=request.getContextPath()%>/VistaServlet?idVista=preguntasFrecuentesC" class="nav-item nav-link font-al"><i class="fa fa-question-circle me-2" ></i><span style="font-size: 13.5px;"><b>Preguntas frecuentes</b></span></a>
             </div>
         </nav>
     </div>
@@ -135,13 +134,14 @@
                 <h3 class="m-0 me-2 px-2" style="color:#023047;">¡Bienvenido, coordinador!</h3>
             </a>
             <div class="navbar-nav align-items-center ms-auto">
+
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                         <img class="rounded-circle me-lg-2" src="img/coordinadora.jpg" alt="" style="width: 40px; height: 40px;">
                         <span class="d-none d-lg-inline-flex" style="color:#023047;"><b>Nombre Apellido</b></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                        <a href="VistaServlet?idVista=perfilC" class="dropdown-item">Mi perfil</a>
+                        <<a href="VistaServlet?idVista=perfilC" class="dropdown-item">Mi perfil</a>
                         <a href="VistaServlet?idVista=Index" class="dropdown-item">Cerrar sesión</a>
                     </div>
                 </div>
@@ -150,23 +150,10 @@
         <!-- Navbar End -->
         <!-- PARTE SUPERIOR FINAL -->
 
-=======
-    <!-- BARRA AZUL DE LA IZQUIERDA INICIO-->
-    <jsp:include page="../includes/barraLateralCoordinador.jsp"></jsp:include>
+        <!-- BARRA AZUL DE LA IZQUIERDA INICIO-->
 
-    <!-- Content Start -->
-    <div id="navbar" class="content">
+        <!-- Content Start -->
 
-
-
-        <!-- PARTE SUPERIOR FINAL -->
-
-        <!-- PARTE SUPERIOR INICIO -->
-        <jsp:include page="../includes/navbarCoordinador.jsp"></jsp:include>
-        <!-- PARTE SUPERIOR FINAL -->
-
->>>>>>> f6f1d138967f4400fadf6a87fbdb6e4460b04e97
-        <!-- LLENAR-->
         <form method="post" action="<%=request.getContextPath()%>/CoordIncidServlet?action=editar">
             <div class="container-fluid pt-4 px-4">
                 <div class="container">
@@ -274,59 +261,58 @@
                 </div>
             </div>
         </div>
+        <!-- Content End -->
+
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
-    <!-- Content End -->
 
-    <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
-</div>
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/chart/chart.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="lib/tempusdominus/js/moment.min.js"></script>
+    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
-<!-- JavaScript Libraries -->
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="lib/chart/chart.min.js"></script>
-<script src="lib/easing/easing.min.js"></script>
-<script src="lib/waypoints/waypoints.min.js"></script>
-<script src="lib/owlcarousel/owl.carousel.min.js"></script>
-<script src="lib/tempusdominus/js/moment.min.js"></script>
-<script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
-<script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
-
-<!-- Template Javascript -->
-<script src="js/main.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        function desactivarStickyTop() {
-            navbar.classList.remove('sticky-top');
-        }
-
-        function activarStickyTop() {
-            navbar.classList.add('sticky-top');
-        }
-        document.addEventListener('click', function(event) {
-            if (event.target.classList.contains('btn-secondary')) {
-                desactivarStickyTop();
-                var popup = event.target.nextElementSibling;
-                popup.style.display = 'block';
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            function desactivarStickyTop() {
+                navbar.classList.remove('sticky-top');
             }
-        });
 
-        document.addEventListener('click', function(event) {
-            if (event.target.classList.contains('close-btn')) {
-                activarStickyTop();
-                var popup = event.target.closest('.popup');
-                popup.style.display = 'none';
+            function activarStickyTop() {
+                navbar.classList.add('sticky-top');
             }
+            document.addEventListener('click', function(event) {
+                if (event.target.classList.contains('btn-secondary')) {
+                    desactivarStickyTop();
+                    var popup = event.target.nextElementSibling;
+                    popup.style.display = 'block';
+                }
+            });
+
+            document.addEventListener('click', function(event) {
+                if (event.target.classList.contains('close-btn')) {
+                    activarStickyTop();
+                    var popup = event.target.closest('.popup');
+                    popup.style.display = 'none';
+                }
+            });
         });
-    });
-</script>
-<!--cerrar pop up -->
-<script>
-    function cerrarPopup() {
-        var popup = document.getElementById("popup");
-        popup.style.display = "none";
-    }
-</script>
+    </script>
+    <!--cerrar pop up -->
+    <script>
+        function cerrarPopup() {
+            var popup = document.getElementById("popup");
+            popup.style.display = "none";
+        }
+    </script>
 
 </body>
 
