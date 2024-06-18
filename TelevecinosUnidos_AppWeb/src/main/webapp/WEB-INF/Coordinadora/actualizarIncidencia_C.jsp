@@ -40,40 +40,6 @@
     <link rel="stylesheet" href="css/style_incidencias.css">
     <link href="css/style_vec.css" rel="stylesheet">
 
-    <style>
-        .popup {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-        }
-
-        .popup-content {
-            background-color: white;
-            width: 50%;
-            max-width: 400px;
-            margin: 100px auto;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-            text-align: center;
-            position: relative;
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 5px;
-            right: 10px;
-            font-size: 24px;
-            cursor: pointer;
-            color: rgb(0, 0, 0);
-        }
-    </style>
-
 </head>
 
 <body>
@@ -174,28 +140,28 @@
                         <div class="campo" style="margin-bottom: -35px;">
                             <label for="tipoIncidencia">Tipo de incidencia:</label><br>
                             <select id="tipoIncidencia" name="TipoIncidencia_idTipoIncidencia">
-                                <option value="1" <%= incidenciaa != null && "Seguridad Pública".equals(incidenciaa.getTipoIncidencia()) ? "selected" : "" %>>Seguridad Pública</option>
-                                <option value="2" <%= incidenciaa != null && "Emergencia Médica".equals(incidenciaa.getTipoIncidencia()) ? "selected" : "" %>>Emergencia Médica</option>
-                                <option value="3" <%= incidenciaa != null && "Infraestructura y Servicios Públicos".equals(incidenciaa.getTipoIncidencia()) ? "selected" : "" %>>Infraestructura y Servicios Públicos</option>
-                                <option value="4" <%= incidenciaa != null && "Otro".equals(incidenciaa.getTipoIncidencia()) ? "selected" : "" %>>Otro</option>
+                                <option value="Seguridad Pública" <%= incidenciaa != null && "Seguridad Pública".equals(incidenciaa.getTipoIncidencia()) ? "selected" : "" %>>Seguridad Pública</option>
+                                <option value="Emergencia Médica" <%= incidenciaa != null && "Emergencia Médica".equals(incidenciaa.getTipoIncidencia()) ? "selected" : "" %>>Emergencia Médica</option>
+                                <option value="Infraestructura y Servicios Públicos" <%= incidenciaa != null && "Infraestructura y Servicios Públicos".equals(incidenciaa.getTipoIncidencia()) ? "selected" : "" %>>Infraestructura y Servicios Públicos</option>
+                                <option value="Otro" <%= incidenciaa != null && "Otro".equals(incidenciaa.getTipoIncidencia()) ? "selected" : "" %>>Otro</option>
                             </select><br>
                             <br>
                         </div>
                         <div class="campo" style="margin-bottom: -35px;">
                             <label for="urbanizacion">Urbanización:</label><br>
                             <select id="urbanizacion" name="urbanizacion_idUrbanizacion">
-                                <option value="1" <%= incidenciaa != null && "Rafael Escardó".equals(incidenciaa.getUrbanizacion()) ? "selected" : "" %>>Rafael Escardó</option>
-                                <option value="2" <%= incidenciaa != null && "José de La Riva Agüero".equals(incidenciaa.getUrbanizacion()) ? "selected" : "" %>>José de La Riva Agüero</option>
-                                <option value="3" <%= incidenciaa != null && "Juan XXIII".equals(incidenciaa.getUrbanizacion()) ? "selected" : "" %>>Juan XXIII</option>
-                                <option value="4" <%= incidenciaa != null && "Libertad".equals(incidenciaa.getUrbanizacion()) ? "selected" : "" %>>Libertad</option>
-                                <option value="5" <%= incidenciaa != null && "Los Jardines de La Marina".equals(incidenciaa.getUrbanizacion()) ? "selected" : "" %>>Los Jardines de La Marina</option>
-                                <option value="6" <%= incidenciaa != null && "Las Leyendas".equals(incidenciaa.getUrbanizacion()) ? "selected" : "" %>>Las Leyendas</option>
-                                <option value="7" <%= incidenciaa != null && "Las Torres San Miguelito".equals(incidenciaa.getUrbanizacion()) ? "selected" : "" %>>Las Torres San Miguelito</option>
-                                <option value="8" <%= incidenciaa != null && "Elmer Faucett".equals(incidenciaa.getUrbanizacion()) ? "selected" : "" %>>Elmer Faucett</option>
-                                <option value="9" <%= incidenciaa != null && "Maranga".equals(incidenciaa.getUrbanizacion()) ? "selected" : "" %>>Maranga</option>
-                                <option value="10" <%= incidenciaa != null && "Pando".equals(incidenciaa.getUrbanizacion()) ? "selected" : "" %>>Pando</option>
-                                <option value="11" <%= incidenciaa != null && "Parques de La Huaca".equals(incidenciaa.getUrbanizacion()) ? "selected" : "" %>>Parques de La Huaca</option>
-                                <option value="12" <%= incidenciaa != null && "Otro".equals(incidenciaa.getUrbanizacion()) ? "selected" : "" %>>Otro</option>
+                                <option value="Rafael Escardó" <%= incidenciaa != null && "Rafael Escardó".equals(incidenciaa.getUrbanizacion()) ? "selected" : "" %>>Rafael Escardó</option>
+                                <option value="José de La Riva Agüero" <%= incidenciaa != null && "José de La Riva Agüero".equals(incidenciaa.getUrbanizacion()) ? "selected" : "" %>>José de La Riva Agüero</option>
+                                <option value="Juan XXIII" <%= incidenciaa != null && "Juan XXIII".equals(incidenciaa.getUrbanizacion()) ? "selected" : "" %>>Juan XXIII</option>
+                                <option value="Libertad" <%= incidenciaa != null && "Libertad".equals(incidenciaa.getUrbanizacion()) ? "selected" : "" %>>Libertad</option>
+                                <option value="Los Jardines de La Marina" <%= incidenciaa != null && "Los Jardines de La Marina".equals(incidenciaa.getUrbanizacion()) ? "selected" : "" %>>Los Jardines de La Marina</option>
+                                <option value="Las Leyendas" <%= incidenciaa != null && "Las Leyendas".equals(incidenciaa.getUrbanizacion()) ? "selected" : "" %>>Las Leyendas</option>
+                                <option value="Las Torres San Miguelito" <%= incidenciaa != null && "Las Torres San Miguelito".equals(incidenciaa.getUrbanizacion()) ? "selected" : "" %>>Las Torres San Miguelito</option>
+                                <option value="Elmer Faucett" <%= incidenciaa != null && "Elmer Faucett".equals(incidenciaa.getUrbanizacion()) ? "selected" : "" %>>Elmer Faucett</option>
+                                <option value="Maranga" <%= incidenciaa != null && "Maranga".equals(incidenciaa.getUrbanizacion()) ? "selected" : "" %>>Maranga</option>
+                                <option value="Pando" <%= incidenciaa != null && "Pando".equals(incidenciaa.getUrbanizacion()) ? "selected" : "" %>>Pando</option>
+                                <option value="Parques de La Huaca" <%= incidenciaa != null && "Parques de La Huaca".equals(incidenciaa.getUrbanizacion()) ? "selected" : "" %>>Parques de La Huaca</option>
+                                <option value="Otro" <%= incidenciaa != null && "Otro".equals(incidenciaa.getUrbanizacion()) ? "selected" : "" %>>Otro</option>
                             </select>
                             <br>
                             <br>
@@ -280,39 +246,6 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            function desactivarStickyTop() {
-                navbar.classList.remove('sticky-top');
-            }
-
-            function activarStickyTop() {
-                navbar.classList.add('sticky-top');
-            }
-            document.addEventListener('click', function(event) {
-                if (event.target.classList.contains('btn-secondary')) {
-                    desactivarStickyTop();
-                    var popup = event.target.nextElementSibling;
-                    popup.style.display = 'block';
-                }
-            });
-
-            document.addEventListener('click', function(event) {
-                if (event.target.classList.contains('close-btn')) {
-                    activarStickyTop();
-                    var popup = event.target.closest('.popup');
-                    popup.style.display = 'none';
-                }
-            });
-        });
-    </script>
-    <!--cerrar pop up -->
-    <script>
-        function cerrarPopup() {
-            var popup = document.getElementById("popup");
-            popup.style.display = "none";
-        }
-    </script>
 
 </body>
 

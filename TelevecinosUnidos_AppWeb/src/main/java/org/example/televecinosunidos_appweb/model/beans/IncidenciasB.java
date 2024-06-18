@@ -7,7 +7,7 @@ public class IncidenciasB {
     private String referencia;
     private String foto;
     private int ambulancia;
-    private  String urbanizacion;
+    private String urbanizacion;
 
     private int idUrbanizacion;
 
@@ -31,6 +31,17 @@ public class IncidenciasB {
     private int criticidadIncidencia_idCriticidadIncidencia;
     private int tipoIncidencia_idTipoIncidencia;
     private int estadosIncidencia_idEstadoIncidencia;
+
+    public int getUrbanizacion_idUrbanizacion() {
+        return urbanizacion_idUrbanizacion;
+    }
+
+    public void setUrbanizacion_idUrbanizacion(int urbanizacion_idUrbanizacion) {
+        this.urbanizacion_idUrbanizacion = urbanizacion_idUrbanizacion;
+    }
+
+    private int urbanizacion_idUrbanizacion;
+
 
     private String criticidadIncidencia_idCriticidadIncidenciaStr;
     private String tipoIncidencia_idTipoIncidenciaStr;

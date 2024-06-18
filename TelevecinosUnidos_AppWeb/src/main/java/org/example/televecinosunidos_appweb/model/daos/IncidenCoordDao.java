@@ -64,9 +64,11 @@ public class IncidenCoordDao extends BaseDao{
                 "i.incidenciaPersonal, " +
                 "DATE_FORMAT(i.fecha, '%d %M') AS 'Fecha', " +
                 "TIME_FORMAT(i.fecha, '%H:%i') AS 'Hora', " +
+                "urb.nombre AS 'Urbanizacion', " +
                 "ti.TipoIncidencia AS 'Tipo de Incidencia', " +
                 "ei.estado AS 'Estado Incidencia' " +
                 "FROM incidencias i " +
+                "JOIN urbanizacion urb ON i.urbanizacion_idUrbanizacion = urb.idUrbanizacion " +
                 "JOIN tipoincidencia ti ON i.TipoIncidencia_idTipoIncidencia = ti.idTipoIncidencia " +
                 "JOIN estadosincidencia ei ON i.EstadosIncidencia_idEstadosIncidencia = ei.idEstadosIncidencia " +
                 "WHERE i.idIncidencias = ?";
@@ -86,8 +88,8 @@ public class IncidenCoordDao extends BaseDao{
                     incidencia.setFoto(rs.getString("foto"));
                     incidencia.setAmbulancia(rs.getInt("ambulancia"));
                     incidencia.setNumeroContacto(rs.getString("numeroContacto"));
-                    incidencia.setUrbanizacion(rs.getString("urbanizacion_idUrbanizacion"));
-                    incidencia.setTipoIncidencia(rs.getString("TipoIncidencia_idTipoIncidencia"));
+                    incidencia.setUrbanizacion(rs.getString("Urbanizacion"));
+                    incidencia.setTipoIncidencia(rs.getString("Tipo de Incidencia"));
                     incidencia.setIncidenciaPersonal(rs.getInt("incidenciaPersonal"));
                     incidencia.setFecha(rs.getString("Fecha"));
                     incidencia.setHora(rs.getString("Hora"));
@@ -140,13 +142,41 @@ public class IncidenCoordDao extends BaseDao{
             pstmt.setString(4, incidencia.getFoto());
             pstmt.setInt(5, incidencia.getAmbulancia());
             pstmt.setString(6, incidencia.getNumeroContacto());
-            pstmt.setInt(7, Integer.parseInt(incidencia.getUrbanizacion()));
-            pstmt.setInt(8, Integer.parseInt(incidencia.getTipoIncidencia()));
+            int urbanizacionId = obtenerIdUrbanizacion(incidencia.getUrbanizacion());
+            pstmt.setInt(7, urbanizacionId);
+            int tipoIncidenciaId = obtenerIdTipoIncidencia(incidencia.getTipoIncidencia());
+            pstmt.setInt(8, tipoIncidenciaId);
             pstmt.setInt(9, incidencia.getIncidenciaPersonal());
             pstmt.setInt(10, incidencia.getIdIncidencias());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+    private int obtenerIdUrbanizacion(String urbanizacion) {
+        switch (urbanizacion) {
+            case "Rafael Escardó": return 1;
+            case "José de La Riva Agüero": return 2;
+            case "Juan XXIII": return 3;
+            case "Libertad": return 4;
+            case "Los Jardines de La Marina": return 5;
+            case "Las Leyendas": return 6;
+            case "Las Torres San Miguelito": return 7;
+            case "Elmer Faucett": return 8;
+            case "Maranga": return 9;
+            case "Pando": return 10;
+            case "Parques de La Huaca": return 11;
+            case "Otro": return 12;
+            default: throw new IllegalArgumentException("Urbanización no reconocida: " + urbanizacion);
+        }
+    }
+    private int obtenerIdTipoIncidencia(String tipoIncidencia) {
+        switch (tipoIncidencia) {
+            case "Seguridad Pública": return 1;
+            case "Emergencia Médica": return 2;
+            case "Infraestructura y Servicios Públicos": return 3;
+            case "Otro": return 4;
+            default: throw new IllegalArgumentException("Tipo de incidencia no reconocido: " + tipoIncidencia);
         }
     }
 }
