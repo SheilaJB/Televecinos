@@ -102,7 +102,7 @@
                         <span class="d-none d-lg-inline-flex" style="color:#023047;"><b>Nombre Apellido</b></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                        <a href="perfil_V.html" class="dropdown-item">Mi perfil</a>
+                        <a href="<%=request.getContextPath()%>/VecinoServlet?action=perfilVecino" class="dropdown-item">Mi perfil</a>
                         <a href="index.html" class="dropdown-item">Cerrar sesión</a>
                     </div>
                 </div>

@@ -66,23 +66,23 @@
             </div>
             <!-- Fin del perfil del usuario en el sidebar-->
             <div class="navbar-nav w-100">
-                <a href="inicioVecino.html" class="nav-item nav-link"><i class="fa fa-home me-2"></i><span style="font-size: 13.5px;"><b>Inicio</b></a>
+                <a href="<%=request.getContextPath()%>/VecinoServlet?action=inicioVecino" class="nav-item nav-link active"><i class="fa fa-home me-2"></i><span style="font-size: 13.5px;"><b>Inicio</b></a>
                 <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-calendar me-2"></i><span style="font-size: 13.5px;"><b>Eventos</b></a>
+                    <a href="#" class="nav-link dropdown-toggle " data-bs-toggle="dropdown"><i class="fa fa-calendar me-2"></i><span style="font-size: 13.5px;"><b>Eventos</b></a>
                     <div class="dropdown-menu bg-transparent border-0">
-                        <a href="Evento-D-Vecino.html" class="dropdown-item"><span style="font-size: 13.5px;"><b>Deporte</b></a>
-                        <a href="Evento-C-Vecino.html" class="dropdown-item"><span style="font-size: 13.5px;"><b>Cultura</b></a>
-                        <a href="ListaEvent-Vecino.html" class="dropdown-item"><span style="font-size: 13.5px;"><b>Eventos inscritos</b></a>
+                        <a href="<%=request.getContextPath()%>/VecinoServlet?action=eventoDeporte" class="dropdown-item"><span style="font-size: 13.5px;"><b>Deporte</b></a>
+                        <a href="<%=request.getContextPath()%>/VecinoServlet?action=eventoCultura" class="dropdown-item "><span style="font-size: 13.5px;"><b>Cultura</b></a>
+                        <a href="<%=request.getContextPath()%>/VecinoServlet?action=eventosInscritos" class="dropdown-item"><span style="font-size: 13.5px;"><b>Eventos inscritos</b></a>
                     </div>
                 </div>
                 <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"><i class="fa fa-th-list me-2"></i><span style="font-size: 13.5px;"><b>Incidencias</b></a>
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-th-list me-2"></i><span style="font-size: 13.5px;"><b>Incidencias</b></a>
                     <div class="dropdown-menu bg-transparent border-0">
-                        <a href="generarIncidencia_V.html" class="dropdown-item"><span style="font-size: 13.5px;"><b>Generar incidencia</b></a>
-                        <a href="listaIncidencias_V.html" class="dropdown-item active"><span style="font-size: 13.5px;"><b>Lista de incidencias</b></a>
+                        <a href="<%=request.getContextPath()%>/VecinoServlet?action=generarIncidencia" class="dropdown-item"><span style="font-size: 13.5px;"><b>Crear Incidencia</b></a>
+                        <a href="<%=request.getContextPath()%>/VecinoServlet?action=listarIncidencia" class="dropdown-item"><span style="font-size: 13.5px;"><b>Lista de incidencias</b></a>
                     </div>
                 </div>
-                <a href="preguntasFrecuentes_V.html"class="nav-item nav-link "><i class="fa fa-question-circle me-2"></i><span style="font-size: 13.5px;"><b>Preguntas frecuentes</b></a>
+                <a href="<%=request.getContextPath()%>/VecinoServlet?action=preguntasFrecuentes"class="nav-item nav-link "><i class="fa fa-question-circle me-2"></i><span style="font-size: 13.5px;"><b>Preguntas frecuentes</b></a>
             </div>
         </nav>
     </div>
@@ -110,7 +110,7 @@
                     <span class="d-none d-lg-inline-flex" style="color:#023047;"><b>Nombre Apellido</b></span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                    <a href="#" class="dropdown-item itemperfil">Mi perfil</a>
+                    <a href="<%=request.getContextPath()%>/VecinoServlet?action=perfilVecino" class="dropdown-item itemperfil">Mi perfil</a>
                     <a href="login/login.html" class="dropdown-item itemperfil">Cerrar Sesión</a>
                 </div>
             </div>
