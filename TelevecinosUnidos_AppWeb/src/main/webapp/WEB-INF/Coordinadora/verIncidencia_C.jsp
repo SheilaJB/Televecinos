@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="org.example.televecinosunidos_appweb.model.beans.IncidenciasB" %>
+<%@ page import="java.util.Optional" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -74,11 +76,11 @@
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle " data-bs-toggle="dropdown"><i class="fa fa-th-list me-2"></i><span style="font-size: 13.5px;"><b>Incidencias</b></span></a>
                     <div class="dropdown-menu bg-transparent border-0">
-                        <a href=<%=request.getContextPath()%>/VistaServlet?idVista=generarIncidenciaC" class="dropdown-item"><span style="font-size: 13.5px;"><b>Crear incidencia</b></span></a>
-                        <a href=<%=request.getContextPath()%>/VistaServlet?idVista=listaIncidenciaC" class="dropdown-item"><span style="font-size: 13.5px;"><b>Lista de incidencias</b></span></a>
+                        <a href="<%=request.getContextPath()%>/CoordIncidServlet?action=generarIncidenciaC" class="dropdown-item"><span style="font-size: 13.5px;"><b>Crear incidencia</b></span></a>
+                        <a href="<%=request.getContextPath()%>/CoordIncidServlet?action=listarIncidencia" class="dropdown-item"><span style="font-size: 13.5px;"><b>Lista de incidencias</b></span></a>
                     </div>
                 </div>
-                <a href=<%=request.getContextPath()%>/VistaServlet?idVista=preguntasFrecuentesC" class="nav-item nav-link font-al"><i class="fa fa-question-circle me-2" ></i><span style="font-size: 13.5px;"><b>Preguntas frecuentes</b></span></a>
+                <a href="<%=request.getContextPath()%>/VistaServlet?idVista=preguntasFrecuentesC" class="nav-item nav-link font-al"><i class="fa fa-question-circle me-2" ></i><span style="font-size: 13.5px;"><b>Preguntas frecuentes</b></span></a>
             </div>
         </nav>
     </div>
@@ -113,11 +115,8 @@
         <!-- Navbar End -->
         <!-- PARTE SUPERIOR FINAL -->
 
-
-
         <!-- LLENAR-->
         <!-- Footer Start -->
-
         <div class="container-fluid pt-4 px-4">
             <div class="container">
                 <div class="row">
@@ -126,65 +125,96 @@
                             <h2>Ver información de la incidencia</h2>
                         </div>
                         <form>
-                            <div class="rounded h-100 p-4" style="background-color: #8ecae6;">
-                                <div class="mb-3">
-                                    <img id="preview" src="#" alt="Vista previa de la imagen" class="img-thumbnail" style="display: none;">
+                            <div class="card shadow-sm" >
+                                <div class="card-header text-lg-center" ">
+                                    <h5>Información de la Incidencia</h5>
                                 </div>
-                                <div class="mb-3">
-                                    <label for="NombreIncidencia" class="form-label" style="color:#023047;"><b>Nombre de la incidencia</b></label>
-                                    <br>
-                                    <a style="color: white;">Accidente de transito</a>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="TipoIncidencia" class="form-label" style="color:#023047;"><b>Tipo de incidencia</b></label>
-                                    <br>
-                                    <a style="color: white;">• Emergencia Médica</a>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="esPara" class="form-label" style="color:#023047;"><b>La incidencia es para:</b></label>
-                                    <br>
-                                    <a style="color: white;">• Para otra persona</a>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="lugarExacto" class="form-label" style="color:#023047;"><b>Lugar exacto:</b></label>
-                                    <br>
-                                    <a style="color: white;">Av Universitaria #YYYY</a>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="referencia" class="form-label" style="color:#023047;"><b>Referencia</b></label>
-                                    <br>
-                                    <a style="color: white;">Frente a la PUCP</a>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="contacto" class="form-label" style="color:#023047;"><b>Contacto</b></label>
-                                    <br>
-                                    <a style="color: white;">916546561</a>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="ambulancia" class="form-label" style="color:#023047;"><b>¿Se requiere ambulancia?</b></label>
-                                    <br>
-                                    <a style="color: white;">Sí</a>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="fechaGeneracion" class="form-label" style="color:#023047;"><b>Fecha y hora de la generación de incidencia:</b></label>
-                                    <br>
-                                    <a style="color: white;">17/04/24 a las 18:00:00</a>
+                                <div class="card-body">
+                                    <div class="row mb-3">
+                                        <div class="col-12">
+                                            <img id="preview" src="#" alt="Vista previa de la imagen" class="img-thumbnail" style="display: none;">
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-12">
+                                            <label class="form-label" style="color:#023047;"><b>Nombre de la incidencia</b></label>
+                                            <div class="bar p-2 bg-light rounded" data-label="Nombre de la incidencia">
+                                                <%= request.getAttribute("incidencia") != null ? ((IncidenciasB) request.getAttribute("incidencia")).getNombreIncidencia() : "" %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-12">
+                                            <label class="form-label" style="color:#023047;"><b>Tipo de incidencia</b></label>
+                                            <div class="bar p-2 bg-light rounded" data-label="Tipo de incidencia">
+                                                <%= request.getAttribute("incidencia") != null ? ((IncidenciasB) request.getAttribute("incidencia")).getTipoIncidencia() : "" %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-12">
+                                            <label class="form-label" style="color:#023047;"><b>La incidencia es para:</b></label>
+                                            <div class="bar p-2 bg-light rounded" data-label="La incidencia es para">
+                                                <%= request.getAttribute("incidencia") != null && ((IncidenciasB) request.getAttribute("incidencia")).getIncidenciaPersonal() == 1 ? "Para otra persona" : "Personal" %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-12">
+                                            <label class="form-label" style="color:#023047;"><b>Lugar exacto:</b></label>
+                                            <div class="bar p-2 bg-light rounded" data-label="Lugar exacto">
+                                                <%= request.getAttribute("incidencia") != null ? ((IncidenciasB) request.getAttribute("incidencia")).getLugarExacto() : "" %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-12">
+                                            <label class="form-label" style="color:#023047;"><b>Referencia</b></label>
+                                            <div class="bar p-2 bg-light rounded" data-label="Referencia">
+                                                <%= request.getAttribute("incidencia") != null ? ((IncidenciasB) request.getAttribute("incidencia")).getReferencia() : "" %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-12">
+                                            <label class="form-label" style="color:#023047;"><b>Contacto</b></label>
+                                            <div class="bar p-2 bg-light rounded" data-label="Contacto">
+                                                <%= request.getAttribute("incidencia") != null ? ((IncidenciasB) request.getAttribute("incidencia")).getNumeroContacto() : "" %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-12">
+                                            <label class="form-label" style="color:#023047;"><b>¿Se requiere ambulancia?</b></label>
+                                            <div class="bar p-2 bg-light rounded" data-label="¿Se requiere ambulancia?">
+                                                <%= request.getAttribute("incidencia") != null && ((IncidenciasB) request.getAttribute("incidencia")).getAmbulancia() == 1 ? "Sí" : "No" %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-12">
+                                            <label class="form-label" style="color:#023047;"><b>Fecha y hora de la generación de incidencia:</b></label>
+                                            <div class="bar p-2 bg-light rounded" data-label="Fecha y hora de la generación de incidencia">
+                                                <%= request.getAttribute("incidencia") != null ? ((IncidenciasB) request.getAttribute("incidencia")).getFecha() + " a las " + ((IncidenciasB) request.getAttribute("incidencia")).getHora() : "" %>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </form>
                     </div>
                     <div class="col-md-6" style="margin-top: 85px;">
                         <form>
-                            <label for="imagenAcc" class="form-label" style="color:#023047;"><b>Foto del incidente</b></label>
-                            <div class="bg-light rounded h-100 p-4">
+                            <label class="form-label"><b>Foto del incidente</b></label>
+                            <div class="rounded h-100 p-4"style="background-color: #ffb703;">
                                 <div class="mb-3">
-                                    <img src="img/accidente.jpg" class="img-responsive" alt="" style="width: 100%; height: auto;" />
+                                    <img src="<%= request.getAttribute("incidencia") != null ? ((IncidenciasB) request.getAttribute("incidencia")).getFoto() : "img/default.jpg" %>" class="img-responsive" alt="" style="width: 100%; height: auto;" />
                                 </div>
                             </div>
 
                             <div class="d-flex justify-content-end">
-                                <a href="listaIncidencias_C.html">
-                                    <button type="button" class="btn btn-secondary m-2 d-flex justify-content-between align-items-center" id="openPopupBtn">Regresar</button>
+                                <a href="<%=request.getContextPath()%>/CoordIncidServlet?action=listarIncidencia">
+                                    <button type="button" class="btn btn-secondary m-2 d-flex justify-content-between align-items-center">Regresar</button>
                                 </a>
                             </div>
 

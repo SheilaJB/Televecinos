@@ -6,6 +6,8 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class IncidenCoordDao extends BaseDao{
+
+    //Lista de incidencias
     public ArrayList<IncidenciasB> listarIncidencia() {
 
         String setLocaleSql = "SET lc_time_names = 'es_ES'";
@@ -47,10 +49,11 @@ public class IncidenCoordDao extends BaseDao{
         return listaIncidencia;
     }
 
-
+    //Buscar incidencia por id
     public IncidenciasB buscarIncidenciaPorId(String idIncidencia) {
         IncidenciasB incidencia = null;
 
+        String setLocaleSql = "SET lc_time_names = 'es_ES'";
         String sql = "SELECT " +
                 "i.idIncidencias AS 'ID Incidencia', " +
                 "i.nombreIncidencia AS 'Nombre', " +
@@ -75,7 +78,7 @@ public class IncidenCoordDao extends BaseDao{
 
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
+            pstmt.execute(setLocaleSql);
             pstmt.setString(1, idIncidencia);
 
             try (ResultSet rs = pstmt.executeQuery()) {
@@ -103,6 +106,8 @@ public class IncidenCoordDao extends BaseDao{
 
         return incidencia;
     }
+
+    //crear una incidencia
     public void generarIncidenciaC (IncidenciasB incidencia){
         String sql = "INSERT INTO incidencias (nombreIncidencia, fecha, lugarExacto, referencia, foto, ambulancia, " +
                 "numeroContacto, urbanizacion_idUrbanizacion, TipoIncidencia_idTipoIncidencia, incidenciaPersonal, " +
@@ -127,6 +132,7 @@ public class IncidenCoordDao extends BaseDao{
         }
     }
 
+    //Editar una incidencia
     public void actualizarIncidencia(IncidenciasB incidencia) {
         String sql = "UPDATE incidencias " +
                 "SET nombreIncidencia = ?, lugarExacto = ?, referencia = ?, foto = ?, " +
@@ -153,6 +159,8 @@ public class IncidenCoordDao extends BaseDao{
             throw new RuntimeException(e);
         }
     }
+
+    //Para obtener el id de urbanización
     private int obtenerIdUrbanizacion(String urbanizacion) {
         switch (urbanizacion) {
             case "Rafael Escardó": return 1;
@@ -170,6 +178,8 @@ public class IncidenCoordDao extends BaseDao{
             default: throw new IllegalArgumentException("Urbanización no reconocida: " + urbanizacion);
         }
     }
+
+    //Para obtener el id del tipo de incidencia
     private int obtenerIdTipoIncidencia(String tipoIncidencia) {
         switch (tipoIncidencia) {
             case "Seguridad Pública": return 1;
