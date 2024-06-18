@@ -237,6 +237,7 @@ public class AdministradorServlet extends HttpServlet {
         InstructorDao instructorDao = new InstructorDao();
         SolicitanteDao solicitanteDao = new SolicitanteDao();
 
+
         String action = request.getParameter("action") == null ? "registrarSerenazgo" : request.getParameter("action");
         String textoBuscar;
 

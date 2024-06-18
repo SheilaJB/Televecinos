@@ -49,5 +49,40 @@ public class SerenazgoServlet extends HttpServlet {
         }
     }
 
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        IncidenciaDao incidenciaDao = new IncidenciaDao();
+
+        String action = request.getParameter("action") == null ? "buscarIncidenciaPorNombre" : request.getParameter("action");
+        String textoBuscar;
+
+        switch (action){
+            case "buscarIncidenciaFiltro":
+                textoBuscar= request.getParameter("textoBuscarIncidencia");
+                String criticidad =  request.getParameter("criticidad");
+                String tipoIncidencia =  request.getParameter("tipoIncidencia");
+                String estadoIncidencia =  request.getParameter("estadoIncidencia");
+                String urbanizacion =  request.getParameter("urbanizacion");
+
+                if (textoBuscar == null && criticidad == null && tipoIncidencia == null && estadoIncidencia == null && urbanizacion == null) {
+                    response.sendRedirect(request.getContextPath() + "/SerenazgoServlet?action=listaIncidencias_S");
+                } else {
+                    request.setAttribute("textoBusqueda",textoBuscar);
+                    request.setAttribute("lista", incidenciaDao.listarIncidenciasFiltro(textoBuscar,criticidad,tipoIncidencia,estadoIncidencia,urbanizacion));
+                    RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Serenazgo/listaIncidencias_S.jsp");
+                    view.forward(request, response);
+                }
+                break;
+        }
+
+
+    }
+
+
+
+
+
+
 
 }

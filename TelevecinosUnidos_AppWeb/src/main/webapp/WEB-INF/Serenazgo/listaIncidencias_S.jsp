@@ -1,6 +1,8 @@
 <%@ page import="org.example.televecinosunidos_appweb.model.beans.IncidenciasB" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="lista" scope="request" type="java.util.ArrayList<org.example.televecinosunidos_appweb.model.beans.IncidenciasB>" />
+<jsp:useBean id="textoBusqueda" scope="request" type="java.lang.String" class="java.lang.String"/>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -76,61 +78,82 @@
         <div id="Nombre del evento">
             <h3 style="text-align: left; margin-top:20px;margin-bottom:20px;padding: 20px">Lista de incidencias</h3>
         </div>
+        <!-- Filtro -->
         <div style="background-color: #f8f9fa; padding: 20px; align-items: center;">
-            <!-- Filtro -->
-            <div class="filtro" style="border: 1px solid #ccc; border-radius: 5px; padding: 10px; display: flex; align-items: center; background-color:#FFB703 ;">
-                <!-- Barra de búsqueda -->
-                <input type="text" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 30%; margin-right: 2%;" id="filtroInput" placeholder="Buscar...">
+            <div style="background-color: #FFB703; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
 
-                <!-- Selector de criticidad -->
-                <select id="filtroCriticidad" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 20%; margin-right: 2%;">
-                    <option selected disabled>Criticidad</option>
-                    <option value="criticidadBaja">Baja</option>
-                    <option value="criticidadMedia">Media</option>
-                    <option value="criticidadAlta">Alta</option>
+                <form method="post" action="<%=request.getContextPath()%>/SerenazgoServlet?action=buscarIncidenciaFiltro">
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-md-2 mb-2">
+                            <input type="text" class="form-control" id="filtroInput" placeholder="Buscar incidencia..." name="textoBuscarIncidencia" value="<%=textoBusqueda%>"/>
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <!-- Selector de criticidad -->
+                            <select id="filtroCriticidad" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 100%;">
+                                <option selected disabled>Criticidad</option>
+                                <option name="1">Baja</option>
+                                <option name="2">Media</option>
+                                <option name="3">Alta</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <!-- Selector de tipo de incidencia -->
+                            <select id="filtroIncidencia" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 100%;">
+                                <option selected disabled>Tipo de Incidencia</option>
+                                <option name="1">Seguridad Publica</option>
+                                <option name="2">Emergencia pública</option>
+                                <option name="3">Infraestructura y Servicios Públicos</option>
+                                <option name="4">Otro</option>
+                            </select>
+                        </div>
 
-                </select>
+                        <div class="col-md-2 mb-2">
+                            <!-- Selector de estado -->
+                            <select id="filtroEstado" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 100%;">
+                                <option selected disabled>Estado</option>
+                                <option value="1">Pendiente</option>
+                                <option value="2">En curso</option>
+                                <option value="3">Cancelado</option>
+                                <option value="4">Rechazado</option>
+                                <option value="5">Procesado</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <!-- Selector de urbanización -->
+                            <select id="filtroUrbanizacion" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 100%;">
+                                <option selected disabled>Urbanización</option>
+                                <option value="1">Rafael Escardó</option>
+                                <option value="2">José de La Riva Agüero</option>
+                                <option value="3">Juan XXIII</option>
+                                <option value="4">Libertad</option>
+                                <option value="5">Los Jardines de La Marina</option>
+                                <option value="6">Las Leyendas</option>
+                                <option value="7">Las Torres San Miguelito</option>
+                                <option value="8">Elmer Faucett</option>
+                                <option value="9">Maranga</option>
+                                <option value="10">Pando</option>
+                                <option value="11">Parques de La Huaca</option>
+                                <option value="12">Otro</option>
+                            </select>
+                        </div>
 
-                <!-- Selector de tipo de incidencia -->
-                <select id="filtroIncidencia" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 20%; margin-right: 2%;">
-                    <option selected disabled>Tipo de Incidencia</option>
-                    <option value="tipo1">Seguridad Publica</option>
-                    <option value="tipo2">Emergencia pública</option>
-                    <option value="tipo3">Infraestructura y Servicios Públicos</option>
-                    <option value="tipo3">Otro</option>
-                </select>
+                        <!-- Botón de filtrado -->
+                        <div class="col-md-1 mb-2">
+                            <button class="btn btn-primary" type="submit" style="width: 100%;">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                        <div class="col-md-1 mb-2">
+                            <a class="btn btn-secondary" href="<%=request.getContextPath()%>/SerenazgoServlet?action=listaIncias_S" style="width: 100%;">Limpiar</a>
+                        </div>
+                    </div>
+                </form>
 
-                <!-- Selector de estado -->
-                <select id="filtroEstado" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 20%; margin-right: 2%;">
-                    <option selected disabled>Estado</option>
-                    <option value="pendiente">Pendiente</option>
-                    <option value="enCurso">En curso</option>
-                    <option value="cancelado">Cancelado</option>
-                    <option value="rechazado">Rechazado</option>
-                    <option value="procesado">Procesado</option>
-                </select>
-                <!-- Selector de urb -->
-                <select id="filtroEstado" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 20%; margin-right: 2%;">
-                    <option selected disabled>Urbanizacion</option>
-                    <option value="opcion1">Rafael Escardó</option>
-                    <option value="opcion2">José de La Riva Agüero</option>
-                    <option value="opcion3">Juan XXIII</option>
-                    <option value="opcion3">Libertad</option>
-                    <option value="opcion4">Los Jardines de La Marina</option>
-                    <option value="opcion5">Las Leyendas</option>
-                    <option value="opcion6">Las Torres San Miguelito</option>
-                    <option value="opcion7">Elmer Faucett</option>
-                    <option value="opcion8">Maranga</option>
-                    <option value="opcion9">Pando</option>
-                    <option value="opcion10">Maranga</option>
-                    <option value="opcion11">Parques de La Huaca</option>
-
-                    <option value="otro">Otro</option>
-
-                </select>
-                <!-- Botón de filtrado -->
-                <button type="button" class="btn btn-primary" onclick="filtrar()" style="padding: 10px;"><b>Filtrar</b></button>
             </div>
+
+
+
+
             <div class="table-responsive">
                 <table class="table" style="background-color: transparent;">
                     <thead>
@@ -211,7 +234,7 @@
                     </ul>
                 </section>
             </div>
-
+        </div>
         </div>
         <!-- Footer Start -->
         <div class="container-fluid pt-4 px-4">
