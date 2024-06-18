@@ -89,27 +89,27 @@
                         </div>
                         <div class="col-md-2 mb-2">
                             <!-- Selector de criticidad -->
-                            <select id="filtroCriticidad" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 100%;">
+                            <select name="criticidad" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 100%;">
                                 <option selected disabled>Criticidad</option>
-                                <option name="1">Baja</option>
-                                <option name="2">Media</option>
-                                <option name="3">Alta</option>
+                                <option value="1">Baja</option>
+                                <option value="2">Media</option>
+                                <option value="3">Alta</option>
                             </select>
                         </div>
                         <div class="col-md-2 mb-2">
                             <!-- Selector de tipo de incidencia -->
-                            <select id="filtroIncidencia" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 100%;">
+                            <select name="tipoIncidencia" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 100%;">
                                 <option selected disabled>Tipo de Incidencia</option>
-                                <option name="1">Seguridad Publica</option>
-                                <option name="2">Emergencia pública</option>
-                                <option name="3">Infraestructura y Servicios Públicos</option>
-                                <option name="4">Otro</option>
+                                <option value="1">Seguridad Publica</option>
+                                <option value="2">Emergencia pública</option>
+                                <option value="3">Infraestructura y Servicios Públicos</option>
+                                <option value="4">Otro</option>
                             </select>
                         </div>
 
                         <div class="col-md-2 mb-2">
                             <!-- Selector de estado -->
-                            <select id="filtroEstado" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 100%;">
+                            <select name="estadoIncidencia" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 100%;">
                                 <option selected disabled>Estado</option>
                                 <option value="1">Pendiente</option>
                                 <option value="2">En curso</option>
@@ -120,7 +120,7 @@
                         </div>
                         <div class="col-md-2 mb-2">
                             <!-- Selector de urbanización -->
-                            <select id="filtroUrbanizacion" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 100%;">
+                            <select name="urbanizacion" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 100%;">
                                 <option selected disabled>Urbanización</option>
                                 <option value="1">Rafael Escardó</option>
                                 <option value="2">José de La Riva Agüero</option>
@@ -144,7 +144,7 @@
                             </button>
                         </div>
                         <div class="col-md-1 mb-2">
-                            <a class="btn btn-secondary" href="<%=request.getContextPath()%>/SerenazgoServlet?action=listaIncias_S" style="width: 100%;">Limpiar</a>
+                            <a class="btn btn-secondary" href="<%=request.getContextPath()%>/SerenazgoServlet?action=listaIncidencias_S" style="width: 100%;">Limpiar</a>
                         </div>
                     </div>
                 </form>
