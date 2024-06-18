@@ -186,7 +186,7 @@
                         <td><%=incidenciasB.getEstadosIncidencia_idEstadoIncidenciaStr()%>
                         </td>
 
-                        <td><a href="<%=request.getContextPath()%>/SerenazgoServlet?action=gestionar_Incidencia_S&id=<%=incidenciasB.getIdIncidencias()%>"><button type="button" class="btn btn-success-puedeGestionar m-2"><i class="fas fa-check"></i></button></a></td>
+                        <td><a href="<%=request.getContextPath()%>/SerenazgoServlet?action=gestionar_Incidencia_S&id=<%=incidenciasB.getIdIncidencias()%>"><button type="button" class="btn btn-success-puedeGestionar m-2"><i class="fas fa-clipboard-list"></i></button></a></td>
                         <!--
                         <td>Incidencia 1</td>
                         <td>21-Enero</td>
