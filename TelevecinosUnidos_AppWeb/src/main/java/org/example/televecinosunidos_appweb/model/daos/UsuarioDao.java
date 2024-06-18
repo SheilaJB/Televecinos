@@ -234,4 +234,55 @@ public class UsuarioDao extends BaseDao{
 
         return listaBaneados;
     }
+    public boolean validarUsuarioPassword(String correo, String contrasena){
+        boolean exito = false;
+        String sql= "Select * from usuario where correo= ? and contrasena= ?";
+        try (Connection connection= getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql)){
+
+            pstmt.setString(1, correo);
+            pstmt.setString(2, contrasena);
+
+            try(ResultSet rs = pstmt.executeQuery()){
+                if(rs.next()){
+                    exito = true;
+                }
+
+            }
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return exito;
+    }
+    public UsuarioB obtenerUsuario1(String correo) {
+        UsuarioB usuarioB = new UsuarioB();
+        String sql = "SELECT * FROM usuario u " +
+                "FROM televecinosdb.usuario \n" +
+                "WHERE u.correo=?";
+
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1,correo);
+
+            try(ResultSet rs = pstmt.executeQuery()){
+
+                if(rs.next()) {
+                    usuarioB = new UsuarioB();
+
+                    usuarioB.setCorreo(rs.getString(6));
+
+                }
+
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return usuarioB;
+    }
 }
