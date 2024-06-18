@@ -306,11 +306,13 @@ public class AdministradorServlet extends HttpServlet {
 
             case "buscarSerenazgoPorNombre":
                 textoBuscar= request.getParameter("textoBuscarSerenazgo");
-                if (textoBuscar == null) {
+                String tipoS =  request.getParameter("tipo");
+                String turnoS =  request.getParameter("turno");
+                if (textoBuscar == null && tipoS == null && turnoS == null) {
                     response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=listaSerenazgo_A");
                 } else {
                     request.setAttribute("textoBusqueda",textoBuscar);
-                    request.setAttribute("lista", serenazgoDao.listarSerenazgosPorNombre(textoBuscar));
+                    request.setAttribute("lista", serenazgoDao.listarSerenazgosFiltro(textoBuscar,tipoS,turnoS));
                     RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Administrador/listaSerenazgo_A.jsp");
                     view.forward(request, response);
                 }

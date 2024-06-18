@@ -80,20 +80,38 @@
         <div style="background-color: #f8f9fa; padding: 10px; align-items: center;">
             <!-- Filtro -->
             <div style="background-color: #FFB703; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
-                <div class="row justify-content-center align-items-center">
-                    <form method="post" action="<%=request.getContextPath()%>/AdministradorServlet?action=buscarSerenazgoPorNombre">
-                        <div class="col-md-7 mb-2">
-                            <div class="input-group">
-                                <input type="text" class="form-control" id="filtroInput" placeholder="Buscar serenazgo..." name="textoBuscarSerenazgo" value="<%=textoBusqueda%>"/>
-                                <button class="btn btn-primary" type="submit">
-                                    <i class="fas fa-search"></i> </button>
-                                <a class="btn btn-secondary" href="<%=request.getContextPath()%>/AdministradorServlet?action=listaSerenazgo_A">
-                                    Limpiar
-                                </a>
-                            </div>
+                <form method="post" action="<%=request.getContextPath()%>/AdministradorServlet?action=buscarSerenazgoPorNombre">
+                    <div class="row justify-content-center align-items-center">
+
+                        <div class="col-md-3 mb-2">
+                            <input type="text" class="form-control" id="filtroInput" placeholder="Buscar serenazgo..." name="textoBuscarSerenazgo" value="<%=textoBusqueda%>"/>
                         </div>
-                    </form>
-                </div>
+                        <div class="col-md-3 mb-2">
+                            <select name="turno" class="form-select">
+                                <option selected disabled>Turno del serenazgo</option>
+                                <option value="1">Diurno</option>
+                                <option value="2">Nocturno</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-3 mb-2">
+                            <select name="tipo" class="form-select">
+                                <option selected disabled>Tipo del serenazgo</option>
+                                <option value="1">Bicicleta</option>
+                                <option value="2">A pie</option>
+                                <option value="3">Canino</option>
+                                <option value="4">Vehículo</option>
+                            </select>
+                        </div>
+                        <div class="col-md-1 mb-2">
+                            <button class="btn btn-primary " type="submit">
+                                <i class="fas fa-search"></i> </button>
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <a class="btn btn-secondary" href="<%=request.getContextPath()%>/AdministradorServlet?action=listaSerenazgo_A">Limpiar</a>
+                        </div>
+                    </div>
+                </form>
             </div>
 
             <div class="bg-light rounded h-100 p-4" style="font-weight: bold;">

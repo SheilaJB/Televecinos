@@ -245,7 +245,7 @@ public class SerenazgoDao extends BaseDao {
 
     }
 
-    public ArrayList<SerenazgoB> listarSerenazgosPorNombre(String textoBuscar) {
+    public ArrayList<SerenazgoB> listarSerenazgosFiltro(String textoBuscar,String tipoS,String turnoS) {
 
 
 
@@ -269,7 +269,15 @@ public class SerenazgoDao extends BaseDao {
                 "    `televecinosdb`.`serenazgo`\n" +
                 "JOIN \n" +
                 "    `televecinosdb`.`usuario` ON serenazgo.usuario_idUsuario = usuario.idUsuario\n" +
-                "where usuario.isBan = 0 and (usuario.nombre like ? or usuario.apellido like ?)";
+                "where usuario.isBan = 0 and (usuario.nombre like ? or usuario.apellido like ? or usuario.dni like ?)";
+
+        if (turnoS != null) {
+            sql += " AND serenazgo.TurnoSerenazgo_idTurnoSerenazgo = ?";
+        }
+
+        if (tipoS != null) {
+            sql += " AND serenazgo.TipoSerenazgo_idTipoSerenazgo = ?";
+        }
 
 
         ArrayList<SerenazgoB> listaSerenazgos = new ArrayList<>();
@@ -278,6 +286,27 @@ public class SerenazgoDao extends BaseDao {
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, textoBuscar+ "%");
             pstmt.setString(2, textoBuscar+ "%");
+            pstmt.setString(3, textoBuscar+ "%");
+            if (turnoS != null && tipoS != null){
+                pstmt.setString(4, turnoS);
+                pstmt.setString(5, tipoS);
+            }
+            else{
+                if (turnoS != null && tipoS == null){
+                    pstmt.setString(4, turnoS);
+                }
+                else{
+                    if (turnoS == null && tipoS != null){
+                        pstmt.setString(4, tipoS);
+                    }
+                }
+            }
+
+
+
+
+
+
             try(ResultSet rs = pstmt.executeQuery()){
                 while (rs.next()) {
                     SerenazgoB serenazgoB = new SerenazgoB();
