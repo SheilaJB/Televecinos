@@ -85,7 +85,7 @@
                 <form method="post" action="<%=request.getContextPath()%>/SerenazgoServlet?action=buscarIncidenciaFiltro">
                     <div class="row justify-content-center align-items-center">
                         <div class="col-md-2 mb-2">
-                            <input type="text" class="form-control" id="filtroInput" placeholder="Buscar incidencia..." name="textoBuscarIncidencia" value="<%=textoBusqueda%>"/>
+                            <input type="text" class="form-control" id="filtroInput" placeholder="Buscar..." name="textoBuscarIncidencia" value="<%=textoBusqueda%>"/>
                         </div>
                         <div class="col-md-2 mb-2">
                             <!-- Selector de criticidad -->
@@ -166,7 +166,6 @@
                         <th scope="col">Urbanización</th>
                         <th scope="col">Estado</th>
                         <th scope="col">Gestionar</th>
-                        <th scope="col">Ver</th>
                     </tr>
                     </thead>
 
@@ -235,7 +234,6 @@
                 </section>
             </div>
         </div>
-        </div>
         <!-- Footer Start -->
         <div class="container-fluid pt-4 px-4">
             <div class="bg-light rounded-top p-4">
@@ -247,6 +245,10 @@
             </div>
         </div>
         <!-- Footer End -->
+
+
+        </div>
+
     </div>
 </div>
 <!-- Content End -->
