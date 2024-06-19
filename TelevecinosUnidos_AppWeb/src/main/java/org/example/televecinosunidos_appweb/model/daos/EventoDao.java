@@ -18,7 +18,43 @@ public class EventoDao extends BaseDao{
                 "es.estadosEvento AS 'Estado', ef.tipoFrecuencia AS 'Frecuencia' " +
                 "FROM Eventos e JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
                 "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
-                "WHERE e.TipoEvento_idTipoEvento = 1 AND e.eliminado = FALSE;";
+                "WHERE e.TipoEvento_idTipoEvento = 1 AND e.eliminado = FALSE " +
+                "LIMIT 6;";
+
+        ArrayList<EventoB> listaEventosPropios = new ArrayList<>();
+
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                EventoB evento = new EventoB();
+                evento.setidEvento(rs.getInt("ID Evento"));
+                evento.setNombre(rs.getString("Nombre"));
+                evento.setFecha_inicio(rs.getString("Fecha de Inicio"));
+                evento.setEstadoString(rs.getString("Estado"));
+                evento.setFrecuenciaString(rs.getString("Frecuencia"));
+                listaEventosPropios.add(evento);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return listaEventosPropios;
+    }
+    //Mostrar solo los 3 eventos creados recientemente
+    public ArrayList<EventoB> listarEventosPropiosRecientes() {
+
+        String sql = "SELECT e.idEventos AS 'ID Evento', e.nombre AS 'Nombre', " +
+                "DATE_FORMAT(e.fecha_inicio, '%d %M') AS 'Fecha de Inicio', " +
+                "es.estadosEvento AS 'Estado', ef.tipoFrecuencia AS 'Frecuencia' " +
+                "FROM Eventos e " +
+                "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
+                "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
+                "WHERE e.TipoEvento_idTipoEvento = 1 AND e.eliminado = FALSE " +
+                "LIMIT 3;";
+
 
         ArrayList<EventoB> listaEventosPropios = new ArrayList<>();
 

@@ -115,23 +115,23 @@
                 </div>
             </div>
             <div class="navbar-nav w-100">
-                <a href="<%=request.getContextPath()%>/VistaServlet?idVista=inicioCoordinador" class="nav-item nav-link active"><i class="fa fa-home me-2"></i><span style="font-size: 13.5px;"><b>Inicio</b></span></a>
+                <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=inicioCoordinador" class="nav-item nav-link active"><i class="fa fa-home me-2"></i><span style="font-size: 13.5px;"><b>Inicio</b></span></a>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle  " data-bs-toggle="dropdown"><i class="fa fa-calendar me-2"></i><span style="font-size: 13.5px;"><b>Eventos</b></span></a>
                     <div class="dropdown-menu bg-transparent border-0 ">
-                        <a href="<%=request.getContextPath()%>/VistaServlet?idVista=eventoGeneralesC" class="dropdown-item active"><span style="font-size: 13.5px;"><b>Eventos generales</b></span></a>
-                        <a href="<%=request.getContextPath()%>/VistaServlet?idVista=creacionEventoC" class="dropdown-item"><span style="font-size: 13.5px;"><b>Crear evento</b></span></a>
-                        <a href="<%=request.getContextPath()%>/CoordinadorServlet" class="dropdown-item"><span style="font-size: 13.5px;"><b>Eventos propios</b></span></a>
+                        <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=eventoGeneralesC" class="dropdown-item active"><span style="font-size: 13.5px;"><b>Eventos generales</b></span></a>
+                        <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=crearEvento" class="dropdown-item"><span style="font-size: 13.5px;"><b>Crear evento</b></span></a>
+                        <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=lista" class="dropdown-item"><span style="font-size: 13.5px;"><b>Eventos propios</b></span></a>
                     </div>
                 </div>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle " data-bs-toggle="dropdown"><i class="fa fa-th-list me-2"></i><span style="font-size: 13.5px;"><b>Incidencias</b></span></a>
                     <div class="dropdown-menu bg-transparent border-0">
-                        <a href="<%=request.getContextPath()%>/VistaServlet?idVista=generarIncidenciaC" class="dropdown-item"><span style="font-size: 13.5px;"><b>Crear incidencia</b></span></a>
-                        <a href="<%=request.getContextPath()%>/VistaServlet?idVista=listaIncidenciaC" class="dropdown-item"><span style="font-size: 13.5px;"><b>Lista de incidencias</b></span></a>
+                        <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=generarIncidenciaC" class="dropdown-item"><span style="font-size: 13.5px;"><b>Crear incidencia</b></span></a>
+                        <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=listarIncidencia" class="dropdown-item"><span style="font-size: 13.5px;"><b>Lista de incidencias</b></span></a>
                     </div>
                 </div>
-                <a href="<%=request.getContextPath()%>/VistaServlet?idVista=preguntasFrecuentesC" class="nav-item nav-link font-al"><i class="fa fa-question-circle me-2" ></i><span style="font-size: 13.5px;"><b>Preguntas frecuentes</b></span></a>
+                <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=preguntasFrecuentesC" class="nav-item nav-link font-al"><i class="fa fa-question-circle me-2" ></i><span style="font-size: 13.5px;"><b>Preguntas frecuentes</b></span></a>
             </div>
         </nav>
     </div>
@@ -157,8 +157,8 @@
                         <span class="d-none d-lg-inline-flex" style="color:#023047;"><b>Nombre Apellido</b></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                        <a href="VistaServlet?idVista=perfilC" class="dropdown-item">Mi perfil</a>
-                        <a href="VistaServlet?idVista=Index" class="dropdown-item">Cerrar sesión</a>
+                        <a href="CoordinadorServlet?action=perfilC" class="dropdown-item">Mi perfil</a>
+                        <a href="CoordinadorServlet?action=Index" class="dropdown-item">Cerrar sesión</a>
                     </div>
                 </div>
             </div>

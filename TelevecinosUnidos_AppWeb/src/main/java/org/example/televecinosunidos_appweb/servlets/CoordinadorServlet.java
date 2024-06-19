@@ -5,8 +5,10 @@ import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
 import org.example.televecinosunidos_appweb.model.beans.EventoB;
+import org.example.televecinosunidos_appweb.model.beans.IncidenciasB;
 import org.example.televecinosunidos_appweb.model.beans.ProfesoresEvento;
 import org.example.televecinosunidos_appweb.model.daos.EventoDao;
+import org.example.televecinosunidos_appweb.model.daos.IncidenCoordDao;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,24 +18,53 @@ public class CoordinadorServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         EventoDao eventoDao = new EventoDao();
+        IncidenCoordDao incidenciaDao = new IncidenCoordDao();
         ArrayList<EventoB> listaEventosPropios = eventoDao.listarEventosPropios();
-        String vista = "";
-        String action = request.getParameter("action") == null ? "lista" : request.getParameter("action");
+        String vista ="";
+        String action = request.getParameter("action") == null ? "inicioCoordinador" : request.getParameter("action");
 
         switch (action) {
+            //Inicio
+            case "inicioCoordinador":
+                ArrayList<IncidenciasB> listaIncidenciasRecientes = incidenciaDao.listarIncidenciaRecientes();
+                ArrayList<EventoB> listaEventospRropiosRecientes = eventoDao.listarEventosPropiosRecientes();
+                request.setAttribute("listaIncidencia", listaIncidenciasRecientes);
+                request.setAttribute("listaEvento", listaEventospRropiosRecientes);
+                vista = "WEB-INF/Coordinadora/InicioCoordinador.jsp";
+                request.getRequestDispatcher(vista).forward(request, response);
+
+                break;
+            // NavBar
+            case "perfilC":
+                vista = "WEB-INF/Coordinadora/perfil_C.jsp";
+                request.getRequestDispatcher(vista).forward(request, response);
+                break;
+            case "Index":
+                vista = "index.jsp";
+                request.getRequestDispatcher(vista).forward(request, response);
+                break;
+            // Eventos
+            case "eventoGeneralesC":
+                vista = "WEB-INF/Coordinadora/EventoGenerales_C.jsp";
+                request.getRequestDispatcher(vista).forward(request, response);
+                break;
+
             case "lista":
                 vista = "WEB-INF/Coordinadora/ListaEvent-Coordinador.jsp";
                 request.setAttribute("lista", listaEventosPropios);
+                request.getRequestDispatcher(vista).forward(request, response);
                 break;
             case "verEvento":
                 String idEvento = request.getParameter("idEvento");
                 vista = "WEB-INF/Coordinadora/eventoPropio.jsp";
                 request.setAttribute("evento", eventoDao.buscarEventoPorId(idEvento));
+                request.getRequestDispatcher(vista).forward(request, response);
                 break;
             case "crearEvento":
                 ArrayList<ProfesoresEvento> listaProfesores = eventoDao.listarProfesores();
                 request.setAttribute("lista", listaProfesores);
                 vista = "WEB-INF/Coordinadora/creacionEvento.jsp";
+                request.getRequestDispatcher(vista).forward(request, response);
                 break;
             case "editarEvento":
                 String id = request.getParameter("idEvento");
@@ -47,25 +78,69 @@ public class CoordinadorServlet extends HttpServlet {
                     response.sendRedirect(request.getContextPath() + "/CoordinadorServlet");
                     return;
                 }
+                request.getRequestDispatcher(vista).forward(request, response);
                 break;
             case "borrarEvento":
                 String idBorrar = request.getParameter("idEvento");
                 eventoDao.borrarEvento(Integer.parseInt(idBorrar));
                 response.sendRedirect(request.getContextPath() + "/CoordinadorServlet");
                 return;
+
+            //Incidencia
+            case "listarIncidencia":
+                ArrayList<IncidenciasB> listaIncidencias = incidenciaDao.listarIncidencia();
+                request.setAttribute("lista", listaIncidencias);
+                vista = "WEB-INF/Coordinadora/listaIncidencias_C.jsp";
+                request.getRequestDispatcher(vista).forward(request, response);
+                break;
+            case "verIncidencia":
+                String idIncidencia = request.getParameter("idIncidencia");
+                IncidenciasB incidencia = incidenciaDao.buscarIncidenciaPorId(idIncidencia);
+                request.setAttribute("incidencia", incidencia);
+                vista = "WEB-INF/Coordinadora/verIncidencia_C.jsp";
+                request.getRequestDispatcher(vista).forward(request, response);
+                break;
+            case "generarIncidenciaC":
+                vista = "WEB-INF/Coordinadora/generarIncidencia_C.jsp";
+                request.getRequestDispatcher(vista).forward(request, response);
+                break;
+            case "editarIncidencia":
+                String idIncid = request.getParameter("idIncidencia");
+                IncidenciasB incidenciaB = incidenciaDao.buscarIncidenciaPorId(idIncid);
+                if (incidenciaB != null) {
+                    request.setAttribute("incidenciaB", incidenciaB);
+                    request.getRequestDispatcher("WEB-INF/Coordinadora/actualizarIncidencia_C.jsp").forward(request, response);
+                } else {
+                    response.sendRedirect(request.getContextPath() + "/CoordIncidServlet");
+                }
+                return;
+            case "borrarIncidencia": //Revisar este caso
+                String idd = request.getParameter("idIncidencia");
+                IncidenCoordDao.buscarIncidenciaPorId(idd);
+                response.sendRedirect(request.getContextPath() + "/CoordIncidServlet");
+                break;
+
+            //Preguntas Frecuentes
+            case "preguntasFrecuentesC":
+                vista = "WEB-INF/Coordinadora/preguntasFrecuentes_C.jsp";
+                request.getRequestDispatcher(vista).forward(request, response);
+                break;
             default:
                 throw new IllegalArgumentException("Acción no reconocida: " + action);
         }
-        request.getRequestDispatcher(vista).forward(request, response);
+
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
+        IncidenCoordDao incidenciaDao = new IncidenCoordDao();
         EventoDao eventoDao = new EventoDao();
         String action = request.getParameter("action") == null ? "crear" : request.getParameter("action");
 
         switch (action) {
+
+            //Evento
             case "crear":
                 String nombreEvento = request.getParameter("nombreEvento");
                 String descripcionEvento = request.getParameter("descripcionEvento");
@@ -156,6 +231,9 @@ public class CoordinadorServlet extends HttpServlet {
                 eventoDao.actualizarEvento(eventoB);
                 response.sendRedirect(request.getContextPath() + "/CoordinadorServlet");
                 break;
+
+            //Incidencia
+
 
             default:
                 response.sendRedirect(request.getContextPath() + "/CoordinadorServlet");

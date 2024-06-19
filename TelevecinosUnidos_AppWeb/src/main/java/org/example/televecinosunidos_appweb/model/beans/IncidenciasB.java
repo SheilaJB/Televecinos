@@ -1,7 +1,7 @@
 package org.example.televecinosunidos_appweb.model.beans;
 
 public class IncidenciasB {
-    private int idIncidencias;
+    private static int idIncidencias;
     private String nombreIncidencia;
     private String lugarExacto;
     private String referencia;
@@ -103,7 +103,7 @@ public class IncidenciasB {
         this.hora = hora;
     }
 
-    public int getIdIncidencias() {
+    public static int getIdIncidencias() {
         return idIncidencias;
     }
 

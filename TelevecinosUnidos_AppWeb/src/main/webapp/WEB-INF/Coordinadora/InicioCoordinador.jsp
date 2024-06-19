@@ -1,5 +1,9 @@
+<%@ page import="org.example.televecinosunidos_appweb.model.beans.IncidenciasB" %>
+<%@ page import="org.example.televecinosunidos_appweb.model.beans.EventoB" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<% ArrayList<IncidenciasB> listaIncidencia = (ArrayList<IncidenciasB>) request.getAttribute("listaIncidencia"); %>
+<% ArrayList<EventoB> listaEvento = (ArrayList<EventoB>) request.getAttribute("listaEvento"); %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -60,23 +64,23 @@
                 </div>
             </div>
             <div class="navbar-nav w-100">
-                <a href="<%=request.getContextPath()%>/VistaServlet?idVista=inicioCoordinador" class="nav-item nav-link active"><i class="fa fa-home me-2"></i><span style="font-size: 13.5px;"><b>Inicio</b></span></a>
+                <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=inicioCoordinador" class="nav-item nav-link active"><i class="fa fa-home me-2"></i><span style="font-size: 13.5px;"><b>Inicio</b></span></a>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle " data-bs-toggle="dropdown"><i class="fa fa-calendar me-2"></i><span style="font-size: 13.5px;"><b>Eventos</b></span></a>
                     <div class="dropdown-menu bg-transparent border-0">
-                        <a href="<%=request.getContextPath()%>/VistaServlet?idVista=eventoGeneralesC" class="dropdown-item"><span style="font-size: 13.5px;"><b>Eventos generales</b></span></a>
-                        <a href="<%=request.getContextPath()%>/VistaServlet?idVista=creacionEventoC" class="dropdown-item"><span style="font-size: 13.5px;"><b>Crear evento</b></span></a>
-                        <a href="<%=request.getContextPath()%>/CoordinadorServlet" class="dropdown-item"><span style="font-size: 13.5px;"><b>Eventos propios</b></span></a>
+                        <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=eventoGeneralesC" class="dropdown-item"><span style="font-size: 13.5px;"><b>Eventos generales</b></span></a>
+                        <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=crearEvento" class="dropdown-item"><span style="font-size: 13.5px;"><b>Crear evento</b></span></a>
+                        <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=lista" class="dropdown-item"><span style="font-size: 13.5px;"><b>Eventos propios</b></span></a>
                     </div>
                 </div>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle " data-bs-toggle="dropdown"><i class="fa fa-th-list me-2"></i><span style="font-size: 13.5px;"><b>Incidencias</b></span></a>
                     <div class="dropdown-menu bg-transparent border-0">
-                        <a href="<%=request.getContextPath()%>/VistaServlet?idVista=generarIncidenciaC" class="dropdown-item"><span style="font-size: 13.5px;"><b>Crear incidencia</b></span></a>
-                        <a href="<%=request.getContextPath()%>/VistaServlet?idVista=listaIncidenciaC" class="dropdown-item"><span style="font-size: 13.5px;"><b>Lista de incidencias</b></span></a>
+                        <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=generarIncidenciaC" class="dropdown-item"><span style="font-size: 13.5px;"><b>Crear incidencia</b></span></a>
+                        <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=listarIncidencia" class="dropdown-item"><span style="font-size: 13.5px;"><b>Lista de incidencias</b></span></a>
                     </div>
                 </div>
-                <a href="<%=request.getContextPath()%>/VistaServlet?idVista=preguntasFrecuentesC" class="nav-item nav-link font-al"><i class="fa fa-question-circle me-2" ></i><span style="font-size: 13.5px;"><b>Preguntas frecuentes</b></span></a>
+                <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=preguntasFrecuentesC" class="nav-item nav-link font-al"><i class="fa fa-question-circle me-2" ></i><span style="font-size: 13.5px;"><b>Preguntas frecuentes</b></span></a>
             </div>
         </nav>
     </div>
@@ -102,8 +106,8 @@
                         <span class="d-none d-lg-inline-flex" style="color:#023047;"><b>Nombre Apellido</b></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                        <a href="VistaServlet?idVista=perfilC" class="dropdown-item">Mi perfil</a>
-                        <a href="VistaServlet?idVista=Index" class="dropdown-item">Cerrar sesión</a>
+                        <a href="CoordinadorServlet?action=perfilC" class="dropdown-item">Mi perfil</a>
+                        <a href="CoordinadorServlet?action=Index" class="dropdown-item">Cerrar sesión</a>
                     </div>
                 </div>
             </div>
@@ -143,7 +147,8 @@
             <div class="bg-light text-center rounded p-4" >
                 <div class="d-flex align-items-center  justify-content-between mb-4">
                     <h6 class="mb-0">Mis últimas incidencias </h6>
-                    <a href="listaIncidencias_C.html" >Más detalles</a>
+                    <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=listarIncidencia">Más detalles</a>
+
                 </div>
                 <div class="table-responsive">
                     <table class="table text-start align-middle table-bordered table-hover mb-0">
@@ -151,53 +156,47 @@
                         <tr class="text-dark" >
 
                             <th scope="col ">Incidencia</th>
-                            <th scope="col">Estado</th>
                             <th scope="col">Fecha</th>
-                            <th scope="col">Criticidad</th>
+                            <th scope="col">Hora</th>
+                            <th scope="col">Tipo</th>
+                            <th scope="col">Estado</th>
                             <th scope="col">Ver detalles</th>
                         </tr>
                         </thead>
                         <tbody>
+                        <% if (listaIncidencia != null) {
+                            for (IncidenciasB incidencia : listaIncidencia) { %>
                         <tr>
-
-                            <td>Nombre incidencia 1</td>
-                            <td>Evaluada</td>
-                            <td>1/05/24</td>
-                            <td>Alta</td>
-
-                            <td><a href="verInicidencia_C.html"><button type="button" class="btn btn-info m-2 letraBoton">Detalles</button></td></a>
+                            <td><%= incidencia.getNombreIncidencia() %></td>
+                            <td><%= incidencia.getFecha() %></td>
+                            <td><%= incidencia.getHora() %></td>
+                            <td><%= incidencia.getTipoIncidencia() %></td>
+                            <td><%= incidencia.getEstadoIncidencia() %></td>
+                            <td>
+                                <a href="<%=request.getContextPath()%>/CoordIncidServlet?action=verIncidencia&idIncidencia=<%= incidencia.getIdIncidencias() %>">
+                                    <button type="button" class="btn btn-info m-2"><i class="fas fa-eye"></i></button>
+                                </a>
+                            </td>
                         </tr>
+                        <% }
+                        } else { %>
                         <tr>
-
-                            <td>Nombre incidencia 2</td>
-                            <td>Falsa</td>
-                            <td>2/05/24</td>
-                            <td>Medio</td>
-
-                            <td><a href="verInicidencia_C.html"><button type="button" class="btn btn-info m-2 letraBoton">Detalles</button></td></a>
+                            <td colspan="7" class="text-center">No hay incidencias disponibles</td>
                         </tr>
-                        <tr>
-
-                            <td>Nombre incidencia 3</td>
-                            <td>No evaluda </td>
-                            <td>3/05/24</td>
-                            <td>-</td>
-
-
-                            <td><a href="verInicidencia_C.html"><button type="button" class="btn btn-info m-2 letraBoton">Detalles</button></td></a>
-                        </tr>
+                        <% } %>
 
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
+
         <div style="padding: 20px;">
             <!-- Mostrar mis eventos inscritos-->
             <div class="bg-light text-center rounded p-4" >
                 <div class="d-flex align-items-center  justify-content-between mb-4">
                     <h6 class="mb-0">Mis eventos del mes </h6>
-                    <a href="ListaEvent-Coordinador.html" >Más detalles</a>
+                    <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=lista">Más detalles</a>
                 </div>
                 <div class="table-responsive">
                     <table class="table text-start align-middle table-bordered table-hover mb-0">
@@ -205,37 +204,22 @@
                         <tr class="text-dark" >
 
                             <th scope="col ">Evento</th>
-                            <th scope="col">Tipo</th>
                             <th scope="col">Fecha de inicio</th>
+                            <th scope="col">Estado</th>
                             <th scope="col">Frecuencia</th>
                             <th scope="col">Ver detalles</th>
                         </tr>
                         </thead>
                         <tbody>
+                        <% for(EventoB eventoB : listaEvento){ %>
                         <tr>
-
-                            <td>Voley</td>
-                            <td>Deporte</td>
-                            <td>1/05/24</td>
-                            <td>Diario</td>
-                            <td><a href="eventoPropio.html"><button type="button" class="btn btn-info m-2 letraBoton">Detalles</button></td></a>
+                            <td><%= eventoB.getNombre() %></td>
+                            <td><%= eventoB.getFecha_inicio() %></td>
+                            <td><%= eventoB.getEstadoString() %></td>
+                            <td><%= eventoB.getFrecuenciaString() %></td>
+                            <td><a href="<%=request.getContextPath()%>/CoordinadorServlet?action=verEvento&idEvento=<%=eventoB.getidEvento()%>"><button type="button" class="btn btn-info m-2"><i class="fas fa-eye"></i></button></a></td>
                         </tr>
-                        <tr>
-
-                            <td>Danza</td>
-                            <td>Cultura</td>
-                            <td>1/05/24</td>
-                            <td>Lunes-Miercoles</td>
-                            <td><a href="eventoPropio.html"><button type="button" class="btn btn-info m-2 letraBoton">Detalles</button></td></a>
-                        </tr>
-                        <tr>
-
-                            <td>Futbol</td>
-                            <td>Deporte</td>
-                            <td>1/05/24</td>
-                            <td>Martes-Jueves</td>
-                            <td><a href="eventoPropio.html"><button type="button" class="btn btn-info m-2 letraBoton">Detalles</button></td></a>
-                        </tr>
+                        <% } %>
 
                         </tbody>
                     </table>
