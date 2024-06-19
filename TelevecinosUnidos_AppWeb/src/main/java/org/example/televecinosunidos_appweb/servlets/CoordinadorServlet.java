@@ -13,6 +13,9 @@ import org.example.televecinosunidos_appweb.model.daos.IncidenCoordDao;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Pattern;
 
 @WebServlet(name = "CoordinadorServlet", value = "/CoordinadorServlet")
 public class CoordinadorServlet extends HttpServlet {
@@ -122,7 +125,7 @@ public class CoordinadorServlet extends HttpServlet {
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
-                response.sendRedirect(request.getContextPath() + "/CoordinadorServlet");
+                response.sendRedirect(request.getContextPath() + "/CoordinadorServlet?action=listarIncidencia");
                 break;
 
             //Preguntas Frecuentes
@@ -238,15 +241,79 @@ public class CoordinadorServlet extends HttpServlet {
 
             //Incidencia
             case "crearIncidencia":
+                Map<String, String> errores = new HashMap<>();
+
                 String nombreIncidencia = request.getParameter("nombreIncidencia");
                 String fotoI = request.getParameter("foto");
                 String tipoIncidencia = request.getParameter("TipoIncidencia_idTipoIncidencia");
                 String urbanizacion = request.getParameter("urbanizacion_idUrbanizacion");
-                int incidenciaPersonal = Integer.parseInt(request.getParameter("incidenciaPersonal"));
+                String incidenciaPersonalStr = request.getParameter("incidenciaPersonal");
                 String lugarExacto = request.getParameter("lugarExacto");
                 String referencia = request.getParameter("referencia");
                 String numeroContacto = request.getParameter("numeroContacto");
-                int ambulancia = Integer.parseInt(request.getParameter("ambulancia"));
+                String ambulanciaStr = request.getParameter("ambulancia");
+
+                // Validaciones
+                if (nombreIncidencia == null || nombreIncidencia.isEmpty()) {
+                    errores.put("nombreIncidencia", "El nombre de la incidencia es obligatorio");
+                } else if (nombreIncidencia.length() > 100) {
+                    errores.put("nombreIncidencia", "El nombre de la incidencia no puede tener más de 100 caracteres");
+                }
+                /*
+                if (foto == null || foto.isEmpty()) {
+                    errores.put("foto", "La foto es obligatoria");
+                }
+                */
+                if (tipoIncidencia == null || tipoIncidencia.isEmpty()) {
+                    errores.put("tipoIncidencia", "El tipo de incidencia es obligatorio");
+                }
+
+                if (urbanizacion == null || urbanizacion.isEmpty()) {
+                    errores.put("urbanizacion", "La urbanización es obligatoria");
+                }
+
+                if (incidenciaPersonalStr == null || incidenciaPersonalStr.isEmpty()) {
+                    errores.put("incidenciaPersonal", "Debe indicar si la incidencia es para usted u otra persona");
+                }
+
+                if (lugarExacto == null || lugarExacto.isEmpty()) {
+                    errores.put("lugarExacto", "El lugar exacto es obligatorio");
+                }else if (lugarExacto.length() > 100) {
+                    errores.put("lugarExacto", "El nombre de la incidencia no puede tener más de 100 caracteres");
+                }
+
+                if (referencia == null || referencia.isEmpty()) {
+                    errores.put("referencia", "La referencia es obligatoria");
+                }
+
+                if (numeroContacto != null && !numeroContacto.isEmpty()) {
+                    Pattern pattern = Pattern.compile("\\d{9}");
+                    if (!pattern.matcher(numeroContacto).matches()) {
+                        errores.put("numeroContacto", "El número de contacto debe tener 9 dígitos");
+                    }
+                }
+
+                if (ambulanciaStr == null || ambulanciaStr.isEmpty()) {
+                    errores.put("ambulancia", "Debe indicar si se requiere ambulancia");
+                }
+
+                if (!errores.isEmpty()) {
+                    request.setAttribute("errores", errores);
+                    request.setAttribute("nombreIncidencia", nombreIncidencia);
+                    request.setAttribute("foto", fotoI);
+                    request.setAttribute("tipoIncidencia", tipoIncidencia);
+                    request.setAttribute("urbanizacion", urbanizacion);
+                    request.setAttribute("incidenciaPersonal", incidenciaPersonalStr);
+                    request.setAttribute("lugarExacto", lugarExacto);
+                    request.setAttribute("referencia", referencia);
+                    request.setAttribute("numeroContacto", numeroContacto);
+                    request.setAttribute("ambulancia", ambulanciaStr);
+                    request.getRequestDispatcher("WEB-INF/Coordinadora/generarIncidencia_C.jsp").forward(request, response);
+                    return;
+                }
+
+                int incidenciaPersonal = Integer.parseInt(incidenciaPersonalStr);
+                int ambulancia = Integer.parseInt(ambulanciaStr);
 
                 IncidenciasB incidencia = new IncidenciasB();
                 incidencia.setNombreIncidencia(nombreIncidencia);
@@ -266,6 +333,7 @@ public class CoordinadorServlet extends HttpServlet {
                 // Redirigir a la lista de incidencias
                 response.sendRedirect(request.getContextPath() + "/CoordinadorServlet?action=listarIncidencia");
                 break;
+
             case "editarIncidencia":
                 int id = Integer.parseInt(request.getParameter("idIncidencia"));
                 String nombreIncidencia2 = request.getParameter("nombreIncidencia");
@@ -277,6 +345,7 @@ public class CoordinadorServlet extends HttpServlet {
                 String referencia2 = request.getParameter("referencia");
                 String numeroContacto2 = request.getParameter("numeroContacto");
                 int ambulancia2 = Integer.parseInt(request.getParameter("ambulancia"));
+
 
                 IncidenciasB incidenciaB = new IncidenciasB();
                 incidenciaB.setIdIncidencias(id);

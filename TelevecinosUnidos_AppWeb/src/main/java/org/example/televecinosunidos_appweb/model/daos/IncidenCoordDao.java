@@ -42,15 +42,6 @@ public class IncidenCoordDao extends BaseDao{
                     incidencia.setTipoIncidencia(rs.getString("Tipo de Incidencia"));
                     incidencia.setEstadoIncidencia(rs.getString("Estado Incidencia"));
                     listaIncidencia.add(incidencia);
-                    // Imprimir información de la incidencia
-                    System.out.println("ID Incidencia: " + incidencia.getIdIncidencias());
-                    System.out.println("Nombre: " + incidencia.getNombreIncidencia());
-                    System.out.println("Fecha: " + incidencia.getFecha());
-                    System.out.println("Hora: " + incidencia.getHora());
-                    System.out.println("Tipo de Incidencia: " + incidencia.getTipoIncidencia());
-                    System.out.println("Estado Incidencia: " + incidencia.getEstadoIncidencia());
-                    System.out.println("-----------------------------------------");
-
                 }
             }
         } catch (SQLException e) {

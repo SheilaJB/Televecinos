@@ -1,7 +1,7 @@
 package org.example.televecinosunidos_appweb.model.beans;
 
 public class IncidenciasB {
-    private static int idIncidencias;
+    private int idIncidencias;
     private String nombreIncidencia;
     private String lugarExacto;
     private String referencia;

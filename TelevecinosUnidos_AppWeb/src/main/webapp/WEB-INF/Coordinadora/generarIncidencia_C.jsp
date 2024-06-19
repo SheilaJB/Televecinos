@@ -37,6 +37,40 @@
 
     <link rel="stylesheet" href="path/to/bootstrap.min.css">
 
+    <style>
+        .campo {
+            margin-bottom: 20px;
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 5px;
+            font-size: 0.9em;
+        }
+
+        .form-check {
+            margin-bottom: 10px;
+        }
+
+        .btn-secondary {
+            background-color: #8ecae6;
+            border-color: #8ecae6;
+        }
+
+        .btn-secondary:hover {
+            background-color: #023047;
+            border-color: #023047;
+        }
+
+        .error-label {
+            border: 1px solid red;
+            padding: 3px;
+            border-radius: 3px;
+        }
+    </style>
+
+
+
 </head>
 
 <body>
@@ -121,95 +155,113 @@
                             <h2>Reportar incidencia</h2>
                             <h2 style="font-size: large;">Complete los siguientes datos</h2>
                         </div>
-                        <div class="campo">
+                        <div class="campo ${not empty errores['nombreIncidencia'] ? 'error-div' : ''}">
                             <label for="nombreIncidencia">Nombre de la incidencia:</label><br>
-                            <input type="text" id="nombreIncidencia" name="nombreIncidencia" placeholder="Escribe aquí"><br>
+                            <input type="text" id="nombreIncidencia" name="nombreIncidencia" placeholder="Escribe aquí" value="${nombreIncidencia}" class="${not empty errores['nombreIncidencia'] ? 'error' : ''}"><br>
+                            <c:if test="${not empty errores['nombreIncidencia']}">
+                                <span class="error-message">${errores['nombreIncidencia']}</span>
+                            </c:if>
                         </div>
-                        <div class="campo">
+                        <div class="campo ${not empty errores['foto'] ? 'error-div' : ''}">
                             <label for="foto">Subir foto:</label><br>
-                            <input class="form-control" type="file" id="foto" accept=".jpg, .jpeg, .png" name="foto"><br>
+                            <input class="form-control" type="file" id="foto" accept=".jpg, .jpeg, .png" name="foto" value="${foto}" class="${not empty errores['foto'] ? 'error' : ''}"><br>
+                            <c:if test="${not empty errores['foto']}">
+                                <span class="error-message">${errores['foto']}</span>
+                            </c:if>
                         </div>
-                        <div class="campo" style="margin-bottom: -35px;">
+                        <div class="campo ${not empty errores['tipoIncidencia'] ? 'error-div' : ''}">
                             <label for="tipoIncidencia">Tipo de incidencia:</label><br>
-                            <select id="tipoIncidencia" name="TipoIncidencia_idTipoIncidencia">
-                                <option value="1">Seguridad Pública</option>
-                                <option value="2">Emergencia Médica</option>
-                                <option value="3">Infraestructura y Servicios Públicos</option>
-                                <option value="4">Otro</option>
+                            <select id="tipoIncidencia" name="TipoIncidencia_idTipoIncidencia" class="${not empty errores['tipoIncidencia'] ? 'error' : ''}">
+                                <option value="" disabled selected>Seleccione una opción</option>
+                                <option value="1" ${tipoIncidencia == '1' ? 'selected' : ''}>Seguridad Pública</option>
+                                <option value="2" ${tipoIncidencia == '2' ? 'selected' : ''}>Emergencia Médica</option>
+                                <option value="3" ${tipoIncidencia == '3' ? 'selected' : ''}>Infraestructura y Servicios Públicos</option>
+                                <option value="4" ${tipoIncidencia == '4' ? 'selected' : ''}>Otro</option>
                             </select><br>
-                            <br>
+                            <c:if test="${not empty errores['tipoIncidencia']}">
+                                <span class="error-message">${errores['tipoIncidencia']}</span>
+                            </c:if>
                         </div>
-                        <div class="campo" style="margin-bottom: -35px;">
+                        <div class="campo ${not empty errores['urbanizacion'] ? 'error-div' : ''}">
                             <label for="urbanizacion">Urbanización:</label><br>
-                            <select id="urbanizacion" name="urbanizacion_idUrbanizacion">
-                                <option value="1">Rafael Escardó</option>
-                                <option value="2">José de La Riva Agüero</option>
-                                <option value="3">Juan XXIII</option>
-                                <option value="4">Libertad</option>
-                                <option value="5">Los Jardines de La Marina</option>
-                                <option value="6">Las Leyendas</option>
-                                <option value="7">Las Torres San Miguelito</option>
-                                <option value="8">Elmer Faucett</option>
-                                <option value="9">Maranga</option>
-                                <option value="10">Pando</option>
-                                <option value="11">Parques de La Huaca</option>
-                                <option value="12">Otro</option>
+                            <select id="urbanizacion" name="urbanizacion_idUrbanizacion" class="${not empty errores['urbanizacion'] ? 'error' : ''}">
+                                <option value="" disabled selected>Seleccione una opción</option>
+                                <option value="1" ${urbanizacion == '1' ? 'selected' : ''}>Rafael Escardó</option>
+                                <option value="2" ${urbanizacion == '2' ? 'selected' : ''}>José de La Riva Agüero</option>
+                                <option value="3" ${urbanizacion == '3' ? 'selected' : ''}>Juan XXIII</option>
+                                <option value="4" ${urbanizacion == '4' ? 'selected' : ''}>Libertad</option>
+                                <option value="5" ${urbanizacion == '5' ? 'selected' : ''}>Los Jardines de La Marina</option>
+                                <option value="6" ${urbanizacion == '6' ? 'selected' : ''}>Las Leyendas</option>
+                                <option value="7" ${urbanizacion == '7' ? 'selected' : ''}>Las Torres San Miguelito</option>
+                                <option value="8" ${urbanizacion == '8' ? 'selected' : ''}>Elmer Faucett</option>
+                                <option value="9" ${urbanizacion == '9' ? 'selected' : ''}>Maranga</option>
+                                <option value="10" ${urbanizacion == '10' ? 'selected' : ''}>Pando</option>
+                                <option value="11" ${urbanizacion == '11' ? 'selected' : ''}>Parques de La Huaca</option>
+                                <option value="12" ${urbanizacion == '12' ? 'selected' : ''}>Otro</option>
                             </select>
-                            <br>
-                            <br>
+                            <c:if test="${not empty errores['urbanizacion']}">
+                                <span class="error-message">${errores['urbanizacion']}</span>
+                            </c:if>
                         </div>
-                        <div class="form-group">
+                        <div class="campo ${not empty errores['incidenciaPersonal'] ? 'error-div' : ''}">
                             <label for="paraMi">La incidencia será para:</label><br>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="incidenciaPersonal" id="paraMi" value="1">
-                                <label class="form-check-label" for="paraMi">
-                                    Para mi
-                                </label>
+                                <input class="form-check-input" type="radio" name="incidenciaPersonal" id="paraMi" value="1" ${incidenciaPersonal == '1' ? 'checked' : ''}>
+                                <label class="form-check-label" for="paraMi">Para mi</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="incidenciaPersonal" id="paraOtraPersona" value="0">
-                                <label class="form-check-label" for="paraOtraPersona">
-                                    Para otra persona
-                                </label>
+                                <input class="form-check-input" type="radio" name="incidenciaPersonal" id="paraOtraPersona" value="0" ${incidenciaPersonal == '0' ? 'checked' : ''}>
+                                <label class="form-check-label" for="paraOtraPersona">Para otra persona</label>
                             </div>
+                            <c:if test="${not empty errores['incidenciaPersonal']}">
+                                <span class="error-message">${errores['incidenciaPersonal']}</span>
+                            </c:if>
                         </div>
                     </div>
                     <div class="columna columna2" style="margin-top: 102px;">
-                        <div class="campo">
+                        <div class="campo ${not empty errores['lugarExacto'] ? 'error-div' : ''}">
                             <label for="lugarExacto">Lugar exacto</label><br>
-                            <input type="text" id="lugarExacto" name="lugarExacto" placeholder="Escribe aquí"><br>
+                            <input type="text" id="lugarExacto" name="lugarExacto" placeholder="Escribe aquí" value="${lugarExacto}" class="${not empty errores['lugarExacto'] ? 'error' : ''}"><br>
+                            <c:if test="${not empty errores['lugarExacto']}">
+                                <span class="error-message">${errores['lugarExacto']}</span>
+                            </c:if>
                         </div>
-                        <div class="campo">
+                        <div class="campo ${not empty errores['referencia'] ? 'error-div' : ''}">
                             <label for="referencia">Referencia</label><br>
-                            <input type="text" id="referencia" name="referencia" placeholder="Escribe aquí"><br>
+                            <input type="text" id="referencia" name="referencia" placeholder="Escribe aquí" value="${referencia}" class="${not empty errores['referencia'] ? 'error' : ''}"><br>
+                            <c:if test="${not empty errores['referencia']}">
+                                <span class="error-message">${errores['referencia']}</span>
+                            </c:if>
                         </div>
-                        <div class="campo">
+                        <div class="campo ${not empty errores['numeroContacto'] ? 'error-div' : ''}">
                             <label for="contacto">Contacto (opcional)</label><br>
-                            <input type="text" id="contacto" name="numeroContacto" placeholder="Escribe aquí"><br>
+                            <input type="text" id="contacto" name="numeroContacto" placeholder="Escribe aquí" value="${numeroContacto}" class="${not empty errores['numeroContacto'] ? 'error' : ''}"><br>
+                            <c:if test="${not empty errores['numeroContacto']}">
+                                <span class="error-message">${errores['numeroContacto']}</span>
+                            </c:if>
                         </div>
-                        <div class="campo">
+                        <div class="campo ${not empty errores['ambulancia'] ? 'error-div' : ''}">
                             <label>¿Requiere ambulancia?</label><br>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="ambulancia" id="gridRadios1" value="1">
-                                <label class="form-check-label" for="gridRadios1">
-                                    Sí
-                                </label>
+                                <input class="form-check-input" type="radio" name="ambulancia" id="gridRadios1" value="1" ${ambulancia == '1' ? 'checked' : ''}>
+                                <label class="form-check-label" for="gridRadios1">Sí</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="ambulancia" id="gridRadios2" value="0">
-                                <label class="form-check-label" for="gridRadios2">
-                                    No
-                                </label>
+                                <input class="form-check-input" type="radio" name="ambulancia" id="gridRadios2" value="0" ${ambulancia == '0' ? 'checked' : ''}>
+                                <label class="form-check-label" for="gridRadios2">No</label>
                             </div>
+                            <c:if test="${not empty errores['ambulancia']}">
+                                <span class="error-message">${errores['ambulancia']}</span>
+                            </c:if>
                         </div>
                         <div class="m-n2">
                             <button type="submit" class="btn btn-secondary m-2">Reportar incidencia</button>
                         </div>
-
                     </div>
                 </div>
             </div>
         </form>
+
         <div class="container-fluid pt-4 px-4">
             <div class="bg-light rounded-top p-4">
                 <div class="row">
