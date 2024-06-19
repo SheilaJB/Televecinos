@@ -26,7 +26,8 @@ public class IncidenCoordDao extends BaseDao{
                 "WHERE " +
                 "    i.borrado = FALSE " +
                 "ORDER BY " +
-                "    i.fecha DESC " ;
+                "    i.fecha DESC " +
+                "LIMIT 6;";
 
         ArrayList<IncidenciasB> listaIncidencia = new ArrayList<>();
 
