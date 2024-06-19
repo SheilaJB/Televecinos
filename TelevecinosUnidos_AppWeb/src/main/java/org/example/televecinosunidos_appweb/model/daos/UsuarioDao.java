@@ -236,7 +236,7 @@ public class UsuarioDao extends BaseDao{
     }
     public boolean validarUsuarioPassword(String correo, String contrasena){
         boolean exito = false;
-        String sql= "Select * from usuario where correo= ? and contrasena= ?";
+        String sql = "SELECT * FROM usuario WHERE correo = ? AND contrasena = SHA2(?, 256)";
         try (Connection connection= getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)){
 
@@ -259,22 +259,25 @@ public class UsuarioDao extends BaseDao{
     }
     public UsuarioB obtenerUsuario1(String correo) {
         UsuarioB usuarioB = new UsuarioB();
-        String sql = "SELECT * FROM usuario u " +
-                "FROM televecinosdb.usuario \n" +
-                "WHERE u.correo=?";
+        String sql = "SELECT * FROM televecinosdb.usuario u WHERE u.correo=?";
 
 
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
             pstmt.setString(1,correo);
 
             try(ResultSet rs = pstmt.executeQuery()){
 
                 if(rs.next()) {
                     usuarioB = new UsuarioB();
-
+                    usuarioB.setNombre(rs.getString(2));
+                    usuarioB.setApellido(rs.getString(3));
+                    usuarioB.setDni(rs.getString(4));
+                    usuarioB.setDireccion(rs.getString(5));
                     usuarioB.setCorreo(rs.getString(6));
+                    usuarioB.setTipoCoordinador_idTipoCoordinador(rs.getInt(8));
+                    usuarioB.setIdRol(rs.getInt(12));
+                    usuarioB.setIsBan(rs.getInt(13));
 
                 }
 
