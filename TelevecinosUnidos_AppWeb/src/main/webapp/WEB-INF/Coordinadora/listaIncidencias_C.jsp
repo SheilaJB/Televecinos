@@ -122,23 +122,23 @@
                         </div>
 
                         <div class="col-md-2 mb-2">
-                            <input type="date" class="form-control"  name="filtroFecha">
+                            <input type="date" class="form-control"  name="fecha">
                         </div>
 
                         <div class="col-md-2 mb-2">
-                            <select  class="form-select" name="filtroTipo">
+                            <select  class="form-select" name="tipo">
                                 <option selected disabled>Tipo de Incidencia</option>
                                 <option value="1" >Seguridad Pública</option>
-                                <option value="2 " >Emergencia Médica</option>
-                                <option value="3" >Infraestructura y Servicios Públicos</option>
-                                <option value="4" >Otro</option>
+                                <option value="2 ">Emergencia Médica</option>
+                                <option value="3">Infraestructura y Servicios Públicos</option>
+                                <option value="4">Otro</option>
                             </select>
                         </div>
                         <div class="col-md-2 mb-2">
-                            <select  class="form-select" name="filtroEstado">
+                            <select  class="form-select" name="estado">
                                 <option selected disabled>Estado</option>
                                 <option value="1" >Pendiente</option>
-                                <option value="2" >En curso</option>
+                                <option value="2" >En Curso</option>
                                 <option value="3" >Cancelado</option>
                                 <option value="4" >Rechazado</option>
                                 <option value="5" >Procesado</option>

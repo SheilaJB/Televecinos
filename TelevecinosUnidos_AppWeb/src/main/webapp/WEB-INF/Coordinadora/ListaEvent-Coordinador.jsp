@@ -3,6 +3,9 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="org.example.televecinosunidos_appweb.model.beans.EventoB" %>
 <% ArrayList<EventoB> lista = (ArrayList<EventoB>) request.getAttribute("lista"); %>
+<jsp:useBean id="textoBuscarEvento" scope="request" type="java.lang.String" class="java.lang.String"/>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -139,34 +142,44 @@
             </div>
         </div>
         <div style="background-color: #f8f9fa; padding: 10px; align-items: center;">
-            <!-- Filtro -->
             <div style="background-color: #FFB703; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
-                <div class="row justify-content-center align-items-center">
-                    <div class="col-md-5 mb-2">
-                        <input type="text" class="form-control" id="filtroInput" placeholder="Buscar..." onkeyup="filtrar()">
+                <!-- Filtro -->
+                <form  method="post" action="<%=request.getContextPath()%>/CoordinadorServlet?action=buscarEventoPorNombre">
+                    <div class="row justify-content-center align-items-center">
+                        <!-- Busqueda por nombre de evento -->
+                        <div class="col-md-3 mb-2">
+                            <input type="text" class="form-control" id="filtroInput" placeholder="Buscar evento..." name="textoBuscarEvento"
+                                   value="<%=textoBuscarEvento%>">
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <select  class="form-select" name="frecuencia">
+                                <option selected disabled>Tipo de Frecuencia</option>
+                                <option value="1" >Semanal</option>
+                                <option value="2 ">Dos veces por semana</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <select  class="form-select" name="estado">
+                                <option selected disabled>Estado del evento</option>
+                                <option value="1" >Disponible</option>
+                                <option value="2" >En curso</option>
+                                <option value="3" >Finalizado</option>
+                            </select>
+                        </div>
+                        <div class="col-md-1 mb-2">
+                            <button class="btn btn-primary " type="submit">
+                                <i class="fas fa-search"></i> </button>
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <a type="reset" class="btn btn-primary " href="<%=request.getContextPath()%>/CoordinadorServlet?action=lista" >Limpiar</a>
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=crearEvento" class="btn btn-primary w-100">
+                                <b>Crear evento</b>
+                            </a>
+                        </div>
                     </div>
-                    <div class="col-md-2 mb-2">
-                        <select id="filtroCategoria" class="form-select" onchange="filtrar()">
-                            <option selected value="">Frecuencia</option>
-                            <option value="Semanal">Semanal</option>
-                            <option value="Dos veces por semana">Dos veces por semana</option>
-
-                        </select>
-                    </div>
-                    <div class="col-md-3 mb-2">
-                        <select id="filtroEstado" class="form-select" onchange="filtrar()">
-                            <option selected value="">Estado</option>
-                            <option value="Disponible">Disponible</option>
-                            <option value="En curso">En curso</option>
-                            <option value="Finalizado">Finalizado</option>
-                        </select>
-                    </div>
-                    <div class="col-md-2 mb-2">
-                        <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=crearEvento" class="btn btn-primary w-100">
-                            <b>Crear evento</b>
-                        </a>
-                    </div>
-                </div>
+                </form>
             </div>
 
             <div class="bg-light rounded h-100 p-4" style="font-weight: bold;">

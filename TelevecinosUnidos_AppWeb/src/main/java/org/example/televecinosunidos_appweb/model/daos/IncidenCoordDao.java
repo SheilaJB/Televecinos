@@ -4,6 +4,7 @@ import org.example.televecinosunidos_appweb.model.beans.IncidenciasB;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class IncidenCoordDao extends BaseDao{
 
@@ -155,70 +156,59 @@ public class IncidenCoordDao extends BaseDao{
     }
 
     //Buscar incidencia por filtro
-    public  ArrayList<IncidenciasB> listarIncidenciasFiltro(String nombre, String fecha, String tipo, String estado){
-
+    public ArrayList<IncidenciasB> listarIncidenciasFiltro(String nombre, String fecha, String tipo, String estado) {
         String sql = "SELECT " +
                 "i.idIncidencias AS 'ID Incidencia', " +
                 "i.nombreIncidencia AS 'Nombre', " +
-                "DATE_FORMAT(i.fecha, '%d %M') AS 'Fecha', " +
+                "DATE_FORMAT(i.fecha, '%d %M %Y') AS 'Fecha', " +
                 "TIME_FORMAT(i.fecha, '%H:%i') AS 'Hora', " +
                 "ti.TipoIncidencia AS 'Tipo de Incidencia', " +
                 "ei.estado AS 'Estado Incidencia' " +
                 "FROM incidencias i " +
                 "JOIN tipoincidencia ti ON i.TipoIncidencia_idTipoIncidencia = ti.idTipoIncidencia " +
                 "JOIN estadosincidencia ei ON i.EstadosIncidencia_idEstadosIncidencia = ei.idEstadosIncidencia " +
-                "WHERE i.borrado = FALSE AND i.nombreIncidencia LIKE ? ";
+                "WHERE i.borrado = FALSE AND i.nombreIncidencia LIKE ?";
 
         ArrayList<IncidenciasB> incidencias = new ArrayList<>();
+        List<Object> parametros = new ArrayList<>();
+        parametros.add(nombre + "%");
+
+        // Agregar los filtros adicionales
+        if (fecha != null && !fecha.isEmpty()) {
+            sql += " AND DATE(i.fecha) = ?";
+            parametros.add(fecha);
+        }
+        if (tipo != null && !tipo.isEmpty()) {
+            sql += " AND i.TipoIncidencia_idTipoIncidencia = ?";
+            parametros.add(tipo);
+        }
+        if (estado != null && !estado.isEmpty()) {
+            sql += " AND ei.idEstadosIncidencia = ?";
+            parametros.add(estado);
+        }
 
         try (Connection conn = getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)){
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setString(1,nombre+ "%" );
-
-            if(fecha!=null && tipo!=null && estado!=null){
-                pstmt.setString(2,fecha );
-                pstmt.setString(3,tipo);
-                pstmt.setString(4,estado );
-            }else {
-                if(fecha == null && tipo==null && estado!= null){
-                    pstmt.setString(2,estado );
-                }
-                if (fecha == null && tipo!=null && estado== null){
-                    pstmt.setString(2,tipo);
-                }
-                if (fecha != null && tipo==null && estado== null){
-                    pstmt.setString(2,fecha);
-                }
-                if(fecha!= null && tipo!=null && estado== null){
-                    pstmt.setString(2,fecha );
-                    pstmt.setString(3,tipo );
-                }
-                if (fecha != null && tipo==null && estado!= null){
-                    pstmt.setString(2,fecha );
-                    pstmt.setString(3,estado);
-                }
-                if (fecha == null && tipo!=null && estado!= null){
-                    pstmt.setString(2,tipo);
-                    pstmt.setString(3,estado);
-                }
-
+            // Asignar los parámetros al PreparedStatement
+            for (int i = 0; i < parametros.size(); i++) {
+                pstmt.setObject(i + 1, parametros.get(i));
             }
 
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
                     IncidenciasB incidencia = new IncidenciasB();
-                    incidencia.setIdIncidencias(rs.getInt(1));
-                    incidencia.setNombreIncidencia(rs.getString(2));
-                    incidencia.setFecha(rs.getString(3));
-                    incidencia.setHora(rs.getString(4));
-                    incidencia.setTipoIncidencia(rs.getString(5));
-                    incidencia.setEstadoIncidencia(rs.getString(6));
+                    incidencia.setIdIncidencias(rs.getInt("ID Incidencia"));
+                    incidencia.setNombreIncidencia(rs.getString("Nombre"));
+                    incidencia.setFecha(rs.getString("Fecha"));
+                    incidencia.setHora(rs.getString("Hora"));
+                    incidencia.setTipoIncidencia(rs.getString("Tipo de Incidencia"));
+                    incidencia.setEstadoIncidencia(rs.getString("Estado Incidencia"));
                     incidencias.add(incidencia);
                 }
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Error al listar incidencias filtradas", e);
         }
 
         return incidencias;

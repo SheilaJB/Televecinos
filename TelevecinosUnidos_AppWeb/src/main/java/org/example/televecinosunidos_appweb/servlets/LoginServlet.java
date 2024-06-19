@@ -13,7 +13,13 @@ import java.io.IOException;
 public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/index.jsp").forward(request, response);
+        String action = request.getParameter("action") != null ? "logout":"login";
+        if (action.equals("logout")) {
+            HttpSession httpSession = request.getSession();
+            request.getSession().invalidate();
+            request.getRequestDispatcher("/index.jsp").forward(request, response);
+        }
+
 
     }
 
@@ -29,7 +35,22 @@ public class LoginServlet extends HttpServlet {
             HttpSession httpSession = request.getSession();
             httpSession.setAttribute("usuarioLogueado", usuarioB);
             System.out.println("Correo y contraseña válidos");
-            response.sendRedirect(request.getContextPath());
+            int IdRol = usuarioB.getIdRol();
+            switch (IdRol){
+                case 2:
+                    response.sendRedirect(request.getContextPath() + "/VecinoServlet");
+                    break;
+                case 3:
+                    response.sendRedirect(request.getContextPath() + "/CoordinadorServlet");
+                    break;
+                case 4:
+
+                    response.sendRedirect(request.getContextPath() + "/SerenazgoServlet");
+                    break;
+                case 5:
+                    response.sendRedirect(request.getContextPath());
+            }
+
         }else{
             System.out.println("Correo o contraseña inválidos");
             request.setAttribute("err","Correo o contraseña incorrectos");
