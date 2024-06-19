@@ -13,6 +13,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Pattern;
 
 @WebServlet(name = "VecinoServlet", value = "/VecinoServlet")
 public class VecinoServlet extends HttpServlet {
@@ -25,8 +28,12 @@ public class VecinoServlet extends HttpServlet {
         switch (action) {
             /*------------------Página principal------------------*/
             case "inicioVecino":
+                //Llenado de las tablas de inicio
+                ArrayList<IncidenciasB> listaIncidenciasRecientes = incidenciaDao.listarIncidenciaRecientes();
+                request.setAttribute("listaIncidencia", listaIncidenciasRecientes);
                 vista = "WEB-INF/Vecino/inicioVecino.jsp";
                 break;
+
             case "eventoDeporte":
                 vista = "WEB-INF/Vecino/Evento-D-Vecino.jsp";
                 break;
@@ -88,24 +95,90 @@ public class VecinoServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
         IncidenCoordDao incidenciaDao = new IncidenCoordDao();
-
+        EventoDao eventoDao = new EventoDao();
         String action = request.getParameter("action") == null ? "crear" : request.getParameter("action");
 
         switch (action) {
-            case "crear":
+
+            //Incidencia
+            case "crearIncidencia":
+                Map<String, String> errores = new HashMap<>();
+
                 String nombreIncidencia = request.getParameter("nombreIncidencia");
-                String foto = request.getParameter("foto");
+                String fotoI = request.getParameter("foto");
                 String tipoIncidencia = request.getParameter("TipoIncidencia_idTipoIncidencia");
                 String urbanizacion = request.getParameter("urbanizacion_idUrbanizacion");
-                int incidenciaPersonal = Integer.parseInt(request.getParameter("incidenciaPersonal"));
+                String incidenciaPersonalStr = request.getParameter("incidenciaPersonal");
                 String lugarExacto = request.getParameter("lugarExacto");
                 String referencia = request.getParameter("referencia");
                 String numeroContacto = request.getParameter("numeroContacto");
-                int ambulancia = Integer.parseInt(request.getParameter("ambulancia"));
+                String ambulanciaStr = request.getParameter("ambulancia");
+
+                // Validaciones
+                if (nombreIncidencia == null || nombreIncidencia.isEmpty()) {
+                    errores.put("nombreIncidencia", "El nombre de la incidencia es obligatorio");
+                } else if (nombreIncidencia.length() > 100) {
+                    errores.put("nombreIncidencia", "El nombre de la incidencia no puede tener más de 100 caracteres");
+                }
+                /*
+                if (foto == null || foto.isEmpty()) {
+                    errores.put("foto", "La foto es obligatoria");
+                }
+                */
+                if (tipoIncidencia == null || tipoIncidencia.isEmpty()) {
+                    errores.put("tipoIncidencia", "El tipo de incidencia es obligatorio");
+                }
+
+                if (urbanizacion == null || urbanizacion.isEmpty()) {
+                    errores.put("urbanizacion", "La urbanización es obligatoria");
+                }
+
+                if (incidenciaPersonalStr == null || incidenciaPersonalStr.isEmpty()) {
+                    errores.put("incidenciaPersonal", "Debe indicar si la incidencia es para usted u otra persona");
+                }
+
+                if (lugarExacto == null || lugarExacto.isEmpty()) {
+                    errores.put("lugarExacto", "El lugar exacto es obligatorio");
+                }else if (lugarExacto.length() > 100) {
+                    errores.put("lugarExacto", "El nombre de la incidencia no puede tener más de 100 caracteres");
+                }
+
+                if (referencia == null || referencia.isEmpty()) {
+                    errores.put("referencia", "La referencia es obligatoria");
+                }
+
+                if (numeroContacto != null && !numeroContacto.isEmpty()) {
+                    Pattern pattern = Pattern.compile("\\d{9}");
+                    if (!pattern.matcher(numeroContacto).matches()) {
+                        errores.put("numeroContacto", "El número de contacto debe tener 9 dígitos");
+                    }
+                }
+
+                if (ambulanciaStr == null || ambulanciaStr.isEmpty()) {
+                    errores.put("ambulancia", "Debe indicar si se requiere ambulancia");
+                }
+
+                if (!errores.isEmpty()) {
+                    request.setAttribute("errores", errores);
+                    request.setAttribute("nombreIncidencia", nombreIncidencia);
+                    request.setAttribute("foto", fotoI);
+                    request.setAttribute("tipoIncidencia", tipoIncidencia);
+                    request.setAttribute("urbanizacion", urbanizacion);
+                    request.setAttribute("incidenciaPersonal", incidenciaPersonalStr);
+                    request.setAttribute("lugarExacto", lugarExacto);
+                    request.setAttribute("referencia", referencia);
+                    request.setAttribute("numeroContacto", numeroContacto);
+                    request.setAttribute("ambulancia", ambulanciaStr);
+                    request.getRequestDispatcher("WEB-INF/Vecino/generarIncidencia_V.jsp").forward(request, response);
+                    return;
+                }
+
+                int incidenciaPersonal = Integer.parseInt(incidenciaPersonalStr);
+                int ambulancia = Integer.parseInt(ambulanciaStr);
 
                 IncidenciasB incidencia = new IncidenciasB();
                 incidencia.setNombreIncidencia(nombreIncidencia);
-                incidencia.setFoto(foto);
+                incidencia.setFoto(fotoI);
                 incidencia.setTipoIncidencia(tipoIncidencia);
                 incidencia.setUrbanizacion(urbanizacion);
                 incidencia.setIncidenciaPersonal(incidenciaPersonal);
@@ -122,10 +195,10 @@ public class VecinoServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/VecinoServlet?action=listarIncidencia");
                 break;
 
-            case "editar":
+            case "editarIncidencia":
                 int id = Integer.parseInt(request.getParameter("idIncidencia"));
                 String nombreIncidencia2 = request.getParameter("nombreIncidencia");
-                String foto2 = request.getParameter("foto");
+                String foto2I = request.getParameter("foto");
                 String tipoIncidencia2 = request.getParameter("TipoIncidencia_idTipoIncidencia");
                 String urbanizacion2 = request.getParameter("urbanizacion_idUrbanizacion");
                 int incidenciaPersonal2 = Integer.parseInt(request.getParameter("incidenciaPersonal"));
@@ -134,10 +207,11 @@ public class VecinoServlet extends HttpServlet {
                 String numeroContacto2 = request.getParameter("numeroContacto");
                 int ambulancia2 = Integer.parseInt(request.getParameter("ambulancia"));
 
+
                 IncidenciasB incidenciaB = new IncidenciasB();
                 incidenciaB.setIdIncidencias(id);
                 incidenciaB.setNombreIncidencia(nombreIncidencia2);
-                incidenciaB.setFoto(foto2);
+                incidenciaB.setFoto(foto2I);
                 incidenciaB.setTipoIncidencia(tipoIncidencia2);
                 incidenciaB.setUrbanizacion(urbanizacion2);
                 incidenciaB.setIncidenciaPersonal(incidenciaPersonal2);
@@ -150,6 +224,24 @@ public class VecinoServlet extends HttpServlet {
                 request.getSession().setAttribute("info", "Incidencia editada de manera exitosa");
                 response.sendRedirect(request.getContextPath() + "/VecinoServlet?action=listarIncidencia");
                 break;
+            case "buscarIncidenciaPorNombre":
+                String textBuscar = request.getParameter("textoBuscarIncidencia");
+                String filtroFecha = request.getParameter("fecha");
+                String filtroTipo = request.getParameter("tipo");
+                String filtroEstado = request.getParameter("estado");
+                if (textBuscar == null && filtroFecha == null && filtroTipo == null && filtroEstado ==null){
+                    response.sendRedirect(request.getContextPath() + "/VecinoServlet?action=listarIncidencia");
+                }else {
+                    request.setAttribute("textoBuscarIncidencia", textBuscar);
+                    request.setAttribute("lista", incidenciaDao.listarIncidenciasFiltro(textBuscar, filtroFecha, filtroTipo, filtroEstado));
+                    request.getRequestDispatcher("WEB-INF/Vecino/listaIncidencias_V.jsp").forward(request, response);
+                }
+                break;
+
+            default:
+                response.sendRedirect(request.getContextPath() + "/VecinoServlet");
+                break;
+
         }
     }
 }

@@ -1,4 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="org.example.televecinosunidos_appweb.model.beans.IncidenciasB" %>
+<%@ page import="java.util.Optional" %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,11 +33,7 @@
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
-    <link href="css/app.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/style_incidencias.css">
     <link href="css/style_vec.css" rel="stylesheet">
-
-
 
 </head>
 
@@ -51,20 +50,18 @@
 
     <!-- BARRA AZUL DE LA IZQUIERDA INICIO-->
     <!-- Sidebar Start -->
-    <div class="sidebar pe-4 pb-3 colorBarraLateral">
+    <div class="sidebar pe-4 pb-3" style="background-color: #8ecae6;">
         <nav class="navbar" style="background-color: #8ecae6;" >
             <a class="navbar-brand mx-3 mt-3">
                 <h4 style="color:#023047"><b>Televecinos Unidos</b></h4>
             </a>
-            <!-- Sección del perfil del usuario en el sidebar-->
-            <div class="d-flex align-items-center ms-4 mb-4"   >
+            <div class="d-flex align-items-center ms-4 mb-4"  >
                 <img class="rounded-circle" src="img/Icon_perfil.png" alt="Icono del perfil del usuario" style="width: 50px; height: 50px;">
-                <div class="ms-3 m-3">
+                <div class="ms-3 m-3" >
                     <h6 class="mb-0" style="color:#023047;"><b>Nombre Apellido</b></h6>
                     <span class="text-muted"><b>Vecino</b></span>
                 </div>
             </div>
-            <!-- Fin del perfil del usuario en el sidebar-->
             <div class="navbar-nav w-100">
                 <a href="<%=request.getContextPath()%>/VecinoServlet?action=inicioVecino" class="nav-item nav-link active"><i class="fa fa-home me-2"></i><span style="font-size: 13.5px;"><b>Inicio</b></a>
                 <div class="nav-item dropdown">
@@ -86,122 +83,146 @@
             </div>
         </nav>
     </div>
-    <!-- BARRA AZUL DE LA IZQUIERDA FINAL -->
+    <!-- Sidebar End -->
 
 
     <!-- Content Start -->
     <div class="content">
-        <!-- PARTE SUPERIOR INICIO -->
-        <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0"">
+        <!-- Navbar Start -->
+        <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+            <a href="#" class="sidebar-toggler flex-shrink-0">
+                <i class="fa fa-bars"></i>
+            </a>
+            <a class="navbar-brand mx-4 mb-3 d-flex align-items-center" style="padding-top: 2%;">
+                <img class="rounded-circle" src="img/logo.jpg" alt="" style="width: 40px; height: 40px;">
+                <h3 class="m-0 me-2 px-2" style="color:#023047;">¡Bienvenido, coordinador!</h3>
+            </a>
+            <div class="navbar-nav align-items-center ms-auto">
 
-        <a href="#" class="sidebar-toggler flex-shrink-0">
-            <i class="fa fa-bars"></i>
-        </a>
-        <a class="navbar-brand mx-4 mb-3 d-flex align-items-center" style="padding-top: 2%;">
-            <img class="rounded-circle" src="img/logo.jpg" alt="" style="width: 40px; height: 40px;">
-            <h3 class="m-0 me-2 px-2" style="color:#023047;">¡Bienvenido, televecino!</h3>
-        </a>
-
-        <div class="navbar-nav align-items-center ms-auto">
-
-            <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                    <img class="rounded-circle me-lg-2" src="img/Icon_perfil.png" alt="" style="width: 40px; height: 40px;">
-                    <span class="d-none d-lg-inline-flex" style="color:#023047;"><b>Nombre Apellido</b></span>
-                </a>
-                <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                    <a href="<%=request.getContextPath()%>/VecinoServlet?action=perfilVecino" class="dropdown-item itemperfil">Mi perfil</a>
-                    <a href="login/login.html" class="dropdown-item itemperfil">Cerrar Sesión</a>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                        <img class="rounded-circle me-lg-2" src="img/coordinadora.jpg" alt="" style="width: 40px; height: 40px;">
+                        <span class="d-none d-lg-inline-flex" style="color:#023047;"><b>Nombre Apellido</b></span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                        <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=perfilC" class="dropdown-item">Mi perfil</a>
+                        <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=Index" class="dropdown-item">Cerrar sesión</a>
+                    </div>
                 </div>
             </div>
-        </div>
         </nav>
         <!-- Navbar End -->
         <!-- PARTE SUPERIOR FINAL -->
 
-
-
         <!-- LLENAR-->
         <!-- Footer Start -->
-
-
         <div class="container-fluid pt-4 px-4">
             <div class="container">
-                <div class="columna columna1">
-                    <div class="campo">
-                        <h2>Ver información de la incidencia</h2>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="campo">
+                            <h2>Ver información de la incidencia</h2>
+                        </div>
+                        <form>
+                            <div class="card shadow-sm" >
+                                <div class="card-header text-lg-center">
+                                    <h5>Información de la Incidencia</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row mb-3">
+                                        <div class="col-12">
+                                            <img id="preview" src="#" alt="Vista previa de la imagen" class="img-thumbnail" style="display: none;">
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-12">
+                                            <label class="form-label" style="color:#023047;"><b>Nombre de la incidencia</b></label>
+                                            <div class="bar p-2 bg-light rounded" data-label="Nombre de la incidencia">
+                                                <%= request.getAttribute("incidencia") != null ? ((IncidenciasB) request.getAttribute("incidencia")).getNombreIncidencia() : "" %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-12">
+                                            <label class="form-label" style="color:#023047;"><b>Tipo de incidencia</b></label>
+                                            <div class="bar p-2 bg-light rounded" data-label="Tipo de incidencia">
+                                                <%= request.getAttribute("incidencia") != null ? ((IncidenciasB) request.getAttribute("incidencia")).getTipoIncidencia() : "" %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-12">
+                                            <label class="form-label" style="color:#023047;"><b>La incidencia es para:</b></label>
+                                            <div class="bar p-2 bg-light rounded" data-label="La incidencia es para">
+                                                <%= request.getAttribute("incidencia") != null && ((IncidenciasB) request.getAttribute("incidencia")).getIncidenciaPersonal() == 1 ? "Para otra persona" : "Personal" %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-12">
+                                            <label class="form-label" style="color:#023047;"><b>Lugar exacto:</b></label>
+                                            <div class="bar p-2 bg-light rounded" data-label="Lugar exacto">
+                                                <%= request.getAttribute("incidencia") != null ? ((IncidenciasB) request.getAttribute("incidencia")).getLugarExacto() : "" %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-12">
+                                            <label class="form-label" style="color:#023047;"><b>Referencia</b></label>
+                                            <div class="bar p-2 bg-light rounded" data-label="Referencia">
+                                                <%= request.getAttribute("incidencia") != null ? ((IncidenciasB) request.getAttribute("incidencia")).getReferencia() : "" %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-12">
+                                            <label class="form-label" style="color:#023047;"><b>Contacto</b></label>
+                                            <div class="bar p-2 bg-light rounded" data-label="Contacto">
+                                                <%= request.getAttribute("incidencia") != null ? ((IncidenciasB) request.getAttribute("incidencia")).getNumeroContacto() : "" %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-12">
+                                            <label class="form-label" style="color:#023047;"><b>¿Se requiere ambulancia?</b></label>
+                                            <div class="bar p-2 bg-light rounded" data-label="¿Se requiere ambulancia?">
+                                                <%= request.getAttribute("incidencia") != null && ((IncidenciasB) request.getAttribute("incidencia")).getAmbulancia() == 1 ? "Sí" : "No" %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-12">
+                                            <label class="form-label" style="color:#023047;"><b>Fecha y hora de la generación de incidencia:</b></label>
+                                            <div class="bar p-2 bg-light rounded" data-label="Fecha y hora de la generación de incidencia">
+                                                <%= request.getAttribute("incidencia") != null ? ((IncidenciasB) request.getAttribute("incidencia")).getFecha() + " a las " + ((IncidenciasB) request.getAttribute("incidencia")).getHora() : "" %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-
-                    <form>
-                        <div class="rounded h-100 p-4" style = "background-color: #8ecae6;">
-                            <div class="mb-3">
-                                <img id="preview" src="#" alt="Vista previa de la imagen" class="img-thumbnail" style="display: none;">
-                            </div>
-                            <div class="mb-3">
-                                <label for="NombreIncidencia" class="form-label" style="color:#023047;"><b>Nombre de la incidencia</b></label>
-                                <br>
-                                <a style="color: white;"> Accidente de transito</a>
-                            </div>
-                            <div class="mb-3">
-                                <label for="TipoIncidencia" class="form-label" style="color:#023047;"><b>Tipo de incidencia</b></label>
-                                <br>
-                                <a style="color: white;">• Emergencia Médica</a>
+                    <div class="col-md-6" style="margin-top: 85px;">
+                        <form>
+                            <label class="form-label"><b>Foto del incidente</b></label>
+                            <div class="rounded h-100 p-4"style="background-color: #ffb703;">
+                                <div class="mb-3">
+                                    <img src="<%= request.getAttribute("incidencia") != null ? ((IncidenciasB) request.getAttribute("incidencia")).getFoto() : "img/default.jpg" %>" class="img-responsive" alt="" style="width: 100%; height: auto;" />
+                                </div>
                             </div>
 
-
-                            <div class="mb-3">
-                                <label for="esPara" class="form-label" style="color:#023047;"><b>La incidencia es para:</b></label>
-                                <br>
-                                <a style="color: white;">• Para otra persona</a>
+                            <div class="d-flex justify-content-end">
+                                <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=listarIncidencia">
+                                    <button type="button" class="btn btn-secondary m-2 d-flex justify-content-between align-items-center">Regresar</button>
+                                </a>
                             </div>
 
-                            <div class="mb-3">
-                                <label for="lugarExacto" class="form-label" style="color:#023047;"><b>Lugar exacto:</b></label>
-                                <br>
-                                <a style="color: white;"> Av Universitaria #YYYY</a>
-                            </div>
-                            <div class="mb-3">
-                                <label for="referencia" class="form-label" style="color:#023047;"><b>Referencia</b></label>
-                                <br>
-                                <a style="color: white;">Frente a la PUCP</a>
-                            </div>
-                            <div class="mb-3">
-                                <label for="contacto" class="form-label" style="color:#023047;"><b>Contacto</b></label>
-                                <br>
-                                <a style="color: white;">916546561</a>
-                            </div>
-                            <div class="mb-3">
-                                <label for="ambulancia" class="form-label" style="color:#023047;"><b>¿Se requiere ambulancia?</b></label>
-                                <br>
-                                <a style="color: white;">Sí</a>
-                            </div>
-                            <div class="mb-3">
-                                <label for="fechaGenereación" class="form-label" style="color:#023047;"><b>Fecha y hora de la generación de incidencia:</b></label>
-                                <br>
-                                <a style="color: white;">17/04/24 a las 18:00:00</a>
-                            </div>
-
-                        </div>
-                    </form>
-                </div>
-                <div class="columna columna2" style="margin-top: 85px;">
-                    <form>
-                        <label for="imagenAcc" class="form-label" style="color:#023047;"><b>Foto del incidente</b></label>
-                        <div class="bg-light rounded h-100 p-4">
-                            <div class="mb-3">
-                                <img src="img/accidente.jpg" class="img-responsive" alt="" style="width: 100%; height: auto;"  />
-                            </div>
-                        </div>
-                        <a href="listaIncidencias_V.html" >
-                            <div class="m-n2">
-                                <button type="button" class="btn btn-secondary m-2" id="openPopupBtn">Regresar</button>
-                            </div>
-                        </a>
-
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
+        <!-- Footer Start -->
         <div class="container-fluid pt-4 px-4" >
             <div class="bg-light rounded-top p-4">
                 <div class="row">
@@ -211,6 +232,7 @@
                 </div>
             </div>
         </div>
+        <!-- Footer End -->
     </div>
     <!-- Content End -->
 
@@ -218,7 +240,6 @@
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 </div>
-
 
 <!-- JavaScript Libraries -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -233,7 +254,6 @@
 
 <!-- Template Javascript -->
 <script src="js/main.js"></script>
-
 </body>
 
 </html>

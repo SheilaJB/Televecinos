@@ -173,7 +173,7 @@
                             <td><%= incidencia.getTipoIncidencia() %></td>
                             <td><%= incidencia.getEstadoIncidencia() %></td>
                             <td>
-                                <a href="<%=request.getContextPath()%>/CoordIncidServlet?action=verIncidencia&idIncidencia=<%= incidencia.getIdIncidencias() %>">
+                                <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=verIncidencia&idIncidencia=<%= incidencia.getIdIncidencias() %>">
                                     <button type="button" class="btn btn-info m-2"><i class="fas fa-eye"></i></button>
                                 </a>
                             </td>

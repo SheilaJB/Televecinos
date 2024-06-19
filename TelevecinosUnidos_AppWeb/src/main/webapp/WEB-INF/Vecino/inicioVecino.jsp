@@ -1,6 +1,9 @@
+<%@ page import="org.example.televecinosunidos_appweb.model.beans.IncidenciasB" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
+<% ArrayList<IncidenciasB> listaIncidencia = (ArrayList<IncidenciasB>) request.getAttribute("listaIncidencia"); %>
 
 <head>
     <meta charset="utf-8">
@@ -160,12 +163,13 @@
             </div>
 
             <!-- Recent Sales Start -->
-            <div style="padding: 30px;">
+            <div style="padding: 20px;">
                 <!-- Mostrar mis eventos inscritos-->
                 <div class="bg-light text-center rounded p-4" >
                     <div class="d-flex align-items-center  justify-content-between mb-4">
                         <h6 class="mb-0">Mis últimas incidencias </h6>
-                        <a href="listaIncidencias_V.html" >Mostrar todas mis incidencias</a>
+                        <a href="<%=request.getContextPath()%>//VecinoServlet?action=listarIncidencia">Más detalles</a>
+
                     </div>
                     <div class="table-responsive">
                         <table class="table text-start align-middle table-bordered table-hover mb-0">
@@ -173,47 +177,41 @@
                             <tr class="text-dark" >
 
                                 <th scope="col ">Incidencia</th>
-                                <th scope="col">Estado</th>
                                 <th scope="col">Fecha</th>
-                                <th scope="col">Criticidad</th>
+                                <th scope="col">Hora</th>
+                                <th scope="col">Tipo</th>
+                                <th scope="col">Estado</th>
                                 <th scope="col">Ver detalles</th>
                             </tr>
                             </thead>
                             <tbody>
+                            <% if (listaIncidencia != null) {
+                                for (IncidenciasB incidencia : listaIncidencia) { %>
                             <tr>
-
-                                <td>Nombre incidencia 1</td>
-                                <td>Evaluada</td>
-                                <td>1/05/24</td>
-                                <td>Urgente</td>
-
-                                <td><a href="verInicidencia_V.html"><button type="button" class="btn btn-info m-2 letraBoton">Detalles</button></td></a>
+                                <td><%= incidencia.getNombreIncidencia() %></td>
+                                <td><%= incidencia.getFecha() %></td>
+                                <td><%= incidencia.getHora() %></td>
+                                <td><%= incidencia.getTipoIncidencia() %></td>
+                                <td><%= incidencia.getEstadoIncidencia() %></td>
+                                <td>
+                                    <a href="<%=request.getContextPath()%>/VecinoServlet?action=verIncidencia&idIncidencia=<%= incidencia.getIdIncidencias() %>">
+                                        <button type="button" class="btn btn-info m-2"><i class="fas fa-eye"></i></button>
+                                    </a>
+                                </td>
                             </tr>
+                            <% }
+                            } else { %>
                             <tr>
-
-                                <td>Nombre incidencia 2</td>
-                                <td>Falsa</td>
-                                <td>2/05/24</td>
-                                <td>Medio</td>
-
-                                <td><a href="verInicidencia_V.html"><button type="button" class="btn btn-info m-2 letraBoton">Detalles</button></td></a>
+                                <td colspan="7" class="text-center">No hay incidencias disponibles</td>
                             </tr>
-                            <tr>
-
-                                <td>Nombre incidencia 3</td>
-                                <td>No evaluda </td>
-                                <td>3/05/24</td>
-                                <td>-</td>
-
-
-                                <td><a href="verInicidencia_V.html"><button type="button" class="btn btn-info m-2 letraBoton">Detalles</button></td></a>
-                            </tr>
+                            <% } %>
 
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
+
             <div style="padding: 30px;">
                 <!-- Mostrar mis eventos inscritos-->
                 <div class="bg-light text-center rounded p-4" >
