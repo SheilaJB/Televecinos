@@ -8,6 +8,7 @@ import java.time.DayOfWeek;
 import java.time.temporal.TemporalAdjusters;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class EventoDao extends BaseDao{
 
@@ -355,6 +356,77 @@ public class EventoDao extends BaseDao{
             throw new RuntimeException(e);
         }
         return true;
+    }
+    //Buscar evento por filtro
+    public ArrayList<EventoB> listarEventoFiltro(String nombre, String frecuencia, String estado) {
+        String sql = "SELECT " +
+                "    e.idEventos AS id_evento, " +
+                "    e.nombre AS nombre, " +
+                "    e.descripcion AS descripcion, " +
+                "    u.idUsuario AS id_coordinador, " +
+                "    u.nombre AS nombre_coordinador, " +
+                "    u.apellido AS apellido_coordinador, " +
+                "    e.lugar AS lugar, " +
+                "    ef.tipoFrecuencia AS frecuencia, " +
+                "    es.estadosEvento AS estado, " +
+                "    e.cantidadVacantes AS cantidad_vacantes, " +
+                "    e.cantDisponibles AS cantidad_disponibles, " +
+                "    e.foto AS foto, " +
+                "    DATE_FORMAT(e.fecha_inicio, '%Y-%m-%d') AS fecha_inicio, " +
+                "    DATE_FORMAT(e.fecha_fin, '%Y-%m-%d') AS fecha_fin, " +
+                "    pf.idProfesoresEvento AS id_profesor, " +
+                "    pf.nombre AS nombreProfesor, " +
+                "    pf.apellido AS apellidoProfesor, " +
+                "    TIME(e.hora_inicio) AS hora_inicio, " +
+                "    TIME(e.hora_fin) AS hora_fin, " +
+                "    e.listaMateriales AS listaMateriales, " +
+                "    e.diasEvento as diasEvento " +
+                "FROM " +
+                "    Eventos e " +
+                "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
+                "JOIN Usuario u ON e.Coordinador_idUsuario = u.idUsuario " +
+                "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
+                "JOIN profesoresevento pf ON e.ProfesoresEvento_idProfesoresEvento = pf.idProfesoresEvento " +
+                "WHERE e.nombre LIKE ? ";
+
+        ArrayList<EventoB> evento = new ArrayList<>();
+        List<Object> parametros = new ArrayList<>();
+        parametros.add(nombre + "%");
+
+        // Agregar los filtros adicionales
+        if (frecuencia != null && !frecuencia.isEmpty()) {
+            sql += "AND ef.idEventFrecuencia = ? ";
+            parametros.add(frecuencia);
+        }
+
+        if (estado != null && !estado.isEmpty()) {
+            sql += "AND es.idEventEstados = ? ";
+            parametros.add(estado);
+        }
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            // Asignar los parámetros al PreparedStatement
+            for (int i = 0; i < parametros.size(); i++) {
+                pstmt.setObject(i + 1, parametros.get(i));
+            }
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    EventoB event = new EventoB();
+                    event.setidEvento(rs.getInt("id_evento"));
+                    event.setNombre(rs.getString("nombre"));
+                    event.setFecha_inicio(rs.getString("fecha_inicio"));
+                    event.setEstadoString(rs.getString("estado"));
+                    event.setFrecuenciaString(rs.getString("frecuencia"));
+                    evento.add(event);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al listar eventos filtradas", e);
+        }
+        return evento;
     }
 }
 

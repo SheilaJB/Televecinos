@@ -78,7 +78,7 @@ public class CoordinadorServlet extends HttpServlet {
                     request.setAttribute("lista", listaProfesoresEdit);
                     vista = "WEB-INF/Coordinadora/editarEvento.jsp";
                 } else {
-                    response.sendRedirect(request.getContextPath() + "/CoordinadorServlet");
+                    response.sendRedirect(request.getContextPath() + "/CoordinadorServlet?action=lista");
                     return;
                 }
                 request.getRequestDispatcher(vista).forward(request, response);
@@ -86,8 +86,9 @@ public class CoordinadorServlet extends HttpServlet {
             case "borrarEvento":
                 String idBorrar = request.getParameter("idEvento");
                 eventoDao.borrarEvento(Integer.parseInt(idBorrar));
-                response.sendRedirect(request.getContextPath() + "/CoordinadorServlet");
+                response.sendRedirect(request.getContextPath() + "/CoordinadorServlet?action=lista");
                 return;
+
 
             //Incidencia
             case "listarIncidencia":
@@ -238,6 +239,18 @@ public class CoordinadorServlet extends HttpServlet {
                 eventoDao.actualizarEvento(eventoB);
                 response.sendRedirect(request.getContextPath() + "/CoordinadorServlet?action=lista");
                 break;
+            case "buscarEventoPorNombre":
+                String textBuscar = request.getParameter("textoBuscarEvento");
+                String filtroFrecuencia = request.getParameter("frecuencia");
+                String filtroEstado = request.getParameter("estado");
+                if (textBuscar == null &&  filtroFrecuencia == null && filtroEstado ==null){
+                    response.sendRedirect(request.getContextPath() + "/CoordinadorServlet?action=lista");
+                }else {
+                    request.setAttribute("textoBuscarEvento", textBuscar);
+                    request.setAttribute("lista", eventoDao.listarEventoFiltro(textBuscar,  filtroFrecuencia, filtroEstado));
+                    request.getRequestDispatcher("WEB-INF/Coordinadora/ListaEvent-Coordinador.jsp").forward(request, response);
+                }
+                break;
 
             //Incidencia
             case "crearIncidencia":
@@ -364,19 +377,18 @@ public class CoordinadorServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/CoordinadorServlet?action=listarIncidencia");
                 break;
             case "buscarIncidenciaPorNombre":
-                String textBuscar = request.getParameter("textoBuscarIncidencia");
-                String filtroFecha = request.getParameter("fecha");
+                String textBuscarI = request.getParameter("textoBuscarIncidencia");
+                String filtroFechaI = request.getParameter("fecha");
                 String filtroTipo = request.getParameter("tipo");
-                String filtroEstado = request.getParameter("estado");
-                if (textBuscar == null && filtroFecha == null && filtroTipo == null && filtroEstado ==null){
+                String filtroEstadoI = request.getParameter("estado");
+                if (textBuscarI == null && filtroFechaI == null && filtroTipo == null && filtroEstadoI ==null){
                     response.sendRedirect(request.getContextPath() + "/CoordinadorServlet?action=listarIncidencia");
                 }else {
-                    request.setAttribute("textoBuscarIncidencia", textBuscar);
-                    request.setAttribute("lista", incidenciaDao.listarIncidenciasFiltro(textBuscar, filtroFecha, filtroTipo, filtroEstado));
+                    request.setAttribute("textoBuscarIncidencia", textBuscarI);
+                    request.setAttribute("lista", incidenciaDao.listarIncidenciasFiltro(textBuscarI, filtroFechaI, filtroTipo, filtroEstadoI));
                     request.getRequestDispatcher("WEB-INF/Coordinadora/listaIncidencias_C.jsp").forward(request, response);
                 }
                 break;
-
             default:
                 response.sendRedirect(request.getContextPath() + "/CoordinadorServlet");
                 break;
