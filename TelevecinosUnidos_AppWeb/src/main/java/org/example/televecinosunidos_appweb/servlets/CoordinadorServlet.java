@@ -32,7 +32,6 @@ public class CoordinadorServlet extends HttpServlet {
                 request.setAttribute("listaEvento", listaEventospRropiosRecientes);
                 vista = "WEB-INF/Coordinadora/InicioCoordinador.jsp";
                 request.getRequestDispatcher(vista).forward(request, response);
-
                 break;
             // NavBar
             case "perfilC":
@@ -47,8 +46,8 @@ public class CoordinadorServlet extends HttpServlet {
             case "eventoGeneralesC":
                 vista = "WEB-INF/Coordinadora/EventoGenerales_C.jsp";
                 request.getRequestDispatcher(vista).forward(request, response);
+                //Falta jalar los datos desde la tabla
                 break;
-
             case "lista":
                 vista = "WEB-INF/Coordinadora/ListaEvent-Coordinador.jsp";
                 request.setAttribute("lista", listaEventosPropios);
@@ -111,13 +110,13 @@ public class CoordinadorServlet extends HttpServlet {
                     request.setAttribute("incidenciaB", incidenciaB);
                     request.getRequestDispatcher("WEB-INF/Coordinadora/actualizarIncidencia_C.jsp").forward(request, response);
                 } else {
-                    response.sendRedirect(request.getContextPath() + "/CoordIncidServlet");
+                    response.sendRedirect(request.getContextPath() + "/CoordinadorServlet");
                 }
                 return;
             case "borrarIncidencia": //Revisar este caso
                 String idd = request.getParameter("idIncidencia");
                 IncidenCoordDao.buscarIncidenciaPorId(idd);
-                response.sendRedirect(request.getContextPath() + "/CoordIncidServlet");
+                response.sendRedirect(request.getContextPath() + "/CoordinadorServlet");
                 break;
 
             //Preguntas Frecuentes
@@ -139,7 +138,6 @@ public class CoordinadorServlet extends HttpServlet {
         String action = request.getParameter("action") == null ? "crear" : request.getParameter("action");
 
         switch (action) {
-
             //Evento
             case "crear":
                 String nombreEvento = request.getParameter("nombreEvento");

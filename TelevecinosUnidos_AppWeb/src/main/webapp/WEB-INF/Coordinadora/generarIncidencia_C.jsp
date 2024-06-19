@@ -103,8 +103,8 @@
                         <span class="d-none d-lg-inline-flex" style="color:#023047;"><b>Nombre Apellido</b></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                        <a href="<%=request.getContextPath()%>/CoordIncidServlet?action=perfilC" class="dropdown-item">Mi perfil</a>
-                        <a href="<%=request.getContextPath()%>/CoordIncidServlet?action=Index" class="dropdown-item">Cerrar sesión</a>
+                        <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=perfilC" class="dropdown-item">Mi perfil</a>
+                        <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=Index" class="dropdown-item">Cerrar sesión</a>
                     </div>
                 </div>
             </div>
@@ -113,7 +113,7 @@
         <!-- PARTE SUPERIOR FINAL -->
 
         <!-- LLENAR-->
-        <form method="post" action="<%=request.getContextPath()%>/CoordIncidServlet?action=crear">
+        <form method="post" action="<%=request.getContextPath()%>/CoordinadorServlet?action=crear">
             <div class="container-fluid pt-4 px-4">
                 <div class="container">
                     <div class="columna columna1">

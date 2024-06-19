@@ -113,7 +113,7 @@
         <div style="background-color: #f8f9fa; padding: 20px; align-items: center;">
             <!-- Filtro -->
             <div style="background-color: #FFB703 ; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
-                <form  method="post" action="<%=request.getContextPath()%>/CoordIncidServlet?action=buscarIncidenciaPorNombre">
+                <form  method="post" action="<%=request.getContextPath()%>/CoordinadorServlet?action=buscarIncidenciaPorNombre">
                     <div class="row justify-content-center align-items-center">
                         <!-- Busqueda por nombre de incidencia -->
                         <div class="col-md-3 mb-2">
@@ -149,7 +149,7 @@
                                 <i class="fas fa-search"></i> </button>
                         </div>
                         <div class="col-md-2 mb-2">
-                            <a type="reset" class="btn btn-primary " href="<%=request.getContextPath()%>/CoordIncidServlet?action=listarIncidencia" >Limpiar</a>
+                            <a type="reset" class="btn btn-primary " href="<%=request.getContextPath()%>/CoordinadorServlet?action=listarIncidencia" >Limpiar</a>
 
                         </div>
                     </div>
@@ -180,13 +180,13 @@
                         <td><%= incidencia.getTipoIncidencia() %></td>
                         <td><%= incidencia.getEstadoIncidencia() %></td>
                         <td>
-                            <a href="<%=request.getContextPath()%>/CoordIncidServlet?action=verIncidencia&idIncidencia=<%= incidencia.getIdIncidencias() %>">
+                            <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=verIncidencia&idIncidencia=<%= incidencia.getIdIncidencias() %>">
                                 <button type="button" class="btn btn-primary m-2"><i class="fas fa-eye"></i></button>
                             </a>
                         </td>
                         <% if ("Pendiente".equals(incidencia.getEstadoIncidencia())) { %>
                         <td>
-                            <a href="<%=request.getContextPath()%>/CoordIncidServlet?action=editarIncidencia&idIncidencia=<%= incidencia.getIdIncidencias() %>">
+                            <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=editarIncidencia&idIncidencia=<%= incidencia.getIdIncidencias() %>">
                                 <button type="button" class="btn btn-success m-2"><i class="fas fa-pencil-alt"></i></button>
                             </a>
                         </td>
@@ -285,7 +285,7 @@
 
     // Función para confirmar eliminación
     confirmDeleteBtn.addEventListener('click', function() {
-        window.location.href = '<%=request.getContextPath()%>/CoordIncidServlet?action=borrarIncidencia&idIncidencia=' + eventIdToDelete;;
+        window.location.href = '<%=request.getContextPath()%>/CoordinadorServlet?action=borrarIncidencia&idIncidencia=' + eventIdToDelete;;
         closeDeletePopup();
     });
 
