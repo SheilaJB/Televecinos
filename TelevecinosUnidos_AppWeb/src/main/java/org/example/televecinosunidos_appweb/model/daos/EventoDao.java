@@ -14,27 +14,34 @@ public class EventoDao extends BaseDao{
     //Función lista de eventos
     public ArrayList<EventoB> listarEventosPropios() {
 
+        String sqlSetLanguage = "SET lc_time_names = 'es_ES';";
         String sql = "SELECT e.idEventos AS 'ID Evento', e.nombre AS 'Nombre', DATE_FORMAT(e.fecha_inicio, '%d %M') AS 'Fecha de Inicio', " +
                 "es.estadosEvento AS 'Estado', ef.tipoFrecuencia AS 'Frecuencia' " +
                 "FROM Eventos e JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
                 "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
                 "WHERE e.TipoEvento_idTipoEvento = 1 AND e.eliminado = FALSE " +
+                "ORDER BY e.fecha_inicio DESC " +
                 "LIMIT 6;";
 
         ArrayList<EventoB> listaEventosPropios = new ArrayList<>();
 
         try (Connection conn = getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+             Statement stmt = conn.createStatement()) {
 
-            while (rs.next()) {
-                EventoB evento = new EventoB();
-                evento.setidEvento(rs.getInt("ID Evento"));
-                evento.setNombre(rs.getString("Nombre"));
-                evento.setFecha_inicio(rs.getString("Fecha de Inicio"));
-                evento.setEstadoString(rs.getString("Estado"));
-                evento.setFrecuenciaString(rs.getString("Frecuencia"));
-                listaEventosPropios.add(evento);
+            // Ejecutar la sentencia para establecer el idioma de las fechas en español
+            stmt.execute(sqlSetLanguage);
+
+            // Ejecutar la consulta principal
+            try (ResultSet rs = stmt.executeQuery(sql)) {
+                while (rs.next()) {
+                    EventoB evento = new EventoB();
+                    evento.setidEvento(rs.getInt("ID Evento"));
+                    evento.setNombre(rs.getString("Nombre"));
+                    evento.setFecha_inicio(rs.getString("Fecha de Inicio"));
+                    evento.setEstadoString(rs.getString("Estado"));
+                    evento.setFrecuenciaString(rs.getString("Frecuencia"));
+                    listaEventosPropios.add(evento);
+                }
             }
 
         } catch (SQLException e) {
@@ -43,33 +50,38 @@ public class EventoDao extends BaseDao{
 
         return listaEventosPropios;
     }
+
     //Mostrar solo los 3 eventos creados recientemente
     public ArrayList<EventoB> listarEventosPropiosRecientes() {
 
-        String sql = "SELECT e.idEventos AS 'ID Evento', e.nombre AS 'Nombre', " +
-                "DATE_FORMAT(e.fecha_inicio, '%d %M') AS 'Fecha de Inicio', " +
+        String sqlSetLanguage = "SET lc_time_names = 'es_ES';";
+        String sql = "SELECT e.idEventos AS 'ID Evento', e.nombre AS 'Nombre', DATE_FORMAT(e.fecha_inicio, '%d %M') AS 'Fecha de Inicio', " +
                 "es.estadosEvento AS 'Estado', ef.tipoFrecuencia AS 'Frecuencia' " +
-                "FROM Eventos e " +
-                "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
+                "FROM Eventos e JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
                 "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
                 "WHERE e.TipoEvento_idTipoEvento = 1 AND e.eliminado = FALSE " +
+                "ORDER BY e.fecha_inicio DESC " +
                 "LIMIT 3;";
-
 
         ArrayList<EventoB> listaEventosPropios = new ArrayList<>();
 
         try (Connection conn = getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+             Statement stmt = conn.createStatement()) {
 
-            while (rs.next()) {
-                EventoB evento = new EventoB();
-                evento.setidEvento(rs.getInt("ID Evento"));
-                evento.setNombre(rs.getString("Nombre"));
-                evento.setFecha_inicio(rs.getString("Fecha de Inicio"));
-                evento.setEstadoString(rs.getString("Estado"));
-                evento.setFrecuenciaString(rs.getString("Frecuencia"));
-                listaEventosPropios.add(evento);
+            // Ejecutar la sentencia para establecer el idioma de las fechas en español
+            stmt.execute(sqlSetLanguage);
+
+            // Ejecutar la consulta principal
+            try (ResultSet rs = stmt.executeQuery(sql)) {
+                while (rs.next()) {
+                    EventoB evento = new EventoB();
+                    evento.setidEvento(rs.getInt("ID Evento"));
+                    evento.setNombre(rs.getString("Nombre"));
+                    evento.setFecha_inicio(rs.getString("Fecha de Inicio"));
+                    evento.setEstadoString(rs.getString("Estado"));
+                    evento.setFrecuenciaString(rs.getString("Frecuencia"));
+                    listaEventosPropios.add(evento);
+                }
             }
 
         } catch (SQLException e) {

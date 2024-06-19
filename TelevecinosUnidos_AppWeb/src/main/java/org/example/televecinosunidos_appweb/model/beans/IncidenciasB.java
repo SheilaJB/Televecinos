@@ -103,7 +103,7 @@ public class IncidenciasB {
         this.hora = hora;
     }
 
-    public static int getIdIncidencias() {
+    public  int getIdIncidencias() {
         return idIncidencias;
     }
 

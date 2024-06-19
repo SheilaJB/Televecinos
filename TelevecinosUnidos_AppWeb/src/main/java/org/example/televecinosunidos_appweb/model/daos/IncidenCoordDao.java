@@ -25,8 +25,7 @@ public class IncidenCoordDao extends BaseDao{
                 "WHERE " +
                 "    i.borrado = FALSE " +
                 "ORDER BY " +
-                "    i.fecha DESC " +
-                "LIMIT 6;";
+                "    i.fecha DESC " ;
 
         ArrayList<IncidenciasB> listaIncidencia = new ArrayList<>();
 
@@ -43,6 +42,14 @@ public class IncidenCoordDao extends BaseDao{
                     incidencia.setTipoIncidencia(rs.getString("Tipo de Incidencia"));
                     incidencia.setEstadoIncidencia(rs.getString("Estado Incidencia"));
                     listaIncidencia.add(incidencia);
+                    // Imprimir información de la incidencia
+                    System.out.println("ID Incidencia: " + incidencia.getIdIncidencias());
+                    System.out.println("Nombre: " + incidencia.getNombreIncidencia());
+                    System.out.println("Fecha: " + incidencia.getFecha());
+                    System.out.println("Hora: " + incidencia.getHora());
+                    System.out.println("Tipo de Incidencia: " + incidencia.getTipoIncidencia());
+                    System.out.println("Estado Incidencia: " + incidencia.getEstadoIncidencia());
+                    System.out.println("-----------------------------------------");
 
                 }
             }
@@ -99,7 +106,7 @@ public class IncidenCoordDao extends BaseDao{
     }
 
     //Buscar incidencia por id
-    public static IncidenciasB buscarIncidenciaPorId(String idIncidencia) {
+    public  IncidenciasB buscarIncidenciaPorId(String idIncidencia) {
         IncidenciasB incidencia = null;
 
         String setLocaleSql = "SET lc_time_names = 'es_ES'";
@@ -123,7 +130,7 @@ public class IncidenCoordDao extends BaseDao{
                 "JOIN urbanizacion urb ON i.urbanizacion_idUrbanizacion = urb.idUrbanizacion " +
                 "JOIN tipoincidencia ti ON i.TipoIncidencia_idTipoIncidencia = ti.idTipoIncidencia " +
                 "JOIN estadosincidencia ei ON i.EstadosIncidencia_idEstadosIncidencia = ei.idEstadosIncidencia " +
-                "WHERE i.borrado=FALSE and i.idIncidencias = ?";
+                "WHERE i.idIncidencias = ?";
 
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -163,6 +170,7 @@ public class IncidenCoordDao extends BaseDao{
                 "i.idIncidencias AS 'ID Incidencia', " +
                 "i.nombreIncidencia AS 'Nombre', " +
                 "DATE_FORMAT(i.fecha, '%d %M') AS 'Fecha', " +
+                "TIME_FORMAT(i.fecha, '%H:%i') AS 'Hora', " +
                 "ti.TipoIncidencia AS 'Tipo de Incidencia', " +
                 "ei.estado AS 'Estado Incidencia' " +
                 "FROM incidencias i " +
@@ -191,24 +199,26 @@ public class IncidenCoordDao extends BaseDao{
             }else {
                 if(fecha == null && tipo==null && estado!= null){
                     pstmt.setString(2,estado );
-                }else if (fecha == null && tipo!=null && estado== null){
+                }
+                if (fecha == null && tipo!=null && estado== null){
                     pstmt.setString(2,tipo);
                 }
-                else if (fecha != null && tipo==null && estado== null){
+                if (fecha != null && tipo==null && estado== null){
                     pstmt.setString(2,fecha);
-                }else {
-                    if(fecha!= null && tipo!=null && estado== null){
-                        pstmt.setString(2,fecha );
-                        pstmt.setString(3,tipo );
-                    }else if (fecha != null && tipo==null && estado!= null){
-                        pstmt.setString(2,fecha );
-                        pstmt.setString(3,estado);
-                    }
-                    else if (fecha == null && tipo!=null && estado!= null){
-                        pstmt.setString(2,tipo);
-                        pstmt.setString(3,estado);
-                    }
                 }
+                if(fecha!= null && tipo!=null && estado== null){
+                    pstmt.setString(2,fecha );
+                    pstmt.setString(3,tipo );
+                }
+                if (fecha != null && tipo==null && estado!= null){
+                    pstmt.setString(2,fecha );
+                    pstmt.setString(3,estado);
+                }
+                if (fecha == null && tipo!=null && estado!= null){
+                    pstmt.setString(2,tipo);
+                    pstmt.setString(3,estado);
+                }
+
             }
 
             try (ResultSet rs = pstmt.executeQuery()) {
@@ -217,8 +227,9 @@ public class IncidenCoordDao extends BaseDao{
                     incidencia.setIdIncidencias(rs.getInt(1));
                     incidencia.setNombreIncidencia(rs.getString(2));
                     incidencia.setFecha(rs.getString(3));
-                    incidencia.setTipoIncidencia(rs.getString(4));
-                    incidencia.setEstadoIncidencia(rs.getString(5));
+                    incidencia.setHora(rs.getString(4));
+                    incidencia.setTipoIncidencia(rs.getString(5));
+                    incidencia.setEstadoIncidencia(rs.getString(6));
                     incidencias.add(incidencia);
                 }
             }

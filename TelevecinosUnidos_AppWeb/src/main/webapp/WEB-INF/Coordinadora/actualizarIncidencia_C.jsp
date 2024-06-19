@@ -120,7 +120,7 @@
 
         <!-- Content Start -->
 
-        <form method="post" action="<%=request.getContextPath()%>/CoordinadorServlet?action=editar">
+        <form method="post" action="<%=request.getContextPath()%>/CoordinadorServlet?action=editarIncidencia">
             <div class="container-fluid pt-4 px-4">
                 <div class="container">
                     <div class="columna columna1">

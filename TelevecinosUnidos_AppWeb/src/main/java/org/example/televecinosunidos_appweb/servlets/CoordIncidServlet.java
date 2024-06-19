@@ -9,7 +9,7 @@ import org.example.televecinosunidos_appweb.model.daos.IncidenCoordDao;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
+/*
 @WebServlet(name = "CoordIncidServlet", value = "/CoordIncidServlet")
 public class CoordIncidServlet extends HttpServlet {
     @Override
@@ -57,7 +57,7 @@ public class CoordIncidServlet extends HttpServlet {
         String action = request.getParameter("action") == null ? "crear" : request.getParameter("action");
 
         switch (action) {
-            case "crear":
+            case "crearIncidencia":
                 String nombreIncidencia = request.getParameter("nombreIncidencia");
                 String foto = request.getParameter("foto");
                 String tipoIncidencia = request.getParameter("TipoIncidencia_idTipoIncidencia");
@@ -87,7 +87,7 @@ public class CoordIncidServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/CoordIncidServlet?action=listarIncidencia");
                 break;
 
-            case "editar":
+            case "editarIncidencia":
                 int id = Integer.parseInt(request.getParameter("idIncidencia"));
                 String nombreIncidencia2 = request.getParameter("nombreIncidencia");
                 String foto2 = request.getParameter("foto");
@@ -118,3 +118,4 @@ public class CoordIncidServlet extends HttpServlet {
         }
     }
 }
+*/

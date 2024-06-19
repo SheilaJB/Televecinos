@@ -155,7 +155,7 @@
         <h2 class="mb-2 text-center" style = "padding-top: 3%;" style="color:#023047;">Creación de un nuevo evento</h2>
         <div id="error-message" class="error">Por favor, complete todos los campos obligatorios.</div>
         <!-- Form Start -->
-        <form method="post" action="<%=request.getContextPath()%>/CoordinadorServlet">
+        <form method="post" action="<%=request.getContextPath()%>/CoordinadorServlet?action=lista">
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
                     <div class="col-sm-12">
@@ -446,7 +446,7 @@
             createConfirmationPopup.style.display = 'none';
             enableInteractions();
             //redirigir al usuario o recargar la página
-            window.location.href = 'ListaEvent-Coordinador.html'; // Redirige al usuario a la lista de eventos
+            window.location.href = '<%=request.getContextPath()%>/CoordinadorServlet?action=lista"'; // Redirige al usuario a la lista de eventos
         }
 
         // Evento para cerrar el popup cuando se presiona el botón de cerrar

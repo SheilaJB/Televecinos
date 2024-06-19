@@ -126,7 +126,7 @@
                         </div>
                         <form>
                             <div class="card shadow-sm" >
-                                <div class="card-header text-lg-center" ">
+                                <div class="card-header text-lg-center">
                                     <h5>Información de la Incidencia</h5>
                                 </div>
                                 <div class="card-body">

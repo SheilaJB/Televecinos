@@ -180,23 +180,22 @@
                         <td><%= incidencia.getTipoIncidencia() %></td>
                         <td><%= incidencia.getEstadoIncidencia() %></td>
                         <td>
-                            <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=verIncidencia&idIncidencia=<%= incidencia.getIdIncidencias() %>">
+                            <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=verIncidencia&idIncidencia=<%= incidencia.getIdIncidencias()%>">
                                 <button type="button" class="btn btn-primary m-2"><i class="fas fa-eye"></i></button>
                             </a>
                         </td>
                         <% if ("Pendiente".equals(incidencia.getEstadoIncidencia())) { %>
                         <td>
-                            <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=editarIncidencia&idIncidencia=<%= incidencia.getIdIncidencias() %>">
+                            <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=editarIncidencia&idIncidencia=<%=incidencia.getIdIncidencias()%>">
                                 <button type="button" class="btn btn-success m-2"><i class="fas fa-pencil-alt"></i></button>
                             </a>
                         </td>
                         <td>
-                            <button type="button" class="btn btn-danger m-2" onclick="confirmDelete(<%=IncidenciasB.getIdIncidencias()%>)"><i class="fas fa-trash-alt"></i></button>
-
+                            <button type="button" class="btn btn-danger m-2" onclick="confirmDelete(<%=incidencia.getIdIncidencias()%>)"><i class="fas fa-trash-alt"></i></button>
                         </td>
                         <% } else { %>
                         <td><button type="button" class="btn btn-success m-2"><i class="fas fa-pencil-alt"></i></button></td>
-                        <td ><button type="button" class="btn btn-danger m-2"><i class="fas fa-trash-alt"></i></button></td>
+                        <td><button type="button" class="btn btn-danger m-2"><i class="fas fa-trash-alt"></i></button></td>
                         <% } %>
                     </tr>
                     <% }
@@ -206,6 +205,7 @@
                     </tr>
                     <% } %>
                     </tbody>
+
                 </table>
             </div>
             <div  style="display: flex; justify-content: center; align-items: center;">

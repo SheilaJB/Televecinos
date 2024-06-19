@@ -11,6 +11,7 @@ import org.example.televecinosunidos_appweb.model.daos.EventoDao;
 import org.example.televecinosunidos_appweb.model.daos.IncidenCoordDao;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 @WebServlet(name = "CoordinadorServlet", value = "/CoordinadorServlet")
@@ -110,12 +111,17 @@ public class CoordinadorServlet extends HttpServlet {
                     request.setAttribute("incidenciaB", incidenciaB);
                     request.getRequestDispatcher("WEB-INF/Coordinadora/actualizarIncidencia_C.jsp").forward(request, response);
                 } else {
-                    response.sendRedirect(request.getContextPath() + "/CoordinadorServlet");
+                    response.sendRedirect(request.getContextPath() + "/CoordinadorServlet?action=listarIncidencia");
                 }
                 return;
-            case "borrarIncidencia": //Revisar este caso
+            case "borrarIncidencia":
                 String idd = request.getParameter("idIncidencia");
-                IncidenCoordDao.buscarIncidenciaPorId(idd);
+                System.out.println("ID a borrar: " + idd); // Log para verificar el ID
+                try {
+                    IncidenCoordDao.borrarIncidencia(idd);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
                 response.sendRedirect(request.getContextPath() + "/CoordinadorServlet");
                 break;
 
@@ -181,7 +187,7 @@ public class CoordinadorServlet extends HttpServlet {
 
                 int estado = 1;
                 eventoDao.crearEvento(eventoB0);
-                response.sendRedirect(request.getContextPath() + "/CoordinadorServlet");
+                response.sendRedirect(request.getContextPath() + "/CoordinadorServlet?action=lista");
                 break;
 
             case "editar":
@@ -227,11 +233,80 @@ public class CoordinadorServlet extends HttpServlet {
 
                 eventoDao.eliminarFechasEventoPorIdEvento(idEvento);
                 eventoDao.actualizarEvento(eventoB);
-                response.sendRedirect(request.getContextPath() + "/CoordinadorServlet");
+                response.sendRedirect(request.getContextPath() + "/CoordinadorServlet?action=lista");
                 break;
 
             //Incidencia
+            case "crearIncidencia":
+                String nombreIncidencia = request.getParameter("nombreIncidencia");
+                String fotoI = request.getParameter("foto");
+                String tipoIncidencia = request.getParameter("TipoIncidencia_idTipoIncidencia");
+                String urbanizacion = request.getParameter("urbanizacion_idUrbanizacion");
+                int incidenciaPersonal = Integer.parseInt(request.getParameter("incidenciaPersonal"));
+                String lugarExacto = request.getParameter("lugarExacto");
+                String referencia = request.getParameter("referencia");
+                String numeroContacto = request.getParameter("numeroContacto");
+                int ambulancia = Integer.parseInt(request.getParameter("ambulancia"));
 
+                IncidenciasB incidencia = new IncidenciasB();
+                incidencia.setNombreIncidencia(nombreIncidencia);
+                incidencia.setFoto(fotoI);
+                incidencia.setTipoIncidencia(tipoIncidencia);
+                incidencia.setUrbanizacion(urbanizacion);
+                incidencia.setIncidenciaPersonal(incidenciaPersonal);
+                incidencia.setLugarExacto(lugarExacto);
+                incidencia.setReferencia(referencia);
+                incidencia.setNumeroContacto(numeroContacto);
+                incidencia.setAmbulancia(ambulancia);
+
+                incidenciaDao.generarIncidenciaC(incidencia);
+                // Agregar mensaje a la sesión
+                request.getSession().setAttribute("info", "Incidencia creada de manera exitosa");
+
+                // Redirigir a la lista de incidencias
+                response.sendRedirect(request.getContextPath() + "/CoordinadorServlet?action=listarIncidencia");
+                break;
+            case "editarIncidencia":
+                int id = Integer.parseInt(request.getParameter("idIncidencia"));
+                String nombreIncidencia2 = request.getParameter("nombreIncidencia");
+                String foto2I = request.getParameter("foto");
+                String tipoIncidencia2 = request.getParameter("TipoIncidencia_idTipoIncidencia");
+                String urbanizacion2 = request.getParameter("urbanizacion_idUrbanizacion");
+                int incidenciaPersonal2 = Integer.parseInt(request.getParameter("incidenciaPersonal"));
+                String lugarExacto2 = request.getParameter("lugarExacto");
+                String referencia2 = request.getParameter("referencia");
+                String numeroContacto2 = request.getParameter("numeroContacto");
+                int ambulancia2 = Integer.parseInt(request.getParameter("ambulancia"));
+
+                IncidenciasB incidenciaB = new IncidenciasB();
+                incidenciaB.setIdIncidencias(id);
+                incidenciaB.setNombreIncidencia(nombreIncidencia2);
+                incidenciaB.setFoto(foto2I);
+                incidenciaB.setTipoIncidencia(tipoIncidencia2);
+                incidenciaB.setUrbanizacion(urbanizacion2);
+                incidenciaB.setIncidenciaPersonal(incidenciaPersonal2);
+                incidenciaB.setLugarExacto(lugarExacto2);
+                incidenciaB.setReferencia(referencia2);
+                incidenciaB.setNumeroContacto(numeroContacto2);
+                incidenciaB.setAmbulancia(ambulancia2);
+
+                incidenciaDao.actualizarIncidencia(incidenciaB);
+                request.getSession().setAttribute("info", "Incidencia editada de manera exitosa");
+                response.sendRedirect(request.getContextPath() + "/CoordinadorServlet?action=listarIncidencia");
+                break;
+            case "buscarIncidenciaPorNombre":
+                String textBuscar = request.getParameter("textoBuscarIncidencia");
+                String filtroFecha = request.getParameter("fecha");
+                String filtroTipo = request.getParameter("tipo");
+                String filtroEstado = request.getParameter("estado");
+                if (textBuscar == null && filtroFecha == null && filtroTipo == null && filtroEstado ==null){
+                    response.sendRedirect(request.getContextPath() + "/CoordinadorServlet?action=listarIncidencia");
+                }else {
+                    request.setAttribute("textoBuscarIncidencia", textBuscar);
+                    request.setAttribute("lista", incidenciaDao.listarIncidenciasFiltro(textBuscar, filtroFecha, filtroTipo, filtroEstado));
+                    request.getRequestDispatcher("WEB-INF/Coordinadora/listaIncidencias_C.jsp").forward(request, response);
+                }
+                break;
 
             default:
                 response.sendRedirect(request.getContextPath() + "/CoordinadorServlet");

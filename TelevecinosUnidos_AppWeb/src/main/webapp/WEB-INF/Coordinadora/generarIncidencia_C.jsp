@@ -113,7 +113,7 @@
         <!-- PARTE SUPERIOR FINAL -->
 
         <!-- LLENAR-->
-        <form method="post" action="<%=request.getContextPath()%>/CoordinadorServlet?action=crear">
+        <form method="post" action="<%=request.getContextPath()%>/CoordinadorServlet?action=crearIncidencia">
             <div class="container-fluid pt-4 px-4">
                 <div class="container">
                     <div class="columna columna1">
