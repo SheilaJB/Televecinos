@@ -176,15 +176,8 @@ public class IncidenCoordDao extends BaseDao{
                 "FROM incidencias i " +
                 "JOIN tipoincidencia ti ON i.TipoIncidencia_idTipoIncidencia = ti.idTipoIncidencia " +
                 "JOIN estadosincidencia ei ON i.EstadosIncidencia_idEstadosIncidencia = ei.idEstadosIncidencia " +
-                "WHERE i.borrado = FALSE AND i.nombreIncidencia LIKE ?";
+                "WHERE i.borrado = FALSE AND i.nombreIncidencia LIKE ? ";
 
-        if (fecha !=null){
-            sql +=" AND DATE(i.fecha) = ?;";
-        } else if (tipo !=null) {
-            sql +=" AND ti.TipoIncidencia = ?;";
-        } else if (estado!=null) {
-            sql += " AND ei.estado = ?;";
-        }
         ArrayList<IncidenciasB> incidencias = new ArrayList<>();
 
         try (Connection conn = getConnection();
