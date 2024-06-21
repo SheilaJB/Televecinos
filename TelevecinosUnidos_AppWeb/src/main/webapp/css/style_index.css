@@ -1,0 +1,91 @@
+body {
+    background-image: url('/img/fondoPantalla.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+.box-area {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.featured-image img {
+    max-width: 100%;
+    height: auto;
+    border: 5px solid #fff;
+}
+
+.welcome-text h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.welcome-text p {
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.form-control {
+    border-radius: 50px;
+}
+
+.input-group-text {
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+}
+
+.btn-primary {
+    background: #007bff;
+    border: none;
+    border-radius: 50px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.btn-primary:hover {
+    background: #0056b3;
+}
+
+.text-white {
+    color: #fff !important;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.text-secondary-custom {
+    color: #f8f9fa;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+a.text-link-white {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+a.text-link-white:hover {
+    color: #f8f9fa;
+}
+
+@media (max-width: 768px) {
+    .box-area {
+        padding: 20px;
+    }
+    .featured-image {
+        width: 150px;
+        height: 150px;
+    }
+}
