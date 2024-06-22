@@ -32,19 +32,27 @@ public class VecinoServlet extends HttpServlet {
                 ArrayList<IncidenciasB> listaIncidenciasRecientes = incidenciaDao.listarIncidenciaRecientes();
                 request.setAttribute("listaIncidencia", listaIncidenciasRecientes);
                 vista = "WEB-INF/Vecino/inicioVecino.jsp";
+                request.getRequestDispatcher(vista).forward(request, response);
                 break;
 
             case "eventoDeporte":
                 vista = "WEB-INF/Vecino/Evento-D-Vecino.jsp";
+                request.getRequestDispatcher(vista).forward(request, response);
+
                 break;
             case "eventoCultura":
                 vista = "WEB-INF/Vecino/Evento-C-Vecino.jsp";
+                request.getRequestDispatcher(vista).forward(request, response);
+
                 break;
             case "preguntasFrecuentes":
                 vista = "WEB-INF/Vecino/preguntasFrecuentes_V.jsp";
+                request.getRequestDispatcher(vista).forward(request, response);
+
                 break;
             case "verPerfil":
                 vista = "WEB-INF/Vecino/perfil_V.jsp";
+                request.getRequestDispatcher(vista).forward(request, response);
                 break;
             /*-------------fin Página principal-------------------*/
 
@@ -52,21 +60,29 @@ public class VecinoServlet extends HttpServlet {
             case "eventosInscritos":
                 //lógica para listar los eventos a los que se inscribe
                 vista = "WEB-INF/Vecino/ListaEvent-Vecino.jsp";
+                request.getRequestDispatcher(vista).forward(request, response);
 
-            /*----------------Incidencias----------------*/
+
+                /*----------------Incidencias----------------*/
             case "listarIncidencia":
                 ArrayList<IncidenciasB> listaIncidencias = incidenciaDao.listarIncidencia();
                 request.setAttribute("lista", listaIncidencias);
                 vista = "WEB-INF/Vecino/listaIncidencias_V.jsp";
+                request.getRequestDispatcher(vista).forward(request, response);
+
                 break;
             case "verIncidencia":
                 String idIncidencia = request.getParameter("idIncidencia");
                 IncidenciasB incidencia = incidenciaDao.buscarIncidenciaPorId(idIncidencia);
                 request.setAttribute("incidencia", incidencia);
                 vista = "WEB-INF/Vecino/verIncidencia_V.jsp";
+                request.getRequestDispatcher(vista).forward(request, response);
+
                 break;
             case "generarIncidencia":
                 vista = "WEB-INF/Vecino/generarIncidencia_V.jsp";
+                request.getRequestDispatcher(vista).forward(request, response);
+
                 break;
             case "editarIncidencia":
                 String id = request.getParameter("idIncidencia");
@@ -86,9 +102,9 @@ public class VecinoServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/VecinoServlet");
                 return;
             default:
-                throw new IllegalArgumentException("Acción no reconocida: " + action);
+                request.getRequestDispatcher("WEB-INF/Vecino/" + action + ".jsp").forward(request,response);
         }
-        request.getRequestDispatcher(vista).forward(request, response);
+
     }
 
     @Override
