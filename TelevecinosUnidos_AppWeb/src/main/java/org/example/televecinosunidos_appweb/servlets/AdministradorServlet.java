@@ -362,6 +362,10 @@ public class AdministradorServlet extends HttpServlet {
                     response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=listaSerenazgo_A");
                 } else {
                     request.setAttribute("textoBusqueda",textoBuscar);
+
+                    request.setAttribute("tipo",tipoS);
+                    request.setAttribute("turno",turnoS);
+
                     request.setAttribute("lista", serenazgoDao.listarSerenazgosFiltro(textoBuscar,tipoS,turnoS));
                     RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Administrador/listaSerenazgo_A.jsp");
                     view.forward(request, response);

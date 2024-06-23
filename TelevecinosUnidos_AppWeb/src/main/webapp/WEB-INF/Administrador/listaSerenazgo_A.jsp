@@ -3,6 +3,9 @@
 <%@ page import="org.example.televecinosunidos_appweb.model.beans.SerenazgoB" %>
 <jsp:useBean id="lista" scope="request" type="ArrayList<org.example.televecinosunidos_appweb.model.beans.SerenazgoB>"/>
 <jsp:useBean id="textoBusqueda" scope="request" type="java.lang.String" class="java.lang.String"/>
+<jsp:useBean id="tipo" scope="request" type="java.lang.String" class="java.lang.String"/>
+<jsp:useBean id="turno" scope="request" type="java.lang.String" class="java.lang.String"/>
+
 
 
 <!DOCTYPE html>
@@ -89,18 +92,18 @@
                         <div class="col-md-3 mb-2">
                             <select name="turno" class="form-select">
                                 <option selected disabled>Turno del serenazgo</option>
-                                <option value="1">Diurno</option>
-                                <option value="2">Nocturno</option>
+                                <option value="1" <%= turno.equals("1") ? "selected" : "" %>>Diurno</option>
+                                <option value="2" <%= turno.equals("2") ? "selected" : "" %>>Nocturno</option>
                             </select>
                         </div>
 
                         <div class="col-md-3 mb-2">
                             <select name="tipo" class="form-select">
                                 <option selected disabled>Tipo del serenazgo</option>
-                                <option value="1">Bicicleta</option>
-                                <option value="2">A pie</option>
-                                <option value="3">Canino</option>
-                                <option value="4">Vehículo</option>
+                                <option value="1" <%= tipo.equals("1") ? "selected" : "" %>>Bicicleta</option>
+                                <option value="2" <%= tipo.equals("2") ? "selected" : "" %>>A pie</option>
+                                <option value="3" <%= tipo.equals("3") ? "selected" : "" %>>Canino</option>
+                                <option value="4" <%= tipo.equals("4") ? "selected" : "" %>>Vehículo</option>
                             </select>
                         </div>
                         <div class="col-md-1 mb-2">

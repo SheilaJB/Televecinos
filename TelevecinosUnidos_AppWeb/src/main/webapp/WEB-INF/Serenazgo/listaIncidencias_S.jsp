@@ -2,6 +2,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="lista" scope="request" type="java.util.ArrayList<org.example.televecinosunidos_appweb.model.beans.IncidenciasB>" />
 <jsp:useBean id="textoBusqueda" scope="request" type="java.lang.String" class="java.lang.String"/>
+<jsp:useBean id="criticidad" scope="request" type="java.lang.String" class="java.lang.String"/>
+<jsp:useBean id="tipo" scope="request" type="java.lang.String" class="java.lang.String"/>
+<jsp:useBean id="estado" scope="request" type="java.lang.String" class="java.lang.String"/>
+<jsp:useBean id="urbanizacion" scope="request" type="java.lang.String" class="java.lang.String"/>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -91,19 +95,22 @@
                             <!-- Selector de criticidad -->
                             <select name="criticidad" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 100%;">
                                 <option selected disabled>Criticidad</option>
-                                <option value="1">Baja</option>
-                                <option value="2">Media</option>
-                                <option value="3">Alta</option>
+                                <option value="1" <%= criticidad.equals("1") ? "selected" : "" %>>Baja</option>
+                                <option value="2" <%= criticidad.equals("2") ? "selected" : "" %>>Media</option>
+                                <option value="3" <%= criticidad.equals("3") ? "selected" : "" %>>Alta</option>
+
                             </select>
                         </div>
                         <div class="col-md-2 mb-2">
                             <!-- Selector de tipo de incidencia -->
                             <select name="tipoIncidencia" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 100%;">
                                 <option selected disabled>Tipo de Incidencia</option>
-                                <option value="1">Seguridad Publica</option>
-                                <option value="2">Emergencia pública</option>
-                                <option value="3">Infraestructura y Servicios Públicos</option>
-                                <option value="4">Otro</option>
+
+                                <option value="1" <%= tipo.equals("1") ? "selected" : "" %>>Seguridad Publica</option>
+                                <option value="2" <%= tipo.equals("2") ? "selected" : "" %>>Emergencia pública</option>
+                                <option value="3" <%= tipo.equals("3") ? "selected" : "" %>>Infraestructura y Servicios Públicos</option>
+                                <option value="4" <%= tipo.equals("4") ? "selected" : "" %>>Otro</option>
+
                             </select>
                         </div>
 
@@ -111,29 +118,33 @@
                             <!-- Selector de estado -->
                             <select name="estadoIncidencia" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 100%;">
                                 <option selected disabled>Estado</option>
-                                <option value="1">Pendiente</option>
-                                <option value="2">En curso</option>
-                                <option value="3">Cancelado</option>
-                                <option value="4">Rechazado</option>
-                                <option value="5">Procesado</option>
+
+                                <option value="1" <%= estado.equals("1") ? "selected" : "" %>>Pendiente</option>
+                                <option value="2" <%= estado.equals("2") ? "selected" : "" %>>En curso</option>
+                                <option value="3" <%= estado.equals("3") ? "selected" : "" %>>Cancelado</option>
+                                <option value="4" <%= estado.equals("4") ? "selected" : "" %>>Rechazado</option>
+                                <option value="5" <%= estado.equals("5") ? "selected" : "" %>>Procesado</option>
+
+
                             </select>
                         </div>
                         <div class="col-md-2 mb-2">
                             <!-- Selector de urbanización -->
                             <select name="urbanizacion" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 100%;">
                                 <option selected disabled>Urbanización</option>
-                                <option value="1">Rafael Escardó</option>
-                                <option value="2">José de La Riva Agüero</option>
-                                <option value="3">Juan XXIII</option>
-                                <option value="4">Libertad</option>
-                                <option value="5">Los Jardines de La Marina</option>
-                                <option value="6">Las Leyendas</option>
-                                <option value="7">Las Torres San Miguelito</option>
-                                <option value="8">Elmer Faucett</option>
-                                <option value="9">Maranga</option>
-                                <option value="10">Pando</option>
-                                <option value="11">Parques de La Huaca</option>
-                                <option value="12">Otro</option>
+                                <option value="1" <%= urbanizacion.equals("1") ? "selected" : "" %>>Rafael Escardó</option>
+                                <option value="2" <%= urbanizacion.equals("2") ? "selected" : "" %>>José de La Riva Agüero</option>
+                                <option value="3" <%= urbanizacion.equals("3") ? "selected" : "" %>>Juan XXIII</option>
+                                <option value="4" <%= urbanizacion.equals("4") ? "selected" : "" %>>Libertad</option>
+                                <option value="5" <%= urbanizacion.equals("5") ? "selected" : "" %>>Los Jardines de La Marina</option>
+                                <option value="6" <%= urbanizacion.equals("6") ? "selected" : "" %>>Las Leyendas</option>
+                                <option value="7" <%= urbanizacion.equals("7") ? "selected" : "" %>>Las Torres San Miguelito</option>
+                                <option value="8" <%= urbanizacion.equals("8") ? "selected" : "" %>>Elmer Faucett</option>
+                                <option value="9" <%= urbanizacion.equals("9") ? "selected" : "" %>>Maranga</option>
+                                <option value="10" <%= urbanizacion.equals("10") ? "selected" : "" %>>Pando</option>
+                                <option value="11" <%= urbanizacion.equals("11") ? "selected" : "" %>>Parques de La Huaca</option>
+                                <option value="12" <%= urbanizacion.equals("12") ? "selected" : "" %>>Otro</option>
+
                             </select>
                         </div>
 

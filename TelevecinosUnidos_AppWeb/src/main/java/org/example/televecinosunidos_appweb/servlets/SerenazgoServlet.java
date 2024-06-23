@@ -69,6 +69,12 @@ public class SerenazgoServlet extends HttpServlet {
                     response.sendRedirect(request.getContextPath() + "/SerenazgoServlet?action=listaIncidencias_S");
                 } else {
                     request.setAttribute("textoBusqueda",textoBuscar);
+
+                    request.setAttribute("criticidad",criticidad);
+                    request.setAttribute("tipo",tipoIncidencia);
+                    request.setAttribute("estado",estadoIncidencia);
+                    request.setAttribute("urbanizacion",urbanizacion);
+
                     request.setAttribute("lista", incidenciaDao.listarIncidenciasFiltro(textoBuscar,criticidad,tipoIncidencia,estadoIncidencia,urbanizacion));
                     RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Serenazgo/listaIncidencias_S.jsp");
                     view.forward(request, response);
