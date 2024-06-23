@@ -135,7 +135,7 @@
 
                 <div class="bar" data-label="Correo"><%=serenazgoLogeado.getCorreoSerenazgo()%></div>
 
-                <a href="inicioSerenazgo.html"><button class="button regresar">Regresar</button></a>
+                <a href="<%=request.getContextPath()%>/SerenazgoServlet"><button class="button regresar">Regresar</button></a>
 
             </div>
 
