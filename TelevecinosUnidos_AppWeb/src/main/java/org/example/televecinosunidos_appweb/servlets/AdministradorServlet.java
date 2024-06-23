@@ -16,7 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-@WebServlet(name = "AdministradorServlet", urlPatterns = {"/AdministradorServlet", ""})
+@WebServlet(name = "AdministradorServlet", value = "/AdministradorServlet")
 public class AdministradorServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -280,6 +280,11 @@ public class AdministradorServlet extends HttpServlet {
                 serenazgoDao.registrarSerenazgo(serenazgoB);
 
                 response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=listaSerenazgo_A");
+                break;
+            case "editarSerenazgo":
+
+
+
                 break;
             case "registroInstructor":
 

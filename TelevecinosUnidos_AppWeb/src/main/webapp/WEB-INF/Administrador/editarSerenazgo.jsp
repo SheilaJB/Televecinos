@@ -1,9 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:useBean id="serenazgo" scope="request" type="org.example.televecinosunidos_appweb.model.beans.SerenazgoB"/>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Registar nuevo serenazgo</title>
+    <title>Editar serenazgo</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -107,24 +109,24 @@
                 <img src="img/serenazgo.jpg" class="img-fluid mb-3" alt="Imagen Serenazgo" width="200">
 
                 <!-- Formulario -->
-                <form id="serenazgoForm" method="post" action="<%=request.getContextPath()%>/AdministradorServlet?action=registrarSerenazgo">
+                <form id="serenazgoForm" method="post" action="<%=request.getContextPath()%>/AdministradorServlet?action=editarSerenazgo">
                     <label for="nombre" class="form-label" style="color:#023047;"><b>Nombre del serenazgo</b></label>
-                    <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Ingrese el nombre del serenazgo">
+                    <input type="text" id="nombre" name="nombre" class="form-control" value="<%=serenazgo.getUsuario().getNombre()%>">
 
                     <label for="apellido" class="form-label" style="color:#023047;"><b>Apellido del serenazgo</b></label>
-                    <input type="text" id="apellido" name="apellido" class="form-control" placeholder="Ingrese el apellido del serenazgo">
+                    <input type="text" id="apellido" name="apellido" class="form-control" value="<%=serenazgo.getUsuario().getApellido()%>">
 
                     <label for="dni" class="form-label" style="color:#023047;"><b>DNI del serenazgo</b></label>
-                    <input type="text" id="dni" name="dni" class="form-control" placeholder="Ingrese el DNI del serenazgo">
+                    <input type="text" id="dni" name="dni" class="form-control" value="<%=serenazgo.getUsuario().getDni()%>">
 
                     <label for="direccion" class="form-label" style="color:#023047;"><b>Direccion del serenazgo</b></label>
-                    <input type="text" id="direccion" name="direccion" class="form-control" placeholder="Ingrese la direccion del serenazgo">
+                    <input type="text" id="direccion" name="direccion" class="form-control" value="<%=serenazgo.getUsuario().getDireccion()%>">
 
                     <label for="correo" class="form-label" style="color:#023047;"><b>Correo</b></label>
-                    <input type="text" id="correo" name="correo" class="form-control" placeholder="Ingrese el correo del serenazgo">
+                    <input type="text" id="correo" name="correo" class="form-control" value="<%=serenazgo.getUsuario().getCorreo()%>">
 
                     <label for="contrasenia" class="form-label" style="color:#023047;"><b>Contraseña</b></label>
-                    <input type="text" id="contrasenia" name="contrasenia" class="form-control" placeholder="Ingrese la contrasenia del serenazgo">
+                    <input type="hidden" id="contrasenia" name="contrasenia" class="form-control" value="<%=serenazgo.getUsuario().getContrasenia()%>">
 
                     <!--quitar
                     <label for="pregFrecuentes" class="form-label" style="color:#023047;"><b>pregFrec</b></label>
@@ -147,10 +149,10 @@
 
 
                     <label for="numTelefono" class="form-label" style="color:#023047;"><b>Número de telefono</b></label>
-                    <input type="text" id="numTelefono" name="numTelefono" class="form-control" placeholder="Ingrese el numero de telefono del serenazgo">
+                    <input type="text" id="numTelefono" name="numTelefono" class="form-control" value="<%=serenazgo.getNumTelefono()%>">
 
                     <label for="fechaNacimiento" class="form-label" style="color:#023047;"><b>Fecha de nacimiento</b></label>
-                    <input type="date" id="fechaNacimiento" name="fechaNacimiento" class="form-control" placeholder="Ingrese la fecha de nacimiento del serenazgo">
+                    <input type="date" id="fechaNacimiento" name="fechaNacimiento" class="form-control" value="<%=serenazgo.getFechaNacimiento()%>">
 
 
                     <label for="turno" class="form-label" style="color:#023047;"><b>Elegir turno:</b></label>
