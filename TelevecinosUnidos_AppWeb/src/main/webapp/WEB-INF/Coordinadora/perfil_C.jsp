@@ -178,7 +178,7 @@
                 <div class="bar" data-label="Dirección">Calle los jazmines 137</div>
                 <div class="bar" data-label="Urbanización">Pando 10</div>
                 <div class="bar" data-label="Correo">robertbala@gmail.com</div>
-                <a href="InicioCoordinador.html"><button class="button regresar">Regresar</button></a>
+                <a href="<%=request.getContextPath()%>/CoordinadorServlet"><button class="button regresar">Regresar</button></a>
             </div>
         </div>
     </div>
