@@ -271,7 +271,7 @@ public class UsuarioDao extends BaseDao{
 
                 if(rs.next()) {
                     usuarioB = new UsuarioB();
-                    usuarioB.setIdUsuario(1);
+                    usuarioB.setIdUsuario(rs.getInt(1));
                     usuarioB.setNombre(rs.getString(2));
                     usuarioB.setApellido(rs.getString(3));
                     usuarioB.setDni(rs.getString(4));

@@ -17,12 +17,34 @@ public class LoginServlet extends HttpServlet {
 
         HttpSession httpSession = request.getSession();
         UsuarioB usuarioLogged = (UsuarioB) httpSession.getAttribute("usuarioLogueado");
+        SerenazgoDTO serenazgoLogeado = (SerenazgoDTO) httpSession.getAttribute("serenazgoLogeado");
         if(usuarioLogged != null &&  usuarioLogged.getIdUsuario()>0) {
-            if(request.getParameter("logout") != null){
+            if(request.getParameter("action") != null){
                 httpSession.invalidate();
+                response.sendRedirect(request.getContextPath()+"/LoginServlet");
+            }else{
+
+                switch (usuarioLogged.getIdRol()){
+                    case 2:
+                        response.sendRedirect(request.getContextPath()+"/VecinoServlet");
+                        break;
+                    case 3:
+                        response.sendRedirect(request.getContextPath()+"/CoordinadoraServlet");
+                        break;
+                    case 5:
+                        response.sendRedirect(request.getContextPath()+"/AdministradorServlet");
+                        break;
+                }
             }
-            response.sendRedirect(request.getContextPath());
-        }else {
+
+        } else if (serenazgoLogeado != null &&  serenazgoLogeado.getIdUsuario()>0) {
+            if(request.getParameter("action") != null){
+                httpSession.invalidate();
+                response.sendRedirect(request.getContextPath()+"/LoginServlet");
+                return;
+            }
+            response.sendRedirect(request.getContextPath()+"/SerenazgoServlet");
+        } else {
             request.getRequestDispatcher("index.jsp").forward(request, response);
         }
 
@@ -37,14 +59,18 @@ public class LoginServlet extends HttpServlet {
         if(usuarioDao.validarUsuarioPassword(correo, contrasena)){
             //aca se da el ingreso
             int IdRol = usuarioDao.obtenerIdPorCorreo(correo);
-            UsuarioB usuarioB =usuarioDao.obtenerUsuario1(correo);
+            UsuarioB usuarioB = null;
             HttpSession httpSession = request.getSession();
-            httpSession.setAttribute("usuarioLogueado", usuarioB);
+
             switch (IdRol){
                 case 2:
+                    usuarioB = usuarioDao.obtenerUsuario1(correo);
+                    httpSession.setAttribute("usuarioLogueado", usuarioB);
                     response.sendRedirect(request.getContextPath() + "/VecinoServlet");
                     break;
                 case 3:
+                    usuarioB = usuarioDao.obtenerUsuario1(correo);
+                    httpSession.setAttribute("usuarioLogueado", usuarioB);
                     response.sendRedirect(request.getContextPath() + "/CoordinadorServlet");
                     break;
                 case 4:
@@ -54,6 +80,8 @@ public class LoginServlet extends HttpServlet {
                     response.sendRedirect(request.getContextPath() + "/SerenazgoServlet");
                     break;
                 case 5:
+                    usuarioB = usuarioDao.obtenerUsuario1(correo);
+                    httpSession.setAttribute("usuarioLogueado", usuarioB);
                     response.sendRedirect(request.getContextPath());
             }
 
