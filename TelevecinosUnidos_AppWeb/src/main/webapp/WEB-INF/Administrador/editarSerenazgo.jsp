@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="org.example.televecinosunidos_appweb.model.beans.SerenazgoB" %>
+
 <jsp:useBean id="serenazgo" scope="request" type="org.example.televecinosunidos_appweb.model.beans.SerenazgoB"/>
 
 <!DOCTYPE html>
@@ -109,7 +111,7 @@
                 <img src="img/serenazgo.jpg" class="img-fluid mb-3" alt="Imagen Serenazgo" width="200">
 
                 <!-- Formulario -->
-                <form id="serenazgoForm" method="post" action="<%=request.getContextPath()%>/AdministradorServlet?action=editarSerenazgo">
+                <form method="post" action="<%=request.getContextPath()%>/AdministradorServlet?action=editarSerenazgo">
                     <label for="nombre" class="form-label" style="color:#023047;"><b>Nombre del serenazgo</b></label>
                     <input type="text" id="nombre" name="nombre" class="form-control" value="<%=serenazgo.getUsuario().getNombre()%>">
 
