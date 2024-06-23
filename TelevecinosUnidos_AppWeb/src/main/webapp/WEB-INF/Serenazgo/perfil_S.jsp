@@ -1,6 +1,6 @@
 <%@ page import="org.example.televecinosunidos_appweb.model.dto.SerenazgoDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<jsp:useBean id="usuarioLogueado" scope="session" type="SerenazgoDTO" class="org.example.televecinosunidos_appweb.model.dto.SerenazgoDTO" />
+<jsp:useBean id="serenazgoLogeado" scope="session" type="SerenazgoDTO" class="org.example.televecinosunidos_appweb.model.dto.SerenazgoDTO" />
 
 
 <!DOCTYPE html>
@@ -126,14 +126,14 @@
 
             <div class="container text-center">
                 <img src="img/serenazgo.jpg" class="img-fluid mb-3" alt="Responsive image" width="200">
-                <div class="bar" data-label="Tipo de serenazgo"><%= usuarioLogueado.getTipoSerenazgo()%></div>
-                <div class="bar" data-label="Turno"><%= usuarioLogueado.getTurnoSerenazgo()%></div>
+                <div class="bar" data-label="Tipo de serenazgo"><%= serenazgoLogeado.getTipoSerenazgo()%></div>
+                <div class="bar" data-label="Turno"><%= serenazgoLogeado.getTurnoSerenazgo()%></div>
                 <div class="bar" data-label="Fecha de nombramiento">15/06/2024</div>
-                <div class="bar" data-label="Nombre"><%= usuarioLogueado.getNombreSerenazgo()%></div>
-                <div class="bar" data-label="Apellido"><%= usuarioLogueado.getApellidoSerenazgo()%></div>
-                <div class="bar" data-label="DNI"><%= usuarioLogueado.getDNI()%></div>
+                <div class="bar" data-label="Nombre"><%= serenazgoLogeado.getNombreSerenazgo()%></div>
+                <div class="bar" data-label="Apellido"><%= serenazgoLogeado.getApellidoSerenazgo()%></div>
+                <div class="bar" data-label="DNI"><%= serenazgoLogeado.getDNI()%></div>
 
-                <div class="bar" data-label="Correo"><%=usuarioLogueado.getCorreoSerenazgo()%></div>
+                <div class="bar" data-label="Correo"><%=serenazgoLogeado.getCorreoSerenazgo()%></div>
 
                 <a href="inicioSerenazgo.html"><button class="button regresar">Regresar</button></a>
 

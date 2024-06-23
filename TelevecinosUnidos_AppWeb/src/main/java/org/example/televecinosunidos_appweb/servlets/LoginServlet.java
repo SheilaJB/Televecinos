@@ -17,8 +17,6 @@ public class LoginServlet extends HttpServlet {
 
         HttpSession httpSession = request.getSession();
         UsuarioB usuarioLogged = (UsuarioB) httpSession.getAttribute("usuarioLogueado");
-
-
         if(usuarioLogged != null &&  usuarioLogged.getIdUsuario()>0) {
             if(request.getParameter("logout") != null){
                 httpSession.invalidate();
@@ -52,7 +50,7 @@ public class LoginServlet extends HttpServlet {
                 case 4:
                     SerenazgoDTO serenazgoDTO = usuarioDao.obtenerUsuarioSerenazgo(correo);
 
-                    httpSession.setAttribute("usuarioLogueado", serenazgoDTO);
+                    httpSession.setAttribute("serenazgoLogeado", serenazgoDTO);
                     response.sendRedirect(request.getContextPath() + "/SerenazgoServlet");
                     break;
                 case 5:

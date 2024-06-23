@@ -1,5 +1,6 @@
-
+<%@ page import="org.example.televecinosunidos_appweb.model.beans.UsuarioB" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:useBean id="usuarioLogueado" scope="session" type="UsuarioB" class="org.example.televecinosunidos_appweb.model.beans.UsuarioB" />
 
 <!-- Navbar Start -->
 <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
@@ -14,7 +15,7 @@
         <div class="nav-item dropdown">
             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                 <img class="rounded-circle me-lg-2" src="img/Icon_perfil.png" alt="" style="width: 40px; height: 40px;">
-                <span class="d-none d-lg-inline-flex" style="color:#023047;"><b>Nombre Apellido</b></span>
+                <span class="d-none d-lg-inline-flex" style="color:#023047;"><b><%= usuarioLogueado.getNombre()+" "+usuarioLogueado.getApellido()%></b></span>
             </a>
             <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                 <a href="<%=request.getContextPath()%>/VecinoServlet?action=perfil_V" class="dropdown-item">Mi perfil</a>
