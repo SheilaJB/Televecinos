@@ -2,6 +2,7 @@ package org.example.televecinosunidos_appweb.model.daos;
 
 import org.example.televecinosunidos_appweb.model.beans.*;
 import org.example.televecinosunidos_appweb.model.beans.UsuarioB;
+import org.example.televecinosunidos_appweb.model.dto.SerenazgoDTO;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -287,5 +288,82 @@ public class UsuarioDao extends BaseDao{
         }
 
         return usuarioB;
+    }
+    public SerenazgoDTO obtenerUsuarioSerenazgo(String correo){
+        SerenazgoDTO serenazgoDTO = null;
+        String sql = "SELECT \n" +
+                "    u.idUsuario AS idUsuario,\n" +
+                "    s.idSerenazgo AS idSerenazgo,\n" +
+                "    u.nombre AS nombreSerenazgo,\n" +
+                "    u.apellido AS apellidoSerenazgo,\n" +
+                "    u.dni AS DNI,\n" +
+                "    s.numTelefono AS telefonoSerenazgo,\n" +
+                "    u.correo AS correoSerenazgo,\n" +
+                "    u.direccion AS direccionSerenazgo,\n" +
+                "    u.isBan AS isBan,\n" +
+                "    u.avatar AS avatarSerenazgo,\n" +
+                "    s.fechaNacimiento AS fechaNacimientoSerenazgo,\n" +
+                "    ts.turno AS turnoSerenazgo,\n" +
+                "    tps.tipo AS tipoSerenazgo\n" +
+                "FROM \n" +
+                "    televecinosdb.usuario u\n" +
+                "INNER JOIN \n" +
+                "    televecinosdb.serenazgo s ON u.idUsuario = s.usuario_idUsuario\n" +
+                "INNER JOIN \n" +
+                "    televecinosdb.turnoserenazgo ts ON s.TurnoSerenazgo_idTurnoSerenazgo = ts.idTurnoSerenazgo\n" +
+                "INNER JOIN \n" +
+                "    televecinosdb.tiposerenazgo tps ON s.TipoSerenazgo_idTipoSerenazgo = tps.idTipoSerenazgo\n" +
+                "WHERE \n" +
+                "    u.correo = ?;\n";
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1,correo);
+
+            try(ResultSet rs = pstmt.executeQuery()){
+
+                if(rs.next()) {
+                    serenazgoDTO = new SerenazgoDTO();
+                    serenazgoDTO.setIdUsuario(rs.getInt("idUsuario"));
+                    serenazgoDTO.setIdSerenazgo(rs.getInt("idSerenazgo"));
+                    serenazgoDTO.setNombreSerenazgo(rs.getString("nombreSerenazgo"));
+                    serenazgoDTO.setApellidoSerenazgo(rs.getString("apellidoSerenazgo"));
+                    serenazgoDTO.setDNI(rs.getString("DNI"));
+                    serenazgoDTO.setTelefonoSerenazgo(rs.getString("telefonoSerenazgo"));
+                    serenazgoDTO.setCorreoSerenazgo(rs.getString("correoSerenazgo"));
+                    serenazgoDTO.setDireccionSerenazgo(rs.getString("direccionSerenazgo"));
+                    serenazgoDTO.setBan(rs.getBoolean("isBan"));
+                    serenazgoDTO.setAvatarSerenazgo(rs.getString("avatarSerenazgo"));
+                    serenazgoDTO.setFechaNacimientoSerenazgo("fechaNacimientoSerenazgo");
+                    serenazgoDTO.setTurnoSerenazgo(rs.getString("turnoSerenazgo"));
+                    serenazgoDTO.setTipoSerenazgo(rs.getString("tipoSerenazgo"));
+                }
+
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return serenazgoDTO;
+    }
+    public int obtenerIdPorCorreo(String correo){
+        int id=0;
+        String sql = "SELECT Rol_idRol\n" +
+                "FROM televecinosdb.usuario\n" +
+                "WHERE correo = ?;\n";
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1,correo);
+
+            try(ResultSet rs = pstmt.executeQuery()){
+                if(rs.next()) {
+                    id = rs.getInt(1);
+                }
+
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return id;
     }
 }

@@ -1,6 +1,7 @@
 <%@ page import="org.example.televecinosunidos_appweb.model.beans.UsuarioB" %>
+<%@ page import="org.example.televecinosunidos_appweb.model.dto.SerenazgoDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<jsp:useBean id="usuarioLogueado" scope="session" type="UsuarioB" class="org.example.televecinosunidos_appweb.model.beans.UsuarioB" />
+<jsp:useBean id="usuarioLogueado" scope="session" type="SerenazgoDTO" class="org.example.televecinosunidos_appweb.model.dto.SerenazgoDTO" />
 
 <%
     String action = request.getParameter("action");
@@ -18,7 +19,7 @@
         <div class="d-flex align-items-center ms-4 mb-4">
             <img class="rounded-circle" src="img/serenazgo.jpg" alt="" style="width: 50px; height: 50px;">
             <div class="ms-3 m-3">
-                <h6 class="mb-0" style="color:#023047;"><b><%=usuarioLogueado.getNombre() + " " + usuarioLogueado.getApellido()%></b></h6>
+                <h6 class="mb-0" style="color:#023047;"><b><%=usuarioLogueado.getNombreSerenazgo() + " " + usuarioLogueado.getApellidoSerenazgo()%></b></h6>
                 <span class="text-muted"><b>Serenazgo</b></span>
             </div>
         </div>
