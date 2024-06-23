@@ -125,7 +125,7 @@
                     <label for="correo" class="form-label" style="color:#023047;"><b>Correo</b></label>
                     <input type="text" id="correo" name="correo" class="form-control" value="<%=serenazgo.getUsuario().getCorreo()%>">
 
-                    <label for="contrasenia" class="form-label" style="color:#023047;"><b>Contraseña</b></label>
+
                     <input type="hidden" id="contrasenia" name="contrasenia" class="form-control" value="<%=serenazgo.getUsuario().getContrasenia()%>">
 
                     <!--quitar
@@ -157,20 +157,20 @@
 
                     <label for="turno" class="form-label" style="color:#023047;"><b>Elegir turno:</b></label>
                     <select id="turno" class="form-select mb-3" name="turno" aria-label="Seleccione un turno">
-                        <option selected>Seleccione un turno:</option>
-                        <option value="1">Diurno</option>
-                        <option value="2">Nocturno</option>
+                        <option value="" <%= serenazgo.getIdTurnoSerenazgo() == 0 ? "selected" : "" %>>Seleccione un turno:</option>
+                        <option value="1" <%= serenazgo.getIdTurnoSerenazgo() == 1 ? "selected" : "" %>>Diurno</option>
+                        <option value="2" <%= serenazgo.getIdTurnoSerenazgo() == 2 ? "selected" : "" %>>Nocturno</option>
                     </select>
 
 
 
                     <label for="tipo" class="form-label" style="color:#023047;"><b>Tipo de serenazgo:</b></label>
                     <select id="tipo" class="form-select mb-3" name="tipo" aria-label="Seleccione un tipo">
-                        <option selected>Seleccione un tipo:</option>
-                        <option value="1">Bicicleta</option>
-                        <option value="2">A pie</option>
-                        <option value="3">Canino</option>
-                        <option value="4">Vehículo</option>
+                        <option value="" <%= serenazgo.getIdTipoSerenazgo() == 0 ? "selected" : "" %>>Seleccione un tipo:</option>
+                        <option value="1" <%= serenazgo.getIdTipoSerenazgo() == 1 ? "selected" : "" %>>Bicicleta</option>
+                        <option value="2" <%= serenazgo.getIdTipoSerenazgo() == 2 ? "selected" : "" %>>A pie</option>
+                        <option value="3" <%= serenazgo.getIdTipoSerenazgo() == 3 ? "selected" : "" %>>Canino</option>
+                        <option value="4" <%= serenazgo.getIdTipoSerenazgo() == 4 ? "selected" : "" %>>Vehículo</option>
                     </select>
 
 
@@ -178,18 +178,18 @@
 
                     <div class="form-group" style = "padding-top: 2%">
                         <div class="m-n2" style="padding-bottom: 5%; ">
-                            <button type="button" class="btn btn-warning m-2 text-white" onclick="regresar()">Regresar</button>
+                            <button href="<%=request.getContextPath()%>/AdministradorServlet?action=listaSerenazgo_A" class="btn btn-warning m-2 text-white">Regresar</button>
 
-                            <button type="submit" class="btn btn-success m-2" id="openPopupBtn" >Registrar</button>
+                            <button type="submit" class="btn btn-success m-2" id="openPopupBtn" >Editar</button>
                         </div>
                     </div>
-
+                    <!--
                     <script>
                         function regresar(){
                             window.location.href="<%=request.getContextPath()%>/AdministradorServlet?action=listaSerenazgo_A";
                         }
                     </script>
-
+                    -->
                     <!--
                     <div id="popup" class="popup" >
                         <div class="popup_contenido">
