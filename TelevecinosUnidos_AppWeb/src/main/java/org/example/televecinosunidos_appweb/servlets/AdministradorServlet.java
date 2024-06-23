@@ -47,6 +47,17 @@ public class AdministradorServlet extends HttpServlet {
             case "registroSerenazgo":
                 request.getRequestDispatcher("WEB-INF/Administrador/registroSerenazgo.jsp").forward(request,response);
                 break;
+            case "editarSerenazgo":
+                String idSerenazgo2 = request.getParameter("idSerenazgo");
+                SerenazgoB serenazgoB = serenazgoDao.buscarSerenazgoPorId(idSerenazgo2);
+                if(serenazgoB != null){
+                    request.setAttribute("serenazgo",serenazgoB);
+                    request.getRequestDispatcher("WEB-INF/Administrador/editarSerenazgo.jsp").forward(request,response);
+                }
+                else{
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet");
+                }
+                break;
             case "listaCoordinadorasCultura_A":
                 vista = "WEB-INF/Administrador/listaCoordinadorasCultura_A.jsp";
                 ArrayList<UsuarioB> listarCoordinadorasCultura = coordinadoraDao.listarCoordinadorasCultura();
@@ -282,9 +293,42 @@ public class AdministradorServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=listaSerenazgo_A");
                 break;
             case "editarSerenazgo":
+                String nombre2 = request.getParameter("nombre");
+                String apellido2 = request.getParameter("apellido");
+                String dni2 = request.getParameter("dni");
+                String direccion2 = request.getParameter("direccion");
+                String numTelefono2 = request.getParameter("numTelefono");
+                String fechaNacimiento2 = request.getParameter("fechaNacimiento");
+                int turno2 = Integer.parseInt(request.getParameter("turno"));
+                int tipo2 = Integer.parseInt(request.getParameter("tipo"));
+                String correo2 = request.getParameter("correo");
+                String contrasenia2 = request.getParameter("contrasenia");
+                int pregFrecuentes2 = 1;
+                int idRol2 = 4;
+                int isBan2 = 0;
 
 
+                UsuarioB us2 = new UsuarioB();
+                us2.setNombre(nombre2);
+                us2.setApellido(apellido2);
+                us2.setDni(dni2);
+                us2.setDireccion(direccion2);
+                us2.setCorreo(correo2);
+                us2.setContrasenia(contrasenia2);
+                us2.setPreguntasFrecuentes_idTable2(pregFrecuentes2);
+                us2.setIdRol(idRol2);
+                us2.setIsBan(isBan2);
 
+                SerenazgoB serenazgoB2 = new SerenazgoB();
+                serenazgoB2.setNumTelefono(numTelefono2);
+                serenazgoB2.setFechaNacimiento(fechaNacimiento2);
+                serenazgoB2.setIdTurnoSerenazgo(turno2);
+                serenazgoB2.setIdTipoSerenazgo(tipo2);
+
+                serenazgoB2.setUsuario(us2);
+                serenazgoDao.actualizarSerenazgo(serenazgoB2);
+
+                response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=listaSerenazgo_A");
                 break;
             case "registroInstructor":
 

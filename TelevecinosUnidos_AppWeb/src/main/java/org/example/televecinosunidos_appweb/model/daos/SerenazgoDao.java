@@ -245,6 +245,49 @@ public class SerenazgoDao extends BaseDao {
 
     }
 
+    public void actualizarSerenazgo(SerenazgoB serenazgoB) {
+        String sqlUsuario = "UPDATE `televecinosdb`.`usuario` " +
+                "SET `nombre` = ?, `apellido` = ?, `dni` = ?, `direccion` = ?, `correo` = ?, `contrasena` = ?, `PreguntasFrecuentes_idtable2` = ?, `Rol_idRol` = ?, `isBan` = ? " +
+                "WHERE `idUsuario` = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sqlUsuario)) {
+
+            pstmt.setString(1, serenazgoB.getUsuario().getNombre());
+            pstmt.setString(2, serenazgoB.getUsuario().getApellido());
+            pstmt.setString(3, serenazgoB.getUsuario().getDni());
+            pstmt.setString(4, serenazgoB.getUsuario().getDireccion());
+            pstmt.setString(5, serenazgoB.getUsuario().getCorreo());
+            pstmt.setString(6, serenazgoB.getUsuario().getContrasenia());
+            pstmt.setInt(7, serenazgoB.getUsuario().getPreguntasFrecuentes_idTable2());
+            pstmt.setInt(8, serenazgoB.getUsuario().getIdRol());
+            pstmt.setInt(9, serenazgoB.getUsuario().getIsBan());
+            pstmt.setInt(10, serenazgoB.getUsuario().getIdUsuario()); // Asumiendo que hay un método getIdUsuario en Usuario
+
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        String sqlSerenazgo = "UPDATE `televecinosdb`.`serenazgo` " +
+                "SET `numTelefono` = ?, `fechaNacimiento` = ?, `TurnoSerenazgo_idTurnoSerenazgo` = ?, `TipoSerenazgo_idTipoSerenazgo` = ? " +
+                "WHERE `usuario_idUsuario` = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sqlSerenazgo)) {
+
+            pstmt.setString(1, serenazgoB.getNumTelefono());
+            pstmt.setString(2, serenazgoB.getFechaNacimiento());
+            pstmt.setInt(3, serenazgoB.getIdTurnoSerenazgo());
+            pstmt.setInt(4, serenazgoB.getIdTipoSerenazgo());
+            pstmt.setInt(5, serenazgoB.getUsuario().getIdUsuario());
+
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
+
     public ArrayList<SerenazgoB> listarSerenazgosFiltro(String textoBuscar,String tipoS,String turnoS) {
 
 
@@ -369,5 +412,7 @@ public class SerenazgoDao extends BaseDao {
 
         return listaSerenazgos;
     }
+
+
 }
 
