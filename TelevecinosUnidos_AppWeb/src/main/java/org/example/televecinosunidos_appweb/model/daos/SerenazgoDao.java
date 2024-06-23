@@ -261,7 +261,7 @@ public class SerenazgoDao extends BaseDao {
             pstmt.setInt(7, serenazgoB.getUsuario().getPreguntasFrecuentes_idTable2());
             pstmt.setInt(8, serenazgoB.getUsuario().getIdRol());
             pstmt.setInt(9, serenazgoB.getUsuario().getIsBan());
-            pstmt.setInt(10, serenazgoB.getUsuario().getIdUsuario()); // Asumiendo que hay un método getIdUsuario en Usuario
+            pstmt.setInt(10, serenazgoB.getUsuario().getIdUsuario());
 
             pstmt.executeUpdate();
         } catch (SQLException e) {

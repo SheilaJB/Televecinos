@@ -35,7 +35,8 @@ public class AdministradorServlet extends HttpServlet {
         switch (action) {
             case "listaSerenazgo_A":
                 vista = "WEB-INF/Administrador/listaSerenazgo_A.jsp";
-                request.setAttribute("lista",listarSerenazgos);
+                ArrayList<SerenazgoB> listarSerenazgos2 = serenazgoDao.listarSerenazgos();
+                request.setAttribute("lista",listarSerenazgos2);
                 request.getRequestDispatcher(vista).forward(request, response);
                 break;
             case "verSerenazgo":
@@ -293,6 +294,7 @@ public class AdministradorServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=listaSerenazgo_A");
                 break;
             case "editarSerenazgo":
+                String idUsuario2 = request.getParameter("idUsuario");
                 String nombre2 = request.getParameter("nombre");
                 String apellido2 = request.getParameter("apellido");
                 String dni2 = request.getParameter("dni");
@@ -309,6 +311,7 @@ public class AdministradorServlet extends HttpServlet {
 
 
                 UsuarioB us2 = new UsuarioB();
+                us2.setIdUsuario(Integer.parseInt(idUsuario2));
                 us2.setNombre(nombre2);
                 us2.setApellido(apellido2);
                 us2.setDni(dni2);

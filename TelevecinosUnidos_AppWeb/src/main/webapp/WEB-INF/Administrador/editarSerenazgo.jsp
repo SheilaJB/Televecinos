@@ -112,6 +112,9 @@
 
                 <!-- Formulario -->
                 <form method="post" action="<%=request.getContextPath()%>/AdministradorServlet?action=editarSerenazgo">
+
+                    <input type="hidden" id="idUsuario" name="idUsuario" class="form-control" value="<%=serenazgo.getUsuario().getIdUsuario()%>">
+
                     <label for="nombre" class="form-label" style="color:#023047;"><b>Nombre del serenazgo</b></label>
                     <input type="text" id="nombre" name="nombre" class="form-control" value="<%=serenazgo.getUsuario().getNombre()%>">
 
