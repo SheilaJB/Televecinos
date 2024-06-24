@@ -424,7 +424,7 @@ public class AdministradorServlet extends HttpServlet {
                     response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=listaInstructores_A");
                 } else {
                     request.setAttribute("textoBusqueda",textoBuscar);
-                    request.setAttribute("lista", solicitanteDao.listarSolicitantesPorNombre(textoBuscar));
+                    request.setAttribute("lista", instructorDao.listarProfesoresPorNombre(textoBuscar));
                     RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Administrador/listaInstructores_A.jsp");
                     view.forward(request, response);
                 }
