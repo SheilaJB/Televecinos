@@ -147,7 +147,7 @@ INSERT INTO `televecinosDB`.`Usuario` (
   `Rol_idRol`, 
   `isBan`
 ) VALUES
-('Juan', 'González', '12345678', 'Calle Alfonso Ugarte 127', 'luis.garcia@example.com', SHA2('password1', 256), 1, 4, 0),
+('Juan', 'González', '12345678', 'Calle Alfonso Ugarte 127', 'juan.gonzales@example.com', SHA2('password1', 256), 1, 4, 0),
 ('María', 'Pérez', '23456789', 'Avenida Patriotas 234', 'maria.perez@example.com', SHA2('password2', 256), 1, 4, 0),
 ('Carlos', 'Díaz', '34567890', 'Jirón Amazonas 341', 'Carlos.Díaz@example.com', SHA2('password3', 256), 1, 4, 0);
 
@@ -156,6 +156,22 @@ INSERT INTO `televecinosDB`.`Serenazgo` (`numTelefono`, `fechaNacimiento`, `Turn
 ( '912345678', '1990-01-01', 1, 1,13),
 ( '923456789', '1992-02-02', 2, 2,14),
 ( '934567890', '1994-03-03', 1, 3,15);
+
+
+-- Ingreso de admin
+INSERT INTO `televecinosDB`.`Usuario` (
+  `nombre`, 
+  `apellido`, 
+  `dni`, 
+  `direccion`, 
+  `correo`, 
+  `contrasena`, 
+  `PreguntasFrecuentes_idtable2`, 
+  `Rol_idRol`, 
+  `isBan`
+) VALUES
+('admin', 'admin', '12345678', 'Calle Alfonso Ugarte 127', 'admin.televecinos@gmail.com', SHA2('admin', 256), 1, 5, 0);
+
 
 -- Inserciones para la tabla Eventos (Culturales)
 INSERT INTO `televecinosDB`.`eventos` 
