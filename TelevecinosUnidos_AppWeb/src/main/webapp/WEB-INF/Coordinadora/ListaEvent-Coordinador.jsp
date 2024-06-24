@@ -62,6 +62,8 @@
             color: rgb(0, 0, 0);
         }
     </style>
+    <!-- Tempus Dominus CSS (si necesario) -->
+    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
 </head>
 <body>
 <div class="container-xxl position-relative bg-white d-flex p-0">
@@ -182,6 +184,13 @@
                 </form>
             </div>
 
+            <!-- Bootstrap JS with Popper -->
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+            <!-- Bootstrap JS and dependencies (Popper.js) -->
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
+
             <div class="bg-light rounded h-100 p-4" style="font-weight: bold;">
                 <script>
                     function crearEvento() {
@@ -197,9 +206,8 @@
                             <th scope="col">Fecha de inicio</th>
                             <th scope="col">Estado</th>
                             <th scope="col">Frecuencia</th>
-                            <th scope="col">Visualizar</th>
-                            <th scope="col">Editar</th>
-                            <th scope="col">Borrar</th>
+                            <th scope="col"></th>
+
                         </tr>
                         </thead>
                         <tbody>
@@ -209,9 +217,22 @@
                             <td><%= eventoB.getFecha_inicio() %></td>
                             <td><%= eventoB.getEstadoString() %></td>
                             <td><%= eventoB.getFrecuenciaString() %></td>
-                            <td><a href="<%=request.getContextPath()%>/CoordinadorServlet?action=verEvento&idEvento=<%=eventoB.getidEvento()%>"><button type="button" class="btn btn-info m-2"><i class="fas fa-eye"></i></button></a></td>
-                            <td><a href="<%=request.getContextPath()%>/CoordinadorServlet?action=editarEvento&idEvento=<%=eventoB.getidEvento()%>"><button type="button" class="btn btn-success m-2"><i class="fas fa-pencil-alt"></i></button></a></td>
-                            <td><button type="button" class="btn btn-danger m-2" onclick="confirmDelete(<%=eventoB.getidEvento()%>)"><i class="fas fa-trash-alt"></i></button></td>
+                            <!--Desplegable-->
+                            <td>
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                            <% if ("Disponible".equals(eventoB.getEstadoString())) { %>
+                                            <li><a class="dropdown-item"  onclick="viewFunction(<%=eventoB.getidEvento()%>)">Ver</a></li>
+                                            <li><a class="dropdown-item"  onclick="editFunction(<%=eventoB.getidEvento()%>)">Editar</a></li>
+                                            <li><a class="dropdown-item"  onclick="confirmDelete(<%=eventoB.getidEvento()%>)">Borrar</a></li>
+                                            <% } else { %>
+                                            <li><a class="dropdown-item"  onclick="viewFunction(<%=eventoB.getidEvento()%>)">Ver</a></li>
+                                            <% } %>
+                                        </ul>
+                                    </button>
+                                </div>
+                            </td>
                         </tr>
                         <% } %>
                         </tbody>
@@ -219,6 +240,22 @@
                 </div>
             </div>
         </div>
+
+        <!-- jQuery (opcional si necesitas usar funciones de jQuery específicas) -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <!-- Bootstrap 5 JS with Popper.js -->
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Tempus Dominus JS (si necesario) -->
+        <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+        <script>
+            function viewFunction(idEvento) {
+                window.location.href ='<%=request.getContextPath()%>/CoordinadorServlet?action=verEvento&idEvento=' +idEvento;
+            }
+
+            function editFunction(idEvento) {
+                window.location.href ='<%=request.getContextPath()%>/CoordinadorServlet?action=editarEvento&idEvento=' + idEvento;}
+        </script>
 
         <!-- Filtro -->
         <div id="Barra-Filtro">

@@ -70,6 +70,8 @@
             color: rgb(0, 0, 0);
         }
     </style>
+    <!-- Tempus Dominus CSS (si necesario) -->
+    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
 
 </head>
 
@@ -100,6 +102,13 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+        <!-- Bootstrap JS with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Bootstrap JS and dependencies (Popper.js) -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
 
         <div id="Nombre del evento">
             <h3 style="text-align: left; margin-top:20px;margin-bottom:20px;padding: 20px">Lista de incidencias</h3>
@@ -165,9 +174,8 @@
                         <th scope="col">Hora</th>
                         <th scope="col">Tipo</th>
                         <th scope="col">Estado</th>
-                        <th scope="col">Ver</th>
-                        <th scope="col">Editar</th>
-                        <th scope="col">Borrar</th>
+                        <th scope="col"></th>
+
                     </tr>
                     </thead>
                     <tbody>
@@ -179,24 +187,23 @@
                         <td><%= incidencia.getHora() %></td>
                         <td><%= incidencia.getTipoIncidencia() %></td>
                         <td><%= incidencia.getEstadoIncidencia() %></td>
+                        <!--Desplegable-->
+
                         <td>
-                            <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=verIncidencia&idIncidencia=<%= incidencia.getIdIncidencias()%>">
-                                <button type="button" class="btn btn-primary m-2"><i class="fas fa-eye"></i></button>
-                            </a>
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                        <% if ("Pendiente".equals(incidencia.getEstadoIncidencia())) { %>
+                                        <li><a class="dropdown-item" onclick="viewFunction(<%= incidencia.getIdIncidencias()%>)">Ver</a></li>
+                                        <li><a class="dropdown-item" onclick="editFunction(<%= incidencia.getIdIncidencias()%>)">Editar</a></li>
+                                        <li><a class="dropdown-item" onclick="confirmDelete(<%=incidencia.getIdIncidencias()%>)">Borrar</a></li>
+                                        <% } else { %>
+                                        <li><a class="dropdown-item" onclick="viewFunction(<%= incidencia.getIdIncidencias()%>)">Ver</a></li>
+                                        <% } %>
+                                    </ul>
+                                </button>
+                            </div>
                         </td>
-                        <% if ("Pendiente".equals(incidencia.getEstadoIncidencia())) { %>
-                        <td>
-                            <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=editarIncidencia&idIncidencia=<%=incidencia.getIdIncidencias()%>">
-                                <button type="button" class="btn btn-success m-2"><i class="fas fa-pencil-alt"></i></button>
-                            </a>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-danger m-2" onclick="confirmDelete(<%=incidencia.getIdIncidencias()%>)"><i class="fas fa-trash-alt"></i></button>
-                        </td>
-                        <% } else { %>
-                        <td><button type="button" class="btn btn-success m-2"><i class="fas fa-pencil-alt"></i></button></td>
-                        <td><button type="button" class="btn btn-danger m-2"><i class="fas fa-trash-alt"></i></button></td>
-                        <% } %>
                     </tr>
                     <% }
                     } else { %>
@@ -208,6 +215,23 @@
 
                 </table>
             </div>
+
+            <!-- jQuery (opcional si necesitas usar funciones de jQuery específicas) -->
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <!-- Bootstrap 5 JS with Popper.js -->
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+            <!-- Tempus Dominus JS (si necesario) -->
+            <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+            <script>
+                function viewFunction(idEvento) {
+                    window.location.href ='<%=request.getContextPath()%>/CoordinadorServlet?action=verIncidencia&idIncidencia=' +idEvento;
+                }
+
+                function editFunction(idEvento) {
+                    window.location.href ='<%=request.getContextPath()%>/CoordinadorServlet?action=editarIncidencia&idIncidencia=' + idEvento;}
+            </script>
+
             <div  style="display: flex; justify-content: center; align-items: center;">
                 <section class="paginacion" >
                     <ul style="list-style: none;padding: 0;margin: 0;display: flex;">
