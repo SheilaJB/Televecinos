@@ -89,7 +89,7 @@
         <!-- PARTE SUPERIOR FINAL -->
 
 
-        <h2 class="mb-2 text-center" style = "padding-top: 3%;" style="color:#023047;">Evaluación de incidencia</h2>}
+        <h2 class="mb-2 text-center" style = "padding-top: 3%;" style="color:#023047;">Evaluación de incidencia</h2>
         <form method="post" action="<%=request.getContextPath()%>/SerenazgoServlet?action=edit">
         <!-- Form Start -->
         <div class="container-fluid pt-4 px-4">

@@ -93,6 +93,11 @@ INSERT INTO `televecinosDB`.`TurnoSerenazgo` (`idTurnoSerenazgo`,`turno`) VALUES
 INSERT INTO `televecinosDB`.`TipoSerenazgo` (`idTipoSerenazgo`,`tipo`) VALUES
 (1,'Bicicleta'), (2,'A pie'), (3,'Canino'), (4,'Vehiculo');
 
+INSERT INTO `televecinosDB`.`personalrequerido` (`idpersonalRequerido`,`nombre`) VALUES
+(1,'Ambulancia'),
+(2,'Policia'),
+(3,'Bomberos');
+
 -- Ingreso de coordinadoras
 INSERT INTO `televecinosDB`.`Usuario` (
   `nombre`, 
