@@ -179,7 +179,7 @@ INSERT INTO `televecinosDB`.`Usuario` (
   `isBan`,
   `primerIngreso`
 ) VALUES
-('admin', 'admin', '12345678', 'Calle Alfonso Ugarte 127', 'admin.televecinos@gmail.com', SHA2('admin', 256), 1, 5, 0,0);
+('admin', 'admin', '12345678', 'admin', 'admin.televecinos@gmail.com', SHA2('admin', 256), 1, 5, 0,0);
 
 
 -- Inserciones para la tabla Eventos (Culturales)
