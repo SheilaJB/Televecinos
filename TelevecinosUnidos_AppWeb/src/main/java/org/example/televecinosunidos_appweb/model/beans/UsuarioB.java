@@ -12,7 +12,6 @@ public class UsuarioB {
     private String urbanizacionString;//para tablas pequeñas !
     private int tipoCoordinador_idTipoCoordinador;
     private int asistencia;
-    private String avatar;
     private int PreguntasFrecuentes_idTable2;
     private int idRol;
     private String rolStr;
@@ -48,14 +47,6 @@ public class UsuarioB {
 
     public void setAsistencia(int asistencia) {
         this.asistencia = asistencia;
-    }
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
     }
 
     public String getContrasenia() {

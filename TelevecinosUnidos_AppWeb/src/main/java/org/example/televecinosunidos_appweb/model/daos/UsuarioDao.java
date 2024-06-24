@@ -367,4 +367,50 @@ public class UsuarioDao extends BaseDao{
 
         return id;
     }
+    public boolean registrarUsuario(String nombre, String apellido, String dni, String direccion, String distrito, int urbanizacion_idUrbanizacion, String correo) {
+        boolean registrado = false;
+        String sql = "INSERT INTO usuario (nombre, apellido, dni, direccion, distrito, urbanizacion_idUrbanizacion, correo, Rol_idRol) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = this.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, nombre);
+            ps.setString(2, apellido);
+            ps.setString(3, dni);
+            ps.setString(4, direccion);
+            ps.setString(5, distrito);
+            ps.setInt(6, urbanizacion_idUrbanizacion);
+            ps.setString(7, correo);
+            ps.setInt(8, 1); // Asignamos el rol "Pendiente" (idRol = 1) por defecto
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected > 0) {
+                registrado = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return registrado;
+    }
+    public ArrayList<UsuarioB> listarUrbanizaciones() {
+        ArrayList<UsuarioB> urbanizaciones = new ArrayList<>();
+        String sql = "SELECT idUrbanizacion, nombre FROM urbanizacion";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            while (rs.next()) {
+                UsuarioB urbanizacion = new UsuarioB();
+                urbanizacion.setUrbanizacion_idUrbanizacion(rs.getInt("idUrbanizacion"));
+                urbanizacion.setUrbanizacionString(rs.getString("nombre"));
+                urbanizaciones.add(urbanizacion);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return urbanizaciones;
+    }
+
 }

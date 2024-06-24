@@ -69,7 +69,7 @@
                             <label for="formCheck" class="form-check-label text-secondary-custom"><small><b>Recuérdame</b></small></label>
                         </div>
                         <div class="forgot">
-                            <small><a href="olvidasteContrasena.html" class="text-link-white"><b>¿Olvidaste tu contraseña?</b></a></small>
+                            <small><a href="registro.jsp" class="text-link-white" style="text-decoration: underline;"><b>¿Olvidaste tu contraseña?</b></a></small>
                         </div>
                     </div>
                     <div class="input-group mb-3">
@@ -79,7 +79,7 @@
             </form>
             <div class="row text-center">
                 <small class="text-white"><b>¿No tienes una cuenta?</b></small>
-                <small><a href="registro.html" class="text-link-white"><b>Regístrate aquí</b></a></small>
+                <small><a href="<%=request.getContextPath()%>/register.jsp" class="text-link-white" style="text-decoration: underline;"><b>Regístrate aquí</b></a></small>
             </div>
         </div>
     </div>
