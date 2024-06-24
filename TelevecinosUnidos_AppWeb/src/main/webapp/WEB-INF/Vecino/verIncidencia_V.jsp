@@ -157,7 +157,7 @@
                             </div>
 
                             <div class="d-flex justify-content-end">
-                                <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=listarIncidencia">
+                                <a href="<%=request.getContextPath()%>/VecinoServlet?action=listarIncidencia">
                                     <button type="button" class="btn btn-secondary m-2 d-flex justify-content-between align-items-center">Regresar</button>
                                 </a>
                             </div>

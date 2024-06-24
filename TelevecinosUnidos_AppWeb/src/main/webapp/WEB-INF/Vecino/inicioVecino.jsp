@@ -34,6 +34,32 @@
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
     <link href="css/style_vec.css" rel="stylesheet">
+
+    <!-- Custom Styles -->
+    <style>
+        .table-sm th, .table-sm td {
+            padding: .3rem;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        .table thead th {
+            background-color: #ffb703;
+            color: #495057;
+        }
+        .table-hover tbody tr:hover {
+            background-color: #e9ecef;
+        }
+        .btn-info {
+            background-color: #00b4d8;
+            border-color: #00b4d8;
+            font-size: 0.8rem;
+            padding: .25rem .5rem;
+        }
+        .btn-info:hover {
+            background-color: #138496;
+            border-color: #117a8b;
+        }
+    </style>
 </head>
 
 <body>
@@ -46,11 +72,9 @@
     </div>
     <!-- Spinner End -->
 
-
     <!-- BARRA AZUL DE LA IZQUIERDA INICIO-->
     <jsp:include page="../includes/barraLateralVecino.jsp"></jsp:include>
     <!-- BARRA AZUL DE LA IZQUIERDA FINAL -->
-
 
     <!-- Content Start -->
     <div class="content">
@@ -58,69 +82,23 @@
         <jsp:include page="../includes/navbarVecino.jsp"></jsp:include>
         <!-- PARTE SUPERIOR FINAL -->
 
-
         <!-- Mostrar inicio de coordinador-->
 
         <!-- Eventos próximos-->
-        <div id="Eventos Recientes ">
-            <div  class="text-center">
-                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-indicators">
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                    </div>
-                    <div class="carousel-inner" >
-                        <div class="carousel-item active">
-                            <img src="img/deporte/chino-rocha-2FKTyJqfWX8-unsplash.jpg" class="d-block w-100" alt="Slide 1">
-                            <div class="carousel-caption d-none d-md-block">
-                                <h3><b>Evento 1</b></h3>
-                                <p>Some representative placeholder content for the first slide.</p>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <img src="img/Deporte/wesley-tingey-dKCKiC0BQtU-unsplash.jpg" class="d-block w-100" alt="Slide 1">
-                            <div class="carousel-caption d-none d-md-block">
-                                <h3><b>Evento 1</b></h3>
-                                <p>Some representative placeholder content for the first slide.</p>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <img src="img/Deporte/girls-training-volleyball-field.jpg" class="d-block w-100" alt="Slide 1">
-                            <div class="carousel-caption d-none d-md-block">
-                                <h3><b>Evento 1</b></h3>
-                                <p>Some representative placeholder content for the first slide.</p>
-                            </div>
-                        </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
-                    </div>
-
-
-                </div>
-            </div>
-
+        <div id="Eventos Recientes">
             <!-- Recent Sales Start -->
             <div style="padding: 20px;">
                 <!-- Mostrar mis eventos inscritos-->
-                <div class="bg-light text-center rounded p-4" >
-                    <div class="d-flex align-items-center  justify-content-between mb-4">
-                        <h6 class="mb-0">Mis últimas incidencias </h6>
-                        <a href="<%=request.getContextPath()%>//VecinoServlet?action=listarIncidencia">Más detalles</a>
-
+                <div class="bg-light text-center rounded p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <h6 class="mb-0">Mis últimas incidencias</h6>
+                        <a href="<%=request.getContextPath()%>//VecinoServlet?action=listarIncidencia">Mostrar todas mis incidencias</a>
                     </div>
                     <div class="table-responsive">
-                        <table class="table text-start align-middle table-bordered table-hover mb-0">
+                        <table class="table table-sm table-striped table-bordered table-hover">
                             <thead>
-                            <tr class="text-dark" >
-
-                                <th scope="col ">Incidencia</th>
+                            <tr class="text-dark">
+                                <th scope="col">Incidencia</th>
                                 <th scope="col">Fecha</th>
                                 <th scope="col">Hora</th>
                                 <th scope="col">Tipo</th>
@@ -146,10 +124,9 @@
                             <% }
                             } else { %>
                             <tr>
-                                <td colspan="7" class="text-center">No hay incidencias disponibles</td>
+                                <td colspan="6" class="text-center">No hay incidencias disponibles</td>
                             </tr>
                             <% } %>
-
                             </tbody>
                         </table>
                     </div>
@@ -158,17 +135,16 @@
 
             <div style="padding: 30px;">
                 <!-- Mostrar mis eventos inscritos-->
-                <div class="bg-light text-center rounded p-4" >
-                    <div class="d-flex align-items-center  justify-content-between mb-4">
-                        <h6 class="mb-0">Mis eventos del mes </h6>
-                        <a href="ListaEvent-Vecino.html" >Mostrar todos mis eventos</a>
+                <div class="bg-light text-center rounded p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <h6 class="mb-0">Mis eventos del mes</h6>
+                        <a href="ListaEvent-Vecino.html">Mostrar todos mis eventos</a>
                     </div>
                     <div class="table-responsive">
-                        <table class="table text-start align-middle table-bordered table-hover mb-0">
+                        <table class="table table-sm table-striped table-bordered table-hover">
                             <thead>
-                            <tr class="text-dark" >
-
-                                <th scope="col ">Evento</th>
+                            <tr class="text-dark">
+                                <th scope="col">Evento</th>
                                 <th scope="col">Tipo</th>
                                 <th scope="col">Fecha de inicio</th>
                                 <th scope="col">Frecuencia</th>
@@ -177,30 +153,38 @@
                             </thead>
                             <tbody>
                             <tr>
-
                                 <td>Voley</td>
                                 <td>Deporte</td>
                                 <td>1/05/24</td>
                                 <td>Diario</td>
-                                <td><a href="EventoActual-Vecino.html"><button type="button" class="btn btn-info m-2 letraBoton">Detalles</button></td></a>
+                                <td>
+                                    <a href="EventoActual-Vecino.html">
+                                        <button type="button" class="btn btn-info m-2"><i class="fas fa-eye"></i></button>
+                                    </a>
+                                </td>
                             </tr>
                             <tr>
-
                                 <td>Danza</td>
                                 <td>Cultura</td>
                                 <td>1/05/24</td>
                                 <td>Lunes-Miercoles</td>
-                                <td><a href="EventoActual-Vecino.html"><button type="button" class="btn btn-info m-2 letraBoton">Detalles</button></td></a>
+                                <td>
+                                    <a href="EventoActual-Vecino.html">
+                                        <button type="button" class="btn btn-info m-2"><i class="fas fa-eye"></i></button>
+                                    </a>
+                                </td>
                             </tr>
                             <tr>
-
                                 <td>Futbol</td>
                                 <td>Deporte</td>
                                 <td>1/05/24</td>
                                 <td>Martes-Jueves</td>
-                                <td><a href="EventoActual-Vecino.html"><button type="button" class="btn btn-info m-2 letraBoton">Detalles</button></td></a>
+                                <td>
+                                    <a href="EventoActual-Vecino.html">
+                                        <button type="button" class="btn btn-info m-2"><i class="fas fa-eye"></i></button>
+                                    </a>
+                                </td>
                             </tr>
-
                             </tbody>
                         </table>
                     </div>
@@ -220,7 +204,6 @@
             <!-- Footer End -->
         </div>
         <!-- Content End -->
-
 
         <!-- Back to Top -->
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
@@ -242,9 +225,7 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.min.js"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.34/moment-timezone-with-data.min.js'></script>
 
-
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 </body>
-
 </html>
