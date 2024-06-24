@@ -3,6 +3,7 @@
 
 <%@ page import="org.example.televecinosunidos_appweb.model.dto.SerenazgoDTO" %>
 <jsp:useBean id="serenazgoLogeado" scope="session" type="SerenazgoDTO" class="org.example.televecinosunidos_appweb.model.dto.SerenazgoDTO" />
+<jsp:useBean id="incidencia" scope="request" type="org.example.televecinosunidos_appweb.model.beans.IncidenciasB"/>
 
 
 
@@ -148,6 +149,7 @@
                     </div>
                     <div class="col-sm-12 col-sm-12 col-xl-6">
                         <div class="rounded h-100 p-4" style = "background-color:#219ebc;">
+                            <input type="hidden" name="idIncidencia" value="<%= incidencia != null ? incidencia.getIdIncidencias() : "" %>">
                             <!---Nombre del Serenazgo-->
                             <div class="mb-3">
                                 <label class="form-label" style="color:#023047;"><b>Nombre del serenazgo encargado de la incidencia:</b></label>

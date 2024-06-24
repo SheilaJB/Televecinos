@@ -4,6 +4,7 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import org.example.televecinosunidos_appweb.model.beans.IncidenciasB;
+import org.example.televecinosunidos_appweb.model.beans.SerenazgoB;
 import org.example.televecinosunidos_appweb.model.daos.IncidenciaDao;
 
 import java.io.IOException;
@@ -32,11 +33,11 @@ public class SerenazgoServlet extends HttpServlet {
 
             case "gestionar_Incidencia_S":
                 String id = request.getParameter("id");
-                //Job job = jobDao.buscarPorId(id);
                 IncidenciasB incidenciasB = incidenciaDao.buscarPorId(id);
 
                 if(incidenciasB != null){
-                    request.getAttribute("incidencias");
+
+                    request.setAttribute("incidencia",incidenciasB);
                     request.getRequestDispatcher("WEB-INF/Serenazgo/gestionar_Incidencia_S.jsp").forward(request,response);
                 }else{
                     response.sendRedirect(request.getContextPath() + "/SerenazgoServlet");
@@ -81,14 +82,16 @@ public class SerenazgoServlet extends HttpServlet {
                 }
                 break;
             case "gestionarIncidencia":
+
                 IncidenciasB incidenciaB = new IncidenciasB();
+                int id = Integer.parseInt(request.getParameter("idIncidencia"));
                 String solucionADar = request.getParameter("solucionADar");
                 String criticidadIncidencia = request.getParameter("criticidadIncidencia");
                 String personalRequerido = request.getParameter("personalRequerido");
                 String movilidadIncidencia = request.getParameter("movilidadIncidencia");
                 String estadoIncidenci = request.getParameter("estadoIncidencia");
 
-
+                incidenciaB.setIdIncidencias(id);
                 incidenciaB.setCriticidadIncidencia_idCriticidadIncidenciaStr(criticidadIncidencia);
                 incidenciaB.setSolucionADar(solucionADar);
                 incidenciaB.setPersonalRequeridoStr(personalRequerido);

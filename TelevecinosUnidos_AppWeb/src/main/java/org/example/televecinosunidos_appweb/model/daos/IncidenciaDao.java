@@ -400,32 +400,24 @@ public class IncidenciaDao extends BaseDao{
     }
 
     public void actualizarIncidenciaS(IncidenciasB incidencia) {
-        /*
+
         String sql = "UPDATE incidencias " +
-                "SET nombreIncidencia = ?, lugarExacto = ?, referencia = ?, foto = ?, " +
-                "ambulancia = ?, numeroContacto = ?, urbanizacion_idUrbanizacion = ?, " +
-                "TipoIncidencia_idTipoIncidencia = ?, incidenciaPersonal = ? " +
-                "WHERE idIncidencias = ? AND borrado =FALSE AND EstadosIncidencia_idEstadosIncidencia = 1;";
+                "SET solucionADar = ?, personalRequerido_idpersonalRequerido = ?, nombreDelPersonalEnTurno = ?, tipoMovilidadRequerido = ? " +
+                "WHERE idIncidencias = ? ;";
 
         try (Connection connection = getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setString(1, incidencia.getNombreIncidencia());
-            pstmt.setString(2, incidencia.getLugarExacto());
-            pstmt.setString(3, incidencia.getReferencia());
-            pstmt.setString(4, incidencia.getFoto());
-            pstmt.setInt(5, incidencia.getAmbulancia());
-            pstmt.setString(6, incidencia.getNumeroContacto());
-            int urbanizacionId = obtenerIdUrbanizacion(incidencia.getUrbanizacion());
-            pstmt.setInt(7, urbanizacionId);
-            int tipoIncidenciaId = obtenerIdTipoIncidencia(incidencia.getTipoIncidencia());
-            pstmt.setInt(8, tipoIncidenciaId);
-            pstmt.setInt(9, incidencia.getIncidenciaPersonal());
-            pstmt.setInt(10, incidencia.getIdIncidencias());
+            pstmt.setString(1, incidencia.getSolucionADar());
+            pstmt.setString(2, incidencia.getPersonalRequeridoStr());
+            pstmt.setString(3, incidencia.getNombrePersonalTurno());
+            pstmt.setString(4,incidencia.getTipoMovilidadRequerido() );
+            pstmt.setInt(5, incidencia.getIdIncidencias());
+
             pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        */
+
 
     }
 
