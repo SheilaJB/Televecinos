@@ -402,16 +402,18 @@ public class IncidenciaDao extends BaseDao{
     public void actualizarIncidenciaS(IncidenciasB incidencia) {
 
         String sql = "UPDATE incidencias " +
-                "SET solucionADar = ?, personalRequerido_idpersonalRequerido = ?, nombreDelPersonalEnTurno = ?, tipoMovilidadRequerido = ? " +
+                "SET solucionADar = ?, personalRequerido_idpersonalRequerido = ?, nombreDelPersonalEnTurno = ?, tipoMovilidadRequerido = ?,CriticidadIncidencia_idCriticidadIncidencia=?,EstadosIncidencia_idEstadosIncidencia=? " +
                 "WHERE idIncidencias = ? ;";
 
         try (Connection connection = getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, incidencia.getSolucionADar());
-            pstmt.setString(2, incidencia.getPersonalRequeridoStr());
+            pstmt.setInt(2, incidencia.getPersonalRequerido());
             pstmt.setString(3, incidencia.getNombrePersonalTurno());
-            pstmt.setString(4,incidencia.getTipoMovilidadRequerido() );
-            pstmt.setInt(5, incidencia.getIdIncidencias());
+            pstmt.setInt(4,incidencia.getTipoMovilidadRequerido() );
+            pstmt.setInt(5,incidencia.getCriticidadIncidencia_idCriticidadIncidencia() );
+            pstmt.setInt(6,incidencia.getEstadosIncidencia_idEstadoIncidencia() );
+            pstmt.setInt(7, incidencia.getIdIncidencias());
 
             pstmt.executeUpdate();
         } catch (SQLException e) {

@@ -36,7 +36,6 @@ public class SerenazgoServlet extends HttpServlet {
                 IncidenciasB incidenciasB = incidenciaDao.buscarPorId(id);
 
                 if(incidenciasB != null){
-
                     request.setAttribute("incidencia",incidenciasB);
                     request.getRequestDispatcher("WEB-INF/Serenazgo/gestionar_Incidencia_S.jsp").forward(request,response);
                 }else{
@@ -84,19 +83,21 @@ public class SerenazgoServlet extends HttpServlet {
             case "gestionarIncidencia":
 
                 IncidenciasB incidenciaB = new IncidenciasB();
-                int id = Integer.parseInt(request.getParameter("idIncidencia"));
+                int idIncidencia = Integer.parseInt(request.getParameter("idIncidencia"));
                 String solucionADar = request.getParameter("solucionADar");
                 String criticidadIncidencia = request.getParameter("criticidadIncidencia");
                 String personalRequerido = request.getParameter("personalRequerido");
                 String movilidadIncidencia = request.getParameter("movilidadIncidencia");
                 String estadoIncidenci = request.getParameter("estadoIncidencia");
 
-                incidenciaB.setIdIncidencias(id);
-                incidenciaB.setCriticidadIncidencia_idCriticidadIncidenciaStr(criticidadIncidencia);
+
+
+                incidenciaB.setIdIncidencias(idIncidencia);
                 incidenciaB.setSolucionADar(solucionADar);
-                incidenciaB.setPersonalRequeridoStr(personalRequerido);
-                incidenciaB.setTipoMovilidadRequerido(movilidadIncidencia);
-                incidenciaB.setEstadosIncidencia_idEstadoIncidenciaStr(estadoIncidenci);
+                incidenciaB.setCriticidadIncidencia_idCriticidadIncidencia(Integer.parseInt(criticidadIncidencia));
+                incidenciaB.setPersonalRequerido(Integer.parseInt(personalRequerido));
+                incidenciaB.setTipoMovilidadRequerido(Integer.parseInt(movilidadIncidencia));
+                incidenciaB.setEstadosIncidencia_idEstadoIncidencia(Integer.parseInt(estadoIncidenci));
 
                 incidenciaDao.actualizarIncidenciaS(incidenciaB);
                 response.sendRedirect(request.getContextPath() + "/SerenazgoServlet?action=listaIncidencias_S");

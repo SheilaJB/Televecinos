@@ -97,7 +97,7 @@
         <!-- PARTE SUPERIOR FINAL -->
 
 
-        <h2 class="mb-2 text-center" style = "padding-top: 3%;" style="color:#023047;">Evaluación de incidencia</h2>
+        <h2 class="mb-2 text-center" style = "padding-top: 3%;" style="color:#023047;">Evaluación de incidencia: <%=incidencia.getNombreIncidencia()%></h2>
         <form method="post" action="<%=request.getContextPath()%>/SerenazgoServlet?action=gestionarIncidencia">
             <!-- Form Start -->
             <div class="container-fluid pt-4 px-4">
@@ -149,11 +149,12 @@
                     </div>
                     <div class="col-sm-12 col-sm-12 col-xl-6">
                         <div class="rounded h-100 p-4" style = "background-color:#219ebc;">
-                            <input type="hidden" name="idIncidencia" value="<%= incidencia != null ? incidencia.getIdIncidencias() : "" %>">
-                            <!---Nombre del Serenazgo-->
+                            <input type="hidden" name="idIncidencia" class="form-control" value="<%=incidencia.getIdIncidencias()%>">
+
                             <div class="mb-3">
                                 <label class="form-label" style="color:#023047;"><b>Nombre del serenazgo encargado de la incidencia:</b></label>
-                                <input type="hidden" id="idUsuario" class="form-control" value="<%=serenazgoLogeado.getNombreSerenazgo() + " " + serenazgoLogeado.getApellidoSerenazgo()%>">
+                                <input type="text" id="idUsuario" class="form-control" value="<%=serenazgoLogeado.getNombreSerenazgo() + " " + serenazgoLogeado.getApellidoSerenazgo()%>" readonly>
+                                <input type="hidden" name="idUsuario" class="form-control" value="<%=serenazgoLogeado.getNombreSerenazgo() + " " + serenazgoLogeado.getApellidoSerenazgo()%>" readonly>
                             </div>
 
                             <!----Criticidad de la incidencia----->
@@ -216,7 +217,7 @@
                             <select name="estadoIncidencia" class="form-select mb-3" aria-label="Default select example" onchange="mostrarOpciones()">
                                 <option selected>Seleccione el estado de la incidencia </option>
                                 <option value="1">Pendiente</option>
-                                <option value="2">Procesado</option>
+                                <option value="5">Procesado</option>
 
                             </select>
 

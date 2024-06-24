@@ -14,13 +14,22 @@ public class IncidenciasB {
     private String solucionADar;
     private String PersonalRequeridoStr;
     private String nombrePersonalTurno;
-    private String tipoMovilidadRequerido;
+    private int tipoMovilidadRequerido;
+    private int personalRequerido;
 
-    public String getTipoMovilidadRequerido() {
+    public int getPersonalRequerido() {
+        return personalRequerido;
+    }
+
+    public void setPersonalRequerido(int personalRequerido) {
+        this.personalRequerido = personalRequerido;
+    }
+
+    public int getTipoMovilidadRequerido() {
         return tipoMovilidadRequerido;
     }
 
-    public void setTipoMovilidadRequerido(String tipoMovilidadRequerido) {
+    public void setTipoMovilidadRequerido(int tipoMovilidadRequerido) {
         this.tipoMovilidadRequerido = tipoMovilidadRequerido;
     }
 
