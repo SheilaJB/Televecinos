@@ -269,7 +269,7 @@ public class AdministradorServlet extends HttpServlet {
                 int pregFrecuentes = 1;
                 int idRol = 4;
                 int isBan = 0;
-
+                int primeroIngreso = 1;
 
                 UsuarioB us = new UsuarioB();
                 us.setNombre(nombre);

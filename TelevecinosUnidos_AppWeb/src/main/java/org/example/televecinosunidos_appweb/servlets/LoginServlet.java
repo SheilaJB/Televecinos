@@ -67,7 +67,7 @@ public class LoginServlet extends HttpServlet {
             String distrito = request.getParameter("distrito");
             int urbanizacion_idUrbanizacion = Integer.parseInt(request.getParameter("urbanizacion"));
             String correo = request.getParameter("correo");
-
+/*
             UsuarioDao usuarioDao = new UsuarioDao();
             boolean registrado = usuarioDao.registrarUsuario(nombre, apellido, dni, direccion, distrito, urbanizacion_idUrbanizacion, correo);
 
@@ -76,7 +76,7 @@ public class LoginServlet extends HttpServlet {
             } else {
                 request.setAttribute("err", "Error al registrar el usuario");
                 request.getRequestDispatcher("/register.jsp").forward(request, response);
-            }
+            }*/
         } else {
             // Lógica de inicio de sesión de usuario
             String correo = request.getParameter("correo");

@@ -16,6 +16,15 @@ public class UsuarioB {
     private int idRol;
     private String rolStr;
     private int isBan;
+    private int primerIngreso;
+
+    public int getPrimerIngreso() {
+        return primerIngreso;
+    }
+
+    public void setPrimerIngreso(int primerIngreso) {
+        this.primerIngreso = primerIngreso;
+    }
 
     public String getRolStr() {
         return rolStr;
