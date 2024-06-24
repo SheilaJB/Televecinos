@@ -400,6 +400,7 @@ public class IncidenciaDao extends BaseDao{
     }
 
     public void actualizarIncidenciaS(IncidenciasB incidencia) {
+        /*
         String sql = "UPDATE incidencias " +
                 "SET nombreIncidencia = ?, lugarExacto = ?, referencia = ?, foto = ?, " +
                 "ambulancia = ?, numeroContacto = ?, urbanizacion_idUrbanizacion = ?, " +
@@ -424,6 +425,8 @@ public class IncidenciaDao extends BaseDao{
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        */
+
     }
 
 
