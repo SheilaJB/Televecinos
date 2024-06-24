@@ -281,6 +281,7 @@ public class AdministradorServlet extends HttpServlet {
                 us.setPreguntasFrecuentes_idTable2(pregFrecuentes);
                 us.setIdRol(idRol);
                 us.setIsBan(isBan);
+                us.setPrimerIngreso(primeroIngreso);
 
                 SerenazgoB serenazgoB = new SerenazgoB();
                 serenazgoB.setNumTelefono(numTelefono);

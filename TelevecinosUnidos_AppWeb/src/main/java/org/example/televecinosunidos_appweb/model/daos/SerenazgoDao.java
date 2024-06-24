@@ -191,7 +191,7 @@ public class SerenazgoDao extends BaseDao {
 
     public void registrarSerenazgo(SerenazgoB serenazgoB) {
 
-        String sql = "INSERT INTO `televecinosdb`.`usuario` (`nombre`, `apellido`, `dni`, `direccion`, `correo`, `contrasena`,`PreguntasFrecuentes_idtable2`, `Rol_idRol`, `isBan`) VALUES (?, ?, ?, ?, ?, SHA2(?,256   ), ?, ?, ?)";
+        String sql = "INSERT INTO `televecinosdb`.`usuario` (`nombre`, `apellido`, `dni`, `direccion`, `correo`, `contrasena`,`PreguntasFrecuentes_idtable2`, `Rol_idRol`, `isBan`,`primerIngreso`) VALUES (?, ?, ?, ?, ?, SHA2(?,256   ), ?, ?, ?,?)";
         try(Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) { // usando try con recursos
 
             pstmt.setString(1,serenazgoB.getUsuario().getNombre());
@@ -203,7 +203,7 @@ public class SerenazgoDao extends BaseDao {
             pstmt.setInt(7,serenazgoB.getUsuario().getPreguntasFrecuentes_idTable2());
             pstmt.setInt(8,serenazgoB.getUsuario().getIdRol());
             pstmt.setInt(9,serenazgoB.getUsuario().getIsBan());
-
+            pstmt.setInt(10,serenazgoB.getUsuario().getPrimerIngreso());
             pstmt.executeUpdate();
 
 
