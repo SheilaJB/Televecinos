@@ -27,7 +27,7 @@
             <a href="<%=request.getContextPath()%>/SerenazgoServlet?action=inicioSerenazgo" class="nav-item nav-link <%= action.equals("inicioSerenazgo") ? "active" : "" %>"><i class="fa fa-home me-2"></i><span style="font-size: 13.5px;"><b>Inicio</b></span></a>
             <a href="<%=request.getContextPath()%>/SerenazgoServlet?action=dashboard" class="nav-item nav-link <%= action.equals("dashboard") ? "active" : "" %>"><i class="fa fa-chart-bar me-2"></i><span style="font-size: 13.5px;"><b>Dashboard</b></span></a>
             <a href="<%=request.getContextPath()%>/SerenazgoServlet?action=listaIncidencias_S" class="nav-item nav-link <%= action.equals("listaIncidencias_S") ? "active" : "" %>"><i class="fa fa-th-list me-2"></i><span style="font-size: 13.5px;"><b>Incidencias</b></span></a>
-            <a href="<%=request.getContextPath()%>/SerenazgoServlet?action=banVecino" class="nav-item nav-link <%= action.equals("banVecino") ? "active" : "" %>"><i class="fa fa-ban me-2"></i><span style="font-size: 13.5px;"><b>Banear vecino</b></span></a>
+            <a href="<%=request.getContextPath()%>/SerenazgoServlet?action=listaVecinos_S" class="nav-item nav-link <%= action.equals("listaVecinos_S") ? "active" : "" %>"><i class="fa fa-ban me-2"></i><span style="font-size: 13.5px;"><b>Banear vecino</b></span></a>
             <a href="<%=request.getContextPath()%>/SerenazgoServlet?action=preguntasFrecuentes_S" class="nav-item nav-link <%= action.equals("preguntasFrecuentes_S") ? "active" : "" %>"><i class="fa fa-question-circle me-2"></i><span style="font-size: 13.5px;"><b>Preguntas frecuentes</b></span></a>
         </div>
     </nav>

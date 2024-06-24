@@ -5,15 +5,21 @@ import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import org.example.televecinosunidos_appweb.model.beans.IncidenciasB;
 import org.example.televecinosunidos_appweb.model.beans.SerenazgoB;
+import org.example.televecinosunidos_appweb.model.beans.UsuarioB;
 import org.example.televecinosunidos_appweb.model.daos.IncidenciaDao;
+import org.example.televecinosunidos_appweb.model.daos.UsuarioDao;
+import org.example.televecinosunidos_appweb.model.daos.VecinoDao;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 @WebServlet(name = "SerenazgoServlet", value = "/SerenazgoServlet")
 public class SerenazgoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         IncidenciaDao incidenciaDao = new IncidenciaDao();
+        VecinoDao vecinoDao = new VecinoDao();
+        UsuarioDao usuarioDao = new UsuarioDao();
 
         String action = request.getParameter("action")==null?"inicioSerenazgo":request.getParameter("action");
         String vista;
@@ -42,6 +48,24 @@ public class SerenazgoServlet extends HttpServlet {
                     response.sendRedirect(request.getContextPath() + "/SerenazgoServlet");
                 }
                 break;
+            case "listaVecinos_S":
+                vista = "WEB-INF/Serenazgo/listaVecinos_S.jsp";
+                request.setAttribute("lista",vecinoDao.listarVecinos());
+                request.getRequestDispatcher(vista).forward(request, response);
+                break;
+            case "banearVecino":
+                String vecinoId = request.getParameter("idVecino");
+                if (usuarioDao.obtenerUsuario(vecinoId) != null) {
+                    try {
+                        usuarioDao.banearUsuario(vecinoId);
+                        HttpSession httpSession = request.getSession();
+                        httpSession.setAttribute("msg","Vecino baneado exitosomente");
+                        response.sendRedirect(request.getContextPath() + "/SerenazgoServlet?action=listaVecinos_S");
+                    } catch (SQLException e) {
+                        response.sendRedirect(request.getContextPath() + "/SerenazgoServlet?err=Error al denegadar solicitud");
+                    }
+                }
+                break;
 
 
             default:
@@ -53,7 +77,7 @@ public class SerenazgoServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         IncidenciaDao incidenciaDao = new IncidenciaDao();
-
+        VecinoDao vecinoDao = new VecinoDao();
         String action = request.getParameter("action") == null ? "buscarIncidenciaPorNombre" : request.getParameter("action");
         String textoBuscar;
 
@@ -101,6 +125,17 @@ public class SerenazgoServlet extends HttpServlet {
 
                 incidenciaDao.actualizarIncidenciaS(incidenciaB);
                 response.sendRedirect(request.getContextPath() + "/SerenazgoServlet?action=listaIncidencias_S");
+                break;
+            case "buscarVecinoPorNombre":
+                textoBuscar= request.getParameter("textoBuscar");
+                if (textoBuscar == null) {
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=listaVecinos_S");
+                } else {
+                    request.setAttribute("textoBusqueda",textoBuscar);
+                    request.setAttribute("lista", vecinoDao.buscarVecinoPorNombre(textoBuscar));
+                    RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Administrador/listaVecinos_S.jsp");
+                    view.forward(request, response);
+                }
                 break;
         }
 
