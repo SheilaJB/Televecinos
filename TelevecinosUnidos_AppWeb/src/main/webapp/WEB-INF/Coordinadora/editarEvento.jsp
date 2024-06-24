@@ -258,6 +258,11 @@
                                 <label for="hora_fin" class="form-label" style="color:#023047;"><b>Hora de finalización:</b></label>
                                 <input type="time" class="form-control" id="hora_fin" name="hora_fin" value="<%=evento.getHora_fin()%>" required>
                             </div>
+                            <!-- Lista de materiales -->
+                            <div class="mb-3">
+                                <label for="listaMateriales" class="form-label"  style="color:#023047;"><b>Materiales:</b></label>
+                                <input type="text" class="form-control" id="listaMateriales" name="listaMateriales" value="<%=evento.getListaMateriales()%>">
+                            </div>
                         </div>
                     </div>
 
@@ -293,18 +298,41 @@
                     <!-- Materiales -->
                     <div class="col-sm-12 col-xl-6">
                         <div class="rounded h-100 p-4" style="background-color: #8ecae6;">
-                            <label for="listaMateriales" class="form-label" style="color:#023047;"><b>Materiales:</b></label>
-                            <input type="text" class="form-control" id="listaMateriales" name="listaMateriales" value="<%=evento.getListaMateriales()%>">
+                            <h5 class="mb-4" style="color:#023047;"><b>Subir fotos para la galeria (máx 3)</b></h5>
+                            <div class="mb-3">
+                                <label for="foto" class="form-label" style="color:#023047;"><b>Formato permitido: .jpg .jpeg o .png</b></label>
+                                <input class="form-control" type="file" id="fotoGaleria" accept=".jpg, .jpeg, .png" name="foto">
+                            </div>
+                            <!-- Contenedor para la previsualización de la imagen -->
+                            <div class="mb-3">
+                                <img id="previewGaleria" src="<%=evento.getFoto()%>" alt="Vista previa de la imagen" class="img-thumbnail" style="display: <%=evento.getFoto() != null ? "block" : "none"%>;">
+                            </div>
                         </div>
                     </div>
+
+                    <script>
+                        document.getElementById('fotoGaleria').addEventListener('change', function(event) {
+                            var file = event.target.files[0];
+                            if (file) {
+                                var reader = new FileReader();
+                                reader.onload = function(e) {
+                                    var imgElement = document.getElementById('previewGaleria');
+                                    imgElement.src = e.target.result;
+                                    imgElement.style.display = 'block'; // Muestra la imagen
+                                };
+                                reader.readAsDataURL(file);
+                            }
+                        });
+                    </script>
                 </div>
             </div>
             <!-- Form End -->
-
             <!-- Botón para actualizar evento -->
-            <div style="text-align: right; margin-right: 100px; padding-top: 2%;">
-                <button type="submit" class="btn btn-primary" style="background-color: #023047; border-color: #023047; color: #ffffff;"><b>Guardar Cambios</b></button>
+            <div class="d-flex justify-content-between" style="margin: 20px; padding-top: 2%;">
+                <a class="btn btn-primary" style="background-color: #023047; border-color: #023047; color: #ffffff;"><b>Cancelar</b></a>
+                <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=listaInscritos"  class="btn btn-primary" style="background-color: #023047; border-color: #023047; color: #ffffff;"><b>Siguiente</b></a>
             </div>
+
         </form>
         <!-- Footer Start -->
         <div class="container-fluid pt-4 px-4">

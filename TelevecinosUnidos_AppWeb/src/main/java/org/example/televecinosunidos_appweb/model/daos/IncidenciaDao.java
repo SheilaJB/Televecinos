@@ -399,6 +399,30 @@ public class IncidenciaDao extends BaseDao{
         return listaIncidencias;
     }
 
+    public void actualizarIncidenciaS(IncidenciasB incidencia) {
+
+        String sql = "UPDATE incidencias " +
+                "SET solucionADar = ?, personalRequerido_idpersonalRequerido = ?, nombreDelPersonalEnTurno = ?, tipoMovilidadRequerido = ? " +
+                "WHERE idIncidencias = ? ;";
+
+        try (Connection connection = getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setString(1, incidencia.getSolucionADar());
+            pstmt.setString(2, incidencia.getPersonalRequeridoStr());
+            pstmt.setString(3, incidencia.getNombrePersonalTurno());
+            pstmt.setString(4,incidencia.getTipoMovilidadRequerido() );
+            pstmt.setInt(5, incidencia.getIdIncidencias());
+
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
+
+
+
 
 
 }

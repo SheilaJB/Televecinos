@@ -126,13 +126,12 @@
 
             <div class="container text-center">
                 <img src="img/serenazgo.jpg" class="img-fluid mb-3" alt="Responsive image" width="200">
-                <div class="bar" data-label="Tipo de serenazgo"><%= serenazgoLogeado.getTipoSerenazgo()%></div>
-                <div class="bar" data-label="Turno"><%= serenazgoLogeado.getTurnoSerenazgo()%></div>
-                <div class="bar" data-label="Fecha de nombramiento">15/06/2024</div>
                 <div class="bar" data-label="Nombre"><%= serenazgoLogeado.getNombreSerenazgo()%></div>
                 <div class="bar" data-label="Apellido"><%= serenazgoLogeado.getApellidoSerenazgo()%></div>
+                <div class="bar" data-label="Fecha de nacimiento"><%=serenazgoLogeado.getFechaNacimientoSerenazgo()%></div>
                 <div class="bar" data-label="DNI"><%= serenazgoLogeado.getDNI()%></div>
-
+                <div class="bar" data-label="Tipo de serenazgo"><%= serenazgoLogeado.getTipoSerenazgo()%></div>
+                <div class="bar" data-label="Turno"><%= serenazgoLogeado.getTurnoSerenazgo()%></div>
                 <div class="bar" data-label="Correo"><%=serenazgoLogeado.getCorreoSerenazgo()%></div>
 
                 <a href="<%=request.getContextPath()%>/SerenazgoServlet"><button class="button regresar">Regresar</button></a>

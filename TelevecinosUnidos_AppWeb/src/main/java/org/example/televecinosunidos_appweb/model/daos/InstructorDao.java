@@ -59,7 +59,7 @@ public class InstructorDao extends BaseDao{
     }
 
     public ArrayList<ProfesoresEvento> listarProfesoresPorNombre(String textoBuscar) {
-        String sql = "SELECT * FROM televecinosdb.profesoresevento where nombre like ? or apellido like ?);" ;
+        String sql = "SELECT * FROM televecinosdb.profesoresevento where nombre like ? or apellido like ?;" ;
 
 
         ArrayList<ProfesoresEvento> lista = new ArrayList<>();

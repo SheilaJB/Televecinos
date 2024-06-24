@@ -11,6 +11,43 @@ public class IncidenciasB {
 
     private int idUrbanizacion;
 
+    private String solucionADar;
+    private String PersonalRequeridoStr;
+    private String nombrePersonalTurno;
+    private String tipoMovilidadRequerido;
+
+    public String getTipoMovilidadRequerido() {
+        return tipoMovilidadRequerido;
+    }
+
+    public void setTipoMovilidadRequerido(String tipoMovilidadRequerido) {
+        this.tipoMovilidadRequerido = tipoMovilidadRequerido;
+    }
+
+    public String getNombrePersonalTurno() {
+        return nombrePersonalTurno;
+    }
+
+    public void setNombrePersonalTurno(String nombrePersonalTurno) {
+        this.nombrePersonalTurno = nombrePersonalTurno;
+    }
+
+    public String getPersonalRequeridoStr() {
+        return PersonalRequeridoStr;
+    }
+
+    public void setPersonalRequeridoStr(String personalRequeridoStr) {
+        PersonalRequeridoStr = personalRequeridoStr;
+    }
+
+    public String getSolucionADar() {
+        return solucionADar;
+    }
+
+    public void setSolucionADar(String solucionADar) {
+        this.solucionADar = solucionADar;
+    }
+
     public int getIdUrbanizacion() {
         return idUrbanizacion;
     }
