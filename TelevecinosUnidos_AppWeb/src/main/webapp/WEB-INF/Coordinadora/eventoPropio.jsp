@@ -122,40 +122,34 @@
         </div>
         <div class="container-fluid pt-4 px-4">
             <div class="row g-4">
-                <div class="col-sm-12">
-                    <div class="rounded h-100 p-4" style=" background-color: #ffb703;">
-                        <form>
-                            <!---Descripción del evento-->
-                            <div class="mb-3">
-                                <label for="descripcionEvento" class="form-label" style="color:#023047;">
-                                    <b>Descripción:</b>
-                                    <br>
-                                    <a style="text-align: justify;">¡Descubre el Vóley! Únete a nosotros para aprender, jugar y disfrutar de este emocionante deporte. Nuestro evento ofrece una oportunidad única para todos, desde principiantes hasta expertos, de sumergirse en el mundo del vóley. Con actividades divertidas, competiciones amistosas y sesiones de entrenamiento, te garantizamos una experiencia inolvidable. ¡No te pierdas esta emocionante oportunidad de ser parte de la acción del vóley!</a>
-                                    <br>
-                                    <br>
-                                    <b>Nombre del coordinador:</b>
-                                    <br>
-                                    <a>Nombre Apellido</a>
-                                </label>
-
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
-
-                <!----Subir foto---->
+                <!----Subir portada---->
                 <div class="col-sm-12 col-sm-12 col-xl-6">
                     <div class="bg-light rounded h-100 p-4">
                         <div class="mb-3">
                             <img src="img/Deporte/markus-spiske-BfphcCvhl6E-unsplash.jpg" class="img-responsive" alt="" style="width: 100%; height: auto;"  />
                         </div>
-
                     </div>
-
                 </div>
+
+                <!----Descripción del evento---->
+                <div class="col-sm-12 col-sm-12 col-xl-6" >
+                    <div class="rounded h-100 p-4" style=" background-color: #ffb703;">
+                        <label for="descripcionEvento" class="form-label" style="color:#023047;">
+                            <b>Descripción:</b>
+                            <br>
+                            <a style="text-align: justify;">¡Descubre el Vóley! Únete a nosotros para aprender, jugar y disfrutar de este emocionante deporte. Nuestro evento ofrece una oportunidad única para todos, desde principiantes hasta expertos, de sumergirse en el mundo del vóley. Con actividades divertidas, competiciones amistosas y sesiones de entrenamiento, te garantizamos una experiencia inolvidable. ¡No te pierdas esta emocionante oportunidad de ser parte de la acción del vóley!</a>
+                            <br>
+                            <br>
+                            <b>Nombre del coordinador:</b>
+                            <br>
+                            <a>Nombre Apellido</a>
+                        </label>
+                    </div>
+                </div>
+
+
                 <!---Info del profe, lugar y fecha-->
-                <div class="col-sm-12 col-xl-6">
+                <div class="ccol-sm-12 col-sm-12 col-xl-6">
                     <div class="rounded h-100 p-4" style = "background-color:#219ebc;">
                         <!---Nombre del coordinador-->
                         <div class="mb-3">
@@ -202,11 +196,6 @@
                     </script>
                 </div>
 
-
-                <!----Lista de Materiales---->
-                <div class="col-sm-12 col-xl-6">
-
-                </div>
                 <script>
                     document.getElementById('subirFoto').addEventListener('change', function(event) {
                         var file = event.target.files[0];
@@ -224,7 +213,7 @@
 
 
                 <!-- Fecha/Hora/ -->
-                <div class="col-sm-12 col-xl-6">
+                <div class="col-sm-12 col-sm-12 col-xl-6">
                     <div class="rounded h-100 p-4" style = "background-color: #8ecae6;">
                         <!-- Contenedor para la previsualización de la imagen -->
                         <div class="mb-3">
@@ -255,7 +244,12 @@
                             <br>
                             <a style="color: white;"> 13:00</a>
                         </div>
-
+                        <!----Lista de Materiales---->
+                        <div class="col-sm-12 col-xl-6">
+                            <label for="listaNateriales" class="form-label" style="color:#023047;"><b>Lista de  materiales:</b></label>
+                            <br>
+                            <a style="color: white;"> Toalla personal, botella de agua y cambio de ropa</a>
+                        </div>
                     </div>
                 </div>
 
@@ -291,56 +285,56 @@
                         });
                     });
                 </script>
-
             </div>
         </div>
         <!-- Form End -->
 
         <!-- Galeria de fotos -->
-        <div id="Prox_Eventos " class="container-fluid pt-4 px-4">
-            <h3 style="text-align: center; margin-top:50px;margin-bottom:50px;">Galeria de nuestros recuerdos</h3>
+        <div class="col-sm-12 col-sm-12 col-xl-6">
+            <div id="Prox_Eventos " class="container-fluid pt-4 px-4">
+                <h3 style="text-align: center; margin-top:20px;margin-bottom:20px;">Galeria de nuestros recuerdos</h3>
 
-            <div class="rounded h-100 p-4" style=" background-color: #ffb703; padding: 20px; align-items: center;">
-                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-indicators">
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                <div class="rounded h-100 p-4" style=" background-color: #ffb703; padding: 20px; align-items: center;">
+                    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-indicators">
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                        </div>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div class="row">
+                                    <img src="img/Deporte/ninas-jugando-voleibol.jpg" class="d-block w-100" alt="Slide 1">
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="row">
+
+                                    <img src="img/Deporte/girl-posing-with-volley-ball.jpg" class="d-block w-100" alt="Slide 1">
+
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="row">
+                                    <img src="img/Deporte/girls-training-volleyball-field.jpg" class="d-block w-100" alt="Slide 1">
+                                </div>
+
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
                     </div>
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <div class="row">
-                                <img src="img/Deporte/ninas-jugando-voleibol.jpg" class="d-block w-100" alt="Slide 1">
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="row">
-
-                                <img src="img/Deporte/girl-posing-with-volley-ball.jpg" class="d-block w-100" alt="Slide 1">
-
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="row">
-                                <img src="img/Deporte/girls-training-volleyball-field.jpg" class="d-block w-100" alt="Slide 1">
-
-                            </div>
-
-                        </div>
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
                 </div>
-
-
             </div>
         </div>
+
+
         <!-- Botón para editar evento -->
         <div style="text-align: right; margin-right: 100px; padding-top: 2%;">
             <a href="editarEvento.html"><button type="submit" class="btn btn-primary" style="background-color: #023047; border-color: #023047; color: #ffffff;"><b>Editar evento</b></button></a>

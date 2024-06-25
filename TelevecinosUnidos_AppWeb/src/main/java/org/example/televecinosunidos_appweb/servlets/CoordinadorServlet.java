@@ -241,6 +241,9 @@ public class CoordinadorServlet extends HttpServlet {
 
                 eventoDao.eliminarFechasEventoPorIdEvento(idEvento);
                 eventoDao.actualizarEvento(eventoB);
+                // Agregar mensaje a la sesión
+                request.getSession().setAttribute("info", "Evento editado de manera exitosa");
+
                 response.sendRedirect(request.getContextPath() + "/CoordinadorServlet?action=lista");
                 break;
             case "buscarEventoPorNombre":

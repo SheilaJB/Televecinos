@@ -125,7 +125,7 @@
                 <form  method="post" action="<%=request.getContextPath()%>/CoordinadorServlet?action=buscarIncidenciaPorNombre">
                     <div class="row justify-content-center align-items-center">
                         <!-- Busqueda por nombre de incidencia -->
-                        <div class="col-md-3 mb-2">
+                        <div class="col-md-4 mb-2">
                             <input type="text" class="form-control" id="filtroInput" placeholder="Buscar incidencia..." name="textoBuscarIncidencia"
                                    value="<%=textoBuscarIncidencia%>">
                         </div>
@@ -154,22 +154,26 @@
                             </select>
                         </div>
                         <div class="col-md-1 mb-2">
-                            <button class="btn btn-primary " type="submit">
+                            <button class="btn btn-primary w-100" type="submit">
                                 <i class="fas fa-search"></i> </button>
                         </div>
                         <div class="col-md-2 mb-2">
-                            <a type="reset" class="btn btn-primary " href="<%=request.getContextPath()%>/CoordinadorServlet?action=listarIncidencia" >Limpiar</a>
-
+                            <a type="reset" class="btn btn-primary w-100" href="<%=request.getContextPath()%>/CoordinadorServlet?action=listarIncidencia" >Limpiar</a>
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=generarIncidenciaC" class="btn btn-primary w-100">
+                                Crear incidencia
+                            </a>
                         </div>
                     </div>
                 </form>
             </div>
 
             <div class="table-responsive">
-                <table class="table" style="background-color: transparent;">
+                <table class="table table-striped table-hover" style="background-color: transparent;">
                     <thead>
                     <tr>
-                        <th scope="col">Nombre de la incidencia</th>
+                        <th scope="col">Nombre</th>
                         <th scope="col">Fecha</th>
                         <th scope="col">Hora</th>
                         <th scope="col">Tipo</th>

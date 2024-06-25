@@ -269,9 +269,9 @@
                     <!-- Subir foto -->
                     <div class="col-sm-12 col-xl-6">
                         <div class="rounded h-100 p-4" style="background-color:#fb8500">
-                            <h5 class="mb-4" style="color:#023047;"><b>Subir foto</b></h5>
+                            <h5 class="mb-4" style="color:#023047;"><b>Subir una foto para la portada</b></h5>
                             <div class="mb-3">
-                                <label for="foto" class="form-label" style="color:#023047;"><b>Subir una foto en formato * .jpg .jpeg o .png</b></label>
+                                <label for="foto" class="form-label" style="color:#023047;"><b>Formatos permitidos: .jpg .jpeg o .png</b></label>
                                 <input class="form-control" type="file" id="foto" accept=".jpg, .jpeg, .png" name="foto">
                             </div>
                             <!-- Contenedor para la previsualización de la imagen -->
@@ -295,12 +295,12 @@
                         });
                     </script>
 
-                    <!-- Materiales -->
+                    <!-- Galería -->
                     <div class="col-sm-12 col-xl-6">
                         <div class="rounded h-100 p-4" style="background-color: #8ecae6;">
                             <h5 class="mb-4" style="color:#023047;"><b>Subir fotos para la galeria (máx 3)</b></h5>
                             <div class="mb-3">
-                                <label for="foto" class="form-label" style="color:#023047;"><b>Formato permitido: .jpg .jpeg o .png</b></label>
+                                <label for="foto" class="form-label" style="color:#023047;"><b>Formatos permitidos: .jpg .jpeg o .png</b></label>
                                 <input class="form-control" type="file" id="fotoGaleria" accept=".jpg, .jpeg, .png" name="foto">
                             </div>
                             <!-- Contenedor para la previsualización de la imagen -->
@@ -328,9 +328,10 @@
             </div>
             <!-- Form End -->
             <!-- Botón para actualizar evento -->
-            <div class="d-flex justify-content-between" style="margin: 20px; padding-top: 2%;">
-                <a class="btn btn-primary" style="background-color: #023047; border-color: #023047; color: #ffffff;"><b>Cancelar</b></a>
-                <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=listaInscritos"  class="btn btn-primary" style="background-color: #023047; border-color: #023047; color: #ffffff;"><b>Siguiente</b></a>
+            <div class="d-flex justify-content-between" style="margin: 30px; padding-top: 2%;">
+                <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=lista"  class="btn btn-primary" style="background-color: #023047; border-color: #023047; color: #ffffff;"><b>Cancelar</b></a>
+                <button type="submit" class="btn btn-primary" style="background-color: #023047; border-color: #023047; color: #ffffff;"><b>Guardar Cambios</b></button>
+                <!--<a href="<%=request.getContextPath()%>/CoordinadorServlet?action=lista"  class="btn btn-primary" style="background-color: #023047; border-color: #023047; color: #ffffff;"><b>Siguiente</b></a>-->
             </div>
 
         </form>

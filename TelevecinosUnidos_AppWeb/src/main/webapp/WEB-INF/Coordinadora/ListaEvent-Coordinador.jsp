@@ -32,6 +32,7 @@
     <link href="css/style.css" rel="stylesheet">
     <link href="css/style_vec.css" rel="stylesheet">
     <style>
+
         .popup {
             display: none;
             position: fixed;
@@ -143,6 +144,14 @@
                 <h1 style="text-align: center; margin-top:50px;margin-bottom:50px;"><b>Eventos propios</b></h1>
             </div>
         </div>
+
+        <% if (session.getAttribute("info") != null) { %>
+        <div class="alert alert-success" role="alert">
+            <%= session.getAttribute("info") %>
+        </div>
+        <% session.removeAttribute("info"); %>
+        <% } %>
+
         <div style="background-color: #f8f9fa; padding: 10px; align-items: center;">
             <div style="background-color: #FFB703; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
                 <!-- Filtro -->
@@ -169,15 +178,15 @@
                             </select>
                         </div>
                         <div class="col-md-1 mb-2">
-                            <button class="btn btn-primary " type="submit">
+                            <button class="btn btn-primary w-100" type="submit">
                                 <i class="fas fa-search"></i> </button>
                         </div>
                         <div class="col-md-2 mb-2">
-                            <a type="reset" class="btn btn-primary " href="<%=request.getContextPath()%>/CoordinadorServlet?action=lista" >Limpiar</a>
+                            <a type="reset" class="btn btn-primary w-100" href="<%=request.getContextPath()%>/CoordinadorServlet?action=lista" >Limpiar</a>
                         </div>
                         <div class="col-md-2 mb-2">
                             <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=crearEvento" class="btn btn-primary w-100">
-                                <b>Crear evento</b>
+                                Crear evento
                             </a>
                         </div>
                     </div>
@@ -191,53 +200,66 @@
             <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
 
-            <div class="bg-light rounded h-100 p-4" style="font-weight: bold;">
-                <script>
-                    function crearEvento() {
-                        window.location.href = 'creacionEvento.html';
-                    }
-                </script>
+            <script>
+                function crearEvento() {
+                    window.location.href = 'creacionEvento.html';
+                }
+            </script>
 
-                <div class="table-responsive">
-                    <table id="eventosTable" class="table" style="background-color: transparent;">
-                        <thead>
-                        <tr>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Fecha de inicio</th>
-                            <th scope="col">Estado</th>
-                            <th scope="col">Frecuencia</th>
-                            <th scope="col"></th>
+            <div class="table-responsive">
+                <table id="eventosTable" class="table table-striped table-hover" style="background-color: transparent;">
+                    <thead>
+                    <tr>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Fecha de inicio</th>
+                        <th scope="col">Estado</th>
+                        <th scope="col">Frecuencia</th>
+                        <th scope="col"></th>
 
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <% for(EventoB eventoB : lista){ %>
-                        <tr>
-                            <td><%= eventoB.getNombre() %></td>
-                            <td><%= eventoB.getFecha_inicio() %></td>
-                            <td><%= eventoB.getEstadoString() %></td>
-                            <td><%= eventoB.getFrecuenciaString() %></td>
-                            <!--Desplegable-->
-                            <td>
-                                <div class="dropdown">
-                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                            <% if ("Disponible".equals(eventoB.getEstadoString())) { %>
-                                            <li><a class="dropdown-item"  onclick="viewFunction(<%=eventoB.getidEvento()%>)">Ver</a></li>
-                                            <li><a class="dropdown-item"  onclick="editFunction(<%=eventoB.getidEvento()%>)">Editar</a></li>
-                                            <li><a class="dropdown-item"  onclick="confirmDelete(<%=eventoB.getidEvento()%>)">Borrar</a></li>
-                                            <% } else { %>
-                                            <li><a class="dropdown-item"  onclick="viewFunction(<%=eventoB.getidEvento()%>)">Ver</a></li>
-                                            <% } %>
-                                        </ul>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        <% } %>
-                        </tbody>
-                    </table>
-                </div>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% for(EventoB eventoB : lista){ %>
+                    <tr>
+                        <td><%= eventoB.getNombre() %></td>
+                        <td><%= eventoB.getFecha_inicio() %></td>
+                        <td><%= eventoB.getEstadoString() %></td>
+                        <td><%= eventoB.getFrecuenciaString() %></td>
+                        <!--Desplegable-->
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                        <% if ("Disponible".equals(eventoB.getEstadoString())) { %>
+                                        <li><a class="dropdown-item"  onclick="viewFunction(<%=eventoB.getidEvento()%>)">Ver</a></li>
+                                        <li><a class="dropdown-item"  onclick="editFunction(<%=eventoB.getidEvento()%>)">Editar</a></li>
+                                        <li><a class="dropdown-item"  onclick="confirmDelete(<%=eventoB.getidEvento()%>)">Borrar</a></li>
+                                        <% } else { %>
+                                        <li><a class="dropdown-item"  onclick="viewFunction(<%=eventoB.getidEvento()%>)">Ver</a></li>
+                                        <% } %>
+                                    </ul>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <% } %>
+                    </tbody>
+                </table>
+            </div>
+            <div  style="display: flex; justify-content: center; align-items: center;">
+                <section class="paginacion" >
+                    <ul style="list-style: none;padding: 0;margin: 0;display: flex;">
+                        <div style="background-color: white ; padding: 5px; margin:10px">
+                            <li style="margin: 0 5px;"><a class="link-opacity-50-hover" href="#" class="active">1</a></li>
+                        </div>
+                        <div style="background-color:white ; padding: 5px;margin:10px">
+                            <li style="margin: 0 5px;"><a class="link-opacity-50-hover" href="#" class="active">2</a></li>
+                        </div>
+                        <div style="background-color: white ; padding: 5px;margin:10px">
+                            <li style="margin: 0 5px;"><a class="link-opacity-50-hover" href="#" class="active">3</a></li>
+                        </div>
+                    </ul>
+                </section>
             </div>
         </div>
 
@@ -256,42 +278,6 @@
             function editFunction(idEvento) {
                 window.location.href ='<%=request.getContextPath()%>/CoordinadorServlet?action=editarEvento&idEvento=' + idEvento;}
         </script>
-
-        <!-- Filtro -->
-        <div id="Barra-Filtro">
-            <script>
-                function filtrar() {
-                    var input = document.getElementById('filtroInput').value.toUpperCase();
-                    var categoria = document.getElementById('filtroCategoria').value.toUpperCase();
-                    var estado = document.getElementById('filtroEstado').value.toUpperCase();
-                    var table = document.getElementById('eventosTable');
-                    var tr = table.getElementsByTagName('tr');
-
-                    for (var i = 1; i < tr.length; i++) {
-                        var tdNombre = tr[i].getElementsByTagName('td')[0];
-                        var tdEstado = tr[i].getElementsByTagName('td')[2];
-                        var tdFrecuencia = tr[i].getElementsByTagName('td')[3];
-                        if (tdNombre && tdEstado && tdFrecuencia) {
-                            var txtValueNombre = tdNombre.textContent || tdNombre.innerText;
-                            var txtValueEstado = tdEstado.textContent || tdEstado.innerText;
-                            var txtValueFrecuencia = tdFrecuencia.textContent || tdFrecuencia.innerText;
-                            var visible = true;
-
-                            if (input && txtValueNombre.toUpperCase().indexOf(input) === -1) {
-                                visible = false;
-                            }
-                            if (estado && txtValueEstado.toUpperCase().indexOf(estado) === -1) {
-                                visible = false;
-                            }
-                            if (categoria && txtValueFrecuencia.toUpperCase().indexOf(categoria) === -1) {
-                                visible = false;
-                            }
-                            tr[i].style.display = visible ? '' : 'none';
-                        }
-                    }
-                }
-            </script>
-        </div>
 
         <!-- Footer Start -->
         <div class="container-fluid pt-4 px-4">
