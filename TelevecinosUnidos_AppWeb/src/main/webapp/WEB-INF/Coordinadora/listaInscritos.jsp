@@ -263,35 +263,6 @@
 
         </div>
 
-        <!-- Filtro-->
-        <div id="Barra-Filtro" >
-            <script>
-                function filtrar() {
-                    var input, filtro, ul, li, txtValue, categoria, estado;
-                    input = document.getElementById('filtroInput');
-                    filtro = input.value.toUpperCase();
-                    ul = document.getElementById("lista");
-                    li = ul.getElementsByTagName('li');
-                    categoria = document.getElementById('filtroCategoria').value;
-                    estado = document.getElementById('filtroEstado').value;
-                    for (var i = 0; i < li.length; i++) {
-                        txtValue = li[i].textContent || li[i].innerText;
-                        var visible = true;
-                        if (txtValue.toUpperCase().indexOf(filtro) === -1) {
-                            visible = false;
-                        }
-                        if (categoria !== 'todos' && !txtValue.includes(categoria)) {
-                            visible = false;
-                        }
-                        if (estado !== 'todos' && !txtValue.includes(estado)) {
-                            visible = false;
-                        }
-                        li[i].style.display = visible ? "" : "none";
-                    }
-                }
-            </script>
-        </div>
-
         <!-- Botón para hacer cambios del evento -->
         <div class="d-flex justify-content-between"  style="margin-left: 60px;margin-right: 60px; padding: 25px">
             <button type="submit" class="btn btn-primary" style="background-color: #023047; border-color: #023047; color: #ffffff;" onclick="crearEvento()"><b>Atrás</b></button>
@@ -301,7 +272,7 @@
 
         <script>
             function guardarCambios() {
-                window.location.href = 'listaEvent-Coordinador.html';
+                window.location.href = '<%=request.getContextPath()%>/CoordinadorServlet?action=lista';
             }
         </script>
         <script>
