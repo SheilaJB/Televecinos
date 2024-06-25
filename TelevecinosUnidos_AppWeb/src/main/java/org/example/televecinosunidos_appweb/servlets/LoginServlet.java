@@ -65,19 +65,24 @@ public class LoginServlet extends HttpServlet {
             String apellido = request.getParameter("apellido");
             String dni = request.getParameter("dni");
             String direccion = request.getParameter("direccion");
-            String distrito = request.getParameter("distrito");
             int urbanizacion_idUrbanizacion = Integer.parseInt(request.getParameter("urbanizacion"));
             String correo = request.getParameter("correo");
-/*
+            int primerIngreso = 1; // Valor predeterminado para primerIngreso
+
+
+            System.out.println("Intentando registrar usuario: " + nombre + " " + apellido + " con correo: " + correo);
             UsuarioDao usuarioDao = new UsuarioDao();
-            boolean registrado = usuarioDao.registrarUsuario(nombre, apellido, dni, direccion, distrito, urbanizacion_idUrbanizacion, correo);
+            boolean registrado = usuarioDao.registrarUsuario(nombre, apellido, dni, direccion, urbanizacion_idUrbanizacion, correo,primerIngreso);
 
             if (registrado) {
-                response.sendRedirect(request.getContextPath() + "/index.jsp");
+                System.out.println("Registro exitoso para el usuario: " + correo);
+                request.setAttribute("success", "Registro exitoso. Revisa tu correo para más indicaciones.");
+                request.getRequestDispatcher("/register.jsp").forward(request, response);
             } else {
+                System.out.println("Error al registrar el usuario: " + correo);
                 request.setAttribute("err", "Error al registrar el usuario");
                 request.getRequestDispatcher("/register.jsp").forward(request, response);
-            }*/
+            }
         } else {
             // Lógica de inicio de sesión de usuario
             String correo = request.getParameter("correo");

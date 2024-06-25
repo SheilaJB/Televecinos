@@ -50,6 +50,19 @@
                         });
                     </script>
                     <% } %>
+                    <% if(request.getAttribute("success") != null) { %>
+                    <script>
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Registro Exitoso',
+                            text: '<%= request.getAttribute("success") %>',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = "<%=request.getContextPath()%>/index.jsp";
+                            }
+                        });
+                    </script>
+                    <% } %>
                     <div class="input-group mb-3">
                         <input type="text" id="nombre" class="form-control form-control-lg bg-light fs-6" name="nombre" placeholder="Nombre" required>
                         <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
@@ -65,10 +78,6 @@
                     <div class="input-group mb-3">
                         <input type="text" id="direccion" class="form-control form-control-lg bg-light fs-6" name="direccion" placeholder="Dirección" required>
                         <span class="input-group-text"><i class="fa-solid fa-map-marker-alt"></i></span>
-                    </div>
-                    <div class="input-group mb-3">
-                        <input type="text" id="distrito" class="form-control form-control-lg bg-light fs-6" name="distrito" placeholder="Distrito" value="San Miguel" required readonly>
-                        <span class="input-group-text"><i class="fa-solid fa-map"></i></span>
                     </div>
                     <div class="input-group mb-3">
                         <select id="urbanizacion" class="form-control form-control-lg bg-light fs-6" name="urbanizacion" required>

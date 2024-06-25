@@ -367,10 +367,9 @@ public class UsuarioDao extends BaseDao{
 
         return id;
     }
-    public boolean registrarUsuario(String nombre, String apellido, String dni,String direccion, int urbanizacion_idUrbanizacion, String correo) {
+    public boolean registrarUsuario(String nombre, String apellido, String dni, String direccion, int urbanizacion_idUrbanizacion, String correo, int primerIngreso) {
         boolean registrado = false;
-        String sql = "INSERT INTO usuario (nombre, apellido, dni, direccion," +
-                "urbanizacion_idUrbanizacion, correo, Rol_idRol) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO usuario (nombre, apellido, dni, direccion, urbanizacion_idUrbanizacion, correo, primerIngreso, Rol_idRol) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = this.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -380,13 +379,15 @@ public class UsuarioDao extends BaseDao{
             ps.setString(4, direccion);
             ps.setInt(5, urbanizacion_idUrbanizacion);
             ps.setString(6, correo);
-            ps.setInt(7, 1);
+            ps.setInt(7, primerIngreso);
+            ps.setInt(8, 1); // Aquí asumo que el rol por defecto es 1
 
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected > 0) {
                 registrado = true;
             }
         } catch (SQLException e) {
+            System.out.println("Error SQL al registrar el usuario: " + e.getMessage());
             e.printStackTrace();
         }
 
