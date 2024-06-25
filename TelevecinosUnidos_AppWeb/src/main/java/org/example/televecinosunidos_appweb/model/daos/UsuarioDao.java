@@ -367,7 +367,7 @@ public class UsuarioDao extends BaseDao{
 
         return id;
     }
-    public boolean registrarUsuario(String nombre, String apellido, String dni, int urbanizacion_idUrbanizacion, String direccion, String correo) {
+    public boolean registrarUsuario(String nombre, String apellido, String dni,String direccion, int urbanizacion_idUrbanizacion, String correo) {
         boolean registrado = false;
         String sql = "INSERT INTO usuario (nombre, apellido, dni, direccion," +
                 "urbanizacion_idUrbanizacion, correo, Rol_idRol) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -410,7 +410,11 @@ public class UsuarioDao extends BaseDao{
             e.printStackTrace();
         }
 
+        System.out.println("Urbanizaciones encontradas: " + urbanizaciones.size());
+        for (UsuarioB u : urbanizaciones) {
+            System.out.println("Urbanizacion: " + u.getUrbanizacionString());
+        }
+
         return urbanizaciones;
     }
-
 }

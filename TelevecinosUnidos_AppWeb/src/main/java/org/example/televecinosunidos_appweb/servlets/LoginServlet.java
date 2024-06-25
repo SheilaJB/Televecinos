@@ -15,6 +15,7 @@ import java.util.ArrayList;
 public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         UsuarioDao usuarioDao = new UsuarioDao();
         ArrayList<UsuarioB> urbanizaciones = usuarioDao.listarUrbanizaciones();
         request.setAttribute("urbanizaciones", urbanizaciones);

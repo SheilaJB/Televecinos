@@ -79,7 +79,7 @@
             </form>
             <div class="row text-center">
                 <small class="text-white"><b>¿No tienes una cuenta?</b></small>
-                <small><a href="<%=request.getContextPath()%>/register.jsp" class="text-link-white" style="text-decoration: underline;"><b>Regístrate aquí</b></a></small>
+                <small><a href="<%=request.getContextPath()%>/LoginServlet?action=register" class="text-link-white" style="text-decoration: underline;"><b>Regístrate aquí</b></a></small>
             </div>
         </div>
     </div>

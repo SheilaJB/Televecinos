@@ -72,6 +72,7 @@
                     </div>
                     <div class="input-group mb-3">
                         <select id="urbanizacion" class="form-control form-control-lg bg-light fs-6" name="urbanizacion" required>
+                            <option value="" selected>Urbanización en la que reside</option>
                             <%
                                 ArrayList<UsuarioB> urbanizaciones = (ArrayList<UsuarioB>) request.getAttribute("urbanizaciones");
                                 if (urbanizaciones != null && !urbanizaciones.isEmpty()) {
@@ -98,7 +99,7 @@
             </form>
             <div class="row text-center">
                 <small class="text-white"><b>¿Ya tienes una cuenta?</b></small>
-                <small><a href="index.jsp" class="text-link-white" style="text-decoration: underline;"><b>Inicia sesión aquí</b></a></small>
+                <small><a href="<%=request.getContextPath()%>/index.jsp" class="text-link-white" style="text-decoration: underline;"><b>Inicia sesión aquí</b></a></small>
             </div>
         </div>
     </div>
