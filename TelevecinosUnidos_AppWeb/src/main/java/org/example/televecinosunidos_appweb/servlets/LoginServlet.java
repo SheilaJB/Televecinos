@@ -150,7 +150,7 @@ public class LoginServlet extends HttpServlet {
                     case 5:
                         usuarioB = usuarioDao.obtenerUsuario1(correo);
                         httpSession.setAttribute("usuarioLogueado", usuarioB);
-                        response.sendRedirect(request.getContextPath());
+                        response.sendRedirect(request.getContextPath()+ "/AdministradorServlet");
                         break;
                 }
             } else {
