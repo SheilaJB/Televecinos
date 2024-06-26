@@ -17,7 +17,7 @@
             </a>
             <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                 <a href="<%=request.getContextPath()%>/AdministradorServlet?action=perfil_A" class="dropdown-item">Mi perfil</a>
-                <a href="<%=request.getContextPath()%>/AdministradorServlet?action=logout" class="dropdown-item">Cerrar sesión</a>
+                <a href="<%=request.getContextPath()%>/LoginServlet?action=logout" class="dropdown-item">Cerrar sesión</a>
             </div>
         </div>
     </div>
