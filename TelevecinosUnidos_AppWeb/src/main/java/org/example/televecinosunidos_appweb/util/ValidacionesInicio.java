@@ -1,4 +1,4 @@
-package org.example.televecinosunidos_appweb.model;
+package org.example.televecinosunidos_appweb.util;
 
 public class ValidacionesInicio {
 

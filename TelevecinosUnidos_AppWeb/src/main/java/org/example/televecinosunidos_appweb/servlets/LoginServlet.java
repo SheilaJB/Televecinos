@@ -6,7 +6,7 @@ import jakarta.servlet.annotation.*;
 import org.example.televecinosunidos_appweb.model.beans.*;
 import org.example.televecinosunidos_appweb.model.daos.*;
 import org.example.televecinosunidos_appweb.model.dto.SerenazgoDTO;
-import org.example.televecinosunidos_appweb.model.ValidacionesInicio;
+import org.example.televecinosunidos_appweb.util.ValidacionesInicio;
 
 import java.io.IOException;
 import java.net.URLEncoder;

@@ -3,18 +3,14 @@ package org.example.televecinosunidos_appweb.servlets;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
-import org.example.televecinosunidos_appweb.model.beans.EventoB;
-import org.example.televecinosunidos_appweb.model.beans.ProfesoresEvento;
-import org.example.televecinosunidos_appweb.model.beans.SerenazgoB;
-import org.example.televecinosunidos_appweb.model.beans.UsuarioB;
+import org.example.televecinosunidos_appweb.model.beans.*;
 import org.example.televecinosunidos_appweb.model.daos.*;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 @WebServlet(name = "AdministradorServlet", value = "/AdministradorServlet")
 public class AdministradorServlet extends HttpServlet {
@@ -118,9 +114,9 @@ public class AdministradorServlet extends HttpServlet {
                     try {
                         solicitanteDao.aceptarSolicitud(solicitanteId);
                         HttpSession httpSession = request.getSession();
-                        httpSession.setAttribute("msg","Solicitud aprobada exitosamente");
+                        httpSession.setAttribute("msg", "Solicitud aprobada exitosamente");
                         response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=nuevasSolicitudes_A");
-                    } catch (SQLException e) {
+                    } catch (SQLException | NoSuchAlgorithmException e) {
                         response.sendRedirect(request.getContextPath() + "/AdministradorServlet?err=Error al aprobar solicitud");
                     }
                 }

@@ -1,9 +1,13 @@
 package org.example.televecinosunidos_appweb.model.daos;
 
 import org.example.televecinosunidos_appweb.model.beans.UsuarioB;
+import org.example.televecinosunidos_appweb.util.EnviarEmail;
+import org.example.televecinosunidos_appweb.util.GeneraContrasena;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.ArrayList;
+
 
 public class SolicitanteDao extends BaseDao {
     public ArrayList<UsuarioB> listarSolicitantes() {
@@ -41,15 +45,39 @@ public class SolicitanteDao extends BaseDao {
     }
 
 
-    public void aceptarSolicitud(String solicitanteId) throws SQLException{
-        String sql = "update usuario set Rol_idRol = 2 where idUsuario = ?";
-        try (Connection conn = getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, solicitanteId);
-            pstmt.executeUpdate();
-        }
+    public void aceptarSolicitud(String solicitanteId) throws SQLException, NoSuchAlgorithmException {
+        String sqlUpdateRole = "UPDATE usuario SET Rol_idRol = 2, contrasena = ? WHERE idUsuario = ?";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        try {
+            conn = getConnection();
+            conn.setAutoCommit(false); // Iniciar transacción
 
+            String tempPassword = GeneraContrasena.generateTemporaryPassword();
+            String hashedPassword = GeneraContrasena.hashPassword(tempPassword);
+
+            pstmt = conn.prepareStatement(sqlUpdateRole);
+            pstmt.setString(1, hashedPassword);
+            pstmt.setString(2, solicitanteId);
+            pstmt.executeUpdate();
+
+            UsuarioB usuario = obtenerSolicitante(solicitanteId); // Método para obtener el usuario por ID
+            EnviarEmail enviarEmail = new EnviarEmail();
+            enviarEmail.sendEmail(usuario.getCorreo(), tempPassword); // Método para enviar el correo
+
+            conn.commit(); // Confirmar transacción
+
+        } catch (SQLException | NoSuchAlgorithmException e) {
+            if (conn != null) {
+                conn.rollback(); // Revertir transacción en caso de error
+            }
+            throw e;
+        } finally {
+            if (pstmt != null) pstmt.close();
+            if (conn != null) conn.close();
+        }
     }
+
 
     public void denegarSolicitud(String solicitanteId2) throws SQLException{
         String sql = "update usuario set isBan = 1 where idUsuario = ?";
