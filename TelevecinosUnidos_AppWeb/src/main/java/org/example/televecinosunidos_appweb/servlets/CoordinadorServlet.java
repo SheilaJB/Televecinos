@@ -59,7 +59,8 @@ public class CoordinadorServlet extends HttpServlet {
                 request.getRequestDispatcher(vista).forward(request, response);
                 break;
             case "registrarAsistencia":
-                vista = "WEB-INF/Coordinadora/registroAsistencia.jsp";
+                vista = "WEB-INF/Coordinadora/registroAsistencia.jsp" ;
+
                 request.setAttribute("lista", listarEventosDisponibles);
                 request.getRequestDispatcher(vista).forward(request, response);
                 break;
