@@ -380,7 +380,7 @@ public class UsuarioDao extends BaseDao{
             ps.setInt(5, urbanizacion_idUrbanizacion);
             ps.setString(6, correo);
             ps.setInt(7, primerIngreso);
-            ps.setInt(8, 1); // Aquí asumo que el rol por defecto es 1
+            ps.setInt(8, 1);
 
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected > 0) {
@@ -417,5 +417,21 @@ public class UsuarioDao extends BaseDao{
         }
 
         return urbanizaciones;
+    }
+
+    //validaciones para el registro de usuario
+    public boolean esDniUnico(String dni) {
+        String sql = "SELECT COUNT(*) FROM usuario WHERE dni = ?";
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, dni);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) == 0;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }
