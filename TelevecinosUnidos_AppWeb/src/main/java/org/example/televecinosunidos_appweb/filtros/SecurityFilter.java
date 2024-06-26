@@ -46,9 +46,9 @@ public class SecurityFilter implements Filter {
                 }
 
 
-
             } else if (serenazgoLogeado == null) {
-                httpResponse.sendRedirect(httpRequest.getContextPath() + "/loginServlet");
+                httpResponse.sendRedirect(httpRequest.getContextPath() + "/LoginServlet");
+                return;
             }
         } else if (path.contains("/CoordinadorServlet")) {
             SerenazgoDTO serenazgoLogeado = (SerenazgoDTO) (session != null ? session.getAttribute("serenazgoLogeado") : null);
@@ -69,6 +69,9 @@ public class SecurityFilter implements Filter {
                         return;
                 }
 
+            }else if (usuarioLogeado == null) {
+                httpResponse.sendRedirect(httpRequest.getContextPath() + "/LoginServlet");
+                return;
             }
         }else if (path.contains("/AdministradorServlet")) {
             SerenazgoDTO serenazgoLogeado = (SerenazgoDTO) (session != null ? session.getAttribute("serenazgoLogeado") : null);
@@ -90,6 +93,9 @@ public class SecurityFilter implements Filter {
 
                 }
 
+            }else if (usuarioLogeado == null) {
+                httpResponse.sendRedirect(httpRequest.getContextPath() + "/LoginServlet");
+                return;
             }
         }else if (path.contains("/VecinoServlet")) {
             int x = 1;
@@ -112,6 +118,9 @@ public class SecurityFilter implements Filter {
                         return;
                 }
 
+            }else if (usuarioLogeado == null) {
+                httpResponse.sendRedirect(httpRequest.getContextPath() + "/LoginServlet");
+                return;
             }
         }
 
