@@ -187,7 +187,7 @@
                         </div>
                         <div class="col-md-2 mb-2">
 
-                            <a href=" " class="btn btn-primary w-100">
+                            <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=crearEvento" class="btn btn-primary w-100">
                                 Crear evento
                             </a>
                         </div>

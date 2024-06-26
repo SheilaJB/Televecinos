@@ -486,7 +486,7 @@ public class EventoDao extends BaseDao{
         return evento;
     }
 
-    //Función para listar todos los eventos
+    //Función para listar todos los eventos tipo para Vecino
     public ArrayList<EventoB> listarTodosEventos() {
 
         String sqlSetLanguage = "SET lc_time_names = 'es_ES';";
@@ -526,6 +526,104 @@ public class EventoDao extends BaseDao{
             throw new RuntimeException(e);
         }
 
+        return listaTodosEventos;
+    }
+
+    //Lista de eventos generales para Coordinador Deporte
+    public ArrayList<EventoB> listarTodosEventosCoordinadorDeporte() {
+
+        String sqlSetLanguage = "SET lc_time_names = 'es_ES';";
+        String sql = "SELECT \n" +
+                "    e.idEventos AS 'ID Evento', \n" +
+                "    e.nombre AS 'Nombre', \n" +
+                "    e.descripcion AS 'Descripcion', \n" +
+                "    DATE_FORMAT(e.fecha_inicio, '%d %M %Y') AS 'Fecha de Inicio', \n" +
+                "    DATE_FORMAT(e.fecha_fin, '%d %M %Y') AS 'Fecha de Fin', \n" +
+                "    es.estadosEvento AS 'Estado', \n" +
+                "    e.foto AS 'Foto'\n" +
+                "FROM \n" +
+                "    Eventos e\n" +
+                "JOIN \n" +
+                "    EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados\n" +
+                "WHERE \n" +
+                "    e.eliminado = FALSE AND e.TipoEvento_idTipoEvento = 2\n" +
+                "ORDER BY \n" +
+                "    e.fecha_inicio DESC;";
+
+        ArrayList<EventoB> listaTodosEventos = new ArrayList<>();
+
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement()) {
+
+            // Ejecutar la sentencia para establecer el idioma de las fechas en español
+            stmt.execute(sqlSetLanguage);
+
+            // Ejecutar la consulta principal
+            try (ResultSet rs = stmt.executeQuery(sql)) {
+                while (rs.next()) {
+                    EventoB evento = new EventoB();
+                    evento.setidEvento(rs.getInt("ID Evento"));
+                    evento.setNombre(rs.getString("Nombre"));
+                    evento.setDescripcion(rs.getString("Descripcion"));
+                    evento.setFecha_inicio(rs.getString("Fecha de Inicio"));
+                    evento.setFecha_fin(rs.getString("Fecha de Fin"));
+                    evento.setEstadoString(rs.getString("Estado"));
+                    evento.setFoto(rs.getString("Foto"));
+                    listaTodosEventos.add(evento);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return listaTodosEventos;
+    }
+
+    //Lista de eventos generales para Coordinador Cultura
+    public ArrayList<EventoB> listarTodosEventosCoordinadorCultura() {
+
+        String sqlSetLanguage = "SET lc_time_names = 'es_ES';";
+        String sql = "SELECT \n" +
+                "    e.idEventos AS 'ID Evento', \n" +
+                "    e.nombre AS 'Nombre', \n" +
+                "    e.descripcion AS 'Descripcion', \n" +
+                "    DATE_FORMAT(e.fecha_inicio, '%d %M %Y') AS 'Fecha de Inicio', \n" +
+                "    DATE_FORMAT(e.fecha_fin, '%d %M %Y') AS 'Fecha de Fin', \n" +
+                "    es.estadosEvento AS 'Estado', \n" +
+                "    e.foto AS 'Foto'\n" +
+                "FROM \n" +
+                "    Eventos e\n" +
+                "JOIN \n" +
+                "    EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados\n" +
+                "WHERE \n" +
+                "    e.eliminado = FALSE AND e.TipoEvento_idTipoEvento = 1\n" +
+                "ORDER BY \n" +
+                "    e.fecha_inicio DESC;";
+
+        ArrayList<EventoB> listaTodosEventos = new ArrayList<>();
+
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement()) {
+
+            // Ejecutar la sentencia para establecer el idioma de las fechas en español
+            stmt.execute(sqlSetLanguage);
+
+            // Ejecutar la consulta principal
+            try (ResultSet rs = stmt.executeQuery(sql)) {
+                while (rs.next()) {
+                    EventoB evento = new EventoB();
+                    evento.setidEvento(rs.getInt("ID Evento"));
+                    evento.setNombre(rs.getString("Nombre"));
+                    evento.setDescripcion(rs.getString("Descripcion"));
+                    evento.setFecha_inicio(rs.getString("Fecha de Inicio"));
+                    evento.setFecha_fin(rs.getString("Fecha de Fin"));
+                    evento.setEstadoString(rs.getString("Estado"));
+                    evento.setFoto(rs.getString("Foto"));
+                    listaTodosEventos.add(evento);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         return listaTodosEventos;
     }
 
