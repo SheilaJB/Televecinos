@@ -1,4 +1,10 @@
+<%@ page import="org.example.televecinosunidos_appweb.model.beans.EventoB" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<%
+    ArrayList<EventoB> listaEventos = (ArrayList<EventoB>) request.getAttribute("listaEventos");
+%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,6 +37,33 @@
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
     <link href="css/style_vec.css" rel="stylesheet">
+    <style>
+        .card {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .card-img-top {
+            height: 180px;
+            object-fit: cover;
+        }
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            flex-grow: 1;
+        }
+        .card a {
+            margin-top: auto;
+        }
+        @media (max-width: 768px) {
+            .card-img-top {
+                height: 150px;
+            }
+            .card-body {
+                flex-grow: 0;
+            }
+        </style>
 </head>
 
 <body>
@@ -44,70 +77,13 @@
     <!-- Spinner End -->
 
 
-    <!-- Sidebar Start -->
-    <div class="sidebar pe-4 pb-3" style="background-color: #8ecae6;">
-        <nav class="navbar" style="background-color: #8ecae6;" >
-            <a class="navbar-brand mx-3 mt-3">
-                <h4 style="color:#023047"><b>Televecinos Unidos</b></h4>
-            </a>
-            <div class="d-flex align-items-center ms-4 mb-4"  >
-                <img class="rounded-circle" src="img/coordinadora.jpg" alt="" style="width: 50px; height: 50px;">
-                <div class="ms-3 m-3" >
-                    <h6 class="mb-0" style="color:#023047;"><b>Nombre Apellido</b></h6>
-                    <span class="text-muted"><b>Coordinador</b></span>
-                </div>
-            </div>
-
-            <div class="navbar-nav w-100">
-                <a href="CoordinadorServlet?action=inicioCoordinador" class="nav-item nav-link "><i class="fa fa-home me-2"></i><span style="font-size: 13.5px;"><b>Inicio</b></span></a>
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle active " data-bs-toggle="dropdown"><i class="fa fa-calendar me-2"></i><span style="font-size: 13.5px;"><b>Eventos</b></span></a>
-                    <div class="dropdown-menu bg-transparent border-0 ">
-                        <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=eventoGeneralesC" class="dropdown-item active"><span style="font-size: 13.5px;"><b>Eventos generales</b></span></a>
-                        <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=crearEvento" class="dropdown-item"><span style="font-size: 13.5px;"><b>Crear evento</b></span></a>
-                        <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=lista" class="dropdown-item"><span style="font-size: 13.5px;"><b>Eventos propios</b></span></a>
-                        <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=registrarAsistencia" class="dropdown-item "><span style="font-size: 13.5px;"><b>Registrar asistencia</b></span></a>
-                    </div>
-                </div>
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle " data-bs-toggle="dropdown"><i class="fa fa-th-list me-2"></i><span style="font-size: 13.5px;"><b>Incidencias</b></span></a>
-                    <div class="dropdown-menu bg-transparent border-0">
-                        <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=generarIncidenciaC" class="dropdown-item"><span style="font-size: 13.5px;"><b>Crear incidencia</b></span></a>
-                        <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=listarIncidencia" class="dropdown-item"><span style="font-size: 13.5px;"><b>Lista de incidencias</b></span></a>
-                    </div>
-                </div>
-                <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=preguntasFrecuentesC" class="nav-item nav-link font-al"><i class="fa fa-question-circle me-2" ></i><span style="font-size: 13.5px;"><b>Preguntas frecuentes</b></span></a>
-            </div>
-        </nav>
-    </div>
+    <jsp:include page="../includes/barraLateralCoordinador.jsp"></jsp:include>
     <!-- Sidebar End -->
 
-
     <!-- Content Start -->
-    <div class="content">
+    <div id="navbar" class="content">
         <!-- Navbar Start -->
-        <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
-            <a href="#" class="sidebar-toggler flex-shrink-0">
-                <i class="fa fa-bars"></i>
-            </a>
-            <a class="navbar-brand mx-4 mb-3 d-flex align-items-center" style="padding-top: 2%;">
-                <img class="rounded-circle" src="img/logo.jpg" alt="" style="width: 40px; height: 40px;">
-                <h3 class="m-0 me-2 px-2" style="color:#023047;">¡Bienvenido, coordinador!</h3>
-            </a>
-            <div class="navbar-nav align-items-center ms-auto">
-
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                        <img class="rounded-circle me-lg-2" src="img/coordinadora.jpg" alt="" style="width: 40px; height: 40px;">
-                        <span class="d-none d-lg-inline-flex" style="color:#023047;"><b>Nombre Apellido</b></span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                        <a href="CoordinadorServlet?action=perfilC" class="dropdown-item">Mi perfil</a>
-                        <a href="CoordinadorServlet?action=Index" class="dropdown-item">Cerrar sesión</a>
-                    </div>
-                </div>
-            </div>
-        </nav>
+        <jsp:include page="../includes/navbarCoordinador.jsp"></jsp:include>
         <!-- Navbar End -->
 
 
@@ -172,197 +148,42 @@
                     <button type="button" class="btn btn-primary w-100" onclick="filtrar()"><b>Filtrar</b></button>
                 </div>
                 <div class="col-md-2 mb-2">
-                    <button type="button" class="btn btn-primary w-100" onclick="crearEvento()"><b>Crear evento</b></button>
+                    <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=crearEvento" class="btn btn-primary w-100">Crear evento</a>
                 </div>
             </div>
         </div>
         <div style="background-color: #f8f9fa; padding: 20px; " >
 
             <div class="row my-4" style="margin-bottom: 10px;">
-                <div class="col-md-3 mb-4">
-                    <div class="card" style="max-width: 20rem; margin: auto;border-radius: 15px;">
-                        <img src="img/Deporte/pexels-pixabay-248547.jpg" alt="Evento de deporte" style="max-height: 180px;"class="card-img-top rounded-top">
-                        <div class="card-body" style="height: 15rem;">
-                            <h5 class="card-title" style="text-align: left;">Nombre del evento</h5>
-                            <p class="card-status"style="font-size: small; margin-bottom: 0;">Estado: Diponible</p>
-                            <p class="text-wrap" style="font-size: small; margin-bottom: 0;" style="text-size-adjust:auto; overflow-y: auto;  width: auto;">Fecha de incio: DD/MM/AAAA</p>
-                            <p class="text-wrap" style="font-size: small; margin-bottom: 0;" style="text-size-adjust:auto; overflow-y: auto;  width: auto;">Fecha de fin: DD/MM/AAAA</p>
-                            <p class="text-wrap" style="font-size: small; margin-bottom: 0;" style="text-size-adjust:auto; overflow-y: auto;  width: auto;">¡Te invitamos a un emocionante día de fútbol en el Estadio Municipal de X lugar!</p>
-                            <div class="row" style="position: absolute; bottom: 0; right: 0; margin: 10px;">
-                                <a class="link-opacity-50-hover" style="font-size: small;"href="eventoPropio.html">Más información aquí</a>
+                <% if (listaEventos != null) {
+                    for (EventoB evento : listaEventos) { %>
+                        <div class="col-md-3 mb-4">
+                            <div class="card" style="max-width: 20rem; margin: auto;border-radius: 15px;">
+                                <img src="<%= evento.getFoto() %>" alt="<%= evento.getNombre() %>" class="card-img-top rounded-top">
+                                <div class="card-body">
+                                    <h5 class="card-title" style="text-align: left;"><%= evento.getNombre() %></h5>
+                                    <p class="card-status" style="font-size: small; margin-bottom: 0;">Estado: <%= evento.getEstadoString() %></p>
+                                    <p class="text-wrap" style="font-size: small; margin-bottom: 0;">Fecha de inicio: <%= evento.getFecha_inicio() %></p>
+                                    <p class="text-wrap" style="font-size: small; margin-bottom: 0;">Fecha de fin: <%= evento.getFecha_fin() %></p>
+                                    <p class="text-wrap" style="font-size: small; margin-bottom: 0;"><%= evento.getDescripcion() %></p>
+                                    <a class="link-opacity-50-hover" style="font-size: small;" href="<%=request.getContextPath()%>/CoordinadorServlet?action=verEvento&idEvento=<%= evento.getidEvento() %>">Más información aquí</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-md-3 mb-4">
-                    <div class="card" style="max-width: 20rem; margin: auto;border-radius: 15px;" >
-                        <img src="img/Deporte/bruce-mars-gJtDg6WfMlQ-unsplash.jpg" alt="Evento de deporte" style="max-height: 180px;"class="card-img-top rounded-top">
-                        <div class="card-body" style="height: 15rem;">
-                            <h5 class="card-title" style="text-align: left;">Nombre del evento</h5>
-                            <p class="card-status"style="font-size: small; margin-bottom: 0;">Estado: Diponible</p>
-                            <p class="text-wrap" style="font-size: small; margin-bottom: 0;" style="text-size-adjust:auto; overflow-y: auto;  width: auto;">Fecha de incio: DD/MM/AAAA</p>
-                            <p class="text-wrap" style="font-size: small; margin-bottom: 0;" style="text-size-adjust:auto; overflow-y: auto;  width: auto;">Fecha de fin: DD/MM/AAAA</p>
-                            <p class="text-wrap" style="font-size: small; margin-bottom: 0;" style="text-size-adjust:auto; overflow-y: auto;  width: auto;">¡Te invitamos a un emocionante día de fútbol en el Estadio Municipal de X lugar!</p>
-                            <div class="row" style="position: absolute; bottom: 0; right: 0; margin: 10px;">
-                                <a class="link-opacity-50-hover" style="font-size: small;"href="MasInformacion_C.html">Más información aquí</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 mb-4">
-                    <div class="card" style="max-width: 20rem; margin: auto;border-radius: 15px;">
-                        <img src="img/Deporte/girl-posing-with-volley-ball.jpg" alt="Evento de deporte" style="max-height: 180px;"class="card-img-top rounded-top">
-                        <div class="card-body" style="height: 15rem;">
-                            <h5 class="card-title" style="text-align: left;">Nombre del evento</h5>
-                            <p class="card-status"style="font-size: small; margin-bottom: 0;">Estado: Diponible</p>
-                            <p class="text-wrap" style="font-size: small; margin-bottom: 0;" style="text-size-adjust:auto; overflow-y: auto;  width: auto;">Fecha de incio: DD/MM/AAAA</p>
-                            <p class="text-wrap" style="font-size: small; margin-bottom: 0;" style="text-size-adjust:auto; overflow-y: auto;  width: auto;">Fecha de fin: DD/MM/AAAA</p>
-                            <p class="text-wrap" style="font-size: small; margin-bottom: 0;" style="text-size-adjust:auto; overflow-y: auto;  width: auto;">¡Te invitamos a un emocionante día de fútbol en el Estadio Municipal de X lugar!</p>
-                            <div class="row" style="position: absolute; bottom: 0; right: 0; margin: 10px;">
-                                <a class="link-opacity-50-hover" style="font-size: small;"href="eventoPropio.html">Más información aquí</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 mb-4">
-                    <div class="card" style="max-width: 20rem; margin: auto;border-radius: 15px;">
-                        <img src="img/Deporte/markus-spiske-BfphcCvhl6E-unsplash.jpg" alt="Evento de deporte" style="max-height: 180px;"class="card-img-top rounded-top">
-                        <div class="card-body" style="height: 15rem;">
-                            <h5 class="card-title" style="text-align: left;">Nombre del evento</h5>
-                            <p class="card-status"style="font-size: small; margin-bottom: 0;">Estado: Diponible</p>
-                            <p class="text-wrap" style="font-size: small; margin-bottom: 0;" style="text-size-adjust:auto; overflow-y: auto;  width: auto;">Fecha de incio: DD/MM/AAAA</p>
-                            <p class="text-wrap" style="font-size: small; margin-bottom: 0;" style="text-size-adjust:auto; overflow-y: auto;  width: auto;">Fecha de fin: DD/MM/AAAA</p>
-                            <p class="text-wrap" style="font-size: small; margin-bottom: 0;" style="text-size-adjust:auto; overflow-y: auto;  width: auto;">¡Te invitamos a un emocionante día de fútbol en el Estadio Municipal de X lugar!</p>
-                            <div class="row" style="position: absolute; bottom: 0; right: 0; margin: 10px;">
-                                <a class="link-opacity-50-hover" style="font-size: small;"href="MasInformacion_C.html">Más información aquí</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <%  }
+                } else { %>
+                <p>No hay eventos disponibles</p>
+                <% } %>
             </div>
-            <div class="row my-4" style="margin-bottom: 10px;">
-                <div class="col-md-3 mb-4">
-                    <div class="card" style="max-width: 20rem; margin: auto;border-radius: 15px;">
-                        <img src="img/Deporte/markus-spiske-WUehAgqO5hE-unsplash.jpg" alt="Evento de deporte" style="max-height: 180px;"class="card-img-top rounded-top">
-                        <div class="card-body" style="height: 15rem;">
-                            <h5 class="card-title" style="text-align: left;">Nombre del evento</h5>
-                            <p class="card-status"style="font-size: small; margin-bottom: 0;">Estado: Diponible</p>
-                            <p class="text-wrap" style="font-size: small; margin-bottom: 0;" style="text-size-adjust:auto; overflow-y: auto;  width: auto;">Fecha de incio: DD/MM/AAAA</p>
-                            <p class="text-wrap" style="font-size: small; margin-bottom: 0;" style="text-size-adjust:auto; overflow-y: auto;  width: auto;">Fecha de fin: DD/MM/AAAA</p>
-                            <p class="text-wrap" style="font-size: small; margin-bottom: 0;" style="text-size-adjust:auto; overflow-y: auto;  width: auto;">¡Te invitamos a un emocionante día de fútbol en el Estadio Municipal de X lugar!</p>
-                            <div class="row" style="position: absolute; bottom: 0; right: 0; margin: 10px;">
-                                <a class="link-opacity-50-hover" style="font-size: small;"href="MasInformacion_C.html">Más información aquí</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 mb-4">
-                    <div class="card" style="max-width: 20rem; margin: auto;border-radius: 15px;" >
-                        <img src="img/Deporte/pexels-tirachard-kumtanom-347134.jpg" alt="Evento de deporte" style="max-height: 180px;"class="card-img-top rounded-top">
-                        <div class="card-body" style="height: 15rem;">
-                            <h5 class="card-title" style="text-align: left;">Nombre del evento</h5>
-                            <p class="card-status"style="font-size: small; margin-bottom: 0;">Estado: Diponible</p>
-                            <p class="text-wrap" style="font-size: small; margin-bottom: 0;" style="text-size-adjust:auto; overflow-y: auto;  width: auto;">Fecha de incio: DD/MM/AAAA</p>
-                            <p class="text-wrap" style="font-size: small; margin-bottom: 0;" style="text-size-adjust:auto; overflow-y: auto;  width: auto;">Fecha de fin: DD/MM/AAAA</p>
-                            <p class="text-wrap" style="font-size: small; margin-bottom: 0;" style="text-size-adjust:auto; overflow-y: auto;  width: auto;">¡Te invitamos a un emocionante día de fútbol en el Estadio Municipal de X lugar!</p>
-                            <div class="row" style="position: absolute; bottom: 0; right: 0; margin: 10px;">
-                                <a class="link-opacity-50-hover" style="font-size: small;"href="MasInformacion_C.html">Más información aquí</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 mb-4">
-                    <div class="card" style="max-width: 20rem; margin: auto;border-radius: 15px;">
-                        <img src="img/Deporte/chino-rocha-2FKTyJqfWX8-unsplash.jpg" alt="Evento de deporte" style="max-height: 180px;"class="card-img-top rounded-top">
-                        <div class="card-body" style="height: 15rem;">
-                            <h5 class="card-title" style="text-align: left;">Nombre del evento</h5>
-                            <p class="card-status"style="font-size: small; margin-bottom: 0;">Estado: Diponible</p>
-                            <p class="text-wrap" style="font-size: small; margin-bottom: 0;" style="text-size-adjust:auto; overflow-y: auto;  width: auto;">Fecha: DD/MM/AAAA</p>
-                            <p class="text-wrap" style="font-size: small; margin-bottom: 0;" style="text-size-adjust:auto; overflow-y: auto;  width: auto;">¡Te invitamos a un emocionante día de fútbol en el Estadio Municipal de X lugar!</p>
-                            <div class="row" style="position: absolute; bottom: 0; right: 0; margin: 10px;">
-                                <a class="link-opacity-50-hover" style="font-size: small;"href="eventoPropio.html">Más información aquí</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 mb-4">
-                    <div class="card" style="max-width: 20rem; margin: auto;border-radius: 15px;">
-                        <img src="img/Deporte/wesley-tingey-dKCKiC0BQtU-unsplash.jpg" alt="Evento de deporte" style="max-height: 180px;"class="card-img-top rounded-top">
-                        <div class="card-body" style="height: 15rem;">
-                            <h5 class="card-title" style="text-align: left;">Nombre del evento</h5>
-                            <p class="card-status"style="font-size: small; margin-bottom: 0;">Estado: Diponible</p>
-                            <p class="text-wrap" style="font-size: small; margin-bottom: 0;" style="text-size-adjust:auto; overflow-y: auto;  width: auto;">Fecha de incio: DD/MM/AAAA</p>
-                            <p class="text-wrap" style="font-size: small; margin-bottom: 0;" style="text-size-adjust:auto; overflow-y: auto;  width: auto;">Fecha de fin: DD/MM/AAAA</p>
-                            <p class="text-wrap" style="font-size: small; margin-bottom: 0;" style="text-size-adjust:auto; overflow-y: auto;  width: auto;">¡Te invitamos a un emocionante día de fútbol en el Estadio Municipal de X lugar!</p>
-                            <div class="row" style="position: absolute; bottom: 0; right: 0; margin: 10px;">
-                                <a class="link-opacity-50-hover" style="font-size: small;"href="MasInformacion_C.html">Más información aquí</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row my-4" style="margin-bottom: 10px;">
-                <div class="col-md-3 mb-4">
-                    <div class="card" style="max-width: 20rem; margin: auto;border-radius: 15px;">
-                        <img src="img/Deporte/pexels-pixabay-248547.jpg" alt="Evento de deporte" style="max-height: 180px;"class="card-img-top rounded-top">
-                        <div class="card-body" style="height: 15rem;">
-                            <h5 class="card-title" style="text-align: left;">Nombre del evento</h5>
-                            <p class="card-status"style="font-size: small; margin-bottom: 0;">Estado: Diponible</p>
-                            <p class="text-wrap" style="font-size: small; margin-bottom: 0;" style="text-size-adjust:auto; overflow-y: auto;  width: auto;">Fecha de incio: DD/MM/AAAA</p>
-                            <p class="text-wrap" style="font-size: small; margin-bottom: 0;" style="text-size-adjust:auto; overflow-y: auto;  width: auto;">Fecha de fin: DD/MM/AAAA</p>
-                            <p class="text-wrap" style="font-size: small; margin-bottom: 0;" style="text-size-adjust:auto; overflow-y: auto;  width: auto;">¡Te invitamos a un emocionante día de fútbol en el Estadio Municipal de X lugar!</p>
-                            <div class="row" style="position: absolute; bottom: 0; right: 0; margin: 10px;">
-                                <a class="link-opacity-50-hover" style="font-size: small;"href="MasInformacion_C.html">Más información aquí</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 mb-4">
-                    <div class="card" style="max-width: 20rem; margin: auto;border-radius: 15px;" >
-                        <img src="img/Deporte/pexels-pixabay-248547.jpg" alt="Evento de deporte" style="max-height: 180px;"class="card-img-top rounded-top">
-                        <div class="card-body" style="height: 15rem;">
-                            <h5 class="card-title" style="text-align: left;">Nombre del evento</h5>
-                            <p class="card-status"style="font-size: small; margin-bottom: 0;">Estado: Diponible</p>
-                            <p class="text-wrap" style="font-size: small; margin-bottom: 0;" style="text-size-adjust:auto; overflow-y: auto;  width: auto;">Fecha de incio: DD/MM/AAAA</p>
-                            <p class="text-wrap" style="font-size: small; margin-bottom: 0;" style="text-size-adjust:auto; overflow-y: auto;  width: auto;">Fecha de fin: DD/MM/AAAA</p>
-                            <p class="text-wrap" style="font-size: small; margin-bottom: 0;" style="text-size-adjust:auto; overflow-y: auto;  width: auto;">¡Te invitamos a un emocionante día de fútbol en el Estadio Municipal de X lugar!</p>
-                            <div class="row" style="position: absolute; bottom: 0; right: 0; margin: 10px;">
-                                <a class="link-opacity-50-hover" style="font-size: small;"href="MasInformacion_C.html">Más información aquí</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 mb-4">
-                    <div class="card" style="max-width: 20rem; margin: auto;border-radius: 15px;">
-                        <img src="img/Deporte/pexels-pixabay-248547.jpg" alt="Evento de deporte" style="max-height: 180px;"class="card-img-top rounded-top">
-                        <div class="card-body" style="height: 15rem;">
-                            <h5 class="card-title" style="text-align: left;">Nombre del evento</h5>
-                            <p class="card-status"style="font-size: small; margin-bottom: 0;">Estado: Diponible</p>
-                            <p class="text-wrap" style="font-size: small; margin-bottom: 0;" style="text-size-adjust:auto; overflow-y: auto;  width: auto;">Fecha de incio: DD/MM/AAAA</p>
-                            <p class="text-wrap" style="font-size: small; margin-bottom: 0;" style="text-size-adjust:auto; overflow-y: auto;  width: auto;">Fecha de fin: DD/MM/AAAA</p>
-                            <p class="text-wrap" style="font-size: small; margin-bottom: 0;" style="text-size-adjust:auto; overflow-y: auto;  width: auto;">¡Te invitamos a un emocionante día de fútbol en el Estadio Municipal de X lugar!</p>
-                            <div class="row" style="position: absolute; bottom: 0; right: 0; margin: 10px;">
-                                <a class="link-opacity-50-hover" style="font-size: small;"href="MasInformacion_C.html">Más información aquí</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 mb-4">
-                    <div class="card" style="max-width: 20rem; margin: auto;border-radius: 15px;">
-                        <img src="img/Deporte/pexels-pixabay-248547.jpg" alt="Evento de deporte" style="max-height: 180px;"class="card-img-top rounded-top">
-                        <div class="card-body" style="height: 15rem;">
-                            <h5 class="card-title" style="text-align: left;">Nombre del evento</h5>
-                            <p class="card-status"style="font-size: small; margin-bottom: 0;">Estado: Diponible</p>
-                            <p class="text-wrap" style="font-size: small; margin-bottom: 0;" style="text-size-adjust:auto; overflow-y: auto;  width: auto;">Fecha de incio: DD/MM/AAAA</p>
-                            <p class="text-wrap" style="font-size: small; margin-bottom: 0;" style="text-size-adjust:auto; overflow-y: auto;  width: auto;">Fecha de fin: DD/MM/AAAA</p>
-                            <p class="text-wrap" style="font-size: small; margin-bottom: 0;" style="text-size-adjust:auto; overflow-y: auto;  width: auto;">¡Te invitamos a un emocionante día de fútbol en el Estadio Municipal de X lugar!</p>
-                            <div class="row" style="position: absolute; bottom: 0; right: 0; margin: 10px;">
-                                <a class="link-opacity-50-hover" style="font-size: small;"href="MasInformacion_C.html">Más información aquí</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
+
+
+
+
+
+
+
+
             <div  style="display: flex; justify-content: center; align-items: center;">
                 <!-- Paginación-->
                 <section class="paginacion" >

@@ -50,6 +50,8 @@ public class CoordinadorServlet extends HttpServlet {
             // Eventos
             case "eventoGeneralesC":
                 vista = "WEB-INF/Coordinadora/EventoGenerales_C.jsp";
+                ArrayList<EventoB> listaEventosGenerales = eventoDao.listarTodosEventosCoordinadorDeporte();
+                request.setAttribute("listaEventos", listaEventosGenerales);
                 request.getRequestDispatcher(vista).forward(request, response);
                 //Falta jalar los datos desde la tabla
                 break;
