@@ -29,8 +29,7 @@
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle <%= (action.equals("eventoDeporte") || action.equals("eventoCultura") || action.equals("EventosInscritos")) ? "active" : "" %>" data-bs-toggle="dropdown"><i class="fa fa-calendar me-2"></i><span style="font-size: 13.5px;"><b>Eventos</b></span></a>
                 <div class="dropdown-menu bg-transparent border-0">
-                    <a href="<%=request.getContextPath()%>/VecinoServlet?action=eventoDeporte" class="dropdown-item <%= action.equals("eventoDeporte") ? "active" : "" %>" style="font-size: 13.5px;"><b>Deporte</b></a>
-                    <a href="<%=request.getContextPath()%>/VecinoServlet?action=eventoCultura" class="dropdown-item <%= action.equals("eventoCultura") ? "active" : "" %>" style="font-size: 13.5px;"><b>Cultura</b></a>
+                    <a href="<%=request.getContextPath()%>/VecinoServlet?action=verEventos" class="dropdown-item <%= action.equals("eventoDeporte") ? "active" : "" %>" style="font-size: 13.5px;"><b>Ver Eventos</b></a>
                     <a href="<%=request.getContextPath()%>/VecinoServlet?action=eventosInscritos" class="dropdown-item <%= action.equals("eventosInscritos") ? "active" : "" %>" style="font-size: 13.5px;"><b>Eventos inscritos</b></a>
                 </div>
             </div>

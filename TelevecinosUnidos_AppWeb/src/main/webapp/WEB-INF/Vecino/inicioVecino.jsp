@@ -59,6 +59,12 @@
             background-color: #138496;
             border-color: #117a8b;
         }
+        .custom-image {
+            width: 100%;
+            max-width: 500px;
+            margin: 20px auto;
+            display: block;
+        }
     </style>
 </head>
 
@@ -83,6 +89,11 @@
         <!-- PARTE SUPERIOR FINAL -->
 
         <!-- Mostrar inicio de coordinador-->
+
+        <!-- Imagen de bienvenida -->
+        <div class="text-center">
+            <img src="<%= request.getContextPath() %>/img/imgVecino.png" alt="Bienvenida Vecino" class="custom-image">
+        </div>
 
         <!-- Eventos próximos-->
         <div id="Eventos Recientes">
