@@ -100,7 +100,6 @@
     </div>
     <!-- Spinner End -->
 
-
     <!-- Sidebar Start -->
     <div class="sidebar pe-4 pb-3" style="background-color: #8ecae6;">
         <nav class="navbar" style="background-color: #8ecae6;" >

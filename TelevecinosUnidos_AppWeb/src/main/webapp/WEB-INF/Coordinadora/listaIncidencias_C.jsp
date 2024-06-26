@@ -87,6 +87,7 @@
     <!-- Spinner End -->
 
 
+
     <!-- BARRA AZUL DE LA IZQUIERDA INICIO-->
 
     <jsp:include page="../includes/barraLateralCoordinador.jsp"></jsp:include>

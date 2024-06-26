@@ -186,6 +186,7 @@
                             <a type="reset" class="btn btn-primary w-100" href="<%=request.getContextPath()%>/CoordinadorServlet?action=lista" >Limpiar</a>
                         </div>
                         <div class="col-md-2 mb-2">
+
                             <a href=" " class="btn btn-primary w-100">
                                 Crear evento
                             </a>
