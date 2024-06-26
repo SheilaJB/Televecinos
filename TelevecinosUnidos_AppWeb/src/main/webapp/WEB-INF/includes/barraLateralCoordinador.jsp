@@ -1,6 +1,6 @@
 <%@ page import="org.example.televecinosunidos_appweb.model.beans.UsuarioB" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<jsp:useBean id="usuarioLogeado" scope="session" type="UsuarioB" class="org.example.televecinosunidos_appweb.model.beans.UsuarioB" />
+<jsp:useBean id="usuarioLogueado" scope="session" type="UsuarioB" class="org.example.televecinosunidos_appweb.model.beans.UsuarioB" />
 <%
     String action = request.getParameter("action");
     if (action == null) {
