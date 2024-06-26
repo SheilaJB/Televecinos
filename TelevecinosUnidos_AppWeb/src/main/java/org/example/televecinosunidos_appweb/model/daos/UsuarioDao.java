@@ -260,7 +260,27 @@ public class UsuarioDao extends BaseDao{
     }
     public UsuarioB obtenerUsuario1(String correo) {
         UsuarioB usuarioB = new UsuarioB();
-        String sql = "SELECT * FROM televecinosdb.usuario u WHERE u.correo=?";
+        String sql = "SELECT \n" +
+                "    u.idUsuario AS idUsuario,\n" +
+                "    u.nombre AS nombreUsuario,\n" +
+                "    u.apellido AS apellidoUsuario,\n" +
+                "    u.dni AS dniUsuario,\n" +
+                "    u.direccion AS direccionUsuario,\n" +
+                "    u.correo AS correoUsuario,\n" +
+                "    u.contrasena AS contrasenaUsuario,\n" +
+                "    u.TipoCoordinador_idTipoCoordinador AS idTipoCoordinadorUsuario,\n" +
+                "    u.asistencia AS asistenciaUsuario,\n" +
+                "    u.avatar AS avatarUsuario,\n" +
+                "    u.PreguntasFrecuentes_idtable2 AS idPreguntasFrecuentesUsuario,\n" +
+                "    u.Rol_idRol AS idRolUsuario,\n" +
+                "    u.isBan AS isBanUsuario,\n" +
+                "    u.primerIngreso AS primerIngresoUsuario,\n" +
+                "    urb.nombre AS nombreUrbanizacion\n" +
+                "FROM \n" +
+                "    usuario u\n" +
+                "    LEFT JOIN urbanizacion urb ON u.urbanizacion_idUrbanizacion = urb.idUrbanizacion\n" +
+                "WHERE \n" +
+                "    u.correo = ?;\n";
 
 
         try (Connection conn = getConnection();
@@ -271,15 +291,15 @@ public class UsuarioDao extends BaseDao{
 
                 if(rs.next()) {
                     usuarioB = new UsuarioB();
-                    usuarioB.setIdUsuario(rs.getInt(1));
-                    usuarioB.setNombre(rs.getString(2));
-                    usuarioB.setApellido(rs.getString(3));
-                    usuarioB.setDni(rs.getString(4));
-                    usuarioB.setDireccion(rs.getString(5));
-                    usuarioB.setCorreo(rs.getString(6));
-                    usuarioB.setTipoCoordinador_idTipoCoordinador(rs.getInt(8));
-                    usuarioB.setIdRol(rs.getInt(12));
-                    usuarioB.setIsBan(rs.getInt(13));
+                    usuarioB.setIdUsuario(rs.getInt("idUsuario"));
+                    usuarioB.setNombre(rs.getString("nombreUsuario"));
+                    usuarioB.setApellido(rs.getString("apellidoUsuario"));
+                    usuarioB.setDni(rs.getString("dniUsuario"));
+                    usuarioB.setDireccion(rs.getString("direccionUsuario"));
+                    usuarioB.setCorreo(rs.getString("correoUsuario"));
+                    usuarioB.setTipoCoordinador_idTipoCoordinador(rs.getInt("idTipoCoordinadorUsuario"));
+                    usuarioB.setIdRol(rs.getInt("idRolUsuario"));
+                    usuarioB.setIsBan(rs.getInt("isBanUsuario"));
 
                 }
 

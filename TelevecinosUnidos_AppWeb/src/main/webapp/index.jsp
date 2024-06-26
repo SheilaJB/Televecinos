@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.net.URLDecoder" %>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -69,7 +70,7 @@
                             <label for="formCheck" class="form-check-label text-secondary-custom"><small><b>Recuérdame</b></small></label>
                         </div>
                         <div class="forgot">
-                            <small><a href="registro.jsp" class="text-link-white" style="text-decoration: underline;"><b>¿Olvidaste tu contraseña?</b></a></small>
+                            <small><a href="<%=request.getContextPath()%>/LoginServlet?action=register" class="text-link-white" style="text-decoration: underline;"><b>¿Olvidaste tu contraseña?</b></a></small>
                         </div>
                     </div>
                     <div class="input-group mb-3">
