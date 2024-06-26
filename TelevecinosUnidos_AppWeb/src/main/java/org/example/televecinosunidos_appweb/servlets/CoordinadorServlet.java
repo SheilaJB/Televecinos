@@ -24,6 +24,7 @@ public class CoordinadorServlet extends HttpServlet {
         EventoDao eventoDao = new EventoDao();
         IncidenCoordDao incidenciaDao = new IncidenCoordDao();
         ArrayList<EventoB> listaEventosPropios = eventoDao.listarEventosPropios();
+        ArrayList<EventoB> listarEventosDisponibles = eventoDao.listarEventosDisponibles();
         String vista ="";
         String action = request.getParameter("action") == null ? "inicioCoordinador" : request.getParameter("action");
 
@@ -55,6 +56,11 @@ public class CoordinadorServlet extends HttpServlet {
             case "lista":
                 vista = "WEB-INF/Coordinadora/ListaEvent-Coordinador.jsp";
                 request.setAttribute("lista", listaEventosPropios);
+                request.getRequestDispatcher(vista).forward(request, response);
+                break;
+            case "registrarAsistencia":
+                vista = "WEB-INF/Coordinadora/registroAsistencia.jsp";
+                request.setAttribute("lista", listarEventosDisponibles);
                 request.getRequestDispatcher(vista).forward(request, response);
                 break;
             case "listaInscritos":

@@ -20,7 +20,7 @@ public class EventoDao extends BaseDao{
                 "es.estadosEvento AS 'Estado', ef.tipoFrecuencia AS 'Frecuencia' " +
                 "FROM Eventos e JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
                 "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
-                "WHERE e.TipoEvento_idTipoEvento = 1 AND e.eliminado = FALSE " +
+                "WHERE e.TipoEvento_idTipoEvento = 2 AND e.eliminado = FALSE " +
                 "ORDER BY e.fecha_inicio DESC " +
                 "LIMIT 6;";
 
@@ -50,6 +50,61 @@ public class EventoDao extends BaseDao{
         }
 
         return listaEventosPropios;
+    }
+
+    //Función lista de eventos disponibles
+    public ArrayList<EventoB> listarEventosDisponibles() {
+
+        String sqlSetLanguage = "SET lc_time_names = 'es_ES';";
+        String sql = "SELECT \n" +
+                "e.idEventos AS 'ID Evento', \n" +
+                "e.nombre AS 'Nombre', \n" +
+                "DATE_FORMAT(e.fecha_inicio, '%d %M') AS 'Fecha de Inicio', \n" +
+                "DATE_FORMAT(e.fecha_fin, '%d %M') AS 'Fecha de finalizacion', \n" +
+                "es.estadosEvento AS 'Estado', \n" +
+                "ef.tipoFrecuencia AS 'Frecuencia' ,\n" +
+                "DATE_FORMAT(e.hora_inicio, '%H:%i') AS hora_inicio, \n" +
+                "DATE_FORMAT(e.hora_fin, '%H:%i') AS hora_fin \n" +
+                "FROM \n" +
+                "    Eventos e \n" +
+                "JOIN \n" +
+                "    EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados \n" +
+                "JOIN \n" +
+                "    EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia \n" +
+                "WHERE \n" +
+                "    e.TipoEvento_idTipoEvento = 2 \n" +
+                "    AND e.eliminado = FALSE \n" +
+                "ORDER BY \n" +
+                "    e.fecha_inicio DESC ;";
+
+        ArrayList<EventoB> listaEventosDisponible = new ArrayList<>();
+
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement()) {
+
+            // Ejecutar la sentencia para establecer el idioma de las fechas en español
+            stmt.execute(sqlSetLanguage);
+
+            // Ejecutar la consulta principal
+            try (ResultSet rs = stmt.executeQuery(sql)) {
+                while (rs.next()) {
+                    EventoB evento = new EventoB();
+                    evento.setidEvento(rs.getInt("ID Evento"));
+                    evento.setNombre(rs.getString("Nombre"));
+                    evento.setFecha_inicio(rs.getString("Fecha de Inicio"));
+                    evento.setFecha_fin(rs.getString("Fecha de finalizacion"));
+                    evento.setEstadoString(rs.getString("Estado"));
+                    evento.setFrecuenciaString(rs.getString("Frecuencia"));
+                    evento.setHora_inicio(rs.getString("hora_inicio"));
+                    evento.setHora_fin(rs.getString("hora_fin"));
+                    listaEventosDisponible.add(evento);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return listaEventosDisponible;
     }
 
     //Mostrar solo los 3 eventos creados recientemente

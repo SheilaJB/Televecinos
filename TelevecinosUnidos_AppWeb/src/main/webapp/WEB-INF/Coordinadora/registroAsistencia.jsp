@@ -96,8 +96,8 @@
                     <div class="dropdown-menu bg-transparent border-0">
                         <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=eventoGeneralesC" class="dropdown-item"><span style="font-size: 13.5px;"><b>Eventos generales</b></span></a>
                         <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=crearEvento" class="dropdown-item"><span style="font-size: 13.5px;"><b>Crear evento</b></span></a>
-                        <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=lista" class="dropdown-item active"><span style="font-size: 13.5px;"><b>Eventos propios</b></span></a>
-                        <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=registrarAsistencia" class="dropdown-item "><span style="font-size: 13.5px;"><b>Registrar asistencia</b></span></a>
+                        <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=lista" class="dropdown-item "><span style="font-size: 13.5px;"><b>Eventos propios</b></span></a>
+                        <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=registrarAsistencia" class="dropdown-item active"><span style="font-size: 13.5px;"><b>Registrar asistencia</b></span></a>
                     </div>
                 </div>
                 <div class="nav-item dropdown">
@@ -142,80 +142,23 @@
         <!-- Lista de eventos -->
         <div class="container text-center">
             <div id="Nombre del evento">
-                <h1 style="text-align: center; margin-top:50px;margin-bottom:50px;"><b>Eventos propios</b></h1>
+                <h1 style="text-align: center; margin-top:50px;margin-bottom:50px;"><b>Registrar mi asistencia</b></h1>
             </div>
         </div>
-
-        <% if (session.getAttribute("info") != null) { %>
-        <div class="alert alert-success" role="alert">
-            <%= session.getAttribute("info") %>
-        </div>
-        <% session.removeAttribute("info"); %>
-        <% } %>
-
         <div style="background-color: #f8f9fa; padding: 10px; align-items: center;">
-            <div style="background-color: #FFB703; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
-                <!-- Filtro -->
-                <form  method="post" action="<%=request.getContextPath()%>/CoordinadorServlet?action=buscarEventoPorNombre">
-                    <div class="row justify-content-center align-items-center">
-                        <!-- Busqueda por nombre de evento -->
-                        <div class="col-md-3 mb-2">
-                            <input type="text" class="form-control" id="filtroInput" placeholder="Buscar evento..." name="textoBuscarEvento"
-                                   value="<%=textoBuscarEvento%>">
-                        </div>
-                        <div class="col-md-2 mb-2">
-                            <select  class="form-select" name="frecuencia">
-                                <option selected disabled>Tipo de Frecuencia</option>
-                                <option value="1" >Semanal</option>
-                                <option value="2 ">Dos veces por semana</option>
-                            </select>
-                        </div>
-                        <div class="col-md-2 mb-2">
-                            <select  class="form-select" name="estado">
-                                <option selected disabled>Estado del evento</option>
-                                <option value="1" >Disponible</option>
-                                <option value="2" >En curso</option>
-                                <option value="3" >Finalizado</option>
-                            </select>
-                        </div>
-                        <div class="col-md-1 mb-2">
-                            <button class="btn btn-primary w-100" type="submit">
-                                <i class="fas fa-search"></i> </button>
-                        </div>
-                        <div class="col-md-2 mb-2">
-                            <a type="reset" class="btn btn-primary w-100" href="<%=request.getContextPath()%>/CoordinadorServlet?action=lista" >Limpiar</a>
-                        </div>
-                        <div class="col-md-2 mb-2">
-                            <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=crearEvento" class="btn btn-primary w-100">
-                                Crear evento
-                            </a>
-                        </div>
-                    </div>
-                </form>
-            </div>
-
-            <!-- Bootstrap JS with Popper -->
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-            <!-- Bootstrap JS and dependencies (Popper.js) -->
-            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-            <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
-
-            <script>
-                function crearEvento() {
-                    window.location.href = 'creacionEvento.html';
-                }
-            </script>
-
             <div class="table-responsive">
                 <table id="eventosTable" class="table table-striped table-hover" style="background-color: transparent;">
                     <thead>
                     <tr>
                         <th scope="col">Nombre</th>
-                        <th scope="col">Fecha de inicio</th>
+                        <th scope="col">Inicio</th>
+                        <th scope="col">Fin</th>
+                        <th scope="col">Hora de inicio</th>
+                        <th scope="col">Hora de finalización</th>
                         <th scope="col">Estado</th>
                         <th scope="col">Frecuencia</th>
-                        <th scope="col"></th>
+                        <th scope="col">Entrada</th>
+                        <th scope="col">Salida</th>
 
                     </tr>
                     </thead>
@@ -224,29 +167,53 @@
                     <tr>
                         <td><%= eventoB.getNombre() %></td>
                         <td><%= eventoB.getFecha_inicio() %></td>
-                        <td><%= eventoB.getEstadoString() %></td>
+                        <td><%= eventoB.getFecha_fin() %></td>
+                        <td><%= eventoB.getHora_inicio() %></td>
+                        <td><%= eventoB.getHora_fin() %></td>
                         <td><%= eventoB.getFrecuenciaString() %></td>
-                        <!--Desplegable-->
+                        <td><%= eventoB.getEstadoString() %></td>
+
+                        <% if ("En curso".equals(eventoB.getEstadoString())) { %>
                         <td>
-                            <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                        <% if ("Disponible".equals(eventoB.getEstadoString())) { %>
-                                        <li><a class="dropdown-item"  onclick="viewFunction(<%=eventoB.getidEvento()%>)">Ver</a></li>
-                                        <li><a class="dropdown-item"  onclick="editFunction(<%=eventoB.getidEvento()%>)">Editar</a></li>
-                                        <li><a class="dropdown-item"  onclick="confirmDelete(<%=eventoB.getidEvento()%>)">Borrar</a></li>
-                                        <% } else { %>
-                                        <li><a class="dropdown-item"  onclick="viewFunction(<%=eventoB.getidEvento()%>)">Ver</a></li>
-                                        <% } %>
-                                    </ul>
-                                </button>
-                            </div>
+                            <input type="checkbox" onclick="toggleTime(this)">
+                            <span class="time-info"></span>
                         </td>
+                        <td>
+                            <input type="checkbox" onclick="toggleTime(this)">
+                            <span class="time-info"></span>
+                        </td>
+                        <% } else { %>
+                        <td>
+                            <input type="checkbox" onclick="toggleTime(this)" disabled>
+                            <span class="time-info"></span>
+                        </td>
+                        <td>
+                            <input type="checkbox" onclick="toggleTime(this)" disabled>
+                            <span class="time-info"></span>
+                        </td>
+                        <% } %>
+
                     </tr>
                     <% } %>
                     </tbody>
                 </table>
             </div>
+            <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=registrarAsistencia" class="btn btn-secondary m-2" >Guardar</a>
+            <script>
+                function toggleTime(checkbox) {
+                    var timeInfo = checkbox.nextElementSibling;
+                    if (checkbox.checked) {
+                        var now = new Date();
+                        var hours = now.getHours().toString().padStart(2, '0');
+                        var minutes = now.getMinutes().toString().padStart(2, '0');
+                        var currentTime = hours + ':' + minutes;
+                        timeInfo.textContent =  currentTime;
+                    } else {
+                        timeInfo.textContent = '';
+                    }
+                }
+            </script>
+
             <div  style="display: flex; justify-content: center; align-items: center;">
                 <section class="paginacion" >
                     <ul style="list-style: none;padding: 0;margin: 0;display: flex;">
@@ -264,23 +231,6 @@
             </div>
         </div>
 
-        <!-- jQuery (opcional si necesitas usar funciones de jQuery específicas) -->
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <!-- Bootstrap 5 JS with Popper.js -->
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Tempus Dominus JS (si necesario) -->
-        <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
-        <script>
-            function viewFunction(idEvento) {
-                window.location.href ='<%=request.getContextPath()%>/CoordinadorServlet?action=verEvento&idEvento=' +idEvento;
-            }
-
-            function editFunction(idEvento) {
-                window.location.href ='<%=request.getContextPath()%>/CoordinadorServlet?action=editarEvento&idEvento=' + idEvento;}
-        </script>
-
-        <!-- Footer Start -->
         <div class="container-fluid pt-4 px-4">
             <div class="bg-light rounded-top p-4">
                 <div class="row">
@@ -372,3 +322,4 @@
 <script src="js/main.js"></script>
 </body>
 </html>
+
