@@ -19,6 +19,7 @@ public class VecinoServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         IncidenCoordDao incidenciaDao = new IncidenCoordDao();
         EventoDao eventoDao = new EventoDao();
+        HttpSession session = request.getSession();
         String action = request.getParameter("action") == null ? "inicioVecino" : request.getParameter("action");
         String vista;
 
@@ -39,8 +40,9 @@ public class VecinoServlet extends HttpServlet {
                 break;
             case "verEvento":
                 String idEvento = request.getParameter("idEvento");
+                EventoB evento = eventoDao.buscarEventoPorId(idEvento);
+                request.setAttribute("evento", evento);
                 vista = "WEB-INF/Vecino/EventoActual-Vecino.jsp";
-                request.setAttribute("evento", eventoDao.buscarEventoPorId(idEvento));
                 request.getRequestDispatcher(vista).forward(request, response);
                 break;
             case "preguntasFrecuentes":
@@ -110,6 +112,7 @@ public class VecinoServlet extends HttpServlet {
         response.setContentType("text/html");
         IncidenCoordDao incidenciaDao = new IncidenCoordDao();
         EventoDao eventoDao = new EventoDao();
+        HttpSession session = request.getSession();
         String action = request.getParameter("action") == null ? "crear" : request.getParameter("action");
 
         switch (action) {
@@ -245,6 +248,19 @@ public class VecinoServlet extends HttpServlet {
                     request.setAttribute("lista", incidenciaDao.listarIncidenciasFiltro(textBuscar, filtroFecha, filtroTipo, filtroEstado));
                     request.getRequestDispatcher("WEB-INF/Vecino/listaIncidencias_V.jsp").forward(request, response);
                 }
+                break;
+
+            case "inscribirEvento":
+                int idUsuario = Integer.parseInt(request.getParameter("idUsuario"));
+                int idEvento = Integer.parseInt(request.getParameter("idEvento"));
+                EventoDao eventoDao2 = new EventoDao();
+                boolean success = eventoDao2.inscribirUsuarioEvento(idUsuario, idEvento);
+                if (success) {
+                    request.getSession().setAttribute("info", "Te has inscrito al evento exitosamente");
+                } else {
+                    request.getSession().setAttribute("error", "No se pudo inscribir al evento. Inténtalo de nuevo más tarde.");
+                }
+                response.sendRedirect(request.getContextPath() + "/VecinoServlet?action=verEvento&idEvento=" + idEvento);
                 break;
 
             default:

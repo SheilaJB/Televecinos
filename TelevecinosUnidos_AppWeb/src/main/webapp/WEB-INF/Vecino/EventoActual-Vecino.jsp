@@ -57,13 +57,7 @@
         <jsp:include page="../includes/navbarVecino.jsp"></jsp:include>
         <!-- PARTE SUPERIOR FINAL -->
 
-
         <!-- Mostrar información del evento-->
-
-
-        <!-- Form Start -->
-        <!---Nombre del evento-->
-
         <div class="container-fluid pt-4 px-4">
             <div class="campo">
                 <h2><%= request.getAttribute("evento") != null ?((EventoB) request.getAttribute("evento")).getNombre() :"" %></h2>
@@ -72,7 +66,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <form>
-                        <div class="card shadow-sm" >
+                        <div class="card shadow-sm">
                             <div class="card-header text-lg-center">
                                 <h5>Información del evento</h5>
                             </div>
@@ -85,79 +79,79 @@
                                 <div class="row mb-3">
                                     <div class="col-12">
                                         <label class="form-label" style="color:#023047;"><b>Descripción:</b></label>
-                                        <div class="bar p-2 bg-light rounded" data-label="Nombre de la incidencia">
+                                        <div class="bar p-2 bg-light rounded">
                                             <%= request.getAttribute("evento") != null ?((EventoB) request.getAttribute("evento")).getDescripcion() :"" %>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <label class="form-label" style="color:#023047;"><b>Coordinador(a):</b></label>
-                                        <div class="bar p-2 bg-light rounded" data-label="Nombre de la incidencia">
+                                        <div class="bar p-2 bg-light rounded">
                                             <%= request.getAttribute("evento") != null ? ((EventoB) request.getAttribute("evento")).getNombreCoordinador() + " " + ((EventoB) request.getAttribute("evento")).getApellidoCoordinador() : "" %>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <label class="form-label" style="color:#023047;"><b>Instructor(a):</b></label>
-                                        <div class="bar p-2 bg-light rounded" data-label="Nombre de la incidencia">
+                                        <div class="bar p-2 bg-light rounded">
                                             <%= request.getAttribute("evento") != null ? ((EventoB) request.getAttribute("evento")).getNombreProfesor() + " " + ((EventoB) request.getAttribute("evento")).getApellidoProfesor() : "" %>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <label class="form-label" style="color:#023047;"><b>Lugar:</b></label>
-                                        <div class="bar p-2 bg-light rounded" data-label="Nombre de la incidencia">
+                                        <div class="bar p-2 bg-light rounded">
                                             <%= request.getAttribute("evento") != null ?((EventoB) request.getAttribute("evento")).getLugar() :"" %>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <label class="form-label" style="color:#023047;"><b>Frecuencia:</b></label>
-                                        <div class="bar p-2 bg-light rounded" data-label="Nombre de la incidencia">
+                                        <div class="bar p-2 bg-light rounded">
                                             <%= request.getAttribute("evento") != null ?((EventoB) request.getAttribute("evento")).getFrecuenciaString() :"" %>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <label class="form-label" style="color:#023047;"><b>Dia(s):</b></label>
-                                        <div class="bar p-2 bg-light rounded" data-label="Nombre de la incidencia">
+                                        <div class="bar p-2 bg-light rounded">
                                             <%= request.getAttribute("evento") != null ?((EventoB) request.getAttribute("evento")).getDiaEvento() :"" %>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <label class="form-label" style="color:#023047;"><b>Cantidad de vacantes:</b></label>
-                                        <div class="bar p-2 bg-light rounded" data-label="Nombre de la incidencia">
+                                        <div class="bar p-2 bg-light rounded">
                                             <%= request.getAttribute("evento") != null ?((EventoB) request.getAttribute("evento")).getCantidadVacantes() :"" %>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <label class="form-label" style="color:#023047;"><b>Cantidad de vacantes disponibles:</b></label>
-                                        <div class="bar p-2 bg-light rounded" data-label="Nombre de la incidencia">
+                                        <div class="bar p-2 bg-light rounded">
                                             <%= request.getAttribute("evento") != null ?((EventoB) request.getAttribute("evento")).getCantDisponibles() :"" %>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <label class="form-label" style="color:#023047;"><b>Fecha de inicio:</b></label>
-                                        <div class="bar p-2 bg-light rounded" data-label="Nombre de la incidencia">
+                                        <div class="bar p-2 bg-light rounded">
                                             <%= request.getAttribute("evento") != null ?((EventoB) request.getAttribute("evento")).getFecha_inicio() :"" %>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <label class="form-label" style="color:#023047;"><b>Fecha de finalización:</b></label>
-                                        <div class="bar p-2 bg-light rounded" data-label="Nombre de la incidencia">
+                                        <div class="bar p-2 bg-light rounded">
                                             <%= request.getAttribute("evento") != null ?((EventoB) request.getAttribute("evento")).getFecha_fin() :"" %>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <label class="form-label" style="color:#023047;"><b>Hora de inicio:</b></label>
-                                        <div class="bar p-2 bg-light rounded" data-label="Nombre de la incidencia">
+                                        <div class="bar p-2 bg-light rounded">
                                             <%= request.getAttribute("evento") != null ?((EventoB) request.getAttribute("evento")).getHora_inicio() :"" %>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <label class="form-label" style="color:#023047;"><b>Hora de finalización:</b></label>
-                                        <div class="bar p-2 bg-light rounded" data-label="Nombre de la incidencia">
+                                        <div class="bar p-2 bg-light rounded">
                                             <%= request.getAttribute("evento") != null ?((EventoB) request.getAttribute("evento")).getHora_fin() :"" %>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <label class="form-label" style="color:#023047;"><b>Lista de materiales:</b></label>
-                                        <div class="bar p-2 bg-light rounded" data-label="Nombre de la incidencia">
+                                        <div class="bar p-2 bg-light rounded">
                                             <%= request.getAttribute("evento") != null ?((EventoB) request.getAttribute("evento")).getListaMateriales() :"" %>
                                         </div>
                                     </div>
@@ -166,17 +160,16 @@
                         </div>
                     </form>
                 </div>
-                <div class="col-md-6" >
+                <div class="col-md-6">
                     <form>
-                        <div class="rounded h-100 p-4"style="background-color: #ffb703;">
+                        <div class="rounded h-100 p-4" style="background-color: #ffb703;">
                             <div class="mb-3">
                                 <img src="<%= request.getAttribute("evento") != null ? ((EventoB) request.getAttribute("evento")).getFoto() : "img/default.jpg" %>" class="img-responsive" alt="" style="width: 100%; height: auto;" />
                             </div>
                         </div>
                     </form>
-                    <div id="Prox_Eventos " class="container-fluid pt-4 px-4">
+                    <div id="Prox_Eventos" class="container-fluid pt-4 px-4">
                         <h3 style="text-align: center; margin-top:20px;margin-bottom:20px;">Galeria de nuestros recuerdos</h3>
-
                         <div class="rounded h-100 p-4" style=" background-color: #ffb703; padding: 20px; align-items: center;">
                             <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
                                 <div class="carousel-indicators">
@@ -192,16 +185,13 @@
                                     </div>
                                     <div class="carousel-item">
                                         <div class="row">
-
-                                            <img src="img/Deporte/girl-posing-with-volley-ball.jpg" class="d-block w-100" alt="Slide 1">
-
+                                            <img src="img/Deporte/girl-posing-with-volley-ball.jpg" class="d-block w-100" alt="Slide 2">
                                         </div>
                                     </div>
                                     <div class="carousel-item">
                                         <div class="row">
-                                            <img src="img/Deporte/girls-training-volleyball-field.jpg" class="d-block w-100" alt="Slide 1">
+                                            <img src="img/Deporte/girls-training-volleyball-field.jpg" class="d-block w-100" alt="Slide 3">
                                         </div>
-
                                     </div>
                                 </div>
                                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
@@ -221,8 +211,12 @@
                 <a href="<%=request.getContextPath()%>/VecinoServlet?action=verEventos">
                     <button type="button" class="btn btn-secondary m-2 d-flex justify-content-between align-items-center">Regresar</button>
                 </a>
+                <form action="<%= request.getContextPath() %>/VecinoServlet?action=inscribirEvento" method="post">
+                    <input type="hidden" name="idUsuario" value="<%= idUsuario %>">
+                    <input type="hidden" name="idEvento" value="<%= ((EventoB) request.getAttribute("evento")).getIdEvento() %>">
+                    <button type="submit" class="btn btn-primary m-2 d-flex justify-content-between align-items-center">Inscribirse</button>
+                </form>
             </div>
-
         </div>
         <script>
             document.getElementById('subirFoto').addEventListener('change', function(event) {
@@ -271,8 +265,6 @@
             });
         </script>
 
-
-
         <!-- Footer Start -->
         <div class="container-fluid pt-4 px-4">
             <div class="bg-light rounded-top p-4">
@@ -280,14 +272,12 @@
                     <div class="col-12 col-sm-6 text-center text-sm-start">
                         &copy; <a href="#">TelevecinosUnidos</a>, All Right Reserved.
                     </div>
-
                 </div>
             </div>
         </div>
         <!-- Footer End -->
     </div>
     <!-- Content End -->
-
 
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
