@@ -72,6 +72,15 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
+        <!--balblabla -->
+        <!-- Bootstrap JS with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+        <!-- Bootstrap JS and dependencies (Popper.js) -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
+
 
 
         <!-- Lista de serenazgo -->
@@ -129,9 +138,9 @@
                             <th scope="col">Tipo</th>
                             <th scope="col">DNI</th>
                             <th scope="col">Telefono</th>
-                            <th scope="col">Enviar correo</th>
-                            <th scope="col">Banear</th>
-                            <th scope="col">ver Detalle</th>
+                            <th scope="col"></th>
+                            <!--<th scope="col">Banear</th>
+                            <th scope="col">ver Detalle</th>-->
                         </tr>
                         </thead>
                         <tbody>
@@ -142,9 +151,21 @@
                             <td><%=serenazgoB.getTipoSerenazgoStr() %></td>
                             <td><%=serenazgoB.getUsuario().getDni() %></td>
                             <td><%=serenazgoB.getNumTelefono() %></td>
-                            <td><a href="<%=request.getContextPath()%>/*?action=verSerenazgo&idSerenazgo=<%=serenazgoB.getIdSerenazgo()%>"><button type="button" class="btn btn-success m-2"><i class="fas fa-envelope"></i></button></a></td>
+                            <!-- Desplegable -->
+                            <td>
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                            <li><a class="dropdown-item"  onclick="correoFunction(<%=serenazgoB.getIdSerenazgo()%>)">Enviar correo</a></li>
+                                            <li><a class="dropdown-item"  onclick="banFunction(<%=serenazgoB.getUsuario().getIdUsuario()%>)">Banear</a></li>
+                                            <li><a class="dropdown-item"  onclick="detalleFunction(<%=serenazgoB.getIdSerenazgo()%>)">Ver detalle</a></li>
+                                        </ul>
+                                    </button>
+                                </div>
+                            </td>
+                            <!--<td><a href="<%=request.getContextPath()%>/*?action=verSerenazgo&idSerenazgo=<%=serenazgoB.getIdSerenazgo()%>"><button type="button" class="btn btn-success m-2"><i class="fas fa-envelope"></i></button></a></td>
                             <td><a href="<%=request.getContextPath()%>/AdministradorServlet?action=banearSerenazgo&idSerenazgo=<%=serenazgoB.getUsuario().getIdUsuario()%>"><button type="button" class="btn btn-danger m-2" ><i class="fas fa-ban"></i></button></a></td>
-                            <td><a href="<%=request.getContextPath()%>/AdministradorServlet?action=verSerenazgo&idSerenazgo=<%=serenazgoB.getIdSerenazgo()%>"><button type="button" class="btn btn-info m-2"><i class="fas fa-eye"></i></button></a></td>
+                            <td><a href="<%=request.getContextPath()%>/AdministradorServlet?action=verSerenazgo&idSerenazgo=<%=serenazgoB.getIdSerenazgo()%>"><button type="button" class="btn btn-info m-2"><i class="fas fa-eye"></i></button></a></td>-->
                         </tr>
                         <% } %>
                         </tbody>
@@ -152,6 +173,25 @@
                 </div>
             </div>
         </div>
+
+        <!-- jQuery (opcional si necesitas usar funciones de jQuery específicas) -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <!-- Bootstrap 5 JS with Popper.js -->
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Tempus Dominus JS (si necesario) -->
+        <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+        <script>
+            function correoFunction(Id) {
+                window.location.href ='<%=request.getContextPath()%>/*?action=verSerenazgo&idSerenazgo=' +Id;
+            }
+            function  banFunction(Id){
+                window.location.href ='<%=request.getContextPath()%>/AdministradorServlet?action=banearSerenazgo&idSerenazgo=' +Id;
+            }
+            function detalleFunction(Id){
+                window.location.href ='<%=request.getContextPath()%>/AdministradorServlet?action=verSerenazgo&idSerenazgo=' +Id;
+            }
+        </script>
 
         <!-- Filtro
         <div id="Barra-Filtro">
