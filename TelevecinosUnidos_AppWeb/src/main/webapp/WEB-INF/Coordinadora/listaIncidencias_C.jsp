@@ -94,7 +94,7 @@
 
 
     <!-- Content Start -->
-    <div class="content">
+    <div class="content" id="navbar">
 
         <!-- PARTE SUPERIOR INICIO -->
         <jsp:include page="../includes/navbarCoordinador.jsp"></jsp:include>

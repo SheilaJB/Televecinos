@@ -76,67 +76,13 @@
     </div>
     <!-- Spinner End -->
 
-    <!-- Sidebar Start -->
-    <div class="sidebar pe-4 pb-3" style="background-color: #8ecae6;">
-        <nav class="navbar" style="background-color: #8ecae6;" >
-            <a class="navbar-brand mx-3 mt-3">
-                <h4 style="color:#023047"><b>Televecinos Unidos</b></h4>
-            </a>
-            <div class="d-flex align-items-center ms-4 mb-4"  >
-                <img class="rounded-circle" src="img/coordinadora.jpg" alt="" style="width: 50px; height: 50px;">
-                <div class="ms-3 m-3" >
-                    <h6 class="mb-0" style="color:#023047;"><b>Nombre Apellido</b></h6>
-                    <span class="text-muted"><b>Coordinador</b></span>
-                </div>
-            </div>
-            <div class="navbar-nav w-100">
-                <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=inicioCoordinador" class="nav-item nav-link"><i class="fa fa-home me-2"></i><span style="font-size: 13.5px;"><b>Inicio</b></span></a>
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"><i class="fa fa-calendar me-2"></i><span style="font-size: 13.5px;"><b>Eventos</b></span></a>
-                    <div class="dropdown-menu bg-transparent border-0">
-                        <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=eventoGeneralesC" class="dropdown-item"><span style="font-size: 13.5px;"><b>Eventos generales</b></span></a>
-                        <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=crearEvento" class="dropdown-item"><span style="font-size: 13.5px;"><b>Crear evento</b></span></a>
-                        <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=lista" class="dropdown-item active"><span style="font-size: 13.5px;"><b>Eventos propios</b></span></a>
-                        <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=registrarAsistencia" class="dropdown-item "><span style="font-size: 13.5px;"><b>Registrar asistencia</b></span></a>
-                    </div>
-                </div>
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle " data-bs-toggle="dropdown"><i class="fa fa-th-list me-2"></i><span style="font-size: 13.5px;"><b>Incidencias</b></span></a>
-                    <div class="dropdown-menu bg-transparent border-0">
-                        <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=generarIncidenciaC" class="dropdown-item"><span style="font-size: 13.5px;"><b>Crear incidencia</b></span></a>
-                        <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=listarIncidencia" class="dropdown-item"><span style="font-size: 13.5px;"><b>Lista de incidencias</b></span></a>
-                    </div>
-                </div>
-                <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=preguntasFrecuentesC" class="nav-item nav-link font-al"><i class="fa fa-question-circle me-2" ></i><span style="font-size: 13.5px;"><b>Preguntas frecuentes</b></span></a>
-            </div>
-        </nav>
-    </div>
+    <jsp:include page="../includes/barraLateralCoordinador.jsp"></jsp:include>
     <!-- Sidebar End -->
 
     <!-- Content Start -->
-    <div class="content">
+    <div id="navbar" class="content">
         <!-- Navbar Start -->
-        <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
-            <a href="#" class="sidebar-toggler flex-shrink-0">
-                <i class="fa fa-bars"></i>
-            </a>
-            <a class="navbar-brand mx-4 mb-3 d-flex align-items-center" style="padding-top: 2%;">
-                <img class="rounded-circle" src="img/logo.jpg" alt="" style="width: 40px; height: 40px;">
-                <h3 class="m-0 me-2 px-2" style="color:#023047;">¡Bienvenido, coordinador!</h3>
-            </a>
-            <div class="navbar-nav align-items-center ms-auto">
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                        <img class="rounded-circle me-lg-2" src="img/coordinadora.jpg" alt="" style="width: 40px; height: 40px;">
-                        <span class="d-none d-lg-inline-flex" style="color:#023047;"><b>Nombre Apellido</b></span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                        <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=perfilC" class="dropdown-item">Mi perfil</a>
-                        <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=Index" class="dropdown-item">Cerrar sesión</a>
-                    </div>
-                </div>
-            </div>
-        </nav>
+        <jsp:include page="../includes/navbarCoordinador.jsp"></jsp:include>
         <!-- Navbar End -->
 
         <!-- Lista de eventos -->
