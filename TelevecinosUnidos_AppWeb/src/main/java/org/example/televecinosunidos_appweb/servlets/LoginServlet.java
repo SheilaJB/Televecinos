@@ -9,51 +9,63 @@ import org.example.televecinosunidos_appweb.model.dto.SerenazgoDTO;
 import org.example.televecinosunidos_appweb.model.ValidacionesInicio;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 @WebServlet(name = "LoginServlet", value = "/LoginServlet")
 public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        cargarUrbanizaciones(request);
-        // Luego, maneja el flujo de redirección e invalidación de sesión
-        HttpSession httpSession = request.getSession();
-        UsuarioB usuarioLogged = (UsuarioB) httpSession.getAttribute("usuarioLogueado");
-        SerenazgoDTO serenazgoLogeado = (SerenazgoDTO) httpSession.getAttribute("serenazgoLogeado");
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
 
-        if (usuarioLogged != null && usuarioLogged.getIdUsuario() > 0) {
-            if (request.getParameter("action") != null) {
-                httpSession.invalidate();
-                response.sendRedirect(request.getContextPath() + "/LoginServlet");
-            } else {
-                switch (usuarioLogged.getIdRol()) {
-                    case 2:
-                        response.sendRedirect(request.getContextPath() + "/VecinoServlet");
-                        break;
-                    case 3:
-                        response.sendRedirect(request.getContextPath() + "/CoordinadoraServlet");
-                        break;
-                    case 5:
-                        response.sendRedirect(request.getContextPath() + "/AdministradorServlet");
-                        break;
-                }
-            }
-        } else if (serenazgoLogeado != null && serenazgoLogeado.getIdUsuario() > 0) {
-            if (request.getParameter("action") != null) {
-                httpSession.invalidate();
-                response.sendRedirect(request.getContextPath() + "/LoginServlet");
-            } else {
-                response.sendRedirect(request.getContextPath() + "/SerenazgoServlet");
-            }
-        } else {
+        String action = request.getParameter("action");
+        HttpSession httpSession = request.getSession();
+
+        if (action != null && action.equals("register")) {
+            cargarUrbanizaciones(request);
             request.getRequestDispatcher("register.jsp").forward(request, response);
+        } else {
+            UsuarioB usuarioLogged = (UsuarioB) httpSession.getAttribute("usuarioLogueado");
+            SerenazgoDTO serenazgoLogeado = (SerenazgoDTO) httpSession.getAttribute("serenazgoLogeado");
+
+            if (usuarioLogged != null && usuarioLogged.getIdUsuario() > 0) {
+                if (request.getParameter("action") != null && request.getParameter("action").equals("logout")) {
+                    httpSession.invalidate();
+                    response.sendRedirect(request.getContextPath() + "/LoginServlet?action=login");
+                } else {
+                    switch (usuarioLogged.getIdRol()) {
+                        case 2:
+                            response.sendRedirect(request.getContextPath() + "/VecinoServlet");
+                            break;
+                        case 3:
+                            response.sendRedirect(request.getContextPath() + "/CoordinadoraServlet");
+                            break;
+                        case 5:
+                            response.sendRedirect(request.getContextPath() + "/AdministradorServlet");
+                            break;
+                    }
+                }
+            } else if (serenazgoLogeado != null && serenazgoLogeado.getIdUsuario() > 0) {
+                if (request.getParameter("action") != null && request.getParameter("action").equals("logout")) {
+                    httpSession.invalidate();
+                    response.sendRedirect(request.getContextPath() + "/LoginServlet?action=login");
+                } else {
+                    response.sendRedirect(request.getContextPath() + "/SerenazgoServlet");
+                }
+            } else {
+                request.getRequestDispatcher("index.jsp").forward(request, response);
+            }
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
+
         String action = request.getParameter("action");
-        boolean hasErrors = false;
 
         if (action != null && action.equals("register")) {
             // Lógica de registro de usuario
@@ -67,46 +79,34 @@ public class LoginServlet extends HttpServlet {
 
             // Validar los campos
             if (!ValidacionesInicio.validarNombre(nombre)) {
-                request.setAttribute("err", "El nombre no es válido. La primera letra debe estar en mayúscula. Debe tener una longitud máxima de 100 caracteres y no contener caracteres especiales.");
-                cargarUrbanizaciones(request);
-                request.getRequestDispatcher("/register.jsp").forward(request, response);
+                response.sendRedirect(request.getContextPath() + "/LoginServlet?action=register&err=" + URLEncoder.encode("El nombre no es válido. La primera letra debe estar en mayúscula. Debe tener una longitud máxima de 100 caracteres y no contener caracteres especiales.", StandardCharsets.UTF_8.toString()));
                 return;
             }
 
             if (!ValidacionesInicio.validarApellido(apellido)) {
-                request.setAttribute("err", "El apellido no es válido. La primera letra debe estar en mayúscula. Debe tener una longitud máxima de 100 caracteres y no contener caracteres especiales.");
-                cargarUrbanizaciones(request);
-                request.getRequestDispatcher("/register.jsp").forward(request, response);
+                response.sendRedirect(request.getContextPath() + "/LoginServlet?action=register&err=" + URLEncoder.encode("El apellido no es válido. La primera letra debe estar en mayúscula. Debe tener una longitud máxima de 100 caracteres y no contener caracteres especiales.", StandardCharsets.UTF_8.toString()));
                 return;
             }
 
             if (!ValidacionesInicio.validarDni(dni)) {
-                request.setAttribute("err", "El DNI no es válido. Debe tener exactamente 8 dígitos numéricos.");
-                cargarUrbanizaciones(request);
-                request.getRequestDispatcher("/register.jsp").forward(request, response);
+                response.sendRedirect(request.getContextPath() + "/LoginServlet?action=register&err=" + URLEncoder.encode("El DNI no es válido. Debe tener exactamente 8 dígitos numéricos.", StandardCharsets.UTF_8.toString()));
                 return;
             }
 
             if (!ValidacionesInicio.validarDireccion(direccion)) {
-                request.setAttribute("err", "La dirección no es válida. Debe tener una longitud máxima de 150 caracteres.");
-                cargarUrbanizaciones(request);
-                request.getRequestDispatcher("/register.jsp").forward(request, response);
+                response.sendRedirect(request.getContextPath() + "/LoginServlet?action=register&err=" + URLEncoder.encode("La dirección no es válida. Debe tener una longitud máxima de 150 caracteres.", StandardCharsets.UTF_8.toString()));
                 return;
             }
 
             if (!ValidacionesInicio.validarCorreo(correo)) {
-                request.setAttribute("err", "El correo no es válido. Debe ser una dirección de Gmail.");
-                cargarUrbanizaciones(request);
-                request.getRequestDispatcher("/register.jsp").forward(request, response);
+                response.sendRedirect(request.getContextPath() + "/LoginServlet?action=register&err=" + URLEncoder.encode("El correo no es válido. Debe ser una dirección de Gmail.", StandardCharsets.UTF_8.toString()));
                 return;
             }
 
             UsuarioDao usuarioDao = new UsuarioDao();
 
             if (!usuarioDao.esDniUnico(dni)) {
-                request.setAttribute("err", "El DNI ya está registrado. Por favor, use un DNI diferente.");
-                cargarUrbanizaciones(request);
-                request.getRequestDispatcher("/register.jsp").forward(request, response);
+                response.sendRedirect(request.getContextPath() + "/LoginServlet?action=register&err=" + URLEncoder.encode("El DNI ya está registrado. Por favor, use un DNI diferente.", StandardCharsets.UTF_8.toString()));
                 return;
             }
 
@@ -115,14 +115,10 @@ public class LoginServlet extends HttpServlet {
 
             if (registrado) {
                 System.out.println("Registro exitoso para el usuario: " + correo);
-                request.setAttribute("success", "Registro exitoso. Revisa tu correo para más indicaciones.");
-                cargarUrbanizaciones(request);
-                request.getRequestDispatcher("/register.jsp").forward(request, response);
+                response.sendRedirect(request.getContextPath() + "/LoginServlet?action=register&success=" + URLEncoder.encode("Registro exitoso. Revisa tu correo para más indicaciones.", StandardCharsets.UTF_8.toString()));
             } else {
                 System.out.println("Error al registrar el usuario: " + correo);
-                request.setAttribute("err", "Error al registrar el usuario");
-                cargarUrbanizaciones(request);
-                request.getRequestDispatcher("/register.jsp").forward(request, response);
+                response.sendRedirect(request.getContextPath() + "/LoginServlet?action=register&err=" + URLEncoder.encode("Error al registrar el usuario.", StandardCharsets.UTF_8.toString()));
             }
         } else {
             // Lógica de inicio de sesión de usuario

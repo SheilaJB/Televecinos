@@ -1,5 +1,6 @@
 <%@ page import="org.example.televecinosunidos_appweb.model.beans.UsuarioB" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="java.net.URLDecoder" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="es">
@@ -41,24 +42,24 @@
                         <h2>Registro de Usuario</h2>
                         <p><b>Crea tu cuenta</b></p>
                     </div>
-                    <% if(request.getAttribute("err") != null) { %>
+                    <% if(request.getParameter("err") != null) { %>
                     <script>
                         Swal.fire({
                             icon: 'error',
                             title: 'Error',
-                            text: '<%= request.getAttribute("err") %>',
+                            text: '<%= request.getParameter("err") %>',
                         });
                     </script>
                     <% } %>
-                    <% if(request.getAttribute("success") != null) { %>
+                    <% if(request.getParameter("success") != null) { %>
                     <script>
                         Swal.fire({
                             icon: 'success',
                             title: 'Registro Exitoso',
-                            text: '<%= request.getAttribute("success") %>',
+                            text: '<%= request.getParameter("success") %>',
                         }).then((result) => {
                             if (result.isConfirmed) {
-                                window.location.href = "<%=request.getContextPath()%>/index.jsp";
+                                window.location.href = "<%=request.getContextPath()%>/LoginServlet";
                             }
                         });
                     </script>
@@ -108,7 +109,7 @@
             </form>
             <div class="row text-center">
                 <small class="text-white"><b>¿Ya tienes una cuenta?</b></small>
-                <small><a href="<%=request.getContextPath()%>/index.jsp" class="text-link-white" style="text-decoration: underline;"><b>Inicia sesión aquí</b></a></small>
+                <small><a href="<%=request.getContextPath()%>/LoginServlet" class="text-link-white" style="text-decoration: underline;"><b>Inicia sesión aquí</b></a></small>
             </div>
         </div>
     </div>
