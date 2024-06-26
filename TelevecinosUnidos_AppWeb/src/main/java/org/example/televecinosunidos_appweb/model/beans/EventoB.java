@@ -7,6 +7,8 @@ public class EventoB {
     private String descripcion;
     private String lugar;
     private int Coordinador_idUsuario;
+    private String nombreCoordinador;
+    private String apellidoCoordinador;
     private String fecha_inicio;
     private String fecha_fin;
     private String nombreEvento;
@@ -35,6 +37,22 @@ public class EventoB {
 
     private String nombreProfesor;
     private String apellidoProfesor;
+
+    public String getNombreCoordinador() {
+        return nombreCoordinador;
+    }
+
+    public void setNombreCoordinador(String nombreCoordinador) {
+        this.nombreCoordinador = nombreCoordinador;
+    }
+
+    public String getApellidoCoordinador() {
+        return apellidoCoordinador;
+    }
+
+    public void setApellidoCoordinador(String apellidoCoordinador) {
+        this.apellidoCoordinador = apellidoCoordinador;
+    }
 
     public String getNombreEvento() {
         return nombreEvento;

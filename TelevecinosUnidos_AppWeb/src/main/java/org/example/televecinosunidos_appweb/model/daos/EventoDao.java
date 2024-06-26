@@ -144,7 +144,9 @@ public class EventoDao extends BaseDao{
                     evento.setFecha_fin(rs.getString("fecha_fin"));
                     evento.setProfesoresEvento_idProfesoresEvento(rs.getInt("id_profesor"));  // Configurar id_profesor
                     evento.setNombreProfesor(rs.getString("nombreProfesor"));
+                    evento.setNombreCoordinador(rs.getString("nombre_coordinador"));
                     evento.setApellidoProfesor(rs.getString("apellidoProfesor"));
+                    evento.setApellidoCoordinador(rs.getString("apellido_coordinador"));
                     evento.setHora_inicio(rs.getString("hora_inicio"));
                     evento.setHora_fin(rs.getString("hora_fin"));
                     evento.setFoto(rs.getString("foto"));
