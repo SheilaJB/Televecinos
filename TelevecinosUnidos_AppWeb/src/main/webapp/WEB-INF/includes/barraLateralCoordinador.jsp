@@ -20,7 +20,7 @@
         <div class="d-flex align-items-center ms-4 mb-4">
             <img class="rounded-circle" src="img/coordinadora.jpg" alt="" style="width: 50px; height: 50px;">
             <div class="ms-3 m-3">
-                <h6 class="mb-0" style="color:#023047;"><b><%=usuarioLogeado.getNombre() + " " + usuarioLogeado.getApellido()%></b></h6>
+                <h6 class="mb-0" style="color:#023047;"><b><%=usuarioLogueado.getNombre() + " " + usuarioLogueado.getApellido()%></b></h6>
                 <span class="text-muted"><b>Coordinador</b></span>
             </div>
         </div>
