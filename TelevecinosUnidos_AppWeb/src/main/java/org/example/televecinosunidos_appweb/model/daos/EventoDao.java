@@ -430,5 +430,49 @@ public class EventoDao extends BaseDao{
         }
         return evento;
     }
+
+    //Función para listar todos los eventos
+    public ArrayList<EventoB> listarTodosEventos() {
+
+        String sqlSetLanguage = "SET lc_time_names = 'es_ES';";
+        String sql = "SELECT e.idEventos AS 'ID Evento', e.nombre AS 'Nombre', e.descripcion AS 'Descripcion', " +
+                "DATE_FORMAT(e.fecha_inicio, '%d %M %Y') AS 'Fecha de Inicio', " +
+                "DATE_FORMAT(e.fecha_fin, '%d %M %Y') AS 'Fecha de Fin', " +
+                "es.estadosEvento AS 'Estado', e.foto AS 'Foto' " +
+                "FROM Eventos e " +
+                "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
+                "WHERE e.eliminado = FALSE " +
+                "ORDER BY e.fecha_inicio DESC";
+
+        ArrayList<EventoB> listaTodosEventos = new ArrayList<>();
+
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement()) {
+
+            // Ejecutar la sentencia para establecer el idioma de las fechas en español
+            stmt.execute(sqlSetLanguage);
+
+            // Ejecutar la consulta principal
+            try (ResultSet rs = stmt.executeQuery(sql)) {
+                while (rs.next()) {
+                    EventoB evento = new EventoB();
+                    evento.setidEvento(rs.getInt("ID Evento"));
+                    evento.setNombre(rs.getString("Nombre"));
+                    evento.setDescripcion(rs.getString("Descripcion"));
+                    evento.setFecha_inicio(rs.getString("Fecha de Inicio"));
+                    evento.setFecha_fin(rs.getString("Fecha de Fin"));
+                    evento.setEstadoString(rs.getString("Estado"));
+                    evento.setFoto(rs.getString("Foto"));
+                    listaTodosEventos.add(evento);
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return listaTodosEventos;
+    }
+
 }
 

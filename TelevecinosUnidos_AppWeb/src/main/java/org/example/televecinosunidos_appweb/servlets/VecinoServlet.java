@@ -8,11 +8,7 @@ import org.example.televecinosunidos_appweb.model.beans.IncidenciasB;
 import org.example.televecinosunidos_appweb.model.daos.*;
 
 import java.io.IOException;
-import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -22,68 +18,69 @@ public class VecinoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         IncidenCoordDao incidenciaDao = new IncidenCoordDao();
-        String action = request.getParameter("action")==null?"inicioVecino":request.getParameter("action");
-        String vista ;
+        EventoDao eventoDao = new EventoDao();
+        String action = request.getParameter("action") == null ? "inicioVecino" : request.getParameter("action");
+        String vista;
 
         switch (action) {
             /*------------------Página principal------------------*/
             case "inicioVecino":
-                //Llenado de las tablas de inicio
                 ArrayList<IncidenciasB> listaIncidenciasRecientes = incidenciaDao.listarIncidenciaRecientes();
                 request.setAttribute("listaIncidencia", listaIncidenciasRecientes);
                 vista = "WEB-INF/Vecino/inicioVecino.jsp";
                 request.getRequestDispatcher(vista).forward(request, response);
                 break;
 
-            case "eventoDeporte":
+            case "verEventos":
+                ArrayList<EventoB> listaEventos = eventoDao.listarTodosEventos();
+                request.setAttribute("listaEventos", listaEventos);
                 vista = "WEB-INF/Vecino/Evento-D-Vecino.jsp";
                 request.getRequestDispatcher(vista).forward(request, response);
-
                 break;
-            case "eventoCultura":
-                vista = "WEB-INF/Vecino/Evento-C-Vecino.jsp";
+            case "verEvento":
+                String idEvento = request.getParameter("idEvento");
+                vista = "WEB-INF/Vecino/EventoActual-Vecino.jsp";
+                request.setAttribute("evento", eventoDao.buscarEventoPorId(idEvento));
                 request.getRequestDispatcher(vista).forward(request, response);
-
                 break;
             case "preguntasFrecuentes":
                 vista = "WEB-INF/Vecino/preguntasFrecuentes_V.jsp";
                 request.getRequestDispatcher(vista).forward(request, response);
-
                 break;
+
             case "verPerfil":
                 vista = "WEB-INF/Vecino/perfil_V.jsp";
                 request.getRequestDispatcher(vista).forward(request, response);
                 break;
-            /*-------------fin Página principal-------------------*/
 
-            /* falta seguir el flujo total de eventos*/
+            /*-------------fin Página principal-------------------*/
             case "eventosInscritos":
-                //lógica para listar los eventos a los que se inscribe
+                // Lógica para listar los eventos a los que se inscribe
                 vista = "WEB-INF/Vecino/ListaEvent-Vecino.jsp";
                 request.getRequestDispatcher(vista).forward(request, response);
+                break;
 
-
-                /*----------------Incidencias----------------*/
+            /*----------------Incidencias----------------*/
             case "listarIncidencia":
                 ArrayList<IncidenciasB> listaIncidencias = incidenciaDao.listarIncidencia();
                 request.setAttribute("lista", listaIncidencias);
                 vista = "WEB-INF/Vecino/listaIncidencias_V.jsp";
                 request.getRequestDispatcher(vista).forward(request, response);
-
                 break;
+
             case "verIncidencia":
                 String idIncidencia = request.getParameter("idIncidencia");
                 IncidenciasB incidencia = incidenciaDao.buscarIncidenciaPorId(idIncidencia);
                 request.setAttribute("incidencia", incidencia);
                 vista = "WEB-INF/Vecino/verIncidencia_V.jsp";
                 request.getRequestDispatcher(vista).forward(request, response);
-
                 break;
+
             case "generarIncidencia":
                 vista = "WEB-INF/Vecino/generarIncidencia_V.jsp";
                 request.getRequestDispatcher(vista).forward(request, response);
-
                 break;
+
             case "editarIncidencia":
                 String id = request.getParameter("idIncidencia");
                 IncidenciasB incidenciaB = incidenciaDao.buscarIncidenciaPorId(id);
@@ -94,6 +91,7 @@ public class VecinoServlet extends HttpServlet {
                     response.sendRedirect(request.getContextPath() + "/VecinoServlet");
                 }
                 return;
+
             case "borrarIncidencia":
                 String idBorrar = request.getParameter("idEvento");
                 /*
@@ -101,10 +99,10 @@ public class VecinoServlet extends HttpServlet {
                 */
                 response.sendRedirect(request.getContextPath() + "/VecinoServlet");
                 return;
-            default:
-                request.getRequestDispatcher("WEB-INF/Vecino/" + action + ".jsp").forward(request,response);
-        }
 
+            default:
+                request.getRequestDispatcher("WEB-INF/Vecino/" + action + ".jsp").forward(request, response);
+        }
     }
 
     @Override
@@ -115,8 +113,7 @@ public class VecinoServlet extends HttpServlet {
         String action = request.getParameter("action") == null ? "crear" : request.getParameter("action");
 
         switch (action) {
-
-            //Incidencia
+            // Incidencia
             case "crearIncidencia":
                 Map<String, String> errores = new HashMap<>();
 
@@ -136,11 +133,7 @@ public class VecinoServlet extends HttpServlet {
                 } else if (nombreIncidencia.length() > 100) {
                     errores.put("nombreIncidencia", "El nombre de la incidencia no puede tener más de 100 caracteres");
                 }
-                /*
-                if (foto == null || foto.isEmpty()) {
-                    errores.put("foto", "La foto es obligatoria");
-                }
-                */
+
                 if (tipoIncidencia == null || tipoIncidencia.isEmpty()) {
                     errores.put("tipoIncidencia", "El tipo de incidencia es obligatorio");
                 }
@@ -155,7 +148,7 @@ public class VecinoServlet extends HttpServlet {
 
                 if (lugarExacto == null || lugarExacto.isEmpty()) {
                     errores.put("lugarExacto", "El lugar exacto es obligatorio");
-                }else if (lugarExacto.length() > 100) {
+                } else if (lugarExacto.length() > 100) {
                     errores.put("lugarExacto", "El nombre de la incidencia no puede tener más de 100 caracteres");
                 }
 
@@ -223,7 +216,6 @@ public class VecinoServlet extends HttpServlet {
                 String numeroContacto2 = request.getParameter("numeroContacto");
                 int ambulancia2 = Integer.parseInt(request.getParameter("ambulancia"));
 
-
                 IncidenciasB incidenciaB = new IncidenciasB();
                 incidenciaB.setIdIncidencias(id);
                 incidenciaB.setNombreIncidencia(nombreIncidencia2);
@@ -240,14 +232,15 @@ public class VecinoServlet extends HttpServlet {
                 request.getSession().setAttribute("info", "Incidencia editada de manera exitosa");
                 response.sendRedirect(request.getContextPath() + "/VecinoServlet?action=listarIncidencia");
                 break;
+
             case "buscarIncidenciaPorNombre":
                 String textBuscar = request.getParameter("textoBuscarIncidencia");
                 String filtroFecha = request.getParameter("fecha");
                 String filtroTipo = request.getParameter("tipo");
                 String filtroEstado = request.getParameter("estado");
-                if (textBuscar == null && filtroFecha == null && filtroTipo == null && filtroEstado ==null){
+                if (textBuscar == null && filtroFecha == null && filtroTipo == null && filtroEstado == null) {
                     response.sendRedirect(request.getContextPath() + "/VecinoServlet?action=listarIncidencia");
-                }else {
+                } else {
                     request.setAttribute("textoBuscarIncidencia", textBuscar);
                     request.setAttribute("lista", incidenciaDao.listarIncidenciasFiltro(textBuscar, filtroFecha, filtroTipo, filtroEstado));
                     request.getRequestDispatcher("WEB-INF/Vecino/listaIncidencias_V.jsp").forward(request, response);
@@ -257,7 +250,6 @@ public class VecinoServlet extends HttpServlet {
             default:
                 response.sendRedirect(request.getContextPath() + "/VecinoServlet");
                 break;
-
         }
     }
 }

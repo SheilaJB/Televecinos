@@ -1,5 +1,6 @@
 package org.example.televecinosunidos_appweb.model.daos;
 
+import org.example.televecinosunidos_appweb.model.beans.EventoB;
 import org.example.televecinosunidos_appweb.model.beans.SerenazgoB;
 import org.example.televecinosunidos_appweb.model.beans.UsuarioB;
 
