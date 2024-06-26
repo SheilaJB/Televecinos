@@ -65,6 +65,7 @@
                     <span class="text-muted"><b>Coordinador</b></span>
                 </div>
             </div>
+
             <div class="navbar-nav w-100">
                 <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=inicioCoordinador" class="nav-item nav-link"><i class="fa fa-home me-2"></i><span style="font-size: 13.5px;"><b>Inicio</b></span></a>
                 <div class="nav-item dropdown">
