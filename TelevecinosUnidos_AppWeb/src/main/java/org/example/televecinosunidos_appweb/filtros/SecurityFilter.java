@@ -8,7 +8,7 @@ import org.example.televecinosunidos_appweb.model.dto.SerenazgoDTO;
 
 import java.io.IOException;
 
-@WebFilter("/*")
+@WebFilter(servletNames = {"AdministradorServlet", "CoordinadorServlet", "VecinoServlet", "SerenazgoServlet", "LoginServlet"})
 public class SecurityFilter implements Filter {
 
     @Override
@@ -18,9 +18,11 @@ public class SecurityFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+         
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         HttpSession session = httpRequest.getSession(false);
+
 
         String path = httpRequest.getRequestURI();
 

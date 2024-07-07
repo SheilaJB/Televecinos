@@ -18,12 +18,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Configuración de encabezados para controlar la caché
-        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
-        response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
-        response.setDateHeader("Expires", 0); // Proxies.
 
-        request.setCharacterEncoding("UTF-8");
-        response.setContentType("text/html;charset=UTF-8");
 
         String action = request.getParameter("action");
         HttpSession httpSession = request.getSession();
@@ -38,14 +33,15 @@ public class LoginServlet extends HttpServlet {
             if (usuarioLogged != null && usuarioLogged.getIdUsuario() > 0) {
                 if (request.getParameter("action") != null && request.getParameter("action").equals("logout")) {
                     httpSession.invalidate();
-                    response.sendRedirect(request.getContextPath() + "/LoginServlet?action=login");
+                    response.sendRedirect(request.getContextPath() + "/LoginServlet");
+
                 } else {
                     switch (usuarioLogged.getIdRol()) {
                         case 2:
                             response.sendRedirect(request.getContextPath() + "/VecinoServlet");
                             break;
                         case 3:
-                            response.sendRedirect(request.getContextPath() + "/CoordinadoraServlet");
+                            response.sendRedirect(request.getContextPath() + "/CoordinadorServlet");
                             break;
                         case 5:
                             response.sendRedirect(request.getContextPath() + "/AdministradorServlet");
@@ -54,8 +50,9 @@ public class LoginServlet extends HttpServlet {
                 }
             } else if (serenazgoLogeado != null && serenazgoLogeado.getIdUsuario() > 0) {
                 if (request.getParameter("action") != null && request.getParameter("action").equals("logout")) {
+
                     httpSession.invalidate();
-                    response.sendRedirect(request.getContextPath() + "/LoginServlet?action=login");
+                    response.sendRedirect(request.getContextPath() + "/LoginServlet");
                 } else {
                     response.sendRedirect(request.getContextPath() + "/SerenazgoServlet");
                 }
