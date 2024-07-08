@@ -19,7 +19,7 @@
         <!--------------------------- Cuadro izquierda ----------------------------->
         <div class="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column left-box" style="background: #f8f8fa25;">
             <div class="featured-image mb-3" style="width: 250px; height: 250px; display: flex; justify-content: center; align-items: center;">
-                <img src="logoTele.jpg" class="rounded-circle ms-3" style="max-width: 100%; max-height: 100%;">
+                <img src="/img/logo.jpg" class="rounded-circle ms-3" style="max-width: 100%; max-height: 100%;">
             </div>
         </div>
         <!-------------------- ------ Cuadro derecha ---------------------------->

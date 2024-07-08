@@ -25,7 +25,7 @@ public class LoginServlet extends HttpServlet {
 
         if (action != null && action.equals("register")) {
             cargarUrbanizaciones(request);
-            request.getRequestDispatcher("register.jsp").forward(request, response);
+            request.getRequestDispatcher("WEB-INF/login/register.jsp").forward(request, response);
         } else {
             UsuarioB usuarioLogged = (UsuarioB) httpSession.getAttribute("usuarioLogueado");
             SerenazgoDTO serenazgoLogeado = (SerenazgoDTO) httpSession.getAttribute("serenazgoLogeado");
@@ -57,7 +57,7 @@ public class LoginServlet extends HttpServlet {
                     response.sendRedirect(request.getContextPath() + "/SerenazgoServlet");
                 }
             } else {
-                request.getRequestDispatcher("index.jsp").forward(request, response);
+                request.getRequestDispatcher("/WEB-INF/login/index.jsp").forward(request, response);
             }
         }
     }
@@ -163,7 +163,7 @@ public class LoginServlet extends HttpServlet {
             } else {
                 System.out.println("Correo o contraseña inválidos");
                 request.setAttribute("err", "Correo o contraseña incorrectos");
-                request.getRequestDispatcher("/index.jsp").forward(request, response);
+                request.getRequestDispatcher("WEB-INF/login/index.jsp").forward(request, response);
             }
         }
     }
