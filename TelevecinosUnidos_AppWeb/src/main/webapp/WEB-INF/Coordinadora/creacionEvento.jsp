@@ -138,6 +138,7 @@
                                 <label for="nombreCoordinador" class="form-label" style="color:#023047;"><b>Nombre del coordinador:</b></label>
                                 <div class="display-box"><%= usuarioLogueado.getNombre() + " " + usuarioLogueado.getApellido() %></div>
                                 <input type="hidden" name="idCoordinador" value="<%= usuarioLogueado.getIdUsuario() %>">
+                                <input type="hidden" name="tipoCoordinador" value="<%= usuarioLogueado.getTipoCoordinador_idTipoCoordinador() %>">
                             </div>
                         </div>
                     </div>

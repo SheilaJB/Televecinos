@@ -13,27 +13,31 @@ import java.util.List;
 public class EventoDao extends BaseDao{
 
     //Función lista de eventos
-    public ArrayList<EventoB> listarEventosPropios() {
+    public ArrayList<EventoB> listarEventosPropios(int idTipoEvento) {
 
         String sqlSetLanguage = "SET lc_time_names = 'es_ES';";
         String sql = "SELECT e.idEventos AS 'ID Evento', e.nombre AS 'Nombre', DATE_FORMAT(e.fecha_inicio, '%d %M') AS 'Fecha de Inicio', " +
                 "es.estadosEvento AS 'Estado', ef.tipoFrecuencia AS 'Frecuencia' " +
                 "FROM Eventos e JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
                 "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
-                "WHERE e.TipoEvento_idTipoEvento = 2 AND e.eliminado = FALSE " +
+                "WHERE e.TipoEvento_idTipoEvento = ? AND e.eliminado = FALSE " +
                 "ORDER BY e.fecha_inicio DESC " +
                 "LIMIT 6;";
 
         ArrayList<EventoB> listaEventosPropios = new ArrayList<>();
 
         try (Connection conn = getConnection();
-             Statement stmt = conn.createStatement()) {
+             Statement stmt = conn.createStatement();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             // Ejecutar la sentencia para establecer el idioma de las fechas en español
             stmt.execute(sqlSetLanguage);
 
+            // Establecer el parámetro para el PreparedStatement
+            pstmt.setInt(1, idTipoEvento);
+
             // Ejecutar la consulta principal
-            try (ResultSet rs = stmt.executeQuery(sql)) {
+            try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
                     EventoB evento = new EventoB();
                     evento.setidEvento(rs.getInt("ID Evento"));
@@ -51,6 +55,7 @@ public class EventoDao extends BaseDao{
 
         return listaEventosPropios;
     }
+
 
     //Función lista de eventos disponibles
     public ArrayList<EventoB> listarEventosDisponibles() {
@@ -227,14 +232,12 @@ public class EventoDao extends BaseDao{
         try (Connection connection = getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-            int idCoordinador = 1;
-            int tipoEvento = 1;
             int estadoEvento = 1;
 
             pstmt.setString(1, eventoB.getNombre());
             pstmt.setString(2, eventoB.getDescripcion());
             pstmt.setString(3, eventoB.getLugar());
-            pstmt.setInt(4, idCoordinador);
+            pstmt.setInt(4, eventoB.getCoordinador_idUsuario());
             pstmt.setString(5, eventoB.getFecha_inicio());
             pstmt.setString(6, eventoB.getFecha_fin());
             pstmt.setInt(7, eventoB.getCantidadVacantes());
@@ -243,7 +246,7 @@ public class EventoDao extends BaseDao{
             pstmt.setString(10, eventoB.getListaMateriales());
             pstmt.setInt(11, estadoEvento);
             pstmt.setInt(12, eventoB.getEventFrecuencia_idEventFrecuencia());
-            pstmt.setInt(13, tipoEvento);
+            pstmt.setInt(13, eventoB.getTipoEvento_idTipoEvento());
             pstmt.setInt(14, eventoB.getProfesoresEvento_idProfesoresEvento());
             pstmt.setString(15, eventoB.getHora_inicio());
             pstmt.setString(16, eventoB.getHora_fin());

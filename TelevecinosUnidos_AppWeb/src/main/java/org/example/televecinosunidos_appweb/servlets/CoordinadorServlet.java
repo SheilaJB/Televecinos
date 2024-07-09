@@ -23,7 +23,7 @@ public class CoordinadorServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         EventoDao eventoDao = new EventoDao();
         IncidenCoordDao incidenciaDao = new IncidenCoordDao();
-        ArrayList<EventoB> listaEventosPropios = eventoDao.listarEventosPropios();
+
         ArrayList<EventoB> listarEventosDisponibles = eventoDao.listarEventosDisponibles();
         String vista ="";
         String action = request.getParameter("action") == null ? "inicioCoordinador" : request.getParameter("action");
@@ -56,6 +56,8 @@ public class CoordinadorServlet extends HttpServlet {
                 //Falta jalar los datos desde la tabla
                 break;
             case "lista":
+                int idTipoEvento = Integer.parseInt("2");
+                ArrayList<EventoB> listaEventosPropios = eventoDao.listarEventosPropios(idTipoEvento);
                 vista = "WEB-INF/Coordinadora/ListaEvent-Coordinador.jsp";
                 request.setAttribute("lista", listaEventosPropios);
                 request.getRequestDispatcher(vista).forward(request, response);
@@ -166,13 +168,14 @@ public class CoordinadorServlet extends HttpServlet {
                 String nombreEvento = request.getParameter("nombreEvento");
                 String descripcionEvento = request.getParameter("descripcionEvento");
                 String lugar = request.getParameter("lugar");
-                String idCoordinador = "1";
+                String idCoordinador = request.getParameter("idCoordinador");;
                 String idProfesor = request.getParameter("nombreProfesor");
                 String fecha_inicio = request.getParameter("fecha_inicio");
                 String fecha_fin = request.getParameter("fecha_fin");
                 String hora_inicio = request.getParameter("hora_inicio");
                 String hora_fin = request.getParameter("hora_fin");
                 String idFrecuencia = request.getParameter("frecuencia");
+                String idTipoEvento = request.getParameter("tipoCoordinador");
                 String opcionesDias = null;
                 if (idFrecuencia.equals("2")){
                     opcionesDias = request.getParameter("opcionesDias");
@@ -187,6 +190,7 @@ public class CoordinadorServlet extends HttpServlet {
                 EventoB eventoB0 = new EventoB();
 
                 eventoB0.setNombre(nombreEvento);
+                eventoB0.setTipoEvento_idTipoEvento(Integer.parseInt(idTipoEvento));
                 eventoB0.setDescripcion(descripcionEvento);
                 eventoB0.setLugar(lugar);
                 eventoB0.setCoordinador_idUsuario(Integer.parseInt(idCoordinador));
@@ -200,6 +204,7 @@ public class CoordinadorServlet extends HttpServlet {
                 eventoB0.setCantidadVacantes(Integer.parseInt(cantidadVacantes));
                 eventoB0.setFoto(foto);
                 eventoB0.setListaMateriales(materiales);
+
 
 
                 int estado = 1;
@@ -221,6 +226,7 @@ public class CoordinadorServlet extends HttpServlet {
                 int cantidadVacantes2 = Integer.parseInt(request.getParameter("cantidadVacantes"));
                 String foto2 = request.getParameter("foto");
                 String listaMateriales2 = request.getParameter("listaMateriales");
+                String idTipoEvento2 = request.getParameter("tipoCoordinador");
                 int EventFrecuencia_idEventFrecuencia2 = Integer.parseInt(request.getParameter("frecuencia"));
                 int ProfesoresEvento_idProfesoresEvento2 = Integer.parseInt(request.getParameter("ProfesoresEvento_idProfesoresEvento"));
                 String opcionesDias2 = null;
