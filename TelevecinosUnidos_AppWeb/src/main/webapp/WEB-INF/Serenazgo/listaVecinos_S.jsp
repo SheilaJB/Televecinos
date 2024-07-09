@@ -85,7 +85,7 @@
                                 <input type="text" class="form-control" id="filtroInput" placeholder="Buscar vecino..." name="textoBuscar" value="<%=textoBusqueda%>"/>
                                 <button class="btn btn-primary" type="submit">
                                     <i class="fas fa-search"></i> </button>
-                                <a class="btn btn-secondary" href="<%=request.getContextPath()%>/AdministradorServlet?action=listaVecinos_S">
+                                <a class="btn btn-secondary" href="<%=request.getContextPath()%>/SerenazgoServlet?action=listaVecinos_S">
                                     Limpiar
                                 </a>
                             </div>
@@ -106,7 +106,7 @@
                             <th scope="col">Nombre y Apellido</th>
                             <th scope="col">Direccion</th>
                             <th scope="col">DNI</th>
-
+                            <th scope="col">Cantidad incidencias falsas</th>
                             <th scope="col">Banear</th>
 
 
@@ -118,7 +118,7 @@
                             <td><%=usuarioB.getNombre() + " " + usuarioB.getApellido()%></td>
                             <td><%=usuarioB.getDireccion() %></td>
                             <td><%=usuarioB.getDni() %></td>
-
+                            <!--<td>FALTA VALIDAR QUE SOLO SE MUESTREN LOS QUE TIENEN >5FALSAS</td>-->
                             <td><a href="<%=request.getContextPath()%>/SerenazgoServlet?action=banearVecino&idVecino=<%=usuarioB.getIdUsuario()%>"><button type="button" class="btn btn-danger m-2" ><i class="fas fa-ban"></i></button></a></td>
 
                         </tr>

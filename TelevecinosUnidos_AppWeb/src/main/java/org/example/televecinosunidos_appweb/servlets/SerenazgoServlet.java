@@ -29,14 +29,6 @@ public class SerenazgoServlet extends HttpServlet {
                 request.setAttribute("lista",incidenciaDao.listarIncidencias());
                 request.getRequestDispatcher(vista).forward(request, response);
                 break;
-            //default:
-            //  request.getRequestDispatcher("WEB-INF/Serenazgo/" + action + ".jsp").forward(request,response);
-
-            /*case "new":
-                request.getRequestDispatcher("job/form_new.jsp").forward(request,response);
-                break;*/
-            //break;
-
             case "gestionar_Incidencia_S":
                 String id = request.getParameter("id");
                 IncidenciasB incidenciasB = incidenciaDao.buscarPorId(id);
@@ -133,7 +125,7 @@ public class SerenazgoServlet extends HttpServlet {
                 } else {
                     request.setAttribute("textoBusqueda",textoBuscar);
                     request.setAttribute("lista", vecinoDao.buscarVecinoPorNombre(textoBuscar));
-                    RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Administrador/listaVecinos_S.jsp");
+                    RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Serenazgo/listaVecinos_S.jsp");
                     view.forward(request, response);
                 }
                 break;
