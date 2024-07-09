@@ -9,7 +9,6 @@
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
     <title>Lista de incidencias</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -40,10 +39,10 @@
     <link href="css/app.min.css" rel="stylesheet">
     <link href="css/style_vec.css" rel="stylesheet">
 
-
-
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
-
 
 <body>
 <div class="container-xxl position-relative bg-white d-flex p-0">
@@ -55,11 +54,9 @@
     </div>
     <!-- Spinner End -->
 
-
     <!-- BARRA AZUL DE LA IZQUIERDA INICIO-->
     <jsp:include page="../includes/barraLateralVecino.jsp"></jsp:include>
     <!-- BARRA AZUL DE LA IZQUIERDA FINAL -->
-
 
     <!-- Content Start -->
     <div class="content">
@@ -67,65 +64,62 @@
         <jsp:include page="../includes/navbarVecino.jsp"></jsp:include>
         <!-- PARTE SUPERIOR FINAL -->
 
-
-
         <!-- LLENAR-->
-
-        <!-- Bootstrap JS dependencies -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
         <div id="Nombre del evento">
             <h3 style="text-align: left; margin-top:20px;margin-bottom:20px;padding: 20px">Lista de incidencias</h3>
         </div>
         <% if (session.getAttribute("info") != null) { %>
-        <div class="alert alert-success" role="alert">
-            <%= session.getAttribute("info") %>
-        </div>
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: '¡Éxito!',
+                text: '<%= session.getAttribute("info") %>',
+                showConfirmButton: false,
+                timer: 2000
+            });
+        </script>
         <% session.removeAttribute("info"); %>
         <% } %>
+
         <div style="background-color: #f8f9fa; padding: 20px; align-items: center;">
             <!-- Filtro -->
             <div style="background-color: #FFB703 ; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
-                <form  method="post" action="<%=request.getContextPath()%>/VecinoServlet?action=buscarIncidenciaPorNombre">
+                <form method="post" action="<%=request.getContextPath()%>/VecinoServlet?action=buscarIncidenciaPorNombre">
                     <div class="row justify-content-center align-items-center">
                         <!-- Busqueda por nombre de incidencia -->
                         <div class="col-md-3 mb-2">
                             <input type="text" class="form-control" id="filtroInput" placeholder="Buscar incidencia..." name="textoBuscarIncidencia"
                                    value="<%=textoBuscarIncidencia%>">
                         </div>
-
                         <div class="col-md-2 mb-2">
-                            <input type="date" class="form-control"  name="filtroFecha">
+                            <input type="date" class="form-control" name="filtroFecha">
                         </div>
-
                         <div class="col-md-2 mb-2">
-                            <select  class="form-select" name="filtroTipo">
+                            <select class="form-select" name="filtroTipo">
                                 <option selected disabled>Tipo de Incidencia</option>
-                                <option value="1" >Seguridad Pública</option>
-                                <option value="2 " >Emergencia Médica</option>
-                                <option value="3" >Infraestructura y Servicios Públicos</option>
-                                <option value="4" >Otro</option>
+                                <option value="1">Seguridad Pública</option>
+                                <option value="2">Emergencia Médica</option>
+                                <option value="3">Infraestructura y Servicios Públicos</option>
+                                <option value="4">Otro</option>
                             </select>
                         </div>
                         <div class="col-md-2 mb-2">
-                            <select  class="form-select" name="filtroEstado">
+                            <select class="form-select" name="filtroEstado">
                                 <option selected disabled>Estado</option>
-                                <option value="1" >Pendiente</option>
-                                <option value="2" >En curso</option>
-                                <option value="3" >Cancelado</option>
-                                <option value="4" >Rechazado</option>
-                                <option value="5" >Procesado</option>
+                                <option value="1">Pendiente</option>
+                                <option value="2">En curso</option>
+                                <option value="3">Cancelado</option>
+                                <option value="4">Rechazado</option>
+                                <option value="5">Procesado</option>
                             </select>
                         </div>
                         <div class="col-md-1 mb-2">
-                            <button class="btn btn-primary " type="submit">
-                                <i class="fas fa-search"></i> </button>
+                            <button class="btn btn-primary" type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
                         </div>
                         <div class="col-md-2 mb-2">
-                            <a type="reset" class="btn btn-primary " href="<%=request.getContextPath()%>/VecinoServlet?action=listarIncidencia" >Limpiar</a>
-
+                            <a type="reset" class="btn btn-primary" href="<%=request.getContextPath()%>/VecinoServlet?action=listarIncidencia">Limpiar</a>
                         </div>
                     </div>
                 </form>
@@ -155,18 +149,20 @@
                         <td><%= incidencia.getTipoIncidencia() %></td>
                         <td><%= incidencia.getEstadoIncidencia() %></td>
                         <td>
-                            <a href="<%=request.getContextPath()%>/VecinoServlet?action=verIncidencia&idIncidencia=<%= incidencia.getIdIncidencias()%>">
+                            <a href="<%=request.getContextPath()%>/VecinoServlet?action=verIncidencia&idIncidencia=<%= incidencia.getIdIncidencias() %>">
                                 <button type="button" class="btn btn-primary m-2"><i class="fas fa-eye"></i></button>
                             </a>
                         </td>
                         <% if ("Pendiente".equals(incidencia.getEstadoIncidencia())) { %>
                         <td>
-                            <a href="<%=request.getContextPath()%>/VecinoServlet?action=editarIncidencia&idIncidencia=<%=incidencia.getIdIncidencias()%>">
+                            <a href="<%=request.getContextPath()%>/VecinoServlet?action=editarIncidencia&idIncidencia=<%= incidencia.getIdIncidencias() %>">
                                 <button type="button" class="btn btn-success m-2"><i class="fas fa-pencil-alt"></i></button>
                             </a>
                         </td>
                         <td>
-                            <button type="button" class="btn btn-danger m-2" onclick="confirmDelete(<%=incidencia.getIdIncidencias()%>)"><i class="fas fa-trash-alt"></i></button>
+                            <button type="button" class="btn btn-danger m-2" onclick="confirmDelete(<%= incidencia.getIdIncidencias() %>)">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
                         </td>
                         <% } else { %>
                         <td><button type="button" class="btn btn-success m-2"><i class="fas fa-pencil-alt"></i></button></td>
@@ -180,19 +176,18 @@
                     </tr>
                     <% } %>
                     </tbody>
-
                 </table>
             </div>
-            <div  style="display: flex; justify-content: center; align-items: center;">
-                <section class="paginacion" >
-                    <ul style="list-style: none;padding: 0;margin: 0;display: flex;">
-                        <div style="background-color: white ; padding: 5px; margin:10px">
+            <div style="display: flex; justify-content: center; align-items: center;">
+                <section class="paginacion">
+                    <ul style="list-style: none; padding: 0; margin: 0; display: flex;">
+                        <div style="background-color: white; padding: 5px; margin: 10px">
                             <li style="margin: 0 5px;"><a class="link-opacity-50-hover" href="#" class="active">1</a></li>
                         </div>
-                        <div style="background-color:white ; padding: 5px;margin:10px">
+                        <div style="background-color: white; padding: 5px; margin: 10px">
                             <li style="margin: 0 5px;"><a class="link-opacity-50-hover" href="#" class="active">2</a></li>
                         </div>
-                        <div style="background-color: white ; padding: 5px;margin:10px">
+                        <div style="background-color: white; padding: 5px; margin: 10px">
                             <li style="margin: 0 5px;"><a class="link-opacity-50-hover" href="#" class="active">3</a></li>
                         </div>
                     </ul>
@@ -214,68 +209,28 @@
 </div>
 <!-- Content End -->
 
-
-
-<!-- Popup de confirmation para eliminar una incidencia -->
-
-<div id="deleteConfirmationPopup" class="popup">
-    <div class="popup-content">
-        <span class="close-btn" id="closeDeletePopupBtn">&times;</span>
-        <img src="img/warning.png" alt="check" width="48" height="48" style="margin-top: -10px;">
-        <h2 style="margin-top: 20px;">Confirmar Eliminación</h2>
-        <p>¿Estás seguro de que deseas eliminar este incidente?</p>
-        <button id="confirmDeleteBtn" class="btn btn-danger">Eliminar</button>
-        <button onclick="closeDeletePopup()" class="btn btn-secondary">Cancelar</button>
-    </div>
-</div>
-
-<!-- JavaScript para Popup -->
+<!-- JavaScript para SweetAlert -->
 <script>
-    const closeDeletePopupBtn = document.getElementById('closeDeletePopupBtn');
-    const deleteConfirmationPopup = document.getElementById('deleteConfirmationPopup');
-    const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
-    const mainContent = document.querySelector('.content'); // Selecciona el contenido principal que quieres deshabilitar
-    let eventIdToDelete; // Variable para almacenar el ID del evento a eliminar
-
-    // Función para deshabilitar interacciones
-    function disableInteractions() {
-        mainContent.style.pointerEvents = 'none';
-        mainContent.style.opacity = '0.4'; // Opcional: reduce la opacidad para un efecto visual de desactivado
-    }
-
-    // Función para habilitar interacciones
-    function enableInteractions() {
-        mainContent.style.pointerEvents = 'all';
-        mainContent.style.opacity = '1'; // Restaura la opacidad
-    }
-
-    // Función para cerrar el popup
-    function closeDeletePopup() {
-        deleteConfirmationPopup.style.display = 'none';
-        enableInteractions();
-    }
-
-    // Eventos para manejar el popup
-    closeDeletePopupBtn.addEventListener('click', closeDeletePopup);
-
-    // Función para confirmar eliminación
-    confirmDeleteBtn.addEventListener('click', function() {
-        window.location.href = '<%=request.getContextPath()%>/VecinoServlet?action=borrarIncidencia&idIncidencia=' + eventIdToDelete;;
-        closeDeletePopup();
-    });
-
-    // Función para abrir el popup de confirmación
     function confirmDelete(eventId) {
-        eventIdToDelete = eventId; // Almacenar el ID del evento a eliminar
-        deleteConfirmationPopup.style.display = 'block';
-        disableInteractions();
+        Swal.fire({
+            title: 'Confirmar Eliminación',
+            text: "¿Estás seguro de que deseas eliminar este incidente?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Sí, eliminarlo',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '<%=request.getContextPath()%>/VecinoServlet?action=borrarIncidencia&idIncidencia=' + eventId;
+            }
+        });
     }
 </script>
 
-
 <!-- Back to Top -->
 <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
-</div>
 
 <!-- JavaScript Libraries -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
