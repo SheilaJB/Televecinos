@@ -85,6 +85,12 @@ public class AdministradorServlet extends HttpServlet {
                 request.setAttribute("lista",vecinoDao.listarVecinos());
                 request.getRequestDispatcher(vista).forward(request, response);
                 break;
+            case "DetalleSolicitantes_A":
+                String idVecino1 = request.getParameter("idVecino");
+                request.setAttribute("vecino",vecinoDao.buscarVecinoPorId(idVecino1));
+                vista = "WEB-INF/Administrador/DetalleSolicitantes_A.jsp";
+                request.getRequestDispatcher(vista).forward(request, response);
+                break;
             case "DetalleVecinos_A":
                 String idVecino = request.getParameter("idVecino");
                 request.setAttribute("vecino",vecinoDao.buscarVecinoPorId(idVecino));
