@@ -418,7 +418,7 @@ public class EventoDao extends BaseDao{
         return true;
     }
     //Buscar evento por filtro
-    public ArrayList<EventoB> listarEventoFiltro(String nombre, String frecuencia, String estado) {
+    public ArrayList<EventoB> listarEventoFiltro(String nombre, String frecuencia, String estado, int idTipoEvento) {
         String sql = "SELECT " +
                 "    e.idEventos AS id_evento, " +
                 "    e.nombre AS nombre, " +
@@ -462,6 +462,10 @@ public class EventoDao extends BaseDao{
         if (estado != null && !estado.isEmpty()) {
             sql += "AND es.idEventEstados = ? ";
             parametros.add(estado);
+        }
+        if (idTipoEvento !=0) {
+            sql += "AND e.TipoEvento_idTipoEvento = ? ";
+            parametros.add(idTipoEvento);
         }
 
         try (Connection conn = getConnection();

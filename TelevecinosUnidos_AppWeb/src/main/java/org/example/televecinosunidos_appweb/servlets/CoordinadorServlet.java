@@ -163,6 +163,8 @@ public class CoordinadorServlet extends HttpServlet {
         IncidenCoordDao incidenciaDao = new IncidenCoordDao();
         EventoDao eventoDao = new EventoDao();
         String action = request.getParameter("action") == null ? "crear" : request.getParameter("action");
+        HttpSession httpSession = request.getSession();
+        UsuarioB usuarioLogged = (UsuarioB) httpSession.getAttribute("usuarioLogueado");
 
         switch (action) {
             //Evento
@@ -271,7 +273,7 @@ public class CoordinadorServlet extends HttpServlet {
                     response.sendRedirect(request.getContextPath() + "/CoordinadorServlet?action=lista");
                 }else {
                     request.setAttribute("textoBuscarEvento", textBuscar);
-                    request.setAttribute("lista", eventoDao.listarEventoFiltro(textBuscar,  filtroFrecuencia, filtroEstado));
+                    request.setAttribute("lista", eventoDao.listarEventoFiltro(textBuscar,  filtroFrecuencia, filtroEstado,usuarioLogged.getTipoCoordinador_idTipoCoordinador()));
                     request.getRequestDispatcher("WEB-INF/Coordinadora/ListaEvent-Coordinador.jsp").forward(request, response);
                 }
                 break;
