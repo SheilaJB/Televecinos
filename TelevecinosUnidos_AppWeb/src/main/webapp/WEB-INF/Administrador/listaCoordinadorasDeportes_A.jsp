@@ -248,14 +248,14 @@
             reverseButtons: true
         }).then((result) => {
             if (result.isConfirmed) {
-                // Mostrar alerta de éxito y luego redirigir
+
                 swalWithBootstrapButtons.fire({
                     title: 'Baneado',
                     text: 'El usuario ha sido baneado exitosamente',
                     icon: 'success'
                 }).then(() => {
-                    // Redirigir a la acción de banear el usuario
-                    window.location.href = '<%= request.getContextPath() %>/AdministradorServlet?action=banearVecino&idVecino=' + idUsuario;
+
+                    window.location.href = '<%= request.getContextPath() %>/AdministradorServlet?action=banearCoordinadoraDeporte&idCoordinadora=' + idUsuario;
                 });
             } else if (result.dismiss === Swal.DismissReason.cancel) {
                 swalWithBootstrapButtons.fire({

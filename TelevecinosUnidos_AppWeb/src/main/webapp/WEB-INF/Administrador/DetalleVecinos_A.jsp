@@ -34,6 +34,7 @@
     <link href="css/app.min.css" rel="stylesheet">
     <link href="css/style_vec.css" rel="stylesheet">
     <link href="css/style_popup.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
 
         .container {
@@ -148,43 +149,13 @@
                 <a href="<%=request.getContextPath()%>/AdministradorServlet?action=listaVecinos_A"><button class="button regresar">Regresar</button></a>
                 <a href="<%=request.getContextPath()%>/AdministradorServlet?action=promoverAcoordinadorCultura&idVecino=<%=vecino.getIdUsuario()%>"><button class="button convertCoordinadora btn-banear">Promover a coordinadora cultura</button></a>
                 <a href="<%=request.getContextPath()%>/AdministradorServlet?action=promoverAcoordinadorDeporte&idVecino=<%=vecino.getIdUsuario()%>"><button class="button convertCoordinadora btn-banear">Promover a coordinadora deportes </button></a>
-                <!--
-                <button class="button convertCoordinadora btn-banear">Promover a coordinadora</button>
-                <div id="popup1" class="popup1" >
-                    <div class="popup_contenido1">
-                        <span class="close-btn" id="closePopupBtn1">&times;</span>
-                        <img src="img/elegircordi.jpeg" alt="check" width="48" height="48" style="margin-top: -10px;">
-                        <p>SELECIONE UN ROL PARA LA NUEVA COORDINADORA</p>
-                        <div>
-                            <a href="emailCoordAdmin.html" type="button" class="btn btn-danger rounded-pill m-2">Cultura</a>
-                        </div>
-                        <div>
-                            <a href="emailCoordDEPORTEAdmin.html" type="button" class="btn btn-success rounded-pill m-2">Deportes</a>
-                        </div>
 
-                        <a href="DetalleVecinos_A.html"><button type="button" class="btn btn-warning rounded-pill m-2">Cancelar</button></a>
+                <!--<a href="<%=request.getContextPath()%>/AdministradorServlet?action=banearVecino&idVecino=<%=vecino.getIdUsuario()%>"><button class="button banear btn-banear">Banear</button></a>-->
+                <button type="button" class="btn btn-danger m-2" onclick="confirmarBanear(<%=vecino.getIdUsuario()%>)">
+                    Banear
+                </button>
 
-                    </div>
-                </div>
-                -->
-                <a href="<%=request.getContextPath()%>/AdministradorServlet?action=banearVecino&idVecino=<%=vecino.getIdUsuario()%>"><button class="button banear btn-banear">Banear</button></a>
-                <!--
-                <button class="button banear btn-banear">Banear</button>
-                <div id="popup1" class="popup1" >
-                    <div class="popup_contenido1">
-                        <span class="close-btn" id="closePopupBtn1">&times;</span>
-                        <img src="img/advertencia.png" alt="check" width="48" height="48" style="margin-top: -10px;">
 
-                        <p>¡Advertencia!</p>
-
-                        <p>La acción "Banear" será permanente, debe estar seguro de su decisión al respecto</p>
-
-                        <a href="NuevasSolicitudes.html"><button type="button" class="btn btn-success rounded-pill m-2">Cancelar</button></a>
-                        <button type="button" class="btn btn-danger rounded-pill m-2">Sí, banear</button>
-
-                    </div>
-                </div>
-                -->
             </div>
 
             <script>
@@ -235,7 +206,45 @@
 <script src="lib/tempusdominus/js/moment.min.js"></script>
 <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
 <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+<script>
+    function confirmarBanear(idUsuario) {
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        });
 
+        swalWithBootstrapButtons.fire({
+            title: '¿Estás seguro que deseas banear al usuario?',
+            text: 'Podrás desbanearlo luego',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: '¡Sí, quiero banearlo!',
+            cancelButtonText: '¡No, cancelar!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                swalWithBootstrapButtons.fire({
+                    title: 'Baneado',
+                    text: 'El usuario ha sido baneado exitosamente',
+                    icon: 'success'
+                }).then(() => {
+
+                    window.location.href = '<%= request.getContextPath() %>/AdministradorServlet?action=banearVecino&idVecino=' + idUsuario;
+                });
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                swalWithBootstrapButtons.fire({
+                    title: 'Baneo cancelado',
+                    text: 'No se ha baneado al usuario',
+                    icon: 'error'
+                });
+            }
+        });
+    }
+</script>
 <!-- Template Javascript -->
 <script src="js/main.js"></script>
 <script>
