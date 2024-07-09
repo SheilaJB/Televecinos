@@ -140,8 +140,8 @@ INSERT INTO `televecinosDB`.`Usuario` (
 ('Lucía', 'Díaz', '92345678', 'Jirón Puno 907, Maranga', 'lucia.diaz@example.com', SHA2('password9', 256), 'avatar', 1, 2, 0,0,7),
 ('Miguel', 'Hernández', '10345678', 'Calle Junín 1018, Pando', 'miguel.hernandez@example.com', SHA2('password10', 256), 'avatar', 1, 2, 0,0,8),
 ('Elena', 'Jiménez', '11345678', 'Avenida Bertoloto 1129, Parques de La Huaca', 'elena.jimenez@example.com', SHA2('password11', 256), 'avatar', 1, 2, 0,0,2),
-('Valeria', 'Ruiz', '12345679', 'Jirón Tumbes 1240, Otro', 'valeria.ruiz@example.com', SHA2('password12', 256), 'avatar', 1, 1, 0,0,6),
-('Diego', 'Morales', '13345678', 'Calle Libertad 1351, Rafael Escardó', 'diego.morales@example.com', SHA2('password13', 256), 'avatar', 1, 1, 0,0,7);
+('Valeria', 'Ruiz', '12345679', 'Jirón Tumbes 1240, Otro', 'valeria.ruiz@example.com', SHA2('password12', 256), 'avatar', 1, 1, 0,0,0),
+('Diego', 'Morales', '13345678', 'Calle Libertad 1351, Rafael Escardó', 'diego.morales@example.com', SHA2('password13', 256), 'avatar', 1, 1, 0,0,0);
 
 -- Ingreso adicional
 INSERT INTO `televecinosDB`.`Usuario` (

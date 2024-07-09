@@ -118,7 +118,7 @@
                             <td><%=usuarioB.getNombre() + " " + usuarioB.getApellido()%></td>
                             <td><%=usuarioB.getDireccion() %></td>
                             <td><%=usuarioB.getDni() %></td>
-                            <!--<td>FALTA VALIDAR QUE SOLO SE MUESTREN LOS QUE TIENEN >5FALSAS</td>-->
+                            <td><%=usuarioB.getCantidadIncidenciasFalsas() %></td>
                             <td><a href="<%=request.getContextPath()%>/SerenazgoServlet?action=banearVecino&idVecino=<%=usuarioB.getIdUsuario()%>"><button type="button" class="btn btn-danger m-2" ><i class="fas fa-ban"></i></button></a></td>
 
                         </tr>

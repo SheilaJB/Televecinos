@@ -17,6 +17,15 @@ public class UsuarioB {
     private String rolStr;
     private int isBan;
     private int primerIngreso;
+    private int cantidadIncidenciasFalsas;
+
+    public int getCantidadIncidenciasFalsas() {
+        return cantidadIncidenciasFalsas;
+    }
+
+    public void setCantidadIncidenciasFalsas(int cantidadIncidenciasFalsas) {
+        this.cantidadIncidenciasFalsas = cantidadIncidenciasFalsas;
+    }
 
     public int getPrimerIngreso() {
         return primerIngreso;

@@ -10,10 +10,10 @@ import java.util.ArrayList;
 public class VecinoDao extends BaseDao{
     public ArrayList<UsuarioB> listarVecinos() {
 
-        String sql = "SELECT idUsuario,nombre,apellido,dni,direccion,correo\n" +
+        String sql = "SELECT idUsuario,nombre,apellido,dni,direccion,correo,cantidadIncidenciasFalsas\n" +
                 "FROM televecinosdb.usuario \n" +
-                "where Rol_idRol = 2 and isBan=0" ;
-
+                "where Rol_idRol = 2 and isBan=0 \n" +
+                "order by usuario.idUsuario desc;";
 
         ArrayList<UsuarioB> listaVecinos = new ArrayList<>();
 
@@ -29,7 +29,7 @@ public class VecinoDao extends BaseDao{
                 usuarioB.setDni(rs.getString(4));
                 usuarioB.setDireccion(rs.getString(5));
                 usuarioB.setCorreo(rs.getString(6));
-
+                usuarioB.setCantidadIncidenciasFalsas(rs.getInt(7));
 
                 listaVecinos.add(usuarioB);
             }
@@ -153,8 +153,8 @@ public class VecinoDao extends BaseDao{
     public ArrayList<UsuarioB> buscarVecinoPorNombre(String textoBuscar) {
         String sql = "SELECT idUsuario, nombre, apellido, dni, direccion, correo " +
                 "FROM televecinosdb.usuario " +
-                "WHERE Rol_idRol = 2 AND isBan = 0 AND (nombre LIKE ? OR apellido LIKE ?)";
-
+                "WHERE Rol_idRol = 2 AND isBan = 0 AND (nombre LIKE ? OR apellido LIKE ? OR dni LIKE ?)\n" +
+                "order by idUsuario desc;";
 
 
         ArrayList<UsuarioB> listaVecinos = new ArrayList<>();
@@ -163,7 +163,7 @@ public class VecinoDao extends BaseDao{
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, textoBuscar+ "%");
             pstmt.setString(2, textoBuscar+ "%");
-
+            pstmt.setString(3, textoBuscar);
             try(ResultSet rs = pstmt.executeQuery()){
                 while (rs.next()) {
                     UsuarioB usuarioB = new UsuarioB();
