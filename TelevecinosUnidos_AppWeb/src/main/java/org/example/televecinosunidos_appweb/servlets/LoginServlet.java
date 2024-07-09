@@ -6,11 +6,14 @@ import jakarta.servlet.annotation.*;
 import org.example.televecinosunidos_appweb.model.beans.*;
 import org.example.televecinosunidos_appweb.model.daos.*;
 import org.example.televecinosunidos_appweb.model.dto.SerenazgoDTO;
+import org.example.televecinosunidos_appweb.util.EnviarEmail;
+import org.example.televecinosunidos_appweb.util.GeneraContrasena;
 import org.example.televecinosunidos_appweb.util.ValidacionesInicio;
 
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 @WebServlet(name = "LoginServlet", urlPatterns ={"/LoginServlet",""} )
@@ -26,6 +29,8 @@ public class LoginServlet extends HttpServlet {
         if (action != null && action.equals("register")) {
             cargarUrbanizaciones(request);
             request.getRequestDispatcher("WEB-INF/login/register.jsp").forward(request, response);
+        } else if (action != null && action.equals("forgotPassword")) {
+            request.getRequestDispatcher("WEB-INF/login/olvidasteContrasena.jsp").forward(request, response);
         } else {
             UsuarioB usuarioLogged = (UsuarioB) httpSession.getAttribute("usuarioLogueado");
             SerenazgoDTO serenazgoLogeado = (SerenazgoDTO) httpSession.getAttribute("serenazgoLogeado");
@@ -127,7 +132,34 @@ public class LoginServlet extends HttpServlet {
                 System.out.println("Error al registrar el usuario: " + correo);
                 response.sendRedirect(request.getContextPath() + "/LoginServlet?action=register&err=" + URLEncoder.encode("Error al registrar el usuario.", StandardCharsets.UTF_8.toString()));
             }
-        } else {
+        } else if (action != null && action.equals("forgotPassword")) {
+
+            String correo = request.getParameter("correo");
+
+            UsuarioDao usuarioDao = new UsuarioDao();
+
+            if (usuarioDao.existeCorreo(correo)) {
+                // Generar contraseña temporal
+                String tempPassword = GeneraContrasena.generateTemporaryPassword();
+
+                try {
+                    usuarioDao.actualizarContrasenaTemporal(correo, GeneraContrasena.hashPassword(tempPassword));
+                } catch (NoSuchAlgorithmException e) {
+                    throw new RuntimeException(e);
+                }
+
+                // Enviar correo con la contraseña temporal
+                EnviarEmail enviarEmail = new EnviarEmail();
+                enviarEmail.sendEmail(correo, tempPassword);
+
+                // Redirigir con mensaje de éxito
+                response.sendRedirect(request.getContextPath() + "/LoginServlet?action=forgotPassword&success=" + URLEncoder.encode("Revisa tu correo para mayor información.", StandardCharsets.UTF_8.toString()));
+            } else {
+                // Redirigir con mensaje de error si el correo no está registrado
+                response.sendRedirect(request.getContextPath() + "/LoginServlet?action=forgotPassword&err=" + URLEncoder.encode("El correo electrónico no está registrado. Por favor, intenta de nuevo.", StandardCharsets.UTF_8.toString()));
+            }
+        }
+        else {
             // Lógica de inicio de sesión de usuario
             String correo = request.getParameter("correo");
             String contrasena = request.getParameter("contrasena");

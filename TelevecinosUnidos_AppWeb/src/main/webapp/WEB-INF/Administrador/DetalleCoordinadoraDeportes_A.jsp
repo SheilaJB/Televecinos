@@ -36,6 +36,7 @@
     <link href="css/app.min.css" rel="stylesheet">
     <link href="css/style_vec.css" rel="stylesheet">
     <link href="css/style_popup.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
 
         .container {
@@ -152,25 +153,10 @@
                 <div class="bar" data-label="Correo"><%=coordinadora.getCorreo()%></div>
                 <a href="<%=request.getContextPath()%>/AdministradorServlet?action=listaCoordinadorasDeportes_A"><button class="button regresar">Regresar</button></a>
                 <a href="correoparaCoordA.html"><button  class="button enviar btn-success">Enviar correo</button></a>
-                <a href="<%=request.getContextPath()%>/AdministradorServlet?action=banearCoordinadoraDeporte&idCoordinadora=<%=coordinadora.getIdUsuario()%>"><button class="button banear btn-banear">Banear</button></a>
-
-                <!--
-                <button class="button banear btn-banear">Banear</button>
-                <div id="popup1" class="popup1" >
-                    <div class="popup_contenido1">
-                        <span class="close-btn" id="closePopupBtn1">&times;</span>
-                        <img src="img/advertencia.png" alt="check" width="48" height="48" style="margin-top: -10px;">
-
-                        <p>¡Advertencia!</p>
-
-                        <p>La acción "Banear" será permanente, debe estar seguro de su desición al respecto</p>
-
-                        <a href="DetalleCordinadora_A.html"><button type="button" class="btn btn-success rounded-pill m-2">Cancelar</button></a>
-                        <button type="button" class="btn btn-danger rounded-pill m-2">Sí, banear</button>
-
-                    </div>
-                </div>
-                -->
+                <!--<a href="<%=request.getContextPath()%>/AdministradorServlet?action=banearCoordinadoraDeporte&idCoordinadora=<%=coordinadora.getIdUsuario()%>"><button class="button banear btn-banear">Banear</button></a>-->
+                <button type="button" class="btn btn-danger m-2" onclick="confirmarBanear(<%=coordinadora.getIdUsuario()%>)">
+                    Banear
+                </button>
             </div>
 
             <script>
@@ -251,6 +237,44 @@
         });
     });
 
+</script>
+<script>
+    function confirmarBanear(idUsuario) {
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        });
+
+        swalWithBootstrapButtons.fire({
+            title: '¿Estás seguro que deseas banear al usuario?',
+            text: 'Podrás desbanearlo luego',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: '¡Sí, quiero banearlo!',
+            cancelButtonText: '¡No, cancelar!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                swalWithBootstrapButtons.fire({
+                    title: 'Baneado',
+                    text: 'El usuario ha sido baneado exitosamente',
+                    icon: 'success'
+                }).then(() => {
+
+                    window.location.href = '<%= request.getContextPath() %>/AdministradorServlet?action=banearCoordinadoraDeporte&idCoordinadora=' + idUsuario;
+                });
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                swalWithBootstrapButtons.fire({
+                    title: 'Baneo cancelado',
+                    text: 'No se ha baneado al usuario',
+                    icon: 'error'
+                });
+            }
+        });
+    }
 </script>
 </body>
 

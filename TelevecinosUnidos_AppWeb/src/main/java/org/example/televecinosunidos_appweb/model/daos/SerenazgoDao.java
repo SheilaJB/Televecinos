@@ -4,7 +4,10 @@ import org.example.televecinosunidos_appweb.model.beans.EventoB;
 import org.example.televecinosunidos_appweb.model.beans.ProfesoresEvento;
 import org.example.televecinosunidos_appweb.model.beans.SerenazgoB;
 import org.example.televecinosunidos_appweb.model.beans.UsuarioB;
+import org.example.televecinosunidos_appweb.util.EnviarEmail;
+import org.example.televecinosunidos_appweb.util.GeneraContrasena;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -189,7 +192,11 @@ public class SerenazgoDao extends BaseDao {
     }
 
 
-    public void registrarSerenazgo(SerenazgoB serenazgoB) {
+    public void registrarSerenazgo(SerenazgoB serenazgoB) throws NoSuchAlgorithmException {
+        String tempPassword = GeneraContrasena.generateTemporaryPassword();
+        String hashedPassword = GeneraContrasena.hashPassword(tempPassword);
+
+
 
         String sql = "INSERT INTO `televecinosdb`.`usuario` (`nombre`, `apellido`, `dni`, `direccion`, `correo`, `contrasena`,`PreguntasFrecuentes_idtable2`, `Rol_idRol`, `isBan`,`primerIngreso`) VALUES (?, ?, ?, ?, ?, SHA2(?,256   ), ?, ?, ?,?)";
         try(Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) { // usando try con recursos
@@ -199,7 +206,7 @@ public class SerenazgoDao extends BaseDao {
             pstmt.setString(3,serenazgoB.getUsuario().getDni());
             pstmt.setString(4,serenazgoB.getUsuario().getDireccion());
             pstmt.setString(5,serenazgoB.getUsuario().getCorreo());
-            pstmt.setString(6,serenazgoB.getUsuario().getContrasenia());
+            pstmt.setString(6,hashedPassword);
             pstmt.setInt(7,serenazgoB.getUsuario().getPreguntasFrecuentes_idTable2());
             pstmt.setInt(8,serenazgoB.getUsuario().getIdRol());
             pstmt.setInt(9,serenazgoB.getUsuario().getIsBan());
@@ -241,6 +248,9 @@ public class SerenazgoDao extends BaseDao {
         }
 
 
+        //mandamos el correo donde se le indica que es serenazgo
+        EnviarEmail enviarEmail = new EnviarEmail();
+        enviarEmail.sendEmail(serenazgoB.getUsuario().getCorreo(), tempPassword);
 
 
     }
@@ -412,6 +422,7 @@ public class SerenazgoDao extends BaseDao {
 
         return listaSerenazgos;
     }
+
 
 
 }

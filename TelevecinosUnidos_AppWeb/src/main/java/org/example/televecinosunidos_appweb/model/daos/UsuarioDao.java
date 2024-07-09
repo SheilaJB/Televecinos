@@ -454,4 +454,49 @@ public class UsuarioDao extends BaseDao{
         }
         return false;
     }
+    public boolean actualizarContrasenaTemporal(String correo, String contrasenaTemporal) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        boolean actualizado = false;
+
+        try {
+            conn = this.getConnection();
+            String query = "UPDATE usuario SET contrasena = ? WHERE correo = ?";
+            stmt = conn.prepareStatement(query);
+            stmt.setString(1, contrasenaTemporal);
+            stmt.setString(2, correo);
+
+            int rowsUpdated = stmt.executeUpdate();
+            if (rowsUpdated > 0) {
+                actualizado = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return actualizado;
+    }
+
+    public boolean existeCorreo(String correo) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        boolean existe = false;
+
+        try {
+            conn = this.getConnection();
+            String query = "SELECT correo FROM usuario WHERE correo = ?";
+            stmt = conn.prepareStatement(query);
+            stmt.setString(1, correo);
+            rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                existe = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return existe;
+    }
+
+
 }
