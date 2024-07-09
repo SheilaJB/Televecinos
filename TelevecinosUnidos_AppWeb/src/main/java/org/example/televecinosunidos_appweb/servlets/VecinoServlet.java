@@ -5,9 +5,12 @@ import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import org.example.televecinosunidos_appweb.model.beans.EventoB;
 import org.example.televecinosunidos_appweb.model.beans.IncidenciasB;
+import org.example.televecinosunidos_appweb.model.beans.UsuarioB;
 import org.example.televecinosunidos_appweb.model.daos.*;
+import org.example.televecinosunidos_appweb.util.GeneraContrasena;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,7 +34,10 @@ public class VecinoServlet extends HttpServlet {
                 vista = "WEB-INF/Vecino/inicioVecino.jsp";
                 request.getRequestDispatcher(vista).forward(request, response);
                 break;
-
+            case "cambiarContrasena":
+                vista = "WEB-INF/Vecino/cambioContrasena.jsp";
+                request.getRequestDispatcher(vista).forward(request, response);
+                break;
             case "verEventos":
                 ArrayList<EventoB> listaEventos = eventoDao.listarTodosEventos();
                 request.setAttribute("listaEventos", listaEventos);
@@ -261,6 +267,51 @@ public class VecinoServlet extends HttpServlet {
                     request.getSession().setAttribute("error", "No se pudo inscribir al evento. Inténtalo de nuevo más tarde.");
                 }
                 response.sendRedirect(request.getContextPath() + "/VecinoServlet?action=verEvento&idEvento=" + idEvento);
+                break;
+
+            case "cambiarContrasena":
+                String nuevaContrasena = request.getParameter("nuevaContrasena");
+                String confirmarContrasena = request.getParameter("confirmarContrasena");
+
+                // Validaciones de contraseña
+                if (nuevaContrasena == null || nuevaContrasena.isEmpty() || confirmarContrasena == null || confirmarContrasena.isEmpty()) {
+                    request.setAttribute("err", "Ambos campos son obligatorios.");
+                    request.getRequestDispatcher("WEB-INF/Vecino/cambioContrasena.jsp").forward(request, response);
+                    return;
+                } else if (nuevaContrasena.length() < 8) {
+                    request.setAttribute("err", "La contraseña debe tener al menos 8 caracteres.");
+                    request.getRequestDispatcher("WEB-INF/Vecino/cambioContrasena.jsp").forward(request, response);
+                    return;
+                } else if (!nuevaContrasena.matches("^(?=.*[0-9])(?=.*[a-zA-Z])(?!.*\\s).*$")) {
+                    request.setAttribute("err", "La contraseña debe contener al menos un número y una letra, sin espacios ni caracteres especiales.");
+                    request.getRequestDispatcher("WEB-INF/Vecino/cambioContrasena.jsp").forward(request, response);
+                    return;
+                } else if (!nuevaContrasena.equals(confirmarContrasena)) {
+                    request.setAttribute("err", "Las contraseñas no coinciden.");
+                    request.getRequestDispatcher("WEB-INF/Vecino/cambioContrasena.jsp").forward(request, response);
+                    return;
+                } else {
+                    // Proceso de cambio de contraseña
+                    UsuarioDao usuarioDao = new UsuarioDao();
+                    UsuarioB usuario = (UsuarioB) session.getAttribute("usuarioLogueado");
+
+                    if (usuario != null) {
+                        String hashedPassword;
+                        try {
+                            hashedPassword = GeneraContrasena.hashPassword(nuevaContrasena);
+                        } catch (NoSuchAlgorithmException e) {
+                            throw new RuntimeException(e);
+                        }
+                        usuario.setContrasenia(hashedPassword);
+
+                        usuarioDao.actualizarContrasena(usuario);
+                        session.setAttribute("success", "Contraseña cambiada exitosamente");
+                        response.sendRedirect(request.getContextPath() + "/VecinoServlet?action=cambiarContrasena");
+                    } else {
+                        request.setAttribute("err", "Usuario no encontrado en la sesión.");
+                        request.getRequestDispatcher("WEB-INF/Vecino/cambioContrasena.jsp").forward(request, response);
+                    }
+                }
                 break;
 
             default:

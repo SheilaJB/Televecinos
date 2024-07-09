@@ -498,5 +498,21 @@ public class UsuarioDao extends BaseDao{
         return existe;
     }
 
+    public void actualizarContrasena(UsuarioB usuario) {
+        String sql = "UPDATE usuario SET contrasena = ? WHERE idUsuario = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, usuario.getContrasenia());
+            ps.setInt(2, usuario.getIdUsuario());
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Contraseña actualizada correctamente.");
+            } else {
+                System.out.println("No se encontró el usuario con el ID proporcionado.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 }
