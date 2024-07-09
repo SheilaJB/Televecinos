@@ -70,7 +70,7 @@
                             <label for="formCheck" class="form-check-label text-secondary-custom"><small><b>Recuérdame</b></small></label>
                         </div>
                         <div class="forgot">
-                            <small><a href="<%=request.getContextPath()%>/LoginServlet?action=register" class="text-link-white" style="text-decoration: underline;"><b>¿Olvidaste tu contraseña?</b></a></small>
+                            <small><a href="<%=request.getContextPath()%>/LoginServlet?action=forgotPassword" class="text-link-white" style="text-decoration: underline;"><b>¿Olvidaste tu contraseña?</b></a></small>
                         </div>
                     </div>
                     <div class="input-group mb-3">
