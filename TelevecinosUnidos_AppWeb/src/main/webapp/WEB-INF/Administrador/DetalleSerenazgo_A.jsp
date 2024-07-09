@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <meta charset="utf-8">
     <title>Detalles del serenazgo</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -160,7 +161,14 @@
                 <a href="<%=request.getContextPath()%>/AdministradorServlet?action=listaSerenazgo_A"><button class="button regresar">Regresar</button></a>
                 <a href="correoparaSgA.html"><button  class="button enviar btn-success">Enviar correo</button></a>
                 <a href="<%=request.getContextPath()%>/AdministradorServlet?action=editarSerenazgo&idSerenazgo=<%=serenazgo.getIdSerenazgo()%>" class="button enviar btn-success">EDITAR</a>
-                <a href="<%=request.getContextPath()%>/AdministradorServlet?action=banearSerenazgo&idSerenazgo=<%=serenazgo.getUsuario().getIdUsuario()%>"><button class="button banear btn-banear">Banear</button></a>
+                <!--<a href="<%=request.getContextPath()%>/AdministradorServlet?action=banearSerenazgo&idSerenazgo=<%=serenazgo.getUsuario().getIdUsuario()%>"><button class="button banear btn-banear">Banear</button></a>-->
+
+                <button type="button" class="button banear btn-banear" onclick="confirmarBanear(<%=serenazgo.getUsuario().getIdUsuario()%>)">
+                    Banear
+                </button>
+
+
+
                 <!--
                 <button class="button banear btn-banear">Banear</button>
                 <div id="popup1" class="popup1" >
@@ -258,6 +266,45 @@
         });
     });
 
+</script>
+<script>
+    function confirmarBanear(idUsuario) {
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        });
+
+        swalWithBootstrapButtons.fire({
+            title: '¿Estás seguro que deseas banear al usuario?',
+            text: 'Podrás desbanearlo luego',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: '¡Sí, quiero banearlo!',
+            cancelButtonText: '¡No, cancelar!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                swalWithBootstrapButtons.fire({
+                    title: 'Baneado',
+                    text: 'El usuario ha sido baneado exitosamente',
+                    icon: 'success'
+                }).then(() => {
+
+                    window.location.href = '<%=request.getContextPath()%>/AdministradorServlet?action=banearSerenazgo&idSerenazgo=' + idUsuario;
+                });
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                swalWithBootstrapButtons.fire({
+                    title: 'Baneo cancelado',
+                    text: 'No se ha baneado al usuario',
+                    icon: 'error'
+                });
+            }
+        });
+    }
 </script>
 </body>
 

@@ -38,7 +38,7 @@
     <link href="css/style_vec.css" rel="stylesheet">
     <link href="css/style_popup.css" rel="stylesheet">
 
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -118,7 +118,9 @@
                             <th scope="col">Nombre y Apellido</th>
                             <th scope="col">Direccion</th>
                             <th scope="col">DNI</th>
-                            <th scope="col"></th>
+                            <th scope="col">Enviar correo</th>
+                            <th scope="col">Banear</th>
+                            <th scope="col">ver Detalle</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -127,7 +129,7 @@
                             <td><%=usuarioB.getNombre() + " " + usuarioB.getApellido()%></td>
                             <td><%=usuarioB.getDireccion() %></td>
                             <td><%=usuarioB.getDni() %></td>
-                            <!--Desplegable -->
+                            <!--Desplegable
                             <td>
                                 <div class="dropdown">
                                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -139,10 +141,16 @@
                                     </button>
                                 </div>
                             </td>
-                            <!--
+                            -->
                             <td><a href="<%=request.getContextPath()%>/*?action=verSerenazgo&idSerenazgo=<%=usuarioB.getIdUsuario()%>"><button type="button" class="btn btn-success m-2"><i class="fas fa-envelope"></i></button></a></td>
-                            <td><a href="<%=request.getContextPath()%>/AdministradorServlet?action=banearCoordinadoraCultura&idCoordinadora=<%=usuarioB.getIdUsuario()%>"><button type="button" class="btn btn-danger m-2" ><i class="fas fa-ban"></i></button></a></td>
-                            <td><a href="<%=request.getContextPath()%>/AdministradorServlet?action=DetalleCoordinadoraCultura_A&idCoordinadora=<%=usuarioB.getIdUsuario()%>"><button type="button" class="btn btn-info m-2"><i class="fas fa-eye"></i></button></a></td>-->
+                            <td>
+                                <!--<a href="<%=request.getContextPath()%>/AdministradorServlet?action=banearCoordinadoraCultura&idCoordinadora=<%=usuarioB.getIdUsuario()%>"><button type="button" class="btn btn-danger m-2" ><i class="fas fa-ban"></i></button></a>-->
+                                <button type="button" class="btn btn-danger m-2" onclick="confirmarBanear(<%=usuarioB.getIdUsuario()%>)">
+                                    <i class="fas fa-ban"></i>
+                                </button>
+
+                            </td>
+                            <td><a href="<%=request.getContextPath()%>/AdministradorServlet?action=DetalleCoordinadoraCultura_A&idCoordinadora=<%=usuarioB.getIdUsuario()%>"><button type="button" class="btn btn-info m-2"><i class="fas fa-eye"></i></button></a></td>
                         </tr>
                         <% } %>
                         </tbody>
@@ -221,7 +229,45 @@
 <script src="lib/tempusdominus/js/moment.min.js"></script>
 <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
 <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+<script>
+    function confirmarBanear(idUsuario) {
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        });
 
+        swalWithBootstrapButtons.fire({
+            title: '¿Estás seguro que deseas banear al usuario?',
+            text: 'Podrás desbanearlo luego',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: '¡Sí, quiero banearlo!',
+            cancelButtonText: '¡No, cancelar!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                swalWithBootstrapButtons.fire({
+                    title: 'Baneado',
+                    text: 'El usuario ha sido baneado exitosamente',
+                    icon: 'success'
+                }).then(() => {
+
+                    window.location.href = '<%= request.getContextPath() %>/AdministradorServlet?action=banearCoordinadoraCultura&idCoordinadora=' + idUsuario;
+                });
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                swalWithBootstrapButtons.fire({
+                    title: 'Baneo cancelado',
+                    text: 'No se ha baneado al usuario',
+                    icon: 'error'
+                });
+            }
+        });
+    }
+</script>
 <!-- Template Javascript -->
 <script src="js/main.js"></script>
 <script>

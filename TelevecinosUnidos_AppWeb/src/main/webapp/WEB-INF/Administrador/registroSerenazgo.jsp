@@ -123,10 +123,13 @@
                     <label for="correo" class="form-label" style="color:#023047;"><b>Correo</b></label>
                     <input type="text" id="correo" name="correo" class="form-control" placeholder="Ingrese el correo del serenazgo">
 
+
+
+                    <!--quitar
                     <label for="contrasenia" class="form-label" style="color:#023047;"><b>Contraseña</b></label>
                     <input type="text" id="contrasenia" name="contrasenia" class="form-control" placeholder="Ingrese la contrasenia del serenazgo">
 
-                    <!--quitar
+
                     <label for="pregFrecuentes" class="form-label" style="color:#023047;"><b>pregFrec</b></label>
                     <input type="text" id="pregFrecuentes" name="pregFrecuentes" class="form-control" placeholder="pregFrec">
 

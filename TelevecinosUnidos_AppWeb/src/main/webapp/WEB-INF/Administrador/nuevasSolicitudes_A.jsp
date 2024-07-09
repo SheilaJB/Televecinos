@@ -98,7 +98,7 @@
                     <form method="post" action="<%=request.getContextPath()%>/AdministradorServlet?action=buscarNuevasSolicitudesPorNombre">
                         <div class="col-md-7 mb-2">
                             <div class="input-group">
-                                <input type="text" class="form-control" id="filtroInput" placeholder="Buscar usuario baneado..." name="textoBuscar" value="<%=textoBusqueda%>"/>
+                                <input type="text" class="form-control" id="filtroInput" placeholder="Buscar solicitante..." name="textoBuscar" value="<%=textoBusqueda%>"/>
                                 <button class="btn btn-primary" type="submit">
                                     <i class="fas fa-search"></i> </button>
                                 <a class="btn btn-secondary" href="<%=request.getContextPath()%>/AdministradorServlet?action=nuevasSolicitudes_A">
@@ -130,7 +130,9 @@
                             <th scope="col">Nombre y Apellido</th>
                             <th scope="col">Direccion</th>
                             <th scope="col">DNI</th>
-                            <th scope="col"></th>
+                            <th scope="col">Aceptar</th>
+                            <th scope="col">Denegar</th>
+                            <th scope="col">ver Detalle</th>
 
                         </tr>
                         </thead>
@@ -140,7 +142,7 @@
                             <td><%=usuarioB.getNombre() + " " + usuarioB.getApellido()%></td>
                             <td><%=usuarioB.getDireccion() %></td>
                             <td><%=usuarioB.getDni() %></td>
-                            <!--Desplegable -->
+                            <!--Desplegable
                             <td>
                                 <div class="dropdown">
                                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -152,10 +154,11 @@
                                     </button>
                                 </div>
                             </td>
-                            <!--
+                            -->
+
                             <td><a href="<%=request.getContextPath()%>/AdministradorServlet?action=solicitanteAVecinoAceptar&idSolicitante=<%=usuarioB.getIdUsuario()%>"><button type="button" class="btn btn-success m-2"><i class="fas fa-check"></i></button></a></td>
                             <td><a href="<%=request.getContextPath()%>/AdministradorServlet?action=solicitanteAVecinoDenegar&idSolicitante=<%=usuarioB.getIdUsuario()%>"><button type="button" class="btn btn-danger m-2" ><i class="fas fa-times"></i></button></a></td>
-                            <td><a href="<%=request.getContextPath()%>/AdministradorServlet?action=DetalleVecinos_A&idVecino=<%=usuarioB.getIdUsuario()%>"><button type="button" class="btn btn-info m-2"><i class="fas fa-eye"></i></button></a></td> -->
+                            <td><a href="<%=request.getContextPath()%>/AdministradorServlet?action=DetalleVecinos_A&idVecino=<%=usuarioB.getIdUsuario()%>"><button type="button" class="btn btn-info m-2"><i class="fas fa-eye"></i></button></a></td>
                         </tr>
                         <% } %>
                         </tbody>
