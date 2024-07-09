@@ -5,6 +5,7 @@ import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import org.example.televecinosunidos_appweb.model.beans.*;
 import org.example.televecinosunidos_appweb.model.daos.*;
+import org.example.televecinosunidos_appweb.util.GeneraContrasena;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -261,7 +262,7 @@ public class AdministradorServlet extends HttpServlet {
                 int turno = Integer.parseInt(request.getParameter("turno"));
                 int tipo = Integer.parseInt(request.getParameter("tipo"));
                 String correo = request.getParameter("correo");
-                String contrasenia = request.getParameter("contrasenia");
+                //String contrasenia = request.getParameter("contrasenia");
                 int pregFrecuentes = 1;
                 int idRol = 4;
                 int isBan = 0;
@@ -273,7 +274,7 @@ public class AdministradorServlet extends HttpServlet {
                 us.setDni(dni);
                 us.setDireccion(direccion);
                 us.setCorreo(correo);
-                us.setContrasenia(contrasenia);
+                //us.setContrasenia(contrasenia);
                 us.setPreguntasFrecuentes_idTable2(pregFrecuentes);
                 us.setIdRol(idRol);
                 us.setIsBan(isBan);
@@ -286,9 +287,18 @@ public class AdministradorServlet extends HttpServlet {
                 serenazgoB.setIdTipoSerenazgo(tipo);
 
                 serenazgoB.setUsuario(us);
-                serenazgoDao.registrarSerenazgo(serenazgoB);
+                try {
+                    serenazgoDao.registrarSerenazgo(serenazgoB);
+                } catch (NoSuchAlgorithmException e) {
+                    throw new RuntimeException(e);
+                }
+
 
                 response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=listaSerenazgo_A");
+
+
+
+
                 break;
             case "editarSerenazgo":
                 String idUsuario2 = request.getParameter("idUsuario");
