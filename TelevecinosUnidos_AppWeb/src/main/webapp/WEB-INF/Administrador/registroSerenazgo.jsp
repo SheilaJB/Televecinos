@@ -68,7 +68,7 @@
 
     </style>
 
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -124,31 +124,6 @@
                     <input type="text" id="correo" name="correo" class="form-control" placeholder="Ingrese el correo del serenazgo">
 
 
-
-                    <!--quitar
-                    <label for="contrasenia" class="form-label" style="color:#023047;"><b>Contraseña</b></label>
-                    <input type="text" id="contrasenia" name="contrasenia" class="form-control" placeholder="Ingrese la contrasenia del serenazgo">
-
-
-                    <label for="pregFrecuentes" class="form-label" style="color:#023047;"><b>pregFrec</b></label>
-                    <input type="text" id="pregFrecuentes" name="pregFrecuentes" class="form-control" placeholder="pregFrec">
-
-
-                    <label for="idRol" class="form-label" style="color:#023047;"><b>idRol</b></label>
-                    <input type="text" id="idRol" name="idRol" class="form-control" placeholder="idRol">
-
-
-                    <label for="isBan" class="form-label" style="color:#023047;"><b>isBan</b></label>
-                    <input type="text" id="isBan" name="isBan" class="form-control" placeholder="isban">
-
-
-
-                    <label for="idUsuario" class="form-label" style="color:#023047;"><b>idUsuario</b></label>
-                    <input type="text" id="idUsuario" name="idUsuario" class="form-control" placeholder="idUsuario">
-
-                    -->
-
-
                     <label for="numTelefono" class="form-label" style="color:#023047;"><b>Número de telefono</b></label>
                     <input type="text" id="numTelefono" name="numTelefono" class="form-control" placeholder="Ingrese el numero de telefono del serenazgo">
 
@@ -174,14 +149,11 @@
                         <option value="4">Vehículo</option>
                     </select>
 
-
-
-
                     <div class="form-group" style = "padding-top: 2%">
                         <div class="m-n2" style="padding-bottom: 5%; ">
                             <button type="button" class="btn btn-warning m-2 text-white" onclick="regresar()">Regresar</button>
 
-                            <button type="submit" class="btn btn-success m-2" id="openPopupBtn" >Registrar</button>
+                            <button type="submit" class="btn btn-success m-2" onclick="registrar()" >Registrar</button>
                         </div>
                     </div>
 
@@ -191,19 +163,20 @@
                         }
                     </script>
 
-                    <!--
-                    <div id="popup" class="popup" >
-                        <div class="popup_contenido">
-                            <span class="close-btn" id="closePopupBtn">&times;</span>
-                            <img src="img/check.png" alt="check" width="48" height="48" style="margin-top: -10px;">
-                            <h2 style="margin-top: 20px;">Éxito</h2>
-                            <p>Se ha registrado un nuevo serenazgo</p>
-                            <a href="#">
-                                <a href="<%=request.getContextPath()%>/AdministradorServlet"><button type="button" class="btn btn-primary rounded-pill m-2">Regresar</button></a>
-                            </a>
-                        </div>
-                    </div>
-                    Popup -->
+                    <script>
+                        function registrar() {
+                            Swal.fire({
+
+                                icon: "success",
+                                title: "El serenazgo ha sido registrado exitosamente",
+                                showConfirmButton: false,
+                                timer: 1700
+                            }).then(() => {
+                                window.location.href = '<%= request.getContextPath() %>/AdministradorServlet?action=listaSerenazgo_A';
+                            });
+                        }
+                    </script>
+
 
                 </form>
 
@@ -217,7 +190,7 @@
             <div class="bg-light rounded-top p-4">
                 <div class="row">
                     <div class="col-12 col-sm-6 text-center text-sm-start">
-                        &copy; <a href="#">Televecinos Unidos</a>, All Right Reserved.
+                        &copy; <a>Televecinos Unidos</a>, All Right Reserved.
                     </div>
 
                 </div>
@@ -281,6 +254,9 @@
 
 
 </script>
+
+
+
 
 </body>
 </html>

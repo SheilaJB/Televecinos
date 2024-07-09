@@ -10,8 +10,8 @@ public class CoordinadoraDao extends BaseDao{
     public ArrayList<UsuarioB> listarCoordinadorasCultura() {
         String sql = "SELECT idUsuario,nombre,apellido,dni,direccion,correo \n" +
                 "FROM televecinosdb.usuario \n" +
-                "WHERE Rol_idRol = 3 AND TipoCoordinador_idTipoCoordinador = 1 and isBan = 0;" ;
-
+                "WHERE Rol_idRol = 3 AND TipoCoordinador_idTipoCoordinador = 1 and isBan = 0 \n" +
+                "order by idUsuario desc;";
         ArrayList<UsuarioB> listaCoordinadoras = new ArrayList<>();
 
         try (Connection conn = getConnection();
@@ -39,8 +39,8 @@ public class CoordinadoraDao extends BaseDao{
     public ArrayList<UsuarioB> listarCoordinadorasDeportes() {
         String sql = "SELECT idUsuario,nombre,apellido,dni,direccion,correo \n" +
                 "FROM televecinosdb.usuario \n" +
-                "WHERE Rol_idRol = 3 AND TipoCoordinador_idTipoCoordinador = 2 and isBan = 0;";
-
+                "WHERE Rol_idRol = 3 AND TipoCoordinador_idTipoCoordinador = 2 and isBan = 0 \n" +
+                "order by idUsuario desc;";
         ArrayList<UsuarioB> listaCoordinadoras = new ArrayList<>();
 
         try (Connection conn = getConnection();
@@ -101,15 +101,15 @@ public class CoordinadoraDao extends BaseDao{
     public ArrayList<UsuarioB> listarCoordinadorasCulturaPorNombre(String textoBuscar) {
         String sql = "SELECT idUsuario,nombre,apellido,dni,direccion,correo \n" +
                 "FROM televecinosdb.usuario \n" +
-                "WHERE Rol_idRol = 3 AND TipoCoordinador_idTipoCoordinador = 1 and isBan = 0 and (usuario.nombre like ? or usuario.apellido like ?)" ;
-
+                "WHERE Rol_idRol = 3 AND TipoCoordinador_idTipoCoordinador = 1 and isBan = 0 and (usuario.nombre like ? or usuario.apellido like ? or usuario.dni like ?) \n" +
+                "order by usuario.idUsuario desc;";
         ArrayList<UsuarioB> listaCoordinadoras = new ArrayList<>();
 
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, textoBuscar+ "%");
             pstmt.setString(2, textoBuscar+ "%");
-
+            pstmt.setString(3, textoBuscar);
             try(ResultSet rs = pstmt.executeQuery()){
                 while (rs.next()) {
                     UsuarioB usuarioB = new UsuarioB();
@@ -134,15 +134,15 @@ public class CoordinadoraDao extends BaseDao{
     public ArrayList<UsuarioB> listarCoordinadorasDeportesPorNombre(String textoBuscar) {
         String sql = "SELECT idUsuario,nombre,apellido,dni,direccion,correo \n" +
                 "FROM televecinosdb.usuario \n" +
-                "WHERE Rol_idRol = 3 AND TipoCoordinador_idTipoCoordinador = 2 and isBan = 0 and (usuario.nombre like ? or usuario.apellido like ?)";
-
+                "WHERE Rol_idRol = 3 AND TipoCoordinador_idTipoCoordinador = 2 and isBan = 0 and (usuario.nombre like ? or usuario.apellido like ? or usuario.dni like ?) \n" +
+                "order by usuario.idUsuario desc;";
         ArrayList<UsuarioB> listaCoordinadoras = new ArrayList<>();
 
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, textoBuscar+ "%");
             pstmt.setString(2, textoBuscar+ "%");
-
+            pstmt.setString(3, textoBuscar);
             try(ResultSet rs = pstmt.executeQuery()){
                 while (rs.next()) {
                     UsuarioB usuarioB = new UsuarioB();

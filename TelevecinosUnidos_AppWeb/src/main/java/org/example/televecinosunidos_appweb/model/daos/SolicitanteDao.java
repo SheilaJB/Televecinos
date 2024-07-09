@@ -131,7 +131,7 @@ public class SolicitanteDao extends BaseDao {
 
         String sql = "SELECT idUsuario,nombre,apellido,dni,direccion,correo\n" +
                 "FROM televecinosdb.usuario \n" +
-                "where Rol_idRol = 1 and isBan=0 and (usuario.nombre like ? or usuario.apellido like ?)" ;
+                "where Rol_idRol = 1 and isBan=0 and (usuario.nombre like ? or usuario.apellido like ? or usuario.dni like ?)" ;
 
 
         ArrayList<UsuarioB> listaSolicitantes = new ArrayList<>();
@@ -140,6 +140,7 @@ public class SolicitanteDao extends BaseDao {
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, textoBuscar+ "%");
             pstmt.setString(2, textoBuscar+ "%");
+            pstmt.setString(3, textoBuscar);
 
             try(ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {

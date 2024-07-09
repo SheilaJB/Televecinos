@@ -32,6 +32,17 @@
     <link href="css/app.min.css" rel="stylesheet">
     <link href="css/style_vec.css" rel="stylesheet">
 
+    <head>
+        <style>
+            .custom-carousel-img {
+                max-width: 80%; /* Ajusta el tamaño máximo del ancho según sea necesario */
+                max-height: 80vh; /* Ajusta el tamaño máximo de la altura según sea necesario */
+                margin: auto;
+                display: block;
+                object-fit: cover; /* Esto asegura que la imagen se escale correctamente */
+            }
+        </style>
+    </head>
 
 </head>
 
@@ -61,7 +72,7 @@
         <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="img/fondoDeAdminInicio2.jpg" class="d-block w-100" alt="...">
+                    <img src="img/fondoDeAdminInicio2.jpg" class="d-block w-100 custom-carousel-img" alt="...">
                     <div class="carousel-caption d-none d-md-block">
                         <h5 class="titleCarousel">MUNICIPALIDAD DE SAN MIGUEL - Administración</h5>
                         <p>Como administrador debe operar con transparencia, respetando la privacidad de los usuarios y manteniendo la neutralidad en la moderación del contenido. Es crucial combatir el discurso de odio y la desinformación, colaborar con las autoridades cuando sea necesario y garantizar un ambiente seguro y justo para todos los usuarios.</p>
@@ -69,60 +80,62 @@
                 </div>
             </div>
         </div>
-
-        <!-- Bootstrap JS dependencies -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-
-
         <!-- Fin de iamgen estatica -->
-        <div style="background-color: #f8f9fa; padding: 20px; align-items: center;">
+        <div style="background-color: #f8f9fa; padding: 20px; align-items: center;margin-top: 20px;">
 
-            <!---cambio de cuadros-->
             <h3 class="mb-4">Funciones:</h3>
+
             <div class="row row-cols-1 row-cols-md-3 g-4">
-                <div class="col">
-                    <div class="card h-100 shadow" style="background-color: #8ECAE6;">
-                        <div class="card-body">
-                            <h5 class="card-title">Gestionar y evaluar las solicitudes de inscripción de nuevos usuarios</h5>
+                <a href="<%=request.getContextPath()%>/AdministradorServlet?action=nuevasSolicitudes_A">
+                    <div class="col">
+                        <div class="card h-100 shadow text-center" style="background-color: #8ECAE6;">
+                            <div class="card-body">
+                                <h5 class="card-title">Gestionar y evaluar las solicitudes de inscripción de nuevos usuarios</h5>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col">
-                    <div class="card h-100 shadow" style="background-color: #219EBC;">
-                        <div class="card-body">
-                            <h5 class="card-title">Crear las cuentas de los serenazgos y asignarles credenciales temporales</h5>
+                </a>
+                <a href="<%=request.getContextPath()%>/AdministradorServlet?action=registroSerenazgo">
+                    <div class="col">
+                        <div class="card h-100 shadow text-center" style="background-color: #219EBC;">
+                            <div class="card-body">
+                                <h5 class="card-title">Crear las cuentas de los serenazgos y asignarles credenciales temporales</h5>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col">
-                    <div class="card h-100 shadow" style="background-color: #FFB703;">
-                        <div class="card-body">
-                            <h5 class="card-title">Asignar el rol de coordinador a los vecinos designados previamente</h5>
+                </a>
+                <a href="<%=request.getContextPath()%>/AdministradorServlet?action=listaVecinos_A">
+                    <div class="col">
+                        <div class="card h-100 shadow text-center" style="background-color: #FFB703;">
+                            <div class="card-body">
+                                <h5 class="card-title">Asignar el rol de coordinador a los vecinos designados previamente</h5>
 
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col">
-                    <div class="card h-100 shadow" style="background-color: #FB8500;">
-                        <div class="card-body">
-                            <h5 class="card-title">Gestionar el envío de correos de confirmación de creación de nuevos usuarios de la página</h5>
+                </a>
+                <a href="<%=request.getContextPath()%>/AdministradorServlet?action=registroInstructor">
+                    <div class="col">
+                        <div class="card h-100 shadow text-center" style="background-color: #FB8500;">
+                            <div class="card-body">
+                                <h5 class="card-title">Registrar instructores y el curso que dictan</h5>
 
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col">
-                    <div class="card h-100 shadow" style="background-color: #8ECAE6;">
-                        <div class="card-body">
-                            <h5 class="card-title">Banear a los usuarios de la página y solicitudes de registro previa evaluación</h5>
+                </a>
+                <a href="<%=request.getContextPath()%>/AdministradorServlet?action=usuariosBaneados_A">
+                    <div class="col">
+                        <div class="card h-100 shadow text-center" style="background-color: #8ECAE6;">
+                            <div class="card-body">
+                                <h5 class="card-title">Banear y desbanear a los usuarios de la página </h5>
 
+                            </div>
                         </div>
                     </div>
-                </div>
+                </a>
                 <div class="col">
-                    <div class="card h-100 shadow" style="background-color: #FB8500;">
+                    <div class="card h-100 shadow text-center" style="background-color: #FB8500;">
                         <div class="card-body">
                             <h5 class="card-title">Leer las sugerencias que escriban los miembros de la página</h5>
 
@@ -166,7 +179,7 @@
             <div class="bg-light rounded-top p-4">
                 <div class="row">
                     <div class="col-12 col-sm-6 text-center text-sm-start">
-                        &copy; <a href="#">Televecinos Unidos</a>, All Right Reserved.
+                        &copy; <a>Televecinos Unidos</a>, All Right Reserved.
                     </div>
                 </div>
             </div>
@@ -190,6 +203,10 @@
 <script src="lib/tempusdominus/js/moment.min.js"></script>
 <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
 <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+<!-- Bootstrap JS dependencies -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <!-- Template Javascript -->
 <script src="js/main.js"></script>

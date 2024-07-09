@@ -13,27 +13,31 @@ import java.util.List;
 public class EventoDao extends BaseDao{
 
     //Función lista de eventos
-    public ArrayList<EventoB> listarEventosPropios() {
+    public ArrayList<EventoB> listarEventosPropios(int idTipoEvento) {
 
         String sqlSetLanguage = "SET lc_time_names = 'es_ES';";
         String sql = "SELECT e.idEventos AS 'ID Evento', e.nombre AS 'Nombre', DATE_FORMAT(e.fecha_inicio, '%d %M') AS 'Fecha de Inicio', " +
                 "es.estadosEvento AS 'Estado', ef.tipoFrecuencia AS 'Frecuencia' " +
                 "FROM Eventos e JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
                 "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
-                "WHERE e.TipoEvento_idTipoEvento = 2 AND e.eliminado = FALSE " +
+                "WHERE e.TipoEvento_idTipoEvento = ? AND e.eliminado = FALSE " +
                 "ORDER BY e.fecha_inicio DESC " +
                 "LIMIT 6;";
 
         ArrayList<EventoB> listaEventosPropios = new ArrayList<>();
 
         try (Connection conn = getConnection();
-             Statement stmt = conn.createStatement()) {
+             Statement stmt = conn.createStatement();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             // Ejecutar la sentencia para establecer el idioma de las fechas en español
             stmt.execute(sqlSetLanguage);
 
+            // Establecer el parámetro para el PreparedStatement
+            pstmt.setInt(1, idTipoEvento);
+
             // Ejecutar la consulta principal
-            try (ResultSet rs = stmt.executeQuery(sql)) {
+            try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
                     EventoB evento = new EventoB();
                     evento.setidEvento(rs.getInt("ID Evento"));
@@ -51,6 +55,7 @@ public class EventoDao extends BaseDao{
 
         return listaEventosPropios;
     }
+
 
     //Función lista de eventos disponibles
     public ArrayList<EventoB> listarEventosDisponibles() {
@@ -204,7 +209,7 @@ public class EventoDao extends BaseDao{
                     evento.setApellidoCoordinador(rs.getString("apellido_coordinador"));
                     evento.setHora_inicio(rs.getString("hora_inicio"));
                     evento.setHora_fin(rs.getString("hora_fin"));
-                    evento.setFoto(rs.getString("foto"));
+                    evento.setFoto(rs.getBinaryStream("foto"));
                     evento.setListaMateriales(rs.getString("listaMateriales"));
                     evento.setDiaEvento(rs.getString("diasEvento"));
                 }
@@ -227,23 +232,21 @@ public class EventoDao extends BaseDao{
         try (Connection connection = getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-            int idCoordinador = 1;
-            int tipoEvento = 1;
             int estadoEvento = 1;
 
             pstmt.setString(1, eventoB.getNombre());
             pstmt.setString(2, eventoB.getDescripcion());
             pstmt.setString(3, eventoB.getLugar());
-            pstmt.setInt(4, idCoordinador);
+            pstmt.setInt(4, eventoB.getCoordinador_idUsuario());
             pstmt.setString(5, eventoB.getFecha_inicio());
             pstmt.setString(6, eventoB.getFecha_fin());
             pstmt.setInt(7, eventoB.getCantidadVacantes());
             pstmt.setInt(8, eventoB.getCantidadVacantes());
-            pstmt.setString(9, eventoB.getFoto());
+            pstmt.setBlob(9, eventoB.getFoto());
             pstmt.setString(10, eventoB.getListaMateriales());
             pstmt.setInt(11, estadoEvento);
             pstmt.setInt(12, eventoB.getEventFrecuencia_idEventFrecuencia());
-            pstmt.setInt(13, tipoEvento);
+            pstmt.setInt(13, eventoB.getTipoEvento_idTipoEvento());
             pstmt.setInt(14, eventoB.getProfesoresEvento_idProfesoresEvento());
             pstmt.setString(15, eventoB.getHora_inicio());
             pstmt.setString(16, eventoB.getHora_fin());
@@ -385,7 +388,7 @@ public class EventoDao extends BaseDao{
             ps.setInt(6, evento.getEventFrecuencia_idEventFrecuencia());
             ps.setInt(7, evento.getProfesoresEvento_idProfesoresEvento());
             ps.setInt(8, evento.getCantidadVacantes());
-            ps.setString(9, evento.getFoto());
+            ps.setBlob(9, evento.getFoto());
             ps.setString(10, evento.getListaMateriales());
             ps.setString(11, evento.getHora_inicio());
             ps.setString(12, evento.getHora_fin());
@@ -415,7 +418,7 @@ public class EventoDao extends BaseDao{
         return true;
     }
     //Buscar evento por filtro
-    public ArrayList<EventoB> listarEventoFiltro(String nombre, String frecuencia, String estado) {
+    public ArrayList<EventoB> listarEventoFiltro(String nombre, String frecuencia, String estado, int idTipoEvento) {
         String sql = "SELECT " +
                 "    e.idEventos AS id_evento, " +
                 "    e.nombre AS nombre, " +
@@ -459,6 +462,10 @@ public class EventoDao extends BaseDao{
         if (estado != null && !estado.isEmpty()) {
             sql += "AND es.idEventEstados = ? ";
             parametros.add(estado);
+        }
+        if (idTipoEvento !=0) {
+            sql += "AND e.TipoEvento_idTipoEvento = ? ";
+            parametros.add(idTipoEvento);
         }
 
         try (Connection conn = getConnection();
@@ -517,7 +524,7 @@ public class EventoDao extends BaseDao{
                     evento.setFecha_inicio(rs.getString("Fecha de Inicio"));
                     evento.setFecha_fin(rs.getString("Fecha de Fin"));
                     evento.setEstadoString(rs.getString("Estado"));
-                    evento.setFoto(rs.getString("Foto"));
+                    evento.setFoto(rs.getBinaryStream("Foto"));
                     listaTodosEventos.add(evento);
                 }
             }
@@ -568,7 +575,7 @@ public class EventoDao extends BaseDao{
                     evento.setFecha_inicio(rs.getString("Fecha de Inicio"));
                     evento.setFecha_fin(rs.getString("Fecha de Fin"));
                     evento.setEstadoString(rs.getString("Estado"));
-                    evento.setFoto(rs.getString("Foto"));
+                    evento.setFoto(rs.getBinaryStream("Foto"));
                     listaTodosEventos.add(evento);
                 }
             }
@@ -617,7 +624,7 @@ public class EventoDao extends BaseDao{
                     evento.setFecha_inicio(rs.getString("Fecha de Inicio"));
                     evento.setFecha_fin(rs.getString("Fecha de Fin"));
                     evento.setEstadoString(rs.getString("Estado"));
-                    evento.setFoto(rs.getString("Foto"));
+                    evento.setFoto(rs.getBinaryStream("Foto"));
                     listaTodosEventos.add(evento);
                 }
             }

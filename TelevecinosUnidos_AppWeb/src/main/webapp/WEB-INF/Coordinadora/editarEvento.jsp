@@ -2,6 +2,9 @@
 <%@ page import="org.example.televecinosunidos_appweb.model.beans.EventoB" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="org.example.televecinosunidos_appweb.model.beans.UsuarioB" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:useBean id="usuarioLogueado" scope="session" type="UsuarioB" class="org.example.televecinosunidos_appweb.model.beans.UsuarioB" />
 <%@ page pageEncoding="UTF-8" %>
 <%
     EventoB evento = (EventoB) request.getAttribute("eventoB");
@@ -107,6 +110,7 @@
                                 <label for="Coordinador_idUsuario" class="form-label" style="color:#023047;"><b>Ingrese nombre del coordinador:</b></label>
                                 <input type="text" class="form-control" id="Coordinador_idUsuario" placeholder="Escribir" name="Coordinador_idUsuario" value="<%= evento.getCoordinador_idUsuario() %>" disabled>
                                 <input type="hidden" name="Coordinador_idUsuario" value="<%= evento.getCoordinador_idUsuario() %>">
+                                <input type="hidden" name="tipoCoordinador" value="<%= usuarioLogueado.getTipoCoordinador_idTipoCoordinador() %>">
                             </div>
                         </div>
                     </div>

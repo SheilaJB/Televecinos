@@ -7,27 +7,30 @@ import jakarta.servlet.annotation.*;
 import org.example.televecinosunidos_appweb.model.beans.EventoB;
 import org.example.televecinosunidos_appweb.model.beans.IncidenciasB;
 import org.example.televecinosunidos_appweb.model.beans.ProfesoresEvento;
+import org.example.televecinosunidos_appweb.model.beans.UsuarioB;
 import org.example.televecinosunidos_appweb.model.daos.EventoDao;
 import org.example.televecinosunidos_appweb.model.daos.IncidenCoordDao;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
-
+@MultipartConfig
 @WebServlet(name = "CoordinadorServlet", value = "/CoordinadorServlet")
 public class CoordinadorServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         EventoDao eventoDao = new EventoDao();
         IncidenCoordDao incidenciaDao = new IncidenCoordDao();
-        ArrayList<EventoB> listaEventosPropios = eventoDao.listarEventosPropios();
+
         ArrayList<EventoB> listarEventosDisponibles = eventoDao.listarEventosDisponibles();
         String vista ="";
         String action = request.getParameter("action") == null ? "inicioCoordinador" : request.getParameter("action");
-
+        HttpSession httpSession = request.getSession();
+        UsuarioB usuarioLogged = (UsuarioB) httpSession.getAttribute("usuarioLogueado");
         switch (action) {
             //Inicio
             case "inicioCoordinador":
@@ -56,6 +59,8 @@ public class CoordinadorServlet extends HttpServlet {
                 //Falta jalar los datos desde la tabla
                 break;
             case "lista":
+                int idTipoEvento = usuarioLogged.getTipoCoordinador_idTipoCoordinador();
+                ArrayList<EventoB> listaEventosPropios = eventoDao.listarEventosPropios(idTipoEvento);
                 vista = "WEB-INF/Coordinadora/ListaEvent-Coordinador.jsp";
                 request.setAttribute("lista", listaEventosPropios);
                 request.getRequestDispatcher(vista).forward(request, response);
@@ -159,6 +164,8 @@ public class CoordinadorServlet extends HttpServlet {
         IncidenCoordDao incidenciaDao = new IncidenCoordDao();
         EventoDao eventoDao = new EventoDao();
         String action = request.getParameter("action") == null ? "crear" : request.getParameter("action");
+        HttpSession httpSession = request.getSession();
+        UsuarioB usuarioLogged = (UsuarioB) httpSession.getAttribute("usuarioLogueado");
 
         switch (action) {
             //Evento
@@ -166,13 +173,14 @@ public class CoordinadorServlet extends HttpServlet {
                 String nombreEvento = request.getParameter("nombreEvento");
                 String descripcionEvento = request.getParameter("descripcionEvento");
                 String lugar = request.getParameter("lugar");
-                String idCoordinador = "1";
+                String idCoordinador = request.getParameter("idCoordinador");;
                 String idProfesor = request.getParameter("nombreProfesor");
                 String fecha_inicio = request.getParameter("fecha_inicio");
                 String fecha_fin = request.getParameter("fecha_fin");
                 String hora_inicio = request.getParameter("hora_inicio");
                 String hora_fin = request.getParameter("hora_fin");
                 String idFrecuencia = request.getParameter("frecuencia");
+                String idTipoEvento = request.getParameter("tipoCoordinador");
                 String opcionesDias = null;
                 if (idFrecuencia.equals("2")){
                     opcionesDias = request.getParameter("opcionesDias");
@@ -181,12 +189,15 @@ public class CoordinadorServlet extends HttpServlet {
                 }
 
                 String cantidadVacantes = request.getParameter("cantidadVacantes");
-                String foto = request.getParameter("foto");
+                Part part = request.getPart("foto");
+                InputStream fileInputStream = part.getInputStream();
+
                 String materiales = request.getParameter("materiales");
 
                 EventoB eventoB0 = new EventoB();
-
+                eventoB0.setFoto(fileInputStream);
                 eventoB0.setNombre(nombreEvento);
+                eventoB0.setTipoEvento_idTipoEvento(Integer.parseInt(idTipoEvento));
                 eventoB0.setDescripcion(descripcionEvento);
                 eventoB0.setLugar(lugar);
                 eventoB0.setCoordinador_idUsuario(Integer.parseInt(idCoordinador));
@@ -198,8 +209,8 @@ public class CoordinadorServlet extends HttpServlet {
                 eventoB0.setEventFrecuencia_idEventFrecuencia(Integer.parseInt(idFrecuencia));
                 eventoB0.setDiaEvento(opcionesDias);
                 eventoB0.setCantidadVacantes(Integer.parseInt(cantidadVacantes));
-                eventoB0.setFoto(foto);
                 eventoB0.setListaMateriales(materiales);
+
 
 
                 int estado = 1;
@@ -219,8 +230,10 @@ public class CoordinadorServlet extends HttpServlet {
                 String hora_fin2 = request.getParameter("hora_fin");
                 String frecuencia2 = request.getParameter("frecuencia");
                 int cantidadVacantes2 = Integer.parseInt(request.getParameter("cantidadVacantes"));
-                String foto2 = request.getParameter("foto");
+                Part part2 = request.getPart("foto");
+                InputStream fileInputStream2 = part2.getInputStream();
                 String listaMateriales2 = request.getParameter("listaMateriales");
+                String idTipoEvento2 = request.getParameter("tipoCoordinador");
                 int EventFrecuencia_idEventFrecuencia2 = Integer.parseInt(request.getParameter("frecuencia"));
                 int ProfesoresEvento_idProfesoresEvento2 = Integer.parseInt(request.getParameter("ProfesoresEvento_idProfesoresEvento"));
                 String opcionesDias2 = null;
@@ -240,7 +253,7 @@ public class CoordinadorServlet extends HttpServlet {
                 eventoB.setFecha_fin(fecha_fin2);
                 eventoB.setFrecuenciaString(frecuencia2);
                 eventoB.setCantidadVacantes(cantidadVacantes2);
-                eventoB.setFoto(foto2);
+                eventoB.setFoto(fileInputStream2);
                 eventoB.setListaMateriales(listaMateriales2);
                 eventoB.setEventFrecuencia_idEventFrecuencia(EventFrecuencia_idEventFrecuencia2);
                 eventoB.setProfesoresEvento_idProfesoresEvento(ProfesoresEvento_idProfesoresEvento2);
@@ -263,7 +276,7 @@ public class CoordinadorServlet extends HttpServlet {
                     response.sendRedirect(request.getContextPath() + "/CoordinadorServlet?action=lista");
                 }else {
                     request.setAttribute("textoBuscarEvento", textBuscar);
-                    request.setAttribute("lista", eventoDao.listarEventoFiltro(textBuscar,  filtroFrecuencia, filtroEstado));
+                    request.setAttribute("lista", eventoDao.listarEventoFiltro(textBuscar,  filtroFrecuencia, filtroEstado,usuarioLogged.getTipoCoordinador_idTipoCoordinador()));
                     request.getRequestDispatcher("WEB-INF/Coordinadora/ListaEvent-Coordinador.jsp").forward(request, response);
                 }
                 break;
