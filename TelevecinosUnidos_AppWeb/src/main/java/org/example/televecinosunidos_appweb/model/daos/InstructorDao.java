@@ -10,8 +10,8 @@ import java.util.ArrayList;
 public class InstructorDao extends BaseDao{
 
     public ArrayList<ProfesoresEvento> listarProfesores() {
-        String sql = "SELECT * FROM televecinosdb.profesoresevento;" ;
-
+        String sql = "SELECT * FROM televecinosdb.profesoresevento \n" +
+                    "order by profesoresevento.idProfesoresEvento desc;";
 
         ArrayList<ProfesoresEvento> lista = new ArrayList<>();
 
@@ -59,8 +59,8 @@ public class InstructorDao extends BaseDao{
     }
 
     public ArrayList<ProfesoresEvento> listarProfesoresPorNombre(String textoBuscar) {
-        String sql = "SELECT * FROM televecinosdb.profesoresevento where nombre like ? or apellido like ?;" ;
-
+        String sql = "SELECT * FROM televecinosdb.profesoresevento where nombre like ? or apellido like ?\n" +
+                "order by profesoresevento.idProfesoresEvento desc;";
 
         ArrayList<ProfesoresEvento> lista = new ArrayList<>();
 

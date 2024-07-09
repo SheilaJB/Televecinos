@@ -1,3 +1,5 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,6 +34,17 @@
     <link href="css/style_vec.css" rel="stylesheet">
     <link href="css/style_serenazgo.css" rel="stylesheet">
 
+    <style>
+        .custom-carousel-img {
+            max-width: 80%; /* Ajusta el tamaño máximo del ancho según sea necesario */
+            max-height: 80vh; /* Ajusta el tamaño máximo de la altura según sea necesario */
+            margin: auto;
+            display: block;
+            object-fit: cover; /* Esto asegura que la imagen se escale correctamente */
+        }
+    </style>
+
+
 </head>
 
 <body>
@@ -62,7 +75,7 @@
         <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="img/serenazgo2.jpg" class="d-block w-100" alt="...">
+                    <img src="img/serenazgo2.jpg" class="d-block w-100 custom-carousel-img" alt="...">
                     <div class="carousel-caption d-none d-md-block">
                         <h5 class="titleCarousel">MUNICIPALIDAD DE SAN MIGUEL - Serenazgo</h5>
                         <p>Te damos la bienvenida al panel del Serenazgo, una herramienta fundamental para garantizar la seguridad y el bienestar en nuestra comunidad.</p>
@@ -85,30 +98,34 @@
 
 
             <div class="row row-cols-1 row-cols-md-3 g-4">
-                <div class="col">
-                    <div class="card h-100 shadow" style="background-color: #023047;">
-                        <div class="card-body">
-                            <p class="card-title colorLetra">Dashboard: Podrás visualizar gráficos con  información general de las incidencias</p>
+                <a href="<%=request.getContextPath()%>/SerenazgoServlet?action=dashboard">
+                    <div class="col">
+                        <div class="card h-100 shadow text-center" style="background-color: #023047;">
+                            <div class="card-body">
+                                <p class="card-title colorLetra">Dashboard: Podrás visualizar gráficos con  información general de las incidencias</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col">
-                    <div class="card h-100 shadow" style="background-color: #023047;">
-                        <div class="card-body">
-                            <p class="card-title colorLetra">Incidencias: Podrás gestionar las incidencias y evaluarlas</p>
+                </a>
+                <a href="<%=request.getContextPath()%>/SerenazgoServlet?action=listaIncidencias_S">
+                    <div class="col">
+                        <div class="card h-100 shadow text-center" style="background-color: #023047;">
+                            <div class="card-body">
+                                <p class="card-title colorLetra">Incidencias: Podrás gestionar las incidencias y evaluarlas</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col">
-                    <div class="card h-100 shadow" style="background-color: #023047;">
-                        <div class="card-body">
-                            <p class="card-title colorLetra">Banear vecino: Cuando se cumpla el número máximo de alertas falsas (5) podrás banear a un vecino</p>
-
+                </a>
+                <a href="<%=request.getContextPath()%>/SerenazgoServlet?action=listaVecinos_S">
+                    <div class="col">
+                        <div class="card h-100 shadow text-center" style="background-color: #023047;">
+                            <div class="card-body">
+                                <!--<p class="card-title colorLetra">Banear vecino: Cuando se cumpla el número máximo de alertas falsas (5) podrás banear a un vecino</p>-->
+                                <p class="card-title colorLetra">Banear vecino: Podrás banear un vecino al superar el máximo de alertas falsas </p>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-
+                </a>
             </div>
 
 
@@ -145,7 +162,7 @@
             <div class="bg-light rounded-top p-4">
                 <div class="row">
                     <div class="col-12 col-sm-6 text-center text-sm-start">
-                        &copy; <a href="#">TelevecinosUnidos</a>, All Right Reserved.
+                        &copy; <a>TelevecinosUnidos</a>, All Right Reserved.
                     </div>
 
                 </div>
