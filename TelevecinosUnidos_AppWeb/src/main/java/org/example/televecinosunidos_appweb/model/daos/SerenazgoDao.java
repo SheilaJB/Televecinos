@@ -38,7 +38,8 @@ public class SerenazgoDao extends BaseDao {
                 "    `televecinosdb`.`serenazgo`\n" +
                 "JOIN \n" +
                 "    `televecinosdb`.`usuario` ON serenazgo.usuario_idUsuario = usuario.idUsuario\n" +
-                "where usuario.isBan = 0;";
+                "where usuario.isBan = 0\n" +
+                "order by usuario.idUsuario desc;";
 
 
         ArrayList<SerenazgoB> listaSerenazgos = new ArrayList<>();
@@ -332,6 +333,8 @@ public class SerenazgoDao extends BaseDao {
             sql += " AND serenazgo.TipoSerenazgo_idTipoSerenazgo = ?";
         }
 
+        sql+="order by usuario.idUsuario desc;";
+
 
         ArrayList<SerenazgoB> listaSerenazgos = new ArrayList<>();
 
@@ -339,7 +342,7 @@ public class SerenazgoDao extends BaseDao {
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, textoBuscar+ "%");
             pstmt.setString(2, textoBuscar+ "%");
-            pstmt.setString(3, textoBuscar+ "%");
+            pstmt.setString(3, textoBuscar);
             if (turnoS != null && tipoS != null){
                 pstmt.setString(4, turnoS);
                 pstmt.setString(5, tipoS);

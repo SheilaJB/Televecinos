@@ -76,7 +76,7 @@
                     <form method="post" action="<%=request.getContextPath()%>/AdministradorServlet?action=buscarInstructoresPorNombre">
                         <div class="col-md-7 mb-2">
                             <div class="input-group">
-                                <input type="text" class="form-control" id="filtroInput" placeholder="Buscar coordinadora de cultura..." name="textoBuscar" value="<%=textoBusqueda%>"/>
+                                <input type="text" class="form-control" id="filtroInput" placeholder="Buscar instructor..." name="textoBuscar" value="<%=textoBusqueda%>"/>
                                 <button class="btn btn-primary" type="submit">
                                     <i class="fas fa-search"></i> </button>
                                 <a class="btn btn-secondary" href="<%=request.getContextPath()%>/AdministradorServlet?action=listaInstructores_A">
@@ -147,7 +147,7 @@
             <div class="bg-light rounded-top p-4">
                 <div class="row">
                     <div class="col-12 col-sm-6 text-center text-sm-start">
-                        &copy; <a href="#">Televecinos Unidos</a>, All Right Reserved.
+                        &copy; <a>Televecinos Unidos</a>, All Right Reserved.
                     </div>
                 </div>
             </div>
