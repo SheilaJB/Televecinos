@@ -12,12 +12,13 @@ import org.example.televecinosunidos_appweb.model.daos.EventoDao;
 import org.example.televecinosunidos_appweb.model.daos.IncidenCoordDao;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
-
+@MultipartConfig
 @WebServlet(name = "CoordinadorServlet", value = "/CoordinadorServlet")
 public class CoordinadorServlet extends HttpServlet {
     @Override
@@ -188,11 +189,13 @@ public class CoordinadorServlet extends HttpServlet {
                 }
 
                 String cantidadVacantes = request.getParameter("cantidadVacantes");
-                String foto = request.getParameter("foto");
+                Part part = request.getPart("foto");
+                InputStream fileInputStream = part.getInputStream();
+
                 String materiales = request.getParameter("materiales");
 
                 EventoB eventoB0 = new EventoB();
-
+                eventoB0.setFoto(fileInputStream);
                 eventoB0.setNombre(nombreEvento);
                 eventoB0.setTipoEvento_idTipoEvento(Integer.parseInt(idTipoEvento));
                 eventoB0.setDescripcion(descripcionEvento);
@@ -206,7 +209,6 @@ public class CoordinadorServlet extends HttpServlet {
                 eventoB0.setEventFrecuencia_idEventFrecuencia(Integer.parseInt(idFrecuencia));
                 eventoB0.setDiaEvento(opcionesDias);
                 eventoB0.setCantidadVacantes(Integer.parseInt(cantidadVacantes));
-                eventoB0.setFoto(foto);
                 eventoB0.setListaMateriales(materiales);
 
 
@@ -228,7 +230,8 @@ public class CoordinadorServlet extends HttpServlet {
                 String hora_fin2 = request.getParameter("hora_fin");
                 String frecuencia2 = request.getParameter("frecuencia");
                 int cantidadVacantes2 = Integer.parseInt(request.getParameter("cantidadVacantes"));
-                String foto2 = request.getParameter("foto");
+                Part part2 = request.getPart("foto");
+                InputStream fileInputStream2 = part2.getInputStream();
                 String listaMateriales2 = request.getParameter("listaMateriales");
                 String idTipoEvento2 = request.getParameter("tipoCoordinador");
                 int EventFrecuencia_idEventFrecuencia2 = Integer.parseInt(request.getParameter("frecuencia"));
@@ -250,7 +253,7 @@ public class CoordinadorServlet extends HttpServlet {
                 eventoB.setFecha_fin(fecha_fin2);
                 eventoB.setFrecuenciaString(frecuencia2);
                 eventoB.setCantidadVacantes(cantidadVacantes2);
-                eventoB.setFoto(foto2);
+                eventoB.setFoto(fileInputStream2);
                 eventoB.setListaMateriales(listaMateriales2);
                 eventoB.setEventFrecuencia_idEventFrecuencia(EventFrecuencia_idEventFrecuencia2);
                 eventoB.setProfesoresEvento_idProfesoresEvento(ProfesoresEvento_idProfesoresEvento2);

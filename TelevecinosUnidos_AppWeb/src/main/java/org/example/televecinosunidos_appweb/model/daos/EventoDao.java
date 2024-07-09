@@ -209,7 +209,7 @@ public class EventoDao extends BaseDao{
                     evento.setApellidoCoordinador(rs.getString("apellido_coordinador"));
                     evento.setHora_inicio(rs.getString("hora_inicio"));
                     evento.setHora_fin(rs.getString("hora_fin"));
-                    evento.setFoto(rs.getString("foto"));
+                    evento.setFoto(rs.getBinaryStream("foto"));
                     evento.setListaMateriales(rs.getString("listaMateriales"));
                     evento.setDiaEvento(rs.getString("diasEvento"));
                 }
@@ -242,7 +242,7 @@ public class EventoDao extends BaseDao{
             pstmt.setString(6, eventoB.getFecha_fin());
             pstmt.setInt(7, eventoB.getCantidadVacantes());
             pstmt.setInt(8, eventoB.getCantidadVacantes());
-            pstmt.setString(9, eventoB.getFoto());
+            pstmt.setBlob(9, eventoB.getFoto());
             pstmt.setString(10, eventoB.getListaMateriales());
             pstmt.setInt(11, estadoEvento);
             pstmt.setInt(12, eventoB.getEventFrecuencia_idEventFrecuencia());
@@ -388,7 +388,7 @@ public class EventoDao extends BaseDao{
             ps.setInt(6, evento.getEventFrecuencia_idEventFrecuencia());
             ps.setInt(7, evento.getProfesoresEvento_idProfesoresEvento());
             ps.setInt(8, evento.getCantidadVacantes());
-            ps.setString(9, evento.getFoto());
+            ps.setBlob(9, evento.getFoto());
             ps.setString(10, evento.getListaMateriales());
             ps.setString(11, evento.getHora_inicio());
             ps.setString(12, evento.getHora_fin());
@@ -524,7 +524,7 @@ public class EventoDao extends BaseDao{
                     evento.setFecha_inicio(rs.getString("Fecha de Inicio"));
                     evento.setFecha_fin(rs.getString("Fecha de Fin"));
                     evento.setEstadoString(rs.getString("Estado"));
-                    evento.setFoto(rs.getString("Foto"));
+                    evento.setFoto(rs.getBinaryStream("Foto"));
                     listaTodosEventos.add(evento);
                 }
             }
@@ -575,7 +575,7 @@ public class EventoDao extends BaseDao{
                     evento.setFecha_inicio(rs.getString("Fecha de Inicio"));
                     evento.setFecha_fin(rs.getString("Fecha de Fin"));
                     evento.setEstadoString(rs.getString("Estado"));
-                    evento.setFoto(rs.getString("Foto"));
+                    evento.setFoto(rs.getBinaryStream("Foto"));
                     listaTodosEventos.add(evento);
                 }
             }
@@ -624,7 +624,7 @@ public class EventoDao extends BaseDao{
                     evento.setFecha_inicio(rs.getString("Fecha de Inicio"));
                     evento.setFecha_fin(rs.getString("Fecha de Fin"));
                     evento.setEstadoString(rs.getString("Estado"));
-                    evento.setFoto(rs.getString("Foto"));
+                    evento.setFoto(rs.getBinaryStream("Foto"));
                     listaTodosEventos.add(evento);
                 }
             }

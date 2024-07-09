@@ -1,5 +1,7 @@
 package org.example.televecinosunidos_appweb.model.beans;
 
+import java.io.InputStream;
+
 public class EventoB {
     private int idEvento;
     private String nombre;
@@ -16,7 +18,7 @@ public class EventoB {
     private String hora_fin;
     private int cantidadVacantes;
     private int cantDisponibles;
-    private String foto;
+    private InputStream foto;
     private String listaMateriales;
     private int EventEstados_idEventEstados;
     private int EventFrecuencia_idEventFrecuencia;
@@ -150,11 +152,11 @@ public class EventoB {
         this.cantDisponibles = cantDisponibles;
     }
 
-    public String getFoto() {
+    public InputStream getFoto() {
         return foto;
     }
 
-    public void setFoto(String foto) {
+    public void setFoto(InputStream foto) {
         this.foto = foto;
     }
 

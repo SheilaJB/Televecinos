@@ -117,7 +117,7 @@
         <h2 class="mb-2 text-center" style="padding-top: 3%; color:#023047;">Creación de un nuevo evento</h2>
         <div id="error-message" class="error">Por favor, complete todos los campos obligatorios.</div>
         <!-- Form Start -->
-        <form method="post" action="<%=request.getContextPath()%>/CoordinadorServlet?action=crear">
+        <form method="post" action="<%=request.getContextPath()%>/CoordinadorServlet?action=crear" enctype="multipart/form-data">
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
                     <div class="col-sm-12">
