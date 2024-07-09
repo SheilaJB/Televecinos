@@ -9,7 +9,7 @@ import java.util.List;
 public class IncidenCoordDao extends BaseDao{
 
     //Lista de incidencias
-    public ArrayList<IncidenciasB> listarIncidencia() {
+    public ArrayList<IncidenciasB> listarIncidencia(int userId) {
 
         String setLocaleSql = "SET lc_time_names = 'es_ES'";
         String sql = "SELECT " +
@@ -24,7 +24,7 @@ public class IncidenCoordDao extends BaseDao{
                 "JOIN tipoincidencia ti ON i.TipoIncidencia_idTipoIncidencia = ti.idTipoIncidencia " +
                 "JOIN estadosincidencia ei ON i.EstadosIncidencia_idEstadosIncidencia = ei.idEstadosIncidencia " +
                 "WHERE " +
-                "    i.borrado = FALSE " +
+                "    i.borrado = FALSE AND i.Usuario_idUsuario = ? " +
                 "ORDER BY " +
                 "    i.fecha DESC " +
                 "LIMIT 6;";
@@ -32,9 +32,10 @@ public class IncidenCoordDao extends BaseDao{
         ArrayList<IncidenciasB> listaIncidencia = new ArrayList<>();
 
         try (Connection conn = getConnection();
-             Statement stmt = conn.createStatement()) {
-            stmt.execute(setLocaleSql);
-            try (ResultSet rs = stmt.executeQuery(sql)) {
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.execute(setLocaleSql);
+            pstmt.setInt(1, userId);
+            try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
                     IncidenciasB incidencia = new IncidenciasB();
                     incidencia.setIdIncidencias(rs.getInt("ID Incidencia"));
@@ -52,8 +53,10 @@ public class IncidenCoordDao extends BaseDao{
 
         return listaIncidencia;
     }
+
+
     //Solo mostrar las 3 incidencias mas recientes
-    public ArrayList<IncidenciasB> listarIncidenciaRecientes() {
+    public ArrayList<IncidenciasB> listarIncidenciaRecientes(int userId) {
 
         String setLocaleSql = "SET lc_time_names = 'es_ES'";
         String sql = "SELECT " +
@@ -68,27 +71,33 @@ public class IncidenCoordDao extends BaseDao{
                 "JOIN tipoincidencia ti ON i.TipoIncidencia_idTipoIncidencia = ti.idTipoIncidencia " +
                 "JOIN estadosincidencia ei ON i.EstadosIncidencia_idEstadosIncidencia = ei.idEstadosIncidencia " +
                 "WHERE " +
-                "    i.borrado = FALSE " +
+                "    i.borrado = FALSE AND i.Usuario_idUsuario = ? " +
                 "ORDER BY " +
                 "    i.fecha DESC " +
                 "LIMIT 3;";
 
         ArrayList<IncidenciasB> listaIncidencia = new ArrayList<>();
 
-        try (Connection conn = getConnection();
-             Statement stmt = conn.createStatement()) {
-            stmt.execute(setLocaleSql);
-            try (ResultSet rs = stmt.executeQuery(sql)) {
-                while (rs.next()) {
-                    IncidenciasB incidencia = new IncidenciasB();
-                    incidencia.setIdIncidencias(rs.getInt("ID Incidencia"));
-                    incidencia.setNombreIncidencia(rs.getString("Nombre"));
-                    incidencia.setFecha(rs.getString("Fecha"));
-                    incidencia.setHora(rs.getString("Hora"));
-                    incidencia.setTipoIncidencia(rs.getString("Tipo de Incidencia"));
-                    incidencia.setEstadoIncidencia(rs.getString("Estado Incidencia"));
-                    listaIncidencia.add(incidencia);
+        try (Connection conn = getConnection()) {
+            // Set locale
+            try (PreparedStatement localeStmt = conn.prepareStatement(setLocaleSql)) {
+                localeStmt.execute();
+            }
 
+            // Prepare and execute main query
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setInt(1, userId);
+                try (ResultSet rs = pstmt.executeQuery()) {
+                    while (rs.next()) {
+                        IncidenciasB incidencia = new IncidenciasB();
+                        incidencia.setIdIncidencias(rs.getInt("ID Incidencia"));
+                        incidencia.setNombreIncidencia(rs.getString("Nombre"));
+                        incidencia.setFecha(rs.getString("Fecha"));
+                        incidencia.setHora(rs.getString("Hora"));
+                        incidencia.setTipoIncidencia(rs.getString("Tipo de Incidencia"));
+                        incidencia.setEstadoIncidencia(rs.getString("Estado Incidencia"));
+                        listaIncidencia.add(incidencia);
+                    }
                 }
             }
         } catch (SQLException e) {
@@ -97,6 +106,7 @@ public class IncidenCoordDao extends BaseDao{
 
         return listaIncidencia;
     }
+
 
     //Buscar incidencia por id
     public  IncidenciasB buscarIncidenciaPorId(String idIncidencia) {
@@ -156,8 +166,10 @@ public class IncidenCoordDao extends BaseDao{
         return incidencia;
     }
 
+
+
     //Buscar incidencia por filtro
-    public ArrayList<IncidenciasB> listarIncidenciasFiltro(String nombre, String fecha, String tipo, String estado) {
+    public ArrayList<IncidenciasB> listarIncidenciasFiltro(String nombre, String fecha, String tipo, String estado, int userId) {
         String sql = "SELECT " +
                 "i.idIncidencias AS 'ID Incidencia', " +
                 "i.nombreIncidencia AS 'Nombre', " +
@@ -168,10 +180,11 @@ public class IncidenCoordDao extends BaseDao{
                 "FROM incidencias i " +
                 "JOIN tipoincidencia ti ON i.TipoIncidencia_idTipoIncidencia = ti.idTipoIncidencia " +
                 "JOIN estadosincidencia ei ON i.EstadosIncidencia_idEstadosIncidencia = ei.idEstadosIncidencia " +
-                "WHERE i.borrado = FALSE AND i.nombreIncidencia LIKE ?";
+                "WHERE i.borrado = FALSE AND i.Usuario_idUsuario = ? AND i.nombreIncidencia LIKE ?";
 
         ArrayList<IncidenciasB> incidencias = new ArrayList<>();
         List<Object> parametros = new ArrayList<>();
+        parametros.add(userId);
         parametros.add(nombre + "%");
 
         // Agregar los filtros adicionales
@@ -215,13 +228,14 @@ public class IncidenCoordDao extends BaseDao{
         return incidencias;
     }
 
+
+
     //crear una incidencia
-    public void generarIncidenciaC (IncidenciasB incidencia){
+    public void generarIncidenciaC (IncidenciasB incidencia, int userId){
         String sql = "INSERT INTO incidencias (nombreIncidencia, fecha, lugarExacto, referencia, foto, ambulancia, " +
                 "numeroContacto, urbanizacion_idUrbanizacion, TipoIncidencia_idTipoIncidencia, incidenciaPersonal, " +
                 "EstadosIncidencia_idEstadosIncidencia, Usuario_idUsuario) " +
-                "VALUES (?, NOW(), ?, ?, ?, ?, ?, ?, ?, ?, 1, 1)";
-
+                "VALUES (?, NOW(), ?, ?, ?, ?, ?, ?, ?, ?, 1, ?)";
 
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -234,19 +248,21 @@ public class IncidenCoordDao extends BaseDao{
             pstmt.setString(7, incidencia.getUrbanizacion());
             pstmt.setString(8, incidencia.getTipoIncidencia());
             pstmt.setInt(9, incidencia.getIncidenciaPersonal());
+            pstmt.setInt(10, userId);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
+
     //Editar una incidencia
-    public void actualizarIncidencia(IncidenciasB incidencia) {
+    public void actualizarIncidencia(IncidenciasB incidencia, int userId) {
         String sql = "UPDATE incidencias " +
                 "SET nombreIncidencia = ?, lugarExacto = ?, referencia = ?, foto = ?, " +
                 "ambulancia = ?, numeroContacto = ?, urbanizacion_idUrbanizacion = ?, " +
                 "TipoIncidencia_idTipoIncidencia = ?, incidenciaPersonal = ? " +
-                "WHERE idIncidencias = ? AND borrado =FALSE AND EstadosIncidencia_idEstadosIncidencia = 1;";
+                "WHERE idIncidencias = ? AND borrado =FALSE AND EstadosIncidencia_idEstadosIncidencia = 1 AND Usuario_idUsuario = ?;";
 
         try (Connection connection = getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -262,25 +278,27 @@ public class IncidenCoordDao extends BaseDao{
             pstmt.setInt(8, tipoIncidenciaId);
             pstmt.setInt(9, incidencia.getIncidenciaPersonal());
             pstmt.setInt(10, incidencia.getIdIncidencias());
+            pstmt.setInt(11, userId);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
+
     //Borrar una incidencia
-    public static void   borrarIncidencia(String idIncidencia) throws  SQLException{
+    public static void borrarIncidencia(String idIncidencia, int userId) throws SQLException {
 
-        String sql ="UPDATE  incidencias SET borrado=TRUE  WHERE idIncidencias=?";
+        String sql = "UPDATE incidencias SET borrado=TRUE WHERE idIncidencias=? AND Usuario_idUsuario = ?";
 
-        try(Connection connection = getConnection();
-            PreparedStatement pstmt = connection.prepareStatement(sql)){
-
-            pstmt.setString(1,idIncidencia);
+        try (Connection connection = getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setString(1, idIncidencia);
+            pstmt.setInt(2, userId);
             pstmt.executeUpdate();
-
         }
     }
+
 
     //Para obtener el id de urbanización
     private int obtenerIdUrbanizacion(String urbanizacion) {

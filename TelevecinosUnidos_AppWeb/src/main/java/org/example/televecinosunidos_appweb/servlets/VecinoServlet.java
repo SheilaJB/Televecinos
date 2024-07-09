@@ -26,10 +26,17 @@ public class VecinoServlet extends HttpServlet {
         String action = request.getParameter("action") == null ? "inicioVecino" : request.getParameter("action");
         String vista;
 
+        UsuarioB usuarioLogueado = (UsuarioB) session.getAttribute("usuarioLogueado");
+        if (usuarioLogueado == null) {
+            response.sendRedirect("/LoginServlet");
+            return;
+        }
+        int userId = usuarioLogueado.getIdUsuario();
+
         switch (action) {
             /*------------------Página principal------------------*/
             case "inicioVecino":
-                ArrayList<IncidenciasB> listaIncidenciasRecientes = incidenciaDao.listarIncidenciaRecientes();
+                ArrayList<IncidenciasB> listaIncidenciasRecientes = incidenciaDao.listarIncidenciaRecientes(userId);
                 request.setAttribute("listaIncidencia", listaIncidenciasRecientes);
                 vista = "WEB-INF/Vecino/inicioVecino.jsp";
                 request.getRequestDispatcher(vista).forward(request, response);
@@ -70,7 +77,7 @@ public class VecinoServlet extends HttpServlet {
 
             /*----------------Incidencias----------------*/
             case "listarIncidencia":
-                ArrayList<IncidenciasB> listaIncidencias = incidenciaDao.listarIncidencia();
+                ArrayList<IncidenciasB> listaIncidencias = incidenciaDao.listarIncidencia(userId);
                 request.setAttribute("lista", listaIncidencias);
                 vista = "WEB-INF/Vecino/listaIncidencias_V.jsp";
                 request.getRequestDispatcher(vista).forward(request, response);
@@ -120,6 +127,13 @@ public class VecinoServlet extends HttpServlet {
         EventoDao eventoDao = new EventoDao();
         HttpSession session = request.getSession();
         String action = request.getParameter("action") == null ? "crear" : request.getParameter("action");
+
+        UsuarioB usuarioLogueado = (UsuarioB) session.getAttribute("usuarioLogueado");
+        if (usuarioLogueado == null) {
+            response.sendRedirect("/LoginServlet");
+            return;
+        }
+        int userId = usuarioLogueado.getIdUsuario();
 
         switch (action) {
             // Incidencia
@@ -205,7 +219,7 @@ public class VecinoServlet extends HttpServlet {
                 incidencia.setNumeroContacto(numeroContacto);
                 incidencia.setAmbulancia(ambulancia);
 
-                incidenciaDao.generarIncidenciaC(incidencia);
+                incidenciaDao.generarIncidenciaC(incidencia,userId);
                 // Agregar mensaje a la sesión
                 request.getSession().setAttribute("info", "Incidencia creada de manera exitosa");
 
@@ -237,7 +251,7 @@ public class VecinoServlet extends HttpServlet {
                 incidenciaB.setNumeroContacto(numeroContacto2);
                 incidenciaB.setAmbulancia(ambulancia2);
 
-                incidenciaDao.actualizarIncidencia(incidenciaB);
+                incidenciaDao.actualizarIncidencia(incidenciaB,userId);
                 request.getSession().setAttribute("info", "Incidencia editada de manera exitosa");
                 response.sendRedirect(request.getContextPath() + "/VecinoServlet?action=listarIncidencia");
                 break;
@@ -251,7 +265,7 @@ public class VecinoServlet extends HttpServlet {
                     response.sendRedirect(request.getContextPath() + "/VecinoServlet?action=listarIncidencia");
                 } else {
                     request.setAttribute("textoBuscarIncidencia", textBuscar);
-                    request.setAttribute("lista", incidenciaDao.listarIncidenciasFiltro(textBuscar, filtroFecha, filtroTipo, filtroEstado));
+                    request.setAttribute("lista", incidenciaDao.listarIncidenciasFiltro(textBuscar, filtroFecha, filtroTipo, filtroEstado,userId));
                     request.getRequestDispatcher("WEB-INF/Vecino/listaIncidencias_V.jsp").forward(request, response);
                 }
                 break;

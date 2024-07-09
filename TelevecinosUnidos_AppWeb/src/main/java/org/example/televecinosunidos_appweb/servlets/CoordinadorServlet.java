@@ -31,10 +31,17 @@ public class CoordinadorServlet extends HttpServlet {
         String action = request.getParameter("action") == null ? "inicioCoordinador" : request.getParameter("action");
         HttpSession httpSession = request.getSession();
         UsuarioB usuarioLogged = (UsuarioB) httpSession.getAttribute("usuarioLogueado");
+
+        UsuarioB usuarioLogueado = (UsuarioB) httpSession.getAttribute("usuarioLogueado");
+        if (usuarioLogueado == null) {
+            response.sendRedirect("/LoginServlet");
+            return;
+        }
+        int userId = usuarioLogueado.getIdUsuario();
         switch (action) {
             //Inicio
             case "inicioCoordinador":
-                ArrayList<IncidenciasB> listaIncidenciasRecientes = incidenciaDao.listarIncidenciaRecientes();
+                ArrayList<IncidenciasB> listaIncidenciasRecientes = incidenciaDao.listarIncidenciaRecientes(userId);
                 ArrayList<EventoB> listaEventospRropiosRecientes = eventoDao.listarEventosPropiosRecientes();
                 request.setAttribute("listaIncidencia", listaIncidenciasRecientes);
                 request.setAttribute("listaEvento", listaEventospRropiosRecientes);
@@ -110,7 +117,7 @@ public class CoordinadorServlet extends HttpServlet {
 
             //Incidencia
             case "listarIncidencia":
-                ArrayList<IncidenciasB> listaIncidencias = incidenciaDao.listarIncidencia();
+                ArrayList<IncidenciasB> listaIncidencias = incidenciaDao.listarIncidencia(userId);
                 request.setAttribute("lista", listaIncidencias);
                 vista = "WEB-INF/Coordinadora/listaIncidencias_C.jsp";
                 request.getRequestDispatcher(vista).forward(request, response);
@@ -140,7 +147,7 @@ public class CoordinadorServlet extends HttpServlet {
                 String idd = request.getParameter("idIncidencia");
                 System.out.println("ID a borrar: " + idd); // Log para verificar el ID
                 try {
-                    IncidenCoordDao.borrarIncidencia(idd);
+                    IncidenCoordDao.borrarIncidencia(idd,userId);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
@@ -166,6 +173,12 @@ public class CoordinadorServlet extends HttpServlet {
         String action = request.getParameter("action") == null ? "crear" : request.getParameter("action");
         HttpSession httpSession = request.getSession();
         UsuarioB usuarioLogged = (UsuarioB) httpSession.getAttribute("usuarioLogueado");
+
+        if (usuarioLogged == null) {
+            response.sendRedirect("/LoginServlet");
+            return;
+        }
+        int userId = usuarioLogged.getIdUsuario();
 
         switch (action) {
             //Evento
@@ -368,7 +381,7 @@ public class CoordinadorServlet extends HttpServlet {
                 incidencia.setNumeroContacto(numeroContacto);
                 incidencia.setAmbulancia(ambulancia);
 
-                incidenciaDao.generarIncidenciaC(incidencia);
+                incidenciaDao.generarIncidenciaC(incidencia,userId);
                 // Agregar mensaje a la sesión
                 request.getSession().setAttribute("info", "Incidencia creada de manera exitosa");
 
@@ -401,7 +414,7 @@ public class CoordinadorServlet extends HttpServlet {
                 incidenciaB.setNumeroContacto(numeroContacto2);
                 incidenciaB.setAmbulancia(ambulancia2);
 
-                incidenciaDao.actualizarIncidencia(incidenciaB);
+                incidenciaDao.actualizarIncidencia(incidenciaB,userId);
                 request.getSession().setAttribute("info", "Incidencia editada de manera exitosa");
                 response.sendRedirect(request.getContextPath() + "/CoordinadorServlet?action=listarIncidencia");
                 break;
@@ -414,7 +427,7 @@ public class CoordinadorServlet extends HttpServlet {
                     response.sendRedirect(request.getContextPath() + "/CoordinadorServlet?action=listarIncidencia");
                 }else {
                     request.setAttribute("textoBuscarIncidencia", textBuscarI);
-                    request.setAttribute("lista", incidenciaDao.listarIncidenciasFiltro(textBuscarI, filtroFechaI, filtroTipo, filtroEstadoI));
+                    request.setAttribute("lista", incidenciaDao.listarIncidenciasFiltro(textBuscarI, filtroFechaI, filtroTipo, filtroEstadoI,userId));
                     request.getRequestDispatcher("WEB-INF/Coordinadora/listaIncidencias_C.jsp").forward(request, response);
                 }
                 break;
