@@ -160,7 +160,7 @@
 
                 <a href="<%=request.getContextPath()%>/AdministradorServlet?action=listaSerenazgo_A"><button class="button regresar">Regresar</button></a>
                 <a href="correoparaSgA.html"><button  class="button enviar btn-success">Enviar correo</button></a>
-                <a href="<%=request.getContextPath()%>/AdministradorServlet?action=editarSerenazgo&idSerenazgo=<%=serenazgo.getIdSerenazgo()%>" class="button enviar btn-success">EDITAR</a>
+                <a href="<%=request.getContextPath()%>/AdministradorServlet?action=editarSerenazgo&idSerenazgo=<%=serenazgo.getIdSerenazgo()%>" class="button enviar btn-success">Editar</a>
                 <!--<a href="<%=request.getContextPath()%>/AdministradorServlet?action=banearSerenazgo&idSerenazgo=<%=serenazgo.getUsuario().getIdUsuario()%>"><button class="button banear btn-banear">Banear</button></a>-->
 
                 <button type="button" class="button banear btn-banear" onclick="confirmarBanear(<%=serenazgo.getUsuario().getIdUsuario()%>)">

@@ -39,6 +39,8 @@
 
     <!-- Tempus Dominus CSS (si necesario) -->
     <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -117,11 +119,7 @@
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
 
             <div class="bg-light rounded h-100 p-4" style="font-weight: bold;">
-                <script>
-                    function crearEvento() {
-                        window.location.href = 'creacionEvento.html';
-                    }
-                </script>
+
 
                 <div class="table-responsive">
                     <table id="eventosTable" class="table" style="background-color: transparent;">
@@ -156,9 +154,52 @@
                             </td>
                             -->
 
-                            <td><a href="<%=request.getContextPath()%>/AdministradorServlet?action=solicitanteAVecinoAceptar&idSolicitante=<%=usuarioB.getIdUsuario()%>"><button type="button" class="btn btn-success m-2"><i class="fas fa-check"></i></button></a></td>
-                            <td><a href="<%=request.getContextPath()%>/AdministradorServlet?action=solicitanteAVecinoDenegar&idSolicitante=<%=usuarioB.getIdUsuario()%>"><button type="button" class="btn btn-danger m-2" ><i class="fas fa-times"></i></button></a></td>
-                            <td><a href="<%=request.getContextPath()%>/AdministradorServlet?action=DetalleVecinos_A&idVecino=<%=usuarioB.getIdUsuario()%>"><button type="button" class="btn btn-info m-2"><i class="fas fa-eye"></i></button></a></td>
+                            <td>
+                                <!--<a href="<%=request.getContextPath()%>/AdministradorServlet?action=solicitanteAVecinoAceptar&idSolicitante=<%=usuarioB.getIdUsuario()%>"><button type="button" class="btn btn-success m-2"><i class="fas fa-check"></i></button></a>-->
+                                <button type="button" class="btn btn-success m-2" onclick="aceptarSolicitante(<%=usuarioB.getIdUsuario()%>)">
+                                    <i class="fas fa-check"></i>
+                                </button>
+
+                                <script>
+                                    function aceptarSolicitante(idUsuario) {
+                                        Swal.fire({
+
+                                            icon: "success",
+                                            title: "El solicitante ha sido aceptado exitosamente",
+                                            showConfirmButton: false,
+                                            timer: 1500
+                                        }).then(() => {
+                                            window.location.href = '<%= request.getContextPath() %>/AdministradorServlet?action=solicitanteAVecinoAceptar&idSolicitante=' + idUsuario;
+                                        });
+                                    }
+                                </script>
+
+
+
+                            </td>
+                            <td>
+                                <!--<a href="<%=request.getContextPath()%>/AdministradorServlet?action=solicitanteAVecinoDenegar&idSolicitante=<%=usuarioB.getIdUsuario()%>"><button type="button" class="btn btn-danger m-2" ><i class="fas fa-times"></i></button></a>-->
+
+                                <button type="button" class="btn btn-danger m-2" onclick="denegarSolicitante(<%=usuarioB.getIdUsuario()%>)">
+                                    <i class="fas fa-times"></i>
+                                </button>
+
+                                <script>
+                                    function denegarSolicitante(idUsuario) {
+                                        Swal.fire({
+
+                                            icon: "error",
+                                            title: "El solicitante ha sido denagado",
+                                            showConfirmButton: false,
+                                            timer: 1500
+                                        }).then(() => {
+                                            window.location.href = '<%= request.getContextPath() %>/AdministradorServlet?action=solicitanteAVecinoDenegar&idSolicitante=' + idUsuario;
+                                        });
+                                    }
+                                </script>
+                            </td>
+
+                            <td><a href="<%=request.getContextPath()%>/AdministradorServlet?action=DetalleSolicitantes_A&idVecino=<%=usuarioB.getIdUsuario()%>"><button type="button" class="btn btn-info m-2"><i class="fas fa-eye"></i></button></a></td>
                         </tr>
                         <% } %>
                         </tbody>

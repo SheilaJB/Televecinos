@@ -69,7 +69,7 @@
 
     </style>
 
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -108,35 +108,8 @@
                 <img src="img/instructor.jpg" class="img-fluid mb-3" alt="Imagen Serenazgo" width="200">
 
                 <!-- Formulario -->
-                <form method="post" action="<%=request.getContextPath()%>/AdministradorServlet?action=registroInstructor">
+                <form id="instructorid" method="post" action="<%=request.getContextPath()%>/AdministradorServlet?action=registroInstructor">
 
-                    <!--
-                    <label for="tipo" class="form-label" style="color:#023047;"><b>Tipo de instructor:</b></label>
-                    <select id="tipo" class="form-select mb-3" aria-label="Seleccione un tipo">
-                        <option selected>Seleccione un tipo:</option>
-                        <option value="1">Deporte</option>
-                        <option value="2">Cultura</option>
-                    </select>
-                    <label for="nombre" class="form-label" style="color:#023047;"><b>Area a instruir</b></label>
-                    <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Ingrese el área que instruirá">
-
-                    <div class="mb-3">
-                        <label for="fechaNombramiento" class="form-label" style="color:#023047;"><b>Fecha de contratación:</b></label>
-                        <input type="date" class="form-control" id="fechaNombramiento" name="fecha_nombramiento">
-                    </div>
-
-                    <label for="dni" class="form-label" style="color:#023047;"><b>DNI del instructor</b></label>
-                    <input type="text" id="dni" name="dni" class="form-control" placeholder="Ingrese el DNI del instructor">
-
-                    <label for="direccion" class="form-label" style="color:#023047;"><b>Dirección del instructor</b></label>
-                    <input type="text" id="direccion" name="direccion" class="form-control" placeholder="Ingrese la dirección domiciliaria del instructor">
-
-                    <label for="correo" class="form-label" style="color:#023047;"><b>Correo del instructor</b></label>
-                    <input type="text" id="correo" name="correo" class="form-control" placeholder="Ingrese el correo electrónico del instructor">
-
-                    <label for="nombre" class="form-label" style="color:#023047;"><b>Celular de contacto</b></label>
-                    <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Ingrese el numero de celular del instructor">
-                    -->
 
                     <label for="nombre" class="form-label" style="color:#023047;"><b>Nombre del instructor</b></label>
                     <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Ingrese el nombre del instructor">
@@ -148,37 +121,33 @@
                     <input type="text" id="curso" name="curso" class="form-control" placeholder="Ingrese el curso del instructor">
 
 
-
-
-
-
                     <div class="form-group" style = "padding-top: 2%">
                         <div class="m-n2" style="padding-bottom: 5%; ">
                             <button type="button" class="btn btn-warning m-2 text-white" onclick="regresar()">Regresar</button>
-                            <button type="submit" class="btn btn-success m-2" id="openPopupBtn" >Registrar</button>
+                            <button type="button" class="btn btn-success m-2" onclick="registrar()" >Registrar</button>
 
                         </div>
                     </div>
 
                     <script>
                         function regresar(){
-                            window.location.href="<%=request.getContextPath()%>/AdministradorServlet?action=listaInstructores_A";
+                            window.location.href= '<%=request.getContextPath()%>/AdministradorServlet?action=listaInstructores_A';
                         }
                     </script>
 
-                    <!-- Popup
-                    <div id="popup" class="popup" >
-                        <div class="popup_contenido">
-                            <span class="close-btn" id="closePopupBtn">&times;</span>
-                            <img src="img/check.png" alt="check" width="48" height="48" style="margin-top: -10px;">
-                            <h2 style="margin-top: 20px;">Éxito</h2>
-                            <p>Se ha registrado un nuevo instructor</p>
-                            <a href="#">
-                                <a href="/AdministradorServlet?action=listaInstructores_A"><button type="button" class="btn btn-primary rounded-pill m-2">Regresar</button></a>
-                            </a>
-                        </div>
-                    </div>
-                    -->
+                    <script>
+                        function registrar() {
+                            Swal.fire({
+
+                                icon: "success",
+                                title: "El instructor ha sido registrado exitosamente",
+                                showConfirmButton: false,
+                                timer: 1700
+                            }).then(() => {
+                                document.getElementById('instructorid').submit();
+                            });
+                        }
+                    </script>
 
                 </form>
 

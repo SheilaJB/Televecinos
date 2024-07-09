@@ -1,10 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<%@ page import="java.util.*" %>
+<jsp:useBean id="vecino" scope="request" type="org.example.televecinosunidos_appweb.model.beans.UsuarioB"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Detalles del solicitante</title>
+    <title>Detalles del vecino</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -33,6 +34,7 @@
     <link href="css/app.min.css" rel="stylesheet">
     <link href="css/style_vec.css" rel="stylesheet">
     <link href="css/style_popup.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
 
         .container {
@@ -91,12 +93,12 @@
             color: #fff;
         }
 
-        .aceptar {
+        .convertCoordinadora {
             background-color: #27ae60;
             color: #fff;
         }
 
-        .rechazar {
+        .banear {
             background-color: #e74c3c;
             color: #fff;
         }
@@ -115,11 +117,9 @@
     </div>
     <!-- Spinner End -->
 
-
     <!-- BARRA AZUL DE LA IZQUIERDA INICIO-->
     <jsp:include page="../includes/barraLateralAdministrador.jsp"></jsp:include>
     <!-- BARRA AZUL DE LA IZQUIERDA FINAL -->
-
 
     <!-- Content Start -->
     <div class="content">
@@ -139,43 +139,20 @@
 
 
             <div class="container text-center">
-                <img src="img/solicitante.png" class="img-fluid mb-3" alt="Responsive image" width="200">
-                <div class="bar" data-label="Nombre">Alexis Mariel</div>
-                <div class="bar" data-label="Apellido">Herrera  Lopez</div>
-                <div class="bar" data-label="DNI">46851236</div>
-                <div class="bar" data-label="Dirección">Calle los jazmines 137</div>
-                <div class="bar" data-label="Distrito">San Miguel</div>
-                <div class="bar" data-label="Urbanización">Pando 10</div>
-                <div class="bar" data-label="Correo">robertbala@gmail.com</div>
-                <a href="NuevasSolicitudes_A.html"><button class="button regresar">Regresar</button></a>
+                <img src="img/vecino.jpg" class="img-fluid mb-3" alt="Responsive image" width="200">
+                <div class="bar" data-label="ID"><%=vecino.getIdUsuario()%></div>
+                <div class="bar" data-label="Nombre"><%=vecino.getNombre()%></div>
+                <div class="bar" data-label="Apellido"><%=vecino.getApellido()%></div>
+                <div class="bar" data-label="DNI"><%=vecino.getDni()%></div>
+                <div class="bar" data-label="Dirección"><%=vecino.getDireccion()%></div>
+                <div class="bar" data-label="Correo"><%=vecino.getCorreo()%></div>
+                <a href="<%=request.getContextPath()%>/AdministradorServlet?action=nuevasSolicitudes_A"><button class="button regresar">Regresar</button></a>
 
-                <button class="button aceptar btn-banear">Aceptar</button>
-                <div id="popup1" class="popup1" >
-                    <div class="popup_contenido1">
-                        <span class="close-btn" id="closePopupBtn1">&times;</span>
-                        <img src="img/check.png" alt="check" width="48" height="48" style="margin-top: -10px;">
 
-                        <p>¡Nuevo Vecino añadido!</p>
+                <!--<a href="<%=request.getContextPath()%>/AdministradorServlet?action=banearVecino&idVecino=<%=vecino.getIdUsuario()%>"><button class="button banear btn-banear">Banear</button></a>-->
 
-                        <a href="NuevasSolicitudes_A.html"><button type="button" class="btn btn-primary rounded-pill m-2">Regresar</button></a>
 
-                    </div>
-                </div>
-                <button class="button rechazar btn-banear">Rechazar</button>
-                <div id="popup2" class="popup1" >
-                    <div class="popup_contenido1">
-                        <s8pan class="close-btn" id="closePopupBtn2">&times;</s8pan>
-                        <img src="img/advertencia.png" alt="check" width="48" height="48" style="margin-top: -10px;">
 
-                        <p>¡Advertencia!</p>
-
-                        <p>La acción tomada será permanente, ¿Está seguro de rechazar la solicitud de registro del vecino?</p>
-
-                        <a href="DetalleNewVecinos_A.html"><button type="button" class="btn btn-success rounded-pill m-2">Cancelar</button></a>
-                        <button type="button" class="btn btn-danger rounded-pill m-2">Sí, rechazar</button>
-
-                    </div>
-                </div>
             </div>
 
             <script>
@@ -201,7 +178,7 @@
             <div class="bg-light rounded-top p-4">
                 <div class="row">
                     <div class="col-12 col-sm-6 text-center text-sm-start">
-                        &copy; <a href="#">Televecinos Unidos</a>, All Right Reserved.
+                        &copy; <a href="#">TelevecinosUnidos</a>, All Right Reserved.
                     </div>
 
                 </div>
@@ -226,7 +203,45 @@
 <script src="lib/tempusdominus/js/moment.min.js"></script>
 <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
 <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+<script>
+    function confirmarBanear(idUsuario) {
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        });
 
+        swalWithBootstrapButtons.fire({
+            title: '¿Estás seguro que deseas banear al usuario?',
+            text: 'Podrás desbanearlo luego',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: '¡Sí, quiero banearlo!',
+            cancelButtonText: '¡No, cancelar!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                swalWithBootstrapButtons.fire({
+                    title: 'Baneado',
+                    text: 'El usuario ha sido baneado exitosamente',
+                    icon: 'success'
+                }).then(() => {
+
+                    window.location.href = '<%= request.getContextPath() %>/AdministradorServlet?action=banearVecino&idVecino=' + idUsuario;
+                });
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                swalWithBootstrapButtons.fire({
+                    title: 'Baneo cancelado',
+                    text: 'No se ha baneado al usuario',
+                    icon: 'error'
+                });
+            }
+        });
+    }
+</script>
 <!-- Template Javascript -->
 <script src="js/main.js"></script>
 <script>
