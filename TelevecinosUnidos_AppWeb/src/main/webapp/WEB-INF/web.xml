@@ -7,9 +7,9 @@
         <error-code>404</error-code>
         <location>/WEB-INF/Error404.jsp</location>
     </error-page>
-    <error-page>
+    <!--<error-page>
         <error-code>500</error-code>
         <location>/WEB-INF/Error500.jsp</location>
-    </error-page>
+    </error-page>-->
 
 </web-app>
