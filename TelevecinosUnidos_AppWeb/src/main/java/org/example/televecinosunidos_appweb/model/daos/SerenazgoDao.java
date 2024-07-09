@@ -38,7 +38,8 @@ public class SerenazgoDao extends BaseDao {
                 "    `televecinosdb`.`serenazgo`\n" +
                 "JOIN \n" +
                 "    `televecinosdb`.`usuario` ON serenazgo.usuario_idUsuario = usuario.idUsuario\n" +
-                "where usuario.isBan = 0;";
+                "where usuario.isBan = 0\n" +
+                "order by usuario.idUsuario desc;";
 
 
         ArrayList<SerenazgoB> listaSerenazgos = new ArrayList<>();

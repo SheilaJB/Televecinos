@@ -145,7 +145,6 @@
             <div class="container text-center">
                 <img src="img/coordinadora.jpg" class="img-fluid mb-3" alt="Responsive image" width="200">
                 <div class="bar" data-label="Tipo de cordinadora">Cultura</div>
-                <div class="bar" data-label="Fecha de nombramiento">?</div>
                 <div class="bar" data-label="Nombre"><%=coordinadora.getNombre()%></div>
                 <div class="bar" data-label="Apellido"><%=coordinadora.getApellido()%></div>
                 <div class="bar" data-label="DNI"><%=coordinadora.getDni()%></div>
@@ -182,7 +181,7 @@
             <div class="bg-light rounded-top p-4">
                 <div class="row">
                     <div class="col-12 col-sm-6 text-center text-sm-start">
-                        &copy; <a href="#">Televecinos Unidos</a>, All Right Reserved.
+                        &copy; <a>Televecinos Unidos</a>, All Right Reserved.
                     </div>
 
                 </div>
