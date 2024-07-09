@@ -7,6 +7,7 @@ import jakarta.servlet.annotation.*;
 import org.example.televecinosunidos_appweb.model.beans.EventoB;
 import org.example.televecinosunidos_appweb.model.beans.IncidenciasB;
 import org.example.televecinosunidos_appweb.model.beans.ProfesoresEvento;
+import org.example.televecinosunidos_appweb.model.beans.UsuarioB;
 import org.example.televecinosunidos_appweb.model.daos.EventoDao;
 import org.example.televecinosunidos_appweb.model.daos.IncidenCoordDao;
 
@@ -27,7 +28,8 @@ public class CoordinadorServlet extends HttpServlet {
         ArrayList<EventoB> listarEventosDisponibles = eventoDao.listarEventosDisponibles();
         String vista ="";
         String action = request.getParameter("action") == null ? "inicioCoordinador" : request.getParameter("action");
-
+        HttpSession httpSession = request.getSession();
+        UsuarioB usuarioLogged = (UsuarioB) httpSession.getAttribute("usuarioLogueado");
         switch (action) {
             //Inicio
             case "inicioCoordinador":
@@ -56,7 +58,7 @@ public class CoordinadorServlet extends HttpServlet {
                 //Falta jalar los datos desde la tabla
                 break;
             case "lista":
-                int idTipoEvento = Integer.parseInt("2");
+                int idTipoEvento = usuarioLogged.getTipoCoordinador_idTipoCoordinador();
                 ArrayList<EventoB> listaEventosPropios = eventoDao.listarEventosPropios(idTipoEvento);
                 vista = "WEB-INF/Coordinadora/ListaEvent-Coordinador.jsp";
                 request.setAttribute("lista", listaEventosPropios);
