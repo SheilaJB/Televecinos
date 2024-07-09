@@ -114,14 +114,16 @@
                         </thead>
                         <tbody>
                         <% for(UsuarioB usuarioB : lista){ %>
-                        <tr>
-                            <td><%=usuarioB.getNombre() + " " + usuarioB.getApellido()%></td>
-                            <td><%=usuarioB.getDireccion() %></td>
-                            <td><%=usuarioB.getDni() %></td>
-                            <td><%=usuarioB.getCantidadIncidenciasFalsas() %></td>
-                            <td><a href="<%=request.getContextPath()%>/SerenazgoServlet?action=banearVecino&idVecino=<%=usuarioB.getIdUsuario()%>"><button type="button" class="btn btn-danger m-2" ><i class="fas fa-ban"></i></button></a></td>
+                            <% if(usuarioB.getCantidadIncidenciasFalsas()>=5){ %>
+                                <tr>
+                                    <td><%=usuarioB.getNombre() + " " + usuarioB.getApellido()%></td>
+                                    <td><%=usuarioB.getDireccion() %></td>
+                                    <td><%=usuarioB.getDni() %></td>
+                                    <td><%=usuarioB.getCantidadIncidenciasFalsas() %></td>
+                                    <td><a href="<%=request.getContextPath()%>/SerenazgoServlet?action=banearVecino&idVecino=<%=usuarioB.getIdUsuario()%>"><button type="button" class="btn btn-danger m-2" ><i class="fas fa-ban"></i></button></a></td>
 
-                        </tr>
+                                </tr>
+                            <% } %>
                         <% } %>
                         </tbody>
                     </table>

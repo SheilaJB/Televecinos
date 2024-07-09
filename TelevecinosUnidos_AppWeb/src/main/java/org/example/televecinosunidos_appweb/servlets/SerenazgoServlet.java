@@ -121,7 +121,7 @@ public class SerenazgoServlet extends HttpServlet {
             case "buscarVecinoPorNombre":
                 textoBuscar= request.getParameter("textoBuscar");
                 if (textoBuscar == null) {
-                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=listaVecinos_S");
+                    response.sendRedirect(request.getContextPath() + "/SerenazgoServlet?action=listaVecinos_S");
                 } else {
                     request.setAttribute("textoBusqueda",textoBuscar);
                     request.setAttribute("lista", vecinoDao.buscarVecinoPorNombre(textoBuscar));
