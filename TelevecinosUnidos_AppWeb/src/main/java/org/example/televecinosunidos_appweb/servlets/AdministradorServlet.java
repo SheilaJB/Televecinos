@@ -351,6 +351,7 @@ public class AdministradorServlet extends HttpServlet {
                 profesoresEvento.setCurso(curso);
                 instructorDao.registrarNuevoProfesor(profesoresEvento);
                 response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=listaInstructores_A");
+
                 break;
             case "buscarVecinoPorNombre":
                 textoBuscar= request.getParameter("textoBuscar");

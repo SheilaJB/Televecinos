@@ -37,7 +37,7 @@
         <link href="css/style_vec.css" rel="stylesheet">
         <link href="css/style_popup.css" rel="stylesheet">
 
-
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </head>
 
     <body>
@@ -118,7 +118,14 @@
                                         <td><%=usuarioB.getDireccion() %></td>
                                         <td><%=usuarioB.getDni() %></td>
                                         <td><%=usuarioB.getRolStr() %></td>
-                                        <td><a href="<%=request.getContextPath()%>/AdministradorServlet?action=desbanearUsuario&idUsuario=<%=usuarioB.getIdUsuario()%>"><button type="button" class="btn btn-success m-2" ><i class="fas fa-unlock"></i></button></a></td>
+                                        <td>
+
+                                            <!--<a href="<%=request.getContextPath()%>/AdministradorServlet?action=desbanearUsuario&idUsuario=<%=usuarioB.getIdUsuario()%>"><button type="button" class="btn btn-success m-2" ><i class="fas fa-unlock"></i></button></a>-->
+
+                                            <button type="button" class="btn btn-success m-2" onclick="desbanear(<%=usuarioB.getIdUsuario()%>)">
+                                                <i class="fas fa-unlock"></i>
+                                            </button>
+                                        </td>
                                     </tr>
                                     <% } %>
                                 </tbody>
@@ -159,6 +166,22 @@
         <script src="lib/tempusdominus/js/moment.min.js"></script>
         <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
         <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+        <script>
+            function desbanear(idUsuario) {
+                Swal.fire({
+
+                    icon: "success",
+                    title: "El usuario ha sido desbaneado exitosamente",
+                    showConfirmButton: false,
+                    timer: 1700
+                }).then(() => {
+                    window.location.href = '<%= request.getContextPath() %>/AdministradorServlet?action=desbanearUsuario&idUsuario=' + idUsuario;
+                });
+            }
+        </script>
+
+
 
         <!-- Template Javascript -->
         <script src="js/main.js"></script>

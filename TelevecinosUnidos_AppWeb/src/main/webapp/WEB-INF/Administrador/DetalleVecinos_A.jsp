@@ -147,11 +147,51 @@
                 <div class="bar" data-label="Dirección"><%=vecino.getDireccion()%></div>
                 <div class="bar" data-label="Correo"><%=vecino.getCorreo()%></div>
                 <a href="<%=request.getContextPath()%>/AdministradorServlet?action=listaVecinos_A"><button class="button regresar">Regresar</button></a>
-                <a href="<%=request.getContextPath()%>/AdministradorServlet?action=promoverAcoordinadorCultura&idVecino=<%=vecino.getIdUsuario()%>"><button class="button convertCoordinadora btn-banear">Promover a coordinadora cultura</button></a>
-                <a href="<%=request.getContextPath()%>/AdministradorServlet?action=promoverAcoordinadorDeporte&idVecino=<%=vecino.getIdUsuario()%>"><button class="button convertCoordinadora btn-banear">Promover a coordinadora deportes </button></a>
+
+
+                <!--<a href="<%=request.getContextPath()%>/AdministradorServlet?action=promoverAcoordinadorCultura&idVecino=<%=vecino.getIdUsuario()%>"><button class="button convertCoordinadora btn-banear">Promover a coordinadora cultura</button></a>-->
+                <button type="button" class="button convertCoordinadora btn-banear" onclick="convertirCoordinadoraCultura(<%=vecino.getIdUsuario()%>)">
+                    Promover a coordinadora cultura
+                </button>
+                <script>
+                    function convertirCoordinadoraCultura(idVecino) {
+                        Swal.fire({
+
+                            icon: "success",
+                            title: "Ha sido promovido exitosamente",
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then(() => {
+                            window.location.href = '<%= request.getContextPath() %>/AdministradorServlet?action=promoverAcoordinadorCultura&idVecino=' + idVecino;
+                        });
+                    }
+                </script>
+
+
+
+                <!--<a href="<%=request.getContextPath()%>/AdministradorServlet?action=promoverAcoordinadorDeporte&idVecino=<%=vecino.getIdUsuario()%>"><button class="button convertCoordinadora btn-banear">Promover a coordinadora deportes </button></a>-->
+                <button type="button" class="button convertCoordinadora btn-banear" onclick="convertirCoordinadoraDeporte(<%=vecino.getIdUsuario()%>)">
+                    Promover a coordinadora deporte
+                </button>
+
+                <script>
+                    function convertirCoordinadoraDeporte(idVecino) {
+                        Swal.fire({
+
+                            icon: "success",
+                            title: "Ha sido promovido exitosamente",
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then(() => {
+                            window.location.href = '<%= request.getContextPath() %>/AdministradorServlet?action=promoverAcoordinadorDeporte&idVecino=' + idVecino;
+                        });
+                    }
+                </script>
+
+
 
                 <!--<a href="<%=request.getContextPath()%>/AdministradorServlet?action=banearVecino&idVecino=<%=vecino.getIdUsuario()%>"><button class="button banear btn-banear">Banear</button></a>-->
-                <button type="button" class="btn btn-danger m-2" onclick="confirmarBanear(<%=vecino.getIdUsuario()%>)">
+                <button type="button" class="button banear btn-banear" onclick="confirmarBanear(<%=vecino.getIdUsuario()%>)">
                     Banear
                 </button>
 
