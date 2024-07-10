@@ -34,6 +34,7 @@ public class IncidenciaDao extends BaseDao{
                 incidenciaB.setSerenazgo_idSerenazgo(rs.getInt("Serenazgo_idSerenazgo"));
                 incidenciaB.setUsuario_idUsuario(rs.getInt("Usuario_idUsuario"));
                 incidenciaB.setIncidenciaPersonal(rs.getInt("incidenciaPersonal"));
+                incidenciaB.setNombrePersonalTurno(rs.getString("nombreDelPersonalEnTurno"));
                 listaIncidencias.add(incidenciaB);
 
                 switch (incidenciaB.getCriticidadIncidencia_idCriticidadIncidencia()){
@@ -159,8 +160,94 @@ public class IncidenciaDao extends BaseDao{
                     incidenciasB.setSerenazgo_idSerenazgo(rs.getInt("Serenazgo_idSerenazgo"));
                     incidenciasB.setUsuario_idUsuario(rs.getInt("Usuario_idUsuario"));
                     incidenciasB.setIncidenciaPersonal(rs.getInt("incidenciaPersonal"));
+                    incidenciasB.setReferencia(rs.getString("referencia"));
 
                 }
+                //
+                switch (incidenciasB.getCriticidadIncidencia_idCriticidadIncidencia()){
+                    case 1:
+                        incidenciasB.setCriticidadIncidencia_idCriticidadIncidenciaStr("Baja");
+                        break;
+                    case 2:
+                        incidenciasB.setCriticidadIncidencia_idCriticidadIncidenciaStr("Media");
+                        break;
+                    case 3:
+                        incidenciasB.setCriticidadIncidencia_idCriticidadIncidenciaStr("Alta");
+                        break;
+                }
+                switch (incidenciasB.getEstadosIncidencia_idEstadoIncidencia()){
+                    case 1:
+                        incidenciasB.setEstadosIncidencia_idEstadoIncidenciaStr("Pendiente");
+                        break;
+                    case 2:
+                        incidenciasB.setEstadosIncidencia_idEstadoIncidenciaStr("En curso");
+                        break;
+                    case 3:
+                        incidenciasB.setEstadosIncidencia_idEstadoIncidenciaStr("Cancelado");
+                        break;
+                    case 4:
+                        incidenciasB.setEstadosIncidencia_idEstadoIncidenciaStr("Rechazado");
+                        break;
+                    case 5:
+                        incidenciasB.setEstadosIncidencia_idEstadoIncidenciaStr("Procesado");
+                        break;
+                }
+                switch (incidenciasB.getTipoIncidencia()){
+                    case "1":
+                        incidenciasB.setTipoIncidencia_idTipoIncidenciaStr("Seguridad Pública");
+                        break;
+                    case "2":
+                        incidenciasB.setTipoIncidencia_idTipoIncidenciaStr("Emergencia pública");
+                        break;
+                    case "3":
+                        incidenciasB.setTipoIncidencia_idTipoIncidenciaStr("Infraestructura y Servicios Publicos");
+                        break;
+                    case "4":
+                        incidenciasB.setTipoIncidencia_idTipoIncidenciaStr("Otro");
+                        break;
+                }
+
+                switch (incidenciasB.getIdUrbanizacion()){
+                    case 1:
+                        incidenciasB.setUrbanizacion("Rafael Escardó ");
+                        break;
+                    case 2:
+                        incidenciasB.setUrbanizacion("José de La Riva Agüero");
+                        break;
+                    case 3:
+                        incidenciasB.setUrbanizacion("Juan XXIII");
+                        break;
+                    case 4:
+                        incidenciasB.setUrbanizacion("Libertad");
+                        break;
+                    case 5:
+                        incidenciasB.setUrbanizacion("Los Jardines de La Marina");
+                        break;
+                    case 6:
+                        incidenciasB.setUrbanizacion("Las Leyendas");
+                        break;
+                    case 7:
+                        incidenciasB.setUrbanizacion("Las Torres San Miguelito");
+                        break;
+                    case 8:
+                        incidenciasB.setUrbanizacion("Elmer Faucett");
+                        break;
+                    case 9:
+                        incidenciasB.setUrbanizacion("Maranga");
+                        break;
+                    case 10:
+                        incidenciasB.setUrbanizacion("Pando");
+                        break;
+                    case 11:
+                        incidenciasB.setUrbanizacion("Parques de La Huaca");
+                        break;
+                    case 12:
+                        incidenciasB.setUrbanizacion("Otro");
+                        break;
+                }
+                //
+
+
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

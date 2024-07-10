@@ -61,6 +61,14 @@ public class SerenazgoServlet extends HttpServlet {
                     }
                 }
                 break;
+            case "verDetalleIncidencia":
+                String idIncidencia = request.getParameter("idIncidencia");
+                String idVecinoDuenoIncidencia = request.getParameter("idVecinoDuenoIncidencia");
+                vista = "WEB-INF/Serenazgo/verIncidencia_S.jsp";
+                request.setAttribute("incidencia",incidenciaDao.buscarPorId(idIncidencia));
+                request.setAttribute("nombreVecinoDuenoIncidencia",vecinoDao.buscarVecinoPorId(idVecinoDuenoIncidencia).getNombre()+" " + vecinoDao.buscarVecinoPorId(idVecinoDuenoIncidencia).getApellido());
+                request.getRequestDispatcher(vista).forward(request, response);
+                break;
 
 
             default:

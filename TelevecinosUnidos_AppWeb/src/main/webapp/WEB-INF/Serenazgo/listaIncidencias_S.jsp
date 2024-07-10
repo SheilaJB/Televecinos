@@ -216,7 +216,7 @@
                         <%if(incidenciasB.getEstadosIncidencia_idEstadoIncidencia() != 5){%>
                             <td><a href="<%=request.getContextPath()%>/SerenazgoServlet?action=gestionar_Incidencia_S&id=<%=incidenciasB.getIdIncidencias()%>"><button type="button" class="btn btn-success-puedeGestionar m-2"><i class="fas fa-clipboard-list"></i></button></a></td>
                         <%}else{%>
-                            <td><button type="button" class="btn btn-danger m-2" onclick="incidenciaYaGestionada(<%=incidenciasB.getNombrePersonalTurno()%>)"><i class="fas fa-clipboard-list"></i></button></td>
+                            <td><button type="button" class="btn btn-danger m-2" onclick="incidenciaYaGestionada('<%=incidenciasB.getNombrePersonalTurno()%>','<%=incidenciasB.getIdIncidencias()%>','<%=incidenciasB.getUsuario_idUsuario()%>')"><i class="fas fa-clipboard-list"></i></button></td>
                         <%} %>
                     </tr>
 
@@ -226,7 +226,7 @@
                 </table>
 
                 <script>
-                    function incidenciaYaGestionada(nombrePersonalTurno) {
+                    function incidenciaYaGestionada(nombrePersonalTurno,idIncidencia,idVecinoDuenoIncidencia) {
                         Swal.fire({
                             title: "Error",
                             text: "Esta incidencia ya ha sido gestionada por: "+ nombrePersonalTurno,
@@ -239,11 +239,8 @@
 
                         }).then((result) => {
                             if (result.isConfirmed) {
-                                Swal.fire({
-                                    title: "incidencia: !",
-                                    text: "Your file has been deleted.",
-                                    icon: "success"
-                                });
+                                window.location.href = '<%= request.getContextPath() %>/SerenazgoServlet?action=verDetalleIncidencia&idIncidencia=' + idIncidencia + "&idVecinoDuenoIncidencia="+idVecinoDuenoIncidencia;
+
                             }
                         });
 

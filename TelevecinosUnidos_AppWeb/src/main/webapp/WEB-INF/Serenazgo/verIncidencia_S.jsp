@@ -1,4 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:useBean id="incidencia" scope="request" type="org.example.televecinosunidos_appweb.model.beans.IncidenciasB"/>
+<jsp:useBean id="nombreVecinoDuenoIncidencia" scope="request" type="java.lang.String"/>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -68,7 +71,7 @@
             <div class="container">
                 <div class="columna columna1">
                     <div class="campo">
-                        <h2>Ver información de la incidencia</h2>
+                        <h2>Ver detalle de incidencia</h2>
                     </div>
 
                     <form>
@@ -77,47 +80,52 @@
                                 <img id="preview" src="#" alt="Vista previa de la imagen" class="img-thumbnail" style="display: none;">
                             </div>
                             <div class="mb-3">
-                                <label for="NombreIncidencia" class="form-label" style="color:#023047;"><b>Nombre de la incidencia</b></label>
+                                <label for="NombreIncidencia" class="form-label" style="color:#023047;"><b>Nombre de la incidencia </b></label>
                                 <br>
-                                <a style="color: white;"> Accidente de transito</a>
+                                <a style="color: white;">• <%=incidencia.getNombreIncidencia()%></a>
                             </div>
                             <div class="mb-3">
                                 <label for="TipoIncidencia" class="form-label" style="color:#023047;"><b>Tipo de incidencia</b></label>
                                 <br>
-                                <a style="color: white;">• Emergencia Médica</a>
+                                <a style="color: white;">• <%=incidencia.getTipoIncidencia_idTipoIncidenciaStr()%></a>
                             </div>
 
 
                             <div class="mb-3">
-                                <label for="esPara" class="form-label" style="color:#023047;"><b>La incidencia es para:</b></label>
+                                <label for="esPara" class="form-label" style="color:#023047;"><b>La incidencia pertenece a:</b></label>
                                 <br>
-                                <a style="color: white;">• Para otra persona</a>
+                                <a style="color: white;">• <%=nombreVecinoDuenoIncidencia%></a>
                             </div>
 
                             <div class="mb-3">
                                 <label for="lugarExacto" class="form-label" style="color:#023047;"><b>Lugar exacto:</b></label>
                                 <br>
-                                <a style="color: white;"> Av Universitaria #YYYY</a>
+                                <a style="color: white;">•<%=incidencia.getLugarExacto()%></a>
                             </div>
                             <div class="mb-3">
                                 <label for="referencia" class="form-label" style="color:#023047;"><b>Referencia</b></label>
                                 <br>
-                                <a style="color: white;">Frente a la PUCP</a>
+                                <a style="color: white;">•<%=incidencia.getReferencia()%></a>
                             </div>
                             <div class="mb-3">
                                 <label for="contacto" class="form-label" style="color:#023047;"><b>Contacto</b></label>
                                 <br>
-                                <a style="color: white;">916546561</a>
+                                <a style="color: white;">•<%=incidencia.getNumeroContacto()%></a>
                             </div>
                             <div class="mb-3">
                                 <label for="ambulancia" class="form-label" style="color:#023047;"><b>¿Se requiere ambulancia?</b></label>
                                 <br>
-                                <a style="color: white;">Sí</a>
+                                <%if(incidencia.getAmbulancia()==1){ %>
+                                <a style="color: white;">•Sí</a>
+                                <%}else{ %>
+                                    <a style="color: white;">•No</a>
+                                <%} %>
+
                             </div>
                             <div class="mb-3">
                                 <label for="fechaGenereación" class="form-label" style="color:#023047;"><b>Fecha y hora de la generación de incidencia:</b></label>
                                 <br>
-                                <a style="color: white;">17/04/24 a las 18:00:00</a>
+                                <a style="color: white;">• <%=incidencia.getFecha()%> </a>
                             </div>
 
                         </div>
@@ -138,7 +146,7 @@
                             </div>
                         </a>
 
-                        <a href="listaIncidencias_S.html">
+                        <a href="<%=request.getContextPath()%>/SerenazgoServlet?action=listaIncidencias_S">
                             <div class="BotonRegresar">
                                 <button type="button" class="btn btn-lg btn-primary m-2" style="background-color: #023047; border-color: #023047; color: #ffffff;">Regresar</button>
                             </div>
