@@ -20,7 +20,7 @@ public class ImagenDao extends BaseDao{
 
             if (rs.next()) {
                 String nombreArchivo = rs.getString("nombreFoto");
-                System.out.println(nombreArchivo);
+                System.out.println("fotorr: " + nombreArchivo);
                 String tipoArchivo = getContentTypeByFileName(nombreArchivo);
                 response.setContentType(tipoArchivo);
                 response.setHeader("Content-Disposition", "inline; filename=\"" + nombreArchivo + "\"");

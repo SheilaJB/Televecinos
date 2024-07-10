@@ -152,6 +152,7 @@ public class VecinoServlet extends HttpServlet {
                 String ambulanciaStr = request.getParameter("ambulancia");
 
                 Part part = request.getPart("foto");
+                String fileName = part.getSubmittedFileName();
                 InputStream fileInputStream = part.getInputStream();
 
                 // Validaciones

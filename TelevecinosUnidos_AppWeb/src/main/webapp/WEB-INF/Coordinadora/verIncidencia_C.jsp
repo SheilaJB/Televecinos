@@ -2,6 +2,8 @@
 <%@ page import="org.example.televecinosunidos_appweb.model.beans.IncidenciasB" %>
 <%@ page import="java.util.Optional" %>
 
+<% IncidenciasB incidenciasB = (IncidenciasB) request.getAttribute("incidencia"); %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -150,9 +152,9 @@
                     <div class="col-md-6" style="margin-top: 85px;">
                         <form>
                             <label class="form-label"><b>Foto del incidente</b></label>
-                            <div class="rounded h-100 p-4"style="background-color: #ffb703;">
+                            <div class="rounded h-100 p-4" style="background-color: #ffb703;">
                                 <div class="mb-3">
-                                    <img src="<%= request.getAttribute("incidencia") != null ? ((IncidenciasB) request.getAttribute("incidencia")).getFoto() : "img/default.jpg" %>" class="img-responsive" alt="" style="width: 100%; height: auto;" />
+                                    <img src="ImagenServlet?idImagenIncidencia= <%= incidenciasB.getIdIncidencias() %>" class="img-responsive" alt="" style="width: 100%; height: auto;" />
                                 </div>
                             </div>
                             <div class="d-flex justify-content-end">
