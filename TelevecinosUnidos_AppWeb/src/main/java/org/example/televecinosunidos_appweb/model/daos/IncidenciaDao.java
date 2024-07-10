@@ -9,8 +9,8 @@ import java.util.ArrayList;
 public class IncidenciaDao extends BaseDao{
     public ArrayList<IncidenciasB> listarIncidencias() {
 
-        String sql = "SELECT * FROM televecinosdb.incidencias;" ;
-
+        String sql = "SELECT * FROM televecinosdb.incidencias \n" +
+                    "order by incidencias.EstadosIncidencia_idEstadosIncidencia asc";
 
         ArrayList<IncidenciasB> listaIncidencias = new ArrayList<>();
 
@@ -171,7 +171,8 @@ public class IncidenciaDao extends BaseDao{
     //funcion que falta probar y arreglar:
     public ArrayList<IncidenciasB> listarIncidenciasFiltro(String textoBuscar,String criticidad,String tipo,String estado,String urbanizacion ) {
 
-        String sql = "SELECT * FROM televecinosdb.incidencias where incidencias.nombreIncidencia  like ?" ;
+        String sql = "SELECT * FROM televecinosdb.incidencias where incidencias.nombreIncidencia  like ?";
+
 
         if (criticidad != null) {
             sql += " AND incidencias.CriticidadIncidencia_idCriticidadIncidencia = ?";
@@ -185,10 +186,10 @@ public class IncidenciaDao extends BaseDao{
         }
 
         if (urbanizacion != null) {
-            sql += "AND incidencias.urbanizacion_idUrbanizacion = ?;";
+            sql += "AND incidencias.urbanizacion_idUrbanizacion = ?";
         }
 
-
+        sql+="order by incidencias.EstadosIncidencia_idEstadosIncidencia asc";
 
         ArrayList<IncidenciasB> listaIncidencias = new ArrayList<>();
 
@@ -402,7 +403,7 @@ public class IncidenciaDao extends BaseDao{
     public void actualizarIncidenciaS(IncidenciasB incidencia) {
 
         String sql = "UPDATE incidencias " +
-                "SET solucionADar = ?, personalRequerido_idpersonalRequerido = ?, nombreDelPersonalEnTurno = ?, tipoMovilidadRequerido = ?,CriticidadIncidencia_idCriticidadIncidencia=?,EstadosIncidencia_idEstadosIncidencia=? " +
+                "SET solucionADar = ?, personalRequerido_idpersonalRequerido = ?, nombreDelPersonalEnTurno = ?, tipoMovilidadRequerido = ?,CriticidadIncidencia_idCriticidadIncidencia=?,EstadosIncidencia_idEstadosIncidencia=?,Serenazgo_idSerenazgo=? " +
                 "WHERE idIncidencias = ? ;";
 
         try (Connection connection = getConnection();
@@ -413,7 +414,8 @@ public class IncidenciaDao extends BaseDao{
             pstmt.setInt(4,incidencia.getTipoMovilidadRequerido() );
             pstmt.setInt(5,incidencia.getCriticidadIncidencia_idCriticidadIncidencia() );
             pstmt.setInt(6,incidencia.getEstadosIncidencia_idEstadoIncidencia() );
-            pstmt.setInt(7, incidencia.getIdIncidencias());
+            pstmt.setInt(7, incidencia.getSerenazgo_idSerenazgo());
+            pstmt.setInt(8, incidencia.getIdIncidencias());
 
             pstmt.executeUpdate();
         } catch (SQLException e) {
