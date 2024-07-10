@@ -266,15 +266,15 @@ public class IncidenCoordDao extends BaseDao{
         String sql = "UPDATE incidencias " +
                 "SET nombreIncidencia = ?, lugarExacto = ?, referencia = ?, foto = ?, " +
                 "ambulancia = ?, numeroContacto = ?, urbanizacion_idUrbanizacion = ?, " +
-                "TipoIncidencia_idTipoIncidencia = ?, incidenciaPersonal = ? " +
-                "WHERE idIncidencias = ? AND borrado =FALSE AND EstadosIncidencia_idEstadosIncidencia = 1 AND Usuario_idUsuario = ?;";
+                "TipoIncidencia_idTipoIncidencia = ?, incidenciaPersonal = ?, nombreFoto = ? " +
+                "WHERE idIncidencias = ? AND borrado = FALSE AND EstadosIncidencia_idEstadosIncidencia = 1 AND Usuario_idUsuario = ?;";
 
         try (Connection connection = getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, incidencia.getNombreIncidencia());
             pstmt.setString(2, incidencia.getLugarExacto());
             pstmt.setString(3, incidencia.getReferencia());
-            pstmt.setBlob(9, incidencia.getFoto());
+            pstmt.setBlob(4, incidencia.getFoto());
             pstmt.setInt(5, incidencia.getAmbulancia());
             pstmt.setString(6, incidencia.getNumeroContacto());
             int urbanizacionId = obtenerIdUrbanizacion(incidencia.getUrbanizacion());
@@ -282,8 +282,10 @@ public class IncidenCoordDao extends BaseDao{
             int tipoIncidenciaId = obtenerIdTipoIncidencia(incidencia.getTipoIncidencia());
             pstmt.setInt(8, tipoIncidenciaId);
             pstmt.setInt(9, incidencia.getIncidenciaPersonal());
-            pstmt.setInt(10, incidencia.getIdIncidencias());
-            pstmt.setInt(11, userId);
+            pstmt.setString(10, incidencia.getNombreFoto());
+            pstmt.setInt(11, incidencia.getIdIncidencias());
+            pstmt.setInt(12, userId);
+
             pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
