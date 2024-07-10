@@ -89,7 +89,7 @@
 
         <h2 class="mb-2 text-center" style="padding-top: 3%; color:#023047;">Editar Evento</h2>
         <!-- Form Start -->
-        <form method="post" action="<%=request.getContextPath()%>/CoordinadorServlet?action=editar">
+        <form method="post" action="<%=request.getContextPath()%>/CoordinadorServlet?action=editar" enctype="multipart/form-data">
             <input type="hidden" name="idEvento" value="<%=evento.getIdEvento()%>">
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
@@ -223,11 +223,12 @@
                             <h5 class="mb-4" style="color:#023047;"><b>Subir una foto para la portada</b></h5>
                             <div class="mb-3">
                                 <label for="foto" class="form-label" style="color:#023047;"><b>Formatos permitidos: .jpg .jpeg o .png</b></label>
-                                <input class="form-control" type="file" id="foto" accept=".jpg, .jpeg, .png" name="foto">
+                                <input class="form-control" type="file" id="foto" accept=".jpg, .jpeg, .png" name="foto" >
                             </div>
                             <!-- Contenedor para la previsualización de la imagen -->
                             <div class="mb-3">
-                                <img id="preview" src="<%=evento.getFoto()%>" alt="Vista previa de la imagen" class="img-thumbnail" style="display: <%=evento.getFoto() != null ? "block" : "none"%>;">
+                                <img id="preview" src="ImagenServlet?idImagenEvento=<%=evento.getIdEvento()%>" alt="Vista previa de la imagen" class="img-thumbnail" style="display: <%=evento.getFoto() != null ? "block" : "none"%>;">
+
                             </div>
                         </div>
                     </div>
