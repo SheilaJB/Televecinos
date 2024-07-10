@@ -104,7 +104,7 @@
 
         <form  id="incidenciaFalsaForm" method="post" action="<%=request.getContextPath()%>/SerenazgoServlet?action=seleccionarInicidenciaFalsa">
             <input type="hidden" name="incidenciaId" value="<%=incidencia.getIdIncidencias()%>">
-
+            <input type="hidden" class="form-control" name="UsrID" value="<%=incidencia.getUsuario_idUsuario()%>">
             <td>
                 <button type="button" class="btn btn-false m-2 btn-banear" onclick="confirmarIncidenciaFalsa(<%=incidencia.getIdIncidencias()%>)">
                     ⛔ Falsa
@@ -210,12 +210,15 @@
 
                             </select>
 
+
                         </div>
                     </div>
 
                 </div>
             </div>
-            <input type="hidden" name="idUsuario" value="<%=incidencia.getUsuario_idUsuario()%>">
+
+
+
             <!-- Botón para guardar evaluación de incidencia REVISAR LINEA 218-->
             <div style="text-align: right; margin-right: 100px; padding-top: 2%;">
                 <button type="button" class="btn btn-primary" style="background-color: #023047; border-color: #023047; color: #ffffff;" onclick="guardadoExitosamente()"><b>Guardar</b></button>
