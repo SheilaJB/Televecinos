@@ -223,7 +223,7 @@
                             <h5 class="mb-4" style="color:#023047;"><b>Subir una foto para la portada</b></h5>
                             <div class="mb-3">
                                 <label for="foto" class="form-label" style="color:#023047;"><b>Formatos permitidos: .jpg .jpeg o .png</b></label>
-                                <input class="form-control" type="file" id="foto" accept=".jpg, .jpeg, .png" name="foto" >
+                                <input class="form-control" type="file" id="foto" accept=".jpg, .jpeg, .png" name="foto">
                             </div>
                             <!-- Contenedor para la previsualización de la imagen -->
                             <div class="mb-3">

@@ -43,6 +43,7 @@
     <link href="css/style_vec.css" rel="stylesheet">
     <link href="css/style_serenazgo.css" rel="stylesheet">
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         table {
             width: 100%;
@@ -212,36 +213,42 @@
                         <td><%=incidenciasB.getEstadosIncidencia_idEstadoIncidenciaStr()%>
                         </td>
 
-                        <td><a href="<%=request.getContextPath()%>/SerenazgoServlet?action=gestionar_Incidencia_S&id=<%=incidenciasB.getIdIncidencias()%>"><button type="button" class="btn btn-success-puedeGestionar m-2"><i class="fas fa-clipboard-list"></i></button></a></td>
-                        <!--
-                        <td>Incidencia 1</td>
-                        <td>21-Enero</td>
-                        <th scope="col">Seguridad pública</th>
-                        <td><i class="me-2 colorLetrasBarraLateral"></i>Media</a></td>
-                        <th scope="col">Los Jardines de La Marina</th>
-                        <td><i class="fa me-2 colorLetrasBarraLateral"></i>Pendiente</a></td>
-                        <td>
-                            <a href="gestionar_Incidencia_S.html">
-                                <button type="button" class="btn btn-success-puedeGestionar m-2" onclick="editEvent(1)">
-                                    <i class="fas fa-pencil-alt"></i>
-                                </button>
-                            </a>
-                        </td>
-                        <td>
-                            <a href="verInicidencia_S.html">
-                                <button type="button" class="btn btn-primary m-2" onclick="editEvent(1)">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                            </a>
-                        </td>
-                    </tr> -->
-
+                        <%if(incidenciasB.getEstadosIncidencia_idEstadoIncidencia() != 5){%>
+                            <td><a href="<%=request.getContextPath()%>/SerenazgoServlet?action=gestionar_Incidencia_S&id=<%=incidenciasB.getIdIncidencias()%>"><button type="button" class="btn btn-success-puedeGestionar m-2"><i class="fas fa-clipboard-list"></i></button></a></td>
+                        <%}else{%>
+                            <td><button type="button" class="btn btn-danger m-2" onclick="incidenciaYaGestionada('<%=incidenciasB.getNombrePersonalTurno()%>','<%=incidenciasB.getIdIncidencias()%>','<%=incidenciasB.getUsuario_idUsuario()%>')"><i class="fas fa-clipboard-list"></i></button></td>
+                        <%} %>
                     </tr>
 
                     <% } %>
                     </tbody>
 
                 </table>
+
+                <script>
+                    function incidenciaYaGestionada(nombrePersonalTurno,idIncidencia,idVecinoDuenoIncidencia) {
+                        Swal.fire({
+                            title: "Error",
+                            text: "Esta incidencia ya ha sido gestionada por: "+ nombrePersonalTurno,
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                            confirmButtonText: "Ver detalle",
+                            cancelButtonText: "Regresar"
+
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = '<%= request.getContextPath() %>/SerenazgoServlet?action=verDetalleIncidencia&idIncidencia=' + idIncidencia + "&idVecinoDuenoIncidencia="+idVecinoDuenoIncidencia;
+
+                            }
+                        });
+
+                    }
+                </script>
+
+
+
 
             </div>
             <div  style="display: flex; justify-content: center; align-items: center;">

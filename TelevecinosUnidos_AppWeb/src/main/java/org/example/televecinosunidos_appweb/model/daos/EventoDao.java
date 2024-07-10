@@ -168,6 +168,7 @@ public class EventoDao extends BaseDao{
                 "e.cantidadVacantes AS cantidad_vacantes, " +
                 "e.cantDisponibles AS cantidad_disponibles, " +
                 "e.foto AS foto, " +
+                "e.nombreFoto AS nombreFoto, " +
                 "DATE_FORMAT(e.fecha_inicio, '%Y-%m-%d') AS fecha_inicio, " +
                 "DATE_FORMAT(e.fecha_fin, '%Y-%m-%d') AS fecha_fin, " +
                 "pf.idProfesoresEvento AS id_profesor, " +
@@ -210,6 +211,7 @@ public class EventoDao extends BaseDao{
                     evento.setHora_inicio(rs.getString("hora_inicio"));
                     evento.setHora_fin(rs.getString("hora_fin"));
                     evento.setFoto(rs.getBinaryStream("foto"));
+                    evento.setNombreFoto(rs.getString("nombreFoto"));
                     evento.setListaMateriales(rs.getString("listaMateriales"));
                     evento.setDiaEvento(rs.getString("diasEvento"));
                 }
