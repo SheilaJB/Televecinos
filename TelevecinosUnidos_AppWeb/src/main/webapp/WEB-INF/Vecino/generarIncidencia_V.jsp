@@ -1,6 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="org.example.televecinosunidos_appweb.model.beans.IncidenciasB" %>
-
+<%
+    IncidenciasB incidencia = (IncidenciasB) request.getAttribute("incidencia");
+%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -111,6 +113,24 @@
                                 <span class="error-message">${errores['foto']}</span>
                             </c:if>
                         </div>
+                        <!-- Contenedor para la previsualización de la imagen -->
+                        <div class="mb-3">
+                            <img id="preview" src="#" alt="Vista previa de la imagen" class="img-thumbnail" style="display: none;">
+                        </div>
+                        <script>
+                            document.getElementById('foto').addEventListener('change', function(event) {
+                                var file = event.target.files[0];
+                                if (file) {
+                                    var reader = new FileReader();
+                                    reader.onload = function(e) {
+                                        var imgElement = document.getElementById('preview');
+                                        imgElement.src = e.target.result;
+                                        imgElement.style.display = 'block'; // Muestra la imagen
+                                    };
+                                    reader.readAsDataURL(file);
+                                }
+                            });
+                        </script>
                         <div class="campo ${not empty errores['tipoIncidencia'] ? 'error-div' : ''}">
                             <label for="tipoIncidencia">Tipo de incidencia:</label><br>
                             <select id="tipoIncidencia" name="TipoIncidencia_idTipoIncidencia" class="${not empty errores['tipoIncidencia'] ? 'error' : ''}">

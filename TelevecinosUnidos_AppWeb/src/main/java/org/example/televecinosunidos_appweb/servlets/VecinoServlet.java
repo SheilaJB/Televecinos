@@ -237,6 +237,7 @@ public class VecinoServlet extends HttpServlet {
             case "editarIncidencia":
                 Map<String, String> errores2 = new HashMap<>();
 
+                IncidenciasB incidencia2 = incidenciaDao.buscarIncidenciaPorId(request.getParameter("idIncidencia"));
                 int id = Integer.parseInt(request.getParameter("idIncidencia"));
                 String nombreIncidencia2 = request.getParameter("nombreIncidencia");
                 String tipoIncidencia2 = request.getParameter("TipoIncidencia_idTipoIncidencia");
@@ -313,7 +314,13 @@ public class VecinoServlet extends HttpServlet {
                 IncidenciasB incidenciaB = new IncidenciasB();
                 incidenciaB.setIdIncidencias(id);
                 incidenciaB.setNombreIncidencia(nombreIncidencia2);
-                incidenciaB.setFoto(fileInputStream2);
+                if (fileName2 == null || fileName2.isEmpty()){
+                    incidenciaB.setFoto(incidencia2.getFoto());
+                    incidenciaB.setNombreFoto(incidencia2.getNombreFoto());
+                }else {
+                    incidenciaB.setNombreFoto(fileName2);
+                    incidenciaB.setFoto(fileInputStream2);
+                }
                 incidenciaB.setTipoIncidencia(tipoIncidencia2);
                 incidenciaB.setUrbanizacion(urbanizacion2);
                 incidenciaB.setIncidenciaPersonal(incidenciaPersonal2);
@@ -321,7 +328,7 @@ public class VecinoServlet extends HttpServlet {
                 incidenciaB.setReferencia(referencia2);
                 incidenciaB.setNumeroContacto(numeroContacto2);
                 incidenciaB.setAmbulancia(ambulancia2);
-                incidenciaB.setNombreFoto(fileName2);
+
 
                 incidenciaDao.actualizarIncidencia(incidenciaB, userId);
                 request.getSession().setAttribute("info", "Incidencia editada de manera exitosa");
