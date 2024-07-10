@@ -10,7 +10,7 @@ public class IncidenciasB {
     private InputStream foto;
     private int ambulancia;
     private String urbanizacion;
-
+    private String nombreFoto;
     private int idUrbanizacion;
 
     private String solucionADar;
@@ -18,6 +18,14 @@ public class IncidenciasB {
     private String nombrePersonalTurno;
     private int tipoMovilidadRequerido;
     private int personalRequerido;
+
+    public String getNombreFoto() {
+        return nombreFoto;
+    }
+
+    public void setNombreFoto(String nombreFoto) {
+        this.nombreFoto = nombreFoto;
+    }
 
     public InputStream getFoto() {
         return foto;

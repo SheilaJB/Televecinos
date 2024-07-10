@@ -311,6 +311,7 @@ public class CoordinadorServlet extends HttpServlet {
                 String ambulanciaStr = request.getParameter("ambulancia");
 
                 Part part3 = request.getPart("foto3");
+                String fileName3 = part3.getSubmittedFileName();
                 InputStream fileInputStream3 = part3.getInputStream();
 
                 // Validaciones
@@ -364,6 +365,7 @@ public class CoordinadorServlet extends HttpServlet {
                     request.setAttribute("referencia", referencia);
                     request.setAttribute("numeroContacto", numeroContacto);
                     request.setAttribute("ambulancia", ambulanciaStr);
+                    request.setAttribute("nombreFoto", fileName3);
                     request.getRequestDispatcher("WEB-INF/Coordinador/generarIncidencia_C.jsp").forward(request, response);
                     return;
                 }
@@ -381,7 +383,7 @@ public class CoordinadorServlet extends HttpServlet {
                 incidencia.setReferencia(referencia);
                 incidencia.setNumeroContacto(numeroContacto);
                 incidencia.setAmbulancia(ambulancia);
-
+                incidencia.setNombreFoto(fileName3);
                 incidenciaDao.generarIncidenciaC(incidencia,userId);
                 // Agregar mensaje a la sesión
                 request.getSession().setAttribute("info", "Incidencia creada de manera exitosa");

@@ -234,9 +234,10 @@ public class IncidenCoordDao extends BaseDao{
     public void generarIncidenciaC(IncidenciasB incidencia, int userId) {
         String sql = "INSERT INTO incidencias (nombreIncidencia, fecha, lugarExacto, referencia, foto, ambulancia, " +
                 "numeroContacto, urbanizacion_idUrbanizacion, TipoIncidencia_idTipoIncidencia, incidenciaPersonal, " +
-                "EstadosIncidencia_idEstadosIncidencia, Usuario_idUsuario) " +
-                "VALUES (?, NOW(), ?, ?, ?, ?, ?, ?, ?, ?, 1, ?)";
+                "EstadosIncidencia_idEstadosIncidencia, Usuario_idUsuario, nombreFoto) " +
+                "VALUES (?, NOW(), ?, ?, ?, ?, ?, ?, ?, ?, 1, ?,'1234.png')";
 
+        System.out.println("foto: " + incidencia.getNombreFoto());
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, incidencia.getNombreIncidencia());
@@ -249,6 +250,7 @@ public class IncidenCoordDao extends BaseDao{
             pstmt.setString(8, incidencia.getTipoIncidencia());
             pstmt.setInt(9, incidencia.getIncidenciaPersonal());
             pstmt.setInt(10, userId);
+            //pstmt.setString(11, incidencia.getNombreFoto());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);

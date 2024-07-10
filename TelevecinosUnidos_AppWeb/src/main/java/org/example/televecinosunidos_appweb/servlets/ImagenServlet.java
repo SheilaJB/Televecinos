@@ -22,7 +22,7 @@ public class ImagenServlet extends HttpServlet {
             imagenDao.listarImagen(sql, id, response);
         } else if (idImagenIncidencia != null) {
             int id = Integer.parseInt(idImagenIncidencia);
-            String sql = "SELECT foto FROM incidencias WHERE idIncidencias =";
+            String sql = "SELECT * FROM incidencias WHERE idIncidencias =";
             imagenDao.listarImagen(sql, id, response);
         }
     }
