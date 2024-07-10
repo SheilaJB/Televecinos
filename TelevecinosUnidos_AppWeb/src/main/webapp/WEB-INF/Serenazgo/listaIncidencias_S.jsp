@@ -168,7 +168,7 @@
                             </button>
                         </div>
                         <div class="col-md-1 mb-2">
-                            <a class="btn btn-secondary" href="<%=request.getContextPath()%>/SerenazgoServlet?action=listaIncidencias_S" style="width: 100%;">Limpiar</a>
+                            <a class="btn btn-secondary text-center" href="<%=request.getContextPath()%>/SerenazgoServlet?action=listaIncidencias_S" style="width: 100%;">Limpiar</a>
                         </div>
                     </div>
                 </form>
@@ -213,17 +213,59 @@
                         <td><%=incidenciasB.getEstadosIncidencia_idEstadoIncidenciaStr()%>
                         </td>
 
-                        <%if(incidenciasB.getEstadosIncidencia_idEstadoIncidencia() != 5){%>
-                            <td><a href="<%=request.getContextPath()%>/SerenazgoServlet?action=gestionar_Incidencia_S&id=<%=incidenciasB.getIdIncidencias()%>"><button type="button" class="btn btn-success-puedeGestionar m-2"><i class="fas fa-clipboard-list"></i></button></a></td>
-                        <%}else{%>
+                        <%if(incidenciasB.getEstadosIncidencia_idEstadoIncidencia() == 5){%>
                             <td><button type="button" class="btn btn-danger m-2" onclick="incidenciaYaGestionada('<%=incidenciasB.getNombrePersonalTurno()%>','<%=incidenciasB.getIdIncidencias()%>','<%=incidenciasB.getUsuario_idUsuario()%>')"><i class="fas fa-clipboard-list"></i></button></td>
+                        <%}else if(incidenciasB.getEstadosIncidencia_idEstadoIncidencia() == 3){%>
+                            <td><button type="button" class="btn btn-danger m-2" onclick="incidenciaCancelada()"><i class="fas fa-clipboard-list"></i></button></td>
+                        <%}else{%>
+                            <!--<td><a href="<%=request.getContextPath()%>/SerenazgoServlet?action=gestionar_Incidencia_S&id=<%=incidenciasB.getIdIncidencias()%>"><button type="button" class="btn btn-success-puedeGestionar m-2"><i class="fas fa-clipboard-list"></i></button></a></td>-->
+                            <td><button type="button" class="btn btn-success-puedeGestionar m-2" onclick="incidenciaPorGestionar('<%=incidenciasB.getNombrePersonalTurno()%>','<%=incidenciasB.getIdIncidencias()%>','<%=incidenciasB.getUsuario_idUsuario()%>')"><i class="fas fa-clipboard-list"></i></button></td>
                         <%} %>
+
+
                     </tr>
 
                     <% } %>
                     </tbody>
 
                 </table>
+
+                <script>
+                    function incidenciaCancelada() {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Error",
+                            text: "Esta incidencia ha sido cancelada",
+                        });
+
+                    }
+                </script>
+
+                <script>
+                    function incidenciaPorGestionar(nombrePersonalTurno,idIncidencia,idVecinoDuenoIncidencia) {
+                        Swal.fire({
+                            title: "¿Qué deseas hacer?",
+                            showDenyButton: true,
+                            showCancelButton: true,
+                            confirmButtonColor: "#30d6c3",
+                            denyButtonColor: "#146951",
+                            cancelButtonColor: "#d93030",
+                            confirmButtonText: "Ver incidencia",
+                            denyButtonText: `Gestionar incidencia`,
+                            cancelButtonText: "Regresar"
+                        }).then((result) => {
+                            /* Read more about isConfirmed, isDenied below */
+                            if (result.isConfirmed) {
+                                window.location.href = '<%= request.getContextPath() %>/SerenazgoServlet?action=verDetalleIncidencia&idIncidencia=' + idIncidencia + "&idVecinoDuenoIncidencia="+idVecinoDuenoIncidencia;
+                            } else if (result.isDenied) {
+                                window.location.href = href="<%=request.getContextPath()%>/SerenazgoServlet?action=gestionar_Incidencia_S&id=" + idIncidencia;
+                            }
+                        });
+
+                    }
+                </script>
+
+
 
                 <script>
                     function incidenciaYaGestionada(nombrePersonalTurno,idIncidencia,idVecinoDuenoIncidencia) {

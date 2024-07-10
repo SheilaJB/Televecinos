@@ -107,11 +107,19 @@
                                 <br>
                                 <a style="color: white;">•<%=incidencia.getReferencia()%></a>
                             </div>
+
                             <div class="mb-3">
-                                <label for="contacto" class="form-label" style="color:#023047;"><b>Contacto</b></label>
+                                <label for="contacto" class="form-label" style="color:#023047;"><b>Número de Contacto</b></label>
                                 <br>
-                                <a style="color: white;">•<%=incidencia.getNumeroContacto()%></a>
+
+                                <% if (incidencia.getNumeroContacto() == null){%>
+                                    <a style="color: white;">•No ha sido registrado por el vecino></a>
+                                <%}else{%>
+                                    <a style="color: white;">•<%=incidencia.getNumeroContacto()%></a>
+                                <%}%>
+
                             </div>
+
                             <div class="mb-3">
                                 <label for="ambulancia" class="form-label" style="color:#023047;"><b>¿Se requiere ambulancia?</b></label>
                                 <br>
@@ -125,7 +133,7 @@
                             <div class="mb-3">
                                 <label for="fechaGenereación" class="form-label" style="color:#023047;"><b>Fecha y hora de la generación de incidencia:</b></label>
                                 <br>
-                                <a style="color: white;">• <%=incidencia.getFecha()%> </a>
+                                <a style="color: white;">•<%=incidencia.getFecha()%> </a>
                             </div>
 
                         </div>
@@ -140,11 +148,16 @@
                             </div>
                         </div>
 
-                        <a href="gestionar_Incidencia_S.html">
-                            <div class="BotonIrIncidencias">
-                                <button type="button" class="btn btn-lg btn-primary m-2" style="background-color: #20a62c; border-color: #20a62c; color: #ffffff;">Gestionar</button>
-                            </div>
-                        </a>
+                        <%if(incidencia.getSerenazgo_idSerenazgo()==0){%>
+                            <a href="<%=request.getContextPath()%>/SerenazgoServlet?action=gestionar_Incidencia_S&id=<%=incidencia.getIdIncidencias()%>">
+                                <div class="BotonIrIncidencias">
+                                    <button type="button" class="btn btn-lg btn-primary m-2" style="background-color: #146951; border-color: #146951; color: #ffffff;">Gestionar</button>
+                                </div>
+                            </a>
+                        <%}%>
+
+
+
 
                         <a href="<%=request.getContextPath()%>/SerenazgoServlet?action=listaIncidencias_S">
                             <div class="BotonRegresar">
