@@ -226,8 +226,8 @@ public class EventoDao extends BaseDao{
     public void crearEvento(EventoB eventoB) {
 
         String sql = "INSERT INTO `televecinosDB`.`eventos` \n" +
-                "(`nombre`, `descripcion`, `lugar`, `Coordinador_idUsuario`, `fecha_inicio`, `fecha_fin`, `cantidadVacantes`, `cantDisponibles`, `foto`, `listaMateriales`, `EventEstados_idEventEstados`, `EventFrecuencia_idEventFrecuencia`, `TipoEvento_idTipoEvento`, `ProfesoresEvento_idProfesoresEvento`, `hora_inicio`, `hora_fin`, `diasEvento`) \n" +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "(`nombre`, `descripcion`, `lugar`, `Coordinador_idUsuario`, `fecha_inicio`, `fecha_fin`, `cantidadVacantes`, `cantDisponibles`, `foto`, `nombreFoto`,`listaMateriales`, `EventEstados_idEventEstados`, `EventFrecuencia_idEventFrecuencia`, `TipoEvento_idTipoEvento`, `ProfesoresEvento_idProfesoresEvento`, `hora_inicio`, `hora_fin`, `diasEvento`) \n" +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -243,14 +243,15 @@ public class EventoDao extends BaseDao{
             pstmt.setInt(7, eventoB.getCantidadVacantes());
             pstmt.setInt(8, eventoB.getCantidadVacantes());
             pstmt.setBlob(9, eventoB.getFoto());
-            pstmt.setString(10, eventoB.getListaMateriales());
-            pstmt.setInt(11, estadoEvento);
-            pstmt.setInt(12, eventoB.getEventFrecuencia_idEventFrecuencia());
-            pstmt.setInt(13, eventoB.getTipoEvento_idTipoEvento());
-            pstmt.setInt(14, eventoB.getProfesoresEvento_idProfesoresEvento());
-            pstmt.setString(15, eventoB.getHora_inicio());
-            pstmt.setString(16, eventoB.getHora_fin());
-            pstmt.setString(17, eventoB.getDiaEvento());
+            pstmt.setString(10,eventoB.getNombreFoto());
+            pstmt.setString(11, eventoB.getListaMateriales());
+            pstmt.setInt(12, estadoEvento);
+            pstmt.setInt(13, eventoB.getEventFrecuencia_idEventFrecuencia());
+            pstmt.setInt(14, eventoB.getTipoEvento_idTipoEvento());
+            pstmt.setInt(15, eventoB.getProfesoresEvento_idProfesoresEvento());
+            pstmt.setString(16, eventoB.getHora_inicio());
+            pstmt.setString(17, eventoB.getHora_fin());
+            pstmt.setString(18, eventoB.getDiaEvento());
 
             pstmt.executeUpdate();
 

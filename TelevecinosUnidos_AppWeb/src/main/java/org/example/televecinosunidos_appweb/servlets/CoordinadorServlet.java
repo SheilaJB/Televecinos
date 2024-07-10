@@ -203,6 +203,7 @@ public class CoordinadorServlet extends HttpServlet {
 
                 String cantidadVacantes = request.getParameter("cantidadVacantes");
                 Part part = request.getPart("foto");
+                String fileName = part.getSubmittedFileName();
                 InputStream fileInputStream = part.getInputStream();
 
                 String materiales = request.getParameter("materiales");
@@ -223,6 +224,7 @@ public class CoordinadorServlet extends HttpServlet {
                 eventoB0.setDiaEvento(opcionesDias);
                 eventoB0.setCantidadVacantes(Integer.parseInt(cantidadVacantes));
                 eventoB0.setListaMateriales(materiales);
+                eventoB0.setNombreFoto(fileName);
 
 
 
