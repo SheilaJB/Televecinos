@@ -7,6 +7,7 @@ import org.example.televecinosunidos_appweb.model.beans.IncidenciasB;
 import org.example.televecinosunidos_appweb.model.beans.SerenazgoB;
 import org.example.televecinosunidos_appweb.model.beans.UsuarioB;
 import org.example.televecinosunidos_appweb.model.daos.IncidenciaDao;
+import org.example.televecinosunidos_appweb.model.daos.SerenazgoDao;
 import org.example.televecinosunidos_appweb.model.daos.UsuarioDao;
 import org.example.televecinosunidos_appweb.model.daos.VecinoDao;
 
@@ -20,6 +21,8 @@ public class SerenazgoServlet extends HttpServlet {
         IncidenciaDao incidenciaDao = new IncidenciaDao();
         VecinoDao vecinoDao = new VecinoDao();
         UsuarioDao usuarioDao = new UsuarioDao();
+        SerenazgoDao serenazgoDao = new SerenazgoDao();
+
 
         String action = request.getParameter("action")==null?"inicioSerenazgo":request.getParameter("action");
         String vista;
@@ -42,7 +45,7 @@ public class SerenazgoServlet extends HttpServlet {
                 break;
             case "listaVecinos_S":
                 vista = "WEB-INF/Serenazgo/listaVecinos_S.jsp";
-                request.setAttribute("lista",vecinoDao.listarVecinos());
+                request.setAttribute("lista",serenazgoDao.listarVecinosPorCantidadIncidenciasFalsas());
                 request.getRequestDispatcher(vista).forward(request, response);
                 break;
             case "banearVecino":
@@ -159,7 +162,7 @@ public class SerenazgoServlet extends HttpServlet {
                 break;
             case "seleccionarInicidenciaFalsa":
                 incidenciaId = request.getParameter("incidenciaId");
-                idUsuario = request.getParameter("idUsuario");
+                idUsuario = request.getParameter("UsrID");
                 incidenciaDao.actualizarIncidenciaComoFalsa(incidenciaId,idUsuario);
                 request.setAttribute("lista",incidenciaDao.listarIncidencias());
                 request.getRequestDispatcher("WEB-INF/Serenazgo/listaIncidencias_S.jsp").forward(request, response);

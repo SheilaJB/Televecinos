@@ -128,21 +128,28 @@
                         </thead>
                         <tbody>
                         <% for(UsuarioB usuarioB : lista){ %>
-                            <% if(usuarioB.getCantidadIncidenciasFalsas()>=5){ %>
-                                <tr>
-                                    <td><%=usuarioB.getNombre() + " " + usuarioB.getApellido()%></td>
-                                    <td><%=usuarioB.getDireccion() %></td>
-                                    <td><%=usuarioB.getDni() %></td>
-                                    <td><%=usuarioB.getCantidadIncidenciasFalsas() %></td>
-                                    <td>
-                                        <!--<a href="<%=request.getContextPath()%>/SerenazgoServlet?action=banearVecino&idVecino=<%=usuarioB.getIdUsuario()%>"><button type="button" class="btn btn-danger m-2" ><i class="fas fa-ban"></i></button></a>-->
-                                        <button type="button" class="btn btn-danger m-2" onclick="confirmarBanear(<%=usuarioB.getIdUsuario()%>)">
-                                            <i class="fas fa-ban"></i>
-                                        </button>
-                                    </td>
+                            <tr>
+                                <td><%=usuarioB.getNombre() + " " + usuarioB.getApellido()%></td>
+                                <td><%=usuarioB.getDireccion() %></td>
+                                <td><%=usuarioB.getDni() %></td>
+                                <td><%=usuarioB.getCantidadIncidenciasFalsas() %></td>
+                                <td>
+                                    <!--<a href="<%=request.getContextPath()%>/SerenazgoServlet?action=banearVecino&idVecino=<%=usuarioB.getIdUsuario()%>"><button type="button" class="btn btn-danger m-2" ><i class="fas fa-ban"></i></button></a>-->
+                                    <%if (usuarioB.getCantidadIncidenciasFalsas()>=5){%>
+                                    <button type="button" class="btn btn-danger m-2" onclick="confirmarBanear(<%=usuarioB.getIdUsuario()%>)">
+                                        <i class="fas fa-ban"></i>
+                                    </button>
+                                    <%}else{%>
 
-                                </tr>
-                            <% } %>
+                                    <button type="button" class="btn btn-secondary m-2" onclick="noPuedeBanear()">
+                                        <i class="fas fa-ban"></i>
+                                    </button>
+                                    <%}%>
+
+                                </td>
+
+                            </tr>
+
                         <% } %>
                         </tbody>
                     </table>
@@ -221,6 +228,22 @@
         });
     }
 </script>
+
+
+
+<script>
+    function noPuedeBanear(){
+        Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "No puedes banear a un usuario con menos de 5 incidencias falsas!",
+            //footer: <a href= '<%=request.getContextPath()%>/SerenazgoServlet?action=listaVecinos_S'> Why do I have this issue?</a>
+            //footer: '<a href="<%=request.getContextPath()%>/SerenazgoServlet?action=listaVecinos_S">Why do I have this issue?</a>'
+
+        });
+    }
+</script>
+
 <!-- Template Javascript -->
 <script src="js/main.js"></script>
 <script>

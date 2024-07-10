@@ -426,6 +426,40 @@ public class SerenazgoDao extends BaseDao {
         return listaSerenazgos;
     }
 
+    //ESTE DEBERIA IR EN VECINODAO_
+    public ArrayList<UsuarioB> listarVecinosPorCantidadIncidenciasFalsas() {
+
+        String sql = "SELECT idUsuario,nombre,apellido,dni,direccion,correo,cantidadIncidenciasFalsas\n" +
+                "FROM televecinosdb.usuario \n" +
+                "where Rol_idRol = 2 and isBan=0 \n" +
+                "order by usuario.cantidadIncidenciasFalsas desc;";
+
+        ArrayList<UsuarioB> listaVecinos = new ArrayList<>();
+
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                UsuarioB usuarioB = new UsuarioB();
+                usuarioB.setIdUsuario(rs.getInt(1));
+                usuarioB.setNombre(rs.getString(2));
+                usuarioB.setApellido(rs.getString(3));
+                usuarioB.setDni(rs.getString(4));
+                usuarioB.setDireccion(rs.getString(5));
+                usuarioB.setCorreo(rs.getString(6));
+                usuarioB.setCantidadIncidenciasFalsas(rs.getInt(7));
+
+                listaVecinos.add(usuarioB);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        return listaVecinos;
+    }
 
 
 }
