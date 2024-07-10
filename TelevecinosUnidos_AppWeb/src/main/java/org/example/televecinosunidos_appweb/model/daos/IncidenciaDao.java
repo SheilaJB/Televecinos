@@ -430,20 +430,54 @@ public class IncidenciaDao extends BaseDao{
     }
 
 
-    public void actualizarIncidenciaComoFalsa(String idIncidencia) {
+    public void actualizarIncidenciaComoFalsa(String idIncidencia,String idUsuario) {
         String sql = "update incidencias\n" +
                 "set EstadosIncidencia_idEstadosIncidencia = 4\n" +
                 "where idIncidencias = ?";
 
         try (Connection connection = getConnection();
-             PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setString(1, idIncidencia);
+             PreparedStatement pstmt1 = connection.prepareStatement(sql)) {
+            pstmt1.setString(1, idIncidencia);
 
 
-            pstmt.executeUpdate();
+            pstmt1.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+
+        String sql2 = "SELECT u.cantidadIncidenciasFalsas \n" +
+                "FROM incidencias i\n" +
+                "INNER JOIN usuario u ON u.idUsuario = i.Usuario_idUsuario\n" +
+                "where u.idUsuario = ?";
+
+        int cantidadIncidenciasFalsas=0;
+        try (Connection connection = getConnection();
+             PreparedStatement pstmt2 = connection.prepareStatement(sql2)) {
+            pstmt2.setString(1, idUsuario);
+
+            try(ResultSet rs = pstmt2.executeQuery()){
+                if(rs.next()) {
+                    cantidadIncidenciasFalsas = rs.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        String sql3 = "update usuario\n" +
+                "set cantidadIncidenciasFalsas = ?\n" +
+                "where idUsuario = ?";
+
+        try (Connection connection = getConnection();
+             PreparedStatement pstmt3 = connection.prepareStatement(sql3)) {
+            pstmt3.setInt(1, cantidadIncidenciasFalsas + 1);
+            pstmt3.setString(2, idUsuario);
+            pstmt3.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
 
 
     }

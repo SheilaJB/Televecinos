@@ -73,7 +73,7 @@ public class SerenazgoServlet extends HttpServlet {
         String action = request.getParameter("action") == null ? "buscarIncidenciaPorNombre" : request.getParameter("action");
         String textoBuscar;
         String incidenciaId;
-
+        String idUsuario;
         switch (action){
             case "buscarIncidenciaFiltro":
                 textoBuscar= request.getParameter("textoBuscarIncidencia");
@@ -153,13 +153,14 @@ public class SerenazgoServlet extends HttpServlet {
                 } else {
                     request.setAttribute("textoBusqueda",textoBuscar);
                     request.setAttribute("lista", vecinoDao.buscarVecinoPorNombre(textoBuscar));
-                    RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Serenazgo/listaVecinos_S.jsp");
-                    view.forward(request, response);
+                    request.getRequestDispatcher("WEB-INF/Serenazgo/listaVecinos_S.jsp").forward(request, response);
+
                 }
                 break;
             case "seleccionarInicidenciaFalsa":
                 incidenciaId = request.getParameter("incidenciaId");
-                incidenciaDao.actualizarIncidenciaComoFalsa(incidenciaId);
+                idUsuario = request.getParameter("idUsuario");
+                incidenciaDao.actualizarIncidenciaComoFalsa(incidenciaId,idUsuario);
                 request.setAttribute("lista",incidenciaDao.listarIncidencias());
                 request.getRequestDispatcher("WEB-INF/Serenazgo/listaIncidencias_S.jsp").forward(request, response);
                 break;

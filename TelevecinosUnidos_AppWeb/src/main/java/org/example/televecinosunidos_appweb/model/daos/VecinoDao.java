@@ -151,7 +151,7 @@ public class VecinoDao extends BaseDao{
 
 
     public ArrayList<UsuarioB> buscarVecinoPorNombre(String textoBuscar) {
-        String sql = "SELECT idUsuario, nombre, apellido, dni, direccion, correo " +
+        String sql = "SELECT idUsuario, nombre, apellido, dni, direccion, correo,cantidadIncidenciasFalsas " +
                 "FROM televecinosdb.usuario " +
                 "WHERE Rol_idRol = 2 AND isBan = 0 AND (nombre LIKE ? OR apellido LIKE ? OR dni LIKE ?)\n" +
                 "order by idUsuario desc;";
@@ -173,6 +173,7 @@ public class VecinoDao extends BaseDao{
                     usuarioB.setDni(rs.getString(4));
                     usuarioB.setDireccion(rs.getString(5));
                     usuarioB.setCorreo(rs.getString(6));
+                    usuarioB.setCantidadIncidenciasFalsas(rs.getInt(7));
 
 
                     listaVecinos.add(usuarioB);
