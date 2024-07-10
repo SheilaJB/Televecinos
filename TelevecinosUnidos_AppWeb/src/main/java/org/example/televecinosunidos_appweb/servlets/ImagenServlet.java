@@ -16,13 +16,15 @@ public class ImagenServlet extends HttpServlet {
         String idImagenEvento = request.getParameter("idImagenEvento");
         String idImagenIncidencia = request.getParameter("idImagenIncidencia");
 
+        System.out.println("idImagenIncidencia: " + idImagenIncidencia);
         if (idImagenEvento != null) {
             int id = Integer.parseInt(idImagenEvento);
             String sql = "SELECT * FROM televecinosdb.eventos WHERE idEventos =";
             imagenDao.listarImagen(sql, id, response);
         } else if (idImagenIncidencia != null) {
             int id = Integer.parseInt(idImagenIncidencia);
-            String sql = "SELECT * FROM incidencias WHERE idIncidencias =";
+            String sql = "SELECT * FROM televecinosdb.incidencias WHERE idIncidencias =";
+
             imagenDao.listarImagen(sql, id, response);
         }
     }

@@ -124,6 +124,7 @@ public class IncidenCoordDao extends BaseDao{
                 "i.urbanizacion_idUrbanizacion, " +
                 "i.TipoIncidencia_idTipoIncidencia, " +
                 "i.incidenciaPersonal, " +
+                "i.nombreFoto, "+
                 "DATE_FORMAT(i.fecha, '%d %M') AS 'Fecha', " +
                 "TIME_FORMAT(i.fecha, '%H:%i') AS 'Hora', " +
                 "urb.nombre AS 'Urbanizacion', " +
@@ -157,6 +158,8 @@ public class IncidenCoordDao extends BaseDao{
                     incidencia.setHora(rs.getString("Hora"));
                     incidencia.setTipoIncidencia(rs.getString("Tipo de Incidencia"));
                     incidencia.setEstadoIncidencia(rs.getString("Estado Incidencia"));
+                    incidencia.setNombreFoto(rs.getString("nombreFoto"));
+
                 }
             }
         } catch (SQLException e) {
@@ -235,7 +238,7 @@ public class IncidenCoordDao extends BaseDao{
         String sql = "INSERT INTO incidencias (nombreIncidencia, fecha, lugarExacto, referencia, foto, ambulancia, " +
                 "numeroContacto, urbanizacion_idUrbanizacion, TipoIncidencia_idTipoIncidencia, incidenciaPersonal, " +
                 "EstadosIncidencia_idEstadosIncidencia, Usuario_idUsuario, nombreFoto) " +
-                "VALUES (?, NOW(), ?, ?, ?, ?, ?, ?, ?, ?, 1, ?,'1234.png')";
+                "VALUES (?, NOW(), ?, ?, ?, ?, ?, ?, ?, ?, 1, ?,?)";
 
         System.out.println("foto: " + incidencia.getNombreFoto());
         try (Connection conn = getConnection();
@@ -250,7 +253,7 @@ public class IncidenCoordDao extends BaseDao{
             pstmt.setString(8, incidencia.getTipoIncidencia());
             pstmt.setInt(9, incidencia.getIncidenciaPersonal());
             pstmt.setInt(10, userId);
-            //pstmt.setString(11, incidencia.getNombreFoto());
+            pstmt.setString(11, incidencia.getNombreFoto());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);

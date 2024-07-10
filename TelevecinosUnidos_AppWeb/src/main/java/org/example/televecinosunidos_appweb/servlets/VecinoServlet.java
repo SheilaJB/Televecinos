@@ -152,6 +152,7 @@ public class VecinoServlet extends HttpServlet {
                 String ambulanciaStr = request.getParameter("ambulancia");
 
                 Part part = request.getPart("foto");
+                String fileName = part.getSubmittedFileName();
                 InputStream fileInputStream = part.getInputStream();
 
                 // Validaciones
@@ -205,6 +206,7 @@ public class VecinoServlet extends HttpServlet {
                     request.setAttribute("referencia", referencia);
                     request.setAttribute("numeroContacto", numeroContacto);
                     request.setAttribute("ambulancia", ambulanciaStr);
+                    request.setAttribute("nombreFoto", fileName);
                     request.getRequestDispatcher("WEB-INF/Vecino/generarIncidencia_V.jsp").forward(request, response);
                     return;
                 }
@@ -222,6 +224,7 @@ public class VecinoServlet extends HttpServlet {
                 incidencia.setReferencia(referencia);
                 incidencia.setNumeroContacto(numeroContacto);
                 incidencia.setAmbulancia(ambulancia);
+                incidencia.setNombreFoto(fileName);
 
                 incidenciaDao.generarIncidenciaC(incidencia,userId);
                 // Agregar mensaje a la sesión
