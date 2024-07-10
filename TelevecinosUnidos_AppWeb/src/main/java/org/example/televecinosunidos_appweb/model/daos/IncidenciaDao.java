@@ -10,6 +10,7 @@ public class IncidenciaDao extends BaseDao{
     public ArrayList<IncidenciasB> listarIncidencias() {
 
         String sql = "SELECT * FROM televecinosdb.incidencias \n" +
+                    "where incidencias.borrado=0\n" +
                     "order by incidencias.EstadosIncidencia_idEstadosIncidencia asc";
 
         ArrayList<IncidenciasB> listaIncidencias = new ArrayList<>();
@@ -171,8 +172,9 @@ public class IncidenciaDao extends BaseDao{
     //funcion que falta probar y arreglar:
     public ArrayList<IncidenciasB> listarIncidenciasFiltro(String textoBuscar,String criticidad,String tipo,String estado,String urbanizacion ) {
 
-        String sql = "SELECT * FROM televecinosdb.incidencias where incidencias.nombreIncidencia  like ?";
+        String sql = "SELECT * FROM televecinosdb.incidencias WHERE incidencias.borrado=0";
 
+        sql += " AND incidencias.nombreIncidencia LIKE ?";
 
         if (criticidad != null) {
             sql += " AND incidencias.CriticidadIncidencia_idCriticidadIncidencia = ?";
@@ -181,15 +183,17 @@ public class IncidenciaDao extends BaseDao{
         if (tipo != null) {
             sql += " AND incidencias.TipoIncidencia_idTipoIncidencia = ?";
         }
+
         if (estado != null) {
             sql += " AND incidencias.EstadosIncidencia_idEstadosIncidencia = ?";
         }
 
         if (urbanizacion != null) {
-            sql += "AND incidencias.urbanizacion_idUrbanizacion = ?";
+            sql += " AND incidencias.urbanizacion_idUrbanizacion = ?";
         }
 
-        sql+="order by incidencias.EstadosIncidencia_idEstadosIncidencia asc";
+        sql += " ORDER BY incidencias.EstadosIncidencia_idEstadosIncidencia ASC";
+
 
         ArrayList<IncidenciasB> listaIncidencias = new ArrayList<>();
 
@@ -426,7 +430,37 @@ public class IncidenciaDao extends BaseDao{
     }
 
 
+    public void actualizarIncidenciaComoFalsa(String idIncidencia) {
+        String sql = "update incidencias\n" +
+                "set EstadosIncidencia_idEstadosIncidencia = 4\n" +
+                "where idIncidencias = ?";
+
+        try (Connection connection = getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setString(1, idIncidencia);
 
 
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
+
+    }
+
+    public void borradorLogicoIncidencia(String inicienciaId) {
+        String sql = "update incidencias\n" +
+                "set borrado = 1\n" +
+                "where idIncidencias = ?";
+
+        try (Connection connection = getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setString(1, inicienciaId);
+
+
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

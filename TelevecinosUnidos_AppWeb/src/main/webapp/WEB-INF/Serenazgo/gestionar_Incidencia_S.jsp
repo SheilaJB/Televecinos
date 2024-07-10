@@ -73,6 +73,8 @@
             color: rgb(0, 0, 0);
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 
 <body>
@@ -98,44 +100,31 @@
 
 
         <h2 class="mb-2 text-center" style = "padding-top: 3%;" style="color:#023047;">Evaluación de incidencia: <%=incidencia.getNombreIncidencia()%></h2>
-        <form method="post" action="<%=request.getContextPath()%>/SerenazgoServlet?action=gestionarIncidencia">
+
+
+        <form  id="incidenciaFalsaForm" method="post" action="<%=request.getContextPath()%>/SerenazgoServlet?action=seleccionarInicidenciaFalsa">
+            <input type="hidden" name="incidenciaId" value="<%=incidencia.getIdIncidencias()%>">
+
+            <td>
+                <button type="button" class="btn btn-false m-2 btn-banear" onclick="confirmarIncidenciaFalsa(<%=incidencia.getIdIncidencias()%>)">
+                    ⛔ Falsa
+                </button>
+            </td>
+        </form>
+        <form id="borrarFalsaForm" method="post" action="<%=request.getContextPath()%>/SerenazgoServlet?action=borrarIncidencia">
+            <input type="hidden" name="incidenciaId" value="<%=incidencia.getIdIncidencias()%>">
+            <td>
+                <button type="button" class="btn btn-danger m-2 btn-banear" onclick="confirmarBorrarIncidencia()">
+                    🗑️Borrar incidencia
+                </button>
+            </td>
+        </form>
+
+        <form method="post" id="formularioGestionarIncidencia" action="<%=request.getContextPath()%>/SerenazgoServlet?action=gestionarIncidencia">
             <!-- Form Start -->
             <div class="container-fluid pt-4 px-4">
-                <td>
-                    <button type="button" class="btn btn-danger m-2 btn-banear" onclick="confirmDelete()">
-                        🗑️Borrar incidencia
-                    </button>
-                    <div id="popup1" class="popup1">
-                        <div class="popup_contenido1">
-                            <span class="close-btn" id="closePopupBtn1">&times;</span>
-                            <!--contenido pop up-->
-                            <h4>¿Por qué deseas eliminar esta incidencia? </h4>
 
-                            <!-- <p>La acción "Banear" será permanente, debe estar seguro de su desición al respecto</p> -->
-                            <div class="mb-3">
-                                <label for="descripcionIncidencia" class="form-label" style="color:#023047;"><b> </b></label>
-                                <textarea class="form-control" id="descripcionIncidencia" rows="2" placeholder="Elimino esta incidencia porque ..."></textarea>
-                            </div>
-                            <a href="listaIncidencias_S.html"><button type="button" class="btn btn-success rounded-pill m-2">Aceptar</button></a>
-                            <button type="button" class="btn btn-danger rounded-pill m-2" onclick="cerrarPopup()">Cancelar</button>
 
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-false m-2 btn-banear" onclick="confirmDelete()">
-                        ⛔ Falsa <!-- Texto a lado del ícono -->
-                    </button>
-                    <div id="popup1" class="popup1">
-                        <div class="popup_contenido1">
-                            <!--contenido pop up-->
-                            <h4>¿Estás seguro? </h4>
-                            <a href="listaIncidencias_S.html"><button type="button" class="btn btn-success rounded-pill m-2">Si</button></a>
-                            <a href="gestionar_Incidencia_S.html"><button type="button" class="btn btn-danger rounded-pill m-2" >No</button></a>
-                            <!-- <button type="button" class="btn btn-danger rounded-pill m-2" >No</button> -->
-                        </div>
-                    </div>
-                </td>
                 <div class="row g-4">
                     <div class="col-sm-12">
                         <div class="rounded h-100 p-4" style=" background-color: #ffb703;">
@@ -160,7 +149,7 @@
                             <!----Criticidad de la incidencia----->
                             <label class="form-label" style="color:#023047;"><b>Criticidad:</b></label>
                             <select name="criticidadIncidencia" class="form-select mb-3" aria-label="Default select example" onchange="mostrarOpciones()">
-                                <option selected>Seleccione la criticidad de la incidencia </option>
+                                <option selected>Seleccione la criticidad de la incidencia</option>
                                 <option value="1">Baja</option>
                                 <option value="2">Media</option>
                                 <option value="3">Alta</option>
@@ -168,7 +157,7 @@
                             <!----Personal para la incidencia----->
                             <label  class="form-label" style="color:#023047;"><b>Personal:</b></label>
                             <select name="personalRequerido" class="form-select mb-3" aria-label="Default select example" onchange="mostrarOpciones()">
-                                <option selected>Seleccione el personal para la incidencia </option>
+                                <option selected>Seleccione el personal para la incidencia</option>
                                 <option value="1">Ambulancia</option>
                                 <option value="2">Policia</option>
                                 <option value="3">Bomberos</option>
@@ -206,7 +195,7 @@
                             <!----Movilidad de la incidencia----->
                             <label for="movilidad" class="form-label" style="color:#023047;"><b>Movilidad:</b></label>
                             <select id="movilidad" name="movilidadIncidencia" class="form-select mb-3" aria-label="Default select example" onchange="mostrarOpciones()">
-                                <option selected>Seleccione la movilidad para la incidencia </option>
+                                <option selected>Seleccione la movilidad para la incidencia</option>
                                 <option value="1">Bicicleta</option>
                                 <option value="2">A pie</option>
                                 <option value="3">Canino</option>
@@ -215,8 +204,8 @@
                             <!----Estado de la incidencia----->
                             <label  class="form-label" style="color:#023047;"><b>Estado de la incidencia:</b></label>
                             <select name="estadoIncidencia" class="form-select mb-3" aria-label="Default select example" onchange="mostrarOpciones()">
-                                <option selected>Seleccione el estado de la incidencia </option>
-                                <option value="1">Pendiente</option>
+                                <option selected>Seleccione el estado de la incidencia</option>
+                                <option value="2">En curso</option>
                                 <option value="5">Procesado</option>
 
                             </select>
@@ -229,21 +218,28 @@
 
             <!-- Botón para guardar evaluación de incidencia -->
             <div style="text-align: right; margin-right: 100px; padding-top: 2%;">
-                <button type="submit" class="btn btn-primary" style="background-color: #023047; border-color: #023047; color: #ffffff;" onclick="mostrarMensajeExito()"><b>Guardar</b></button>
+                <button type="button" class="btn btn-primary" style="background-color: #023047; border-color: #023047; color: #ffffff;" onclick="guardadoExitosamente()"><b>Guardar</b></button>
             </div>
-
         </form>
+        <div style="text-align: right; margin-right: 100px;padding-top: 2%; ">
+            <a href="<%=request.getContextPath()%>/SerenazgoServlet?action=listaIncidencias_S"><button class="btn btn-primary" style="background-color: #137aef; border-color: #226086; color: #ffffff;"><b>Regresar</b></button></a>
+        </div>
+
         <!-- Form End -->
-
-
-
         <script>
-            function mostrarMensajeExito() {
-                // Mostrar ventana emergente con mensaje de éxito
-                alert("La incidencia fue evaluada exitosamente.");
-                window.location.href = 'ListaEvent-Coordinador.html'; <!--REVISAR-->
+            function guardadoExitosamente() {
+                Swal.fire({
+
+                    icon: "success",
+                    title: "La incidencia ha sido gestionada exitosamente",
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(() => {
+                    document.getElementById('incidenciaFalsaForm').submit();
+                });
             }
         </script>
+
 
         <!-- Footer Start -->
         <div class="container-fluid pt-4 px-4">
@@ -257,17 +253,7 @@
         </div>
         <!-- Footer End -->
     </div>
-    <!-- Content End -->
-    <!-- Popup de Confirmación para crear Eventos -->
-    <div id="createConfirmationPopup" class="popup">
-        <div class="popup-content">
-            <span class="close-btn" id="closeCreatePopupBtn">&times;</span>
-            <img src="img/check.png" alt="check" width="48" height="48" style="margin-top: -10px;">
-            <h2>Evaluación Exitosa</h2>
-            <p>El incidente ha sido evaluado con éxito.</p>
-            <button onclick="closeCreatePopup()" class="btn btn-secondary">Regresar</button>
-        </div>
-    </div>
+
     <script>
         const closeCreatePopupBtn = document.getElementById('closeCreatePopupBtn');
         const createConfirmationPopup = document.getElementById('createConfirmationPopup');
@@ -309,6 +295,87 @@
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 </div>
+<script>
+    function confirmarIncidenciaFalsa() {
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        });
+
+        swalWithBootstrapButtons.fire({
+            title: '¿Estás seguro que la incidencia es falsa?',
+            text: 'No podrás gestionar esta incidencia otra vez',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sí, es falsa',
+            cancelButtonText: 'No, cancelar',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                swalWithBootstrapButtons.fire({
+                    title: 'Incidencia falsa',
+                    text: 'La incidencia se ha seleccionado como falsa',
+                    icon: 'success'
+                }).then(() => {
+
+                    //window.location.href = '<%= request.getContextPath() %>/SerenazgoServlet?action=seleccionarInicidenciaFalsa&inicienciaId=' + idIncidencia;
+                    document.getElementById('incidenciaFalsaForm').submit();
+
+                });
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                swalWithBootstrapButtons.fire({
+                    title: 'Gestion cancelada',
+                    text: 'No se ha seleccionado como falsa',
+                    icon: 'error'
+                });
+            }
+        });
+    }
+</script>
+<script>
+    function confirmarBorrarIncidencia() {
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        });
+
+        swalWithBootstrapButtons.fire({
+            title: '¿Estás seguro que deseas borrar la incidencia?',
+            text: 'No la volverás a ver',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sí, borrar',
+            cancelButtonText: 'No, cancelar',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                swalWithBootstrapButtons.fire({
+                    title: 'Incidencia borrada',
+                    text: 'La incidencia se ha borrado exitosamente',
+                    icon: 'success'
+                }).then(() => {
+
+                    //window.location.href = '<%= request.getContextPath() %>/SerenazgoServlet?action=borrarIncidencia&inicienciaId=' + idIncidencia;
+                    document.getElementById('borrarFalsaForm').submit();
+                });
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                swalWithBootstrapButtons.fire({
+                    title: 'Gestion cancelada',
+                    text: 'No se ha seleccionado como falsa',
+                    icon: 'error'
+                });
+            }
+        });
+    }
+</script>
 
 <!-- JavaScript Libraries -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
