@@ -72,6 +72,7 @@ public class SerenazgoServlet extends HttpServlet {
         VecinoDao vecinoDao = new VecinoDao();
         String action = request.getParameter("action") == null ? "buscarIncidenciaPorNombre" : request.getParameter("action");
         String textoBuscar;
+        String incidenciaId;
 
         switch (action){
             case "buscarIncidenciaFiltro":
@@ -112,12 +113,34 @@ public class SerenazgoServlet extends HttpServlet {
 
                 incidenciaB.setIdIncidencias(idIncidencia);
                 incidenciaB.setSolucionADar(solucionADar);
-                incidenciaB.setCriticidadIncidencia_idCriticidadIncidencia(Integer.parseInt(criticidadIncidencia));
                 incidenciaB.setNombrePersonalTurno(nombrePersonalDeTurno);
+                incidenciaB.setCriticidadIncidencia_idCriticidadIncidencia(Integer.parseInt(criticidadIncidencia));
                 incidenciaB.setSerenazgo_idSerenazgo(Integer.parseInt(idSerenazgo));
                 incidenciaB.setPersonalRequerido(Integer.parseInt(personalRequerido));
                 incidenciaB.setTipoMovilidadRequerido(Integer.parseInt(movilidadIncidencia));
                 incidenciaB.setEstadosIncidencia_idEstadoIncidencia(Integer.parseInt(estadoIncidenci));
+
+                /*
+                if (criticidadIncidencia != null) {
+                    incidenciaB.setCriticidadIncidencia_idCriticidadIncidencia(Integer.parseInt(criticidadIncidencia));
+                }
+
+                if (idSerenazgo != null) {
+                    incidenciaB.setSerenazgo_idSerenazgo(Integer.parseInt(idSerenazgo));
+                }
+
+                if (personalRequerido != null) {
+                    incidenciaB.setPersonalRequerido(Integer.parseInt(personalRequerido));
+                }
+
+                if (movilidadIncidencia != null) {
+                    incidenciaB.setTipoMovilidadRequerido(Integer.parseInt(movilidadIncidencia));
+                }
+
+                if (estadoIncidenci != null) {
+                    incidenciaB.setEstadosIncidencia_idEstadoIncidencia(Integer.parseInt(estadoIncidenci));
+                }
+                */
 
 
                 incidenciaDao.actualizarIncidenciaS(incidenciaB);
@@ -134,6 +157,21 @@ public class SerenazgoServlet extends HttpServlet {
                     view.forward(request, response);
                 }
                 break;
+            case "seleccionarInicidenciaFalsa":
+                incidenciaId = request.getParameter("incidenciaId");
+                incidenciaDao.actualizarIncidenciaComoFalsa(incidenciaId);
+                request.setAttribute("lista",incidenciaDao.listarIncidencias());
+                request.getRequestDispatcher("WEB-INF/Serenazgo/listaIncidencias_S.jsp").forward(request, response);
+                break;
+            case "borrarIncidencia":
+                incidenciaId = request.getParameter("incidenciaId");
+                incidenciaDao.borradorLogicoIncidencia(incidenciaId);
+                request.setAttribute("lista",incidenciaDao.listarIncidencias());
+                request.getRequestDispatcher("WEB-INF/Serenazgo/listaIncidencias_S.jsp").forward(request, response);
+
+
+                break;
+
         }
 
 
