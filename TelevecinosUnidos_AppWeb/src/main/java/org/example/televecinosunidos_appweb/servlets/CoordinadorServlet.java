@@ -246,6 +246,7 @@ public class CoordinadorServlet extends HttpServlet {
                 String frecuencia2 = request.getParameter("frecuencia");
                 int cantidadVacantes2 = Integer.parseInt(request.getParameter("cantidadVacantes"));
                 Part part2 = request.getPart("foto");
+                String fileName2 = part2.getSubmittedFileName();
                 InputStream fileInputStream2 = part2.getInputStream();
                 String listaMateriales2 = request.getParameter("listaMateriales");
                 String idTipoEvento2 = request.getParameter("tipoCoordinador");
@@ -259,6 +260,7 @@ public class CoordinadorServlet extends HttpServlet {
                 }
 
                 EventoB eventoB = new EventoB();
+                eventoB.setNombreFoto(fileName2);
                 eventoB.setIdEvento(idEvento);
                 eventoB.setNombre(nombre);
                 eventoB.setDescripcion(descripcion);

@@ -376,7 +376,7 @@ public class EventoDao extends BaseDao{
 
         String sql = "UPDATE Eventos SET nombre = ?, descripcion = ?, lugar = ?, " +
                 "fecha_inicio = ?, fecha_fin = ?, EventFrecuencia_idEventFrecuencia = ?, ProfesoresEvento_idProfesoresEvento = ?, " +
-                "cantidadVacantes = ?, foto = ?, listaMateriales = ?, hora_inicio = ?, hora_fin = ?, diasEvento = ? WHERE idEventos = ? AND eliminado = FALSE";
+                "cantidadVacantes = ?, foto = ?, nombreFoto = ?,listaMateriales = ?, hora_inicio = ?, hora_fin = ?, diasEvento = ? WHERE idEventos = ? AND eliminado = FALSE";
 
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS)) {
@@ -390,11 +390,12 @@ public class EventoDao extends BaseDao{
             ps.setInt(7, evento.getProfesoresEvento_idProfesoresEvento());
             ps.setInt(8, evento.getCantidadVacantes());
             ps.setBlob(9, evento.getFoto());
-            ps.setString(10, evento.getListaMateriales());
-            ps.setString(11, evento.getHora_inicio());
-            ps.setString(12, evento.getHora_fin());
-            ps.setString(13, evento.getDiaEvento());
-            ps.setInt(14, evento.getIdEvento());
+            ps.setString(10,evento.getNombreFoto());
+            ps.setString(11, evento.getListaMateriales());
+            ps.setString(12, evento.getHora_inicio());
+            ps.setString(13, evento.getHora_fin());
+            ps.setString(14, evento.getDiaEvento());
+            ps.setInt(15, evento.getIdEvento());
 
             ps.executeUpdate();
 

@@ -108,7 +108,7 @@
                             <!---Nombre del coordinador-->
                             <div class="mb-3">
                                 <label for="Coordinador_idUsuario" class="form-label" style="color:#023047;"><b>Ingrese nombre del coordinador:</b></label>
-                                <input type="text" class="form-control" id="Coordinador_idUsuario" placeholder="Escribir" name="Coordinador_idUsuario" value="<%= evento.getCoordinador_idUsuario() %>" disabled>
+                                <input type="text" class="form-control" id="Coordinador_idUsuario" placeholder="Escribir" name="Coordinador_idUsuario" value="<%= usuarioLogueado.getNombre() + " "+usuarioLogueado.getApellido() %>" disabled>
                                 <input type="hidden" name="Coordinador_idUsuario" value="<%= evento.getCoordinador_idUsuario() %>">
                                 <input type="hidden" name="tipoCoordinador" value="<%= usuarioLogueado.getTipoCoordinador_idTipoCoordinador() %>">
                             </div>
