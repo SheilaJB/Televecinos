@@ -37,6 +37,19 @@
     <link href="css/style_vec.css" rel="stylesheet">
     <link href="css/style_popup.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            text-align: center;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
 
 </head>
 
@@ -117,7 +130,7 @@
                             <th scope="col">Nombre y Apellido</th>
                             <th scope="col">Direccion</th>
                             <th scope="col">DNI</th>
-                            <th scope="col">Enviar correo</th>
+
                             <th scope="col">Banear</th>
                             <th scope="col">ver Detalle</th>
                         </tr>
@@ -140,7 +153,7 @@
                                     </button>
                                 </div>
                             </td>-->
-                            <td><a href="<%=request.getContextPath()%>/*?action=verSerenazgo&idSerenazgo=<%=usuarioB.getIdUsuario()%>"><button type="button" class="btn btn-success m-2"><i class="fas fa-envelope"></i></button></a></td>
+                            <!--<td><a href="<%=request.getContextPath()%>/*?action=verSerenazgo&idSerenazgo=<%=usuarioB.getIdUsuario()%>"><button type="button" class="btn btn-success m-2"><i class="fas fa-envelope"></i></button></a></td>-->
                             <td>
                                 <!--<a href="<%=request.getContextPath()%>/AdministradorServlet?action=banearCoordinadoraDeporte&idCoordinadora=<%=usuarioB.getIdUsuario()%>"><button type="button" class="btn btn-danger m-2" ><i class="fas fa-ban"></i></button></a>-->
                                 <button type="button" class="btn btn-danger m-2" onclick="confirmarBanear(<%=usuarioB.getIdUsuario()%>)">

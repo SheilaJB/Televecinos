@@ -151,7 +151,7 @@
                 <div class="bar" data-label="Dirección"><%=coordinadora.getDireccion()%></div>
                 <div class="bar" data-label="Correo"><%=coordinadora.getCorreo()%></div>
                 <a href="<%=request.getContextPath()%>/AdministradorServlet?action=listaCoordinadorasDeportes_A"><button class="button regresar">Regresar</button></a>
-                <a href="correoparaCoordA.html"><button  class="button enviar btn-success">Enviar correo</button></a>
+                <!--<a href="correoparaCoordA.html"><button  class="button enviar btn-success">Enviar correo</button></a>-->
                 <!--<a href="<%=request.getContextPath()%>/AdministradorServlet?action=banearCoordinadoraDeporte&idCoordinadora=<%=coordinadora.getIdUsuario()%>"><button class="button banear btn-banear">Banear</button></a>-->
                 <button type="button" class="button banear btn-banear" onclick="confirmarBanear(<%=coordinadora.getIdUsuario()%>)">
                     Banear
