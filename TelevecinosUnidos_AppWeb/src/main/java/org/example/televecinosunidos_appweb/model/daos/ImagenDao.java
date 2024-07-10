@@ -20,6 +20,7 @@ public class ImagenDao extends BaseDao{
 
             if (rs.next()) {
                 String nombreArchivo = rs.getString("nombreFoto");
+                System.out.println(nombreArchivo);
                 String tipoArchivo = getContentTypeByFileName(nombreArchivo);
                 response.setContentType(tipoArchivo);
                 response.setHeader("Content-Disposition", "inline; filename=\"" + nombreArchivo + "\"");
@@ -47,7 +48,9 @@ public class ImagenDao extends BaseDao{
     private String getContentTypeByFileName(String fileName) {
         if (fileName.endsWith(".png")) {
             return "image/png";
-        } else if (fileName.endsWith(".jpg") || fileName.endsWith(".jpeg")) {
+        } else if (fileName.endsWith(".jpeg")) {
+            return "image/jpeg";
+        }else if (fileName.endsWith(".jpg")) {
             return "image/jpeg";
         } else if (fileName.endsWith(".gif")) {
             return "image/gif";
