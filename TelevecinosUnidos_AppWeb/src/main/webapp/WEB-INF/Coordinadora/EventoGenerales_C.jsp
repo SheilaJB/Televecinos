@@ -159,7 +159,7 @@
                     for (EventoB evento : listaEventos) { %>
                         <div class="col-md-3 mb-4">
                             <div class="card" style="max-width: 20rem; margin: auto;border-radius: 15px;">
-                                <img src="<%= evento.getFoto() %>" alt="<%= evento.getNombre() %>" class="card-img-top rounded-top">
+                                <img src="ImagenServlet?idImagenEvento=<%=evento.getIdEvento()%>" class="card-img-top rounded-top">
                                 <div class="card-body">
                                     <h5 class="card-title" style="text-align: left;"><%= evento.getNombre() %></h5>
                                     <p class="card-status" style="font-size: small; margin-bottom: 0;">Estado: <%= evento.getEstadoString() %></p>
