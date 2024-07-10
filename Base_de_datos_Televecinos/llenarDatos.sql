@@ -203,6 +203,7 @@ VALUES
 ('Taller de Entrenamiento Funcional', 'Entrenamiento intensivo para mejorar la condición física', 'Gimnasio Municipal', 5, '2024-06-03', '2024-06-03', 30, 30, 'default.jpg', 'Ropa deportiva, Agua', 1, 2, 2, 13, '08:00:00', '10:00:00', 'Lunes-Miércoles'),
 ('Webinar de Psicología Deportiva', 'Conferencia en línea sobre la psicología aplicada al deporte', 'Online', 5, '2024-06-04', '2024-06-04', 200, 200, 'default.jpg', 'Computadora, Internet', 1, 2, 2, 14, '17:00:00', '18:30:00', 'Martes-Jueves');
 
+-- Ingreso de incidencias
 INSERT INTO `televecinosDB`.`Incidencias` (
   `nombreIncidencia`, 
   `fecha`, 
@@ -223,11 +224,33 @@ INSERT INTO `televecinosDB`.`Incidencias` (
 ('Violencia Doméstica', '2024-01-06 17:00:00', 'Jirón Mantaro 101',11, 'Vivienda Unifamiliar', 'foto_6.jpg', 0, '987654326', null, 2, 1, null, 1, 1),
 ('Accidente de Tránsito', '2024-01-09 14:00:00', 'Jirón Pescadores 123',8, 'Intersección con Av. La Marina', 'foto_3.jpg', 1, '987654323', null, 1, 1, null, 6, 0),
 ('Asalto', '2024-01-02 13:00:00', 'Av. Universitaria 5678',3, 'Frente al Centro Comercial Plaza San Miguel', 'foto_2.jpg', 1, '987654322', 2, 2, 2, 2, 7, 0),
-('Accidente de Tránsito', '2024-01-03 14:00:00', 'Jirón Pescadores 123',5, 'Intersección con Av. La Marina', 'foto_3.jpg', 1, '987654323', 3, 3, 3, 3, 8, 0),
+('Accidente de Tránsito', '2024-01-03 14:00:00', 'Jirón Pescadores 123',5, 'Intersección con Av. La Marina', 'foto_3.jpg', 1, '987654323', null, 3, 3, 3, 8, 0),
 ('Incendio', '2024-01-04 15:00:00', 'Calle Bolognesi 456',7, 'Edificio Residencial', 'foto_4.jpg', 1, '987654324', 1, 4, 4, 3, 7, 0),
-('Emergencia Médica', '2024-01-05 16:00:00', 'Av. Bertolotto 789',9, 'Cerca del Hospital San José', 'foto_5.jpg', 0, '987654325', 2, 1, 5, 2, 6, 1),
 ('Robo', '2024-01-07 18:00:00', 'Calle Salaverry 102',12, 'En la esquina', 'foto_7.jpg', 0, '987654327', 2, 3,2, 2, 5, 0),
-('Asalto', '2024-01-08 19:00:00', 'Av. Faucett 103',10, 'Cerca de la escuela', 'foto_8.jpg', 1, '987654328', 2, 4,3, 3, 4, 0),
+('Asalto', '2024-01-08 19:00:00', 'Av. Faucett 103',10, 'Cerca de la escuela', 'foto_8.jpg', 1, '987654328', null, 4,3, 3, 4, 0),
 ('Incendio', '2024-01-10 15:00:00', 'Calle Bolognesi 456',6, 'Edificio Residencial', 'foto_4.jpg', 1, '987654324', 1, 2, 2, 3, 3, 0),
-('Emergencia Médica', '2024-01-10 16:00:00', 'Av. Bertolotto 789',4, 'Cerca del Hospital San José', 'foto_5.jpg', 0, '987654325', 2, 1, 3, 2, 2, 1),
+('Emergencia Médica', '2024-01-10 16:00:00', 'Av. Bertolotto 789',4, 'Cerca del Hospital San José', 'foto_5.jpg', 0, '987654325', null, 1, 3, 2, 2, 1),
 ('Violencia Doméstica', '2024-01-11 17:00:00', 'Jirón Mantaro 101',2, 'Vivienda Unifamiliar', 'foto_6.jpg', 0, '987654326', 3, 3, 2, 1, 1, 1);
+-- Ingreso de incidencia gestionada
+INSERT INTO `televecinosDB`.`Incidencias` (
+  `nombreIncidencia`, 
+  `fecha`, 
+  `lugarExacto`, 
+  `urbanizacion_idUrbanizacion`,
+  `referencia`, 
+  `foto`, 
+  `ambulancia`, 
+  `numeroContacto`, 
+  `CriticidadIncidencia_idCriticidadIncidencia`, 
+  `TipoIncidencia_idTipoIncidencia`, 
+  `EstadosIncidencia_idEstadosIncidencia`, 
+  `Serenazgo_idSerenazgo`, 
+  `Usuario_idUsuario`, 
+  `incidenciaPersonal`,
+  `solucionADar`,
+  `personalRequerido_idpersonalRequerido`,
+  `nombreDelPersonalEnTurno`,
+  `tipoMovilidadRequerido`  
+) VALUES
+('Emergencia Médica', '2024-01-05 16:00:00', 'Av. Bertolotto 789',9, 'Cerca del Hospital San José', 'foto_5.jpg', 0, '987654325', 2, 1, 5, 2, 6, 1,'solucion',2,'María Perez',2);
+
