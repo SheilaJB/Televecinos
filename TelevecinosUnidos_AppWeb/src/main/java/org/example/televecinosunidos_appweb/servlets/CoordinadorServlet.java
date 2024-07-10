@@ -234,6 +234,7 @@ public class CoordinadorServlet extends HttpServlet {
                 break;
 
             case "editar":
+                EventoB evento = eventoDao.buscarEventoPorId(request.getParameter("idEvento"));
                 int idEvento = Integer.parseInt(request.getParameter("idEvento"));
                 String nombre = request.getParameter("nombre");
                 String descripcion = request.getParameter("descripcion");
@@ -260,7 +261,6 @@ public class CoordinadorServlet extends HttpServlet {
                 }
 
                 EventoB eventoB = new EventoB();
-                eventoB.setNombreFoto(fileName2);
                 eventoB.setIdEvento(idEvento);
                 eventoB.setNombre(nombre);
                 eventoB.setDescripcion(descripcion);
@@ -270,7 +270,13 @@ public class CoordinadorServlet extends HttpServlet {
                 eventoB.setFecha_fin(fecha_fin2);
                 eventoB.setFrecuenciaString(frecuencia2);
                 eventoB.setCantidadVacantes(cantidadVacantes2);
-                eventoB.setFoto(fileInputStream2);
+                if (fileName2 == null || fileName2.isEmpty()){
+                    eventoB.setFoto(evento.getFoto());
+                    eventoB.setNombreFoto(evento.getNombreFoto());
+                }else {
+                    eventoB.setNombreFoto(fileName2);
+                    eventoB.setFoto(fileInputStream2);
+                }
                 eventoB.setListaMateriales(listaMateriales2);
                 eventoB.setEventFrecuencia_idEventFrecuencia(EventFrecuencia_idEventFrecuencia2);
                 eventoB.setProfesoresEvento_idProfesoresEvento(ProfesoresEvento_idProfesoresEvento2);
