@@ -14,7 +14,7 @@ public class ImagenDao extends BaseDao{
     public void listarImagen( String sql, int id, HttpServletResponse response) {
 
         try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+             PreparedStatement ps = conn.prepareStatement(sql+id)) {
 
             ResultSet rs = ps.executeQuery();
 
