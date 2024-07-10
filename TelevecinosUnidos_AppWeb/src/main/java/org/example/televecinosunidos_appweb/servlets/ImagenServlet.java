@@ -12,8 +12,10 @@ public class ImagenServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ImagenDao imagenDao = new ImagenDao();
-        int id = Integer.parseInt(request.getParameter("idImagenEvento"));
-        imagenDao.listarImgEvento(id,response);
+        if (request.getParameter("idImagenEvento") != null){
+            int id = Integer.parseInt(request.getParameter("idImagenEvento"));
+            imagenDao.listarImgEvento(id,response);
+        }
     }
 
     @Override
