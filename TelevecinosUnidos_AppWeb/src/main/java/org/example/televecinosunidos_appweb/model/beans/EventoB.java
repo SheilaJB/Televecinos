@@ -25,6 +25,15 @@ public class EventoB {
     private int TipoEvento_idTipoEvento;
     private int ProfesoresEvento_idProfesoresEvento;
     private String diaEvento;
+    private String nombreFoto;
+
+    public String getNombreFoto() {
+        return nombreFoto;
+    }
+
+    public void setNombreFoto(String nombreFoto) {
+        this.nombreFoto = nombreFoto;
+    }
 
     public String getDiaEvento() {
         return diaEvento;
