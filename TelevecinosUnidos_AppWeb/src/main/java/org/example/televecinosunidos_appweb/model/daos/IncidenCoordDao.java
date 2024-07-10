@@ -147,7 +147,7 @@ public class IncidenCoordDao extends BaseDao{
                     incidencia.setNombreIncidencia(rs.getString("Nombre"));
                     incidencia.setLugarExacto(rs.getString("lugarExacto"));
                     incidencia.setReferencia(rs.getString("referencia"));
-                    incidencia.setFoto(rs.getString("foto"));
+                    incidencia.setFoto(rs.getBinaryStream("foto"));
                     incidencia.setAmbulancia(rs.getInt("ambulancia"));
                     incidencia.setNumeroContacto(rs.getString("numeroContacto"));
                     incidencia.setUrbanizacion(rs.getString("Urbanizacion"));
@@ -231,7 +231,7 @@ public class IncidenCoordDao extends BaseDao{
 
 
     //crear una incidencia
-    public void generarIncidenciaC (IncidenciasB incidencia, int userId){
+    public void generarIncidenciaC(IncidenciasB incidencia, int userId) {
         String sql = "INSERT INTO incidencias (nombreIncidencia, fecha, lugarExacto, referencia, foto, ambulancia, " +
                 "numeroContacto, urbanizacion_idUrbanizacion, TipoIncidencia_idTipoIncidencia, incidenciaPersonal, " +
                 "EstadosIncidencia_idEstadosIncidencia, Usuario_idUsuario) " +
@@ -242,7 +242,7 @@ public class IncidenCoordDao extends BaseDao{
             pstmt.setString(1, incidencia.getNombreIncidencia());
             pstmt.setString(2, incidencia.getLugarExacto());
             pstmt.setString(3, incidencia.getReferencia());
-            pstmt.setString(4, incidencia.getFoto());
+            pstmt.setBlob(4, incidencia.getFoto());
             pstmt.setInt(5, incidencia.getAmbulancia());
             pstmt.setString(6, incidencia.getNumeroContacto());
             pstmt.setString(7, incidencia.getUrbanizacion());
@@ -269,7 +269,7 @@ public class IncidenCoordDao extends BaseDao{
             pstmt.setString(1, incidencia.getNombreIncidencia());
             pstmt.setString(2, incidencia.getLugarExacto());
             pstmt.setString(3, incidencia.getReferencia());
-            pstmt.setString(4, incidencia.getFoto());
+            pstmt.setBlob(9, incidencia.getFoto());
             pstmt.setInt(5, incidencia.getAmbulancia());
             pstmt.setString(6, incidencia.getNumeroContacto());
             int urbanizacionId = obtenerIdUrbanizacion(incidencia.getUrbanizacion());

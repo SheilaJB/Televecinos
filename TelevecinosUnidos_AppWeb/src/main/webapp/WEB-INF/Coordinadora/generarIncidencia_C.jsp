@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="org.example.televecinosunidos_appweb.model.beans.IncidenciasB" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -95,7 +96,7 @@
         <!-- PARTE SUPERIOR FINAL -->
 
         <!-- LLENAR-->
-        <form method="post" action="<%=request.getContextPath()%>/CoordinadorServlet?action=crearIncidencia">
+        <form method="post" action="<%=request.getContextPath()%>/CoordinadorServlet?action=crearIncidencia" enctype="multipart/form-data">
             <div class="container-fluid pt-4 px-4">
                 <div class="container">
                     <div class="columna columna1">
@@ -110,11 +111,11 @@
                                 <span class="error-message">${errores['nombreIncidencia']}</span>
                             </c:if>
                         </div>
-                        <div class="campo ${not empty errores['foto'] ? 'error-div' : ''}">
-                            <label for="foto">Subir foto:</label><br>
-                            <input class="form-control" type="file" id="foto" accept=".jpg, .jpeg, .png" name="foto" value="${foto}" class="${not empty errores['foto'] ? 'error' : ''}"><br>
-                            <c:if test="${not empty errores['foto']}">
-                                <span class="error-message">${errores['foto']}</span>
+                        <div class="campo ${not empty errores['foto3'] ? 'error-div' : ''}">
+                            <label for="foto3">Subir foto:</label><br>
+                            <input class="form-control" type="file" id="foto3" accept=".jpg, .jpeg, .png" name="foto3" value="${foto3}" class="${not empty errores['foto3'] ? 'error' : ''}"><br>
+                            <c:if test="${not empty errores['foto3']}">
+                                <span class="error-message">${errores['foto3']}</span>
                             </c:if>
                         </div>
                         <div class="campo ${not empty errores['tipoIncidencia'] ? 'error-div' : ''}">

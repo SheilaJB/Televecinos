@@ -295,11 +295,11 @@ public class CoordinadorServlet extends HttpServlet {
                 break;
 
             //Incidencia
+
             case "crearIncidencia":
                 Map<String, String> errores = new HashMap<>();
 
                 String nombreIncidencia = request.getParameter("nombreIncidencia");
-                String fotoI = request.getParameter("foto");
                 String tipoIncidencia = request.getParameter("TipoIncidencia_idTipoIncidencia");
                 String urbanizacion = request.getParameter("urbanizacion_idUrbanizacion");
                 String incidenciaPersonalStr = request.getParameter("incidenciaPersonal");
@@ -308,17 +308,16 @@ public class CoordinadorServlet extends HttpServlet {
                 String numeroContacto = request.getParameter("numeroContacto");
                 String ambulanciaStr = request.getParameter("ambulancia");
 
+                Part part3 = request.getPart("foto3");
+                InputStream fileInputStream3 = part3.getInputStream();
+
                 // Validaciones
                 if (nombreIncidencia == null || nombreIncidencia.isEmpty()) {
                     errores.put("nombreIncidencia", "El nombre de la incidencia es obligatorio");
                 } else if (nombreIncidencia.length() > 100) {
                     errores.put("nombreIncidencia", "El nombre de la incidencia no puede tener más de 100 caracteres");
                 }
-                /*
-                if (foto == null || foto.isEmpty()) {
-                    errores.put("foto", "La foto es obligatoria");
-                }
-                */
+
                 if (tipoIncidencia == null || tipoIncidencia.isEmpty()) {
                     errores.put("tipoIncidencia", "El tipo de incidencia es obligatorio");
                 }
@@ -333,7 +332,7 @@ public class CoordinadorServlet extends HttpServlet {
 
                 if (lugarExacto == null || lugarExacto.isEmpty()) {
                     errores.put("lugarExacto", "El lugar exacto es obligatorio");
-                }else if (lugarExacto.length() > 100) {
+                } else if (lugarExacto.length() > 100) {
                     errores.put("lugarExacto", "El nombre de la incidencia no puede tener más de 100 caracteres");
                 }
 
@@ -355,7 +354,7 @@ public class CoordinadorServlet extends HttpServlet {
                 if (!errores.isEmpty()) {
                     request.setAttribute("errores", errores);
                     request.setAttribute("nombreIncidencia", nombreIncidencia);
-                    request.setAttribute("foto", fotoI);
+                    request.setAttribute("foto3",part3);
                     request.setAttribute("tipoIncidencia", tipoIncidencia);
                     request.setAttribute("urbanizacion", urbanizacion);
                     request.setAttribute("incidenciaPersonal", incidenciaPersonalStr);
@@ -363,7 +362,7 @@ public class CoordinadorServlet extends HttpServlet {
                     request.setAttribute("referencia", referencia);
                     request.setAttribute("numeroContacto", numeroContacto);
                     request.setAttribute("ambulancia", ambulanciaStr);
-                    request.getRequestDispatcher("WEB-INF/Coordinadora/generarIncidencia_C.jsp").forward(request, response);
+                    request.getRequestDispatcher("WEB-INF/Coordinador/generarIncidencia_C.jsp").forward(request, response);
                     return;
                 }
 
@@ -372,7 +371,7 @@ public class CoordinadorServlet extends HttpServlet {
 
                 IncidenciasB incidencia = new IncidenciasB();
                 incidencia.setNombreIncidencia(nombreIncidencia);
-                incidencia.setFoto(fotoI);
+                incidencia.setFoto(fileInputStream3);
                 incidencia.setTipoIncidencia(tipoIncidencia);
                 incidencia.setUrbanizacion(urbanizacion);
                 incidencia.setIncidenciaPersonal(incidenciaPersonal);
@@ -389,6 +388,8 @@ public class CoordinadorServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/CoordinadorServlet?action=listarIncidencia");
                 break;
 
+
+            /*
             case "editarIncidencia":
                 int id = Integer.parseInt(request.getParameter("idIncidencia"));
                 String nombreIncidencia2 = request.getParameter("nombreIncidencia");
@@ -418,6 +419,7 @@ public class CoordinadorServlet extends HttpServlet {
                 request.getSession().setAttribute("info", "Incidencia editada de manera exitosa");
                 response.sendRedirect(request.getContextPath() + "/CoordinadorServlet?action=listarIncidencia");
                 break;
+            */
             case "buscarIncidenciaPorNombre":
                 String textBuscarI = request.getParameter("textoBuscarIncidencia");
                 String filtroFechaI = request.getParameter("fecha");

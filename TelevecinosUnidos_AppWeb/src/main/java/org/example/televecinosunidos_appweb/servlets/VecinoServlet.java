@@ -10,12 +10,14 @@ import org.example.televecinosunidos_appweb.model.daos.*;
 import org.example.televecinosunidos_appweb.util.GeneraContrasena;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+@MultipartConfig
 @WebServlet(name = "VecinoServlet", value = "/VecinoServlet")
 public class VecinoServlet extends HttpServlet {
     @Override
@@ -141,7 +143,6 @@ public class VecinoServlet extends HttpServlet {
                 Map<String, String> errores = new HashMap<>();
 
                 String nombreIncidencia = request.getParameter("nombreIncidencia");
-                String fotoI = request.getParameter("foto");
                 String tipoIncidencia = request.getParameter("TipoIncidencia_idTipoIncidencia");
                 String urbanizacion = request.getParameter("urbanizacion_idUrbanizacion");
                 String incidenciaPersonalStr = request.getParameter("incidenciaPersonal");
@@ -149,6 +150,9 @@ public class VecinoServlet extends HttpServlet {
                 String referencia = request.getParameter("referencia");
                 String numeroContacto = request.getParameter("numeroContacto");
                 String ambulanciaStr = request.getParameter("ambulancia");
+
+                Part part = request.getPart("foto");
+                InputStream fileInputStream = part.getInputStream();
 
                 // Validaciones
                 if (nombreIncidencia == null || nombreIncidencia.isEmpty()) {
@@ -193,7 +197,7 @@ public class VecinoServlet extends HttpServlet {
                 if (!errores.isEmpty()) {
                     request.setAttribute("errores", errores);
                     request.setAttribute("nombreIncidencia", nombreIncidencia);
-                    request.setAttribute("foto", fotoI);
+                    request.setAttribute("foto",part);
                     request.setAttribute("tipoIncidencia", tipoIncidencia);
                     request.setAttribute("urbanizacion", urbanizacion);
                     request.setAttribute("incidenciaPersonal", incidenciaPersonalStr);
@@ -210,7 +214,7 @@ public class VecinoServlet extends HttpServlet {
 
                 IncidenciasB incidencia = new IncidenciasB();
                 incidencia.setNombreIncidencia(nombreIncidencia);
-                incidencia.setFoto(fotoI);
+                incidencia.setFoto(fileInputStream);
                 incidencia.setTipoIncidencia(tipoIncidencia);
                 incidencia.setUrbanizacion(urbanizacion);
                 incidencia.setIncidenciaPersonal(incidenciaPersonal);
@@ -227,7 +231,7 @@ public class VecinoServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/VecinoServlet?action=listarIncidencia");
                 break;
 
-            case "editarIncidencia":
+            /*case "editarIncidencia":
                 int id = Integer.parseInt(request.getParameter("idIncidencia"));
                 String nombreIncidencia2 = request.getParameter("nombreIncidencia");
                 String foto2I = request.getParameter("foto");
@@ -255,7 +259,7 @@ public class VecinoServlet extends HttpServlet {
                 request.getSession().setAttribute("info", "Incidencia editada de manera exitosa");
                 response.sendRedirect(request.getContextPath() + "/VecinoServlet?action=listarIncidencia");
                 break;
-
+            */
             case "buscarIncidenciaPorNombre":
                 String textBuscar = request.getParameter("textoBuscarIncidencia");
                 String filtroFecha = request.getParameter("fecha");

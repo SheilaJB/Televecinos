@@ -1,11 +1,13 @@
 package org.example.televecinosunidos_appweb.model.beans;
 
+import java.io.InputStream;
+
 public class IncidenciasB {
     private int idIncidencias;
     private String nombreIncidencia;
     private String lugarExacto;
     private String referencia;
-    private String foto;
+    private InputStream foto;
     private int ambulancia;
     private String urbanizacion;
 
@@ -16,6 +18,14 @@ public class IncidenciasB {
     private String nombrePersonalTurno;
     private int tipoMovilidadRequerido;
     private int personalRequerido;
+
+    public InputStream getFoto() {
+        return foto;
+    }
+
+    public void setFoto(InputStream foto) {
+        this.foto = foto;
+    }
 
     public int getPersonalRequerido() {
         return personalRequerido;
@@ -179,14 +189,6 @@ public class IncidenciasB {
 
     public void setReferencia(String referencia) {
         this.referencia = referencia;
-    }
-
-    public String getFoto() {
-        return foto;
-    }
-
-    public void setFoto(String foto) {
-        this.foto = foto;
     }
 
     public int getAmbulancia() {
