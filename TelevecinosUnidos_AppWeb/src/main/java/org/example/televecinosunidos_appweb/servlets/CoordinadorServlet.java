@@ -207,6 +207,7 @@ public class CoordinadorServlet extends HttpServlet {
                 InputStream fileInputStream = part.getInputStream();
 
                 String materiales = request.getParameter("materiales");
+                //Validaciones
 
                 EventoB eventoB0 = new EventoB();
                 eventoB0.setFoto(fileInputStream);
@@ -374,7 +375,7 @@ public class CoordinadorServlet extends HttpServlet {
                     request.setAttribute("numeroContacto", numeroContacto);
                     request.setAttribute("ambulancia", ambulanciaStr);
                     request.setAttribute("nombreFoto", fileName3);
-                    request.getRequestDispatcher("WEB-INF/Coordinador/generarIncidencia_C.jsp").forward(request, response);
+                    request.getRequestDispatcher("WEB-INF/Coordinadora/generarIncidencia_C.jsp").forward(request, response);
                     return;
                 }
 
