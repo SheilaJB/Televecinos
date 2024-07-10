@@ -153,8 +153,8 @@
 
                             <div class="mb-3">
                                 <label class="form-label" style="color:#023047;"><b>Nombre del serenazgo encargado de la incidencia:</b></label>
-                                <input type="text" id="idUsuario" class="form-control" value="<%=serenazgoLogeado.getNombreSerenazgo() + " " + serenazgoLogeado.getApellidoSerenazgo()%>" readonly>
-                                <input type="hidden" name="idUsuario" class="form-control" value="<%=serenazgoLogeado.getNombreSerenazgo() + " " + serenazgoLogeado.getApellidoSerenazgo()%>" readonly>
+                                <input type="text" name="nombrePersonalDeTurno" class="form-control" value="<%=serenazgoLogeado.getNombreSerenazgo() + " " + serenazgoLogeado.getApellidoSerenazgo()%>" readonly>
+                                <input type="hidden" name="idSerenazgo" class="form-control" value="<%=serenazgoLogeado.getIdSerenazgo()%>" readonly>
                             </div>
 
                             <!----Criticidad de la incidencia----->

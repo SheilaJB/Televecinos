@@ -43,7 +43,19 @@
     <link href="css/style_vec.css" rel="stylesheet">
     <link href="css/style_serenazgo.css" rel="stylesheet">
 
-
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            text-align: center;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
 
 </head>
 
@@ -170,11 +182,11 @@
                     <thead>
 
                     <tr>
-                        <th scope="col">Nombre de la incidencia</th>
+                        <th scope="col">Nombre</th>
                         <th scope="col">Fecha</th>
                         <th scope="col">Tipo</th>
-                        <th scope="col">Criticidad</th>
                         <th scope="col">Urbanización</th>
+                        <th scope="col">Criticidad</th>
                         <th scope="col">Estado</th>
                         <th scope="col">Gestionar</th>
                     </tr>
@@ -190,10 +202,13 @@
                         </td>
                         <td><%=incidenciasB.getTipoIncidencia_idTipoIncidenciaStr()%>
                         </td>
-                        <td><%=incidenciasB.getCriticidadIncidencia_idCriticidadIncidenciaStr()%>
-                        </td>
                         <td><%=incidenciasB.getUrbanizacion()%>
                         </td>
+                        <% if(incidenciasB.getCriticidadIncidencia_idCriticidadIncidenciaStr() != null){%>
+                            <td><%=incidenciasB.getCriticidadIncidencia_idCriticidadIncidenciaStr()%></td>
+                        <%}else{%>
+                            <td>-</td>
+                        <%}%>
                         <td><%=incidenciasB.getEstadosIncidencia_idEstadoIncidenciaStr()%>
                         </td>
 

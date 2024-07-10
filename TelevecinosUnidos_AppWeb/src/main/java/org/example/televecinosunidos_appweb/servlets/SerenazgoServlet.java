@@ -102,6 +102,8 @@ public class SerenazgoServlet extends HttpServlet {
                 int idIncidencia = Integer.parseInt(request.getParameter("idIncidencia"));
                 String solucionADar = request.getParameter("solucionADar");
                 String criticidadIncidencia = request.getParameter("criticidadIncidencia");
+                String nombrePersonalDeTurno =request.getParameter("nombrePersonalDeTurno");
+                String idSerenazgo = request.getParameter("idSerenazgo");
                 String personalRequerido = request.getParameter("personalRequerido");
                 String movilidadIncidencia = request.getParameter("movilidadIncidencia");
                 String estadoIncidenci = request.getParameter("estadoIncidencia");
@@ -111,9 +113,12 @@ public class SerenazgoServlet extends HttpServlet {
                 incidenciaB.setIdIncidencias(idIncidencia);
                 incidenciaB.setSolucionADar(solucionADar);
                 incidenciaB.setCriticidadIncidencia_idCriticidadIncidencia(Integer.parseInt(criticidadIncidencia));
+                incidenciaB.setNombrePersonalTurno(nombrePersonalDeTurno);
+                incidenciaB.setSerenazgo_idSerenazgo(Integer.parseInt(idSerenazgo));
                 incidenciaB.setPersonalRequerido(Integer.parseInt(personalRequerido));
                 incidenciaB.setTipoMovilidadRequerido(Integer.parseInt(movilidadIncidencia));
                 incidenciaB.setEstadosIncidencia_idEstadoIncidencia(Integer.parseInt(estadoIncidenci));
+
 
                 incidenciaDao.actualizarIncidenciaS(incidenciaB);
                 response.sendRedirect(request.getContextPath() + "/SerenazgoServlet?action=listaIncidencias_S");
