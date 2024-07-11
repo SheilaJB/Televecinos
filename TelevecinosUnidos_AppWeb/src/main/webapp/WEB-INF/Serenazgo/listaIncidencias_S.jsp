@@ -44,6 +44,7 @@
     <link href="css/style_serenazgo.css" rel="stylesheet">
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!---->
     <style>
         table {
             width: 100%;
@@ -57,7 +58,7 @@
             background-color: #f2f2f2;
         }
     </style>
-
+    -->
 </head>
 
 

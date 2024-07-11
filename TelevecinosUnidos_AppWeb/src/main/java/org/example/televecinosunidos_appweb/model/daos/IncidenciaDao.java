@@ -39,6 +39,7 @@ public class IncidenciaDao extends BaseDao{
                 incidenciaB.setUsuario_idUsuario(rs.getInt("Usuario_idUsuario"));
                 incidenciaB.setIncidenciaPersonal(rs.getInt("incidenciaPersonal"));
                 incidenciaB.setNombrePersonalTurno(rs.getString("nombreDelPersonalEnTurno"));
+                incidenciaB.setNombreFoto(rs.getString("nombreFoto"));
                 listaIncidencias.add(incidenciaB);
 
                 switch (incidenciaB.getCriticidadIncidencia_idCriticidadIncidencia()){
@@ -165,7 +166,7 @@ public class IncidenciaDao extends BaseDao{
                     incidenciasB.setUsuario_idUsuario(rs.getInt("Usuario_idUsuario"));
                     incidenciasB.setIncidenciaPersonal(rs.getInt("incidenciaPersonal"));
                     incidenciasB.setReferencia(rs.getString("referencia"));
-
+                    incidenciasB.setNombreFoto(rs.getString("nombreFoto"));
                 }
                 //
                 switch (incidenciasB.getCriticidadIncidencia_idCriticidadIncidencia()){

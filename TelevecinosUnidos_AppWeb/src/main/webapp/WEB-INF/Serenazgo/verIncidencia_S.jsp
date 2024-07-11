@@ -144,7 +144,7 @@
                         <label for="imagenAcc" class="form-label" style="color:#023047;"><b>Foto del incidente</b></label>
                         <div class="bg-light rounded h-100 p-4">
                             <div class="mb-3">
-                                <img src="img/accidente.jpg" class="img-responsive" alt="" style="width: 100%; height: auto;"  />
+                                <img src="ImagenServlet?idImagenIncidencia=<%=incidencia.getIdIncidencias()%>" class="img-responsive" alt="" style="width: 100%; height: auto;"  />
                             </div>
                         </div>
 
