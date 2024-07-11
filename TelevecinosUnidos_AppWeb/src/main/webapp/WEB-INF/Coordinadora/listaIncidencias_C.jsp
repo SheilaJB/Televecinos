@@ -39,6 +39,10 @@
     <link href="css/app.min.css" rel="stylesheet">
     <link href="css/style_vec.css" rel="stylesheet">
 
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <style>
         .popup {
             display: none;
@@ -116,9 +120,15 @@
             <h3 style="text-align: left; margin-top:20px;margin-bottom:20px;padding: 20px">Lista de incidencias</h3>
         </div>
         <% if (session.getAttribute("info") != null) { %>
-        <div class="alert alert-success" role="alert">
-            <%= session.getAttribute("info") %>
-        </div>
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: '¡Éxito!',
+                text: '<%= session.getAttribute("info") %>',
+                showConfirmButton: false,
+                timer: 2000
+            });
+        </script>
         <% session.removeAttribute("info"); %>
         <% } %>
         <div style="background-color: #f8f9fa; padding: 20px; align-items: center;">
@@ -127,61 +137,56 @@
                 <form  method="post" action="<%=request.getContextPath()%>/CoordinadorServlet?action=buscarIncidenciaPorNombre">
                     <div class="row justify-content-center align-items-center">
                         <!-- Busqueda por nombre de incidencia -->
-                        <div class="col-md-4 mb-2">
+                        <div class="col-md-3 mb-2">
                             <input type="text" class="form-control" id="filtroInput" placeholder="Buscar incidencia..." name="textoBuscarIncidencia"
                                    value="<%=textoBuscarIncidencia%>">
                         </div>
-
                         <div class="col-md-2 mb-2">
-                            <input type="date" class="form-control"  name="fecha">
+                            <input type="date" class="form-control" name="filtroFecha">
                         </div>
-
                         <div class="col-md-2 mb-2">
-                            <select  class="form-select" name="tipo">
+                            <select class="form-select" name="filtroTipo">
                                 <option selected disabled>Tipo de Incidencia</option>
-                                <option value="1" >Seguridad Pública</option>
-                                <option value="2 ">Emergencia Médica</option>
+                                <option value="1">Seguridad Pública</option>
+                                <option value="2">Emergencia Médica</option>
                                 <option value="3">Infraestructura y Servicios Públicos</option>
                                 <option value="4">Otro</option>
                             </select>
                         </div>
                         <div class="col-md-2 mb-2">
-                            <select  class="form-select" name="estado">
+                            <select class="form-select" name="filtroEstado">
                                 <option selected disabled>Estado</option>
-                                <option value="1" >Pendiente</option>
-                                <option value="2" >En Curso</option>
-                                <option value="3" >Cancelado</option>
-                                <option value="4" >Rechazado</option>
-                                <option value="5" >Procesado</option>
+                                <option value="1">Pendiente</option>
+                                <option value="2">En curso</option>
+                                <option value="3">Cancelado</option>
+                                <option value="4">Rechazado</option>
+                                <option value="5">Procesado</option>
                             </select>
                         </div>
                         <div class="col-md-1 mb-2">
-                            <button class="btn btn-primary w-100" type="submit">
-                                <i class="fas fa-search"></i> </button>
+                            <button class="btn btn-primary" type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
                         </div>
                         <div class="col-md-2 mb-2">
-                            <a type="reset" class="btn btn-primary w-100" href="<%=request.getContextPath()%>/CoordinadorServlet?action=listarIncidencia" >Limpiar</a>
-                        </div>
-                        <div class="col-md-2 mb-2">
-                            <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=generarIncidenciaC" class="btn btn-primary w-100">
-                                Crear incidencia
-                            </a>
+                            <a type="reset" class="btn btn-primary" href="<%=request.getContextPath()%>/CoordinadorServlet?action=listarIncidencia">Limpiar</a>
                         </div>
                     </div>
                 </form>
             </div>
 
             <div class="table-responsive">
-                <table class="table table-striped table-hover" style="background-color: transparent;">
+                <table class="table" style="background-color: transparent;">
                     <thead>
                     <tr>
-                        <th scope="col">Nombre</th>
+                        <th scope="col">Nombre de la incidencia</th>
                         <th scope="col">Fecha</th>
                         <th scope="col">Hora</th>
                         <th scope="col">Tipo</th>
                         <th scope="col">Estado</th>
-                        <th scope="col"></th>
-
+                        <th scope="col">Ver</th>
+                        <th scope="col">Editar</th>
+                        <th scope="col">Borrar</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -193,23 +198,26 @@
                         <td><%= incidencia.getHora() %></td>
                         <td><%= incidencia.getTipoIncidencia() %></td>
                         <td><%= incidencia.getEstadoIncidencia() %></td>
-                        <!--Desplegable-->
-
                         <td>
-                            <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                        <% if ("Pendiente".equals(incidencia.getEstadoIncidencia())) { %>
-                                        <li><a class="dropdown-item" onclick="viewFunction(<%= incidencia.getIdIncidencias()%>)">Ver</a></li>
-                                        <li><a class="dropdown-item" onclick="editFunction(<%= incidencia.getIdIncidencias()%>)">Editar</a></li>
-                                        <li><a class="dropdown-item" onclick="confirmDelete(<%=incidencia.getIdIncidencias()%>)">Borrar</a></li>
-                                        <% } else { %>
-                                        <li><a class="dropdown-item" onclick="viewFunction(<%= incidencia.getIdIncidencias()%>)">Ver</a></li>
-                                        <% } %>
-                                    </ul>
-                                </button>
-                            </div>
+                            <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=verIncidencia&idIncidencia=<%= incidencia.getIdIncidencias() %>">
+                                <button type="button" class="btn btn-primary m-2"><i class="fas fa-eye"></i></button>
+                            </a>
                         </td>
+                        <% if ("Pendiente".equals(incidencia.getEstadoIncidencia())) { %>
+                        <td>
+                            <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=editarIncidencia&idIncidencia=<%= incidencia.getIdIncidencias() %>">
+                                <button type="button" class="btn btn-success m-2"><i class="fas fa-pencil-alt"></i></button>
+                            </a>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger m-2" onclick="confirmDelete(<%= incidencia.getIdIncidencias() %>)">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </td>
+                        <% } else { %>
+                        <td><button type="button" class="btn btn-success m-2"><i class="fas fa-pencil-alt"></i></button></td>
+                        <td><button type="button" class="btn btn-danger m-2"><i class="fas fa-trash-alt"></i></button></td>
+                        <% } %>
                     </tr>
                     <% }
                     } else { %>
@@ -218,25 +226,8 @@
                     </tr>
                     <% } %>
                     </tbody>
-
                 </table>
             </div>
-
-            <!-- jQuery (opcional si necesitas usar funciones de jQuery específicas) -->
-            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-            <!-- Bootstrap 5 JS with Popper.js -->
-            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-            <!-- Tempus Dominus JS (si necesario) -->
-            <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
-            <script>
-                function viewFunction(idEvento) {
-                    window.location.href ='<%=request.getContextPath()%>/CoordinadorServlet?action=verIncidencia&idIncidencia=' +idEvento;
-                }
-
-                function editFunction(idEvento) {
-                    window.location.href ='<%=request.getContextPath()%>/CoordinadorServlet?action=editarIncidencia&idIncidencia=' + idEvento;}
-            </script>
 
             <div  style="display: flex; justify-content: center; align-items: center;">
                 <section class="paginacion" >
@@ -268,66 +259,24 @@
     </div>
 </div>
 <!-- Content End -->
-
-
-
-<!-- Popup de confirmation para eliminar una incidencia -->
-
-<div id="deleteConfirmationPopup" class="popup">
-    <div class="popup-content">
-        <span class="close-btn" id="closeDeletePopupBtn">&times;</span>
-        <img src="img/warning.png" alt="check" width="48" height="48" style="margin-top: -10px;">
-        <h2 style="margin-top: 20px;">Confirmar Eliminación</h2>
-        <p>¿Estás seguro de que deseas eliminar este incidente?</p>
-        <button id="confirmDeleteBtn" class="btn btn-danger">Eliminar</button>
-        <button onclick="closeDeletePopup()" class="btn btn-secondary">Cancelar</button>
-    </div>
-</div>
-
-<!-- JavaScript para Popup -->
 <script>
-    const closeDeletePopupBtn = document.getElementById('closeDeletePopupBtn');
-    const deleteConfirmationPopup = document.getElementById('deleteConfirmationPopup');
-    const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
-    const mainContent = document.querySelector('.content'); // Selecciona el contenido principal que quieres deshabilitar
-    let eventIdToDelete; // Variable para almacenar el ID del evento a eliminar
-
-    // Función para deshabilitar interacciones
-    function disableInteractions() {
-        mainContent.style.pointerEvents = 'none';
-        mainContent.style.opacity = '0.4'; // Opcional: reduce la opacidad para un efecto visual de desactivado
-    }
-
-    // Función para habilitar interacciones
-    function enableInteractions() {
-        mainContent.style.pointerEvents = 'all';
-        mainContent.style.opacity = '1'; // Restaura la opacidad
-    }
-
-    // Función para cerrar el popup
-    function closeDeletePopup() {
-        deleteConfirmationPopup.style.display = 'none';
-        enableInteractions();
-    }
-
-    // Eventos para manejar el popup
-    closeDeletePopupBtn.addEventListener('click', closeDeletePopup);
-
-    // Función para confirmar eliminación
-    confirmDeleteBtn.addEventListener('click', function() {
-        window.location.href = '<%=request.getContextPath()%>/CoordinadorServlet?action=borrarIncidencia&idIncidencia=' + eventIdToDelete;;
-        closeDeletePopup();
-    });
-
-    // Función para abrir el popup de confirmación
     function confirmDelete(eventId) {
-        eventIdToDelete = eventId; // Almacenar el ID del evento a eliminar
-        deleteConfirmationPopup.style.display = 'block';
-        disableInteractions();
+        Swal.fire({
+            title: 'Confirmar Eliminación',
+            text: "¿Estás seguro de que deseas eliminar este incidente?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Sí, eliminarlo',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '<%=request.getContextPath()%>/CoordinadorServlet?action=borrarIncidencia&idIncidencia=' + eventId;
+            }
+        });
     }
 </script>
-
-
 <!-- Back to Top -->
 <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 

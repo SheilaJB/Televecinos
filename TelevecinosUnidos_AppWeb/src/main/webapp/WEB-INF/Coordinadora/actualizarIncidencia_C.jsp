@@ -1,8 +1,10 @@
 <%@ page import="org.example.televecinosunidos_appweb.model.beans.IncidenciasB" %>
+<%@ page import="java.util.HashMap" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page pageEncoding="UTF-8" %>
 <%
-    IncidenciasB incidenciaa = (IncidenciasB) request.getAttribute("incidenciaB");
+    IncidenciasB incidenciaB = (IncidenciasB) request.getAttribute("incidenciaB");
+    HashMap<String, String> errores = (HashMap<String, String>) request.getAttribute("errores2");
 %>
 
 <!DOCTYPE html>
@@ -67,7 +69,7 @@
 
         <!-- Content Start -->
 
-        <form method="post" action="<%=request.getContextPath()%>/CoordinadorServlet?action=editarIncidencia">
+        <form method="post" action="<%=request.getContextPath()%>/CoordinadorServlet?action=editarIncidencia" enctype="multipart/form-data">
             <div class="container-fluid pt-4 px-4">
                 <div class="container">
                     <div class="columna columna1">
@@ -75,87 +77,133 @@
                             <h2>Actualizar incidencia</h2>
                             <h2 style="font-size: large;">Actualice los siguientes datos</h2>
                         </div>
-                        <input type="hidden" name="idIncidencia" value="<%= incidenciaa != null ? incidenciaa.getIdIncidencias() : "" %>">
+                        <input type="hidden" name="idIncidencia" value="<%= incidenciaB != null ? incidenciaB.getIdIncidencias() : "" %>">
                         <div class="campo">
                             <label for="nombreIncidencia">Nombre de la incidencia:</label><br>
-                            <input type="text" id="nombreIncidencia" name="nombreIncidencia" placeholder="Escribe aquí" value="<%= incidenciaa != null ? incidenciaa.getNombreIncidencia() : "" %>"><br>
+                            <input type="text" id="nombreIncidencia" name="nombreIncidencia" placeholder="Escribe aquí" value="<%= incidenciaB != null ? incidenciaB.getNombreIncidencia() : "" %>"><br>
+                            <% if (errores != null && errores.containsKey("nombreIncidencia2")) { %>
+                            <span class="text-danger"><%= errores.get("nombreIncidencia2") %></span>
+                            <% } %>
                         </div>
                         <div class="campo">
                             <label for="foto">Subir foto:</label><br>
-                            <input class="form-control" type="file" id="foto" accept=".jpg, .jpeg, .png" name="foto"><br>
+                            <div class="mb-3">
+                                <label for="foto" class="form-label" style="color:#023047;"><b>Formatos permitidos: .jpg .jpeg o .png</b></label>
+                                <input class="form-control" type="file" id="foto" accept=".jpg, .jpeg, .png" name="foto" >
+                            </div>
+                            <!-- Contenedor para la previsualización de la imagen -->
+                            <div class="mb-3">
+                                <img id="preview" src="ImagenServlet?idImagenIncidencia=<%= incidenciaB.getIdIncidencias() %>" alt="Vista previa de la imagen" class="img-thumbnail" style="display: <%= incidenciaB.getFoto() != null ? "block" : "none"%>;">
+
+                            </div>
+                            <script>
+                                document.getElementById('foto').addEventListener('change', function(event) {
+                                    var file = event.target.files[0];
+                                    if (file) {
+                                        var reader = new FileReader();
+                                        reader.onload = function(e) {
+                                            var imgElement = document.getElementById('preview');
+                                            imgElement.src = e.target.result;
+                                            imgElement.style.display = 'block'; // Muestra la imagen
+                                        };
+                                        reader.readAsDataURL(file);
+                                    }
+                                });
+                            </script>
                         </div>
                         <div class="campo" style="margin-bottom: -35px;">
                             <label for="tipoIncidencia">Tipo de incidencia:</label><br>
                             <select id="tipoIncidencia" name="TipoIncidencia_idTipoIncidencia">
-                                <option value="Seguridad Pública" <%= incidenciaa != null && "Seguridad Pública".equals(incidenciaa.getTipoIncidencia()) ? "selected" : "" %>>Seguridad Pública</option>
-                                <option value="Emergencia Médica" <%= incidenciaa != null && "Emergencia Médica".equals(incidenciaa.getTipoIncidencia()) ? "selected" : "" %>>Emergencia Médica</option>
-                                <option value="Infraestructura y Servicios Públicos" <%= incidenciaa != null && "Infraestructura y Servicios Públicos".equals(incidenciaa.getTipoIncidencia()) ? "selected" : "" %>>Infraestructura y Servicios Públicos</option>
-                                <option value="Otro" <%= incidenciaa != null && "Otro".equals(incidenciaa.getTipoIncidencia()) ? "selected" : "" %>>Otro</option>
+                                <option value="Seguridad Pública" <%= incidenciaB != null && "Seguridad Pública".equals(incidenciaB.getTipoIncidencia()) ? "selected" : "" %>>Seguridad Pública</option>
+                                <option value="Emergencia Médica" <%= incidenciaB != null && "Emergencia Médica".equals(incidenciaB.getTipoIncidencia()) ? "selected" : "" %>>Emergencia Médica</option>
+                                <option value="Infraestructura y Servicios Públicos" <%= incidenciaB != null && "Infraestructura y Servicios Públicos".equals(incidenciaB.getTipoIncidencia()) ? "selected" : "" %>>Infraestructura y Servicios Públicos</option>
+                                <option value="Otro" <%= incidenciaB != null && "Otro".equals(incidenciaB.getTipoIncidencia()) ? "selected" : "" %>>Otro</option>
                             </select><br>
                             <br>
+                            <% if (errores != null && errores.containsKey("tipoIncidencia2")) { %>
+                            <span class="text-danger"><%= errores.get("tipoIncidencia2") %></span>
+                            <% } %>
                         </div>
                         <div class="campo" style="margin-bottom: -35px;">
                             <label for="urbanizacion">Urbanización:</label><br>
                             <select id="urbanizacion" name="urbanizacion_idUrbanizacion">
-                                <option value="Rafael Escardó" <%= incidenciaa != null && "Rafael Escardó".equals(incidenciaa.getUrbanizacion()) ? "selected" : "" %>>Rafael Escardó</option>
-                                <option value="José de La Riva Agüero" <%= incidenciaa != null && "José de La Riva Agüero".equals(incidenciaa.getUrbanizacion()) ? "selected" : "" %>>José de La Riva Agüero</option>
-                                <option value="Juan XXIII" <%= incidenciaa != null && "Juan XXIII".equals(incidenciaa.getUrbanizacion()) ? "selected" : "" %>>Juan XXIII</option>
-                                <option value="Libertad" <%= incidenciaa != null && "Libertad".equals(incidenciaa.getUrbanizacion()) ? "selected" : "" %>>Libertad</option>
-                                <option value="Los Jardines de La Marina" <%= incidenciaa != null && "Los Jardines de La Marina".equals(incidenciaa.getUrbanizacion()) ? "selected" : "" %>>Los Jardines de La Marina</option>
-                                <option value="Las Leyendas" <%= incidenciaa != null && "Las Leyendas".equals(incidenciaa.getUrbanizacion()) ? "selected" : "" %>>Las Leyendas</option>
-                                <option value="Las Torres San Miguelito" <%= incidenciaa != null && "Las Torres San Miguelito".equals(incidenciaa.getUrbanizacion()) ? "selected" : "" %>>Las Torres San Miguelito</option>
-                                <option value="Elmer Faucett" <%= incidenciaa != null && "Elmer Faucett".equals(incidenciaa.getUrbanizacion()) ? "selected" : "" %>>Elmer Faucett</option>
-                                <option value="Maranga" <%= incidenciaa != null && "Maranga".equals(incidenciaa.getUrbanizacion()) ? "selected" : "" %>>Maranga</option>
-                                <option value="Pando" <%= incidenciaa != null && "Pando".equals(incidenciaa.getUrbanizacion()) ? "selected" : "" %>>Pando</option>
-                                <option value="Parques de La Huaca" <%= incidenciaa != null && "Parques de La Huaca".equals(incidenciaa.getUrbanizacion()) ? "selected" : "" %>>Parques de La Huaca</option>
-                                <option value="Otro" <%= incidenciaa != null && "Otro".equals(incidenciaa.getUrbanizacion()) ? "selected" : "" %>>Otro</option>
+                                <option value="Rafael Escardó" <%= incidenciaB != null && "Rafael Escardó".equals(incidenciaB.getUrbanizacion()) ? "selected" : "" %>>Rafael Escardó</option>
+                                <option value="José de La Riva Agüero" <%= incidenciaB != null && "José de La Riva Agüero".equals(incidenciaB.getUrbanizacion()) ? "selected" : "" %>>José de La Riva Agüero</option>
+                                <option value="Juan XXIII" <%= incidenciaB != null && "Juan XXIII".equals(incidenciaB.getUrbanizacion()) ? "selected" : "" %>>Juan XXIII</option>
+                                <option value="Libertad" <%= incidenciaB != null && "Libertad".equals(incidenciaB.getUrbanizacion()) ? "selected" : "" %>>Libertad</option>
+                                <option value="Los Jardines de La Marina" <%= incidenciaB != null && "Los Jardines de La Marina".equals(incidenciaB.getUrbanizacion()) ? "selected" : "" %>>Los Jardines de La Marina</option>
+                                <option value="Las Leyendas" <%= incidenciaB != null && "Las Leyendas".equals(incidenciaB.getUrbanizacion()) ? "selected" : "" %>>Las Leyendas</option>
+                                <option value="Las Torres San Miguelito" <%= incidenciaB != null && "Las Torres San Miguelito".equals(incidenciaB.getUrbanizacion()) ? "selected" : "" %>>Las Torres San Miguelito</option>
+                                <option value="Elmer Faucett" <%= incidenciaB != null && "Elmer Faucett".equals(incidenciaB.getUrbanizacion()) ? "selected" : "" %>>Elmer Faucett</option>
+                                <option value="Maranga" <%= incidenciaB != null && "Maranga".equals(incidenciaB.getUrbanizacion()) ? "selected" : "" %>>Maranga</option>
+                                <option value="Pando" <%= incidenciaB != null && "Pando".equals(incidenciaB.getUrbanizacion()) ? "selected" : "" %>>Pando</option>
+                                <option value="Parques de La Huaca" <%= incidenciaB != null && "Parques de La Huaca".equals(incidenciaB.getUrbanizacion()) ? "selected" : "" %>>Parques de La Huaca</option>
+                                <option value="Otro" <%= incidenciaB != null && "Otro".equals(incidenciaB.getUrbanizacion()) ? "selected" : "" %>>Otro</option>
                             </select>
                             <br>
                             <br>
+                            <% if (errores != null && errores.containsKey("urbanizacion2")) { %>
+                            <span class="text-danger"><%= errores.get("urbanizacion2") %></span>
+                            <% } %>
                         </div>
                         <div class="form-group">
                             <label for="paraMi">La incidencia será para:</label><br>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="incidenciaPersonal" id="paraMi" value="1" <%= incidenciaa != null && incidenciaa.getIncidenciaPersonal() == 1 ? "checked" : "" %>>
+                                <input class="form-check-input" type="radio" name="incidenciaPersonal" id="paraMi" value="1" <%= incidenciaB != null && incidenciaB.getIncidenciaPersonal() == 1 ? "checked" : "" %>>
                                 <label class="form-check-label" for="paraMi">
                                     Para mi
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="incidenciaPersonal" id="paraOtraPersona" value="0" <%= incidenciaa != null && incidenciaa.getIncidenciaPersonal() == 0 ? "checked" : "" %>>
+                                <input class="form-check-input" type="radio" name="incidenciaPersonal" id="paraOtraPersona" value="0" <%= incidenciaB != null && incidenciaB.getIncidenciaPersonal() == 0 ? "checked" : "" %>>
                                 <label class="form-check-label" for="paraOtraPersona">
                                     Para otra persona
                                 </label>
                             </div>
+                            <% if (errores != null && errores.containsKey("incidenciaPersonal2")) { %>
+                            <span class="text-danger"><%= errores.get("incidenciaPersonal2") %></span>
+                            <% } %>
                         </div>
                     </div>
                     <div class="columna columna2" style="margin-top: 102px;">
                         <div class="campo">
                             <label for="lugarExacto">Lugar exacto</label><br>
-                            <input type="text" id="lugarExacto" name="lugarExacto" placeholder="Escribe aquí" value="<%= incidenciaa != null ? incidenciaa.getLugarExacto() : "" %>"><br>
+                            <input type="text" id="lugarExacto" name="lugarExacto" placeholder="Escribe aquí" value="<%= incidenciaB != null ? incidenciaB.getLugarExacto() : "" %>"><br>
+                            <% if (errores != null && errores.containsKey("lugarExacto2")) { %>
+                            <span class="text-danger"><%= errores.get("lugarExacto2") %></span>
+                            <% } %>
                         </div>
                         <div class="campo">
                             <label for="referencia">Referencia</label><br>
-                            <input type="text" id="referencia" name="referencia" placeholder="Escribe aquí" value="<%= incidenciaa != null ? incidenciaa.getReferencia() : "" %>"><br>
+                            <input type="text" id="referencia" name="referencia" placeholder="Escribe aquí" value="<%= incidenciaB != null ? incidenciaB.getReferencia() : "" %>"><br>
+                            <% if (errores != null && errores.containsKey("referencia2")) { %>
+                            <span class="text-danger"><%= errores.get("referencia2") %></span>
+                            <% } %>
                         </div>
                         <div class="campo">
                             <label for="contacto">Contacto (opcional)</label><br>
-                            <input type="text" id="contacto" name="numeroContacto" placeholder="Escribe aquí" value="<%= incidenciaa != null ? incidenciaa.getNumeroContacto() : "" %>"><br>
+                            <input type="text" id="contacto" name="numeroContacto" placeholder="Escribe aquí" value="<%= incidenciaB != null ? incidenciaB.getNumeroContacto() : "" %>"><br>
+                            <% if (errores != null && errores.containsKey("numeroContacto2")) { %>
+                            <span class="text-danger"><%= errores.get("numeroContacto2") %></span>
+                            <% } %>
                         </div>
                         <div class="campo">
                             <label>¿Requiere ambulancia?</label><br>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="ambulancia" id="gridRadios1" value="1" <%= incidenciaa != null && incidenciaa.getAmbulancia() == 1 ? "checked" : "" %>>
+                                <input class="form-check-input" type="radio" name="ambulancia" id="gridRadios1" value="1" <%= incidenciaB != null && incidenciaB.getAmbulancia() == 1 ? "checked" : "" %>>
                                 <label class="form-check-label" for="gridRadios1">
                                     Sí
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="ambulancia" id="gridRadios2" value="0" <%= incidenciaa != null && incidenciaa.getAmbulancia() == 0 ? "checked" : "" %>>
+                                <input class="form-check-input" type="radio" name="ambulancia" id="gridRadios2" value="0" <%= incidenciaB != null && incidenciaB.getAmbulancia() == 0 ? "checked" : "" %>>
                                 <label class="form-check-label" for="gridRadios2">
                                     No
                                 </label>
                             </div>
+                            <% if (errores != null && errores.containsKey("ambulancia2")) { %>
+                            <span class="text-danger"><%= errores.get("ambulancia2") %></span>
+                            <% } %>
                         </div>
                         <div class="m-n2">
                             <button type="submit" class="btn btn-secondary m-2">Actualizar incidencia</button>

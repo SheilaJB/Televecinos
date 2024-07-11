@@ -423,7 +423,7 @@ public class CoordinadorServlet extends HttpServlet {
                 String numeroContacto = request.getParameter("numeroContacto");
                 String ambulanciaStr = request.getParameter("ambulancia");
 
-                Part part3 = request.getPart("foto3");
+                Part part3 = request.getPart("foto");
                 String fileName3 = part3.getSubmittedFileName();
                 InputStream fileInputStream3 = part3.getInputStream();
 
@@ -470,7 +470,7 @@ public class CoordinadorServlet extends HttpServlet {
                 if (!errores.isEmpty()) {
                     request.setAttribute("errores", errores);
                     request.setAttribute("nombreIncidencia", nombreIncidencia);
-                    request.setAttribute("foto3",part3);
+                    request.setAttribute("foto",part3);
                     request.setAttribute("tipoIncidencia", tipoIncidencia);
                     request.setAttribute("urbanizacion", urbanizacion);
                     request.setAttribute("incidenciaPersonal", incidenciaPersonalStr);
@@ -506,24 +506,96 @@ public class CoordinadorServlet extends HttpServlet {
                 break;
 
 
-            /*
+
             case "editarIncidencia":
+                Map<String, String> errores2 = new HashMap<>();
+
+                IncidenciasB incidencia2 = incidenciaDao.buscarIncidenciaPorId(request.getParameter("idIncidencia"));
                 int id = Integer.parseInt(request.getParameter("idIncidencia"));
                 String nombreIncidencia2 = request.getParameter("nombreIncidencia");
-                String foto2I = request.getParameter("foto");
                 String tipoIncidencia2 = request.getParameter("TipoIncidencia_idTipoIncidencia");
                 String urbanizacion2 = request.getParameter("urbanizacion_idUrbanizacion");
-                int incidenciaPersonal2 = Integer.parseInt(request.getParameter("incidenciaPersonal"));
+                String incidenciaPersonalStr2 = request.getParameter("incidenciaPersonal");
                 String lugarExacto2 = request.getParameter("lugarExacto");
                 String referencia2 = request.getParameter("referencia");
                 String numeroContacto2 = request.getParameter("numeroContacto");
-                int ambulancia2 = Integer.parseInt(request.getParameter("ambulancia"));
+                String ambulanciaStr2 = request.getParameter("ambulancia");
 
+                Part part4 = request.getPart("foto");
+                String fileName4 = part4.getSubmittedFileName();
+                InputStream fileInputStream4 = part4.getInputStream();
+
+                // Validaciones
+                if (nombreIncidencia2 == null || nombreIncidencia2.isEmpty()) {
+                    errores2.put("nombreIncidencia2", "El nombre de la incidencia es obligatorio");
+                } else if (nombreIncidencia2.length() > 100) {
+                    errores2.put("nombreIncidencia2", "El nombre de la incidencia no puede tener más de 100 caracteres");
+                }
+
+                if (tipoIncidencia2 == null || tipoIncidencia2.isEmpty()) {
+                    errores2.put("tipoIncidencia2", "El tipo de incidencia es obligatorio");
+                }
+                if (urbanizacion2 == null || urbanizacion2.isEmpty()) {
+                    errores2.put("urbanizacion2", "La urbanización es obligatoria");
+                }
+
+                if (incidenciaPersonalStr2 == null || incidenciaPersonalStr2.isEmpty()) {
+                    errores2.put("incidenciaPersonal2", "Debe indicar si la incidencia es para usted u otra persona");
+                }
+
+                if (lugarExacto2 == null || lugarExacto2.isEmpty()) {
+                    errores2.put("lugarExacto2", "El lugar exacto es obligatorio");
+                } else if (lugarExacto2.length() > 100) {
+                    errores2.put("lugarExacto2", "El lugar exacto no puede tener más de 100 caracteres");
+                }
+
+                if (referencia2 == null || referencia2.isEmpty()) {
+                    errores2.put("referencia2", "La referencia es obligatoria");
+                }
+
+                if (numeroContacto2 != null && !numeroContacto2.isEmpty()) {
+                    Pattern pattern = Pattern.compile("\\d{9}");
+                    if (!pattern.matcher(numeroContacto2).matches()) {
+                        errores2.put("numeroContacto2", "El número de contacto debe tener 9 dígitos");
+                    }
+                }
+
+                if (ambulanciaStr2 == null || ambulanciaStr2.isEmpty()) {
+                    errores2.put("ambulancia2", "Debe indicar si se requiere ambulancia");
+                }
+
+                if (!errores2.isEmpty()) {
+                    request.setAttribute("errores2", errores2);
+                    request.setAttribute("nombreIncidencia2", nombreIncidencia2);
+                    request.setAttribute("foto", part4);
+                    request.setAttribute("tipoIncidencia2", tipoIncidencia2);
+                    request.setAttribute("urbanizacion2", urbanizacion2);
+                    request.setAttribute("incidenciaPersonal2", incidenciaPersonalStr2);
+                    request.setAttribute("lugarExacto2", lugarExacto2);
+                    request.setAttribute("referencia2", referencia2);
+                    request.setAttribute("numeroContacto2", numeroContacto2);
+                    request.setAttribute("ambulancia2", ambulanciaStr2);
+                    request.setAttribute("nombreFoto", fileName4);
+
+                    request.setAttribute("incidenciaB", incidencia2);
+
+                    request.getRequestDispatcher("WEB-INF/Coordinadora/actualizarIncidencia_C.jsp").forward(request, response);
+                    return;
+                }
+
+                int incidenciaPersonal2 = Integer.parseInt(incidenciaPersonalStr2);
+                int ambulancia2 = Integer.parseInt(ambulanciaStr2);
 
                 IncidenciasB incidenciaB = new IncidenciasB();
                 incidenciaB.setIdIncidencias(id);
                 incidenciaB.setNombreIncidencia(nombreIncidencia2);
-                incidenciaB.setFoto(foto2I);
+                if (fileName4 == null || fileName4.isEmpty()){
+                    incidenciaB.setFoto(incidencia2.getFoto());
+                    incidenciaB.setNombreFoto(incidencia2.getNombreFoto());
+                }else {
+                    incidenciaB.setNombreFoto(fileName4);
+                    incidenciaB.setFoto(fileInputStream4);
+                }
                 incidenciaB.setTipoIncidencia(tipoIncidencia2);
                 incidenciaB.setUrbanizacion(urbanizacion2);
                 incidenciaB.setIncidenciaPersonal(incidenciaPersonal2);
@@ -532,11 +604,11 @@ public class CoordinadorServlet extends HttpServlet {
                 incidenciaB.setNumeroContacto(numeroContacto2);
                 incidenciaB.setAmbulancia(ambulancia2);
 
-                incidenciaDao.actualizarIncidencia(incidenciaB,userId);
+                incidenciaDao.actualizarIncidencia(incidenciaB, userId);
                 request.getSession().setAttribute("info", "Incidencia editada de manera exitosa");
                 response.sendRedirect(request.getContextPath() + "/CoordinadorServlet?action=listarIncidencia");
                 break;
-            */
+
             case "buscarIncidenciaPorNombre":
                 String textBuscarI = request.getParameter("textoBuscarIncidencia");
                 String filtroFechaI = request.getParameter("fecha");
