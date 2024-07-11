@@ -71,9 +71,26 @@ public class CoordinadorServlet extends HttpServlet {
                 break;
             case "lista":
                 int idTipoEvento = usuarioLogged.getTipoCoordinador_idTipoCoordinador();
+                int paginaActual = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
+                int eventosPorPagina = 5; // Número de eventos por página
+
+                // Obtener la lista completa de eventos
                 ArrayList<EventoB> listaEventosPropios = eventoDao.listarEventosPropios(idTipoEvento);
+
+                // Calcular total de páginas
+                int totalEventos = listaEventosPropios.size();
+                int totalPaginas = (int) Math.ceil((double) totalEventos / eventosPorPagina);
+
+                // Obtener los eventos de la página actual
+                int desde = (paginaActual - 1) * eventosPorPagina;
+                int hasta = Math.min(desde + eventosPorPagina, totalEventos);
+                ArrayList<EventoB> eventosPaginados = new ArrayList<>(listaEventosPropios.subList(desde, hasta));
+
+                // Enviar atributos al JSP
                 vista = "WEB-INF/Coordinadora/ListaEvent-Coordinador.jsp";
-                request.setAttribute("lista", listaEventosPropios);
+                request.setAttribute("lista", eventosPaginados);
+                request.setAttribute("paginaActual", paginaActual);
+                request.setAttribute("totalPaginas", totalPaginas);
                 request.getRequestDispatcher(vista).forward(request, response);
                 break;
             case "registrarAsistencia":
@@ -400,11 +417,21 @@ public class CoordinadorServlet extends HttpServlet {
                 String textBuscar = request.getParameter("textoBuscarEvento");
                 String filtroFrecuencia = request.getParameter("frecuencia");
                 String filtroEstado = request.getParameter("estado");
-                if (textBuscar == null &&  filtroFrecuencia == null && filtroEstado ==null){
+                int pagina = request.getParameter("pagina") != null ? Integer.parseInt(request.getParameter("pagina")) : 1;
+
+                if (textBuscar == null && filtroFrecuencia == null && filtroEstado == null) {
                     response.sendRedirect(request.getContextPath() + "/CoordinadorServlet?action=lista");
-                }else {
+                } else {
                     request.setAttribute("textoBuscarEvento", textBuscar);
-                    request.setAttribute("lista", eventoDao.listarEventoFiltro(textBuscar,  filtroFrecuencia, filtroEstado,usuarioLogged.getTipoCoordinador_idTipoCoordinador()));
+                    request.setAttribute("frecuencia", filtroFrecuencia);
+                    request.setAttribute("estado", filtroEstado);
+                    ArrayList<EventoB> eventos = eventoDao.listarEventoFiltro(textBuscar, filtroFrecuencia, filtroEstado, usuarioLogged.getTipoCoordinador_idTipoCoordinador(), pagina);
+                    int totalRegistros = eventoDao.contarEventosFiltrados(textBuscar, filtroFrecuencia, filtroEstado, usuarioLogged.getTipoCoordinador_idTipoCoordinador()); // Método adicional para contar total de registros
+                    int totalPaginas = (int) Math.ceil((double) totalRegistros / 5); // Ajustado para 5 registros por página
+
+                    request.setAttribute("lista", eventos);
+                    request.setAttribute("paginaActual", pagina);
+                    request.setAttribute("totalPaginas", totalPaginas);
                     request.getRequestDispatcher("WEB-INF/Coordinadora/ListaEvent-Coordinador.jsp").forward(request, response);
                 }
                 break;

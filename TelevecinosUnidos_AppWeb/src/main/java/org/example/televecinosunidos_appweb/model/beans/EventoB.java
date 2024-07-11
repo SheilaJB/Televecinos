@@ -4,6 +4,7 @@ import java.io.InputStream;
 
 public class EventoB {
     private int idEvento;
+    private  int idPag;
     private String nombre;
     private String apellido;
     private String descripcion;
@@ -26,6 +27,13 @@ public class EventoB {
     private int ProfesoresEvento_idProfesoresEvento;
     private String diaEvento;
     private String nombreFoto;
+    public int getIdPag() {
+        return idPag;
+    }
+
+    public void setIdPag(int idPag) {
+        this.idPag = idPag;
+    }
 
     public String getNombreFoto() {
         return nombreFoto;
