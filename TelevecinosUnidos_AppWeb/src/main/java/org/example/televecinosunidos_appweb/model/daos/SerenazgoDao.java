@@ -251,7 +251,9 @@ public class SerenazgoDao extends BaseDao {
 
         //mandamos el correo donde se le indica que es serenazgo
         EnviarEmail enviarEmail = new EnviarEmail();
-        enviarEmail.sendEmail(serenazgoB.getUsuario().getCorreo(),tempPassword);
+        enviarEmail.sendEmailASerenazgo(serenazgoB.getUsuario().getCorreo(),tempPassword);
+
+
 
 
     }

@@ -14,7 +14,8 @@ public class SolicitanteDao extends BaseDao {
 
         String sql = "SELECT idUsuario,nombre,apellido,dni,direccion,correo\n" +
                 "FROM televecinosdb.usuario \n" +
-                "where Rol_idRol = 1 and isBan=0" ;
+                "where Rol_idRol = 1 and isBan=0 \n" +
+                "ORDER BY idUsuario desc";
 
 
         ArrayList<UsuarioB> listaSolicitantes = new ArrayList<>();
@@ -92,6 +93,11 @@ public class SolicitanteDao extends BaseDao {
 
             pstmt.executeUpdate();
         }
+        EnviarEmail enviarEmail = new EnviarEmail();
+        UsuarioB usuarioB = obtenerSolicitante(solicitanteId2);
+        enviarEmail.sendEmailDenegacionSolicitante(usuarioB.getCorreo(),usuarioB.getNombre());
+
+
 
     }
 
@@ -131,7 +137,8 @@ public class SolicitanteDao extends BaseDao {
 
         String sql = "SELECT idUsuario,nombre,apellido,dni,direccion,correo\n" +
                 "FROM televecinosdb.usuario \n" +
-                "where Rol_idRol = 1 and isBan=0 and (usuario.nombre like ? or usuario.apellido like ? or usuario.dni like ?)" ;
+                "where Rol_idRol = 1 and isBan=0 and (usuario.nombre like ? or usuario.apellido like ? or usuario.dni like ?)" +
+                "ORDER BY idUsuario desc";
 
 
         ArrayList<UsuarioB> listaSolicitantes = new ArrayList<>();
