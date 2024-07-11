@@ -15,6 +15,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.ErrorManager;
 import java.util.regex.Pattern;
 
 @MultipartConfig
@@ -26,6 +27,7 @@ public class VecinoServlet extends HttpServlet {
         EventoDao eventoDao = new EventoDao();
         HttpSession session = request.getSession();
         String action = request.getParameter("action") == null ? "inicioVecino" : request.getParameter("action");
+        System.out.println("Action: " + action);
         String vista;
 
         UsuarioB usuarioLogueado = (UsuarioB) session.getAttribute("usuarioLogueado");
@@ -78,6 +80,7 @@ public class VecinoServlet extends HttpServlet {
                 break;
             case "inscribirEvento":
                 String idEv = request.getParameter("idEvento");
+                System.out.println("inscribirEvento - idEvento: " + idEv);
                 response.sendRedirect(request.getContextPath() + "/VecinoServlet?action=verEvento&idEvento=" + idEv);
                 return;
             /*----------------Incidencias----------------*/
@@ -356,17 +359,23 @@ public class VecinoServlet extends HttpServlet {
             case "inscribirEvento":
                 EventoB evento = eventoDao.buscarEventoPorId(request.getParameter("idEvento"));
                 int idEvento = Integer.parseInt(request.getParameter("idEvento"));
-
-                UsuarioB usuario2 = (UsuarioB) session.getAttribute("usuarioLogueado");
-
-                if (usuario2 != null && evento != null) {
-
-                    boolean success = eventoDao.inscribirUsuarioEvento(usuario2.getIdUsuario(), evento.getIdEvento());
-
-                    if (success) {
-                        request.getSession().setAttribute("info", "Inscripción al evento exitosa");
+                System.out.printf("iddd :" + idEvento);
+                if (evento != null) {
+                    if (evento.getCantDisponibles() > 0) {
+                        boolean yaEstaInscrito = eventoDao.estaInscrito(userId, idEvento);
+                        if (!yaEstaInscrito) {
+                            boolean success = eventoDao.inscribirUsuarioEvento(usuarioLogueado.getIdUsuario(), evento.getIdEvento());
+                            if (success) {
+                                eventoDao.updateVacantesDisponibles(evento.getIdEvento());
+                                request.getSession().setAttribute("info", "Inscripción al evento exitosa");
+                            } else {
+                                request.getSession().setAttribute("err", "Error al inscribirse en el evento. Intente de nuevo más tarde.");
+                            }
+                        } else {
+                            request.getSession().setAttribute("err", "Ya estás inscrito(a) en este evento");
+                        }
                     } else {
-                        request.getSession().setAttribute("err", "Error al inscribirse en el evento");
+                        request.getSession().setAttribute("err", "No hay cupos disponibles para este evento");
                     }
                 } else {
                     request.getSession().setAttribute("err", "Usuario o evento no encontrado");
@@ -375,7 +384,7 @@ public class VecinoServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/VecinoServlet?action=verEvento&idEvento=" + idEvento);
                 break;
 
-            case "cambiarContrasena":
+             case "cambiarContrasena":
                 String nuevaContrasena = request.getParameter("nuevaContrasena");
                 String confirmarContrasena = request.getParameter("confirmarContrasena");
 

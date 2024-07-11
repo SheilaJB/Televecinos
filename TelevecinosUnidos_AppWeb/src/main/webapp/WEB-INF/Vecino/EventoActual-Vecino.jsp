@@ -1,6 +1,7 @@
 <%@ page import="org.example.televecinosunidos_appweb.model.beans.EventoB" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,6 +27,10 @@
     <!-- Libraries Stylesheet -->
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
     <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -78,6 +83,19 @@
         <jsp:include page="../includes/navbarVecino.jsp"></jsp:include>
         <!-- PARTE SUPERIOR FINAL -->
 
+        <% if (session.getAttribute("err") != null) { %>
+        <div class="alert alert-danger" role="alert">
+            <%= session.getAttribute("err") %>
+        </div>
+        <% session.removeAttribute("err"); %>
+        <% } %>
+
+        <% if (session.getAttribute("info") != null) { %>
+        <div class="alert alert-success" role="alert">
+            <%= session.getAttribute("info") %>
+        </div>
+        <% session.removeAttribute("info"); %>
+        <% } %>
         <!-- Mostrar información del evento-->
         <div class="container-fluid pt-4 px-4">
             <div class="jumbotron text-center">
@@ -88,31 +106,10 @@
                     ¡Recuerda revisar la frecuencia del evento y acomodar tu calendario para que no te pierdas este evento!
                 </h6>
             </div>
-            <% if (session.getAttribute("info") != null) { %>
-            <script>
-                Swal.fire({
-                    title: "Estás por inscribirte a este evento, ¿Estás seguro?",
-                    text: "No podrás deshacer esta acción",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                    confirmButtonText: "Si, inscribirme"
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        Swal.fire({
-                            title: "¡Te has inscrito a este evento!",
-                            text: "Revisa constantemente el estado del evento en caso exista algún cambio",
-                            icon: "success"
-                        });
-                    }
-                });
-            </script>
-            <% session.removeAttribute("info"); %>
-            <% } %>
+
             <div class="row">
                 <div class="col-md-6">
-                    <form>
+                    <form method="post" action="<%=request.getContextPath()%>/VecinoServlet?action=inscribirEvento&idEvento=<%=request.getAttribute("evento") != null?((EventoB) request.getAttribute("evento")).getIdEvento() :""%>">
                         <div class="card shadow-sm" >
                             <div class="card-header text-lg-center">
                                 <h5>Información del evento</h5>
@@ -257,9 +254,9 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-center mt-4">
-                        <a href="<%= request.getContextPath() %>/VecinoServlet?action=inscribirEvento&idEvento=<%= request.getAttribute("evento") != null ? ((EventoB) request.getAttribute("evento")).getIdEvento() : "" %>">
-                            <button type="button" class="btn btn-primary">Inscribirse a este evento</button>
-                        </a>
+                        <div class="d-flex justify-content-center mt-4">
+                            <button type="button" onclick="confirmInscripcion(<%= request.getAttribute("evento") != null ? ((EventoB) request.getAttribute("evento")).getIdEvento() : "" %>)" class="btn btn-primary" <%= ((EventoB) request.getAttribute("evento")).getCantDisponibles() == 0 ? "disabled" : "" %>>Inscribirse a este evento</button>
+                        </div>
                     </div>
                     <div class="d-flex justify-content-center mt-4">
                         <a href="<%=request.getContextPath()%>/VecinoServlet?action=verEventos">
@@ -269,6 +266,25 @@
                 </div>
             </div>
         </div>
+
+        <script>
+            function confirmInscripcion(eventId) {
+                Swal.fire({
+                    title: 'Confirmar Asistencia',
+                    text: "Estás a punto de inscribirte a este evento ¿Estás seguro?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, inscribirme',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = '<%=request.getContextPath()%>/VecinoServlet?action=inscribirEvento&idEvento=' + eventId;
+                    }
+                });
+            }
+        </script>
         <script>
             document.getElementById('subirFoto').addEventListener('change', function(event) {
                 var file = event.target.files[0];

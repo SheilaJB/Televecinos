@@ -733,6 +733,61 @@ public class EventoDao extends BaseDao{
             return false;
         }
     }
+    public boolean estaInscrito(int idUsuario, int idEvento) {
+        String sql = "SELECT COUNT(*) FROM flujo_usuario_evento WHERE Usuario_idUsuario = ? AND Eventos_idEventos = ?";
+        try (Connection conn = this.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, idUsuario);
+            pstmt.setInt(2, idEvento);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    int count = rs.getInt(1);
+                    return count > 0;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    public void updateVacantesDisponibles(int idEvento) {
+        try (Connection conn = this.getConnection()) {
+            // 1. Get total registered users
+            String sqlCount = "SELECT COUNT(*) FROM flujo_usuario_evento WHERE Eventos_idEventos = ?";
+            try (PreparedStatement pstmtCount = conn.prepareStatement(sqlCount)) {
+                pstmtCount.setInt(1, idEvento);
+                try (ResultSet rsCount = pstmtCount.executeQuery()) {
+                    if (rsCount.next()) {
+                        int inscriptos = rsCount.getInt(1);
+
+                        // 2. Get total vacancies from the event
+                        String sqlGetVacantes = "SELECT cantidadVacantes FROM eventos WHERE idEventos = ?";
+                        try (PreparedStatement pstmtGetVacantes = conn.prepareStatement(sqlGetVacantes)) {
+                            pstmtGetVacantes.setInt(1, idEvento);
+                            try (ResultSet rsGetVacantes = pstmtGetVacantes.executeQuery()) {
+                                if (rsGetVacantes.next()) {
+                                    int totalVacantes = rsGetVacantes.getInt("cantidadVacantes");
+
+                                    // 3. Calculate and update available vacancies
+                                    int nuevasVacantes = totalVacantes - inscriptos;
+                                    String sqlUpdate = "UPDATE eventos SET cantDisponibles = ? WHERE idEventos = ?";
+                                    try (PreparedStatement pstmtUpdate = conn.prepareStatement(sqlUpdate)) {
+                                        pstmtUpdate.setInt(1, nuevasVacantes);
+                                        pstmtUpdate.setInt(2, idEvento);
+                                        pstmtUpdate.executeUpdate();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 }
 
