@@ -13,6 +13,8 @@ import org.example.televecinosunidos_appweb.model.daos.VecinoDao;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 @WebServlet(name = "SerenazgoServlet", value = "/SerenazgoServlet")
 public class SerenazgoServlet extends HttpServlet {
@@ -68,6 +70,21 @@ public class SerenazgoServlet extends HttpServlet {
                 request.setAttribute("incidencia",incidenciaDao.buscarPorId(idIncidencia));
                 request.setAttribute("nombreVecinoDuenoIncidencia",vecinoDao.buscarVecinoPorId(idVecinoDuenoIncidencia).getNombre()+" " + vecinoDao.buscarVecinoPorId(idVecinoDuenoIncidencia).getApellido());
                 request.getRequestDispatcher(vista).forward(request, response);
+                break;
+            case "dashboard":
+                //request.setAttribute("parametros",incidenciaDao.listar());
+                ArrayList<Double> tabla1 = incidenciaDao.DashboardTabla(1);
+                ArrayList<Double> tabla2 = incidenciaDao.DashboardTabla(2);
+                ArrayList<Double> tabla3 = incidenciaDao.DashboardTabla(3);
+                ArrayList<Double> tabla4 = incidenciaDao.DashboardTabla(4);
+                request.setAttribute("tabla1", tabla1);
+                request.setAttribute("tabla2", tabla2);
+                request.setAttribute("tabla3", tabla3);
+                request.setAttribute("tabla4", tabla4);
+
+                vista = "WEB-INF/Serenazgo/dashboard.jsp";
+                request.getRequestDispatcher(vista).forward(request, response);
+
                 break;
 
 

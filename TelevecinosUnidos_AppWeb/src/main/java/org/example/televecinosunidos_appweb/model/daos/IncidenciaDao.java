@@ -2,9 +2,10 @@ package org.example.televecinosunidos_appweb.model.daos;
 
 import org.example.televecinosunidos_appweb.model.beans.IncidenciasB;
 import org.example.televecinosunidos_appweb.model.beans.UsuarioB;
-
-import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
+import java.sql.*;
+
 
 public class IncidenciaDao extends BaseDao{
     public ArrayList<IncidenciasB> listarIncidencias() {
@@ -584,4 +585,51 @@ public class IncidenciaDao extends BaseDao{
             throw new RuntimeException(e);
         }
     }
+
+
+    public ArrayList<Double> DashboardTabla(int i) {
+        ArrayList<Integer> tabla1 = new ArrayList<>();
+
+        String sql = "SELECT " +
+                "SUM(CASE WHEN i.EstadosIncidencia_idEstadosIncidencia = 1 THEN 1 ELSE 0 END) AS pendientes, " +
+                "SUM(CASE WHEN i.EstadosIncidencia_idEstadosIncidencia = 2 THEN 1 ELSE 0 END) AS en_curso, " +
+                "SUM(CASE WHEN i.EstadosIncidencia_idEstadosIncidencia = 3 THEN 1 ELSE 0 END) AS cancelado, " +
+                "SUM(CASE WHEN i.EstadosIncidencia_idEstadosIncidencia = 4 THEN 1 ELSE 0 END) AS rechazado, " +
+                "SUM(CASE WHEN i.EstadosIncidencia_idEstadosIncidencia = 5 THEN 1 ELSE 0 END) AS procesado " +
+                "FROM televecinosdb.incidencias i " +
+                "JOIN televecinosdb.tipoincidencia ti ON i.TipoIncidencia_idTipoIncidencia = ti.idTipoIncidencia " +
+                "WHERE ti.idTipoIncidencia = " + i;
+
+
+
+        try (Connection connection = getConnection();
+             Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            if(rs.next()){
+                tabla1.add(rs.getInt(1));
+                tabla1.add(rs.getInt(2));
+                tabla1.add(rs.getInt(3));
+                tabla1.add(rs.getInt(4));
+                tabla1.add(rs.getInt(5));
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        return calcularPorcentajes(tabla1);
+    }
+
+    public ArrayList<Double> calcularPorcentajes(ArrayList<Integer> numeros) {
+        double sumaTotal = numeros.stream().mapToInt(Integer::intValue).sum();
+        ArrayList<Double> porcentajes = new ArrayList<>();
+        for (int i = 0; i < numeros.size(); i++) {
+            double porcentaje = (numeros.get(i) / sumaTotal) * 100.0;
+            porcentajes.add(porcentaje);
+        }
+        return porcentajes;
+    }
+
+
 }
