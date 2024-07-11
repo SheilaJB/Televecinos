@@ -1,6 +1,8 @@
 <%@ page import="org.example.televecinosunidos_appweb.model.beans.ProfesoresEvento" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="org.example.televecinosunidos_appweb.model.beans.UsuarioB" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.HashMap" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="usuarioLogueado" scope="session" type="UsuarioB" class="org.example.televecinosunidos_appweb.model.beans.UsuarioB" />
 <%@ page pageEncoding="UTF-8" %>
@@ -123,15 +125,15 @@
                     <div class="col-sm-12">
                         <div class="rounded h-100 p-4" style="background-color: #ffb703;">
                             <!---Nombre del evento-->
-                            <div class="mb-3">
+                            <div class="mb-3" class="campo ${not empty erroresEvento ? 'error-div' : ''}">
                                 <label for="nombreEvento" class="form-label" style="color:#023047;"><b>Ingrese un nombre del evento:</b></label>
-                                <input type="text" class="form-control" id="nombreEvento" placeholder="Escribir" name="nombreEvento" required>
+                                <input type="text" class="form-control" id="nombreEvento" placeholder="Escribir" name="nombreEvento" required value="${nombreEvento}" class="campo">
                             </div>
 
                             <!---Descripción del evento-->
-                            <div class="mb-3">
+                            <div class="mb-3" class="campo ${not empty erroresEvento ? 'error-div' : ''}">
                                 <label for="descripcionEvento" class="form-label" style="color:#023047;"><b>Ingrese una descripción del evento:</b></label>
-                                <textarea class="form-control" id="descripcionEvento" rows="2" placeholder="Escribir una breve descripción" name="descripcionEvento" required></textarea>
+                                <input class="form-control" id="descripcionEvento" type="text" placeholder="Escribir una breve descripción" name="descripcionEvento" required value="${descripcionEvento}" class="campo"></input>
                             </div>
                             <!---Nombre del coordinador-->
                             <div class="mb-3">
@@ -147,47 +149,50 @@
                     <div class="col-sm-12 col-sm-12 col-xl-6">
                         <div class="rounded h-100 p-4" style="background-color:#219ebc;">
                             <!---Nombre del profesor-->
-                            <div class="mb-3">
+                            <div class="mb-3" class="campo ${not empty erroresEvento ? 'error-div' : ''}">
                                 <label for="nombreInstructor" class="form-label" style="color:#023047;"><b>Ingrese nombre del profesor:</b></label>
                                 <select id="nombreInstructor" class="form-select mb-3" aria-label="Default select example" name="nombreProfesor" required>
-                                    <option value="" selected>Seleccione un instructor</option>
+                                    <option value="${nombreProfesor}" class="campo" selected>Seleccione un instructor</option>
                                     <% int i = 1; %>
                                     <% for (ProfesoresEvento pEvento : lista) { %>
-                                    <option value="<%= pEvento.getIdProfesoresEvento() %>"><%= pEvento.getNombre() %> <%= pEvento.getApellido() %></option>
+                                    <option value="<%= pEvento.getIdProfesoresEvento() %>" ${nombreProfesor == '0' ? 'selected' : ''}><%= pEvento.getNombre() %> <%= pEvento.getApellido() %></option>
                                     <% i++; %>
                                     <% } %>
                                 </select>
                             </div>
                             <!---Lugar del evento-->
-                            <div class="mb-3">
+                            <div class="mb-3" class="campo ${not empty erroresEvento ? 'error-div' : ''}">
                                 <label for="lugarEvento" class="form-label" style="color:#023047;"><b>Lugar del evento:</b></label>
-                                <input type="text" class="form-control" id="lugarEvento" placeholder="Escribir" name="lugar" required>
+                                <input type="text" class="form-control" id="lugarEvento" placeholder="Escribir" name="lugar" required value="${lugar}" class="campo">
                             </div>
                             <!----Frecuencia del evento----->
-                            <label for="frecuenciaEvento" class="form-label" style="color:#023047;"><b>Frecuencia del evento:</b></label>
-                            <select id="frecuenciaEvento" class="form-select mb-3" aria-label="Default select example" onchange="mostrarOpciones()" name="frecuencia" required>
-                                <option value="" selected>Seleccione la frecuencia del evento</option>
-                                <option value="2">Dos veces por semana</option>
-                                <option value="1">Semanal</option>
-                            </select>
-
-                            <div id="opcionesInterdiarias" style="display:none;">
-                                <select id="diasInterdiarios" class="form-select mb-3" aria-label="Default select example" name="opcionesDias">
-                                    <option value="" selected>Seleccione la opción: </option>
-                                    <option value="Lunes-Miércoles">Lunes-Miércoles</option>
-                                    <option value="Martes-Jueves">Martes-Jueves</option>
+                            <div class="mb-3" class="campo ${not empty erroresEvento ? 'error-div' : ''}">
+                                <label for="frecuenciaEvento" class="form-label" style="color:#023047;"><b>Frecuencia del evento:</b></label>
+                                <select id="frecuenciaEvento" class="form-select mb-3" aria-label="Default select example" oninput="mostrarOpciones()" name="frecuencia" required>
+                                    <option value="" selected>Seleccione la frecuencia del evento</option>
+                                    <option value="2" ${frecuencia == '2' ? 'selected' : ''}>Dos veces por semana</option>
+                                    <option value="1" ${frecuencia == '1' ? 'selected' : ''}>Semanal</option>
                                 </select>
                             </div>
 
-                            <div id="opcionesSemanal" style="display:none;">
+
+                            <div id="opcionesInterdiarias" style="display:none;" class="campo ${not empty erroresEvento ? 'error-div' : ''}">
+                                <select id="diasInterdiarios" class="form-select mb-3" aria-label="Default select example" name="opcionesDias">
+                                    <option value="" selected>Seleccione la opción: </option>
+                                    <option value="Lunes-Miércoles" ${opcionesDias == 'Lunes-Miércoles' ? 'selected' : ''}>Lunes-Miércoles</option>
+                                    <option value="Martes-Jueves" ${opcionesDias == 'Martes-Jueves' ? 'selected' : ''}>Martes-Jueves</option>
+                                </select>
+                            </div>
+
+                            <div id="opcionesSemanal" style="display:none;" class="campo ${not empty erroresEvento ? 'error-div' : ''}">
                                 <label for="diaSemana" class="form-label" style="color:#023047;"><b>Elegir día:</b></label>
                                 <select id="diaSemana" class="form-select mb-3" aria-label="Default select example" name="opcionesDias1">
                                     <option value="" selected>Seleccione el día a la semana:</option>
-                                    <option value="Lunes">Lunes</option>
-                                    <option value="Martes">Martes</option>
-                                    <option value="Miércoles">Miércoles</option>
-                                    <option value="Jueves">Jueves</option>
-                                    <option value="Viernes">Viernes</option>
+                                    <option value="Lunes" ${opcionesDias1 == 'Lunes' ? 'selected' : ''}>Lunes</option>
+                                    <option value="Martes" ${opcionesDias1 == 'Martes' ? 'selected' : ''}>Martes</option>
+                                    <option value="Miércoles" ${opcionesDias1 == 'Miércoles' ? 'selected' : ''}>Miércoles</option>
+                                    <option value="Jueves" ${opcionesDias1 == 'Jueves' ? 'selected' : ''}>Jueves</option>
+                                    <option value="Viernes" ${opcionesDias1 == 'Viernes' ? 'selected' : ''}>Viernes</option>
                                 </select>
                             </div>
 
@@ -211,48 +216,86 @@
                             </script>
 
                             <!----Cantidad de vacantes disponibles----->
-                            <label for="cantVacantes" class="form-label" style="color:#023047;"><b>Cantidad de vacantes:</b> </label>
-                            <select id="cantVacantes" class="form-select mb-3" aria-label="Default select example" name="cantidadVacantes" required>
-                                <option value="" selected>Seleccione la cantidad de vacantes disponibles</option>
-                                <!-- Las opciones se agregarán dinámicamente con JavaScript -->
-                            </select>
-                        </div>
-                        <script>
-                            // Función que se ejecutará al cargar la ventana
-                            window.onload = function() {
-                                var selectElement = document.getElementById('cantVacantes');
+                            <div class="campo ${not empty erroresEvento ? 'error-div' : ''}">
+                                <label for="cantVacantes" class="form-label" style="color:#023047;"><b>Cantidad de vacantes:</b> </label>
+                                <select id="cantVacantes" class="form-select mb-3" aria-label="Default select example" name="cantidadVacantes" required>
+                                    <option value="" selected>Seleccione la cantidad de vacantes disponibles</option>
+                                    <option value="10" ${cantidadVacantes == '10' ? 'selected' : ''}>10</option>
+                                    <option value="11" ${cantidadVacantes == '11' ? 'selected' : ''}>11</option>
+                                    <option value="12" ${cantidadVacantes == '12' ? 'selected' : ''}>12</option>
+                                    <option value="13" ${cantidadVacantes == '13' ? 'selected' : ''}>13</option>
+                                    <option value="14" ${cantidadVacantes == '14' ? 'selected' : ''}>14</option>
+                                    <option value="15" ${cantidadVacantes == '15' ? 'selected' : ''}>15</option>
+                                    <option value="16" ${cantidadVacantes == '16' ? 'selected' : ''}>16</option>
+                                    <option value="17" ${cantidadVacantes == '17' ? 'selected' : ''}>17</option>
+                                    <option value="18" ${cantidadVacantes == '18' ? 'selected' : ''}>18</option>
+                                    <option value="19" ${cantidadVacantes == '19' ? 'selected' : ''}>19</option>
+                                    <option value="20" ${cantidadVacantes == '20' ? 'selected' : ''}>20</option>
+                                    <option value="21" ${cantidadVacantes == '21' ? 'selected' : ''}>21</option>
+                                    <option value="22" ${cantidadVacantes == '22' ? 'selected' : ''}>22</option>
+                                    <option value="23" ${cantidadVacantes == '23' ? 'selected' : ''}>23</option>
+                                    <option value="24" ${cantidadVacantes == '24' ? 'selected' : ''}>24</option>
+                                    <option value="25" ${cantidadVacantes == '25' ? 'selected' : ''}>25</option>
+                                    <option value="26" ${cantidadVacantes == '26' ? 'selected' : ''}>26</option>
+                                    <option value="27" ${cantidadVacantes == '27' ? 'selected' : ''}>27</option>
+                                    <option value="28" ${cantidadVacantes == '28' ? 'selected' : ''}>28</option>
+                                    <option value="29" ${cantidadVacantes == '29' ? 'selected' : ''}>29</option>
+                                    <option value="30" ${cantidadVacantes == '30' ? 'selected' : ''}>30</option>
 
-                                // Crear opciones de 10 a 30
-                                for (var i = 10; i <= 30; i++) {
-                                    var option = new Option(i, i);
-                                    selectElement.add(option);
-                                }
-                            };
-                        </script>
+                                </select>
+                            </div>
+
+                        </div>
                     </div>
 
                     <div class="col-sm-12 col-xl-6">
                         <div class="bg-light rounded h-100 p-4">
                             <!-- Fecha del evento -->
-                            <div class="mb-3">
+                            <div class="mb-3" class="campo ${not empty erroresEvento['fechaInicio'] ? 'error-div' : ''}">
                                 <label for="fechaInicioEvento" class="form-label" style="color:#023047;"><b>Fecha de inicio:</b></label>
-                                <input type="date" class="form-control" id="fechaInicioEvento" name="fecha_inicio" required>
+                                <input type="date" class="form-control" id="fechaInicioEvento" name="fecha_inicio" required value="${fecha_inicio}" class="${not empty erroresEvento['fechaInicio'] ? 'error' : ''}">
+                                <div>
+                                    <c:if test="${not empty erroresEvento['fechaInicio']}">
+                                        <span class="error-messege" style="color: red;">${erroresEvento['fechaInicio']}</span>
+                                    </c:if>
+                                </div>
+                                <div>
+                                    <c:if test="${not empty erroresEvento['errorFechaInicio']}">
+                                        <span class="error-message" style="color: red;">${erroresEvento['errorFechaInicio']}</span>
+                                    </c:if>
+                                </div>
+
+
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-3" class="campo ${not empty erroresEvento['fechaFin'] ? 'error-div' : ''}">
                                 <label for="fechaFinEvento" class="form-label" style="color:#023047;"><b>Fecha de finalización:</b></label>
-                                <input type="date" class="form-control" id="fechaFinEvento" name="fecha_fin" required>
+                                <input type="date" class="form-control" id="fechaFinEvento" name="fecha_fin" required value="${fecha_fin}" class="${not empty erroresEvento['fechaFin'] ? 'error' : ''}">
+                                <div>
+                                    <c:if test="${not empty erroresEvento['fechaFin']}">
+                                        <span class="error-message" style="color: red;">${erroresEvento['fechaFin']}</span>
+                                    </c:if>
+                                </div>
+                                <div>
+                                    <c:if test="${not empty erroresEvento['errorFechaFin']}">
+                                        <span class="error-message" style="color: red;">${erroresEvento['errorFechaFin']}</span>
+                                    </c:if>
+                                </div>
+
                             </div>
 
                             <!-- Hora de inicio del evento -->
-                            <div class="mb-3">
+                            <div class="mb-3" class="campo ${not empty erroresEvento ? 'error-div' : ''}">
                                 <label for="horaInicioEvento" class="form-label" style="color:#023047;"><b>Hora de inicio:</b></label>
-                                <input type="time" class="form-control" id="horaInicioEvento" name="hora_inicio" required>
+                                <input type="time" class="form-control" id="horaInicioEvento" name="hora_inicio" required value="${hora_inicio}" class="${not empty erroresEvento ? 'error' : ''}">
                             </div>
 
                             <!-- Hora de finalización del evento -->
-                            <div class="mb-3">
+                            <div class="mb-3" class="campo ${not empty erroresEvento['fechaFin'] ? 'error-div' : ''}">
                                 <label for="horaFinEvento" class="form-label" style="color:#023047;"><b>Hora de finalización:</b></label>
-                                <input type="time" class="form-control" id="horaFinEvento" name="hora_fin" required>
+                                <input type="time" class="form-control" id="horaFinEvento" name="hora_fin" required value="${hora_fin}" class="${not empty erroresEvento['errorHoraFin'] ? 'error' : ''}">
+                                <c:if test="${not empty erroresEvento['errorHoraFin']}">
+                                    <span class="error-message" style="color: red;">${erroresEvento['errorHoraFin']}</span>
+                                </c:if>
                             </div>
                         </div>
                     </div>
@@ -289,11 +332,11 @@
 
 
                     <!-- Materiales -->
-                    <div class="col-sm-12 col-xl-6">
+                    <div class="col-sm-12 col-xl-6" >
                         <div class="rounded h-100 p-4" style="background-color: #8ecae6;">
                             <label class="form-label" style="color:#023047;"><b>Materiales:</b></label>
-                            <div class="input-group mb-3">
-                                <input type="text" class="form-control" name="materiales" placeholder="Escriba los materiales a usar">
+                            <div class="input-group mb-3" class="campo ${not empty erroresEvento ? 'error-div' : ''}">
+                                <input type="text" class="form-control" name="materiales" placeholder="Escriba los materiales a usar" required value="${materiales}" class="campo">
                             </div>
                         </div>
                     </div>

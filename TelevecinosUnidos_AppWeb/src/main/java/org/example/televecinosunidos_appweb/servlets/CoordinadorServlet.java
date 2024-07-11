@@ -14,6 +14,10 @@ import org.example.televecinosunidos_appweb.model.daos.IncidenCoordDao;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -183,6 +187,7 @@ public class CoordinadorServlet extends HttpServlet {
         switch (action) {
             //Evento
             case "crear":
+                Map<String, String> erroresEvento = new HashMap<>();
                 String nombreEvento = request.getParameter("nombreEvento");
                 String descripcionEvento = request.getParameter("descripcionEvento");
                 String lugar = request.getParameter("lugar");
@@ -208,7 +213,106 @@ public class CoordinadorServlet extends HttpServlet {
 
                 String materiales = request.getParameter("materiales");
                 //Validaciones
+                DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
+                LocalDate fechaInicio = LocalDate.parse(fecha_inicio, dateFormatter);
+                LocalDate fechaFin = LocalDate.parse(fecha_fin, dateFormatter);
+                LocalTime horaInicio = LocalTime.parse(hora_inicio, timeFormatter);
+                LocalTime horaFin = LocalTime.parse(hora_fin, timeFormatter);
+                LocalDate hoy = LocalDate.now();
+
+                if (fechaInicio.isBefore(hoy)) {
+                    erroresEvento.put("fechaInicio", "Error: la fecha de inicio no puede ser antes de hoy");
+                    // Error: la fecha de inicio no puede ser antes de hoy
+                }
+
+                if (fechaFin.isBefore(fechaInicio)) {
+                    erroresEvento.put("fechaFin", "Error: la fecha de finalización no puede ser antes de la fecha de inicio");
+                    // Error: la fecha de finalización no puede ser antes de la fecha de inicio
+                }
+                DayOfWeek dayOfWeekInicio = fechaInicio.getDayOfWeek();
+                DayOfWeek dayOfWeekFin = fechaFin.getDayOfWeek();
+
+                String diaInicioEsperado = opcionesDias.split("-")[0];  // "Lunes" en "Lunes-Miércoles"
+                String diaFinEsperado = opcionesDias.contains("-") ? opcionesDias.split("-")[1] : diaInicioEsperado; // "Miércoles" en "Lunes-Miércoles", o "Lunes" en "Lunes"
+                String diaInicio = null;
+                String diaFin = null;
+                switch (diaInicioEsperado){
+                    case "Lunes":
+                        diaInicio = "MONDAY";
+                        break;
+                    case "Martes":
+                        diaInicio = "TUESDAY";
+                        break;
+                    case "Miércoles":
+                        diaInicio = "WEDNESDAY";
+                        break;
+                    case "Jueves":
+                        diaInicio = "THURSDAY";
+                        break;
+                    case "Viernes":
+                        diaInicio = "FRIDAY";
+                        break;
+                }
+                switch (diaFinEsperado){
+                    case "Lunes":
+                        diaFin = "MONDAY";
+                        break;
+                    case "Martes":
+                        diaFin = "TUESDAY";
+                        break;
+                    case "Miércoles":
+                        diaFin = "WEDNESDAY";
+                        break;
+                    case "Jueves":
+                        diaFin = "THURSDAY";
+                        break;
+                    case "Viernes":
+                        diaFin = "FRIDAY";
+                        break;
+                }
+
+                if (!dayOfWeekInicio.toString().equals(diaInicio)) {
+                    erroresEvento.put("errorFechaInicio", "Error: la fecha de inicio no coincide con el día esperado");
+                    // Error: la fecha de inicio no coincide con el día esperado
+                }
+
+                if (!dayOfWeekFin.toString().equals(diaFin)) {
+                    erroresEvento.put("errorFechaFin", "Error: la fecha de fin no coincide con el día esperado");
+                    // Error: la fecha de fin no coincide con el día esperado
+                }
+                if (horaInicio.isAfter(horaFin)) {
+                    erroresEvento.put("errorHoraFin", "Error: la hora de inicio no puede ser después de la hora de fin");
+                    // Error: la hora de inicio no puede ser después de la hora de fin
+                }
+
+                if (!erroresEvento.isEmpty()) {
+                    ArrayList<ProfesoresEvento> listaProfesores = eventoDao.listarProfesores();
+                    request.setAttribute("lista", listaProfesores);
+                    request.setAttribute("erroresEvento", erroresEvento);
+                    request.setAttribute("nombreEvento", nombreEvento);
+                    request.setAttribute("descripcionEvento", descripcionEvento);
+                    request.setAttribute("lugar", lugar);
+                    request.setAttribute("nombreProfesor", idProfesor);
+                    request.setAttribute("frecuencia", idFrecuencia);
+                    request.setAttribute("fecha_inicio", fecha_inicio);
+                    request.setAttribute("fecha_fin", fecha_fin);
+                    request.setAttribute("hora_inicio", hora_inicio);
+                    request.setAttribute("hora_fin", hora_fin);
+                    request.setAttribute("cantidadVacantes", cantidadVacantes);
+                    request.setAttribute("materiales", materiales);
+
+                    if (idFrecuencia.equals("2")){
+                        request.setAttribute("opcionesDias", opcionesDias);
+                    }else{
+                        request.setAttribute("opcionesDias1", opcionesDias);
+                    }
+                    request.getRequestDispatcher("WEB-INF/Coordinadora/creacionEvento.jsp").forward(request, response);
+                    return;
+                }
+
+                //Se establece la información en el objeto evento
                 EventoB eventoB0 = new EventoB();
                 eventoB0.setFoto(fileInputStream);
                 eventoB0.setNombre(nombreEvento);
