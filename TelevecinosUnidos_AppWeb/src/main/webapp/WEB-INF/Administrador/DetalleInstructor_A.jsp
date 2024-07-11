@@ -149,7 +149,7 @@
                 <div class="bar" data-label="Correo">robertbala@gmail.com</div>
                 <div class="bar" data-label="Celular">917816612</div>
                 <a href="ListaInstructores_A.html" class="button regresar">Regresar</a>
-                <a href="correoparaInstrA.html"><button type="button" class="button sendCorreo">Enviar correo</button></a>
+                <!--<a href="correoparaInstrA.html"><button type="button" class="button sendCorreo">Enviar correo</button></a>-->
                 <button class="button banear btn-banear">Remover</button>
                 <div id="popup1" class="popup1" >
                     <div class="popup_contenido1">

@@ -195,7 +195,7 @@ public class SerenazgoDao extends BaseDao {
 
     public void registrarSerenazgo(SerenazgoB serenazgoB) throws NoSuchAlgorithmException {
         String tempPassword = GeneraContrasena.generateTemporaryPassword();
-        String hashedPassword = GeneraContrasena.hashPassword(tempPassword);
+
 
 
 
@@ -207,7 +207,7 @@ public class SerenazgoDao extends BaseDao {
             pstmt.setString(3,serenazgoB.getUsuario().getDni());
             pstmt.setString(4,serenazgoB.getUsuario().getDireccion());
             pstmt.setString(5,serenazgoB.getUsuario().getCorreo());
-            pstmt.setString(6,hashedPassword);
+            pstmt.setString(6,tempPassword);
             pstmt.setInt(7,serenazgoB.getUsuario().getPreguntasFrecuentes_idTable2());
             pstmt.setInt(8,serenazgoB.getUsuario().getIdRol());
             pstmt.setInt(9,serenazgoB.getUsuario().getIsBan());
@@ -251,7 +251,7 @@ public class SerenazgoDao extends BaseDao {
 
         //mandamos el correo donde se le indica que es serenazgo
         EnviarEmail enviarEmail = new EnviarEmail();
-        enviarEmail.sendEmail(serenazgoB.getUsuario().getCorreo(), tempPassword);
+        enviarEmail.sendEmail(serenazgoB.getUsuario().getCorreo(),tempPassword);
 
 
     }
