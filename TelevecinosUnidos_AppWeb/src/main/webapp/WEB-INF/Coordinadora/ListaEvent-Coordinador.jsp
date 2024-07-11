@@ -4,7 +4,10 @@
 <%@ page import="org.example.televecinosunidos_appweb.model.beans.EventoB" %>
 <% ArrayList<EventoB> lista = (ArrayList<EventoB>) request.getAttribute("lista"); %>
 <jsp:useBean id="textoBuscarEvento" scope="request" type="java.lang.String" class="java.lang.String"/>
-
+<%
+    int paginaActual = (int) request.getAttribute("paginaActual");
+    int totalPaginas = (int) request.getAttribute("totalPaginas");
+%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -61,6 +64,13 @@
             font-size: 24px;
             cursor: pointer;
             color: rgb(0, 0, 0);
+
+        }
+        .btn-sm-square {
+            width: 20px;
+            height: 20px;
+            padding: 0;
+            text-align: center;
         }
     </style>
     <!-- Tempus Dominus CSS (si necesario) -->
@@ -157,57 +167,59 @@
             <div class="table-responsive">
                 <table id="eventosTable" class="table table-striped table-hover" style="background-color: transparent;">
                     <thead>
-                    <tr>
+                    <tr class="form-text">
                         <th scope="col">Nombre</th>
                         <th scope="col">Fecha de inicio</th>
                         <th scope="col">Estado</th>
                         <th scope="col">Frecuencia</th>
                         <th scope="col"></th>
-
                     </tr>
                     </thead>
                     <tbody>
-                    <% for(EventoB eventoB : lista){ %>
+                    <% for(EventoB eventoB : lista) { %>
                     <tr>
                         <td><%= eventoB.getNombre() %></td>
                         <td><%= eventoB.getFecha_inicio() %></td>
                         <td><%= eventoB.getEstadoString() %></td>
                         <td><%= eventoB.getFrecuenciaString() %></td>
-                        <!--Desplegable-->
                         <td>
-                            <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                        <% if ("Disponible".equals(eventoB.getEstadoString())) { %>
-                                        <li><a class="dropdown-item"  onclick="viewFunction(<%=eventoB.getidEvento()%>)">Ver</a></li>
-                                        <li><a class="dropdown-item"  onclick="editFunction(<%=eventoB.getidEvento()%>)">Editar</a></li>
-                                        <li><a class="dropdown-item"  onclick="confirmDelete(<%=eventoB.getidEvento()%>)">Borrar</a></li>
-                                        <% } else { %>
-                                        <li><a class="dropdown-item"  onclick="viewFunction(<%=eventoB.getidEvento()%>)">Ver</a></li>
-                                        <% } %>
-                                    </ul>
-                                </button>
-                            </div>
+                            <% if ("Disponible".equals(eventoB.getEstadoString())) { %>
+                            <a onclick="viewFunction(<%=eventoB.getidEvento()%>)">
+                                <button type="button" class="btn btn-primary btn-sm-square m-1"><i class="fas fa-eye fa-xs"></i></button>
+                            </a>
+                            <a onclick="editFunction(<%=eventoB.getidEvento()%>)">
+                                <button type="button" class="btn btn-success btn-sm-square m-1"><i class="fas fa-pencil-alt fa-xs"></i></button>
+                            </a>
+                            <a onclick="confirmDelete(<%=eventoB.getidEvento()%>)">
+                                <button type="button" class="btn btn-danger btn-sm-square m-1"><i class="fas fa-trash-alt fa-xs"></i></button>
+                            </a>
+                            <% } else { %>
+                            <a onclick="viewFunction(<%=eventoB.getidEvento()%>)">
+                                <button type="button" class="btn btn-primary btn-sm-square m-1" ><i class="fas fa-eye fa-xs"></i></button>
+                            </a>
+                            <button type="button" class="btn btn-success btn-sm-square m-1" disabled><i class="fas fa-pencil-alt fa-xs"></i></button>
+                            <button type="button" class="btn btn-danger btn-sm-square m-1" disabled><i class="fas fa-trash-alt fa-xs"></i></button>
+                            <% } %>
                         </td>
                     </tr>
                     <% } %>
                     </tbody>
                 </table>
-            </div>
-            <div  style="display: flex; justify-content: center; align-items: center;">
-                <section class="paginacion" >
-                    <ul style="list-style: none;padding: 0;margin: 0;display: flex;">
-                        <div style="background-color: white ; padding: 5px; margin:10px">
-                            <li style="margin: 0 5px;"><a class="link-opacity-50-hover" href="#" class="active">1</a></li>
-                        </div>
-                        <div style="background-color:white ; padding: 5px;margin:10px">
-                            <li style="margin: 0 5px;"><a class="link-opacity-50-hover" href="#" class="active">2</a></li>
-                        </div>
-                        <div style="background-color: white ; padding: 5px;margin:10px">
-                            <li style="margin: 0 5px;"><a class="link-opacity-50-hover" href="#" class="active">3</a></li>
-                        </div>
+                <nav>
+                    <ul class="pagination">
+                        <li class="page-item <%= paginaActual == 1 ? "disabled" : "" %>">
+                            <a class="page-link" href="<%=request.getContextPath()%>/CoordinadorServlet?action=lista&page=<%= paginaActual - 1 %>">Anterior</a>
+                        </li>
+                        <% for(int i = 1; i <= totalPaginas; i++) { %>
+                        <li class="page-item <%= i == paginaActual ? "active" : "" %>">
+                            <a class="page-link" href="<%=request.getContextPath()%>/CoordinadorServlet?action=lista&page=<%= i %>"><%= i %></a>
+                        </li>
+                        <% } %>
+                        <li class="page-item <%= paginaActual == totalPaginas ? "disabled" : "" %>">
+                            <a class="page-link" href="<%=request.getContextPath()%>/CoordinadorServlet?action=lista&page=<%= paginaActual + 1 %>">Siguiente</a>
+                        </li>
                     </ul>
-                </section>
+                </nav>
             </div>
         </div>
 

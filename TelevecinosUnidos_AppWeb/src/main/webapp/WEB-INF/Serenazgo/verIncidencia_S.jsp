@@ -144,11 +144,11 @@
                         <label for="imagenAcc" class="form-label" style="color:#023047;"><b>Foto del incidente</b></label>
                         <div class="bg-light rounded h-100 p-4">
                             <div class="mb-3">
-                                <img src="img/accidente.jpg" class="img-responsive" alt="" style="width: 100%; height: auto;"  />
+                                <img src="ImagenServlet?idImagenIncidencia=<%=incidencia.getIdIncidencias()%>" class="img-responsive" alt="" style="width: 100%; height: auto;"  />
                             </div>
                         </div>
 
-                        <%if(incidencia.getSerenazgo_idSerenazgo()==0){%>
+                        <%if(incidencia.getSerenazgo_idSerenazgo()!=0 || incidencia.getEstadosIncidencia_idEstadoIncidencia()==1){%>
                             <a href="<%=request.getContextPath()%>/SerenazgoServlet?action=gestionar_Incidencia_S&id=<%=incidencia.getIdIncidencias()%>">
                                 <div class="BotonIrIncidencias">
                                     <button type="button" class="btn btn-lg btn-primary m-2" style="background-color: #146951; border-color: #146951; color: #ffffff;">Gestionar</button>

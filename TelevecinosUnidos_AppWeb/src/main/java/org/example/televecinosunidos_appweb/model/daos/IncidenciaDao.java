@@ -3,8 +3,12 @@ package org.example.televecinosunidos_appweb.model.daos;
 import org.example.televecinosunidos_appweb.model.beans.IncidenciasB;
 import org.example.televecinosunidos_appweb.model.beans.UsuarioB;
 
-import java.sql.*;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.List;
+import java.sql.*;
+
 
 public class IncidenciaDao extends BaseDao{
     public ArrayList<IncidenciasB> listarIncidencias() {
@@ -35,6 +39,7 @@ public class IncidenciaDao extends BaseDao{
                 incidenciaB.setUsuario_idUsuario(rs.getInt("Usuario_idUsuario"));
                 incidenciaB.setIncidenciaPersonal(rs.getInt("incidenciaPersonal"));
                 incidenciaB.setNombrePersonalTurno(rs.getString("nombreDelPersonalEnTurno"));
+                incidenciaB.setNombreFoto(rs.getString("nombreFoto"));
                 listaIncidencias.add(incidenciaB);
 
                 switch (incidenciaB.getCriticidadIncidencia_idCriticidadIncidencia()){
@@ -161,7 +166,7 @@ public class IncidenciaDao extends BaseDao{
                     incidenciasB.setUsuario_idUsuario(rs.getInt("Usuario_idUsuario"));
                     incidenciasB.setIncidenciaPersonal(rs.getInt("incidenciaPersonal"));
                     incidenciasB.setReferencia(rs.getString("referencia"));
-
+                    incidenciasB.setNombreFoto(rs.getString("nombreFoto"));
                 }
                 //
                 switch (incidenciasB.getCriticidadIncidencia_idCriticidadIncidencia()){
@@ -583,5 +588,84 @@ public class IncidenciaDao extends BaseDao{
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+
+    public ArrayList<Double> DashboardTabla1234(int i) {
+        ArrayList<Integer> tabla1 = new ArrayList<>();
+
+        String sql = "SELECT " +
+                "SUM(CASE WHEN i.EstadosIncidencia_idEstadosIncidencia = 1 THEN 1 ELSE 0 END) AS pendientes, " +
+                "SUM(CASE WHEN i.EstadosIncidencia_idEstadosIncidencia = 2 THEN 1 ELSE 0 END) AS en_curso, " +
+                "SUM(CASE WHEN i.EstadosIncidencia_idEstadosIncidencia = 3 THEN 1 ELSE 0 END) AS cancelado, " +
+                "SUM(CASE WHEN i.EstadosIncidencia_idEstadosIncidencia = 4 THEN 1 ELSE 0 END) AS rechazado, " +
+                "SUM(CASE WHEN i.EstadosIncidencia_idEstadosIncidencia = 5 THEN 1 ELSE 0 END) AS procesado " +
+                "FROM televecinosdb.incidencias i " +
+                "JOIN televecinosdb.tipoincidencia ti ON i.TipoIncidencia_idTipoIncidencia = ti.idTipoIncidencia " +
+                "WHERE ti.idTipoIncidencia = " + i;
+
+
+
+        try (Connection connection = getConnection();
+             Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            if(rs.next()){
+                tabla1.add(rs.getInt(1));
+                tabla1.add(rs.getInt(2));
+                tabla1.add(rs.getInt(3));
+                tabla1.add(rs.getInt(4));
+                tabla1.add(rs.getInt(5));
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        return calcularPorcentajes(tabla1);
+    }
+
+    public ArrayList<Double> calcularPorcentajes(ArrayList<Integer> numeros) {
+        //double sumaTotal = numeros.stream().mapToInt(Integer::intValue).sum();
+        double sumaTotal = 0;
+        for(int i=0;i<numeros.size();i++){
+            sumaTotal += numeros.get(i);
+        }
+
+        ArrayList<Double> porcentajes = new ArrayList<>();
+        for (int i = 0; i < numeros.size(); i++) {
+            double porcentaje = (numeros.get(i) / sumaTotal) * 100.0;
+            BigDecimal porcentajeRedondeado = new BigDecimal(porcentaje).setScale(2, RoundingMode.HALF_UP);
+            porcentajes.add(porcentajeRedondeado.doubleValue());
+        }
+        return porcentajes;
+    }
+
+    public ArrayList<Integer> DashboardTabla7(int i) {
+        ArrayList<Integer> tabla1 = new ArrayList<>();
+        String sql = "SELECT " +
+                "u.idUrbanizacion, " +
+                "COUNT(i.idIncidencias) AS cantidad_incidencias " +
+                "FROM " +
+                "televecinosdb.urbanizacion u " +
+                "LEFT JOIN " +
+                "televecinosdb.incidencias i ON u.idUrbanizacion = i.urbanizacion_idUrbanizacion " +
+                "AND i.TipoIncidencia_idTipoIncidencia = " + i +"\n" +
+                "GROUP BY " +
+                "u.idUrbanizacion " +
+                "ORDER BY " +
+                "u.idUrbanizacion;";
+        try (Connection connection = getConnection();
+             Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while(rs.next()){
+                tabla1.add(rs.getInt(2));
+
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return tabla1;
     }
 }
