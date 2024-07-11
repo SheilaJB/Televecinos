@@ -2,6 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%@ page import="org.example.televecinosunidos_appweb.model.dto.SerenazgoDTO" %>
+<%@ page import="org.example.televecinosunidos_appweb.model.beans.IncidenciasB" %>
 <jsp:useBean id="serenazgoLogeado" scope="session" type="SerenazgoDTO" class="org.example.televecinosunidos_appweb.model.dto.SerenazgoDTO" />
 <jsp:useBean id="incidencia" scope="request" type="org.example.televecinosunidos_appweb.model.beans.IncidenciasB"/>
 
@@ -130,8 +131,12 @@
                         <div class="rounded h-100 p-4" style=" background-color: #ffb703;">
                             <!---Descripción de la incidencia-->
                             <div class="mb-3">
-                                <label for="descripcionIncidencia" class="form-label" style="color:#023047;"><b>Ingrese una descripción de la solución a dar a la incidencia:</b></label>
-                                <input type="text" id="nombre" name="solucionADar" class="form-control" placeholder="Escribir una breve descripción">
+                                <label class="form-label" style="color:#023047;"><b>Ingrese una descripción de la solución a dar a la incidencia:</b></label>
+                                <% if(incidencia.getSolucionADar() != null){%>
+                                    <input type="text" id="nombre" name="solucionADar" class="form-control" value="<%=incidencia.getSolucionADar()%>">
+                                <%}else{%>
+                                    <input type="text" id="nombre" name="solucionADar" class="form-control" placeholder="Escribir una breve descripción">
+                                <%}%>
                             </div>
                         </div>
 
@@ -147,22 +152,40 @@
                             </div>
 
                             <!----Criticidad de la incidencia----->
-                            <label class="form-label" style="color:#023047;"><b>Criticidad:</b></label>
-                            <select name="criticidadIncidencia" class="form-select mb-3" aria-label="Default select example" onchange="mostrarOpciones()">
-                                <option selected>Seleccione la criticidad de la incidencia</option>
-                                <option value="1">Baja</option>
-                                <option value="2">Media</option>
-                                <option value="3">Alta</option>
-                            </select>
+                            <label for="criticidadd" class="form-label" style="color:#023047;"><b>Criticidad:</b></label>
+                            <% if(incidencia.getEstadosIncidencia_idEstadoIncidencia() == 2){%>
+                                <select id="criticidadd" name="criticidadIncidencia" class="form-select mb-3" aria-label="Default select example" >
+                                    <option value ="" <%=incidencia.getCriticidadIncidencia_idCriticidadIncidencia() == 0 ? "selected" : "" %>>Seleccione la criticidad de la incidencia</option>
+                                    <option value="1" <%=incidencia.getCriticidadIncidencia_idCriticidadIncidencia() == 1 ? "selected" : "" %>>Baja</option>
+                                    <option value="2" <%=incidencia.getCriticidadIncidencia_idCriticidadIncidencia() == 2 ? "selected" : "" %>>Media</option>
+                                    <option value="3" <%=incidencia.getCriticidadIncidencia_idCriticidadIncidencia() == 3 ? "selected" : "" %>>Alta</option>
+                                </select>
+                            <%}else{%>
+                                <select id="criticidadd" name="criticidadIncidencia" class="form-select mb-3" aria-label="Default select example" onchange="mostrarOpciones()">
+                                    <option selected>Seleccione la criticidad de la incidencia</option>
+                                    <option value="1">Baja</option>
+                                    <option value="2">Media</option>
+                                    <option value="3">Alta</option>
+                                </select>
+                            <%}%>
+
                             <!----Personal para la incidencia----->
                             <label  class="form-label" style="color:#023047;"><b>Personal:</b></label>
-                            <select name="personalRequerido" class="form-select mb-3" aria-label="Default select example" onchange="mostrarOpciones()">
-                                <option selected>Seleccione el personal para la incidencia</option>
-                                <option value="1">Ambulancia</option>
-                                <option value="2">Policia</option>
-                                <option value="3">Bomberos</option>
-                            </select>
-
+                            <% if(incidencia.getEstadosIncidencia_idEstadoIncidencia()==2){%>
+                                <select name="personalRequerido" class="form-select mb-3" aria-label="Default select example" >
+                                    <option value=""  <%= incidencia.getPersonalRequerido() == 0 ? "selected" : "" %>>Seleccione el personal para la incidencia</option>
+                                    <option value="1" <%= incidencia.getPersonalRequerido() == 1 ? "selected" : "" %>>Ambulancia</option>
+                                    <option value="2" <%= incidencia.getPersonalRequerido() == 2 ? "selected" : "" %>>Policia</option>
+                                    <option value="3" <%= incidencia.getPersonalRequerido() == 3 ? "selected" : "" %>>Bomberos</option>
+                                </select>
+                            <%}else{%>
+                                <select name="personalRequerido" class="form-select mb-3" aria-label="Default select example" onchange="mostrarOpciones()">
+                                    <option selected>Seleccione el personal para la incidencia</option>
+                                    <option value="1">Ambulancia</option>
+                                    <option value="2">Policia</option>
+                                    <option value="3">Bomberos</option>
+                                </select>
+                            <%}%>
                             <div id="inputContainer" style="display: none;">
                                 <input type="text" class="form-control" id="nombrePersonal" placeholder="">
                             </div>
@@ -193,22 +216,42 @@
                     <div class="col-sm-12 col-xl-6">
                         <div class="bg-light rounded h-100 p-4">
                             <!----Movilidad de la incidencia----->
+                            <% if(incidencia.getEstadosIncidencia_idEstadoIncidencia()==2){%>
                             <label for="movilidad" class="form-label" style="color:#023047;"><b>Movilidad:</b></label>
-                            <select id="movilidad" name="movilidadIncidencia" class="form-select mb-3" aria-label="Default select example" onchange="mostrarOpciones()">
-                                <option selected>Seleccione la movilidad para la incidencia</option>
-                                <option value="1">Bicicleta</option>
-                                <option value="2">A pie</option>
-                                <option value="3">Canino</option>
-                                <option value="3">Vehículo</option>
-                            </select>
+                                <select id="movilidad" name="movilidadIncidencia" class="form-select mb-3" aria-label="Default select example" onchange="mostrarOpciones()">
+                                    <option value=""  <%= incidencia.getTipoMovilidadRequerido()  == 0 ? "selected" : "" %>>Seleccione la movilidad para la incidencia</option>
+                                    <option value="1" <%= incidencia.getTipoMovilidadRequerido()  == 1 ? "selected" : "" %>>Bicicleta</option>
+                                    <option value="2" <%= incidencia.getTipoMovilidadRequerido()  == 2 ? "selected" : "" %>>A pie</option>
+                                    <option value="3" <%= incidencia.getTipoMovilidadRequerido()  == 3 ? "selected" : "" %>>Canino</option>
+                                    <option value="4" <%= incidencia.getTipoMovilidadRequerido()  == 4 ? "selected" : "" %>>Vehículo</option>
+                                </select>
+                            <%}else{%>
+                                <select id="movilidad" name="movilidadIncidencia" class="form-select mb-3" aria-label="Default select example" onchange="mostrarOpciones()">
+                                    <option selected>Seleccione la movilidad para la incidencia</option>
+                                    <option value="1">Bicicleta</option>
+                                    <option value="2">A pie</option>
+                                    <option value="3">Canino</option>
+                                    <option value="3">Vehículo</option>
+                                </select>
+                            <%}%>
+
+
                             <!----Estado de la incidencia----->
                             <label  class="form-label" style="color:#023047;"><b>Estado de la incidencia:</b></label>
-                            <select name="estadoIncidencia" class="form-select mb-3" aria-label="Default select example" onchange="mostrarOpciones()">
-                                <option selected>Seleccione el estado de la incidencia</option>
-                                <option value="2">En curso</option>
-                                <option value="5">Procesado</option>
+                            <% if(incidencia.getEstadosIncidencia_idEstadoIncidencia()==2){%>
+                                <select name="estadoIncidencia" class="form-select mb-3" aria-label="Default select example" onchange="mostrarOpciones()">
+                                    <option value=""  <%= incidencia.getEstadosIncidencia_idEstadoIncidencia() == 0 ? "selected" : "" %>>Seleccione el estado de la incidencia</option>
+                                    <option value="2" <%= incidencia.getEstadosIncidencia_idEstadoIncidencia() == 2 ? "selected" : "" %>>En curso</option>
+                                    <option value="5" <%= incidencia.getEstadosIncidencia_idEstadoIncidencia() == 5 ? "selected" : "" %>>Procesado</option>
+                                </select>
+                            <%}else{%>
+                                <select name="estadoIncidencia" class="form-select mb-3" aria-label="Default select example" onchange="mostrarOpciones()">
+                                    <option selected>Seleccione el estado de la incidencia</option>
+                                    <option value="2">En curso</option>
+                                    <option value="5">Procesado</option>
+                                </select>
+                            <%}%>
 
-                            </select>
 
 
                         </div>

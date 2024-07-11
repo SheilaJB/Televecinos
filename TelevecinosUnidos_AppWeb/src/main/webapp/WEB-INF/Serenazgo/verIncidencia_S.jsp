@@ -148,7 +148,7 @@
                             </div>
                         </div>
 
-                        <%if(incidencia.getSerenazgo_idSerenazgo()!=0 || incidencia.getEstadosIncidencia_idEstadoIncidencia()==1){%>
+                        <%if(incidencia.getSerenazgo_idSerenazgo()==0 || incidencia.getEstadosIncidencia_idEstadoIncidencia() <=2){%>
                             <a href="<%=request.getContextPath()%>/SerenazgoServlet?action=gestionar_Incidencia_S&id=<%=incidencia.getIdIncidencias()%>">
                                 <div class="BotonIrIncidencias">
                                     <button type="button" class="btn btn-lg btn-primary m-2" style="background-color: #146951; border-color: #146951; color: #ffffff;">Gestionar</button>
