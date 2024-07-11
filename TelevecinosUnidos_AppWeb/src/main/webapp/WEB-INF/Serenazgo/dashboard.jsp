@@ -44,6 +44,7 @@
     <link href="css/style_serenazgo.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+
 </head>
 <body>
 <div class="container-xxl position-relative bg-white d-flex p-0">
@@ -72,7 +73,7 @@
         <!-- Tabla de resumen  -->
         <div class="container-fluid pt-4 px-4 " style="padding: 20px;">
             <div class="row g-4">
-                <div class="col-sm-12 col-xl-6 w-25 h-40" >
+                <div class="col-sm-12 col-xl-4" >
                     <div class="bg-light text-center rounded p-4" style="border: 1px solid black; box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);">
                         <div class="d-flex align-items-center justify-content-between mb-4">
                             <h6 class="mb-0">Seguridad pública</h6>
@@ -80,7 +81,7 @@
                         <canvas id="type-incidents-pie-1"></canvas>
                     </div>
                 </div>
-                <div class="col-sm-12 col-xl-6 w-25 h-40">
+                <div class="col-sm-12 col-xl-4 ">
                     <div class="bg-light text-center rounded p-4" style="border: 1px solid black; box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);">
                         <div class="d-flex align-items-center justify-content-between mb-4">
                             <h6 class="mb-0">Emergencia médica</h6>
@@ -88,7 +89,7 @@
                         <canvas id="type-incidents-pie-2"></canvas>
                     </div>
                 </div>
-                <div class="col-sm-12 col-xl-6 w-25 h-40">
+                <div class="col-sm-12 col-xl-4 ">
                     <div class="bg-light text-center rounded p-4" style="border: 1px solid black; box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);">
                         <div class="d-flex align-items-center justify-content-between mb-4">
                             <h6 class="mb-0">Infraestructura</h6>
@@ -96,12 +97,24 @@
                         <canvas id="type-incidents-pie-3"></canvas>
                     </div>
                 </div>
-                <div class="col-sm-12 col-xl-6 w-25 h-40">
+            </div>
+            <div class="row g-4" style="margin-top: 10px;">
+                <div class="col-sm-12 col-xl-4 " style="margin-top: 35px;">
                     <div class="bg-light text-center rounded p-4" style="border: 1px solid black; box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);">
                         <div class="d-flex align-items-center justify-content-between mb-4">
                             <h6 class="mb-0">Otro</h6>
                         </div>
                         <canvas id="type-incidents-pie-4"></canvas>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-xl-8">
+                    <div class="bg-light text-center rounded p-4" style="border: 1px solid black; box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);">
+                        <div class="d-flex align-items-center justify-content-between mb-4">
+                            <h6 class="mb-0">Estado de las incidencias</h6>
+
+                            <a href="<%=request.getContextPath()%>/SerenazgoServlet?action=listaIncidencias_S">Más detalles</a>
+                        </div>
+                        <canvas id="tipo-incidencias-dia"></canvas>
                     </div>
                 </div>
             </div>
@@ -120,7 +133,7 @@
             <button type="button" class="btn btn-primary posicionBotonFiltrar2" onclick="filtrar()" style="padding: 10px;"><b>Filtrar</b></button>
         </div>
         -->
-        <!-- Tabla de tipos de incidencias -->
+        <!-- Tabla de tipos de incidencias
         <div class="container-fluid pt-4 px-4">
             <div class="row g-4">
                 <div class="col-sm-12 col-xl-6">
@@ -132,19 +145,10 @@
                         <canvas id="type-incidents-bar"></canvas>
                     </div>
                 </div>
-                <div class="col-sm-12 col-xl-6">
-                    <div class="bg-light text-center rounded p-4" style="border: 1px solid black; box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);">
-                        <div class="d-flex align-items-center justify-content-between mb-4">
-                            <h6 class="mb-0">Estado de las incidencias</h6>
 
-                            <a href="listaIncidencias_S.html">Más detalles</a>
-                        </div>
-                        <canvas id="status-incidents"></canvas>
-                    </div>
-                </div>
             </div>
         </div>
-
+        -->
 
 
         <div class="container-fluid pt-4 px-4">
@@ -274,7 +278,7 @@
         });
 
 
-        // Tipos de incidencias - Chart
+        /* Tipos de incidencias - Chart
         var ctx1 = $("#type-incidents-bar").get(0).getContext("2d");
         var myChart1 = new Chart(ctx1, {
             type: "bar",
@@ -305,43 +309,38 @@
             options: {
                 responsive: true
             }
-        });
+        });*/
         // Estados de incidencias - Chart
-        var ctx2 = $("#status-incidents").get(0).getContext("2d");
+        var ctx2 = $("#tipo-incidencias-dia").get(0).getContext("2d");
         var myChart2 = new Chart(ctx2, {
             type: "line",
             data: {
                 labels: ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sábado", "Domingo"],
                 datasets: [{
-                    label: "Procesado",
+                    label: "Seguridad Pública",
                     data: [17, 26, 14, 21, 25, 14, 18],
                     backgroundColor: "rgba(42, 157, 143, 1)",
                     fill: false
                 },
                     {
-                        label: "Pendiente",
+                        label: "Emergencia Médica",
                         data: [22, 32, 18, 27, 31, 18, 23],
                         backgroundColor:"rgba(233, 196, 106, 1)",
                         fill: false
                     },
                     {
-                        label: "En curso",
+                        label: "Infraestructura y Servicios Públicos",
                         data: [26, 39, 21, 32, 37, 22, 28],
                         backgroundColor: "rgba(38, 70, 83, 1)",
                         fill: false
                     },
                     {
-                        label: "Cancelado",
+                        label: "Otro",
                         data: [13, 20, 11, 16, 18, 11, 14],
                         backgroundColor:"rgba(231, 111, 81, 1)",
                         fill: false
                     },
-                    {
-                        label: "Rechazado",
-                        data: [9, 13, 7, 11, 12, 7, 9],
-                        backgroundColor: "rgba(244, 162, 97, 1)",
-                        fill: false
-                    }
+
                 ]
             },
             options: {
@@ -382,9 +381,7 @@
                     data: tabla1,//cambiar
                 }]
             },
-            options: {
-                responsive: true
-            }
+
         });
         // Tipo 2
         var ctx4 = $("#type-incidents-pie-2").get(0).getContext("2d");
@@ -500,68 +497,6 @@
                 responsive: true
             }
         });
-        /*
-            // Single Line Chart
-            var ctx7 = $("#line-chart").get(0).getContext("2d");
-            var myChart7 = new Chart(ctx7, {
-                type: "line",
-                data: {
-                    labels: [50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150],
-                    datasets: [{
-                        label: "Salse",
-                        fill: false,
-                        backgroundColor: "rgba(0, 156, 255, .3)",
-                        data: [7, 8, 8, 9, 9, 9, 10, 11, 14, 14, 15]
-                    }]
-                },
-                options: {
-                    responsive: true
-                }
-            });
-            // Single Bar Chart
-            var ctx8 = $("#bar-chart").get(0).getContext("2d");
-            var myChart8 = new Chart(ctx8, {
-                type: "bar",
-                data: {
-                    labels: ["Italy", "France", "Spain", "USA", "Argentina"],
-                    datasets: [{
-                        backgroundColor: [
-                            "rgba(0, 156, 255, .7)",
-                            "rgba(0, 156, 255, .6)",
-                            "rgba(0, 156, 255, .5)",
-                            "rgba(0, 156, 255, .4)",
-                            "rgba(0, 156, 255, .3)"
-                        ],
-                        data: [55, 49, 44, 24, 15]
-                    }]
-                },
-                options: {
-                    responsive: true
-                }
-            });
-            // Doughnut Chart
-            var ctx9 = $("#doughnut-chart").get(0).getContext("2d");
-            var myChart9 = new Chart(ctx9, {
-                type: "doughnut",
-                data: {
-                    labels: ["Italy", "France", "Spain", "USA", "Argentina"],
-                    datasets: [{
-                        backgroundColor: [
-                            "rgba(0, 156, 255, .7)",
-                            "rgba(0, 156, 255, .6)",
-                            "rgba(0, 156, 255, .5)",
-                            "rgba(0, 156, 255, .4)",
-                            "rgba(0, 156, 255, .3)"
-                        ],
-                        data: [55, 49, 44, 24, 15]
-                    }]
-                },
-                options: {
-                    responsive: true
-                }
-            });
-            */
-
     })(jQuery);
 
 
