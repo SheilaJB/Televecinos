@@ -2,6 +2,9 @@ package org.example.televecinosunidos_appweb.model.daos;
 
 import org.example.televecinosunidos_appweb.model.beans.IncidenciasB;
 import org.example.televecinosunidos_appweb.model.beans.UsuarioB;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
@@ -622,15 +625,20 @@ public class IncidenciaDao extends BaseDao{
     }
 
     public ArrayList<Double> calcularPorcentajes(ArrayList<Integer> numeros) {
-        double sumaTotal = numeros.stream().mapToInt(Integer::intValue).sum();
+        //double sumaTotal = numeros.stream().mapToInt(Integer::intValue).sum();
+        double sumaTotal = 0;
+        for(int i=0;i<numeros.size();i++){
+            sumaTotal += numeros.get(i);
+        }
+
         ArrayList<Double> porcentajes = new ArrayList<>();
         for (int i = 0; i < numeros.size(); i++) {
             double porcentaje = (numeros.get(i) / sumaTotal) * 100.0;
-            porcentajes.add(porcentaje);
+            BigDecimal porcentajeRedondeado = new BigDecimal(porcentaje).setScale(2, RoundingMode.HALF_UP);
+            porcentajes.add(porcentajeRedondeado.doubleValue());
         }
         return porcentajes;
     }
-
 
     public ArrayList<Integer> DashboardTabla7(int i) {
         ArrayList<Integer> tabla1 = new ArrayList<>();

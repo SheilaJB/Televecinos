@@ -365,11 +365,11 @@
             type: "pie",
             data: {
                 labels: [
-                    "Pendiente - " + tabla1[0] + "%",
-                    "En curso - " + tabla1[1] + "%",
-                    "Cancelado - " + tabla1[2] + "%",
-                    "Rechazado - " + tabla1[3] + "%",
-                    "Procesado - " + tabla1[4] + "%"
+                    "Pendiente: " + tabla1[0] + "%",
+                    "En curso: " + tabla1[1] + "%",
+                    "Cancelado: " + tabla1[2] + "%",
+                    "Rechazado: " + tabla1[3] + "%",
+                    "Procesado: " + tabla1[4] + "%"
                 ],
                 datasets: [{
                     backgroundColor: [
@@ -392,11 +392,11 @@
             type: "pie",
             data: {
                 labels: [
-                    "Pendiente - " + tabla1[0] + "%",
-                    "En curso - " + tabla1[1] + "%",
-                    "Cancelado - " + tabla1[2] + "%",
-                    "Rechazado - " + tabla1[3] + "%",
-                    "Procesado - " + tabla1[4] + "%"
+                    "Pendiente: " + tabla2[0] + "%",
+                    "En curso: " + tabla2[1] + "%",
+                    "Cancelado: " + tabla2[2] + "%",
+                    "Rechazado: " + tabla2[3] + "%",
+                    "Procesado: " + tabla2[4] + "%"
                 ],
                 datasets: [{
                     backgroundColor: [
@@ -419,11 +419,11 @@
             type: "pie",
             data: {
                 labels: [
-                    "Pendiente - " + tabla1[0] + "%",
-                    "En curso - " + tabla1[1] + "%",
-                    "Cancelado - " + tabla1[2] + "%",
-                    "Rechazado - " + tabla1[3] + "%",
-                    "Procesado - " + tabla1[4] + "%"
+                    "Pendiente: " + tabla3[0] + "%",
+                    "En curso: " + tabla3[1] + "%",
+                    "Cancelado: " + tabla3[2] + "%",
+                    "Rechazado: " + tabla3[3] + "%",
+                    "Procesado: " + tabla3[4] + "%"
                 ],
                 datasets: [{
                     backgroundColor: [
@@ -446,11 +446,11 @@
             type: "pie",
             data: {
                 labels: [
-                    "Pendiente - " + tabla1[0] + "%",
-                    "En curso - " + tabla1[1] + "%",
-                    "Cancelado - " + tabla1[2] + "%",
-                    "Rechazado - " + tabla1[3] + "%",
-                    "Procesado - " + tabla1[4] + "%"
+                    "Pendiente: " + tabla4[0] + "%",
+                    "En curso: " + tabla4[1] + "%",
+                    "Cancelado: " + tabla4[2] + "%",
+                    "Rechazado: " + tabla4[3] + "%",
+                    "Procesado: " + tabla4[4] + "%"
                 ],
                 datasets: [{
                     backgroundColor: [
