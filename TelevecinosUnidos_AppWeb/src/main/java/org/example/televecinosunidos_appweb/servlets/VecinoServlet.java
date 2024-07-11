@@ -304,9 +304,13 @@ public class VecinoServlet extends HttpServlet {
                     request.setAttribute("numeroContacto2", numeroContacto2);
                     request.setAttribute("ambulancia2", ambulanciaStr2);
                     request.setAttribute("nombreFoto", fileName2);
+
+                    request.setAttribute("incidenciaB", incidencia2);
+
                     request.getRequestDispatcher("WEB-INF/Vecino/actualizarIncidencia_V.jsp").forward(request, response);
                     return;
                 }
+
 
                 int incidenciaPersonal2 = Integer.parseInt(incidenciaPersonalStr2);
                 int ambulancia2 = Integer.parseInt(ambulanciaStr2);
