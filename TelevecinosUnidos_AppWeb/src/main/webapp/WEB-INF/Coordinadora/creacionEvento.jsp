@@ -133,7 +133,7 @@
                             <!---Descripción del evento-->
                             <div class="mb-3" class="campo ${not empty erroresEvento ? 'error-div' : ''}">
                                 <label for="descripcionEvento" class="form-label" style="color:#023047;"><b>Ingrese una descripción del evento:</b></label>
-                                <input class="form-control" id="descripcionEvento" type="text" placeholder="Escribir una breve descripción" name="descripcionEvento" required value="${descripcionEvento}" class="campo"></input>
+                                <textarea class="form-control" id="descripcionEvento" type="text" placeholder="Escribir una breve descripción" name="descripcionEvento" required class="campo">${descripcionEvento}</textarea>
                             </div>
                             <!---Nombre del coordinador-->
                             <div class="mb-3">

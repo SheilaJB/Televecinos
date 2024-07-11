@@ -96,9 +96,9 @@
                     <div class="col-sm-12">
                         <div class="rounded h-100 p-4" style="background-color: #ffb703;">
                             <!---Nombre del evento-->
-                            <div class="mb-3">
+                            <div class="mb-3" class="campo ${not empty erroresEvento ? 'error-div' : ''}">
                                 <label for="nombre" class="form-label" style="color:#023047;"><b>Ingrese un nombre del evento:</b></label>
-                                <input type="text" class="form-control" id="nombre" placeholder="Escribir" name="nombre" value="<%=evento.getNombre()%>" required>
+                                <input type="text" class="form-control" id="nombre" placeholder="Escribir" name="nombre"  value="${nombreEvento}" required>
                             </div>
                             <!---Descripción del evento-->
                             <div class="mb-3">

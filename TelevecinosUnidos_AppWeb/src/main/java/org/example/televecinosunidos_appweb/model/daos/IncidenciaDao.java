@@ -157,6 +157,7 @@ public class IncidenciaDao extends BaseDao{
                     incidenciasB.setFecha(rs.getString("fecha"));
                     incidenciasB.setLugarExacto(rs.getString("lugarExacto"));
                     incidenciasB.setUrbanizacion(rs.getString("urbanizacion_idUrbanizacion"));
+                    incidenciasB.setReferencia(rs.getString("referencia"));
                     incidenciasB.setAmbulancia(rs.getInt("ambulancia"));
                     incidenciasB.setNumeroContacto(rs.getString("numeroContacto"));
                     incidenciasB.setCriticidadIncidencia_idCriticidadIncidencia(rs.getInt("CriticidadIncidencia_idCriticidadIncidencia"));
@@ -165,7 +166,11 @@ public class IncidenciaDao extends BaseDao{
                     incidenciasB.setSerenazgo_idSerenazgo(rs.getInt("Serenazgo_idSerenazgo"));
                     incidenciasB.setUsuario_idUsuario(rs.getInt("Usuario_idUsuario"));
                     incidenciasB.setIncidenciaPersonal(rs.getInt("incidenciaPersonal"));
-                    incidenciasB.setReferencia(rs.getString("referencia"));
+                    //incidenciasB.setBorrado_idBorrado(rs.getInt("borrado"))
+                    incidenciasB.setSolucionADar(rs.getString("SolucionADar"));
+                    incidenciasB.setPersonalRequerido(rs.getInt("personalRequerido_idpersonalRequerido"));
+                    incidenciasB.setNombrePersonalTurno(rs.getString("nombreDelPersonalEnTurno"));
+                    incidenciasB.setTipoMovilidadRequerido(rs.getInt("tipoMovilidadRequerido"));
                     incidenciasB.setNombreFoto(rs.getString("nombreFoto"));
                 }
                 //
@@ -402,6 +407,8 @@ public class IncidenciaDao extends BaseDao{
                     incidenciaB.setSerenazgo_idSerenazgo(rs.getInt("Serenazgo_idSerenazgo"));
                     incidenciaB.setUsuario_idUsuario(rs.getInt("Usuario_idUsuario"));
                     incidenciaB.setIncidenciaPersonal(rs.getInt("incidenciaPersonal"));
+                    incidenciaB.setNombrePersonalTurno(rs.getString("nombreDelPersonalEnTurno"));
+                    incidenciaB.setNombreFoto(rs.getString("nombreFoto"));
                     listaIncidencias.add(incidenciaB);
 
                     switch (incidenciaB.getCriticidadIncidencia_idCriticidadIncidencia()){
