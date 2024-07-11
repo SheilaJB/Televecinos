@@ -80,21 +80,40 @@
                                 <img id="preview" src="#" alt="Vista previa de la imagen" class="img-thumbnail" style="display: none;">
                             </div>
                             <div class="mb-3">
-                                <label for="NombreIncidencia" class="form-label" style="color:#023047;"><b>Nombre de la incidencia </b></label>
+                                <label for="NombreIncidencia" class="form-label" style="color:#023047;"><b>Nombre de la incidencia: </b></label>
                                 <br>
                                 <a style="color: white;">• <%=incidencia.getNombreIncidencia()%></a>
                             </div>
                             <div class="mb-3">
-                                <label for="TipoIncidencia" class="form-label" style="color:#023047;"><b>Tipo de incidencia</b></label>
+                                <label for="TipoIncidencia" class="form-label" style="color:#023047;"><b>Tipo de incidencia:</b></label>
                                 <br>
-                                <a style="color: white;">• <%=incidencia.getTipoIncidencia_idTipoIncidenciaStr()%></a>
+                                <a style="color: white;">•<%=incidencia.getTipoIncidencia_idTipoIncidenciaStr()%></a>
                             </div>
 
 
                             <div class="mb-3">
                                 <label for="esPara" class="form-label" style="color:#023047;"><b>La incidencia pertenece a:</b></label>
                                 <br>
-                                <a style="color: white;">• <%=nombreVecinoDuenoIncidencia%></a>
+                                <a style="color: white;">•<%=nombreVecinoDuenoIncidencia%></a>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="esPara" class="form-label" style="color:#023047;"><b>Es para:</b></label>
+                                <br>
+                                <%if(incidencia.getIncidenciaPersonal()==0){%>
+                                    <a style="color: white;">•Otra persona</a>
+                                <%}else{%>
+                                    <a style="color: white;">•El mismo vecino</a>
+                                <%}%>
+
+
+
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="esPara" class="form-label" style="color:#023047;"><b>Urbanizacion:</b></label>
+                                <br>
+                                <a style="color: white;">•<%=incidencia.getUrbanizacion()%></a>
                             </div>
 
                             <div class="mb-3">
@@ -103,13 +122,13 @@
                                 <a style="color: white;">•<%=incidencia.getLugarExacto()%></a>
                             </div>
                             <div class="mb-3">
-                                <label for="referencia" class="form-label" style="color:#023047;"><b>Referencia</b></label>
+                                <label for="referencia" class="form-label" style="color:#023047;"><b>Referencia:</b></label>
                                 <br>
                                 <a style="color: white;">•<%=incidencia.getReferencia()%></a>
                             </div>
 
                             <div class="mb-3">
-                                <label for="contacto" class="form-label" style="color:#023047;"><b>Número de Contacto</b></label>
+                                <label for="contacto" class="form-label" style="color:#023047;"><b>Número de contacto:</b></label>
                                 <br>
 
                                 <% if (incidencia.getNumeroContacto() == null){%>
@@ -141,12 +160,26 @@
                 </div>
                 <div class="columna columna2" style="margin-top: 85px;">
                     <form>
+
                         <label for="imagenAcc" class="form-label" style="color:#023047;"><b>Foto del incidente</b></label>
-                        <div class="bg-light rounded h-100 p-4">
-                            <div class="mb-3">
-                                <img src="ImagenServlet?idImagenIncidencia=<%=incidencia.getIdIncidencias()%>" class="img-responsive" alt="" style="width: 100%; height: auto;"  />
+                        <%if(incidencia.getNombreFoto() == null || incidencia.getNombreFoto().equals("") ){%>
+                            <div>
+                                No se ingresó ninguna imagen de referencia
                             </div>
-                        </div>
+                        <%}else{%>
+                            <div class="bg-light rounded h-100 p-4">
+                                <div class="mb-3">
+                                    <img src="ImagenServlet?idImagenIncidencia=<%=incidencia.getIdIncidencias()%>" class="img-responsive" alt="" style="width: 100%; height: auto;"  />
+                                </div>
+                            </div>
+                        <%}%>
+
+                        <%if(incidencia.getEstadosIncidencia_idEstadoIncidencia()==2){%>
+
+                        <%}%>
+
+
+
 
                         <%if(incidencia.getSerenazgo_idSerenazgo()==0 || incidencia.getEstadosIncidencia_idEstadoIncidencia() <=2){%>
                             <a href="<%=request.getContextPath()%>/SerenazgoServlet?action=gestionar_Incidencia_S&id=<%=incidencia.getIdIncidencias()%>">

@@ -247,12 +247,13 @@ INSERT INTO `televecinosDB`.`Incidencias` (
   `solucionADar`,
   `personalRequerido_idpersonalRequerido`,
   `nombreDelPersonalEnTurno`,
-  `tipoMovilidadRequerido`  
+  `tipoMovilidadRequerido`,
+  `nombreFoto`
 ) VALUES
-('Asalto', '2024-01-02 13:00:00', 'Av. Universitaria 5678',3, 'Frente al Centro Comercial Plaza San Miguel', 'foto_2.jpg', 1, '987654322', 2, 2, 2, 2, 7, 0,'solucion1',3,'María Perez',3),
-('Robo', '2024-01-07 18:00:00', 'Calle Salaverry 102',12, 'En la esquina', 'foto_7.jpg', 0, '987654327', 2, 3,2, 2, 5, 0,'solucion2',2,'María Perez',2),
-('Violencia Doméstica', '2024-01-11 17:00:00', 'Jirón Mantaro 101',2, 'Vivienda Unifamiliar', 'foto_6.jpg', 0, '987654326', 3, 3, 2, 1, 1, 1,'solucion3',1,'Juan Gonzales',1),
-('Incendio', '2024-01-10 15:00:00', 'Calle Bolognesi 456',6, 'Edificio Residencial', 'foto_4.jpg', 1, '987654324', 1, 2, 2, 3, 3, 0,'solucion4',3,'Carlos Díaz',1);
+('Asalto', '2024-01-02 13:00:00', 'Av. Universitaria 5678',3, 'Frente al Centro Comercial Plaza San Miguel', 'foto_2.jpg', 1, '987654322', 2, 2, 2, 2, 7, 0,'solucion1',3,'María Perez',3,''),
+('Robo', '2024-01-07 18:00:00', 'Calle Salaverry 102',12, 'En la esquina', 'foto_7.jpg', 0, '987654327', 2, 3,2, 2, 5, 0,'solucion2',2,'María Perez',2,''),
+('Violencia Doméstica', '2024-01-11 17:00:00', 'Jirón Mantaro 101',2, 'Vivienda Unifamiliar', 'foto_6.jpg', 0, '987654326', 3, 3, 2, 1, 1, 1,'solucion3',1,'Juan Gonzales',1,''),
+('Incendio', '2024-01-10 15:00:00', 'Calle Bolognesi 456',6, 'Edificio Residencial', 'foto_4.jpg', 1, '987654324', 1, 2, 2, 3, 3, 0,'solucion4',3,'Carlos Díaz',1,'');
 -- Ingreso de incidencia gestionada
 INSERT INTO `televecinosDB`.`Incidencias` (
   `nombreIncidencia`, 
@@ -272,7 +273,8 @@ INSERT INTO `televecinosDB`.`Incidencias` (
   `solucionADar`,
   `personalRequerido_idpersonalRequerido`,
   `nombreDelPersonalEnTurno`,
-  `tipoMovilidadRequerido`  
+  `tipoMovilidadRequerido`,
+  `nombreFoto`
 ) VALUES
-('Emergencia Médica', '2024-01-05 16:00:00', 'Av. Bertolotto 789',9, 'Cerca del Hospital San José', 'foto_5.jpg', 0, '987654325', 2, 1, 5, 2, 6, 1,'solucion',2,'María Perez',2);
+('Emergencia Médica', '2024-01-05 16:00:00', 'Av. Bertolotto 789',9, 'Cerca del Hospital San José', 'foto_5.jpg', 0, '987654325', 2, 1, 5, 2, 6, 1,'solucion',2,'María Perez',2,'');
 

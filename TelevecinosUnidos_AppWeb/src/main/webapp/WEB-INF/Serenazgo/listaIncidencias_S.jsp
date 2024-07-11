@@ -58,7 +58,7 @@
             background-color: #f2f2f2;
         }
     </style>
-    -->
+
 </head>
 
 
@@ -169,7 +169,7 @@
                             </button>
                         </div>
                         <div class="col-md-1 mb-2">
-                            <a class="btn btn-secondary text-center" href="<%=request.getContextPath()%>/SerenazgoServlet?action=listaIncidencias_S" style="width: 100%;">Limpiar</a>
+                            <a class="btn btn-secondary text-center" href="<%=request.getContextPath()%>/SerenazgoServlet?action=listaIncidencias_S" style="width: 100%;"><i class="fas fa-eraser"></i></a>
                         </div>
                     </div>
                 </form>
@@ -248,7 +248,7 @@
                         Swal.fire({
                             icon: "error",
                             title: "Error",
-                            text: "Esta incidencia ha sido cancelada",
+                            text: "Esta incidencia ha sido cancelada por el vecino",
                         });
 
                     }
