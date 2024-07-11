@@ -130,7 +130,11 @@
                                         <td><%=usuarioB.getNombre() + " " + usuarioB.getApellido()%></td>
                                         <td><%=usuarioB.getDireccion() %></td>
                                         <td><%=usuarioB.getDni() %></td>
-                                        <td><%=usuarioB.getRolStr() %></td>
+                                        <% if(usuarioB.getRolStr().equals("Solicitante")){%>
+                                            <td>Solicitante denegado</td>
+                                        <% }else{%>
+                                            <td><%=usuarioB.getRolStr()%></td>
+                                        <% }%>
                                         <td>
 
                                             <!--<a href="<%=request.getContextPath()%>/AdministradorServlet?action=desbanearUsuario&idUsuario=<%=usuarioB.getIdUsuario()%>"><button type="button" class="btn btn-success m-2" ><i class="fas fa-unlock"></i></button></a>-->

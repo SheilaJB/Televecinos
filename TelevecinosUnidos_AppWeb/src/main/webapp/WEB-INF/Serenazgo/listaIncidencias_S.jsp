@@ -217,6 +217,8 @@
                             <td><button type="button" class="btn btn-danger m-2" onclick="incidenciaYaGestionada('<%=incidenciasB.getNombrePersonalTurno()%>','<%=incidenciasB.getIdIncidencias()%>','<%=incidenciasB.getUsuario_idUsuario()%>')"><i class="fas fa-clipboard-list"></i></button></td>
                         <%}else if(incidenciasB.getEstadosIncidencia_idEstadoIncidencia() == 3){%>
                             <td><button type="button" class="btn btn-danger m-2" onclick="incidenciaCancelada()"><i class="fas fa-clipboard-list"></i></button></td>
+                        <%}else if(incidenciasB.getEstadosIncidencia_idEstadoIncidencia() == 4){%>
+                            <td><button type="button" class="btn btn-danger m-2" onclick="incidenciaRechazada()"><i class="fas fa-clipboard-list"></i></button></td>
                         <%}else{%>
                             <!--<td><a href="<%=request.getContextPath()%>/SerenazgoServlet?action=gestionar_Incidencia_S&id=<%=incidenciasB.getIdIncidencias()%>"><button type="button" class="btn btn-success-puedeGestionar m-2"><i class="fas fa-clipboard-list"></i></button></a></td>-->
                             <td><button type="button" class="btn btn-success-puedeGestionar m-2" onclick="incidenciaPorGestionar('<%=incidenciasB.getNombrePersonalTurno()%>','<%=incidenciasB.getIdIncidencias()%>','<%=incidenciasB.getUsuario_idUsuario()%>')"><i class="fas fa-clipboard-list"></i></button></td>
@@ -229,6 +231,16 @@
                     </tbody>
 
                 </table>
+                <script>
+                    function incidenciaRechazada() {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Error",
+                            text: "Esta incidencia ha sido rechazada por ser falsa",
+                        });
+
+                    }
+                </script>
 
                 <script>
                     function incidenciaCancelada() {
