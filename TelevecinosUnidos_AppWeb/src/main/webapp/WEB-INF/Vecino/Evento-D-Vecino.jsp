@@ -127,17 +127,19 @@
                 <% if (listaEventos != null) {
                     for (EventoB evento : listaEventos) { %>
                 <div class="col-md-3 mb-4">
-                    <div class="card" style="max-width: 20rem; margin: auto; border-radius: 15px;">
-                        <img src="<%= evento.getFoto() %>" alt="<%= evento.getNombre() %>" class="card-img-top rounded-top">
-                        <div class="card-body">
-                            <h5 class="card-title" style="text-align: left;"><%= evento.getNombre() %></h5>
-                            <p class="card-status" style="font-size: small; margin-bottom: 0;">Estado: <%= evento.getEstadoString() %></p>
-                            <p class="text-wrap" style="font-size: small; margin-bottom: 0;">Fecha de inicio: <%= evento.getFecha_inicio() %></p>
-                            <p class="text-wrap" style="font-size: small; margin-bottom: 0;">Fecha de fin: <%= evento.getFecha_fin() %></p>
-                            <p class="text-wrap" style="font-size: small; margin-bottom: 0;"><%= evento.getDescripcion() %></p>
-                            <a class="link-opacity-50-hover" style="font-size: small;" href="<%=request.getContextPath()%>/VecinoServlet?action=verEvento&idEvento=<%= evento.getidEvento() %>">Más información aquí</a>
+                    <a href="<%=request.getContextPath()%>/VecinoServlet?action=verEvento&idEvento=<%= evento.getIdEvento() %>" style="text-decoration: none; color: inherit;">
+                        <div class="card" style="max-width: 20rem; margin: auto; border-radius: 15px;">
+                            <img src="ImagenServlet?idImagenEvento=<%=evento.getIdEvento()%>" class="card-img-top rounded-top">
+                            <div class="card-body">
+                                <h5 class="card-title" style="text-align: left;"><%= evento.getNombre() %></h5>
+                                <p class="card-status" style="font-size: small; margin-bottom: 0;">Estado: <%= evento.getEstadoString() %></p>
+                                <p class="text-wrap" style="font-size: small; margin-bottom: 0;">Fecha de inicio: <%= evento.getFecha_inicio() %></p>
+                                <p class="text-wrap" style="font-size: small; margin-bottom: 0;">Fecha de fin: <%= evento.getFecha_fin() %></p>
+                                <p class="text-wrap" style="font-size: small; margin-bottom: 0;"><%= evento.getDescripcion() %></p>
+                                <a class="link-opacity-50-hover" style="font-size: small;" href="<%=request.getContextPath()%>/VecinoServlet?action=verEvento&idEvento=<%= evento.getIdEvento() %>">Inscribirse aquí</a>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
                 <%  }
                 } else { %>

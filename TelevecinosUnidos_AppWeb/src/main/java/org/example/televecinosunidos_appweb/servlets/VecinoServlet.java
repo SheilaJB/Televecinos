@@ -48,18 +48,18 @@ public class VecinoServlet extends HttpServlet {
                 request.getRequestDispatcher(vista).forward(request, response);
                 break;
             case "verEventos":
-                ArrayList<EventoB> listaEventos = eventoDao.listarTodosEventos();
-                request.setAttribute("listaEventos", listaEventos);
+                ArrayList<EventoB> listaEventosGenerales = eventoDao.listarTodosEventos();
+                request.setAttribute("listaEventos", listaEventosGenerales);
                 vista = "WEB-INF/Vecino/Evento-D-Vecino.jsp";
                 request.getRequestDispatcher(vista).forward(request, response);
                 break;
             case "verEvento":
                 String idEvento = request.getParameter("idEvento");
-                EventoB evento = eventoDao.buscarEventoPorId(idEvento);
-                request.setAttribute("evento", evento);
+                request.setAttribute("evento", eventoDao.buscarEventoPorId(idEvento));
                 vista = "WEB-INF/Vecino/EventoActual-Vecino.jsp";
                 request.getRequestDispatcher(vista).forward(request, response);
                 break;
+
             case "preguntasFrecuentes":
                 vista = "WEB-INF/Vecino/preguntasFrecuentes_V.jsp";
                 request.getRequestDispatcher(vista).forward(request, response);
@@ -76,7 +76,10 @@ public class VecinoServlet extends HttpServlet {
                 vista = "WEB-INF/Vecino/ListaEvent-Vecino.jsp";
                 request.getRequestDispatcher(vista).forward(request, response);
                 break;
-
+            case "inscribirEvento":
+                String idEv = request.getParameter("idEvento");
+                response.sendRedirect(request.getContextPath() + "/VecinoServlet?action=verEvento&idEvento=" + idEv);
+                return;
             /*----------------Incidencias----------------*/
             case "listarIncidencia":
                 ArrayList<IncidenciasB> listaIncidencias = incidenciaDao.listarIncidencia(userId);
@@ -111,10 +114,7 @@ public class VecinoServlet extends HttpServlet {
 
             case "borrarIncidencia":
                 String idBorrar = request.getParameter("idEvento");
-                /*
-                incidenciaDao.borrarIncidencia(Integer.parseInt(idBorrar));
-                */
-                response.sendRedirect(request.getContextPath() + "/VecinoServlet");
+                response.sendRedirect(request.getContextPath() + "/VecinoServlet?action=listarIncidencia");
                 return;
 
             default:
@@ -198,7 +198,7 @@ public class VecinoServlet extends HttpServlet {
                 if (!errores.isEmpty()) {
                     request.setAttribute("errores", errores);
                     request.setAttribute("nombreIncidencia", nombreIncidencia);
-                    request.setAttribute("foto",part);
+                    request.setAttribute("foto", part);
                     request.setAttribute("tipoIncidencia", tipoIncidencia);
                     request.setAttribute("urbanizacion", urbanizacion);
                     request.setAttribute("incidenciaPersonal", incidenciaPersonalStr);
@@ -226,7 +226,7 @@ public class VecinoServlet extends HttpServlet {
                 incidencia.setAmbulancia(ambulancia);
                 incidencia.setNombreFoto(fileName);
 
-                incidenciaDao.generarIncidenciaC(incidencia,userId);
+                incidenciaDao.generarIncidenciaC(incidencia, userId);
                 // Agregar mensaje a la sesión
                 request.getSession().setAttribute("info", "Incidencia creada de manera exitosa");
 
@@ -318,10 +318,10 @@ public class VecinoServlet extends HttpServlet {
                 IncidenciasB incidenciaB = new IncidenciasB();
                 incidenciaB.setIdIncidencias(id);
                 incidenciaB.setNombreIncidencia(nombreIncidencia2);
-                if (fileName2 == null || fileName2.isEmpty()){
+                if (fileName2 == null || fileName2.isEmpty()) {
                     incidenciaB.setFoto(incidencia2.getFoto());
                     incidenciaB.setNombreFoto(incidencia2.getNombreFoto());
-                }else {
+                } else {
                     incidenciaB.setNombreFoto(fileName2);
                     incidenciaB.setFoto(fileInputStream2);
                 }
@@ -348,21 +348,30 @@ public class VecinoServlet extends HttpServlet {
                     response.sendRedirect(request.getContextPath() + "/VecinoServlet?action=listarIncidencia");
                 } else {
                     request.setAttribute("textoBuscarIncidencia", textBuscar);
-                    request.setAttribute("lista", incidenciaDao.listarIncidenciasFiltro(textBuscar, filtroFecha, filtroTipo, filtroEstado,userId));
+                    request.setAttribute("lista", incidenciaDao.listarIncidenciasFiltro(textBuscar, filtroFecha, filtroTipo, filtroEstado, userId));
                     request.getRequestDispatcher("WEB-INF/Vecino/listaIncidencias_V.jsp").forward(request, response);
                 }
                 break;
 
             case "inscribirEvento":
-                int idUsuario = Integer.parseInt(request.getParameter("idUsuario"));
+                EventoB evento = eventoDao.buscarEventoPorId(request.getParameter("idEvento"));
                 int idEvento = Integer.parseInt(request.getParameter("idEvento"));
-                EventoDao eventoDao2 = new EventoDao();
-                boolean success = eventoDao2.inscribirUsuarioEvento(idUsuario, idEvento);
-                if (success) {
-                    request.getSession().setAttribute("info", "Te has inscrito al evento exitosamente");
+
+                UsuarioB usuario2 = (UsuarioB) session.getAttribute("usuarioLogueado");
+
+                if (usuario2 != null && evento != null) {
+
+                    boolean success = eventoDao.inscribirUsuarioEvento(usuario2.getIdUsuario(), evento.getIdEvento());
+
+                    if (success) {
+                        request.getSession().setAttribute("info", "Inscripción al evento exitosa");
+                    } else {
+                        request.getSession().setAttribute("err", "Error al inscribirse en el evento");
+                    }
                 } else {
-                    request.getSession().setAttribute("error", "No se pudo inscribir al evento. Inténtalo de nuevo más tarde.");
+                    request.getSession().setAttribute("err", "Usuario o evento no encontrado");
                 }
+
                 response.sendRedirect(request.getContextPath() + "/VecinoServlet?action=verEvento&idEvento=" + idEvento);
                 break;
 
