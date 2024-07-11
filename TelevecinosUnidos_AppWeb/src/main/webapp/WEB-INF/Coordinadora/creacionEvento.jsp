@@ -217,32 +217,9 @@
 
                             <!----Cantidad de vacantes disponibles----->
                             <div class="campo ${not empty erroresEvento ? 'error-div' : ''}">
-                                <label for="cantVacantes" class="form-label" style="color:#023047;"><b>Cantidad de vacantes:</b> </label>
-                                <select id="cantVacantes" class="form-select mb-3" aria-label="Default select example" name="cantidadVacantes" required>
-                                    <option value="" selected>Seleccione la cantidad de vacantes disponibles</option>
-                                    <option value="10" ${cantidadVacantes == '10' ? 'selected' : ''}>10</option>
-                                    <option value="11" ${cantidadVacantes == '11' ? 'selected' : ''}>11</option>
-                                    <option value="12" ${cantidadVacantes == '12' ? 'selected' : ''}>12</option>
-                                    <option value="13" ${cantidadVacantes == '13' ? 'selected' : ''}>13</option>
-                                    <option value="14" ${cantidadVacantes == '14' ? 'selected' : ''}>14</option>
-                                    <option value="15" ${cantidadVacantes == '15' ? 'selected' : ''}>15</option>
-                                    <option value="16" ${cantidadVacantes == '16' ? 'selected' : ''}>16</option>
-                                    <option value="17" ${cantidadVacantes == '17' ? 'selected' : ''}>17</option>
-                                    <option value="18" ${cantidadVacantes == '18' ? 'selected' : ''}>18</option>
-                                    <option value="19" ${cantidadVacantes == '19' ? 'selected' : ''}>19</option>
-                                    <option value="20" ${cantidadVacantes == '20' ? 'selected' : ''}>20</option>
-                                    <option value="21" ${cantidadVacantes == '21' ? 'selected' : ''}>21</option>
-                                    <option value="22" ${cantidadVacantes == '22' ? 'selected' : ''}>22</option>
-                                    <option value="23" ${cantidadVacantes == '23' ? 'selected' : ''}>23</option>
-                                    <option value="24" ${cantidadVacantes == '24' ? 'selected' : ''}>24</option>
-                                    <option value="25" ${cantidadVacantes == '25' ? 'selected' : ''}>25</option>
-                                    <option value="26" ${cantidadVacantes == '26' ? 'selected' : ''}>26</option>
-                                    <option value="27" ${cantidadVacantes == '27' ? 'selected' : ''}>27</option>
-                                    <option value="28" ${cantidadVacantes == '28' ? 'selected' : ''}>28</option>
-                                    <option value="29" ${cantidadVacantes == '29' ? 'selected' : ''}>29</option>
-                                    <option value="30" ${cantidadVacantes == '30' ? 'selected' : ''}>30</option>
+                                <label for="cantidadVacantes" class="form-label" style="color:#023047;"><b>Cantidad de vacantes:</b> </label>
+                                <input type="number" class="form-control" id="cantidadVacantes" placeholder="Escribir" name="cantidadVacantes" value="${cantidadVacantes}" class="campo" required>
 
-                                </select>
                             </div>
 
                         </div>
