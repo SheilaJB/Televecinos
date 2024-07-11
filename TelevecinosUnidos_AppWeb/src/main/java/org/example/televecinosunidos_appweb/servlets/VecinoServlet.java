@@ -367,7 +367,7 @@ public class VecinoServlet extends HttpServlet {
                             boolean success = eventoDao.inscribirUsuarioEvento(usuarioLogueado.getIdUsuario(), evento.getIdEvento());
                             if (success) {
                                 eventoDao.updateVacantesDisponibles(evento.getIdEvento());
-                                request.getSession().setAttribute("info", "Inscripción al evento exitosa");
+                                request.getSession().setAttribute("info", "Inscripción exitosa");
                             } else {
                                 request.getSession().setAttribute("err", "Error al inscribirse en el evento. Intente de nuevo más tarde.");
                             }
