@@ -587,7 +587,7 @@ public class IncidenciaDao extends BaseDao{
     }
 
 
-    public ArrayList<Double> DashboardTabla(int i) {
+    public ArrayList<Double> DashboardTabla1234(int i) {
         ArrayList<Integer> tabla1 = new ArrayList<>();
 
         String sql = "SELECT " +
@@ -632,4 +632,31 @@ public class IncidenciaDao extends BaseDao{
     }
 
 
+    public ArrayList<Integer> DashboardTabla7(int i) {
+        ArrayList<Integer> tabla1 = new ArrayList<>();
+        String sql = "SELECT " +
+                "u.idUrbanizacion, " +
+                "COUNT(i.idIncidencias) AS cantidad_incidencias " +
+                "FROM " +
+                "televecinosdb.urbanizacion u " +
+                "LEFT JOIN " +
+                "televecinosdb.incidencias i ON u.idUrbanizacion = i.urbanizacion_idUrbanizacion " +
+                "AND i.TipoIncidencia_idTipoIncidencia = " + i +"\n" +
+                "GROUP BY " +
+                "u.idUrbanizacion " +
+                "ORDER BY " +
+                "u.idUrbanizacion;";
+        try (Connection connection = getConnection();
+             Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while(rs.next()){
+                tabla1.add(rs.getInt(2));
+
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return tabla1;
+    }
 }

@@ -4,6 +4,11 @@
 <jsp:useBean id="tabla3" scope="request" type="java.util.ArrayList" class="java.util.ArrayList" />
 <jsp:useBean id="tabla4" scope="request" type="java.util.ArrayList" class="java.util.ArrayList" />
 
+<jsp:useBean id="tabla7_tipo1" scope="request" type="java.util.ArrayList" class="java.util.ArrayList" />
+<jsp:useBean id="tabla7_tipo2" scope="request" type="java.util.ArrayList" class="java.util.ArrayList" />
+<jsp:useBean id="tabla7_tipo3" scope="request" type="java.util.ArrayList" class="java.util.ArrayList" />
+<jsp:useBean id="tabla7_tipo4" scope="request" type="java.util.ArrayList" class="java.util.ArrayList" />
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -348,6 +353,11 @@
         var tabla3 = ${tabla3};
         var tabla4 = ${tabla4};
 
+        var tabla7_tipo1 = ${tabla7_tipo1};
+        var tabla7_tipo2 = ${tabla7_tipo2};
+        var tabla7_tipo3 = ${tabla7_tipo3};
+        var tabla7_tipo4 = ${tabla7_tipo4};
+
         // Tipo 1
 
         var ctx3 = $("#type-incidents-pie-1").get(0).getContext("2d");
@@ -466,22 +476,22 @@
                 labels: ["Rafael Escardó", "José de La Riva Agüero", " Juan XXIII", "Libertad", "Los Jardines de La Marina", "Las Leyendas", "Las Torres San Miguelito","Elmer Faucett","Maranga","Pando" ,"Parques de La Huaca", "Otro"],
                 datasets: [{
                     label: "Seguridad pública",
-                    data: [40, 23, 60, 31, 70, 37, 80, 38, 74, 29, 47, 29],
+                    data: tabla7_tipo1,
                     backgroundColor: "rgba(255, 183, 3, 1)"
                 },
                     {
                         label: "Emergencia médica",
-                        data: [66, 65, 55, 70, 60, 75, 85, 80, 88, 95, 61, 73],
+                        data: tabla7_tipo2,
                         backgroundColor: "rgba(251, 133, 0, 1)"
                     },
                     {
                         label: "Infraestructura",
-                        data:  [85, 52, 48, 63, 43, 72, 78, 82, 64, 93, 80, 66],
+                        data:  tabla7_tipo3,
                         backgroundColor: "rgba(33, 158, 188, 1)"
                     },
                     {
                         label: "Otro",
-                        data:  [47, 62, 58, 63, 50, 92, 78, 82, 58, 53, 55, 40],
+                        data:  tabla7_tipo4,
                         backgroundColor: "rgba(2, 48, 71, 1)"
                     }
                 ]

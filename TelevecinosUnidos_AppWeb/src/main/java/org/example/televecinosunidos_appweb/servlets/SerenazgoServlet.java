@@ -73,14 +73,24 @@ public class SerenazgoServlet extends HttpServlet {
                 break;
             case "dashboard":
                 //request.setAttribute("parametros",incidenciaDao.listar());
-                ArrayList<Double> tabla1 = incidenciaDao.DashboardTabla(1);
-                ArrayList<Double> tabla2 = incidenciaDao.DashboardTabla(2);
-                ArrayList<Double> tabla3 = incidenciaDao.DashboardTabla(3);
-                ArrayList<Double> tabla4 = incidenciaDao.DashboardTabla(4);
+                ArrayList<Double> tabla1 = incidenciaDao.DashboardTabla1234(1);
+                ArrayList<Double> tabla2 = incidenciaDao.DashboardTabla1234(2);
+                ArrayList<Double> tabla3 = incidenciaDao.DashboardTabla1234(3);
+                ArrayList<Double> tabla4 = incidenciaDao.DashboardTabla1234(4);
                 request.setAttribute("tabla1", tabla1);
                 request.setAttribute("tabla2", tabla2);
                 request.setAttribute("tabla3", tabla3);
                 request.setAttribute("tabla4", tabla4);
+
+                ArrayList<Integer> tabla7_tipo1 = incidenciaDao.DashboardTabla7(1);
+                ArrayList<Integer> tabla7_tipo2 = incidenciaDao.DashboardTabla7(2);
+                ArrayList<Integer> tabla7_tipo3 = incidenciaDao.DashboardTabla7(3);
+                ArrayList<Integer> tabla7_tipo4 = incidenciaDao.DashboardTabla7(4);
+                request.setAttribute("tabla7_tipo1", tabla7_tipo1);
+                request.setAttribute("tabla7_tipo2", tabla7_tipo2);
+                request.setAttribute("tabla7_tipo3", tabla7_tipo3);
+                request.setAttribute("tabla7_tipo4", tabla7_tipo4);
+
 
                 vista = "WEB-INF/Serenazgo/dashboard.jsp";
                 request.getRequestDispatcher(vista).forward(request, response);
