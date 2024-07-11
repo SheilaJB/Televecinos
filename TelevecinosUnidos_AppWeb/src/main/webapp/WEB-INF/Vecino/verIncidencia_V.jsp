@@ -99,7 +99,7 @@
                                         <div class="col-12">
                                             <label class="form-label" style="color:#023047;"><b>La incidencia es para:</b></label>
                                             <div class="bar p-2 bg-light rounded" data-label="La incidencia es para">
-                                                <%= request.getAttribute("incidencia") != null && ((IncidenciasB) request.getAttribute("incidencia")).getIncidenciaPersonal() == 1 ? "Para otra persona" : "Personal" %>
+                                                <%= request.getAttribute("incidencia") != null && ((IncidenciasB) request.getAttribute("incidencia")).getIncidenciaPersonal() == 1 ? "Personal" : "Para otra persona" %>
                                             </div>
                                         </div>
                                     </div>

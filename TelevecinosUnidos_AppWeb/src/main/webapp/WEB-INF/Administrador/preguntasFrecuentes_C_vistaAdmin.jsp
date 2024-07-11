@@ -64,7 +64,7 @@
         <div class="container-fluid pt-4 px-4" >
             <div class="alert alert-info" role="alert" style="background-color: #ffb703;">
                 <b>Preguntas frecuentes</b>
-                <button class="btn btn-success btn-sm-2 edit-btn" style="margin-left: 750px" >Editar</button>
+                <!--<button class="btn btn-success btn-sm-2 edit-btn" style="margin-left: 750px" >Editar</button>-->
                 <button type="button" class="btn btn-primary btn-sm-2 save-btn d-none btn-banear" style="margin-left: 750px">Guardar cambios</button>
 
                 <div id="popup1" class="popup1" >

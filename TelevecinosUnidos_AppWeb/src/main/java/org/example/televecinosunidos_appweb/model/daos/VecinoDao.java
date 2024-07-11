@@ -3,6 +3,7 @@ package org.example.televecinosunidos_appweb.model.daos;
 import org.example.televecinosunidos_appweb.model.beans.EventoB;
 import org.example.televecinosunidos_appweb.model.beans.SerenazgoB;
 import org.example.televecinosunidos_appweb.model.beans.UsuarioB;
+import org.example.televecinosunidos_appweb.util.EnviarEmail;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -96,6 +97,9 @@ public class VecinoDao extends BaseDao{
             pstmt.executeUpdate();
 
         }
+        EnviarEmail enviarEmail = new EnviarEmail();
+        UsuarioDao usuarioDao = new UsuarioDao();
+        enviarEmail.sendEmailPromoverVecinoACoordinador(usuarioDao.obtenerUsuario(idUsuario).getCorreo(),usuarioDao.obtenerUsuario(idUsuario).getNombre());
     }
 
 
@@ -110,6 +114,9 @@ public class VecinoDao extends BaseDao{
             pstmt.executeUpdate();
 
         }
+        EnviarEmail enviarEmail = new EnviarEmail();
+        UsuarioDao usuarioDao = new UsuarioDao();
+        enviarEmail.sendEmailPromoverVecinoACoordinador(usuarioDao.obtenerUsuario(idUsuario).getCorreo(),usuarioDao.obtenerUsuario(idUsuario).getNombre());
     }
 
 

@@ -184,7 +184,7 @@ public class UsuarioDao extends BaseDao{
 
         String sql = "SELECT idUsuario,nombre,apellido,dni,direccion,correo,Rol_idRol\n" +
                 "FROM televecinosdb.usuario \n" +
-                "where isBan=1 and (usuario.nombre like ? or usuario.apellido like ?)" ;
+                "where isBan=1 and (usuario.nombre like ? or usuario.apellido like ? or usuario.dni like ?)" ;
 
 
         ArrayList<UsuarioB> listaBaneados = new ArrayList<>();
@@ -194,6 +194,7 @@ public class UsuarioDao extends BaseDao{
 
             pstmt.setString(1, textoBuscar+ "%");
             pstmt.setString(2, textoBuscar+ "%");
+            pstmt.setString(3, textoBuscar+ "%");
 
             try(ResultSet rs = pstmt.executeQuery()){
                 while (rs.next()) {

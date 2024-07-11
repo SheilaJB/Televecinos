@@ -38,6 +38,19 @@
         <link href="css/style_popup.css" rel="stylesheet">
 
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <style>
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+            th, td {
+                text-align: center;
+                padding: 8px;
+            }
+            th {
+                background-color: #f2f2f2;
+            }
+        </style>
     </head>
 
     <body>
@@ -117,7 +130,11 @@
                                         <td><%=usuarioB.getNombre() + " " + usuarioB.getApellido()%></td>
                                         <td><%=usuarioB.getDireccion() %></td>
                                         <td><%=usuarioB.getDni() %></td>
-                                        <td><%=usuarioB.getRolStr() %></td>
+                                        <% if(usuarioB.getRolStr().equals("Solicitante")){%>
+                                            <td>Solicitante denegado</td>
+                                        <% }else{%>
+                                            <td><%=usuarioB.getRolStr()%></td>
+                                        <% }%>
                                         <td>
 
                                             <!--<a href="<%=request.getContextPath()%>/AdministradorServlet?action=desbanearUsuario&idUsuario=<%=usuarioB.getIdUsuario()%>"><button type="button" class="btn btn-success m-2" ><i class="fas fa-unlock"></i></button></a>-->
