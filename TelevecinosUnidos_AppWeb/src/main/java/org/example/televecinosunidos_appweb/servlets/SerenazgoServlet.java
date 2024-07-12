@@ -10,10 +10,13 @@ import org.example.televecinosunidos_appweb.model.daos.IncidenciaDao;
 import org.example.televecinosunidos_appweb.model.daos.SerenazgoDao;
 import org.example.televecinosunidos_appweb.model.daos.UsuarioDao;
 import org.example.televecinosunidos_appweb.model.daos.VecinoDao;
+import org.example.televecinosunidos_appweb.model.dto.SerenazgoDTO;
+import org.example.televecinosunidos_appweb.util.GeneraContrasena;
 
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -100,6 +103,20 @@ public class SerenazgoServlet extends HttpServlet {
                 request.getRequestDispatcher(vista).forward(request, response);
 
                 break;
+            case "cambiarContrasena":
+                vista = "WEB-INF/Serenazgo/cambioContrasena_S.jsp";
+                request.getRequestDispatcher(vista).forward(request, response);
+                break;
+            case "perfil_S":
+                vista = "WEB-INF/Serenazgo/perfil_S.jsp";
+                request.getRequestDispatcher(vista).forward(request, response);
+                break;
+            case "cambiarTelefono_S":
+                String idSereno = request.getParameter("idSereno");
+                request.setAttribute("telefonoSereno",serenazgoDao.buscarSerenazgoPorId(idSereno).getNumTelefono());
+                vista = "WEB-INF/Serenazgo/cambiarTelefono_S.jsp";
+                request.getRequestDispatcher(vista).forward(request, response);
+                break;
 
 
             default:
@@ -109,8 +126,9 @@ public class SerenazgoServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        HttpSession session = request.getSession();
         IncidenciaDao incidenciaDao = new IncidenciaDao();
+        SerenazgoDao serenazgoDao = new SerenazgoDao();
         VecinoDao vecinoDao = new VecinoDao();
         String action = request.getParameter("action") == null ? "buscarIncidenciaPorNombre" : request.getParameter("action");
         String textoBuscar;
@@ -211,8 +229,72 @@ public class SerenazgoServlet extends HttpServlet {
                 incidenciaDao.borradorLogicoIncidencia(incidenciaId);
                 request.setAttribute("lista",incidenciaDao.listarIncidencias());
                 request.getRequestDispatcher("WEB-INF/Serenazgo/listaIncidencias_S.jsp").forward(request, response);
+                break;
+            case "cambiarTelefono":
+                String nuevoTelefono = request.getParameter("nuevoTelefono");
+                if (nuevoTelefono == null || nuevoTelefono.isEmpty()) {
+                    request.setAttribute("err", "Es obligatorio llenar el nuevo teléfono");
+                    request.getRequestDispatcher("WEB-INF/Serenazgo/cambiarTelefono_S.jsp").forward(request, response);
+                    return;
+                } else if (nuevoTelefono.length() != 9) {
+                    request.setAttribute("err", "El teléfono debe tener 9 dígitos.");
+                    request.getRequestDispatcher("WEB-INF/Serenazgo/cambiarTelefono_S.jsp").forward(request, response);
+                    return;
+                }else{
+                    SerenazgoDTO serenazgoDTO1 = (SerenazgoDTO) session.getAttribute("serenazgoLogeado");
+                    String num = String.valueOf(serenazgoDTO1.getIdSerenazgo());
+                    serenazgoDao.cambiarTelefono(nuevoTelefono,String.valueOf(serenazgoDao.buscarSerenazgoPorId(num).getIdSerenazgo()));
+                    session.setAttribute("success", "Telefono cambiado exitosamente");
+                    response.sendRedirect(request.getContextPath() + "/SerenazgoServlet?action=cambiarTelefono_S");
+                }
 
+                break;
+            case "cambiarContrasena":
+                String nuevaContrasena = request.getParameter("nuevaContrasena");
+                String confirmarContrasena = request.getParameter("confirmarContrasena");
 
+                // Validaciones de contraseña
+                if (nuevaContrasena == null || nuevaContrasena.isEmpty() || confirmarContrasena == null || confirmarContrasena.isEmpty()) {
+                    request.setAttribute("err", "Ambos campos son obligatorios.");
+                    request.getRequestDispatcher("WEB-INF/Serenazgo/cambioContrasena_S.jsp").forward(request, response);
+                    return;
+                } else if (nuevaContrasena.length() < 8) {
+                    request.setAttribute("err", "La contraseña debe tener al menos 8 caracteres.");
+                    request.getRequestDispatcher("WEB-INF/Serenazgo/cambioContrasena_S.jsp").forward(request, response);
+                    return;
+                } else if (!nuevaContrasena.matches("^(?=.*[0-9])(?=.*[a-zA-Z])(?!.*\\s).*$")) {
+                    request.setAttribute("err", "La contraseña debe contener al menos un número y una letra, sin espacios ni caracteres especiales.");
+                    request.getRequestDispatcher("WEB-INF/Serenazgo/cambioContrasena_S.jsp").forward(request, response);
+                    return;
+                } else if (!nuevaContrasena.equals(confirmarContrasena)) {
+                    request.setAttribute("err", "Las contraseñas no coinciden.");
+                    request.getRequestDispatcher("WEB-INF/Serenazgo/cambioContrasena_S.jsp").forward(request, response);
+                    return;
+                } else {
+                    // Proceso de cambio de contraseña
+                    UsuarioDao usuarioDao = new UsuarioDao();
+
+                    SerenazgoDTO serenazgoDTO = (SerenazgoDTO) session.getAttribute("serenazgoLogeado");
+
+                    UsuarioB usuario = usuarioDao.obtenerUsuario(String.valueOf(serenazgoDTO.getIdUsuario()));
+
+                    if (usuario != null) {
+                        String hashedPassword;
+                        try {
+                            hashedPassword = GeneraContrasena.hashPassword(nuevaContrasena);
+                        } catch (NoSuchAlgorithmException e) {
+                            throw new RuntimeException(e);
+                        }
+                        usuario.setContrasenia(hashedPassword);
+
+                        usuarioDao.actualizarContrasena(usuario);
+                        session.setAttribute("success", "Contraseña cambiada exitosamente");
+                        response.sendRedirect(request.getContextPath() + "/SerenazgoServlet?action=cambiarContrasena");
+                    } else {
+                        request.setAttribute("err", "Usuario no encontrado en la sesión.");
+                        request.getRequestDispatcher("WEB-INF/Serenazgo/cambioContrasena_S.jsp").forward(request, response);
+                    }
+                }
                 break;
 
         }

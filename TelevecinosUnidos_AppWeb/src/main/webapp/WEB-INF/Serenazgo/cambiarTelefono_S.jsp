@@ -1,10 +1,14 @@
+<%@ page import="org.example.televecinosunidos_appweb.model.beans.UsuarioB" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:useBean id="usuarioLogueado" scope="session" type="UsuarioB" class="org.example.televecinosunidos_appweb.model.beans.UsuarioB" />
+<jsp:useBean id="telefonoSereno" scope="request" type="java.lang.String" class="java.lang.String" />
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
-    <title>TELEVECINOS UNIDOS INICIO</title>
+    <title>Cambiar telefono</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -30,8 +34,8 @@
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
-    <link href="css/app.min.css" rel="stylesheet">
     <link href="css/style_vec.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
         .container {
@@ -84,15 +88,26 @@
             transition: background-color 0.3s ease;
         }
 
-        /* Colores para los botones */
-        .regresar {
-            background-color: #efdb04;
-            color: #fff;
+        .button.alert-danger {
+            background-color: #dc3545;
+            color: white;
         }
 
+        .button.alert-success {
+            background-color: #28a745;
+            color: white;
+        }
 
+        .button:hover {
+            opacity: 0.8;
+        }
+
+        .text-muted {
+            font-size: 12px;
+            color: #ff0000;
+            font-weight: bold;
+        }
     </style>
-
 </head>
 
 <body>
@@ -106,59 +121,76 @@
     <!-- Spinner End -->
 
 
-
     <!-- BARRA AZUL DE LA IZQUIERDA INICIO-->
-    <jsp:include page="../includes/barraLateralAdministrador.jsp"></jsp:include>
+    <jsp:include page="../includes/barraLateralSerenazgo.jsp"></jsp:include>
     <!-- BARRA AZUL DE LA IZQUIERDA FINAL -->
+
 
     <!-- Content Start -->
     <div class="content">
         <!-- PARTE SUPERIOR INICIO -->
-        <jsp:include page="../includes/navbarAdministrador.jsp"></jsp:include>
+        <jsp:include page="../includes/navbarSerenazgo.jsp"></jsp:include>
         <!-- PARTE SUPERIOR FINAL -->
 
         <!---Content--->
-        <div style="background-color: #f8f9fa; padding: 20px; align-items: center;">
+        <div class="container-fluid d-flex justify-content-center align-items-center vh-100">
             <div class="container text-center">
-                <img src="img/munisanmiguelLogo.jpg" class="img-fluid mb-3" alt="Responsive image" width="200">
-                <div class="bar" data-label="Administrador">Municipalidad de San Miguel</div>
-                <div class="bar" data-label="Correo">televecinos.unidos@gmail.com</div>
-                <a href="<%=request.getContextPath()%>/AdministradorServlet"><button class="button regresar">Regresar</button></a>
-
-            </div>
-            <div class="container-fluid pt-4 px-4">
-                <div class="bg-light rounded-top p-4">
-                    <div class="row">
-                        <div class="col-12 col-sm-6 text-center text-sm-start">
-                            &copy; <a>TelevecinosUnidos</a>, All Right Reserved.
+                <img src="img/serenazgo.jpg" class="img-fluid mb-3" alt="Responsive image" width="200">
+                <% if(request.getAttribute("err") != null) { %>
+                <script>
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: '<%= request.getAttribute("err") %>',
+                    });
+                </script>
+                <% } %>
+                <% if(session.getAttribute("success") != null) { %>
+                <script>
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Cambio de teléfono exitoso',
+                        text: '<%= session.getAttribute("success") %>',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = "<%=request.getContextPath()%>/SerenazgoServlet?action=perfil_S";
+                        }
+                    });
+                </script>
+                <% session.removeAttribute("success"); // Limpiar la sesión después de mostrar el SweetAlert %>
+                <% } %>
+                <div class="container">
+                    <form method="post" action="<%= request.getContextPath() %>/SerenazgoServlet?action=cambiarTelefono">
+                        <div class="mb-3">
+                            <label for="nuevaContrasena" class="form-label">Telefono actual: <%=telefonoSereno%></label>
+                            <input type="text" class="form-control" id="nuevaContrasena" name="nuevoTelefono" placeholder="Nuevo telefono:" required>
                         </div>
-
-                    </div>
+                        <div class="mb-3">
+                            <small >Debes llenar el campo y tu teléfono contener 9 dígitos</small>
+                        </div>
+                        <button type="submit" class="button alert-success">Guardar Cambios</button>
+                    </form>
+                    <a href="<%=request.getContextPath()%>/SerenazgoServlet?action=perfil_S"><button class="button alert-danger">Regresar</button></a>
                 </div>
             </div>
-
         </div>
-
-
     </div>
+</div>
 
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/chart/chart.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="lib/tempusdominus/js/moment.min.js"></script>
-    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
-    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.css"/>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick-theme.css"/>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
-    <!-- Template Javascript -->
-    <script src="js/main.js"></script>
+<!-- Libraries JS -->
+<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="lib/tempusdominus/js/moment.min.js"></script>
+<script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+<!-- Custom Scripts -->
+<script src="js/main.js"></script>
+<script src="js/script.js"></script>
+
 </body>
 
 </html>

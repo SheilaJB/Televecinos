@@ -111,7 +111,7 @@
                     <table id="eventosTable" class="table" style="background-color: transparent;">
                         <thead>
                         <tr>
-                            <th scope="col">Número</th>
+                            <th scope="col">Identificador</th>
                             <th scope="col">Nombre y Apellido</th>
                             <th scope="col">Curso</th>
 
@@ -119,19 +119,40 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <% int i=1;%>
+                        <% int k=1;%>
                         <% for(ProfesoresEvento profesor : lista){ %>
                         <tr>
-                            <td><%=i %></td>
+                            <td><%=profesor.getIdProfesoresEvento() %></td>
                             <td><%=profesor.getNombre() + " " + profesor.getApellido()%></td>
                             <td><%=profesor.getCurso() %></td>
 
                         </tr>
-                        <% i+=1;%>
                         <% } %>
 
                         </tbody>
                     </table>
+
+                    <!-- Botones para paginación -->
+                    <%
+                        int paginaActual = (int) request.getAttribute("paginaActual");
+                        int totalPaginas = (int) request.getAttribute("totalPaginas");
+                    %>
+                    <nav>
+                        <ul class="pagination">
+                            <li class="page-item <%= paginaActual == 1 ? "disabled" : "" %>">
+                                <a class="page-link" href="<%=request.getContextPath()%>/AdministradorServlet?action=listaInstructores_A&page=<%= paginaActual - 1 %>">Anterior</a>
+                            </li>
+                            <% for(int i = 1; i <= totalPaginas; i++) { %>
+                            <li class="page-item <%= i == paginaActual ? "active" : "" %>">
+                                <a class="page-link" href="<%=request.getContextPath()%>/AdministradorServlet?action=listaInstructores_A&page=<%= i %>"><%= i %></a>
+                            </li>
+                            <% } %>
+                            <li class="page-item <%= paginaActual == totalPaginas ? "disabled" : "" %>">
+                                <a class="page-link" href="<%=request.getContextPath()%>/AdministradorServlet?action=listaInstructores_A&page=<%= paginaActual + 1 %>">Siguiente</a>
+                            </li>
+                        </ul>
+                    </nav>
+
                 </div>
             </div>
         </div>

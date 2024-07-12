@@ -355,7 +355,7 @@ public class UsuarioDao extends BaseDao{
                     serenazgoDTO.setDireccionSerenazgo(rs.getString("direccionSerenazgo"));
                     serenazgoDTO.setBan(rs.getBoolean("isBan"));
                     serenazgoDTO.setAvatarSerenazgo(rs.getString("avatarSerenazgo"));
-                    serenazgoDTO.setFechaNacimientoSerenazgo("fechaNacimientoSerenazgo");
+                    serenazgoDTO.setFechaNacimientoSerenazgo(rs.getString("fechaNacimientoSerenazgo"));
                     serenazgoDTO.setTurnoSerenazgo(rs.getString("turnoSerenazgo"));
                     serenazgoDTO.setTipoSerenazgo(rs.getString("tipoSerenazgo"));
                 }

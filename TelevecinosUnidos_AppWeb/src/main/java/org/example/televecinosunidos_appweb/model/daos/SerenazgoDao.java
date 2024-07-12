@@ -464,5 +464,20 @@ public class SerenazgoDao extends BaseDao {
     }
 
 
+    public void cambiarTelefono(String nuevoTelefono, String serenazgoId) {
+        String sqlUsuario = "UPDATE `serenazgo` \n" +
+                "SET `numTelefono` = ? \n" +
+                "WHERE `idSerenazgo` = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sqlUsuario)) {
+
+            pstmt.setString(1, nuevoTelefono);
+            pstmt.setString(2, serenazgoId);
+
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
 

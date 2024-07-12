@@ -31,11 +31,29 @@ public class AdministradorServlet extends HttpServlet {
         String vista ;
         switch (action) {
             case "listaSerenazgo_A":
+                int paginaSerenazgo = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
+                int serenazgosPorPagina = 5; // Número de serenazgos por página
+
+                // Obtener la lista completa de serenazgos
+                ArrayList<SerenazgoB> listaSerenazgos = serenazgoDao.listarSerenazgos();
+
+                // Calcular total de páginas
+                int totalSerenazgos = listaSerenazgos.size();
+                int totalPaginasSerenazgos = (int) Math.ceil((double) totalSerenazgos / serenazgosPorPagina);
+
+                // Obtener los serenazgos de la página actual
+                int desdeSerenazgo = (paginaSerenazgo - 1) * serenazgosPorPagina;
+                int hastaSerenazgo = Math.min(desdeSerenazgo + serenazgosPorPagina, totalSerenazgos);
+                ArrayList<SerenazgoB> serenazgosPaginados = new ArrayList<>(listaSerenazgos.subList(desdeSerenazgo, hastaSerenazgo));
+
+                // Enviar atributos al JSP
                 vista = "WEB-INF/Administrador/listaSerenazgo_A.jsp";
-                ArrayList<SerenazgoB> listarSerenazgos2 = serenazgoDao.listarSerenazgos();
-                request.setAttribute("lista",listarSerenazgos2);
+                request.setAttribute("lista", serenazgosPaginados);
+                request.setAttribute("paginaActual", paginaSerenazgo);
+                request.setAttribute("totalPaginas", totalPaginasSerenazgos);
                 request.getRequestDispatcher(vista).forward(request, response);
                 break;
+
             case "verSerenazgo":
                 String idSerenazgo = request.getParameter("idSerenazgo");
                 request.setAttribute("serenazgo",serenazgoDao.buscarSerenazgoPorId(idSerenazgo));
@@ -57,15 +75,50 @@ public class AdministradorServlet extends HttpServlet {
                 }
                 break;
             case "listaCoordinadorasCultura_A":
+                int paginaCultura = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
+                int culturaPorPagina = 5; // Número de coordinadoras de cultura por página
+
+                // Obtener la lista completa de coordinadoras de cultura
+                ArrayList<UsuarioB> listaCultura = coordinadoraDao.listarCoordinadorasCultura();
+
+                // Calcular total de páginas
+                int totalCultura = listaCultura.size();
+                int totalPaginasCultura = (int) Math.ceil((double) totalCultura / culturaPorPagina);
+
+                // Obtener las coordinadoras de cultura de la página actual
+                int desdeCultura = (paginaCultura - 1) * culturaPorPagina;
+                int hastaCultura = Math.min(desdeCultura + culturaPorPagina, totalCultura);
+                ArrayList<UsuarioB> culturaPaginada = new ArrayList<>(listaCultura.subList(desdeCultura, hastaCultura));
+
+                // Enviar atributos al JSP
                 vista = "WEB-INF/Administrador/listaCoordinadorasCultura_A.jsp";
-                ArrayList<UsuarioB> listarCoordinadorasCultura = coordinadoraDao.listarCoordinadorasCultura();
-                request.setAttribute("lista",listarCoordinadorasCultura);
+                request.setAttribute("lista", culturaPaginada);
+                request.setAttribute("paginaActual", paginaCultura);
+                request.setAttribute("totalPaginas", totalPaginasCultura);
                 request.getRequestDispatcher(vista).forward(request, response);
                 break;
+
             case "listaCoordinadorasDeportes_A":
+                int paginaDeportes = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
+                int deportesPorPagina = 5; // Número de coordinadoras de deportes por página
+
+                // Obtener la lista completa de coordinadoras de deportes
+                ArrayList<UsuarioB> listaDeportes = coordinadoraDao.listarCoordinadorasDeportes();
+
+                // Calcular total de páginas
+                int totalDeportes = listaDeportes.size();
+                int totalPaginasDeportes = (int) Math.ceil((double) totalDeportes / deportesPorPagina);
+
+                // Obtener las coordinadoras de deportes de la página actual
+                int desdeDeportes = (paginaDeportes - 1) * deportesPorPagina;
+                int hastaDeportes = Math.min(desdeDeportes + deportesPorPagina, totalDeportes);
+                ArrayList<UsuarioB> deportesPaginados = new ArrayList<>(listaDeportes.subList(desdeDeportes, hastaDeportes));
+
+                // Enviar atributos al JSP
                 vista = "WEB-INF/Administrador/listaCoordinadorasDeportes_A.jsp";
-                ArrayList<UsuarioB> listarCoordinadorasDeportes = coordinadoraDao.listarCoordinadorasDeportes();
-                request.setAttribute("lista",listarCoordinadorasDeportes);
+                request.setAttribute("lista", deportesPaginados);
+                request.setAttribute("paginaActual", paginaDeportes);
+                request.setAttribute("totalPaginas", totalPaginasDeportes);
                 request.getRequestDispatcher(vista).forward(request, response);
                 break;
             case "DetalleCoordinadoraCultura_A":
@@ -81,8 +134,26 @@ public class AdministradorServlet extends HttpServlet {
                 request.getRequestDispatcher(vista).forward(request, response);
                 break;
             case "listaVecinos_A":
+                int paginaVecinos = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
+                int vecinosPorPagina = 5; // Número de vecinos por página
+
+                // Obtener la lista completa de vecinos
+                ArrayList<UsuarioB> listaVecinos = vecinoDao.listarVecinos();
+
+                // Calcular total de páginas
+                int totalVecinos = listaVecinos.size();
+                int totalPaginasVecinos = (int) Math.ceil((double) totalVecinos / vecinosPorPagina);
+
+                // Obtener los vecinos de la página actual
+                int desdeVecinos = (paginaVecinos - 1) * vecinosPorPagina;
+                int hastaVecinos = Math.min(desdeVecinos + vecinosPorPagina, totalVecinos);
+                ArrayList<UsuarioB> vecinosPaginados = new ArrayList<>(listaVecinos.subList(desdeVecinos, hastaVecinos));
+
+                // Enviar atributos al JSP
                 vista = "WEB-INF/Administrador/listaVecinos_A.jsp";
-                request.setAttribute("lista",vecinoDao.listarVecinos());
+                request.setAttribute("lista", vecinosPaginados);
+                request.setAttribute("paginaActual", paginaVecinos);
+                request.setAttribute("totalPaginas", totalPaginasVecinos);
                 request.getRequestDispatcher(vista).forward(request, response);
                 break;
             case "DetalleSolicitantes_A":
@@ -98,8 +169,26 @@ public class AdministradorServlet extends HttpServlet {
                 request.getRequestDispatcher(vista).forward(request, response);
                 break;
             case "listaInstructores_A":
+                int paginaInstructores = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
+                int instructoresPorPagina = 10; // Número de instructores por página
+
+                // Obtener la lista completa de instructores
+                ArrayList<ProfesoresEvento> listaInstructores = instructorDao.listarProfesores();
+
+                // Calcular total de páginas
+                int totalInstructores = listaInstructores.size();
+                int totalPaginasInstructores = (int) Math.ceil((double) totalInstructores / instructoresPorPagina);
+
+                // Obtener los instructores de la página actual
+                int desdeInstructores = (paginaInstructores - 1) * instructoresPorPagina;
+                int hastaInstructores = Math.min(desdeInstructores + instructoresPorPagina, totalInstructores);
+                ArrayList<ProfesoresEvento> instructoresPaginados = new ArrayList<>(listaInstructores.subList(desdeInstructores, hastaInstructores));
+
+                // Enviar atributos al JSP
                 vista = "WEB-INF/Administrador/listaInstructores_A.jsp";
-                request.setAttribute("lista",instructorDao.listarProfesores());
+                request.setAttribute("lista", instructoresPaginados);
+                request.setAttribute("paginaActual", paginaInstructores);
+                request.setAttribute("totalPaginas", totalPaginasInstructores);
                 request.getRequestDispatcher(vista).forward(request, response);
                 break;
             case "registroInstructor":
@@ -129,8 +218,26 @@ public class AdministradorServlet extends HttpServlet {
                 request.getRequestDispatcher(vista).forward(request, response);
                 break;
             case "usuariosBaneados_A":
+                int paginaBaneados = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
+                int baneadosPorPagina = 5; // Número de usuarios baneados por página
+
+                // Obtener la lista completa de usuarios baneados
+                ArrayList<UsuarioB> listaBaneados = usuarioDao.listarBaneados();
+
+                // Calcular total de páginas
+                int totalBaneados = listaBaneados.size();
+                int totalPaginasBaneados = (int) Math.ceil((double) totalBaneados / baneadosPorPagina);
+
+                // Obtener los usuarios baneados de la página actual
+                int desdeBaneados = (paginaBaneados - 1) * baneadosPorPagina;
+                int hastaBaneados = Math.min(desdeBaneados + baneadosPorPagina, totalBaneados);
+                ArrayList<UsuarioB> baneadosPaginados = new ArrayList<>(listaBaneados.subList(desdeBaneados, hastaBaneados));
+
+                // Enviar atributos al JSP
                 vista = "WEB-INF/Administrador/usuariosBaneados_A.jsp";
-                request.setAttribute("lista",usuarioDao.listarBaneados());
+                request.setAttribute("lista", baneadosPaginados);
+                request.setAttribute("paginaActual", paginaBaneados);
+                request.setAttribute("totalPaginas", totalPaginasBaneados);
                 request.getRequestDispatcher(vista).forward(request, response);
                 break;
             case "solicitanteAVecinoAceptar":
@@ -378,65 +485,139 @@ public class AdministradorServlet extends HttpServlet {
 
                 break;
             case "buscarVecinoPorNombre":
-                textoBuscar= request.getParameter("textoBuscar");
-                if (textoBuscar == null) {
+                String textoBuscarVecinos = request.getParameter("textoBuscar");
+                int paginaBusquedaVecinos = request.getParameter("pagina") != null ? Integer.parseInt(request.getParameter("pagina")) : 1;
+                int vecinosPorPaginaBusqueda = 5; // Número de vecinos por página
+
+                if (textoBuscarVecinos == null) {
                     response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=listaVecinos_A");
                 } else {
-                    request.setAttribute("textoBusqueda",textoBuscar);
-                    request.setAttribute("lista", vecinoDao.buscarVecinoPorNombre(textoBuscar));
-                    RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Administrador/listaVecinos_A.jsp");
-                    view.forward(request, response);
+                    ArrayList<UsuarioB> vecinosBuscados = vecinoDao.buscarVecinoPorNombre(textoBuscarVecinos);
+                    int totalRegistrosVecinos = vecinosBuscados.size();
+                    int totalPaginasVecinosBusqueda = (int) Math.ceil((double) totalRegistrosVecinos / vecinosPorPaginaBusqueda);
+
+                    // Obtener los vecinos de la página actual
+                    int desdeVecinosBusqueda = (paginaBusquedaVecinos - 1) * vecinosPorPaginaBusqueda;
+                    int hastaVecinosBusqueda = Math.min(desdeVecinosBusqueda + vecinosPorPaginaBusqueda, totalRegistrosVecinos);
+                    ArrayList<UsuarioB> vecinosPaginadosBusqueda = new ArrayList<>(vecinosBuscados.subList(desdeVecinosBusqueda, hastaVecinosBusqueda));
+
+                    // Enviar atributos al JSP
+                    request.setAttribute("textoBusqueda", textoBuscarVecinos);
+                    request.setAttribute("lista", vecinosPaginadosBusqueda);
+                    request.setAttribute("paginaActual", paginaBusquedaVecinos);
+                    request.setAttribute("totalPaginas", totalPaginasVecinosBusqueda);
+                    RequestDispatcher viewVecinos = request.getRequestDispatcher("WEB-INF/Administrador/listaVecinos_A.jsp");
+                    viewVecinos.forward(request, response);
                 }
                 break;
 
             case "buscarSerenazgoPorNombre":
-                textoBuscar= request.getParameter("textoBuscarSerenazgo");
-                String tipoS =  request.getParameter("tipo");
-                String turnoS =  request.getParameter("turno");
-                if (textoBuscar == null && tipoS == null && turnoS == null) {
+                String textoBuscarSerenazgo = request.getParameter("textoBuscarSerenazgo");
+                String tipoS = request.getParameter("tipo");
+                String turnoS = request.getParameter("turno");
+                int paginaBusquedaSerenazgo = request.getParameter("pagina") != null ? Integer.parseInt(request.getParameter("pagina")) : 1;
+                int serenazgosPorPaginaBusqueda = 5; // Número de serenazgos por página
+
+                if (textoBuscarSerenazgo == null && tipoS == null && turnoS == null) {
                     response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=listaSerenazgo_A");
                 } else {
-                    request.setAttribute("textoBusqueda",textoBuscar);
+                    ArrayList<SerenazgoB> serenazgosBuscados = serenazgoDao.listarSerenazgosFiltro(textoBuscarSerenazgo, tipoS, turnoS);
+                    int totalRegistrosSerenazgo = serenazgosBuscados.size();
+                    int totalPaginasSerenazgoBusqueda = (int) Math.ceil((double) totalRegistrosSerenazgo / serenazgosPorPaginaBusqueda);
 
-                    request.setAttribute("tipo",tipoS);
-                    request.setAttribute("turno",turnoS);
+                    // Obtener los serenazgos de la página actual
+                    int desdeSerenazgoBusqueda = (paginaBusquedaSerenazgo - 1) * serenazgosPorPaginaBusqueda;
+                    int hastaSerenazgoBusqueda = Math.min(desdeSerenazgoBusqueda + serenazgosPorPaginaBusqueda, totalRegistrosSerenazgo);
+                    ArrayList<SerenazgoB> serenazgosPaginadosBusqueda = new ArrayList<>(serenazgosBuscados.subList(desdeSerenazgoBusqueda, hastaSerenazgoBusqueda));
 
-                    request.setAttribute("lista", serenazgoDao.listarSerenazgosFiltro(textoBuscar,tipoS,turnoS));
-                    RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Administrador/listaSerenazgo_A.jsp");
-                    view.forward(request, response);
+                    // Enviar atributos al JSP
+                    request.setAttribute("textoBusqueda", textoBuscarSerenazgo);
+                    request.setAttribute("tipo", tipoS);
+                    request.setAttribute("turno", turnoS);
+                    request.setAttribute("lista", serenazgosPaginadosBusqueda);
+                    request.setAttribute("paginaActual", paginaBusquedaSerenazgo);
+                    request.setAttribute("totalPaginas", totalPaginasSerenazgoBusqueda);
+                    RequestDispatcher viewSerenazgo = request.getRequestDispatcher("WEB-INF/Administrador/listaSerenazgo_A.jsp");
+                    viewSerenazgo.forward(request, response);
                 }
                 break;
             case "buscarCoordiCulturaPorNombre":
-                textoBuscar= request.getParameter("textoBuscar");
-                if (textoBuscar == null) {
+                String textoBuscarCultura = request.getParameter("textoBuscar");
+                int paginaBusquedaCultura = request.getParameter("pagina") != null ? Integer.parseInt(request.getParameter("pagina")) : 1;
+                int culturaPorPaginaBusqueda = 5; // Número de coordinadoras de cultura por página
+
+                if (textoBuscarCultura == null) {
                     response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=listaCoordinadorasCultura_A");
                 } else {
-                    request.setAttribute("textoBusqueda",textoBuscar);
-                    request.setAttribute("lista", coordinadoraDao.listarCoordinadorasCulturaPorNombre(textoBuscar));
-                    RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Administrador/listaCoordinadorasCultura_A.jsp");
-                    view.forward(request, response);
+                    ArrayList<UsuarioB> culturaBuscada = coordinadoraDao.listarCoordinadorasCulturaPorNombre(textoBuscarCultura);
+                    int totalRegistrosCultura = culturaBuscada.size();
+                    int totalPaginasCulturaBusqueda = (int) Math.ceil((double) totalRegistrosCultura / culturaPorPaginaBusqueda);
+
+                    // Obtener las coordinadoras de cultura de la página actual
+                    int desdeCulturaBusqueda = (paginaBusquedaCultura - 1) * culturaPorPaginaBusqueda;
+                    int hastaCulturaBusqueda = Math.min(desdeCulturaBusqueda + culturaPorPaginaBusqueda, totalRegistrosCultura);
+                    ArrayList<UsuarioB> culturaPaginadaBusqueda = new ArrayList<>(culturaBuscada.subList(desdeCulturaBusqueda, hastaCulturaBusqueda));
+
+                    // Enviar atributos al JSP
+                    request.setAttribute("textoBusqueda", textoBuscarCultura);
+                    request.setAttribute("lista", culturaPaginadaBusqueda);
+                    request.setAttribute("paginaActual", paginaBusquedaCultura);
+                    request.setAttribute("totalPaginas", totalPaginasCulturaBusqueda);
+                    RequestDispatcher viewCultura = request.getRequestDispatcher("WEB-INF/Administrador/listaCoordinadorasCultura_A.jsp");
+                    viewCultura.forward(request, response);
                 }
                 break;
+
             case "buscarCoordiDeportesPorNombre":
-                textoBuscar= request.getParameter("textoBuscar");
-                if (textoBuscar == null) {
+                String textoBuscarDeportes = request.getParameter("textoBuscar");
+                int paginaBusquedaDeportes = request.getParameter("pagina") != null ? Integer.parseInt(request.getParameter("pagina")) : 1;
+                int deportesPorPaginaBusqueda = 5; // Número de coordinadoras de deportes por página
+
+                if (textoBuscarDeportes == null) {
                     response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=listaCoordinadorasDeportes_A");
                 } else {
-                    request.setAttribute("textoBusqueda",textoBuscar);
-                    request.setAttribute("lista", coordinadoraDao.listarCoordinadorasDeportesPorNombre(textoBuscar));
-                    RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Administrador/listaCoordinadorasDeportes_A.jsp");
-                    view.forward(request, response);
+                    ArrayList<UsuarioB> deportesBuscados = coordinadoraDao.listarCoordinadorasDeportesPorNombre(textoBuscarDeportes);
+                    int totalRegistrosDeportes = deportesBuscados.size();
+                    int totalPaginasDeportesBusqueda = (int) Math.ceil((double) totalRegistrosDeportes / deportesPorPaginaBusqueda);
+
+                    // Obtener las coordinadoras de deportes de la página actual
+                    int desdeDeportesBusqueda = (paginaBusquedaDeportes - 1) * deportesPorPaginaBusqueda;
+                    int hastaDeportesBusqueda = Math.min(desdeDeportesBusqueda + deportesPorPaginaBusqueda, totalRegistrosDeportes);
+                    ArrayList<UsuarioB> deportesPaginadosBusqueda = new ArrayList<>(deportesBuscados.subList(desdeDeportesBusqueda, hastaDeportesBusqueda));
+
+                    // Enviar atributos al JSP
+                    request.setAttribute("textoBusqueda", textoBuscarDeportes);
+                    request.setAttribute("lista", deportesPaginadosBusqueda);
+                    request.setAttribute("paginaActual", paginaBusquedaDeportes);
+                    request.setAttribute("totalPaginas", totalPaginasDeportesBusqueda);
+                    RequestDispatcher viewDeportes = request.getRequestDispatcher("WEB-INF/Administrador/listaCoordinadorasDeportes_A.jsp");
+                    viewDeportes.forward(request, response);
                 }
                 break;
             case "buscarUsuariosBaneadosPorNombre":
-                textoBuscar= request.getParameter("textoBuscar");
-                if (textoBuscar == null) {
+                String textoBuscarBaneados = request.getParameter("textoBuscar");
+                int paginaBusquedaBaneados = request.getParameter("pagina") != null ? Integer.parseInt(request.getParameter("pagina")) : 1;
+                int baneadosPorPaginaBusqueda = 5; // Número de usuarios baneados por página
+
+                if (textoBuscarBaneados == null) {
                     response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=usuariosBaneados_A");
                 } else {
-                    request.setAttribute("textoBusqueda",textoBuscar);
-                    request.setAttribute("lista", usuarioDao.listarBaneadosPorNombre(textoBuscar));
-                    RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Administrador/usuariosBaneados_A.jsp");
-                    view.forward(request, response);
+                    ArrayList<UsuarioB> baneadosBuscados = usuarioDao.listarBaneadosPorNombre(textoBuscarBaneados);
+                    int totalRegistrosBaneados = baneadosBuscados.size();
+                    int totalPaginasBaneadosBusqueda = (int) Math.ceil((double) totalRegistrosBaneados / baneadosPorPaginaBusqueda);
+
+                    // Obtener los usuarios baneados de la página actual
+                    int desdeBaneadosBusqueda = (paginaBusquedaBaneados - 1) * baneadosPorPaginaBusqueda;
+                    int hastaBaneadosBusqueda = Math.min(desdeBaneadosBusqueda + baneadosPorPaginaBusqueda, totalRegistrosBaneados);
+                    ArrayList<UsuarioB> baneadosPaginadosBusqueda = new ArrayList<>(baneadosBuscados.subList(desdeBaneadosBusqueda, hastaBaneadosBusqueda));
+
+                    // Enviar atributos al JSP
+                    request.setAttribute("textoBusqueda", textoBuscarBaneados);
+                    request.setAttribute("lista", baneadosPaginadosBusqueda);
+                    request.setAttribute("paginaActual", paginaBusquedaBaneados);
+                    request.setAttribute("totalPaginas", totalPaginasBaneadosBusqueda);
+                    RequestDispatcher viewBaneados = request.getRequestDispatcher("WEB-INF/Administrador/usuariosBaneados_A.jsp");
+                    viewBaneados.forward(request, response);
                 }
                 break;
             case "buscarNuevasSolicitudesPorNombre":
@@ -467,14 +648,29 @@ public class AdministradorServlet extends HttpServlet {
                 break;
 
             case "buscarInstructoresPorNombre":
-                textoBuscar= request.getParameter("textoBuscar");
-                if (textoBuscar == null) {
+                String textoBuscarInstructores = request.getParameter("textoBuscar");
+                int paginaBusquedaInstructores = request.getParameter("pagina") != null ? Integer.parseInt(request.getParameter("pagina")) : 1;
+                int instructoresPorPaginaBusqueda = 5; // Número de instructores por página
+
+                if (textoBuscarInstructores == null) {
                     response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=listaInstructores_A");
                 } else {
-                    request.setAttribute("textoBusqueda",textoBuscar);
-                    request.setAttribute("lista", instructorDao.listarProfesoresPorNombre(textoBuscar));
-                    RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Administrador/listaInstructores_A.jsp");
-                    view.forward(request, response);
+                    ArrayList<ProfesoresEvento> instructoresBuscados = instructorDao.listarProfesoresPorNombre(textoBuscarInstructores);
+                    int totalRegistrosInstructores = instructoresBuscados.size();
+                    int totalPaginasInstructoresBusqueda = (int) Math.ceil((double) totalRegistrosInstructores / instructoresPorPaginaBusqueda);
+
+                    // Obtener los instructores de la página actual
+                    int desdeInstructoresBusqueda = (paginaBusquedaInstructores - 1) * instructoresPorPaginaBusqueda;
+                    int hastaInstructoresBusqueda = Math.min(desdeInstructoresBusqueda + instructoresPorPaginaBusqueda, totalRegistrosInstructores);
+                    ArrayList<ProfesoresEvento> instructoresPaginadosBusqueda = new ArrayList<>(instructoresBuscados.subList(desdeInstructoresBusqueda, hastaInstructoresBusqueda));
+
+                    // Enviar atributos al JSP
+                    request.setAttribute("textoBusqueda", textoBuscarInstructores);
+                    request.setAttribute("lista", instructoresPaginadosBusqueda);
+                    request.setAttribute("paginaActual", paginaBusquedaInstructores);
+                    request.setAttribute("totalPaginas", totalPaginasInstructoresBusqueda);
+                    RequestDispatcher viewInstructores = request.getRequestDispatcher("WEB-INF/Administrador/listaInstructores_A.jsp");
+                    viewInstructores.forward(request, response);
                 }
                 break;
 
