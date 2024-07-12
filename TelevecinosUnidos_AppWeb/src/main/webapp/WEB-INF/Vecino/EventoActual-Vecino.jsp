@@ -243,7 +243,9 @@
 
                     <form method="post" action="<%=request.getContextPath()%>/VecinoServlet?action=inscribirEvento&idEvento=<%=request.getAttribute("evento") != null ? ((EventoB) request.getAttribute("evento")).getIdEvento() : ""%>">
                         <div class="d-flex justify-content-center mt-4">
-                            <button id="inscribirButton" type="button" class="btn btn-primary" <%= ((EventoB) request.getAttribute("evento")).getCantDisponibles() == 0 ? "disabled" : "" %>>Inscribirse a este evento</button>
+
+                                <button id="inscribirButton" type="button" class="btn btn-primary" <%= ((EventoB) request.getAttribute("evento")).getCantDisponibles() == 0 ? "disabled" : "" %>>Inscribirse a este evento</button>
+
                         </div>
                     </form>
 

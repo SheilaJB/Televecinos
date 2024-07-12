@@ -155,14 +155,15 @@
                             <%if(erroresEvento.isEmpty()){%>
                             <!----Inicio de la selectiva----->
                             <label for="frecuenciaEvento" class="form-label" style="color:#023047;"><b>Frecuencia del evento:</b></label>
-                            <select id="frecuenciaEvento" class="form-select mb-3" aria-label="Default select example" onchange="mostrarOpciones()" name="frecuencia">
+                            <select id="frecuenciaEvento" class="form-select mb-3" aria-label="Default select example" onchange="mostrarOpciones()" name="frecuencia" required>
                                 <option selected>Seleccione la frecuencia del evento</option>
                                 <option value="2" <%=evento.getFrecuenciaString().equals("Dos veces por semana") ? "selected" : ""%>>Dos veces por semana</option>
                                 <option value="1" <%=evento.getFrecuenciaString().equals("Semanal") ? "selected" : ""%>>Semanal</option>
                             </select>
 
+
                             <div id="opcionesInterdiarias" style="display:none;">
-                                <select id="diasInterdiarios" class="form-select mb-3" aria-label="Default select example" name="opcionesDias">
+                                <select id="diasInterdiarios" class="form-select mb-3" aria-label="Default select example" name="opcionesDias" required>
                                     <option selected>Seleccione la opción: </option>
                                     <option value="Lunes-Miércoles" <%=evento.getDiaEvento().equals("Lunes-Miércoles") ? "selected" : ""%>>Lunes-Miércoles</option>
                                     <option value="Martes-Jueves" <%=evento.getDiaEvento().equals("Martes-Jueves") ? "selected" : ""%>>Martes-Jueves</option>
@@ -171,7 +172,7 @@
 
                             <div id="opcionesSemanal" style="display:none;">
                                 <label for="diaSemana" class="form-label" style="color:#023047;"><b>Elegir día:</b></label>
-                                <select id="diaSemana" class="form-select mb-3" aria-label="Default select example" name="opcionesDias1">
+                                <select id="diaSemana" class="form-select mb-3" aria-label="Default select example" name="opcionesDias1" required>
                                     <option selected>Seleccione el día a la semana:</option>
                                     <option value="Lunes" <%=evento.getDiaEvento().equals("Lunes") ? "selected" : ""%>>Lunes</option>
                                     <option value="Martes" <%=evento.getDiaEvento().equals("Martes") ? "selected" : ""%>>Martes</option>
@@ -195,14 +196,14 @@
                             %>
                             <!----Inicio de la selectiva----->
                             <label for="frecuenciaEvento" class="form-label" style="color:#023047;"><b>Frecuencia del evento:</b></label>
-                            <select id="frecuenciaEvento" class="form-select mb-3" aria-label="Default select example" onchange="mostrarOpciones()" name="frecuencia">
+                            <select id="frecuenciaEvento" class="form-select mb-3" aria-label="Default select example" onchange="mostrarOpciones()" name="frecuencia" required>
                                 <option selected>Seleccione la frecuencia del evento</option>
                                 <option value="2" <%=Integer.parseInt(frec)==2 ? "selected" : ""%>>Dos veces por semana</option>
                                 <option value="1" <%=Integer.parseInt(frec)==1 ? "selected" : ""%>>Semanal</option>
                             </select>
 
                             <div id="opcionesInterdiarias" style="display:none;">
-                                <select id="diasInterdiarios" class="form-select mb-3" aria-label="Default select example" name="opcionesDias">
+                                <select id="diasInterdiarios" class="form-select mb-3" aria-label="Default select example" name="opcionesDias" required>
                                     <option selected>Seleccione la opción: </option>
                                     <option value="Lunes-Miércoles" <%=opcionesDias.equals("Lunes-Miércoles") ? "selected" : ""%>>Lunes-Miércoles</option>
                                     <option value="Martes-Jueves" <%=opcionesDias.equals("Martes-Jueves") ? "selected" : ""%>>Martes-Jueves</option>
@@ -211,7 +212,7 @@
 
                             <div id="opcionesSemanal" style="display:none;">
                                 <label for="diaSemana" class="form-label" style="color:#023047;"><b>Elegir día:</b></label>
-                                <select id="diaSemana" class="form-select mb-3" aria-label="Default select example" name="opcionesDias1">
+                                <select id="diaSemana" class="form-select mb-3" aria-label="Default select example" name="opcionesDias1" required>
                                     <option selected>Seleccione el día a la semana:</option>
                                     <option value="Lunes" <%=opcionesDias1.equals("Lunes") ? "selected" : ""%>>Lunes</option>
                                     <option value="Martes" <%=opcionesDias1.equals("Martes") ? "selected" : ""%>>Martes</option>
@@ -246,8 +247,12 @@
                             </script>
 
                             <!---Cantidad de vacantes disponibles-->
+                            <% String ValueY = null;%>
+                            <%if (!erroresEvento.isEmpty()){
+                                ValueY=(String) request.getAttribute("cantVacantes");
+                            }else{ValueY= String.valueOf(evento.getCantidadVacantes());}%>
                             <label for="cantidadVacantes" class="form-label" style="color:#023047;"><b>Cantidad de vacantes:</b></label>
-                            <input type="number" class="form-control" id="cantidadVacantes" placeholder="Escribir" name="cantidadVacantes" value="<%=evento.getCantidadVacantes()%>" required>
+                            <input type="number" class="form-control" id="cantidadVacantes" placeholder="Escribir" name="cantidadVacantes" value="<%=ValueY%>" required>
                         </div>
                     </div>
 
@@ -303,7 +308,7 @@
                             <div class="mb-3">
                                 <label for="listaMateriales" class="form-label"  style="color:#023047;"><b>Materiales:</b></label>
                                 <% String ValueX = null; if(erroresEvento.isEmpty()){ValueX =evento.getListaMateriales();}else{ValueX = (String) request.getAttribute("materiales");}%>
-                                <input type="text" class="form-control" id="listaMateriales" name="listaMateriales" value="<%=ValueX%>">
+                                <input type="text" class="form-control" id="listaMateriales" name="listaMateriales" value="<%=ValueX%>" required>
                             </div>
                         </div>
                     </div>
@@ -376,7 +381,29 @@
                 <button type="submit" class="btn btn-primary" style="background-color: #023047; border-color: #023047; color: #ffffff;"><b>Guardar Cambios</b></button>
                 <!--<a href="<%=request.getContextPath()%>/CoordinadorServlet?action=lista"  class="btn btn-primary" style="background-color: #023047; border-color: #023047; color: #ffffff;"><b>Siguiente</b></a>-->
             </div>
+            <script>
+                function validarFormulario() {
+                    var camposObligatorios = document.querySelectorAll('input[required], select[required], textarea[required]');
+                    var formularioValido = true;
 
+                    camposObligatorios.forEach(function(campo) {
+                        if (!campo.value.trim()) {
+                            campo.classList.add('highlight');
+                            formularioValido = false;
+                        } else {
+                            campo.classList.remove('highlight');
+                        }
+                    });
+
+                    if (!formularioValido) {
+                        document.getElementById('error-message').style.display = 'block';
+                    } else {
+                        document.getElementById('error-message').style.display = 'none';
+                    }
+
+                    return formularioValido;
+                }
+            </script>
         </form>
         <!-- Footer Start -->
         <div class="container-fluid pt-4 px-4">

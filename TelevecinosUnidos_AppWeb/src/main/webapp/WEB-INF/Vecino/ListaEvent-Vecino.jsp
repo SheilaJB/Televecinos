@@ -1,4 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="org.example.televecinosunidos_appweb.model.beans.EventoB" %>
+<%@ page import="java.util.ArrayList" %>
+<%ArrayList<EventoB> eventosInscritos = (ArrayList<EventoB>) request.getAttribute("eventosInscritos");%>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -32,6 +36,15 @@
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
     <link href="css/style_vec.css" rel="stylesheet">
+
+    <style>
+        .btn-sm-square {
+            width: 20px;
+            height: 20px;
+            padding: 0;
+            text-align: center;
+        }
+    </style>
 </head>
 
 <body>
@@ -92,112 +105,44 @@
                 </div>
 
                 <div class="table-responsive">
-                    <table class="table" style="background-color: transparent;">
+                    <table id="eventosTable" class="table table-striped table-hover" style="background-color: transparent;">
                         <thead>
-                        <tr>
-                            <th scope="col">N°</th>
+                        <tr class="form-text">
                             <th scope="col">Nombre</th>
                             <th scope="col">Fecha de inicio</th>
+                            <th scope="col">Estado</th>
                             <th scope="col">Frecuencia</th>
                             <th scope="col">Tipo de evento</th>
-                            <th scope="col">Estado</th>
-                            <th scope="col">Visualizar</th>
-
+                            <th scope="col"></th>
                         </tr>
                         </thead>
                         <tbody>
+                        <%
+                            if (eventosInscritos != null && !eventosInscritos.isEmpty()) {
+                                for (EventoB evento : eventosInscritos) {
+                        %>
                         <tr>
-                            <th scope="row">1</th>
-                            <td>Voley</td>
-                            <td>21-Enero</td>
-                            <td>Lunes-Miercoles</td>
-                            <td>Deporte</td>
-                            <td>En curso</td>
+                            <td><%= evento.getNombre() %></td>
+                            <td><%= evento.getFecha_inicio() %></td>
+                            <td><%= evento.getEstadoString() %></td>
+                            <td><%= evento.getFrecuenciaString() %></td>
+                            <td><%= evento.getTipoEvento() %></td>
                             <td>
-                                <button type="button" class="btn btn-info m-2" style="background-color: transparent; border: none;" onclick="viewEvent()">
-                                    <i class="fas fa-eye"><a href="EventoActual-Vecino.html"></a></i> <!-- Ícono de ojo de FontAwesome -->
-                                </button>
+                                <a onclick="viewFunction(<%=evento.getIdEvento()%>)">
+                                    <button type="button" class="btn btn-primary btn-sm-square m-1"><i class="fas fa-eye fa-xs"></i></button>
+                                </a>
                             </td>
-
-
                         </tr>
+                        <%
+                            }
+                        } else {
+                        %>
                         <tr>
-                            <th scope="row">2</th>
-                            <td>Canto</td>
-                            <td>21-Enero</td>
-                            <td>Martes-Jueves</td>
-                            <td>Cultura</td>
-                            <td>En curso</td>
-                            <td>
-                                <button type="button" class="btn btn-info m-2" style="background-color: transparent; border: none;" onclick="viewEvent()">
-                                    <i class="fas fa-eye"><a href="EventoActual-Vecino"></a></i> <!-- Ícono de ojo de FontAwesome -->
-                                </button>
-                            </td>
-
-
-
+                            <td colspan="8">No estás inscrito en ningún evento.</td>
                         </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Voley</td>
-                            <td>21-Enero</td>
-                            <td>Martes-Jueves</td>
-                            <td>Cultura</td>
-                            <td>En curso</td>
-                            <td>
-                                <button type="button" class="btn btn-info m-2" style="background-color: transparent; border: none;" onclick="viewEvent()">
-                                    <i class="fas fa-eye"><a href="EventoActual-Vecino"></a></i> <!-- Ícono de ojo de FontAwesome -->
-                                </button>
-
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <th scope="row">4</th>
-                            <td>Voley</td>
-                            <td>21-Enero</td>
-                            <td>Lunes-Miercoles</td>
-                            <td>Deporte</td>
-                            <td>En curso</td>
-                            <td>
-                                <button type="button" class="btn btn-info m-2" style="background-color: transparent; border: none;" onclick="viewEvent()">
-                                    <i class="fas fa-eye"><a href="EventoActual-Vecino.html"></a></i> <!-- Ícono de ojo de FontAwesome -->
-                                </button>
-                            </td>
-
-
-                        </tr>
-                        <tr>
-                            <th scope="row">5</th>
-                            <td>Canto</td>
-                            <td>21-Enero</td>
-                            <td>Martes-Jueves</td>
-                            <td>Cultura</td>
-                            <td>Finalizado</td>
-                            <td>
-                                <button type="button" class="btn btn-info m-2" style="background-color: transparent; border: none;" onclick="viewEvent()">
-                                    <i class="fas fa-eye"><a href="EventoActual-Vecino"></a></i> <!-- Ícono de ojo de FontAwesome -->
-                                </button>
-                            </td>
-
-
-
-                        </tr>
-                        <tr>
-                            <th scope="row">6</th>
-                            <td>Voley</td>
-                            <td>21-Enero</td>
-                            <td>Martes-Jueves</td>
-                            <td>Cultura</td>
-                            <td>Finalizado</td>
-                            <td>
-                                <button type="button" class="btn btn-info m-2" style="background-color: transparent; border: none;" onclick="viewEvent()">
-                                    <i class="fas fa-eye"><a href="EventoActual-Vecino"></a></i> <!-- Ícono de ojo de FontAwesome -->
-                                </button>
-
-                            </td>
-
-                        </tr>
+                        <%
+                            }
+                        %>
                         </tbody>
                     </table>
 
@@ -228,7 +173,17 @@
 
         </div>
 
+
+        <script>
+            function viewFunction(idEvento) {
+                window.location.href ='<%=request.getContextPath()%>/VecinoServlet?action=verEventoInscrito&idEvento=' +idEvento;
+            }
+
+        </script>
+
         <!-- Filtro-->
+
+
         <div id="Barra-Filtro" >
             <script>
                 function filtrar() {

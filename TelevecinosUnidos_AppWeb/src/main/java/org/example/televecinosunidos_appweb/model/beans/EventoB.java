@@ -1,6 +1,8 @@
 package org.example.televecinosunidos_appweb.model.beans;
 
 import java.io.InputStream;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class EventoB {
     private int idEvento;
@@ -27,6 +29,17 @@ public class EventoB {
     private int ProfesoresEvento_idProfesoresEvento;
     private String diaEvento;
     private String nombreFoto;
+
+    private String tipoEvento;
+
+    public String getTipoEvento() {
+        return tipoEvento;
+    }
+
+    public void setTipoEvento(String tipoEvento) {
+        this.tipoEvento = tipoEvento;
+    }
+
     public int getIdPag() {
         return idPag;
     }

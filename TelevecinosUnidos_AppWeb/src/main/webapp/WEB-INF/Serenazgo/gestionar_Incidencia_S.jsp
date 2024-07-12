@@ -103,23 +103,22 @@
         <h2 class="mb-2 text-center" style = "padding-top: 3%;" style="color:#023047;">Evaluación de incidencia: <%=incidencia.getNombreIncidencia()%></h2>
 
 
-        <form  id="incidenciaFalsaForm" method="post" action="<%=request.getContextPath()%>/SerenazgoServlet?action=seleccionarInicidenciaFalsa">
-            <input type="hidden" name="incidenciaId" value="<%=incidencia.getIdIncidencias()%>">
-            <input type="hidden" class="form-control" name="UsrID" value="<%=incidencia.getUsuario_idUsuario()%>">
-            <td>
+        <div style="display: flex; align-items: center;">
+            <form id="incidenciaFalsaForm" method="post" action="<%=request.getContextPath()%>/SerenazgoServlet?action=seleccionarInicidenciaFalsa">
+                <input type="hidden" name="incidenciaId" value="<%=incidencia.getIdIncidencias()%>">
+                <input type="hidden" class="form-control" name="UsrID" value="<%=incidencia.getUsuario_idUsuario()%>">
                 <button type="button" class="btn btn-false m-2 btn-banear" onclick="confirmarIncidenciaFalsa(<%=incidencia.getIdIncidencias()%>)">
                     ⛔ Falsa
                 </button>
-            </td>
-        </form>
-        <form id="borrarFalsaForm" method="post" action="<%=request.getContextPath()%>/SerenazgoServlet?action=borrarIncidencia">
-            <input type="hidden" name="incidenciaId" value="<%=incidencia.getIdIncidencias()%>">
-            <td>
+            </form>
+            <form id="borrarFalsaForm" method="post" action="<%=request.getContextPath()%>/SerenazgoServlet?action=borrarIncidencia">
+                <input type="hidden" name="incidenciaId" value="<%=incidencia.getIdIncidencias()%>">
                 <button type="button" class="btn btn-danger m-2 btn-banear" onclick="confirmarBorrarIncidencia()">
                     🗑️Borrar incidencia
                 </button>
-            </td>
-        </form>
+            </form>
+        </div>
+
 
         <form method="post" id="formularioGestionarIncidencia" action="<%=request.getContextPath()%>/SerenazgoServlet?action=gestionarIncidencia">
             <!-- Form Start -->
