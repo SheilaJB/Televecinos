@@ -36,6 +36,7 @@
     <link href="css/app.min.css" rel="stylesheet">
     <link href="css/style_vec.css" rel="stylesheet">
     <link href="css/style_popup.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
 
         .popup {
@@ -110,10 +111,34 @@
             <div class="container text-center">
                 <img src="img/serenazgo.jpg" class="img-fluid mb-3" alt="Imagen Serenazgo" width="200">
 
+                <% if(request.getParameter("err") != null) { %>
+                <script>
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: '<%= request.getParameter("err") %>',
+                    });
+                </script>
+                <% } %>
+                <% if(request.getParameter("success") != null) { %>
+                <script>
+                    Swal.fire({
+                        icon: "success",
+                        title: '<%= request.getParameter("success") %>',
+                        showConfirmButton: false,
+                        timer: 1700
+                    }).then(() => {
+                        window.location.href = '<%= request.getContextPath() %>/AdministradorServlet?action=listaSerenazgo_A';
+                    });
+                </script>
+                <% } %>
+
                 <!-- Formulario -->
                 <form method="post" action="<%=request.getContextPath()%>/AdministradorServlet?action=editarSerenazgo">
 
                     <input type="hidden" id="idUsuario" name="idUsuario" class="form-control" value="<%=serenazgo.getUsuario().getIdUsuario()%>">
+                    <input type="hidden" id="idSerenazgo" name="idSerenazgo" class="form-control" value="<%=serenazgo.getIdSerenazgo()%>">
+
 
                     <label for="nombre" class="form-label" style="color:#023047;"><b>Nombre del serenazgo</b></label>
                     <input type="text" id="nombre" name="nombre" class="form-control" value="<%=serenazgo.getUsuario().getNombre()%>">

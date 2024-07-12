@@ -497,14 +497,15 @@ public class AdministradorServlet extends HttpServlet {
                 break;
             case "editarSerenazgo":
                 String idUsuario2 = request.getParameter("idUsuario");
+                String idSerenazgo2 = request.getParameter("idSerenazgo");
                 String nombre2 = request.getParameter("nombre");
                 String apellido2 = request.getParameter("apellido");
                 String dni2 = request.getParameter("dni");
                 String direccion2 = request.getParameter("direccion");
                 String numTelefono2 = request.getParameter("numTelefono");
                 String fechaNacimiento2 = request.getParameter("fechaNacimiento");
-                int turno2 = Integer.parseInt(request.getParameter("turno"));
-                int tipo2 = Integer.parseInt(request.getParameter("tipo"));
+                String turno2Str = request.getParameter("turno");
+                String tipo2Str = request.getParameter("tipo");
                 String correo2 = request.getParameter("correo");
                 String contrasenia2 = request.getParameter("contrasenia");
                 int pregFrecuentes2 = 1;
@@ -512,28 +513,94 @@ public class AdministradorServlet extends HttpServlet {
                 int isBan2 = 0;
 
 
-                UsuarioB us2 = new UsuarioB();
-                us2.setIdUsuario(Integer.parseInt(idUsuario2));
-                us2.setNombre(nombre2);
-                us2.setApellido(apellido2);
-                us2.setDni(dni2);
-                us2.setDireccion(direccion2);
-                us2.setCorreo(correo2);
-                us2.setContrasenia(contrasenia2);
-                us2.setPreguntasFrecuentes_idTable2(pregFrecuentes2);
-                us2.setIdRol(idRol2);
-                us2.setIsBan(isBan2);
+                //validamos
+                if (nombre2 == null || nombre2.isEmpty()) {
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=editarSerenazgo&idSerenazgo=" +idSerenazgo2 + "&err=" + URLEncoder.encode("Ingresar el nombre es obligatorio.", StandardCharsets.UTF_8.toString()));
+                    return;
+                }else if(apellido2 == null || apellido2.isEmpty()){
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=editarSerenazgo&idSerenazgo=" +idSerenazgo2 + "&err=" + URLEncoder.encode("Ingresar el apellido es obligatorio.", StandardCharsets.UTF_8.toString()));
+                    return;
+                }else if(dni2 == null || dni2.isEmpty()){
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=editarSerenazgo&idSerenazgo="+idSerenazgo2 +"&err=" + URLEncoder.encode("Ingresar el dni es obligatorio.", StandardCharsets.UTF_8.toString()));
+                    return;
+                }else if(direccion2 == null || direccion2.isEmpty()){
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=editarSerenazgo&idSerenazgo="+idSerenazgo2 +"&err=" + URLEncoder.encode("Ingresar la dirección es obligatorio.", StandardCharsets.UTF_8.toString()));
+                    return;
+                }else if(correo2 == null || correo2.isEmpty()){
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=editarSerenazgo&idSerenazgo= "+idSerenazgo2 +"&err=" + URLEncoder.encode("Ingresar el correo es obligatorio.", StandardCharsets.UTF_8.toString()));
+                    return;
+                }else if(numTelefono2 == null || numTelefono2.isEmpty()){
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=editarSerenazgo&idSerenazgo="+idSerenazgo2 +"&err=" + URLEncoder.encode("Ingresar el número de teléfono es obligatorio.", StandardCharsets.UTF_8.toString()));
+                    return;
+                }else if(turno2Str == null || turno2Str.isEmpty()){
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=editarSerenazgo&idSerenazgo="+idSerenazgo2 +"&err=" + URLEncoder.encode("Seleccionar el turno del serenazgo es obligatorio.", StandardCharsets.UTF_8.toString()));
+                    return;
+                }else if(tipo2Str == null || tipo2Str.isEmpty()){
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=editarSerenazgo&idSerenazgo="+idSerenazgo2 +"&err=" + URLEncoder.encode("Seleccionar el tipo de serenazgo es obligatorio.", StandardCharsets.UTF_8.toString()));
+                    return;
+                }else if(fechaNacimiento2 == null || fechaNacimiento2.isEmpty()){
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=editarSerenazgo&idSerenazgo="+idSerenazgo2 +"&err=" + URLEncoder.encode("Elegir la fecha de nacimiento es obligatorio.", StandardCharsets.UTF_8.toString()));
+                    return;
+                } else if (!ValidacionesInicio.validarNombre(nombre2)) {
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=editarSerenazgo&idSerenazgo="+idSerenazgo2 +"&err=" + URLEncoder.encode("El nombre no es válido. La primera letra debe estar en mayúscula. Debe tener una longitud máxima de 100 caracteres y no contener caracteres especiales.", StandardCharsets.UTF_8.toString()));
+                    return;
+                } else if (!ValidacionesInicio.validarApellido(apellido2)) {
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=editarSerenazgo&idSerenazgo="+idSerenazgo2 +"&err=" + URLEncoder.encode("El apellido no es válido. La primera letra debe estar en mayúscula. Debe tener una longitud máxima de 100 caracteres y no contener caracteres especiales.", StandardCharsets.UTF_8.toString()));
+                    return;
+                }else if (!ValidacionesInicio.validarDni(dni2)) {
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=editarSerenazgo&idSerenazgo="+idSerenazgo2 +"&err=" + URLEncoder.encode("El DNI no es válido. Debe tener exactamente 8 dígitos numéricos.", StandardCharsets.UTF_8.toString()));
+                    return;
+                }else if (!ValidacionesInicio.validarDireccion(direccion2)) {
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=editarSerenazgo&idSerenazgo="+idSerenazgo2 +"&err=" + URLEncoder.encode("La dirección no es válida. Debe tener una longitud máxima de 150 caracteres.", StandardCharsets.UTF_8.toString()));
+                    return;
+                } else if (!ValidacionesInicio.validarCorreo(correo2)) {
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=editarSerenazgo&idSerenazgo="+idSerenazgo2 +"&err=" + URLEncoder.encode("El correo no es válido. Debe ser una dirección de Gmail.", StandardCharsets.UTF_8.toString()));
+                    return;
+                }else if (numTelefono2 == null || numTelefono2.isEmpty() || numTelefono2.length() != 9 || !numTelefono2.matches("\\d+")){
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=editarSerenazgo&idSerenazgo="+idSerenazgo2 +"&err=" + URLEncoder.encode("Es obligatorio llenar correctamente el teléfono, debe contener 9 dígitos y no letras", StandardCharsets.UTF_8.toString()));
+                    return;
+                } else if (turno2Str == null || turno2Str.isEmpty()) {
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=editarSerenazgo&idSerenazgo="+idSerenazgo2 +"&err=" + URLEncoder.encode("Es obligatorio elegir el tipo de turno del serenazgo", StandardCharsets.UTF_8.toString()));
+                    return;
+                } else if (tipo2Str == null || tipo2Str.isEmpty()) {
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=editarSerenazgo&idSerenazgo="+idSerenazgo2 +"&err=" + URLEncoder.encode("Es obligatorio elegir el tipo de serenazgo", StandardCharsets.UTF_8.toString()));
+                    return;
+                } else if(fechaNacimiento2.isEmpty() || fechaNacimiento2==null){
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=editarSerenazgo&idSerenazgo="+idSerenazgo2 +"&err=" + URLEncoder.encode("Es obligatorio elegir la fecha de nacimiento", StandardCharsets.UTF_8.toString()));
+                    return;
+                }else {
+                    UsuarioB us2 = new UsuarioB();
+                    us2.setIdUsuario(Integer.parseInt(idUsuario2));
+                    us2.setNombre(nombre2);
+                    us2.setApellido(apellido2);
+                    us2.setDni(dni2);
+                    us2.setDireccion(direccion2);
+                    us2.setCorreo(correo2);
+                    us2.setContrasenia(contrasenia2);
+                    us2.setPreguntasFrecuentes_idTable2(pregFrecuentes2);
+                    us2.setIdRol(idRol2);
+                    us2.setIsBan(isBan2);
 
-                SerenazgoB serenazgoB2 = new SerenazgoB();
-                serenazgoB2.setNumTelefono(numTelefono2);
-                serenazgoB2.setFechaNacimiento(fechaNacimiento2);
-                serenazgoB2.setIdTurnoSerenazgo(turno2);
-                serenazgoB2.setIdTipoSerenazgo(tipo2);
 
-                serenazgoB2.setUsuario(us2);
-                serenazgoDao.actualizarSerenazgo(serenazgoB2);
+                    SerenazgoB serenazgoB2 = new SerenazgoB();
+                    int turno2 = Integer.parseInt(turno2Str);
+                    int tipo2 = Integer.parseInt(tipo2Str);
 
-                response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=listaSerenazgo_A");
+
+                    serenazgoB2.setNumTelefono(numTelefono2);
+                    serenazgoB2.setFechaNacimiento(fechaNacimiento2);
+                    serenazgoB2.setIdTurnoSerenazgo(turno2);
+                    serenazgoB2.setIdTipoSerenazgo(tipo2);
+
+                    serenazgoB2.setUsuario(us2);
+                    serenazgoDao.actualizarSerenazgo(serenazgoB2);
+
+                    //response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=listaSerenazgo_A");
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=editarSerenazgo&idSerenazgo="+idSerenazgo2 + "&success=" + URLEncoder.encode("El serenazgo ha sido editado exitosamente",StandardCharsets.UTF_8.toString()));
+
+                }
+
+
                 break;
             case "registroInstructor":
 
