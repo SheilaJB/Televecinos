@@ -385,7 +385,7 @@ public class CoordinadorServlet extends HttpServlet {
                 }
                 //Validaciones
                 DateTimeFormatter dateFormatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                DateTimeFormatter timeFormatter2 = DateTimeFormatter.ofPattern("HH:mm");
+                DateTimeFormatter timeFormatter2 = DateTimeFormatter.ofPattern("HH:mm[:ss]");
 
                 LocalDate fechaInicio2 = LocalDate.parse(fecha_inicio2, dateFormatter2);
                 LocalDate fechaFin2 = LocalDate.parse(fecha_fin2, dateFormatter2);
