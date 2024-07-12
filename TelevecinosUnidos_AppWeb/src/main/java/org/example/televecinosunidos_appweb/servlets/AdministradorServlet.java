@@ -106,8 +106,26 @@ public class AdministradorServlet extends HttpServlet {
                 request.getRequestDispatcher("WEB-INF/Administrador/registroInstructor.jsp").forward(request,response);
                 break;
             case "nuevasSolicitudes_A":
+                int paginaActual = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
+                int solicitudesPorPagina = 5; // Número de solicitudes por página
+
+                // Obtener la lista completa de solicitantes
+                ArrayList<UsuarioB> listaSolicitantes = solicitanteDao.listarSolicitantes();
+
+                // Calcular total de páginas
+                int totalSolicitantes = listaSolicitantes.size();
+                int totalPaginas = (int) Math.ceil((double) totalSolicitantes / solicitudesPorPagina);
+
+                // Obtener los solicitantes de la página actual
+                int desde = (paginaActual - 1) * solicitudesPorPagina;
+                int hasta = Math.min(desde + solicitudesPorPagina, totalSolicitantes);
+                ArrayList<UsuarioB> solicitantesPaginados = new ArrayList<>(listaSolicitantes.subList(desde, hasta));
+
+                // Enviar atributos al JSP
                 vista = "WEB-INF/Administrador/nuevasSolicitudes_A.jsp";
-                request.setAttribute("lista",solicitanteDao.listarSolicitantes());
+                request.setAttribute("lista", solicitantesPaginados);
+                request.setAttribute("paginaActual", paginaActual);
+                request.setAttribute("totalPaginas", totalPaginas);
                 request.getRequestDispatcher(vista).forward(request, response);
                 break;
             case "usuariosBaneados_A":
@@ -422,16 +440,32 @@ public class AdministradorServlet extends HttpServlet {
                 }
                 break;
             case "buscarNuevasSolicitudesPorNombre":
-                textoBuscar= request.getParameter("textoBuscar");
+                textoBuscar = request.getParameter("textoBuscar");
+                int pagina = request.getParameter("pagina") != null ? Integer.parseInt(request.getParameter("pagina")) : 1;
+                int solicitudesPorPagina = 5; // Número de solicitudes por página
+
                 if (textoBuscar == null) {
                     response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=nuevasSolicitudes_A");
                 } else {
-                    request.setAttribute("textoBusqueda",textoBuscar);
-                    request.setAttribute("lista", solicitanteDao.listarSolicitantesPorNombre(textoBuscar));
+                    ArrayList<UsuarioB> solicitantes = solicitanteDao.listarSolicitantesPorNombre(textoBuscar);
+                    int totalRegistros = solicitantes.size();
+                    int totalPaginas = (int) Math.ceil((double) totalRegistros / solicitudesPorPagina);
+
+                    // Obtener los solicitantes de la página actual
+                    int desde = (pagina - 1) * solicitudesPorPagina;
+                    int hasta = Math.min(desde + solicitudesPorPagina, totalRegistros);
+                    ArrayList<UsuarioB> solicitantesPaginados = new ArrayList<>(solicitantes.subList(desde, hasta));
+
+                    // Enviar atributos al JSP
+                    request.setAttribute("textoBusqueda", textoBuscar);
+                    request.setAttribute("lista", solicitantesPaginados);
+                    request.setAttribute("paginaActual", pagina);
+                    request.setAttribute("totalPaginas", totalPaginas);
                     RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Administrador/nuevasSolicitudes_A.jsp");
                     view.forward(request, response);
                 }
                 break;
+
             case "buscarInstructoresPorNombre":
                 textoBuscar= request.getParameter("textoBuscar");
                 if (textoBuscar == null) {

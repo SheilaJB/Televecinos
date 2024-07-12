@@ -1,8 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.*" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page import="org.example.televecinosunidos_appweb.model.beans.UsuarioB" %>
 <jsp:useBean id="lista" scope="request" type="ArrayList<org.example.televecinosunidos_appweb.model.beans.UsuarioB>"/>
 <jsp:useBean id="textoBusqueda" scope="request" type="java.lang.String" class="java.lang.String"/>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -217,6 +220,26 @@
                         <% } %>
                         </tbody>
                     </table>
+                    <!-- Botones para paginación -->
+                    <%
+                        int paginaActual = (int) request.getAttribute("paginaActual");
+                        int totalPaginas = (int) request.getAttribute("totalPaginas");
+                    %>
+                    <nav>
+                        <ul class="pagination">
+                            <li class="page-item <%= paginaActual == 1 ? "disabled" : "" %>">
+                                <a class="page-link" href="<%=request.getContextPath()%>/AdministradorServlet?action=nuevasSolicitudes_A&page=<%= paginaActual - 1 %>">Anterior</a>
+                            </li>
+                            <% for(int i = 1; i <= totalPaginas; i++) { %>
+                            <li class="page-item <%= i == paginaActual ? "active" : "" %>">
+                                <a class="page-link" href="<%=request.getContextPath()%>/AdministradorServlet?action=nuevasSolicitudes_A&page=<%= i %>"><%= i %></a>
+                            </li>
+                            <% } %>
+                            <li class="page-item <%= paginaActual == totalPaginas ? "disabled" : "" %>">
+                                <a class="page-link" href="<%=request.getContextPath()%>/AdministradorServlet?action=nuevasSolicitudes_A&page=<%= paginaActual + 1 %>">Siguiente</a>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
         </div>
