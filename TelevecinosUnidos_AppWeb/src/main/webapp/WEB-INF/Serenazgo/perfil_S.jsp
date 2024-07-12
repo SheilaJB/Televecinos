@@ -1,6 +1,7 @@
 <%@ page import="org.example.televecinosunidos_appweb.model.dto.SerenazgoDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="serenazgoLogeado" scope="session" type="SerenazgoDTO" class="org.example.televecinosunidos_appweb.model.dto.SerenazgoDTO" />
+<jsp:useBean id="nuevoNum" scope="request" type="java.lang.String" class="java.lang.String" />
 
 
 <!DOCTYPE html>
@@ -138,7 +139,7 @@
                 <img src="img/serenazgo.jpg" class="img-fluid mb-3" alt="Responsive image" width="200">
                 <div class="bar" data-label="Nombre"><%= serenazgoLogeado.getNombreSerenazgo()%></div>
                 <div class="bar" data-label="Apellido"><%= serenazgoLogeado.getApellidoSerenazgo()%></div>
-                <div class="bar" data-label="Telefono"><%= serenazgoLogeado.getTelefonoSerenazgo()%></div>
+                <div class="bar" data-label="Telefono"><%=serenazgoLogeado.getTelefonoSerenazgo()%></div>
                 <div class="bar" data-label="Fecha de nacimiento"><%=serenazgoLogeado.getFechaNacimientoSerenazgo()%></div>
                 <div class="bar" data-label="DNI"><%= serenazgoLogeado.getDNI()%></div>
                 <div class="bar" data-label="Tipo de serenazgo"><%= serenazgoLogeado.getTipoSerenazgo()%></div>

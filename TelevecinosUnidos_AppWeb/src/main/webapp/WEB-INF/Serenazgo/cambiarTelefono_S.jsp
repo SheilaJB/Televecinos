@@ -153,7 +153,7 @@
                         text: '<%= session.getAttribute("success") %>',
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            window.location.href = "<%=request.getContextPath()%>/SerenazgoServlet?action=perfil_S";
+                            window.location.href = "<%=request.getContextPath()%>/SerenazgoServlet?action=perfil_S&idSerenazgo=<%=usuarioLogueado.getIdUsuario()%>";
                         }
                     });
                 </script>
