@@ -170,7 +170,7 @@ public class AdministradorServlet extends HttpServlet {
                 break;
             case "listaInstructores_A":
                 int paginaInstructores = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
-                int instructoresPorPagina = 5; // Número de instructores por página
+                int instructoresPorPagina = 10; // Número de instructores por página
 
                 // Obtener la lista completa de instructores
                 ArrayList<ProfesoresEvento> listaInstructores = instructorDao.listarProfesores();

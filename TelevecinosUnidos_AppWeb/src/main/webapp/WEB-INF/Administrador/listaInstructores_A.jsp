@@ -111,7 +111,7 @@
                     <table id="eventosTable" class="table" style="background-color: transparent;">
                         <thead>
                         <tr>
-                            <th scope="col">Número</th>
+                            <th scope="col">Identificador</th>
                             <th scope="col">Nombre y Apellido</th>
                             <th scope="col">Curso</th>
 
@@ -122,12 +122,11 @@
                         <% int k=1;%>
                         <% for(ProfesoresEvento profesor : lista){ %>
                         <tr>
-                            <td><%=k %></td>
+                            <td><%=profesor.getIdProfesoresEvento() %></td>
                             <td><%=profesor.getNombre() + " " + profesor.getApellido()%></td>
                             <td><%=profesor.getCurso() %></td>
 
                         </tr>
-                        <% k+=1;%>
                         <% } %>
 
                         </tbody>
