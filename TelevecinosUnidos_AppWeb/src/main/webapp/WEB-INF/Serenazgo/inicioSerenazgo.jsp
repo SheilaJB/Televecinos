@@ -102,7 +102,8 @@
                     <div class="col">
                         <div class="card h-100 shadow text-center" style="background-color: #023047;">
                             <div class="card-body">
-                                <p class="card-title colorLetra">Dashboard: Podrás visualizar gráficos con  información general de las incidencias</p>
+                                <p class="card-title colorLetra">Dashboard: </p>
+                                <p class="card-title colorLetra">Podrás visualizar gráficos con  información general de las incidencias</p>
                             </div>
                         </div>
                     </div>
@@ -111,7 +112,8 @@
                     <div class="col">
                         <div class="card h-100 shadow text-center" style="background-color: #023047;">
                             <div class="card-body">
-                                <p class="card-title colorLetra">Incidencias: Podrás gestionar las incidencias y evaluarlas</p>
+                                <p class="card-title colorLetra">Incidencias:</p>
+                                <p class="card-title colorLetra">Podrás gestionar las incidencias y evaluarlas</p>
                             </div>
                         </div>
                     </div>
@@ -121,7 +123,8 @@
                         <div class="card h-100 shadow text-center" style="background-color: #023047;">
                             <div class="card-body">
                                 <!--<p class="card-title colorLetra">Banear vecino: Cuando se cumpla el número máximo de alertas falsas (5) podrás banear a un vecino</p>-->
-                                <p class="card-title colorLetra">Banear vecino: Podrás banear un vecino al superar el máximo de alertas falsas </p>
+                                <p class="card-title colorLetra">Banear vecino: </p>
+                                <p class="card-title colorLetra">Podrás banear un vecino al superar el máximo de alertas falsas </p>
                             </div>
                         </div>
                     </div>
