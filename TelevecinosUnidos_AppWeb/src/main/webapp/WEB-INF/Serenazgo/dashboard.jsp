@@ -261,7 +261,7 @@
 
 
 
-<canvas id="test-chart" width="400" height="400"></canvas>
+<!-- <canvas id="test-chart" width="400" height="400"></canvas> -->
 
 
 
