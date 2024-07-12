@@ -4,6 +4,13 @@
 <jsp:useBean id="tabla3" scope="request" type="java.util.ArrayList" class="java.util.ArrayList" />
 <jsp:useBean id="tabla4" scope="request" type="java.util.ArrayList" class="java.util.ArrayList" />
 
+<jsp:useBean id="tabla6_tipo1" scope="request" type="java.util.ArrayList" class="java.util.ArrayList" />
+<jsp:useBean id="tabla6_tipo2" scope="request" type="java.util.ArrayList" class="java.util.ArrayList" />
+<jsp:useBean id="tabla6_tipo3" scope="request" type="java.util.ArrayList" class="java.util.ArrayList" />
+<jsp:useBean id="tabla6_tipo4" scope="request" type="java.util.ArrayList" class="java.util.ArrayList" />
+
+
+
 <jsp:useBean id="tabla7_tipo1" scope="request" type="java.util.ArrayList" class="java.util.ArrayList" />
 <jsp:useBean id="tabla7_tipo2" scope="request" type="java.util.ArrayList" class="java.util.ArrayList" />
 <jsp:useBean id="tabla7_tipo3" scope="request" type="java.util.ArrayList" class="java.util.ArrayList" />
@@ -110,7 +117,7 @@
                 <div class="col-sm-12 col-xl-8">
                     <div class="bg-light text-center rounded p-4" style="border: 1px solid black; box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);">
                         <div class="d-flex align-items-center justify-content-between mb-4">
-                            <h6 class="mb-0">Estado de las incidencias</h6>
+                            <h6 class="mb-0">Tipo de incidencias por día</h6>
 
                             <a href="<%=request.getContextPath()%>/SerenazgoServlet?action=listaIncidencias_S">Más detalles</a>
                         </div>
@@ -311,32 +318,40 @@
             }
         });*/
         // Estados de incidencias - Chart
+        var tabla6_tipo1 = ${tabla6_tipo1};
+        var tabla6_tipo2 = ${tabla6_tipo2};
+        var tabla6_tipo3 = ${tabla6_tipo3};
+        var tabla6_tipo4 = ${tabla6_tipo4};
+
+
+
+
         var ctx2 = $("#tipo-incidencias-dia").get(0).getContext("2d");
         var myChart2 = new Chart(ctx2, {
-            type: "line",
+            type: "bar",
             data: {
                 labels: ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sábado", "Domingo"],
                 datasets: [{
                     label: "Seguridad Pública",
-                    data: [17, 26, 14, 21, 25, 14, 18],
+                    data: tabla6_tipo1,
                     backgroundColor: "rgba(42, 157, 143, 1)",
                     fill: false
                 },
                     {
                         label: "Emergencia Médica",
-                        data: [22, 32, 18, 27, 31, 18, 23],
+                        data: tabla6_tipo2,
                         backgroundColor:"rgba(233, 196, 106, 1)",
                         fill: false
                     },
                     {
                         label: "Infraestructura y Servicios Públicos",
-                        data: [26, 39, 21, 32, 37, 22, 28],
+                        data: tabla6_tipo3,
                         backgroundColor: "rgba(38, 70, 83, 1)",
                         fill: false
                     },
                     {
                         label: "Otro",
-                        data: [13, 20, 11, 16, 18, 11, 14],
+                        data: tabla6_tipo4,
                         backgroundColor:"rgba(231, 111, 81, 1)",
                         fill: false
                     },

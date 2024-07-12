@@ -5,8 +5,7 @@ import org.example.televecinosunidos_appweb.model.beans.UsuarioB;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.sql.*;
 
 
@@ -702,5 +701,51 @@ public class IncidenciaDao extends BaseDao{
             throw new RuntimeException(e);
         }
         return tabla1;
+    }
+
+    public ArrayList<Integer> DashboardTabla6(int i) {
+
+        ArrayList<Integer> tabla1 = new ArrayList<>(Arrays.asList(0, 0, 0, 0, 0, 0, 0));
+
+        String sql = "SELECT \n" +
+                "    DAYNAME(fecha) AS dia_semana,\n" +
+                "    COUNT(*) AS cantidad_incidencias\n" +
+                "FROM \n" +
+                "    televecinosdb.incidencias\n" +
+                "WHERE \n" +
+                "    TipoIncidencia_idTipoIncidencia =" + i + "\n" +
+                "GROUP BY \n" +
+                "    dia_semana\n" +
+                "ORDER BY \n" +
+                "    FIELD(dia_semana, 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday');";
+
+        Map<String, Integer> diasSemana = new HashMap<>();
+        diasSemana.put("Monday", 0);
+        diasSemana.put("Tuesday", 1);
+        diasSemana.put("Wednesday", 2);
+        diasSemana.put("Thursday", 3);
+        diasSemana.put("Friday", 4);
+        diasSemana.put("Saturday", 5);
+        diasSemana.put("Sunday", 6);
+
+
+        try (Connection connection = getConnection();
+             Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                String dia = rs.getString(1);
+                int cantidad = rs.getInt(2);
+                if (diasSemana.containsKey(dia)) {
+                    int index = diasSemana.get(dia);
+                    tabla1.set(index, cantidad);
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return tabla1;
+
     }
 }
