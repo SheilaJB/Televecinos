@@ -265,6 +265,8 @@
                         <td><button type="button" class="btn btn-success-puedeGestionar m-2" onclick="incidenciaPorGestionar('<%=incidenciasB.getNombrePersonalTurno()%>','<%=incidenciasB.getIdIncidencias()%>','<%=incidenciasB.getUsuario_idUsuario()%>')"><i class="fas fa-clipboard-list"></i></button></td>
                         <% } %>
 
+
+
                     </tr>
 
                     <% } %>
