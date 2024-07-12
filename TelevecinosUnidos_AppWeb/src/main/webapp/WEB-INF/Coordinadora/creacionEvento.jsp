@@ -155,16 +155,25 @@
                     <div class="col-sm-12 col-sm-12 col-xl-6">
                         <div class="rounded h-100 p-4" style="background-color:#219ebc;">
                             <!---Nombre del profesor-->
-                            <div class="mb-3" class="campo ${not empty erroresEvento ? 'error-div' : ''}">
+                            <div class="mb-3">
                                 <label for="nombreInstructor" class="form-label" style="color:#023047;"><b>Ingrese nombre del profesor:</b></label>
-                                <select id="nombreInstructor" class="form-select mb-3" aria-label="Default select example" name="nombreProfesor" required>
-                                    <option value="${nombreProfesor}" class="campo" selected>Seleccione un instructor</option>
-                                    <% int i = 1; %>
+                                <%if(erroresEvento.isEmpty()){%>
+                                <select id="ProfesoresEvento_idProfesoresEvento" class="form-select mb-3" aria-label="Default select example" name="nombreProfesor" required>
+                                    <option selected>Seleccione un profesor</option>
                                     <% for (ProfesoresEvento pEvento : lista) { %>
-                                    <option value="<%= pEvento.getIdProfesoresEvento() %>" ${nombreProfesor == '0' ? 'selected' : ''}><%= pEvento.getNombre() %> <%= pEvento.getApellido() %></option>
-                                    <% i++; %>
+                                    <option value="<%=pEvento.getIdProfesoresEvento()%>"><%= pEvento.getNombre() %> <%= pEvento.getApellido() %></option>
                                     <% } %>
+
                                 </select>
+                                <% } else{%>
+                                <%String idProf = (String) request.getAttribute("nombreProfesor");%>
+                                <select id="ProfesoresEvento_idProfesoresEvento" class="form-select mb-3" aria-label="Default select example" name="nombreProfesor" required>
+                                    <% for (ProfesoresEvento pEvento : lista) { %>
+                                    <option value="<%= pEvento.getIdProfesoresEvento() %>" <%= pEvento.getIdProfesoresEvento() == Integer.parseInt(idProf) ? "selected" : "" %>><%= pEvento.getNombre() %> <%= pEvento.getApellido() %></option>
+                                    <% } %>
+
+                                </select>
+                                <% } %>
                             </div>
                             <!---Lugar del evento-->
                             <div class="mb-3" class="campo ${not empty erroresEvento ? 'error-div' : ''}">
@@ -180,9 +189,6 @@
                                 <option value="2">Dos veces por semana</option>
                                 <option value="1">Semanal</option>
                             </select>
-
-
-
                             <div id="opcionesInterdiarias" style="display:none;">
                                 <label for="diaSemana" class="form-label" style="color:#023047;"><b>Elegir días:</b></label>
                                 <select id="diasInterdiarios" class="form-select mb-3" aria-label="Default select example" name="opcionesDias" required>
@@ -213,15 +219,15 @@
                                     opcionesDias1 = "X";
                                 }
                                 if (opcionesDias == null){
-                                    opcionesDias1 = "X";
+                                    opcionesDias = "X";
                                 }
                             %>
                             <!----Inicio de la selectiva----->
                             <label for="frecuenciaEvento" class="form-label" style="color:#023047;"><b>Frecuencia del evento:</b></label>
                             <select id="frecuenciaEvento" class="form-select mb-3" aria-label="Default select example" onchange="mostrarOpciones()" name="frecuencia" required>
                                 <option value="0" selected>Seleccione la frecuencia del evento</option>
-                                <option value="2" <%=Integer.parseInt(frec)==2 ? "selected" : ""%>>Dos veces por semana</option>
-                                <option value="1" <%=Integer.parseInt(frec)==1 ? "selected" : ""%>>Semanal</option>
+                                <option value="2" <%=frec.equals("2") ? "selected" : ""%>>Dos veces por semana</option>
+                                <option value="1" <%=frec.equals("1") ? "selected" : ""%>>Semanal</option>
                             </select>
                             <div>
                                 <c:if test="${not empty erroresEvento['errorFrecuencia']}">
@@ -251,8 +257,6 @@
                             </div>
                             <!----Fin de la selectiva----->
                             <%}%>
-
-
                             <script>
                                 function mostrarOpciones() {
                                     var frecuenciaSeleccionada = document.getElementById("frecuenciaEvento").value;
@@ -270,6 +274,10 @@
                                         opcionesSemanal.style.display = "none";
                                     }
                                 }
+
+                                window.onload = function() {
+                                    mostrarOpciones();
+                                };
                             </script>
 
                             <!----Cantidad de vacantes disponibles----->
