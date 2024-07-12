@@ -143,7 +143,7 @@
 
             <div class="container text-center">
                 <img src="img/serenazgo.jpg" class="img-fluid mb-3" alt="Responsive image" width="200">
-                <div class="bar" data-label="ID"><%=serenazgo.getIdSerenazgo()%></div>
+
                 <div class="bar" data-label="Nombre"><%=serenazgo.getUsuario().getNombre()%></div>
                 <div class="bar" data-label="Apellido"><%=serenazgo.getUsuario().getApellido()%></div>
                 <div class="bar" data-label="DNI"><%=serenazgo.getUsuario().getDni()%></div>
