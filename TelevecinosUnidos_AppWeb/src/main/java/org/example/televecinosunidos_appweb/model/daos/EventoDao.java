@@ -287,7 +287,7 @@ public class EventoDao extends BaseDao{
                 if (generatedKeys.next()) {
                     int idEvento = generatedKeys.getInt(1);
 
-                    fechasEvento(idEvento, eventoB.getFecha_inicio(), eventoB.getFecha_fin(), eventoB.getEventFrecuencia_idEventFrecuencia(), eventoB.getDiaEvento());
+                    fechasEvento(idEvento, eventoB.getFecha_inicio(), eventoB.getFecha_fin(), eventoB.getEventFrecuencia_idEventFrecuencia(), eventoB.getDiaEvento(),eventoB.getHora_inicio(),eventoB.getHora_fin());
                 } else {
                     throw new SQLException("Creating event failed, no ID obtained.");
                 }
@@ -299,7 +299,7 @@ public class EventoDao extends BaseDao{
         }
     }
 
-    public void fechasEvento(int idEvento, String fechaInicio, String fechaFin, int frecuencia, String diaEvento) {
+    public void fechasEvento(int idEvento, String fechaInicio, String fechaFin, int frecuencia, String diaEvento, String hora_inicio,String hora_fin) {
         LocalDate inicio = LocalDate.parse(fechaInicio);
         LocalDate fin = LocalDate.parse(fechaFin);
 
@@ -333,13 +333,16 @@ public class EventoDao extends BaseDao{
             String url = "jdbc:mysql://localhost:3306/televecinosdb";
             String username = "root";
             String password = "root";
-            String sql = "INSERT INTO dias_evento (eventos_idEventos, dia1, dia2) VALUES (?, ?, ?)";
+            String sql = "INSERT INTO dias_evento (eventos_idEventos, dia1, dia2,hora_inicio,hora_fin, asistenciaCoordinador) VALUES (?, ?, ?, ?, ?,?)";
             try (Connection connection = DriverManager.getConnection(url, username, password);
                  PreparedStatement pstmt = connection.prepareStatement(sql)) {
                 if (frecuencia == 1){
                     pstmt.setInt(1, idEvento);
                     pstmt.setString(2, fechasEntre.get(i).toString());
                     pstmt.setNull(3, java.sql.Types.INTEGER);
+                    pstmt.setString(4, hora_inicio);
+                    pstmt.setString(5, hora_fin);
+                    pstmt.setBoolean(6,false);
                 }else{
                     pstmt.setInt(1, idEvento);
                     pstmt.setString(2, fechasEntre.get(i).toString());
@@ -348,6 +351,9 @@ public class EventoDao extends BaseDao{
                     }else{
                         pstmt.setNull(3, java.sql.Types.INTEGER);
                     }
+                    pstmt.setString(4, hora_inicio);
+                    pstmt.setString(5, hora_fin);
+                    pstmt.setBoolean(6,false);
 
                 }
                 pstmt.executeUpdate();
@@ -427,7 +433,7 @@ public class EventoDao extends BaseDao{
 
             ps.executeUpdate();
 
-            fechasEvento(evento.getIdEvento(), evento.getFecha_inicio(), evento.getFecha_fin(), evento.getEventFrecuencia_idEventFrecuencia(), evento.getDiaEvento());
+            fechasEvento(evento.getIdEvento(), evento.getFecha_inicio(), evento.getFecha_fin(), evento.getEventFrecuencia_idEventFrecuencia(), evento.getDiaEvento(),evento.getHora_inicio(),evento.getHora_fin());
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

@@ -239,6 +239,14 @@ public class CoordinadorServlet extends HttpServlet {
                 LocalTime horaFin = LocalTime.parse(hora_fin, timeFormatter);
                 LocalDate hoy = LocalDate.now();
 
+                if (idFrecuencia.equals("2")){
+                    opcionesDias = request.getParameter("opcionesDias");
+                }else if (idFrecuencia.equals("1")){
+                    opcionesDias = request.getParameter("opcionesDias1");
+                }else{
+                    opcionesDias="Domingo";
+                    erroresEvento.put("errorFrecuencia", "Error: Seleccione una frecuencia");
+                }
                 if (fechaInicio.isBefore(hoy)) {
                     erroresEvento.put("fechaInicio", "Error: la fecha de inicio no puede ser antes de hoy");
                     // Error: la fecha de inicio no puede ser antes de hoy
@@ -320,9 +328,12 @@ public class CoordinadorServlet extends HttpServlet {
                     request.setAttribute("cantidadVacantes", cantidadVacantes);
                     request.setAttribute("materiales", materiales);
 
+                    String NO= "NO";
                     if (idFrecuencia.equals("2")){
                         request.setAttribute("opcionesDias", opcionesDias);
+                        request.setAttribute("opcionesDias1", NO);
                     }else{
+                        request.setAttribute("opcionesDias", NO);
                         request.setAttribute("opcionesDias1", opcionesDias);
                     }
                     request.getRequestDispatcher("WEB-INF/Coordinadora/creacionEvento.jsp").forward(request, response);
@@ -521,6 +532,7 @@ public class CoordinadorServlet extends HttpServlet {
 
                 eventoDao.eliminarFechasEventoPorIdEvento(idEvento);
                 eventoDao.actualizarEvento(eventoB);
+                eventoDao.updateVacantesDisponibles(eventoB.getIdEvento());
                 // Agregar mensaje a la sesión
                 request.getSession().setAttribute("info", "Evento editado de manera exitosa");
 
