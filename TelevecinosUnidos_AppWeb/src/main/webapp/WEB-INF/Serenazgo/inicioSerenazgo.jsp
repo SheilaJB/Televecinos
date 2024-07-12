@@ -100,34 +100,35 @@
             <div class="row row-cols-1 row-cols-md-3 g-4">
                 <a href="<%=request.getContextPath()%>/SerenazgoServlet?action=dashboard">
                     <div class="col">
-                        <div class="card h-100 shadow text-center" style="background-color: #023047;">
+                        <div class="card h-100 shadow-lg text-center" style="background-color: #023047; border-radius: 10px;">
                             <div class="card-body">
-                                <p class="card-title colorLetra">Dashboard: </p>
-                                <p class="card-title colorLetra">Podrás visualizar gráficos con  información general de las incidencias</p>
+                                <p class="card-title" style="color: #FFB703; font-size: 1.5rem; font-weight: bold; margin-bottom: 10px;">Dashboard</p>
+                                <p class="card-text" style="color: #8ecae6; font-size: 1.2rem;">Podrás visualizar gráficos con información general de las incidencias</p>
                             </div>
                         </div>
                     </div>
+
                 </a>
                 <a href="<%=request.getContextPath()%>/SerenazgoServlet?action=listaIncidencias_S">
                     <div class="col">
-                        <div class="card h-100 shadow text-center" style="background-color: #023047;">
+                        <div class="card h-100 shadow-lg text-center" style="background-color: #023047; border-radius: 10px;">
                             <div class="card-body">
-                                <p class="card-title colorLetra">Incidencias:</p>
-                                <p class="card-title colorLetra">Podrás gestionar las incidencias y evaluarlas</p>
+                                <p class="card-title" style="color: #FFB703; font-size: 1.5rem; font-weight: bold; margin-bottom: 10px;">Incidencias</p>
+                                <p class="card-text" style="color: #8ecae6; font-size: 1.2rem;">Podrás gestionar las incidencias y evaluarlas</p>
                             </div>
                         </div>
                     </div>
                 </a>
                 <a href="<%=request.getContextPath()%>/SerenazgoServlet?action=listaVecinos_S">
                     <div class="col">
-                        <div class="card h-100 shadow text-center" style="background-color: #023047;">
+                        <div class="card h-100 shadow-lg text-center" style="background-color: #023047; border-radius: 10px;">
                             <div class="card-body">
-                                <!--<p class="card-title colorLetra">Banear vecino: Cuando se cumpla el número máximo de alertas falsas (5) podrás banear a un vecino</p>-->
-                                <p class="card-title colorLetra">Banear vecino: </p>
-                                <p class="card-title colorLetra">Podrás banear un vecino al superar el máximo de alertas falsas </p>
+                                <p class="card-title" style="color: #FFB703; font-size: 1.5rem; font-weight: bold; margin-bottom: 10px;">Banear vecino</p>
+                                <p class="card-text" style="color: #8ecae6; font-size: 1.2rem;">Podrás banear un vecino al superar el máximo de alertas falsas</p>
                             </div>
                         </div>
                     </div>
+
                 </a>
             </div>
 
