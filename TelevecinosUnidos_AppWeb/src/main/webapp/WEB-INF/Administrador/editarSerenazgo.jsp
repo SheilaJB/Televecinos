@@ -208,33 +208,19 @@
 
                     <div class="form-group" style = "padding-top: 2%">
                         <div class="m-n2" style="padding-bottom: 5%; ">
-                            <button href="<%=request.getContextPath()%>/AdministradorServlet?action=listaSerenazgo_A" class="btn btn-warning m-2 text-white">Regresar</button>
 
-                            <button type="submit" class="btn btn-success m-2" id="openPopupBtn" >Editar</button>
+                            <button type="submit" class="btn btn-success m-2" onclick="regresar()">Editar</button>
                         </div>
                     </div>
-                    <!--
-                    <script>
-                        function regresar(){
-                            window.location.href="<%=request.getContextPath()%>/AdministradorServlet?action=listaSerenazgo_A";
-                        }
-                    </script>
-                    -->
-                    <!--
-                    <div id="popup" class="popup" >
-                        <div class="popup_contenido">
-                            <span class="close-btn" id="closePopupBtn">&times;</span>
-                            <img src="img/check.png" alt="check" width="48" height="48" style="margin-top: -10px;">
-                            <h2 style="margin-top: 20px;">Éxito</h2>
-                            <p>Se ha registrado un nuevo serenazgo</p>
-                            <a href="#">
-                                <a href="<%=request.getContextPath()%>/AdministradorServlet"><button type="button" class="btn btn-primary rounded-pill m-2">Regresar</button></a>
-                            </a>
-                        </div>
-                    </div>
-                    Popup -->
+
+
+
 
                 </form>
+                <a href="<%=request.getContextPath()%>/AdministradorServlet?action=listaSerenazgo_A"><button class="btn btn-warning m-2 text-white">Regresar</button></a>
+
+
+
 
 
             </div>

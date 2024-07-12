@@ -132,6 +132,7 @@
         <!-- PARTE SUPERIOR FINAL -->
 
         <!---Content--->
+
         <div class="container-fluid d-flex justify-content-center align-items-center vh-100">
             <div class="container text-center">
                 <img src="img/user.png" class="img-fluid mb-3" alt="Responsive image" width="200">
@@ -159,6 +160,8 @@
                 <% session.removeAttribute("success"); // Limpiar la sesión después de mostrar el SweetAlert %>
                 <% } %>
                 <div class="container">
+                    <h3 class="text-center">Cambiar contraseña</h3>
+                    <label class="form-label"><b>Por favor ingresa tu nueva contraseña y revisa en el apartado inferior las especificaciones que esta debe tener</b></label>
                     <form method="post" action="<%= request.getContextPath() %>/VecinoServlet?action=cambiarContrasena">
                         <div class="mb-3">
                             <label for="nuevaContrasena" class="form-label">Nueva Contraseña (*)</label>
@@ -173,7 +176,7 @@
                         </div>
                         <button type="submit" class="button alert-success">Guardar Cambios</button>
                     </form>
-                    <a href="<%=request.getContextPath()%>/VecinoServlet?action=verPerfil"><button class="button alert-danger">Regresar</button></a>
+                    <a href="<%=request.getContextPath()%>/VecinoServlet?action=contrasenaActual"><button class="button alert-danger">Regresar</button></a>
                 </div>
             </div>
         </div>

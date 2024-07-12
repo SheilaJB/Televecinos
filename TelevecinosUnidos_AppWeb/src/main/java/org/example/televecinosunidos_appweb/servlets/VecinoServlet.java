@@ -46,6 +46,11 @@ public class VecinoServlet extends HttpServlet {
                 vista = "WEB-INF/Vecino/inicioVecino.jsp";
                 request.getRequestDispatcher(vista).forward(request, response);
                 break;
+
+            case "contrasenaActual":
+                vista = "WEB-INF/Vecino/contrasenaActual.jsp";
+                request.getRequestDispatcher(vista).forward(request, response);
+                break;
             case "cambiarContrasena":
                 vista = "WEB-INF/Vecino/cambioContrasena.jsp";
                 request.getRequestDispatcher(vista).forward(request, response);
@@ -138,6 +143,7 @@ public class VecinoServlet extends HttpServlet {
         response.setContentType("text/html");
         IncidenCoordDao incidenciaDao = new IncidenCoordDao();
         EventoDao eventoDao = new EventoDao();
+        UsuarioDao usuarioDao = new UsuarioDao();
         HttpSession session = request.getSession();
         String action = request.getParameter("action") == null ? "crear" : request.getParameter("action");
 
@@ -370,28 +376,28 @@ public class VecinoServlet extends HttpServlet {
                 System.out.printf("iddd :" + idEvento);
                 if (evento != null) {
 
-                        if (evento.getCantDisponibles() > 0) {
-                            //boolean hayTraslape = eventoDao.existeTraslapeEventos(userId, idEvento);
-                            //if (!hayTraslape) {
-                            boolean yaEstaInscrito = eventoDao.estaInscrito(userId, idEvento);
-                            if (!yaEstaInscrito) {
-                                boolean success = eventoDao.inscribirUsuarioEvento(usuarioLogueado.getIdUsuario(), evento.getIdEvento());
-                                if (success) {
-                                    eventoDao.updateVacantesDisponibles(evento.getIdEvento());
-                                    request.getSession().setAttribute("info", "Inscripción exitosa");
-                                } else {
-                                    request.getSession().setAttribute("err", "Error al inscribirse en el evento. Intente de nuevo más tarde.");
-                                }
+                    if (evento.getCantDisponibles() > 0) {
+                        //boolean hayTraslape = eventoDao.existeTraslapeEventos(userId, idEvento);
+                        //if (!hayTraslape) {
+                        boolean yaEstaInscrito = eventoDao.estaInscrito(userId, idEvento);
+                        if (!yaEstaInscrito) {
+                            boolean success = eventoDao.inscribirUsuarioEvento(usuarioLogueado.getIdUsuario(), evento.getIdEvento());
+                            if (success) {
+                                eventoDao.updateVacantesDisponibles(evento.getIdEvento());
+                                request.getSession().setAttribute("info", "Inscripción exitosa");
                             } else {
-                                request.getSession().setAttribute("err", "Ya estás inscrito(a) en este evento");
+                                request.getSession().setAttribute("err", "Error al inscribirse en el evento. Intente de nuevo más tarde.");
                             }
-                            //} else{
-                            //request.getSession().setAttribute("err", "Ya estás inscrito en un evento que se superpone con este. Revisa las fechas de los eventos a los cuales te has inscrito");
-                            //}
-
                         } else {
-                            request.getSession().setAttribute("err", "No hay cupos disponibles para este evento");
+                            request.getSession().setAttribute("err", "Ya estás inscrito(a) en este evento");
                         }
+                        //} else{
+                        //request.getSession().setAttribute("err", "Ya estás inscrito en un evento que se superpone con este. Revisa las fechas de los eventos a los cuales te has inscrito");
+                        //}
+
+                    } else {
+                        request.getSession().setAttribute("err", "No hay cupos disponibles para este evento");
+                    }
 
                 } else {
                     request.getSession().setAttribute("err", "Usuario o evento no encontrado");
@@ -400,7 +406,29 @@ public class VecinoServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/VecinoServlet?action=verEvento&idEvento=" + idEvento);
                 break;
 
-             case "cambiarContrasena":
+            case "contrasenaActual":
+                String correo = request.getParameter("correo");
+                String contrasenaActual = request.getParameter("contrasenaActual");
+                if (usuarioLogueado != null) {
+                    // Verificar si se proporcionó la contraseña actual
+                    if (contrasenaActual == null || contrasenaActual.isEmpty() || correo == null || correo.isEmpty()) {
+                        request.setAttribute("err", "Por favor, ingrese sus credenciales completas");
+                        request.getRequestDispatcher("WEB-INF/Vecino/contrasenaActual.jsp").forward(request, response);
+                        return;
+                    } else {
+                        if (usuarioDao.validarUsuarioPassword(correo, contrasenaActual)) {
+                            session.setAttribute("success", "Validación exitosa, proceda a cambiar su contraseña");
+                            //response.sendRedirect(request.getContextPath() + "/VecinoServlet?action=cambiarContrasena");
+                            request.getRequestDispatcher("WEB-INF/Vecino/contrasenaActual.jsp").forward(request, response);
+                        } else {
+                            request.setAttribute("err", "Su correo o contraseña son inválidos");
+                            request.getRequestDispatcher("WEB-INF/Vecino/contrasenaActual.jsp").forward(request, response);
+                        }
+                    }
+                }
+                break;
+
+            case "cambiarContrasena":
                 String nuevaContrasena = request.getParameter("nuevaContrasena");
                 String confirmarContrasena = request.getParameter("confirmarContrasena");
 
@@ -413,7 +441,7 @@ public class VecinoServlet extends HttpServlet {
                     request.setAttribute("err", "La contraseña debe tener al menos 8 caracteres.");
                     request.getRequestDispatcher("WEB-INF/Vecino/cambioContrasena.jsp").forward(request, response);
                     return;
-                } else if (!nuevaContrasena.matches("^(?=.*[0-9])(?=.*[a-zA-Z])(?!.*\\s).*$")) {
+                } else if (!nuevaContrasena.matches("^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9]+$")) {
                     request.setAttribute("err", "La contraseña debe contener al menos un número y una letra, sin espacios ni caracteres especiales.");
                     request.getRequestDispatcher("WEB-INF/Vecino/cambioContrasena.jsp").forward(request, response);
                     return;
@@ -422,20 +450,17 @@ public class VecinoServlet extends HttpServlet {
                     request.getRequestDispatcher("WEB-INF/Vecino/cambioContrasena.jsp").forward(request, response);
                     return;
                 } else {
-                    // Proceso de cambio de contraseña
-                    UsuarioDao usuarioDao = new UsuarioDao();
-                    UsuarioB usuario = (UsuarioB) session.getAttribute("usuarioLogueado");
 
-                    if (usuario != null) {
+                    if (usuarioLogueado != null) {
                         String hashedPassword;
                         try {
                             hashedPassword = GeneraContrasena.hashPassword(nuevaContrasena);
                         } catch (NoSuchAlgorithmException e) {
                             throw new RuntimeException(e);
                         }
-                        usuario.setContrasenia(hashedPassword);
+                        usuarioLogueado.setContrasenia(hashedPassword);
 
-                        usuarioDao.actualizarContrasena(usuario);
+                        usuarioDao.actualizarContrasena(usuarioLogueado);
                         session.setAttribute("success", "Contraseña cambiada exitosamente");
                         response.sendRedirect(request.getContextPath() + "/VecinoServlet?action=cambiarContrasena");
                     } else {
@@ -448,6 +473,8 @@ public class VecinoServlet extends HttpServlet {
             default:
                 response.sendRedirect(request.getContextPath() + "/VecinoServlet");
                 break;
+
+
         }
     }
 }
