@@ -207,11 +207,43 @@
                         <td><%=incidenciasB.getUrbanizacion()%>
                         </td>
                         <% if(incidenciasB.getCriticidadIncidencia_idCriticidadIncidenciaStr() != null){%>
-                            <td><%=incidenciasB.getCriticidadIncidencia_idCriticidadIncidenciaStr()%></td>
+                         <% String color = null; switch (incidenciasB.getCriticidadIncidencia_idCriticidadIncidenciaStr())
+                         {
+                             case "Baja":
+                                 color = "green";
+                                 break;
+                             case "Media":
+                                 color = "orange";
+                                 break;
+                             case "Alta":
+                                 color = "red";
+                                 break;
+                         }
+                         %>
+                            <td style="color: <%=color%>;"><%=incidenciasB.getCriticidadIncidencia_idCriticidadIncidenciaStr()%></td>
                         <%}else{%>
                             <td>-</td>
                         <%}%>
-                        <td><%=incidenciasB.getEstadosIncidencia_idEstadoIncidenciaStr()%>
+                        <% String color_estados = null; switch (incidenciasB.getEstadosIncidencia_idEstadoIncidenciaStr())
+                        {
+                            case "Pendiente":
+                                color_estados = "red";
+                                break;
+                            case "En curso":
+                                color_estados = "green";
+                                break;
+                            case "Cancelado":
+                                color_estados = "grey";
+                                break;
+                            case "Rechazado":
+                                color_estados = "brown";
+                                break;
+                            case "Procesado":
+                                color_estados = "blue";
+                                break;
+                        }
+                        %>
+                        <td style="color: <%=color_estados%>;"><%=incidenciasB.getEstadosIncidencia_idEstadoIncidenciaStr()%>
                         </td>
 
                         <%if(incidenciasB.getEstadosIncidencia_idEstadoIncidencia() == 5){%>
