@@ -111,6 +111,12 @@ public class SerenazgoServlet extends HttpServlet {
                 vista = "WEB-INF/Serenazgo/perfil_S.jsp";
                 request.getRequestDispatcher(vista).forward(request, response);
                 break;
+            case "cambiarTelefono_S":
+                String idSereno = request.getParameter("idSereno");
+                request.setAttribute("telefonoSereno",serenazgoDao.buscarSerenazgoPorId(idSereno).getNumTelefono());
+                vista = "WEB-INF/Serenazgo/cambiarTelefono_S.jsp";
+                request.getRequestDispatcher(vista).forward(request, response);
+                break;
 
 
             default:
@@ -122,6 +128,7 @@ public class SerenazgoServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         IncidenciaDao incidenciaDao = new IncidenciaDao();
+        SerenazgoDao serenazgoDao = new SerenazgoDao();
         VecinoDao vecinoDao = new VecinoDao();
         String action = request.getParameter("action") == null ? "buscarIncidenciaPorNombre" : request.getParameter("action");
         String textoBuscar;
@@ -222,7 +229,24 @@ public class SerenazgoServlet extends HttpServlet {
                 incidenciaDao.borradorLogicoIncidencia(incidenciaId);
                 request.setAttribute("lista",incidenciaDao.listarIncidencias());
                 request.getRequestDispatcher("WEB-INF/Serenazgo/listaIncidencias_S.jsp").forward(request, response);
-
+                break;
+            case "cambiarTelefono":
+                String nuevoTelefono = request.getParameter("nuevoTelefono");
+                if (nuevoTelefono == null || nuevoTelefono.isEmpty()) {
+                    request.setAttribute("err", "Es obligatorio llenar el nuevo teléfono");
+                    request.getRequestDispatcher("WEB-INF/Serenazgo/cambiarTelefono_S.jsp").forward(request, response);
+                    return;
+                } else if (nuevoTelefono.length() != 9) {
+                    request.setAttribute("err", "El teléfono debe tener 9 dígitos.");
+                    request.getRequestDispatcher("WEB-INF/Serenazgo/cambiarTelefono_S.jsp").forward(request, response);
+                    return;
+                }else{
+                    SerenazgoDTO serenazgoDTO1 = (SerenazgoDTO) session.getAttribute("serenazgoLogeado");
+                    String num = String.valueOf(serenazgoDTO1.getIdSerenazgo());
+                    serenazgoDao.cambiarTelefono(nuevoTelefono,String.valueOf(serenazgoDao.buscarSerenazgoPorId(num).getIdSerenazgo()));
+                    session.setAttribute("success", "Telefono cambiado exitosamente");
+                    response.sendRedirect(request.getContextPath() + "/SerenazgoServlet?action=cambiarTelefono_S");
+                }
 
                 break;
             case "cambiarContrasena":
