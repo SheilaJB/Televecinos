@@ -119,15 +119,15 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <% int i=1;%>
+                        <% int k=1;%>
                         <% for(ProfesoresEvento profesor : lista){ %>
                         <tr>
-                            <td><%=i %></td>
+                            <td><%=k %></td>
                             <td><%=profesor.getNombre() + " " + profesor.getApellido()%></td>
                             <td><%=profesor.getCurso() %></td>
 
                         </tr>
-                        <% i+=1;%>
+                        <% k+=1;%>
                         <% } %>
 
                         </tbody>
