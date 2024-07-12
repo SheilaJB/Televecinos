@@ -378,6 +378,7 @@ public class CoordinadorServlet extends HttpServlet {
 
                 int ProfesoresEvento_idProfesoresEvento2 = Integer.parseInt(request.getParameter("ProfesoresEvento_idProfesoresEvento"));
                 String opcionesDias2 = null;
+                //Validaciones
                 if (frecuencia2.equals("2")){
                     opcionesDias2 = request.getParameter("opcionesDias");
                 }else if (frecuencia2.equals("1")){
@@ -386,7 +387,11 @@ public class CoordinadorServlet extends HttpServlet {
                     opcionesDias2="Domingo";
                     erroresEvento2.put("errorFrecuencia", "Error: Seleccione una frecuencia");
                 }
-                //Validaciones
+
+                if (cantidadVacantes2<=evento.getCantidadVacantes()){
+                    erroresEvento2.put("errorVacantes","Error: La cantidad de vacantes no debe disminuir");
+                }
+
                 DateTimeFormatter dateFormatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                 DateTimeFormatter timeFormatter2 = DateTimeFormatter.ofPattern("HH:mm[:ss]");
 

@@ -259,6 +259,11 @@
                             }else{ValueY= String.valueOf(evento.getCantidadVacantes());}%>
                             <label for="cantidadVacantes" class="form-label" style="color:#023047;"><b>Cantidad de vacantes:</b></label>
                             <input type="number" class="form-control" id="cantidadVacantes" placeholder="Escribir" name="cantidadVacantes" value="<%=ValueY%>" required>
+                            <div>
+                                <c:if test="${not empty erroresEvento['errorVacantes']}">
+                                    <span class="error-message" style="color: red;">${erroresEvento['errorVacantes']}</span>
+                                </c:if>
+                            </div>
                         </div>
                     </div>
 
