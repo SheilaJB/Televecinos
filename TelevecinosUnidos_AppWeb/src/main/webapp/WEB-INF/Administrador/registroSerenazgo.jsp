@@ -106,6 +106,30 @@
             <div class="container text-center">
                 <img src="img/serenazgo.jpg" class="img-fluid mb-3" alt="Imagen Serenazgo" width="200">
 
+
+                <% if(request.getParameter("err") != null) { %>
+                <script>
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: '<%= request.getParameter("err") %>',
+                    });
+                </script>
+                <% } %>
+                <% if(request.getParameter("success") != null) { %>
+                    <script>
+                        Swal.fire({
+                            icon: "success",
+                            title: '<%= request.getParameter("success") %>',
+                            showConfirmButton: false,
+                            timer: 1700
+                        }).then(() => {
+                            window.location.href = '<%= request.getContextPath() %>/AdministradorServlet?action=listaSerenazgo_A';
+                        });
+                    </script>
+                <% } %>
+
+
                 <!-- Formulario -->
                 <form id="serenazgoForm" method="post" action="<%=request.getContextPath()%>/AdministradorServlet?action=registrarSerenazgo">
                     <label for="nombre" class="form-label" style="color:#023047;"><b>Nombre del serenazgo</b></label>
@@ -121,7 +145,7 @@
                     <input type="text" id="direccion" name="direccion" class="form-control" placeholder="Ingrese la direccion del serenazgo">
 
                     <label for="correo" class="form-label" style="color:#023047;"><b>Correo</b></label>
-                    <input type="text" id="correo" name="correo" class="form-control" placeholder="Ingrese el correo del serenazgo">
+                    <input type="email" id="correo" name="correo" class="form-control" placeholder="Ingrese el correo del serenazgo">
 
 
                     <label for="numTelefono" class="form-label" style="color:#023047;"><b>Número de telefono</b></label>
@@ -133,7 +157,7 @@
 
                     <label for="turno" class="form-label" style="color:#023047;"><b>Elegir turno:</b></label>
                     <select id="turno" class="form-select mb-3" name="turno" aria-label="Seleccione un turno">
-                        <option selected>Seleccione un turno:</option>
+                        <option value ="" selected>Seleccione un turno:</option>
                         <option value="1">Diurno</option>
                         <option value="2">Nocturno</option>
                     </select>
@@ -142,7 +166,7 @@
 
                     <label for="tipo" class="form-label" style="color:#023047;"><b>Tipo de serenazgo:</b></label>
                     <select id="tipo" class="form-select mb-3" name="tipo" aria-label="Seleccione un tipo">
-                        <option selected>Seleccione un tipo:</option>
+                        <option value ="" selected>Seleccione un tipo:</option>
                         <option value="1">Bicicleta</option>
                         <option value="2">A pie</option>
                         <option value="3">Canino</option>
@@ -153,7 +177,7 @@
                         <div class="m-n2" style="padding-bottom: 5%; ">
                             <button type="button" class="btn btn-warning m-2 text-white" onclick="regresar()">Regresar</button>
 
-                            <button type="submit" class="btn btn-success m-2" onclick="registrar()" >Registrar</button>
+                            <button type="submit" class="btn btn-success m-2">Registrar</button>
                         </div>
                     </div>
 
@@ -163,19 +187,7 @@
                         }
                     </script>
 
-                    <script>
-                        function registrar() {
-                            Swal.fire({
 
-                                icon: "success",
-                                title: "El serenazgo ha sido registrado exitosamente",
-                                showConfirmButton: false,
-                                timer: 1700
-                            }).then(() => {
-                                window.location.href = '<%= request.getContextPath() %>/AdministradorServlet?action=listaSerenazgo_A';
-                            });
-                        }
-                    </script>
 
 
                 </form>

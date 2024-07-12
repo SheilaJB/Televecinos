@@ -6,8 +6,11 @@ import jakarta.servlet.annotation.*;
 import org.example.televecinosunidos_appweb.model.beans.*;
 import org.example.televecinosunidos_appweb.model.daos.*;
 import org.example.televecinosunidos_appweb.util.GeneraContrasena;
+import org.example.televecinosunidos_appweb.util.ValidacionesInicio;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -381,54 +384,115 @@ public class AdministradorServlet extends HttpServlet {
         String action = request.getParameter("action") == null ? "registrarSerenazgo" : request.getParameter("action");
         String textoBuscar;
 
-        switch (action){
+        switch (action) {
             case "registrarSerenazgo":
 
                 String nombre = request.getParameter("nombre");
                 String apellido = request.getParameter("apellido");
                 String dni = request.getParameter("dni");
                 String direccion = request.getParameter("direccion");
-                String numTelefono = request.getParameter("numTelefono");
-                String fechaNacimiento = request.getParameter("fechaNacimiento");
-                int turno = Integer.parseInt(request.getParameter("turno"));
-                int tipo = Integer.parseInt(request.getParameter("tipo"));
                 String correo = request.getParameter("correo");
+                String numTelefono = request.getParameter("numTelefono");
+                String turnoStr = request.getParameter("turno");
+                String tipoStr = request.getParameter("tipo");
+                String fechaNacimiento = request.getParameter("fechaNacimiento");
+
+
                 //String contrasenia = request.getParameter("contrasenia");
                 int pregFrecuentes = 1;
                 int idRol = 4;
                 int isBan = 0;
                 int primeroIngreso = 1;
 
-                UsuarioB us = new UsuarioB();
-                us.setNombre(nombre);
-                us.setApellido(apellido);
-                us.setDni(dni);
-                us.setDireccion(direccion);
-                us.setCorreo(correo);
-                //us.setContrasenia(contrasenia);
-                us.setPreguntasFrecuentes_idTable2(pregFrecuentes);
-                us.setIdRol(idRol);
-                us.setIsBan(isBan);
-                us.setPrimerIngreso(primeroIngreso);
 
-                SerenazgoB serenazgoB = new SerenazgoB();
-                serenazgoB.setNumTelefono(numTelefono);
-                serenazgoB.setFechaNacimiento(fechaNacimiento);
-                serenazgoB.setIdTurnoSerenazgo(turno);
-                serenazgoB.setIdTipoSerenazgo(tipo);
+                //validamos
+                if (nombre == null || nombre.isEmpty()) {
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=registroSerenazgo&err=" + URLEncoder.encode("Ingresar el nombre es obligatorio.", StandardCharsets.UTF_8.toString()));
+                    return;
+                }else if(apellido == null || apellido.isEmpty()){
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=registroSerenazgo&err=" + URLEncoder.encode("Ingresar el apellido es obligatorio.", StandardCharsets.UTF_8.toString()));
+                    return;
+                }else if(dni == null || dni.isEmpty()){
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=registroSerenazgo&err=" + URLEncoder.encode("Ingresar el dni es obligatorio.", StandardCharsets.UTF_8.toString()));
+                    return;
+                }else if(direccion == null || direccion.isEmpty()){
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=registroSerenazgo&err=" + URLEncoder.encode("Ingresar la dirección es obligatorio.", StandardCharsets.UTF_8.toString()));
+                    return;
+                }else if(correo == null || correo.isEmpty()){
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=registroSerenazgo&err=" + URLEncoder.encode("Ingresar el correo es obligatorio.", StandardCharsets.UTF_8.toString()));
+                    return;
+                }else if(numTelefono == null || numTelefono.isEmpty()){
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=registroSerenazgo&err=" + URLEncoder.encode("Ingresar el número de teléfono es obligatorio.", StandardCharsets.UTF_8.toString()));
+                    return;
+                }else if(turnoStr == null || turnoStr.isEmpty()){
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=registroSerenazgo&err=" + URLEncoder.encode("Seleccionar el turno del serenazgo es obligatorio.", StandardCharsets.UTF_8.toString()));
+                    return;
+                }else if(tipoStr == null || tipoStr.isEmpty()){
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=registroSerenazgo&err=" + URLEncoder.encode("Seleccionar el tipo de serenazgo es obligatorio.", StandardCharsets.UTF_8.toString()));
+                    return;
+                }else if(fechaNacimiento == null || fechaNacimiento.isEmpty()){
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=registroSerenazgo&err=" + URLEncoder.encode("Elegir la fecha de nacimiento es obligatorio.", StandardCharsets.UTF_8.toString()));
+                    return;
+                } else if (!ValidacionesInicio.validarNombre(nombre)) {
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=registroSerenazgo&err=" + URLEncoder.encode("El nombre no es válido. La primera letra debe estar en mayúscula. Debe tener una longitud máxima de 100 caracteres y no contener caracteres especiales.", StandardCharsets.UTF_8.toString()));
+                    return;
+                } else if (!ValidacionesInicio.validarApellido(apellido)) {
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=registroSerenazgo&id=&err=" + URLEncoder.encode("El apellido no es válido. La primera letra debe estar en mayúscula. Debe tener una longitud máxima de 100 caracteres y no contener caracteres especiales.", StandardCharsets.UTF_8.toString()));
+                    return;
+                }else if (!ValidacionesInicio.validarDni(dni)) {
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=registroSerenazgo&err=" + URLEncoder.encode("El DNI no es válido. Debe tener exactamente 8 dígitos numéricos.", StandardCharsets.UTF_8.toString()));
+                    return;
+                }else if (!ValidacionesInicio.validarDireccion(direccion)) {
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=registroSerenazgo&err=" + URLEncoder.encode("La dirección no es válida. Debe tener una longitud máxima de 150 caracteres.", StandardCharsets.UTF_8.toString()));
+                    return;
+                } else if (!ValidacionesInicio.validarCorreo(correo)) {
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=registroSerenazgo&err=" + URLEncoder.encode("El correo no es válido. Debe ser una dirección de Gmail.", StandardCharsets.UTF_8.toString()));
+                    return;
+                }else if (numTelefono == null || numTelefono.isEmpty() || numTelefono.length() != 9 || !numTelefono.matches("\\d+")){
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=registroSerenazgo&err=" + URLEncoder.encode("Es obligatorio llenar correctamente el teléfono, debe contener 9 dígitos y no letras", StandardCharsets.UTF_8.toString()));
+                    return;
+                } else if (turnoStr == null || turnoStr.isEmpty()) {
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=registroSerenazgo&err=" + URLEncoder.encode("Es obligatorio elegir el tipo de turno del serenazgo", StandardCharsets.UTF_8.toString()));
+                    return;
+                } else if (tipoStr == null || tipoStr.isEmpty()) {
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=registroSerenazgo&err=" + URLEncoder.encode("Es obligatorio elegir el tipo de serenazgo", StandardCharsets.UTF_8.toString()));
+                    return;
+                } else if(fechaNacimiento.isEmpty() || fechaNacimiento==null){
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=registroSerenazgo&err=" + URLEncoder.encode("Es obligatorio elegir la fecha de nacimiento", StandardCharsets.UTF_8.toString()));
+                    return;
+                }else{
+                    UsuarioB us = new UsuarioB();
+                    us.setNombre(nombre);
+                    us.setApellido(apellido);
+                    us.setDni(dni);
+                    us.setDireccion(direccion);
+                    us.setCorreo(correo);
+                    //us.setContrasenia(contrasenia);
+                    us.setPreguntasFrecuentes_idTable2(pregFrecuentes);
+                    us.setIdRol(idRol);
+                    us.setIsBan(isBan);
+                    us.setPrimerIngreso(primeroIngreso);
 
-                serenazgoB.setUsuario(us);
-                try {
-                    serenazgoDao.registrarSerenazgo(serenazgoB);
-                } catch (NoSuchAlgorithmException e) {
-                    throw new RuntimeException(e);
+                    SerenazgoB serenazgoB = new SerenazgoB();
+                    int turno = Integer.parseInt(turnoStr);
+                    int tipo = Integer.parseInt(tipoStr);
+
+                    serenazgoB.setNumTelefono(numTelefono);
+                    serenazgoB.setFechaNacimiento(fechaNacimiento);
+                    serenazgoB.setIdTurnoSerenazgo(turno);
+                    serenazgoB.setIdTipoSerenazgo(tipo);
+
+                    serenazgoB.setUsuario(us);
+                    try {
+                        serenazgoDao.registrarSerenazgo(serenazgoB);
+                    } catch (NoSuchAlgorithmException e) {
+                        throw new RuntimeException(e);
+                    }
+
+
+                    //response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=listaSerenazgo_A");
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=registroSerenazgo&success=" + URLEncoder.encode("El serenazgo ha sido registrado exitosamente",StandardCharsets.UTF_8.toString()));
                 }
-
-
-                response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=listaSerenazgo_A");
-
-
-
 
                 break;
             case "editarSerenazgo":
