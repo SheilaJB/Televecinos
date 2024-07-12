@@ -3,12 +3,18 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="org.example.televecinosunidos_appweb.model.beans.UsuarioB" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.HashMap" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="usuarioLogueado" scope="session" type="UsuarioB" class="org.example.televecinosunidos_appweb.model.beans.UsuarioB" />
 <%@ page pageEncoding="UTF-8" %>
 <%
     EventoB evento = (EventoB) request.getAttribute("eventoB");
     ArrayList<ProfesoresEvento> listaProfesoresEdit = (ArrayList<ProfesoresEvento>) request.getAttribute("lista");
+    Map<String, String> erroresEvento = new HashMap<String, String>();
+    if (request.getAttribute("erroresEvento")!= null) {
+        erroresEvento = (Map<String, String>) request.getAttribute("erroresEvento");
+    }
 %>
 
 <!DOCTYPE html>
@@ -96,14 +102,16 @@
                     <div class="col-sm-12">
                         <div class="rounded h-100 p-4" style="background-color: #ffb703;">
                             <!---Nombre del evento-->
-                            <div class="mb-3" class="campo ${not empty erroresEvento ? 'error-div' : ''}">
+                            <div class="mb-3">
                                 <label for="nombre" class="form-label" style="color:#023047;"><b>Ingrese un nombre del evento:</b></label>
-                                <input type="text" class="form-control" id="nombre" placeholder="Escribir" name="nombre"  value="${nombreEvento}" required>
+                                <% String Value1 = null; if(erroresEvento.isEmpty()){Value1 =evento.getNombre();}else{Value1 = (String) request.getAttribute("nombreEvento");}%>
+                                <input type="text" class="form-control" id="nombre" placeholder="Escribir" name="nombre" value="<%=Value1%>" required>
                             </div>
                             <!---Descripción del evento-->
                             <div class="mb-3">
                                 <label for="descripcion" class="form-label" style="color:#023047;"><b>Ingrese una descripción del evento:</b></label>
-                                <textarea class="form-control" id="descripcion" rows="2" placeholder="Escribir una breve descripción" name="descripcion" required><%=evento.getDescripcion()%></textarea>
+                                <% String Value2 = null; if(erroresEvento.isEmpty()){Value2 =evento.getDescripcion();}else{Value2 = (String) request.getAttribute("descripcionEvento");}%>
+                                <textarea class="form-control" id="descripcion" rows="2" placeholder="Escribir una breve descripción" name="descripcion" required><%=Value2%></textarea>
                             </div>
                             <!---Nombre del coordinador-->
                             <div class="mb-3">
@@ -120,27 +128,42 @@
                             <!---Nombre del profesor-->
                             <div class="mb-3">
                                 <label for="ProfesoresEvento_idProfesoresEvento" class="form-label" style="color:#023047;"><b>Ingrese nombre del profesor:</b></label>
+                                <%if(erroresEvento.isEmpty()){%>
                                 <select id="ProfesoresEvento_idProfesoresEvento" class="form-select mb-3" aria-label="Default select example" name="ProfesoresEvento_idProfesoresEvento" required>
                                     <% for (ProfesoresEvento pEvento : listaProfesoresEdit) { %>
                                     <option value="<%= pEvento.getIdProfesoresEvento() %>" <%= pEvento.getIdProfesoresEvento() == evento.getProfesoresEvento_idProfesoresEvento() ? "selected" : "" %>><%= pEvento.getNombre() %> <%= pEvento.getApellido() %></option>
                                     <% } %>
+
                                 </select>
+                                <% } else{%>
+                                <%String idProf = (String) request.getAttribute("nombreProfesor");%>
+                                <select id="ProfesoresEvento_idProfesoresEvento" class="form-select mb-3" aria-label="Default select example" name="ProfesoresEvento_idProfesoresEvento" required>
+                                    <% for (ProfesoresEvento pEvento : listaProfesoresEdit) { %>
+                                    <option value="<%= pEvento.getIdProfesoresEvento() %>" <%= pEvento.getIdProfesoresEvento() == Integer.parseInt(idProf) ? "selected" : "" %>><%= pEvento.getNombre() %> <%= pEvento.getApellido() %></option>
+                                    <% } %>
+
+                                </select>
+                                <% } %>
                             </div>
                             <!---Lugar del evento-->
                             <div class="mb-3">
+                                <% String Value3 = null; if(erroresEvento.isEmpty()){Value3 =evento.getLugar();}else{Value3 = (String) request.getAttribute("lugar");}%>
                                 <label for="lugar" class="form-label" style="color:#023047;"><b>Lugar del evento:</b></label>
-                                <input type="text" class="form-control" id="lugar" placeholder="Escribir" name="lugar" value="<%=evento.getLugar()%>" required>
+                                <input type="text" class="form-control" id="lugar" placeholder="Escribir" name="lugar" value="<%=Value3%>" required>
                             </div>
                             <!----Frecuencia del evento----->
+                            <%if(erroresEvento.isEmpty()){%>
+                            <!----Inicio de la selectiva----->
                             <label for="frecuenciaEvento" class="form-label" style="color:#023047;"><b>Frecuencia del evento:</b></label>
-                            <select id="frecuenciaEvento" class="form-select mb-3" aria-label="Default select example" onchange="mostrarOpciones()" name="frecuencia">
+                            <select id="frecuenciaEvento" class="form-select mb-3" aria-label="Default select example" onchange="mostrarOpciones()" name="frecuencia" required>
                                 <option selected>Seleccione la frecuencia del evento</option>
                                 <option value="2" <%=evento.getFrecuenciaString().equals("Dos veces por semana") ? "selected" : ""%>>Dos veces por semana</option>
                                 <option value="1" <%=evento.getFrecuenciaString().equals("Semanal") ? "selected" : ""%>>Semanal</option>
                             </select>
 
+
                             <div id="opcionesInterdiarias" style="display:none;">
-                                <select id="diasInterdiarios" class="form-select mb-3" aria-label="Default select example" name="opcionesDias">
+                                <select id="diasInterdiarios" class="form-select mb-3" aria-label="Default select example" name="opcionesDias" required>
                                     <option selected>Seleccione la opción: </option>
                                     <option value="Lunes-Miércoles" <%=evento.getDiaEvento().equals("Lunes-Miércoles") ? "selected" : ""%>>Lunes-Miércoles</option>
                                     <option value="Martes-Jueves" <%=evento.getDiaEvento().equals("Martes-Jueves") ? "selected" : ""%>>Martes-Jueves</option>
@@ -149,7 +172,7 @@
 
                             <div id="opcionesSemanal" style="display:none;">
                                 <label for="diaSemana" class="form-label" style="color:#023047;"><b>Elegir día:</b></label>
-                                <select id="diaSemana" class="form-select mb-3" aria-label="Default select example" name="opcionesDias1">
+                                <select id="diaSemana" class="form-select mb-3" aria-label="Default select example" name="opcionesDias1" required>
                                     <option selected>Seleccione el día a la semana:</option>
                                     <option value="Lunes" <%=evento.getDiaEvento().equals("Lunes") ? "selected" : ""%>>Lunes</option>
                                     <option value="Martes" <%=evento.getDiaEvento().equals("Martes") ? "selected" : ""%>>Martes</option>
@@ -158,7 +181,48 @@
                                     <option value="Viernes" <%=evento.getDiaEvento().equals("Viernes") ? "selected" : ""%>>Viernes</option>
                                 </select>
                             </div>
+                            <!----Fin de la selectiva----->
 
+                            <%}else{String frec = (String) request.getAttribute("frecuencia");%>
+                            <%
+                                String opcionesDias = (String) request.getAttribute("opcionesDias");
+                                String opcionesDias1 = (String) request.getAttribute("opcionesDias1");
+                                if (opcionesDias1 == null){
+                                    opcionesDias1 = "X";
+                                }
+                                if (opcionesDias == null){
+                                    opcionesDias1 = "X";
+                                }
+                            %>
+                            <!----Inicio de la selectiva----->
+                            <label for="frecuenciaEvento" class="form-label" style="color:#023047;"><b>Frecuencia del evento:</b></label>
+                            <select id="frecuenciaEvento" class="form-select mb-3" aria-label="Default select example" onchange="mostrarOpciones()" name="frecuencia" required>
+                                <option selected>Seleccione la frecuencia del evento</option>
+                                <option value="2" <%=Integer.parseInt(frec)==2 ? "selected" : ""%>>Dos veces por semana</option>
+                                <option value="1" <%=Integer.parseInt(frec)==1 ? "selected" : ""%>>Semanal</option>
+                            </select>
+
+                            <div id="opcionesInterdiarias" style="display:none;">
+                                <select id="diasInterdiarios" class="form-select mb-3" aria-label="Default select example" name="opcionesDias" required>
+                                    <option selected>Seleccione la opción: </option>
+                                    <option value="Lunes-Miércoles" <%=opcionesDias.equals("Lunes-Miércoles") ? "selected" : ""%>>Lunes-Miércoles</option>
+                                    <option value="Martes-Jueves" <%=opcionesDias.equals("Martes-Jueves") ? "selected" : ""%>>Martes-Jueves</option>
+                                </select>
+                            </div>
+
+                            <div id="opcionesSemanal" style="display:none;">
+                                <label for="diaSemana" class="form-label" style="color:#023047;"><b>Elegir día:</b></label>
+                                <select id="diaSemana" class="form-select mb-3" aria-label="Default select example" name="opcionesDias1" required>
+                                    <option selected>Seleccione el día a la semana:</option>
+                                    <option value="Lunes" <%=opcionesDias1.equals("Lunes") ? "selected" : ""%>>Lunes</option>
+                                    <option value="Martes" <%=opcionesDias1.equals("Martes") ? "selected" : ""%>>Martes</option>
+                                    <option value="Miércoles" <%=opcionesDias1.equals("Miércoles") ? "selected" : ""%>>Miércoles</option>
+                                    <option value="Jueves" <%=opcionesDias1.equals("Jueves") ? "selected" : ""%>>Jueves</option>
+                                    <option value="Viernes" <%=opcionesDias1.equals("Viernes") ? "selected" : ""%>>Viernes</option>
+                                </select>
+                            </div>
+                            <!----Fin de la selectiva----->
+                            <%}%>
                             <script>
                                 function mostrarOpciones() {
                                     var frecuenciaSeleccionada = document.getElementById("frecuenciaEvento").value;
@@ -183,8 +247,12 @@
                             </script>
 
                             <!---Cantidad de vacantes disponibles-->
+                            <% String ValueY = null;%>
+                            <%if (!erroresEvento.isEmpty()){
+                                ValueY=(String) request.getAttribute("cantVacantes");
+                            }else{ValueY= String.valueOf(evento.getCantidadVacantes());}%>
                             <label for="cantidadVacantes" class="form-label" style="color:#023047;"><b>Cantidad de vacantes:</b></label>
-                            <input type="number" class="form-control" id="cantidadVacantes" placeholder="Escribir" name="cantidadVacantes" value="<%=evento.getCantidadVacantes()%>" required>
+                            <input type="number" class="form-control" id="cantidadVacantes" placeholder="Escribir" name="cantidadVacantes" value="<%=ValueY%>" required>
                         </div>
                     </div>
 
@@ -192,27 +260,55 @@
                         <div class="bg-light rounded h-100 p-4">
                             <!-- Fecha del evento -->
                             <div class="mb-3">
+                                <% String Value5 = null; if(erroresEvento.isEmpty()){Value5 = evento.getFecha_inicio();}else{Value5 = (String) request.getAttribute("fecha_inicio");}%>
                                 <label for="fecha_inicio" class="form-label" style="color:#023047;"><b>Fecha de inicio:</b></label>
-                                <input type="date" class="form-control" id="fecha_inicio" name="fecha_inicio" value="<%=evento.getFecha_inicio()%>" required>
+                                <input type="date" class="form-control" id="fecha_inicio" name="fecha_inicio" value="<%=Value5%>" required>
+                                <div>
+                                    <c:if test="${not empty erroresEvento['fechaInicio']}">
+                                        <span class="error-messege" style="color: red;">${erroresEvento['fechaInicio']}</span>
+                                    </c:if>
+                                </div>
+                                <div>
+                                    <c:if test="${not empty erroresEvento['errorFechaInicio']}">
+                                        <span class="error-message" style="color: red;">${erroresEvento['errorFechaInicio']}</span>
+                                    </c:if>
+                                </div>
                             </div>
                             <div class="mb-3">
+                                <% String Value6 = null; if(erroresEvento.isEmpty()){Value6 = evento.getFecha_fin();}else{Value6 = (String) request.getAttribute("fecha_fin");}%>
                                 <label for="fecha_fin" class="form-label" style="color:#023047;"><b>Fecha de finalización:</b></label>
-                                <input type="date" class="form-control" id="fecha_fin" name="fecha_fin" value="<%=evento.getFecha_fin()%>" required>
+                                <input type="date" class="form-control" id="fecha_fin" name="fecha_fin" value="<%=Value6%>" required>
+                                <div>
+                                    <c:if test="${not empty erroresEvento['fechaFin']}">
+                                        <span class="error-message" style="color: red;">${erroresEvento['fechaFin']}</span>
+                                    </c:if>
+                                </div>
+                                <div>
+                                    <c:if test="${not empty erroresEvento['errorFechaFin']}">
+                                        <span class="error-message" style="color: red;">${erroresEvento['errorFechaFin']}</span>
+                                    </c:if>
+                                </div>
                             </div>
                             <!-- Hora de inicio del evento -->
                             <div class="mb-3">
+                                <% String Value7 = null; if(erroresEvento.isEmpty()){Value7 = evento.getHora_inicio();}else{Value7 = (String) request.getAttribute("hora_inicio");}%>
                                 <label for="hora_inicio" class="form-label" style="color:#023047;"><b>Hora de inicio:</b></label>
-                                <input type="time" class="form-control" id="hora_inicio" name="hora_inicio" value="<%=evento.getHora_inicio()%>" required>
+                                <input type="time" class="form-control" id="hora_inicio" name="hora_inicio" value="<%=Value7%>" required>
                             </div>
                             <!-- Hora de finalización del evento -->
                             <div class="mb-3">
+                                <% String Value8 = null; if(erroresEvento.isEmpty()){Value8 = evento.getHora_fin();}else{Value8 = (String) request.getAttribute("hora_fin");}%>
                                 <label for="hora_fin" class="form-label" style="color:#023047;"><b>Hora de finalización:</b></label>
-                                <input type="time" class="form-control" id="hora_fin" name="hora_fin" value="<%=evento.getHora_fin()%>" required>
+                                <input type="time" class="form-control" id="hora_fin" name="hora_fin" value="<%=Value8%>" required>
+                                <c:if test="${not empty erroresEvento['errorHoraFin']}">
+                                    <span class="error-message" style="color: red;">${erroresEvento['errorHoraFin']}</span>
+                                </c:if>
                             </div>
-                            <!-- Lista de materiales -->
+                            <!-- Lista de materiales  -->
                             <div class="mb-3">
                                 <label for="listaMateriales" class="form-label"  style="color:#023047;"><b>Materiales:</b></label>
-                                <input type="text" class="form-control" id="listaMateriales" name="listaMateriales" value="<%=evento.getListaMateriales()%>">
+                                <% String ValueX = null; if(erroresEvento.isEmpty()){ValueX =evento.getListaMateriales();}else{ValueX = (String) request.getAttribute("materiales");}%>
+                                <input type="text" class="form-control" id="listaMateriales" name="listaMateriales" value="<%=ValueX%>" required>
                             </div>
                         </div>
                     </div>
@@ -285,7 +381,29 @@
                 <button type="submit" class="btn btn-primary" style="background-color: #023047; border-color: #023047; color: #ffffff;"><b>Guardar Cambios</b></button>
                 <!--<a href="<%=request.getContextPath()%>/CoordinadorServlet?action=lista"  class="btn btn-primary" style="background-color: #023047; border-color: #023047; color: #ffffff;"><b>Siguiente</b></a>-->
             </div>
+            <script>
+                function validarFormulario() {
+                    var camposObligatorios = document.querySelectorAll('input[required], select[required], textarea[required]');
+                    var formularioValido = true;
 
+                    camposObligatorios.forEach(function(campo) {
+                        if (!campo.value.trim()) {
+                            campo.classList.add('highlight');
+                            formularioValido = false;
+                        } else {
+                            campo.classList.remove('highlight');
+                        }
+                    });
+
+                    if (!formularioValido) {
+                        document.getElementById('error-message').style.display = 'block';
+                    } else {
+                        document.getElementById('error-message').style.display = 'none';
+                    }
+
+                    return formularioValido;
+                }
+            </script>
         </form>
         <!-- Footer Start -->
         <div class="container-fluid pt-4 px-4">

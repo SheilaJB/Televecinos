@@ -103,23 +103,22 @@
         <h2 class="mb-2 text-center" style = "padding-top: 3%;" style="color:#023047;">Evaluación de incidencia: <%=incidencia.getNombreIncidencia()%></h2>
 
 
-        <form  id="incidenciaFalsaForm" method="post" action="<%=request.getContextPath()%>/SerenazgoServlet?action=seleccionarInicidenciaFalsa">
-            <input type="hidden" name="incidenciaId" value="<%=incidencia.getIdIncidencias()%>">
-            <input type="hidden" class="form-control" name="UsrID" value="<%=incidencia.getUsuario_idUsuario()%>">
-            <td>
+        <div style="display: flex; align-items: center;">
+            <form id="incidenciaFalsaForm" method="post" action="<%=request.getContextPath()%>/SerenazgoServlet?action=seleccionarInicidenciaFalsa">
+                <input type="hidden" name="incidenciaId" value="<%=incidencia.getIdIncidencias()%>">
+                <input type="hidden" class="form-control" name="UsrID" value="<%=incidencia.getUsuario_idUsuario()%>">
                 <button type="button" class="btn btn-false m-2 btn-banear" onclick="confirmarIncidenciaFalsa(<%=incidencia.getIdIncidencias()%>)">
                     ⛔ Falsa
                 </button>
-            </td>
-        </form>
-        <form id="borrarFalsaForm" method="post" action="<%=request.getContextPath()%>/SerenazgoServlet?action=borrarIncidencia">
-            <input type="hidden" name="incidenciaId" value="<%=incidencia.getIdIncidencias()%>">
-            <td>
+            </form>
+            <form id="borrarFalsaForm" method="post" action="<%=request.getContextPath()%>/SerenazgoServlet?action=borrarIncidencia">
+                <input type="hidden" name="incidenciaId" value="<%=incidencia.getIdIncidencias()%>">
                 <button type="button" class="btn btn-danger m-2 btn-banear" onclick="confirmarBorrarIncidencia()">
                     🗑️Borrar incidencia
                 </button>
-            </td>
-        </form>
+            </form>
+        </div>
+
 
         <form method="post" id="formularioGestionarIncidencia" action="<%=request.getContextPath()%>/SerenazgoServlet?action=gestionarIncidencia">
             <!-- Form Start -->
@@ -216,8 +215,8 @@
                     <div class="col-sm-12 col-xl-6">
                         <div class="bg-light rounded h-100 p-4">
                             <!----Movilidad de la incidencia----->
-                            <% if(incidencia.getEstadosIncidencia_idEstadoIncidencia()==2){%>
                             <label for="movilidad" class="form-label" style="color:#023047;"><b>Movilidad:</b></label>
+                            <% if(incidencia.getEstadosIncidencia_idEstadoIncidencia()==2){%>
                                 <select id="movilidad" name="movilidadIncidencia" class="form-select mb-3" aria-label="Default select example" onchange="mostrarOpciones()">
                                     <option value=""  <%= incidencia.getTipoMovilidadRequerido()  == 0 ? "selected" : "" %>>Seleccione la movilidad para la incidencia</option>
                                     <option value="1" <%= incidencia.getTipoMovilidadRequerido()  == 1 ? "selected" : "" %>>Bicicleta</option>

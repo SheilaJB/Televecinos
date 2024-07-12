@@ -66,120 +66,198 @@
 
         <!-- LLENAR-->
         <!-- Footer Start -->
-
         <div class="container-fluid pt-4 px-4">
             <div class="container">
-                <div class="columna columna1">
-                    <div class="campo">
-                        <h2>Ver detalle de incidencia</h2>
-                    </div>
-
-                    <form>
-                        <div class="rounded h-100 p-4" style = "background-color: #8ecae6;">
-                            <div class="mb-3">
-                                <img id="preview" src="#" alt="Vista previa de la imagen" class="img-thumbnail" style="display: none;">
-                            </div>
-                            <div class="mb-3">
-                                <label for="NombreIncidencia" class="form-label" style="color:#023047;"><b>Nombre de la incidencia </b></label>
-                                <br>
-                                <a style="color: white;">• <%=incidencia.getNombreIncidencia()%></a>
-                            </div>
-                            <div class="mb-3">
-                                <label for="TipoIncidencia" class="form-label" style="color:#023047;"><b>Tipo de incidencia</b></label>
-                                <br>
-                                <a style="color: white;">• <%=incidencia.getTipoIncidencia_idTipoIncidenciaStr()%></a>
-                            </div>
-
-
-                            <div class="mb-3">
-                                <label for="esPara" class="form-label" style="color:#023047;"><b>La incidencia pertenece a:</b></label>
-                                <br>
-                                <a style="color: white;">• <%=nombreVecinoDuenoIncidencia%></a>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="lugarExacto" class="form-label" style="color:#023047;"><b>Lugar exacto:</b></label>
-                                <br>
-                                <a style="color: white;">•<%=incidencia.getLugarExacto()%></a>
-                            </div>
-                            <div class="mb-3">
-                                <label for="referencia" class="form-label" style="color:#023047;"><b>Referencia</b></label>
-                                <br>
-                                <a style="color: white;">•<%=incidencia.getReferencia()%></a>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="contacto" class="form-label" style="color:#023047;"><b>Número de Contacto</b></label>
-                                <br>
-
-                                <% if (incidencia.getNumeroContacto() == null){%>
-                                    <a style="color: white;">•No ha sido registrado por el vecino></a>
-                                <%}else{%>
-                                    <a style="color: white;">•<%=incidencia.getNumeroContacto()%></a>
-                                <%}%>
-
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="ambulancia" class="form-label" style="color:#023047;"><b>¿Se requiere ambulancia?</b></label>
-                                <br>
-                                <%if(incidencia.getAmbulancia()==1){ %>
-                                <a style="color: white;">•Sí</a>
-                                <%}else{ %>
-                                    <a style="color: white;">•No</a>
-                                <%} %>
-
-                            </div>
-                            <div class="mb-3">
-                                <label for="fechaGenereación" class="form-label" style="color:#023047;"><b>Fecha y hora de la generación de incidencia:</b></label>
-                                <br>
-                                <a style="color: white;">•<%=incidencia.getFecha()%> </a>
-                            </div>
-
-                        </div>
-                    </form>
+                <div class="col-md-12" style="text-align: center;">
+                    <h2>Ver información de la incidencia</h2>
                 </div>
-                <div class="columna columna2" style="margin-top: 85px;">
-                    <form>
-                        <label for="imagenAcc" class="form-label" style="color:#023047;"><b>Foto del incidente</b></label>
-                        <div class="bg-light rounded h-100 p-4">
-                            <div class="mb-3">
-                                <img src="ImagenServlet?idImagenIncidencia=<%=incidencia.getIdIncidencias()%>" class="img-responsive" alt="" style="width: 100%; height: auto;"  />
-                            </div>
-                        </div>
+            </div>
 
-                        <%if(incidencia.getSerenazgo_idSerenazgo()==0 || incidencia.getEstadosIncidencia_idEstadoIncidencia() <=2){%>
-                            <a href="<%=request.getContextPath()%>/SerenazgoServlet?action=gestionar_Incidencia_S&id=<%=incidencia.getIdIncidencias()%>">
-                                <div class="BotonIrIncidencias">
-                                    <button type="button" class="btn btn-lg btn-primary m-2" style="background-color: #146951; border-color: #146951; color: #ffffff;">Gestionar</button>
-                                </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 d-flex justify-content-between">
+                        <div class="col-auto">
+                            <a href="<%=request.getContextPath()%>/SerenazgoServlet?action=listaIncidencias_S">
+                                <button class="btn btn-lg btn-primary m-2" style="background-color: #023047; border-color: #023047; color: #ffffff;"><i class="fas fa-arrow-alt-circle-left"></i> Regresar</button>
                             </a>
-                        <%}%>
+                        </div>
+                        <div class="col-auto">
+                            <%if(incidencia.getSerenazgo_idSerenazgo()==0 || incidencia.getEstadosIncidencia_idEstadoIncidencia() <=2){%>
+                            <a href="<%=request.getContextPath()%>/SerenazgoServlet?action=gestionar_Incidencia_S&id=<%=incidencia.getIdIncidencias()%>">
+                                <button class="btn btn-lg btn-primary m-2" style="background-color: #146951; border-color: #146951; color: #ffffff;margin-top: 10px;">Gestionar</button>
+                            </a>
+                            <%}%>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6" style="margin-top: 15px;">
+                        <form>
+                            <div class="card shadow-sm" >
+                                <div class="card-header text-lg-center">
+                                    <h5>Información de la Incidencia</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row mb-3">
+                                        <div class="col-12">
+                                            <img id="preview" src="#" alt="Vista previa de la imagen" class="img-thumbnail" style="display: none;">
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-12">
+                                            <label for="NombreIncidencia" class="form-label" style="color:#023047;"><b>Nombre de la incidencia: </b></label>
+                                            <br>
+                                            <a style="color: #000000;">• <%=incidencia.getNombreIncidencia()%></a>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-12">
+                                            <label for="TipoIncidencia" class="form-label" style="color:#023047;"><b>Tipo de incidencia:</b></label>
+                                            <br>
+                                            <a style="color: #000000;">•<%=incidencia.getTipoIncidencia_idTipoIncidenciaStr()%></a>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-12">
+                                            <label for="esPara" class="form-label" style="color:#023047;"><b>La incidencia pertenece a:</b></label>
+                                            <br>
+                                            <a style="color: #000000;">•<%=nombreVecinoDuenoIncidencia%></a>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-12">
+                                            <label for="esPara" class="form-label" style="color:#023047;"><b>Es para:</b></label>
+                                            <br>
+                                            <%if(incidencia.getIncidenciaPersonal()==0){%>
+                                            <a style="color: #000000;">•Otra persona</a>
+                                            <%}else{%>
+                                            <a style="color: #000000;">•El mismo vecino</a>
+                                            <%}%>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-12">
+                                            <label for="esPara" class="form-label" style="color:#023047;"><b>Urbanizacion:</b></label>
+                                            <br>
+                                            <a style="color: #000000;">•<%=incidencia.getUrbanizacion()%></a>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-12">
+                                            <label for="lugarExacto" class="form-label" style="color:#023047;"><b>Lugar exacto:</b></label>
+                                            <br>
+                                            <a style="color: #000000;">•<%=incidencia.getLugarExacto()%></a>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-12">
+                                            <label for="referencia" class="form-label" style="color:#023047;"><b>Referencia:</b></label>
+                                            <br>
+                                            <a style="color: #000000;">•<%=incidencia.getReferencia()%></a>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-12">
+                                            <label for="contacto" class="form-label" style="color:#023047;"><b>Número de contacto:</b></label>
+                                            <br>
+                                            <% if (incidencia.getNumeroContacto() == null){%>
+                                            <a style="color: #000000;">•No ha sido registrado por el vecino></a>
+                                            <%}else{%>
+                                            <a style="color: #000000;">•<%=incidencia.getNumeroContacto()%></a>
+                                            <%}%>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-12">
+                                            <label for="ambulancia" class="form-label" style="color:#023047;"><b>¿Se requiere ambulancia?</b></label>
+                                            <br>
+                                            <%if(incidencia.getAmbulancia()==1){ %>
+                                            <a style="color: #000000;">•Sí</a>
+                                            <%}else{ %>
+                                            <a style="color: #000000;">•No</a>
+                                            <%} %>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-12">
+                                            <label for="fechaGenereación" class="form-label" style="color:#023047;"><b>Fecha y hora de la generación de incidencia:</b></label>
+                                            <br>
+                                            <a style="color: #000000;">•<%=incidencia.getFecha()%> </a>
+                                        </div>
+                                    </div>
 
 
-
-
-                        <a href="<%=request.getContextPath()%>/SerenazgoServlet?action=listaIncidencias_S">
-                            <div class="BotonRegresar">
-                                <button type="button" class="btn btn-lg btn-primary m-2" style="background-color: #023047; border-color: #023047; color: #ffffff;">Regresar</button>
+                                </div>
                             </div>
-                        </a>
+                        </form>
+                    </div>
+                    <div class="col-md-6" style="margin-top: 10px;">
+                        <form>
+                            <label class="form-label"><b style="color: #000000;">Foto del incidente</b></label>
+                            <div class="rounded h-100 p-4" style="background-color: #023047;">
+                                <div class="mb-3">
+                                    <%if(incidencia.getNombreFoto() == null || incidencia.getNombreFoto().equals("") ){%>
+                                    <div style="color: white;">
+                                        No se ingresó ninguna imagen de referencia
+                                    </div>
+                                    <%}else{%>
+                                    <img src="ImagenServlet?idImagenIncidencia=<%=incidencia.getIdIncidencias()%>" class="img-responsive" alt="" style="width: 100%; height: auto;"  />
+                                    <%}%>
+                                </div>
+                            </div>
+                            <%if(incidencia.getEstadosIncidencia_idEstadoIncidencia()==5){%>
+                                <div style="margin-top: 15px;">
+                                    <form>
+                                        <div class="card shadow-sm">
+                                            <div class="card-body">
+                                                <div>
+                                                    <label class="form-label" style="color:#023047;"><b>Incidencia gestionada por: </b></label>
+                                                    <a style="color: #000000;"> <%=incidencia.getNombrePersonalTurno()%></a>
+                                                </div>
+                                                <div>
+                                                    <label class="form-label" style="color:#023047;"><b>Solucion a dar: </b></label>
+                                                    <a style="color: #000000;"> <%=incidencia.getSolucionADar()%></a><br>
+                                                </div>
+                                                <div>
+                                                    <label class="form-label" style="color:#023047;"><b>Criticidad: </b></label>
+                                                    <a style="color: #000000;"> <%=incidencia.getCriticidadIncidencia_idCriticidadIncidenciaStr()%></a><br>
+                                                </div>
+                                                <div>
+                                                    <label class="form-label" style="color:#023047;"><b>Personal requerido: </b></label>
+                                                    <a style="color: #000000;"> <%=incidencia.getPersonalRequerido()%></a><br>
+                                                </div>
+                                                <div>
+                                                    <label class="form-label" style="color:#023047;"><b>Movilidad requerido: </b></label>
+                                                    <a style="color: #000000;"> <%=incidencia.getTipoMovilidadRequerido()%></a><br>
+                                                </div>
 
 
 
-                    </form>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            <%}%>
+
+
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
+        <!-- Footer Start -->
         <div class="container-fluid pt-4 px-4" >
             <div class="bg-light rounded-top p-4">
                 <div class="row">
                     <div class="col-12 col-sm-6 text-center text-sm-start">
-                        &copy; <a>Televecinos Unidos</a>, All Right Reserved.
+                        &copy; <a href="#">TelevecinosUnidos</a>, All Right Reserved.
                     </div>
                 </div>
             </div>
         </div>
+        <!-- Footer End -->
     </div>
     <!-- Content End -->
 
