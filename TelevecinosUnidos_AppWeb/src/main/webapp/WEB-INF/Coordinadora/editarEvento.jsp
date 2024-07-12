@@ -307,15 +307,22 @@
                                 <% String Value7 = null; if(erroresEvento.isEmpty()){Value7 = evento.getHora_inicio();}else{Value7 = (String) request.getAttribute("hora_inicio");}%>
                                 <label for="hora_inicio" class="form-label" style="color:#023047;"><b>Hora de inicio:</b></label>
                                 <input type="time" class="form-control" id="hora_inicio" name="hora_inicio" value="<%=Value7%>" required>
+                                <div>
+                                    <c:if test="${not empty erroresEvento['errorHoraFin']}">
+                                        <span class="error-message" style="color: red;">${erroresEvento['errorHoraFin']}</span>
+                                    </c:if>
+                                </div>
                             </div>
                             <!-- Hora de finalización del evento -->
                             <div class="mb-3">
                                 <% String Value8 = null; if(erroresEvento.isEmpty()){Value8 = evento.getHora_fin();}else{Value8 = (String) request.getAttribute("hora_fin");}%>
                                 <label for="hora_fin" class="form-label" style="color:#023047;"><b>Hora de finalización:</b></label>
                                 <input type="time" class="form-control" id="hora_fin" name="hora_fin" value="<%=Value8%>" required>
-                                <c:if test="${not empty erroresEvento['errorHoraFin']}">
-                                    <span class="error-message" style="color: red;">${erroresEvento['errorHoraFin']}</span>
-                                </c:if>
+                                <div>
+                                    <c:if test="${not empty erroresEvento['horaFin30Min']}">
+                                        <span class="error-message" style="color: red;">${erroresEvento['horaFin30Min']}</span>
+                                    </c:if>
+                                </div>
                             </div>
                             <!-- Lista de materiales  -->
                             <div class="mb-3">

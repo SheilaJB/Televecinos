@@ -329,15 +329,22 @@
                             <div class="mb-3" class="campo ${not empty erroresEvento ? 'error-div' : ''}">
                                 <label for="horaInicioEvento" class="form-label" style="color:#023047;"><b>Hora de inicio:</b></label>
                                 <input type="time" class="form-control" id="horaInicioEvento" name="hora_inicio" required value="${hora_inicio}" class="${not empty erroresEvento ? 'error' : ''}">
+                                <div>
+                                    <c:if test="${not empty erroresEvento['errorHoraFin']}">
+                                        <span class="error-message" style="color: red;">${erroresEvento['errorHoraFin']}</span>
+                                    </c:if>
+                                </div>
                             </div>
 
                             <!-- Hora de finalización del evento -->
                             <div class="mb-3" class="campo ${not empty erroresEvento['fechaFin'] ? 'error-div' : ''}">
                                 <label for="horaFinEvento" class="form-label" style="color:#023047;"><b>Hora de finalización:</b></label>
                                 <input type="time" class="form-control" id="horaFinEvento" name="hora_fin" required value="${hora_fin}" class="${not empty erroresEvento['errorHoraFin'] ? 'error' : ''}">
-                                <c:if test="${not empty erroresEvento['errorHoraFin']}">
-                                    <span class="error-message" style="color: red;">${erroresEvento['errorHoraFin']}</span>
-                                </c:if>
+                                <div>
+                                    <c:if test="${not empty erroresEvento['horaFin30Min']}">
+                                        <span class="error-message" style="color: red;">${erroresEvento['horaFin30Min']}</span>
+                                    </c:if>
+                                </div>
                             </div>
                         </div>
                     </div>

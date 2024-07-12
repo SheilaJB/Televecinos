@@ -256,6 +256,10 @@ public class CoordinadorServlet extends HttpServlet {
                     erroresEvento.put("fechaFin", "Error: la fecha de finalización no puede ser antes de la fecha de inicio");
                     // Error: la fecha de finalización no puede ser antes de la fecha de inicio
                 }
+                LocalTime treintaMinutosDespues = horaInicio.plusMinutes(30);
+                if (horaFin.isBefore(treintaMinutosDespues)) {
+                    erroresEvento.put("horaFin30Min", "Error: la hora de finalización debe ser al menos 30 minutos después de la hora de inicio.");
+                }
                 DayOfWeek dayOfWeekInicio = fechaInicio.getDayOfWeek();
                 DayOfWeek dayOfWeekFin = fechaFin.getDayOfWeek();
 
@@ -421,6 +425,7 @@ public class CoordinadorServlet extends HttpServlet {
                     erroresEvento2.put("fechaFin", "Error: la fecha de finalización no puede ser antes de la fecha de inicio");
                     // Error: la fecha de finalización no puede ser antes de la fecha de inicio
                 }
+
                 DayOfWeek dayOfWeekInicio2 = fechaInicio2.getDayOfWeek();
                 DayOfWeek dayOfWeekFin2 = fechaFin2.getDayOfWeek();
 
@@ -475,6 +480,10 @@ public class CoordinadorServlet extends HttpServlet {
                 if (horaInicio2.isAfter(horaFin2)) {
                     erroresEvento2.put("errorHoraFin", "Error: la hora de inicio no puede ser después de la hora de fin");
                     // Error: la hora de inicio no puede ser después de la hora de fin
+                }
+                LocalTime treintaMinutosDespues2 = horaInicio2.plusMinutes(30);
+                if (horaFin2.isBefore(treintaMinutosDespues2)) {
+                    erroresEvento2.put("horaFin30Min", "Error: la hora de finalización debe ser al menos 30 minutos después de la hora de inicio.");
                 }
 
                 if (!erroresEvento2.isEmpty()) {
