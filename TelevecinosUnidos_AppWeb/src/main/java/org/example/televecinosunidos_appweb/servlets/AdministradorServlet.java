@@ -623,12 +623,41 @@ public class AdministradorServlet extends HttpServlet {
                 String nombre1 = request.getParameter("nombre");
                 String apellido1 = request.getParameter("apellido");
                 String curso = request.getParameter("curso");
-                ProfesoresEvento profesoresEvento = new ProfesoresEvento();
-                profesoresEvento.setNombre(nombre1);
-                profesoresEvento.setApellido(apellido1);
-                profesoresEvento.setCurso(curso);
-                instructorDao.registrarNuevoProfesor(profesoresEvento);
-                response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=listaInstructores_A");
+
+
+                //validaciones
+                if (nombre1 == null || nombre1.isEmpty()) {
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=registroInstructor&err=" + URLEncoder.encode("Ingresar el nombre es obligatorio.", StandardCharsets.UTF_8.toString()));
+                    return;
+                }else if(apellido1 == null || apellido1.isEmpty()){
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=registroInstructor&err=" + URLEncoder.encode("Ingresar el apellido es obligatorio.", StandardCharsets.UTF_8.toString()));
+                    return;
+                }else if(curso == null || curso.isEmpty()){
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=registroInstructor&err=" + URLEncoder.encode("Ingresar el curso es obligatorio.", StandardCharsets.UTF_8.toString()));
+                    return;
+                } else if (!ValidacionesInicio.validarNombre(nombre1)) {
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=registroInstructor&err=" + URLEncoder.encode("El nombre no es válido. La primera letra debe estar en mayúscula. Debe tener una longitud máxima de 100 caracteres y no contener caracteres especiales.", StandardCharsets.UTF_8.toString()));
+                    return;
+                } else if (!ValidacionesInicio.validarApellido(apellido1)) {
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=registroInstructor&err=" + URLEncoder.encode("El apellido no es válido. La primera letra debe estar en mayúscula. Debe tener una longitud máxima de 100 caracteres y no contener caracteres especiales.", StandardCharsets.UTF_8.toString()));
+                    return;
+                }else{
+                    ProfesoresEvento profesoresEvento = new ProfesoresEvento();
+                    profesoresEvento.setNombre(nombre1);
+                    profesoresEvento.setApellido(apellido1);
+                    profesoresEvento.setCurso(curso);
+                    instructorDao.registrarNuevoProfesor(profesoresEvento);
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=registroInstructor&success=" + URLEncoder.encode("El instructor ha sido registrado exitosamente",StandardCharsets.UTF_8.toString()));
+
+                    //response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=listaInstructores_A");
+
+                }
+
+
+
+
+
+
 
                 break;
             case "buscarVecinoPorNombre":
