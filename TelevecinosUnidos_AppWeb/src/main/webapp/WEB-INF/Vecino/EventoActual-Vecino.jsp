@@ -83,19 +83,6 @@
         <jsp:include page="../includes/navbarVecino.jsp"></jsp:include>
         <!-- PARTE SUPERIOR FINAL -->
 
-        <% if (session.getAttribute("err") != null) { %>
-        <div class="alert alert-danger" role="alert">
-            <%= session.getAttribute("err") %>
-        </div>
-        <% session.removeAttribute("err"); %>
-        <% } %>
-
-        <% if (session.getAttribute("info") != null) { %>
-        <div class="alert alert-success" role="alert">
-            <%= session.getAttribute("info") %>
-        </div>
-        <% session.removeAttribute("info"); %>
-        <% } %>
         <!-- Mostrar información del evento-->
         <div class="container-fluid pt-4 px-4">
             <div class="jumbotron text-center">
@@ -109,7 +96,7 @@
 
             <div class="row">
                 <div class="col-md-6">
-                    <form method="post" action="<%=request.getContextPath()%>/VecinoServlet?action=inscribirEvento&idEvento=<%=request.getAttribute("evento") != null?((EventoB) request.getAttribute("evento")).getIdEvento() :""%>">
+                    <form>
                         <div class="card shadow-sm" >
                             <div class="card-header text-lg-center">
                                 <h5>Información del evento</h5>
@@ -253,11 +240,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="d-flex justify-content-center mt-4">
+
+                    <form method="post" action="<%=request.getContextPath()%>/VecinoServlet?action=inscribirEvento&idEvento=<%=request.getAttribute("evento") != null ? ((EventoB) request.getAttribute("evento")).getIdEvento() : ""%>">
                         <div class="d-flex justify-content-center mt-4">
-                            <button type="button" onclick="confirmInscripcion(<%= request.getAttribute("evento") != null ? ((EventoB) request.getAttribute("evento")).getIdEvento() : "" %>)" class="btn btn-primary" <%= ((EventoB) request.getAttribute("evento")).getCantDisponibles() == 0 ? "disabled" : "" %>>Inscribirse a este evento</button>
+                            <button id="inscribirButton" type="button" class="btn btn-primary" <%= ((EventoB) request.getAttribute("evento")).getCantDisponibles() == 0 ? "disabled" : "" %>>Inscribirse a este evento</button>
                         </div>
-                    </div>
+                    </form>
+
                     <div class="d-flex justify-content-center mt-4">
                         <a href="<%=request.getContextPath()%>/VecinoServlet?action=verEventos">
                             <button type="button" class="btn btn-secondary">Regresar</button>
@@ -268,10 +257,28 @@
         </div>
 
         <script>
-            function confirmInscripcion(eventId) {
+            <% if (session.getAttribute("err") != null) { %>
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: '<%= session.getAttribute("err") %>',
+            });
+            <% session.removeAttribute("err"); %>
+            <% } %>
+
+            <% if (session.getAttribute("info") != null) { %>
+            Swal.fire({
+                icon: 'success',
+                title: 'Éxito',
+                text: '<%= session.getAttribute("info") %>',
+            });
+            <% session.removeAttribute("info"); %>
+            <% } %>
+
+            document.getElementById('inscribirButton').addEventListener('click', function() {
                 Swal.fire({
-                    title: 'Confirmar Asistencia',
-                    text: "Estás a punto de inscribirte a este evento ¿Estás seguro?",
+                    title: 'Confirmar Inscripción',
+                    text: "¿Estás seguro que deseas inscribirte en este evento?",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -280,11 +287,13 @@
                     cancelButtonText: 'Cancelar'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        window.location.href = '<%=request.getContextPath()%>/VecinoServlet?action=inscribirEvento&idEvento=' + eventId;
+                        // Submit the form if the user confirms
+                        this.closest('form').submit();
                     }
                 });
-            }
+            });
         </script>
+
         <script>
             document.getElementById('subirFoto').addEventListener('change', function(event) {
                 var file = event.target.files[0];

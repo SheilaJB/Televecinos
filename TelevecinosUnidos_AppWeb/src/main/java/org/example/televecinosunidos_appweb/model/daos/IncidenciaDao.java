@@ -14,8 +14,8 @@ public class IncidenciaDao extends BaseDao{
     public ArrayList<IncidenciasB> listarIncidencias() {
 
         String sql = "SELECT * FROM televecinosdb.incidencias \n" +
-                    "where incidencias.borrado=0\n" +
-                    "order by incidencias.EstadosIncidencia_idEstadosIncidencia asc";
+                    "WHERE incidencias.borrado = 0 \n" +
+                    "ORDER BY incidencias.EstadosIncidencia_idEstadosIncidencia ASC, incidencias.idIncidencias DESC;";
 
         ArrayList<IncidenciasB> listaIncidencias = new ArrayList<>();
 
@@ -156,16 +156,22 @@ public class IncidenciaDao extends BaseDao{
                     incidenciasB.setNombreIncidencia(rs.getString("nombreIncidencia"));
                     incidenciasB.setFecha(rs.getString("fecha"));
                     incidenciasB.setLugarExacto(rs.getString("lugarExacto"));
-                    incidenciasB.setUrbanizacion(rs.getString("urbanizacion_idUrbanizacion"));
+                    incidenciasB.setUrbanizacion_idUrbanizacion(rs.getInt("urbanizacion_idUrbanizacion"));
+                    incidenciasB.setReferencia(rs.getString("referencia"));
                     incidenciasB.setAmbulancia(rs.getInt("ambulancia"));
                     incidenciasB.setNumeroContacto(rs.getString("numeroContacto"));
                     incidenciasB.setCriticidadIncidencia_idCriticidadIncidencia(rs.getInt("CriticidadIncidencia_idCriticidadIncidencia"));
+                    incidenciasB.setTipoIncidencia_idTipoIncidencia(rs.getInt("TipoIncidencia_idTipoIncidencia"));
                     incidenciasB.setTipoIncidencia(rs.getString("TipoIncidencia_idTipoIncidencia"));
                     incidenciasB.setEstadosIncidencia_idEstadoIncidencia(rs.getInt("EstadosIncidencia_idEstadosIncidencia"));
                     incidenciasB.setSerenazgo_idSerenazgo(rs.getInt("Serenazgo_idSerenazgo"));
                     incidenciasB.setUsuario_idUsuario(rs.getInt("Usuario_idUsuario"));
                     incidenciasB.setIncidenciaPersonal(rs.getInt("incidenciaPersonal"));
-                    incidenciasB.setReferencia(rs.getString("referencia"));
+                    //incidenciasB.setBorrado_idBorrado(rs.getInt("borrado"))
+                    incidenciasB.setSolucionADar(rs.getString("SolucionADar"));
+                    incidenciasB.setPersonalRequerido(rs.getInt("personalRequerido_idpersonalRequerido"));
+                    incidenciasB.setNombrePersonalTurno(rs.getString("nombreDelPersonalEnTurno"));
+                    incidenciasB.setTipoMovilidadRequerido(rs.getInt("tipoMovilidadRequerido"));
                     incidenciasB.setNombreFoto(rs.getString("nombreFoto"));
                 }
                 //
@@ -212,7 +218,7 @@ public class IncidenciaDao extends BaseDao{
                         break;
                 }
 
-                switch (incidenciasB.getIdUrbanizacion()){
+                switch (incidenciasB.getUrbanizacion_idUrbanizacion()){
                     case 1:
                         incidenciasB.setUrbanizacion("Rafael Escardó ");
                         break;
@@ -402,6 +408,8 @@ public class IncidenciaDao extends BaseDao{
                     incidenciaB.setSerenazgo_idSerenazgo(rs.getInt("Serenazgo_idSerenazgo"));
                     incidenciaB.setUsuario_idUsuario(rs.getInt("Usuario_idUsuario"));
                     incidenciaB.setIncidenciaPersonal(rs.getInt("incidenciaPersonal"));
+                    incidenciaB.setNombrePersonalTurno(rs.getString("nombreDelPersonalEnTurno"));
+                    incidenciaB.setNombreFoto(rs.getString("nombreFoto"));
                     listaIncidencias.add(incidenciaB);
 
                     switch (incidenciaB.getCriticidadIncidencia_idCriticidadIncidencia()){
