@@ -301,7 +301,7 @@
                             title: "¿Qué deseas hacer?",
                             showDenyButton: true,
                             showCancelButton: true,
-                            confirmButtonColor: "#30d6c3",
+                            confirmButtonColor: "#023047",
                             denyButtonColor: "#146951",
                             cancelButtonColor: "#d93030",
                             confirmButtonText: "Ver incidencia",

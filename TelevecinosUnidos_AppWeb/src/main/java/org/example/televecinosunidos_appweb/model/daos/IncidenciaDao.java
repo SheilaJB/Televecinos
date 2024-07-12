@@ -203,6 +203,33 @@ public class IncidenciaDao extends BaseDao{
                         incidenciasB.setEstadosIncidencia_idEstadoIncidenciaStr("Procesado");
                         break;
                 }
+                switch (incidenciasB.getPersonalRequerido()){
+                    case 1:
+                        incidenciasB.setPersonalRequeridoStr("Ambulancia");
+                        break;
+                    case 2:
+                        incidenciasB.setPersonalRequeridoStr("Policia");
+                        break;
+                    case 3:
+                        incidenciasB.setPersonalRequeridoStr("Bomberos");
+                        break;
+                }
+                switch (incidenciasB.getTipoMovilidadRequerido()){
+                    case 1:
+                        incidenciasB.setMovilidadRequeridoStr("Bicicleta");
+                        break;
+                    case 2:
+                        incidenciasB.setMovilidadRequeridoStr("A pie");
+                        break;
+                    case 3:
+                        incidenciasB.setMovilidadRequeridoStr("Canino");
+                        break;
+                    case 4:
+                        incidenciasB.setMovilidadRequeridoStr("Vehiculo");
+                        break;
+                }
+
+
                 switch (incidenciasB.getTipoIncidencia()){
                     case "1":
                         incidenciasB.setTipoIncidencia_idTipoIncidenciaStr("Seguridad Pública");

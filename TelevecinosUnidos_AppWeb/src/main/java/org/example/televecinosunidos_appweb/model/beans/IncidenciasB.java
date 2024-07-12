@@ -18,6 +18,15 @@ public class IncidenciasB {
     private String nombrePersonalTurno;
     private int tipoMovilidadRequerido;
     private int personalRequerido;
+    private String movilidadRequeridoStr;
+
+    public String getMovilidadRequeridoStr() {
+        return movilidadRequeridoStr;
+    }
+
+    public void setMovilidadRequeridoStr(String movilidadRequeridoStr) {
+        this.movilidadRequeridoStr = movilidadRequeridoStr;
+    }
 
     public String getNombreFoto() {
         return nombreFoto;

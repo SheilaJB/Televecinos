@@ -12,9 +12,13 @@ import org.example.televecinosunidos_appweb.model.daos.UsuarioDao;
 import org.example.televecinosunidos_appweb.model.daos.VecinoDao;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 @WebServlet(name = "SerenazgoServlet", value = "/SerenazgoServlet")
 public class SerenazgoServlet extends HttpServlet {
@@ -138,16 +142,39 @@ public class SerenazgoServlet extends HttpServlet {
             case "gestionarIncidencia":
 
                 IncidenciasB incidenciaB = new IncidenciasB();
-                int idIncidencia = Integer.parseInt(request.getParameter("idIncidencia"));
-                String solucionADar = request.getParameter("solucionADar");
-                String criticidadIncidencia = request.getParameter("criticidadIncidencia");
-                String nombrePersonalDeTurno =request.getParameter("nombrePersonalDeTurno");
-                String idSerenazgo = request.getParameter("idSerenazgo");
-                String personalRequerido = request.getParameter("personalRequerido");
-                String movilidadIncidencia = request.getParameter("movilidadIncidencia");
+                int idIncidencia = Integer.parseInt(request.getParameter("idIncidencia"));//
+                String solucionADar = request.getParameter("solucionADar");//
+                String criticidadIncidencia = request.getParameter("criticidadIncidencia");//
+                String nombrePersonalDeTurno =request.getParameter("nombrePersonalDeTurno");//
+                String idSerenazgo = request.getParameter("idSerenazgo");//
+                String personalRequerido = request.getParameter("personalRequerido");//
+                String movilidadIncidencia = request.getParameter("movilidadIncidencia");//
                 String estadoIncidenci = request.getParameter("estadoIncidencia");
 
-
+                //validamos
+                if (solucionADar == null || solucionADar.isEmpty()) {
+                    response.sendRedirect(request.getContextPath() + "/SerenazgoServlet?action=gestionar_Incidencia_S&id=" + idIncidencia + "&err=" + URLEncoder.encode("Colocar la solucion a dar es obligatorio", StandardCharsets.UTF_8.toString()));
+                    return;
+                } else if (solucionADar.length() > 100) {
+                    response.sendRedirect(request.getContextPath() + "/SerenazgoServlet?action=gestionar_Incidencia_S&id=" + idIncidencia + "&err=" + URLEncoder.encode("La solucion a dar no puede tener más de 100 caracteres", StandardCharsets.UTF_8.toString()));
+                    return;
+                }
+                if (criticidadIncidencia == null || criticidadIncidencia.isEmpty()) {
+                    response.sendRedirect(request.getContextPath() + "/SerenazgoServlet?action=gestionar_Incidencia_S&id=" + idIncidencia + "&err=" + URLEncoder.encode("Elegir la criticidad de la incidencia es obligatorio", StandardCharsets.UTF_8.toString()));
+                    return;
+                }
+                if (personalRequerido == null || personalRequerido.isEmpty()) {
+                    response.sendRedirect(request.getContextPath() + "/SerenazgoServlet?action=gestionar_Incidencia_S&id=" + idIncidencia + "&err=" + URLEncoder.encode("Elegir el personal requerido de la incidencia es obligatorio", StandardCharsets.UTF_8.toString()));
+                    return;
+                }
+                if (movilidadIncidencia == null || movilidadIncidencia.isEmpty()) {
+                    response.sendRedirect(request.getContextPath() + "/SerenazgoServlet?action=gestionar_Incidencia_S&id=" + idIncidencia + "&err=" + URLEncoder.encode("Elegir la movilidad de la incidencia es obligatorio", StandardCharsets.UTF_8.toString()));
+                    return;
+                }
+                if (estadoIncidenci == null || estadoIncidenci.isEmpty()) {
+                    response.sendRedirect(request.getContextPath() + "/SerenazgoServlet?action=gestionar_Incidencia_S&id=" + idIncidencia + "&err=" + URLEncoder.encode("Elegir el estado de la incidencia es obligatorio", StandardCharsets.UTF_8.toString()));
+                    return;
+                }
 
                 incidenciaB.setIdIncidencias(idIncidencia);
                 incidenciaB.setSolucionADar(solucionADar);
@@ -158,31 +185,8 @@ public class SerenazgoServlet extends HttpServlet {
                 incidenciaB.setTipoMovilidadRequerido(Integer.parseInt(movilidadIncidencia));
                 incidenciaB.setEstadosIncidencia_idEstadoIncidencia(Integer.parseInt(estadoIncidenci));
 
-                /*
-                if (criticidadIncidencia != null) {
-                    incidenciaB.setCriticidadIncidencia_idCriticidadIncidencia(Integer.parseInt(criticidadIncidencia));
-                }
-
-                if (idSerenazgo != null) {
-                    incidenciaB.setSerenazgo_idSerenazgo(Integer.parseInt(idSerenazgo));
-                }
-
-                if (personalRequerido != null) {
-                    incidenciaB.setPersonalRequerido(Integer.parseInt(personalRequerido));
-                }
-
-                if (movilidadIncidencia != null) {
-                    incidenciaB.setTipoMovilidadRequerido(Integer.parseInt(movilidadIncidencia));
-                }
-
-                if (estadoIncidenci != null) {
-                    incidenciaB.setEstadosIncidencia_idEstadoIncidencia(Integer.parseInt(estadoIncidenci));
-                }
-                */
-
-
                 incidenciaDao.actualizarIncidenciaS(incidenciaB);
-                response.sendRedirect(request.getContextPath() + "/SerenazgoServlet?action=listaIncidencias_S");
+                response.sendRedirect(request.getContextPath() + "/SerenazgoServlet?action=gestionar_Incidencia_S&id=" + idIncidencia+"&success=" + URLEncoder.encode("La incidencia ha sido gestionada exitosamente",StandardCharsets.UTF_8.toString()));
                 break;
             case "buscarVecinoPorNombre":
                 textoBuscar= request.getParameter("textoBuscar");

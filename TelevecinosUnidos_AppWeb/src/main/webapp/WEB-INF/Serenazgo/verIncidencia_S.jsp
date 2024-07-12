@@ -226,11 +226,11 @@
                                                 </div>
                                                 <div>
                                                     <label class="form-label" style="color:#023047;"><b>Personal requerido: </b></label>
-                                                    <a style="color: #000000;"> <%=incidencia.getPersonalRequerido()%></a><br>
+                                                    <a style="color: #000000;"> <%=incidencia.getPersonalRequeridoStr()%></a><br>
                                                 </div>
                                                 <div>
                                                     <label class="form-label" style="color:#023047;"><b>Movilidad requerido: </b></label>
-                                                    <a style="color: #000000;"> <%=incidencia.getTipoMovilidadRequerido()%></a><br>
+                                                    <a style="color: #000000;"> <%=incidencia.getMovilidadRequeridoStr()%></a><br>
                                                 </div>
 
 
@@ -252,7 +252,7 @@
             <div class="bg-light rounded-top p-4">
                 <div class="row">
                     <div class="col-12 col-sm-6 text-center text-sm-start">
-                        &copy; <a href="#">TelevecinosUnidos</a>, All Right Reserved.
+                        &copy; <a>TelevecinosUnidos</a>, All Right Reserved.
                     </div>
                 </div>
             </div>
