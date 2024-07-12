@@ -31,12 +31,12 @@
                 </div>
             </div>
             <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle <%= (action.equals("listaCoordinadorasCultura_A") || action.equals("listaCoordinadorasDeportes_A") || action.equals("listaInstructores") || action.equals("formularioInstructores_A")) ? "active" : "" %>" data-bs-toggle="dropdown"><i class="fa fa-chalkboard-teacher me-2 colorLetrasBarraLateral"></i><span style="font-size: 13.3px;"><b>Area de coordinación</b></span></a>
+                <a href="#" class="nav-link dropdown-toggle <%= (action.equals("listaCoordinadorasCultura_A") || action.equals("listaCoordinadorasDeportes_A") || action.equals("listaInstructores_A") || action.equals("registroInstructor")) ? "active" : "" %>" data-bs-toggle="dropdown"><i class="fa fa-chalkboard-teacher me-2 colorLetrasBarraLateral"></i><span style="font-size: 13.3px;"><b>Area de coordinación</b></span></a>
                 <div class="dropdown-menu bg-transparent border-0">
                     <a href="<%=request.getContextPath()%>/AdministradorServlet?action=listaCoordinadorasCultura_A" class="dropdown-item <%= action.equals("listaCoordinadorasCultura_A") ? "active" : "" %>" style="font-size: 13.5px;"><b>Coordinadoras cultura</b></a>
                     <a href="<%=request.getContextPath()%>/AdministradorServlet?action=listaCoordinadorasDeportes_A" class="dropdown-item <%= action.equals("listaCoordinadorasDeportes_A") ? "active" : "" %>" style="font-size: 13.5px;"><b>Coordinadoras deportes</b></a>
-                    <a href="<%=request.getContextPath()%>/AdministradorServlet?action=listaInstructores_A" class="dropdown-item <%= action.equals("listaInstructores") ? "active" : "" %>" style="font-size: 13.5px;"><b>Instructores</b></a>
-                    <a href="<%=request.getContextPath()%>/AdministradorServlet?action=registroInstructor" class="dropdown-item <%= action.equals("formularioInstructores_A") ? "active" : "" %>" style="font-size: 13.5px;"><b>Registrar nuevo instructor</b></a>
+                    <a href="<%=request.getContextPath()%>/AdministradorServlet?action=listaInstructores_A" class="dropdown-item <%= action.equals("listaInstructores_A") ? "active" : "" %>" style="font-size: 13.5px;"><b>Instructores</b></a>
+                    <a href="<%=request.getContextPath()%>/AdministradorServlet?action=registroInstructor" class="dropdown-item <%= action.equals("registroInstructor") ? "active" : "" %>" style="font-size: 13.5px;"><b>Registrar nuevo instructor</b></a>
                 </div>
             </div>
             <a href="<%=request.getContextPath()%>/AdministradorServlet?action=usuariosBaneados_A" class="nav-item nav-link <%= action.equals("usuariosBaneados_A") ? "active" : "" %>"><i class="fa fa-user-alt-slash me-2 colorLetrasBarraLateral"></i><span style="font-size: 14px;"><b>Usuarios Baneados</b></span></a>

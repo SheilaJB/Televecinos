@@ -6,7 +6,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="usuarioLogueado" scope="session" type="UsuarioB" class="org.example.televecinosunidos_appweb.model.beans.UsuarioB" />
 <%@ page pageEncoding="UTF-8" %>
-<% ArrayList<ProfesoresEvento> lista = (ArrayList<ProfesoresEvento>) request.getAttribute("lista"); %>
+<% ArrayList<ProfesoresEvento> lista = (ArrayList<ProfesoresEvento>) request.getAttribute("lista");
+    Map<String, String> erroresEvento = new HashMap<String, String>();
+    if (request.getAttribute("erroresEvento")!= null) {
+        erroresEvento = (Map<String, String>) request.getAttribute("erroresEvento");
+    }
+
+%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -166,35 +172,86 @@
                                 <input type="text" class="form-control" id="lugarEvento" placeholder="Escribir" name="lugar" required value="${lugar}" class="campo">
                             </div>
                             <!----Frecuencia del evento----->
-                            <div class="mb-3" class="campo ${not empty erroresEvento ? 'error-div' : ''}">
-                                <label for="frecuenciaEvento" class="form-label" style="color:#023047;"><b>Frecuencia del evento:</b></label>
-                                <select id="frecuenciaEvento" class="form-select mb-3" aria-label="Default select example" oninput="mostrarOpciones()" name="frecuencia" required>
-                                    <option value="" selected>Seleccione la frecuencia del evento</option>
-                                    <option value="2" ${frecuencia == '2' ? 'selected' : ''}>Dos veces por semana</option>
-                                    <option value="1" ${frecuencia == '1' ? 'selected' : ''}>Semanal</option>
+                            <%if(erroresEvento.isEmpty()){%>
+                            <!----Inicio de la selectiva----->
+                            <label for="frecuenciaEvento" class="form-label" style="color:#023047;"><b>Frecuencia del evento:</b></label>
+                            <select id="frecuenciaEvento" class="form-select mb-3" aria-label="Default select example" onchange="mostrarOpciones()" name="frecuencia" required>
+                                <option value="0" selected>Seleccione la frecuencia del evento</option>
+                                <option value="2">Dos veces por semana</option>
+                                <option value="1">Semanal</option>
+                            </select>
+
+
+
+                            <div id="opcionesInterdiarias" style="display:none;">
+                                <label for="diaSemana" class="form-label" style="color:#023047;"><b>Elegir días:</b></label>
+                                <select id="diasInterdiarios" class="form-select mb-3" aria-label="Default select example" name="opcionesDias" required>
+                                    <option selected>Seleccione la opción: </option>
+                                    <option value="Lunes-Miércoles">Lunes-Miércoles</option>
+                                    <option value="Martes-Jueves">Martes-Jueves</option>
                                 </select>
                             </div>
 
-
-                            <div id="opcionesInterdiarias" style="display:none;" class="campo ${not empty erroresEvento ? 'error-div' : ''}">
-                                <select id="diasInterdiarios" class="form-select mb-3" aria-label="Default select example" name="opcionesDias">
-                                    <option value="" selected>Seleccione la opción: </option>
-                                    <option value="Lunes-Miércoles" ${opcionesDias == 'Lunes-Miércoles' ? 'selected' : ''}>Lunes-Miércoles</option>
-                                    <option value="Martes-Jueves" ${opcionesDias == 'Martes-Jueves' ? 'selected' : ''}>Martes-Jueves</option>
-                                </select>
-                            </div>
-
-                            <div id="opcionesSemanal" style="display:none;" class="campo ${not empty erroresEvento ? 'error-div' : ''}">
+                            <div id="opcionesSemanal" style="display:none;">
                                 <label for="diaSemana" class="form-label" style="color:#023047;"><b>Elegir día:</b></label>
-                                <select id="diaSemana" class="form-select mb-3" aria-label="Default select example" name="opcionesDias1">
-                                    <option value="" selected>Seleccione el día a la semana:</option>
-                                    <option value="Lunes" ${opcionesDias1 == 'Lunes' ? 'selected' : ''}>Lunes</option>
-                                    <option value="Martes" ${opcionesDias1 == 'Martes' ? 'selected' : ''}>Martes</option>
-                                    <option value="Miércoles" ${opcionesDias1 == 'Miércoles' ? 'selected' : ''}>Miércoles</option>
-                                    <option value="Jueves" ${opcionesDias1 == 'Jueves' ? 'selected' : ''}>Jueves</option>
-                                    <option value="Viernes" ${opcionesDias1 == 'Viernes' ? 'selected' : ''}>Viernes</option>
+                                <select id="diaSemana" class="form-select mb-3" aria-label="Default select example" name="opcionesDias1" required>
+                                    <option selected>Seleccione el día a la semana:</option>
+                                    <option value="Lunes">Lunes</option>
+                                    <option value="Martes">Martes</option>
+                                    <option value="Miércoles">Miércoles</option>
+                                    <option value="Jueves">Jueves</option>
+                                    <option value="Viernes">Viernes</option>
                                 </select>
                             </div>
+                            <!----Fin de la selectiva----->
+
+                            <%}else{String frec = (String) request.getAttribute("frecuencia");%>
+                            <%
+                                String opcionesDias = (String) request.getAttribute("opcionesDias");
+                                String opcionesDias1 = (String) request.getAttribute("opcionesDias1");
+                                if (opcionesDias1 == null){
+                                    opcionesDias1 = "X";
+                                }
+                                if (opcionesDias == null){
+                                    opcionesDias1 = "X";
+                                }
+                            %>
+                            <!----Inicio de la selectiva----->
+                            <label for="frecuenciaEvento" class="form-label" style="color:#023047;"><b>Frecuencia del evento:</b></label>
+                            <select id="frecuenciaEvento" class="form-select mb-3" aria-label="Default select example" onchange="mostrarOpciones()" name="frecuencia" required>
+                                <option value="0" selected>Seleccione la frecuencia del evento</option>
+                                <option value="2" <%=Integer.parseInt(frec)==2 ? "selected" : ""%>>Dos veces por semana</option>
+                                <option value="1" <%=Integer.parseInt(frec)==1 ? "selected" : ""%>>Semanal</option>
+                            </select>
+                            <div>
+                                <c:if test="${not empty erroresEvento['errorFrecuencia']}">
+                                    <span class="error-message" style="color: red;">${erroresEvento['errorFrecuencia']}</span>
+                                </c:if>
+                            </div>
+
+                            <div id="opcionesInterdiarias" style="display:none;">
+                                <label for="diaSemana" class="form-label" style="color:#023047;"><b>Elegir días:</b></label>
+                                <select id="diasInterdiarios" class="form-select mb-3" aria-label="Default select example" name="opcionesDias" required>
+                                    <option selected>Seleccione la opción: </option>
+                                    <option value="Lunes-Miércoles" <%=opcionesDias.equals("Lunes-Miércoles") ? "selected" : ""%>>Lunes-Miércoles</option>
+                                    <option value="Martes-Jueves" <%=opcionesDias.equals("Martes-Jueves") ? "selected" : ""%>>Martes-Jueves</option>
+                                </select>
+                            </div>
+
+                            <div id="opcionesSemanal" style="display:none;">
+                                <label for="diaSemana" class="form-label" style="color:#023047;"><b>Elegir día:</b></label>
+                                <select id="diaSemana" class="form-select mb-3" aria-label="Default select example" name="opcionesDias1" required>
+                                    <option selected>Seleccione el día a la semana:</option>
+                                    <option value="Lunes" <%=opcionesDias1.equals("Lunes") ? "selected" : ""%>>Lunes</option>
+                                    <option value="Martes" <%=opcionesDias1.equals("Martes") ? "selected" : ""%>>Martes</option>
+                                    <option value="Miércoles" <%=opcionesDias1.equals("Miércoles") ? "selected" : ""%>>Miércoles</option>
+                                    <option value="Jueves" <%=opcionesDias1.equals("Jueves") ? "selected" : ""%>>Jueves</option>
+                                    <option value="Viernes" <%=opcionesDias1.equals("Viernes") ? "selected" : ""%>>Viernes</option>
+                                </select>
+                            </div>
+                            <!----Fin de la selectiva----->
+                            <%}%>
+
 
                             <script>
                                 function mostrarOpciones() {
@@ -284,7 +341,7 @@
                             <h5 class="mb-4" style="color:#023047;"><b>Subir foto</b></h5>
                             <div class="mb-3">
                                 <label for="subirFoto" class="form-label" style="color:#023047;"><b>Subir una foto en formato * .jpg .jpeg o .png</b></label>
-                                <input class="form-control" type="file" id="subirFoto" accept=".jpg, .jpeg, .png" name="foto">
+                                <input class="form-control" type="file" id="subirFoto" accept=".jpg, .jpeg, .png" name="foto" required>
                             </div>
                             <!-- Contenedor para la previsualización de la imagen -->
                             <div class="mb-3">

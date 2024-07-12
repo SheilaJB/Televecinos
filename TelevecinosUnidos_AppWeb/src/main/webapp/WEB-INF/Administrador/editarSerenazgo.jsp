@@ -36,6 +36,7 @@
     <link href="css/app.min.css" rel="stylesheet">
     <link href="css/style_vec.css" rel="stylesheet">
     <link href="css/style_popup.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
 
         .popup {
@@ -110,10 +111,34 @@
             <div class="container text-center">
                 <img src="img/serenazgo.jpg" class="img-fluid mb-3" alt="Imagen Serenazgo" width="200">
 
+                <% if(request.getParameter("err") != null) { %>
+                <script>
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: '<%= request.getParameter("err") %>',
+                    });
+                </script>
+                <% } %>
+                <% if(request.getParameter("success") != null) { %>
+                <script>
+                    Swal.fire({
+                        icon: "success",
+                        title: '<%= request.getParameter("success") %>',
+                        showConfirmButton: false,
+                        timer: 1700
+                    }).then(() => {
+                        window.location.href = '<%= request.getContextPath() %>/AdministradorServlet?action=listaSerenazgo_A';
+                    });
+                </script>
+                <% } %>
+
                 <!-- Formulario -->
                 <form method="post" action="<%=request.getContextPath()%>/AdministradorServlet?action=editarSerenazgo">
 
                     <input type="hidden" id="idUsuario" name="idUsuario" class="form-control" value="<%=serenazgo.getUsuario().getIdUsuario()%>">
+                    <input type="hidden" id="idSerenazgo" name="idSerenazgo" class="form-control" value="<%=serenazgo.getIdSerenazgo()%>">
+
 
                     <label for="nombre" class="form-label" style="color:#023047;"><b>Nombre del serenazgo</b></label>
                     <input type="text" id="nombre" name="nombre" class="form-control" value="<%=serenazgo.getUsuario().getNombre()%>">
@@ -183,33 +208,19 @@
 
                     <div class="form-group" style = "padding-top: 2%">
                         <div class="m-n2" style="padding-bottom: 5%; ">
-                            <button href="<%=request.getContextPath()%>/AdministradorServlet?action=listaSerenazgo_A" class="btn btn-warning m-2 text-white">Regresar</button>
 
-                            <button type="submit" class="btn btn-success m-2" id="openPopupBtn" >Editar</button>
+                            <button type="submit" class="btn btn-success m-2" onclick="regresar()">Editar</button>
                         </div>
                     </div>
-                    <!--
-                    <script>
-                        function regresar(){
-                            window.location.href="<%=request.getContextPath()%>/AdministradorServlet?action=listaSerenazgo_A";
-                        }
-                    </script>
-                    -->
-                    <!--
-                    <div id="popup" class="popup" >
-                        <div class="popup_contenido">
-                            <span class="close-btn" id="closePopupBtn">&times;</span>
-                            <img src="img/check.png" alt="check" width="48" height="48" style="margin-top: -10px;">
-                            <h2 style="margin-top: 20px;">Éxito</h2>
-                            <p>Se ha registrado un nuevo serenazgo</p>
-                            <a href="#">
-                                <a href="<%=request.getContextPath()%>/AdministradorServlet"><button type="button" class="btn btn-primary rounded-pill m-2">Regresar</button></a>
-                            </a>
-                        </div>
-                    </div>
-                    Popup -->
+
+
+
 
                 </form>
+                <a href="<%=request.getContextPath()%>/AdministradorServlet?action=listaSerenazgo_A"><button class="btn btn-warning m-2 text-white">Regresar</button></a>
+
+
+
 
 
             </div>
