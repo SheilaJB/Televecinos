@@ -388,7 +388,7 @@ public class CoordinadorServlet extends HttpServlet {
                     erroresEvento2.put("errorFrecuencia", "Error: Seleccione una frecuencia");
                 }
 
-                if (cantidadVacantes2<=evento.getCantidadVacantes()){
+                if (cantidadVacantes2<evento.getCantidadVacantes()){
                     erroresEvento2.put("errorVacantes","Error: La cantidad de vacantes no debe disminuir");
                 }
 
