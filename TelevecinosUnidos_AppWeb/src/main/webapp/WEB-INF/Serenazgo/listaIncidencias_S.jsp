@@ -207,56 +207,63 @@
                         <td><%=incidenciasB.getUrbanizacion()%>
                         </td>
                         <% if(incidenciasB.getCriticidadIncidencia_idCriticidadIncidenciaStr() != null){%>
-                         <% String color = null; switch (incidenciasB.getCriticidadIncidencia_idCriticidadIncidenciaStr())
-                         {
-                             case "Baja":
-                                 color = "green";
-                                 break;
-                             case "Media":
-                                 color = "orange";
-                                 break;
-                             case "Alta":
-                                 color = "red";
-                                 break;
-                         }
-                         %>
-                            <td style="color: <%=color%>;"><%=incidenciasB.getCriticidadIncidencia_idCriticidadIncidenciaStr()%></td>
+                        <% String color = null;
+                            String estiloFuente = "font-weight: bold;"; // Estilo de fuente más grueso
+
+                            switch (incidenciasB.getCriticidadIncidencia_idCriticidadIncidenciaStr()) {
+                                case "Baja":
+                                    color = "green";
+                                    break;
+                                case "Media":
+                                    color = "orange";
+                                    break;
+                                case "Alta":
+                                    color = "red";
+                                    break;
+                            }
+                        %>
+                        <td style="color: <%= color %>; <%= estiloFuente %>">
+                            <%= incidenciasB.getCriticidadIncidencia_idCriticidadIncidenciaStr() %>
+                        </td>
+
                         <%}else{%>
                             <td>-</td>
                         <%}%>
-                        <% String color_estados = null; switch (incidenciasB.getEstadosIncidencia_idEstadoIncidenciaStr())
-                        {
-                            case "Pendiente":
-                                color_estados = "red";
-                                break;
-                            case "En curso":
-                                color_estados = "green";
-                                break;
-                            case "Cancelado":
-                                color_estados = "grey";
-                                break;
-                            case "Rechazado":
-                                color_estados = "brown";
-                                break;
-                            case "Procesado":
-                                color_estados = "blue";
-                                break;
-                        }
+                        <% String color_estados = null;
+                            String estiloFuente = "font-weight: bold;"; // Estilo de fuente más grueso
+
+                            switch (incidenciasB.getEstadosIncidencia_idEstadoIncidenciaStr()) {
+                                case "Pendiente":
+                                    color_estados = "red";
+                                    break;
+                                case "En curso":
+                                    color_estados = "blue";
+                                    break;
+                                case "Cancelado":
+                                    color_estados = "grey";
+                                    break;
+                                case "Rechazado":
+                                    color_estados = "brown";
+                                    break;
+                                case "Procesado":
+                                    color_estados = "black";
+                                    break;
+                            }
                         %>
-                        <td style="color: <%=color_estados%>;"><%=incidenciasB.getEstadosIncidencia_idEstadoIncidenciaStr()%>
+                        <td style="color: <%= color_estados %>; <%= estiloFuente %>">
+                            <%= incidenciasB.getEstadosIncidencia_idEstadoIncidenciaStr() %>
                         </td>
 
-                        <%if(incidenciasB.getEstadosIncidencia_idEstadoIncidencia() == 5){%>
-                            <td><button type="button" class="btn btn-danger m-2" onclick="incidenciaYaGestionada('<%=incidenciasB.getNombrePersonalTurno()%>','<%=incidenciasB.getIdIncidencias()%>','<%=incidenciasB.getUsuario_idUsuario()%>')"><i class="fas fa-clipboard-list"></i></button></td>
-                        <%}else if(incidenciasB.getEstadosIncidencia_idEstadoIncidencia() == 3){%>
-                            <td><button type="button" class="btn btn-danger m-2" onclick="incidenciaCancelada()"><i class="fas fa-clipboard-list"></i></button></td>
-                        <%}else if(incidenciasB.getEstadosIncidencia_idEstadoIncidencia() == 4){%>
-                            <td><button type="button" class="btn btn-danger m-2" onclick="incidenciaRechazada()"><i class="fas fa-clipboard-list"></i></button></td>
-                        <%}else{%>
-                            <!--<td><a href="<%=request.getContextPath()%>/SerenazgoServlet?action=gestionar_Incidencia_S&id=<%=incidenciasB.getIdIncidencias()%>"><button type="button" class="btn btn-success-puedeGestionar m-2"><i class="fas fa-clipboard-list"></i></button></a></td>-->
-                            <td><button type="button" class="btn btn-success-puedeGestionar m-2" onclick="incidenciaPorGestionar('<%=incidenciasB.getNombrePersonalTurno()%>','<%=incidenciasB.getIdIncidencias()%>','<%=incidenciasB.getUsuario_idUsuario()%>')"><i class="fas fa-clipboard-list"></i></button></td>
-                        <%} %>
-
+                        <% if (incidenciasB.getEstadosIncidencia_idEstadoIncidencia() == 5) { %>
+                        <td><button type="button" class="btn btn-danger m-2" style="background-color: grey;" onclick="incidenciaYaGestionada('<%=incidenciasB.getNombrePersonalTurno()%>','<%=incidenciasB.getIdIncidencias()%>','<%=incidenciasB.getUsuario_idUsuario()%>')"><i class="fas fa-clipboard-list"></i></button></td>
+                        <% } else if (incidenciasB.getEstadosIncidencia_idEstadoIncidencia() == 3) { %>
+                        <td><button type="button" class="btn btn-danger m-2" style="background-color: grey;" onclick="incidenciaCancelada()"><i class="fas fa-clipboard-list"></i></button></td>
+                        <% } else if (incidenciasB.getEstadosIncidencia_idEstadoIncidencia() == 4) { %>
+                        <td><button type="button" class="btn btn-danger m-2" style="background-color: grey;" onclick="incidenciaRechazada()"><i class="fas fa-clipboard-list"></i></button></td>
+                        <% } else { %>
+                        <!--<td><a href="<%=request.getContextPath()%>/SerenazgoServlet?action=gestionar_Incidencia_S&id=<%=incidenciasB.getIdIncidencias()%>"><button type="button" class="btn btn-success-puedeGestionar m-2"><i class="fas fa-clipboard-list"></i></button></a></td>-->
+                        <td><button type="button" class="btn btn-success-puedeGestionar m-2" onclick="incidenciaPorGestionar('<%=incidenciasB.getNombrePersonalTurno()%>','<%=incidenciasB.getIdIncidencias()%>','<%=incidenciasB.getUsuario_idUsuario()%>')"><i class="fas fa-clipboard-list"></i></button></td>
+                        <% } %>
 
                     </tr>
 
