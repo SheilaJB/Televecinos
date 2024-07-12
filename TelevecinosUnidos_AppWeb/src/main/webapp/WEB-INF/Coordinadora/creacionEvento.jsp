@@ -177,7 +177,7 @@
 
 
                             <div id="opcionesInterdiarias" style="display:none;" class="campo ${not empty erroresEvento ? 'error-div' : ''}">
-                                <select id="diasInterdiarios" class="form-select mb-3" aria-label="Default select example" name="opcionesDias">
+                                <select id="diasInterdiarios" class="form-select mb-3" aria-label="Default select example" name="opcionesDias" required>
                                     <option value="" selected>Seleccione la opción: </option>
                                     <option value="Lunes-Miércoles" ${opcionesDias == 'Lunes-Miércoles' ? 'selected' : ''}>Lunes-Miércoles</option>
                                     <option value="Martes-Jueves" ${opcionesDias == 'Martes-Jueves' ? 'selected' : ''}>Martes-Jueves</option>
@@ -186,7 +186,7 @@
 
                             <div id="opcionesSemanal" style="display:none;" class="campo ${not empty erroresEvento ? 'error-div' : ''}">
                                 <label for="diaSemana" class="form-label" style="color:#023047;"><b>Elegir día:</b></label>
-                                <select id="diaSemana" class="form-select mb-3" aria-label="Default select example" name="opcionesDias1">
+                                <select id="diaSemana" class="form-select mb-3" aria-label="Default select example" name="opcionesDias1" required>
                                     <option value="" selected>Seleccione el día a la semana:</option>
                                     <option value="Lunes" ${opcionesDias1 == 'Lunes' ? 'selected' : ''}>Lunes</option>
                                     <option value="Martes" ${opcionesDias1 == 'Martes' ? 'selected' : ''}>Martes</option>
@@ -284,7 +284,7 @@
                             <h5 class="mb-4" style="color:#023047;"><b>Subir foto</b></h5>
                             <div class="mb-3">
                                 <label for="subirFoto" class="form-label" style="color:#023047;"><b>Subir una foto en formato * .jpg .jpeg o .png</b></label>
-                                <input class="form-control" type="file" id="subirFoto" accept=".jpg, .jpeg, .png" name="foto">
+                                <input class="form-control" type="file" id="subirFoto" accept=".jpg, .jpeg, .png" name="foto" required>
                             </div>
                             <!-- Contenedor para la previsualización de la imagen -->
                             <div class="mb-3">

@@ -375,7 +375,7 @@ public class CoordinadorServlet extends HttpServlet {
                 String listaMateriales2 = request.getParameter("listaMateriales");
                 String idTipoEvento2 = request.getParameter("tipoCoordinador");
                 String idProfesor2 = request.getParameter("ProfesoresEvento_idProfesoresEvento");
-                int EventFrecuencia_idEventFrecuencia2 = Integer.parseInt(request.getParameter("frecuencia"));
+
                 int ProfesoresEvento_idProfesoresEvento2 = Integer.parseInt(request.getParameter("ProfesoresEvento_idProfesoresEvento"));
                 String opcionesDias2 = null;
                 if (frecuencia2.equals("2")){
@@ -472,7 +472,7 @@ public class CoordinadorServlet extends HttpServlet {
                     request.setAttribute("fecha_fin", fecha_fin2);
                     request.setAttribute("hora_inicio", hora_inicio2);
                     request.setAttribute("hora_fin", hora_fin2);
-                    request.setAttribute("cantidadVacantes", cantidadVacantes2);
+                    request.setAttribute("cantVacantes", String.valueOf(cantidadVacantes2));
                     request.setAttribute("materiales", listaMateriales2);
 
                     String NO= "NO";
@@ -503,6 +503,7 @@ public class CoordinadorServlet extends HttpServlet {
                     eventoB.setNombreFoto(fileName2);
                     eventoB.setFoto(fileInputStream2);
                 }
+                int EventFrecuencia_idEventFrecuencia2 = Integer.parseInt(request.getParameter("frecuencia"));
                 eventoB.setListaMateriales(listaMateriales2);
                 eventoB.setEventFrecuencia_idEventFrecuencia(EventFrecuencia_idEventFrecuencia2);
                 eventoB.setProfesoresEvento_idProfesoresEvento(ProfesoresEvento_idProfesoresEvento2);
