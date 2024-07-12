@@ -122,7 +122,7 @@
             <div class="container text-center">
                 <img src="img/munisanmiguelLogo.jpg" class="img-fluid mb-3" alt="Responsive image" width="200">
                 <div class="bar" data-label="Administrador">Municipalidad de San Miguel</div>
-                <div class="bar" data-label="Correo">admin.televecinos@gmail.com</div>
+                <div class="bar" data-label="Correo">televecinos.unidos@gmail.com</div>
                 <a href="<%=request.getContextPath()%>/AdministradorServlet"><button class="button regresar">Regresar</button></a>
 
             </div>
