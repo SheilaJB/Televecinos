@@ -240,10 +240,16 @@ public class SerenazgoServlet extends HttpServlet {
                     request.setAttribute("err", "El teléfono debe tener 9 dígitos.");
                     request.getRequestDispatcher("WEB-INF/Serenazgo/cambiarTelefono_S.jsp").forward(request, response);
                     return;
+                }else if(!nuevoTelefono.matches("\\d+")){
+                    request.setAttribute("err", "El teléfono solo debe contener dígitos, no letras.");
+                    request.getRequestDispatcher("WEB-INF/Serenazgo/cambiarTelefono_S.jsp").forward(request, response);
+                    return;
                 }else{
                     SerenazgoDTO serenazgoDTO1 = (SerenazgoDTO) session.getAttribute("serenazgoLogeado");
+                    serenazgoDTO1.setTelefonoSerenazgo(nuevoTelefono);
                     String num = String.valueOf(serenazgoDTO1.getIdSerenazgo());
                     serenazgoDao.cambiarTelefono(nuevoTelefono,String.valueOf(serenazgoDao.buscarSerenazgoPorId(num).getIdSerenazgo()));
+
                     session.setAttribute("success", "Telefono cambiado exitosamente");
                     response.sendRedirect(request.getContextPath() + "/SerenazgoServlet?action=cambiarTelefono_S");
                 }
