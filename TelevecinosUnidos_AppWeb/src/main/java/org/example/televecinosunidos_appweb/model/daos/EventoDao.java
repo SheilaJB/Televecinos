@@ -1,14 +1,18 @@
 package org.example.televecinosunidos_appweb.model.daos;
 
+
 import org.example.televecinosunidos_appweb.model.beans.EventoB;
 import org.example.televecinosunidos_appweb.model.beans.ProfesoresEvento;
 
 import java.time.LocalDate;
 import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.time.temporal.TemporalAdjusters;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
+
 
 public class EventoDao extends BaseDao{
 
@@ -584,6 +588,7 @@ public class EventoDao extends BaseDao{
         String sql = "SELECT e.idEventos AS 'ID Evento', e.nombre AS 'Nombre', e.descripcion AS 'Descripcion', " +
                 "DATE_FORMAT(e.fecha_inicio, '%d %M %Y') AS 'Fecha de Inicio', " +
                 "DATE_FORMAT(e.fecha_fin, '%d %M %Y') AS 'Fecha de Fin', " +
+                "e.cantDisponibles AS 'Vacantes Disponibles',"+
                 "es.estadosEvento AS 'Estado', e.foto AS 'Foto' " +
                 "FROM Eventos e " +
                 "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
@@ -608,6 +613,7 @@ public class EventoDao extends BaseDao{
                     evento.setFecha_inicio(rs.getString("Fecha de Inicio"));
                     evento.setFecha_fin(rs.getString("Fecha de Fin"));
                     evento.setEstadoString(rs.getString("Estado"));
+                    evento.setCantDisponibles(rs.getInt("Vacantes Disponibles"));
                     evento.setFoto(rs.getBinaryStream("Foto"));
                     listaTodosEventos.add(evento);
                 }
@@ -788,6 +794,62 @@ public class EventoDao extends BaseDao{
             e.printStackTrace();
         }
     }
+
+    public ArrayList<EventoB> obtenerEventosInscritos(int userId) {
+        ArrayList<EventoB> eventosInscritos = new ArrayList<>();
+        String sqlSetLanguage = "SET lc_time_names = 'es_ES';";
+        String sql = "SELECT e.idEventos, e.nombre, DATE_FORMAT(e.fecha_inicio, '%d %M %Y') AS 'Fecha de Inicio', es.estadosEvento, ef.tipoFrecuencia, te.tipo " +
+                "FROM Eventos e " +
+                "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
+                "JOIN TipoEvento te ON e.TipoEvento_idTipoEvento = te.idTipoEvento " +
+                "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
+                "JOIN flujo_usuario_evento fue ON e.idEventos = fue.Eventos_idEventos " +
+                "WHERE fue.Usuario_idUsuario = ? AND e.eliminado = FALSE " +
+                "ORDER BY e.fecha_inicio DESC;";
+
+        try (Connection conn = this.getConnection();
+             Statement stmt = conn.createStatement();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            stmt.execute(sqlSetLanguage);
+            pstmt.setInt(1, userId);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    EventoB evento = new EventoB();
+                    evento.setIdEvento(rs.getInt("idEventos"));
+                    evento.setNombre(rs.getString("nombre"));
+                    evento.setFecha_inicio(rs.getString("Fecha de Inicio"));
+                    evento.setEstadoString(rs.getString("estadosEvento"));
+                    evento.setFrecuenciaString(rs.getString("tipoFrecuencia"));
+                    evento.setTipoEvento(rs.getString("tipo"));
+
+                    eventosInscritos.add(evento);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al obtener eventos inscritos: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return eventosInscritos;
+    }
+
+    /*
+    public boolean existeTraslapeEventos(int userId, int nuevoEventoId) {
+
+        List<EventoB> eventosInscritos = obtenerEventosInscritos(userId);
+
+        EventoB nuevoEvento = buscarEventoPorId(String.valueOf(nuevoEventoId));
+
+        for (EventoB evento : eventosInscritos) {
+            if (seSuperponenFechas(evento, nuevoEvento)) {
+                return true; // traslape
+            }
+        }
+        return false;
+    }
+
+     */
 
 }
 

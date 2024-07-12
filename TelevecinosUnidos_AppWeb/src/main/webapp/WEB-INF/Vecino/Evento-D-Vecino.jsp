@@ -135,8 +135,12 @@
                                 <p class="card-status" style="font-size: small; margin-bottom: 0;">Estado: <%= evento.getEstadoString() %></p>
                                 <p class="text-wrap" style="font-size: small; margin-bottom: 0;">Fecha de inicio: <%= evento.getFecha_inicio() %></p>
                                 <p class="text-wrap" style="font-size: small; margin-bottom: 0;">Fecha de fin: <%= evento.getFecha_fin() %></p>
-                                <p class="text-wrap" style="font-size: small; margin-bottom: 0;"><%= evento.getDescripcion() %></p>
-                                <a class="link-opacity-50-hover" style="font-size: small;" href="<%=request.getContextPath()%>/VecinoServlet?action=verEvento&idEvento=<%= evento.getIdEvento() %>">Inscribirse aquí</a>
+                                <% if ("Disponible".equals(evento.getEstadoString())){ %>
+                                    <p class="text-wrap" style="font-size: small; margin-bottom: 0;">Vacantes Disponibles: <%= evento.getCantDisponibles() %></p>
+                                    <a class="link-opacity-50-hover" style="font-size: small;" href="<%=request.getContextPath()%>/VecinoServlet?action=verEvento&idEvento=<%= evento.getIdEvento() %>">Inscribirse aquí</a>
+                                <% } else { %>
+                                    <a class="link-opacity-50-hover" style="font-size: small;" href="<%=request.getContextPath()%>/VecinoServlet?action=verEvento&idEvento=<%= evento.getIdEvento() %>">Más información</a>
+                                <% } %>
                             </div>
                         </div>
                     </a>

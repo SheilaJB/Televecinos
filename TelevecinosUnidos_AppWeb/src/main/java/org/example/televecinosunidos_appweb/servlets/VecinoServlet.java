@@ -62,6 +62,13 @@ public class VecinoServlet extends HttpServlet {
                 request.getRequestDispatcher(vista).forward(request, response);
                 break;
 
+            case "verEventoInscrito":
+                String idEvento2 = request.getParameter("idEvento");
+                request.setAttribute("evento", eventoDao.buscarEventoPorId(idEvento2));
+                vista = "WEB-INF/Vecino/EventFut.jsp";
+                request.getRequestDispatcher(vista).forward(request, response);
+                break;
+
             case "preguntasFrecuentes":
                 vista = "WEB-INF/Vecino/preguntasFrecuentes_V.jsp";
                 request.getRequestDispatcher(vista).forward(request, response);
@@ -74,9 +81,10 @@ public class VecinoServlet extends HttpServlet {
 
             /*-------------fin Página principal-------------------*/
             case "eventosInscritos":
-                // Lógica para listar los eventos a los que se inscribe
-                vista = "WEB-INF/Vecino/ListaEvent-Vecino.jsp";
-                request.getRequestDispatcher(vista).forward(request, response);
+                ArrayList<EventoB> eventosInscritos = eventoDao.obtenerEventosInscritos(userId);
+                System.out.println("Eventos inscritos en el servlet: " + eventosInscritos);
+                request.setAttribute("eventosInscritos", eventosInscritos);
+                request.getRequestDispatcher("WEB-INF/Vecino/ListaEvent-Vecino.jsp").forward(request, response);
                 break;
             case "inscribirEvento":
                 String idEv = request.getParameter("idEvento");
@@ -362,6 +370,8 @@ public class VecinoServlet extends HttpServlet {
                 System.out.printf("iddd :" + idEvento);
                 if (evento != null) {
                     if (evento.getCantDisponibles() > 0) {
+                        //boolean hayTraslape = eventoDao.existeTraslapeEventos(userId, idEvento);
+                        //if (!hayTraslape) {
                         boolean yaEstaInscrito = eventoDao.estaInscrito(userId, idEvento);
                         if (!yaEstaInscrito) {
                             boolean success = eventoDao.inscribirUsuarioEvento(usuarioLogueado.getIdUsuario(), evento.getIdEvento());
@@ -374,6 +384,10 @@ public class VecinoServlet extends HttpServlet {
                         } else {
                             request.getSession().setAttribute("err", "Ya estás inscrito(a) en este evento");
                         }
+                        //} else{
+                            //request.getSession().setAttribute("err", "Ya estás inscrito en un evento que se superpone con este. Revisa las fechas de los eventos a los cuales te has inscrito");
+                        //}
+
                     } else {
                         request.getSession().setAttribute("err", "No hay cupos disponibles para este evento");
                     }
