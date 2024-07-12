@@ -111,7 +111,10 @@ public class SerenazgoServlet extends HttpServlet {
                 request.setAttribute("tabla7_tipo4", tabla7_tipo4);
 
 
+                String tipoTablaFecha =  request.getParameter("tipoTablaFecha");
+                request.setAttribute("tipoTablaFecha",tipoTablaFecha);
                 vista = "WEB-INF/Serenazgo/dashboard.jsp";
+
                 request.getRequestDispatcher(vista).forward(request, response);
 
                 break;

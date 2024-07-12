@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:useBean id="tipoTablaFecha" scope="request" type="java.lang.String" class="java.lang.String" />
+
 <jsp:useBean id="tabla1" scope="request" type="java.util.ArrayList" class="java.util.ArrayList" />
 <jsp:useBean id="tabla2" scope="request" type="java.util.ArrayList" class="java.util.ArrayList" />
 <jsp:useBean id="tabla3" scope="request" type="java.util.ArrayList" class="java.util.ArrayList" />
@@ -50,7 +52,7 @@
     <link href="css/style_vec.css" rel="stylesheet">
     <link href="css/style_serenazgo.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
 <body>
@@ -116,16 +118,55 @@
                 </div>
                 <div class="col-sm-12 col-xl-8">
                     <div class="bg-light text-center rounded p-4" style="border: 1px solid black; box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);">
-                        <div class="d-flex align-items-center justify-content-between mb-4">
-                            <h6 class="mb-0">Tipo de incidencias por día</h6>
+                        <%if(tipoTablaFecha == null || tipoTablaFecha.equals("dia")){%>
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h6 class="mb-0">Tipo de incidencias por día</h6>
+                                <button onclick="tipoIncidenciasFecha()">Tipo de fecha</button>
+                            </div>
+                            <canvas id="tipo-incidencias-dia"></canvas>
+                        <%}else if(tipoTablaFecha.equals("mes")){%>
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h6 class="mb-0">Tipo de incidencias por mes</h6>
+                                <button onclick="tipoIncidenciasFecha()">Tipo de fecha</button>
+                            </div>
+                            <canvas id="tipo-incidencias-dia"></canvas>
+                        <%}else{%>
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h6 class="mb-0">Tipo de incidencias por año</h6>
+                                <button onclick="tipoIncidenciasFecha()">Tipo de fecha</button>
 
-                            <a href="<%=request.getContextPath()%>/SerenazgoServlet?action=listaIncidencias_S">Más detalles</a>
-                        </div>
-                        <canvas id="tipo-incidencias-dia"></canvas>
+                            </div>
+                            <canvas id="tipo-incidencias-dia"></canvas>
+                        <%}%>
+
+
                     </div>
                 </div>
             </div>
         </div>
+        <script>
+            function tipoIncidenciasFecha() {
+                Swal.fire({
+                    title: "¿Qué tipo de tabla deseas?",
+                    showDenyButton: true,
+                    showCancelButton: true,
+                    confirmButtonText: "Día",
+                    denyButtonText: `Mes`,
+                    cancelButtonText: "año"
+                }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
+                        window.location.href = "<%=request.getContextPath()%>/SerenazgoServlet?action=dashboard&tipoTablaFecha=dia";
+
+                    } else if (result.isDenied) {
+                        window.location.href = "<%=request.getContextPath()%>/SerenazgoServlet?action=dashboard&tipoTablaFecha=mes";
+                    } else{
+                        window.location.href = "<%=request.getContextPath()%>/SerenazgoServlet?action=dashboard&tipoTablaFecha=anio";
+
+                    }
+                });
+            }
+        </script>
 
         <!-- Ingresar filtro: semana/mes/año-->
         <!--
