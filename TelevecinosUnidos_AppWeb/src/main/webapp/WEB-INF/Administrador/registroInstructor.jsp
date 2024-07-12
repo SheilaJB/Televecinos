@@ -110,6 +110,28 @@
                 <!-- Formulario -->
                 <form id="instructorid" method="post" action="<%=request.getContextPath()%>/AdministradorServlet?action=registroInstructor">
 
+                    <% if(request.getParameter("err") != null) { %>
+                    <script>
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: '<%= request.getParameter("err") %>',
+                        });
+                    </script>
+                    <% } %>
+                    <% if(request.getParameter("success") != null) { %>
+                    <script>
+                        Swal.fire({
+                            icon: "success",
+                            title: '<%= request.getParameter("success") %>',
+                            showConfirmButton: false,
+                            timer: 1700
+                        }).then(() => {
+                            window.location.href = '<%= request.getContextPath() %>/AdministradorServlet?action=listaInstructores_A';
+                        });
+                    </script>
+                    <% } %>
+
 
                     <label for="nombre" class="form-label" style="color:#023047;"><b>Nombre del instructor</b></label>
                     <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Ingrese el nombre del instructor">
@@ -124,7 +146,7 @@
                     <div class="form-group" style = "padding-top: 2%">
                         <div class="m-n2" style="padding-bottom: 5%; ">
                             <button type="button" class="btn btn-warning m-2 text-white" onclick="regresar()">Regresar</button>
-                            <button type="button" class="btn btn-success m-2" onclick="registrar()" >Registrar</button>
+                            <button type="submit" class="btn btn-success m-2">Registrar</button>
 
                         </div>
                     </div>
@@ -135,19 +157,7 @@
                         }
                     </script>
 
-                    <script>
-                        function registrar() {
-                            Swal.fire({
 
-                                icon: "success",
-                                title: "El instructor ha sido registrado exitosamente",
-                                showConfirmButton: false,
-                                timer: 1700
-                            }).then(() => {
-                                document.getElementById('instructorid').submit();
-                            });
-                        }
-                    </script>
 
                 </form>
 
