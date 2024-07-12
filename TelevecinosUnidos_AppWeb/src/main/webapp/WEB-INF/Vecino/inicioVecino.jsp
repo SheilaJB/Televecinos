@@ -1,9 +1,11 @@
 <%@ page import="org.example.televecinosunidos_appweb.model.beans.IncidenciasB" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="org.example.televecinosunidos_appweb.model.beans.EventoB" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 <% ArrayList<IncidenciasB> listaIncidencia = (ArrayList<IncidenciasB>) request.getAttribute("listaIncidencia"); %>
+<%ArrayList<EventoB> eventosInscritos = (ArrayList<EventoB>) request.getAttribute("eventosInscritos");%>
 
 <head>
     <meta charset="utf-8">
@@ -149,7 +151,7 @@
                 <div class="bg-light text-center rounded p-4">
                     <div class="d-flex align-items-center justify-content-between mb-4">
                         <h6 class="mb-0">Mis eventos del mes</h6>
-                        <a href="ListaEvent-Vecino.html">Mostrar todos mis eventos</a>
+                        <a href="<%=request.getContextPath()%>/VecinoServlet?action=verEventos">Mostrar todos mis eventos</a>
                     </div>
                     <div class="table-responsive">
                         <table class="table table-sm table-striped table-bordered table-hover">
@@ -163,40 +165,38 @@
                             </tr>
                             </thead>
                             <tbody>
+                            <%
+                                if (eventosInscritos != null && !eventosInscritos.isEmpty()) {
+                                    for (EventoB evento : eventosInscritos) {
+                            %>
                             <tr>
-                                <td>Voley</td>
-                                <td>Deporte</td>
-                                <td>1/05/24</td>
-                                <td>Diario</td>
+                                <td><%= evento.getNombre() %></td>
+                                <td><%= evento.getTipoEvento() %></td>
+                                <td><%= evento.getFecha_inicio() %></td>
+                                <td><%= evento.getFrecuenciaString() %></td>
                                 <td>
-                                    <a href="EventoActual-Vecino.html">
-                                        <button type="button" class="btn btn-info m-2"><i class="fas fa-eye"></i></button>
+                                    <a onclick="viewFunction(<%=evento.getIdEvento()%>)">
+                                        <button type="button" class="btn btn-primary btn-sm-square m-1"><i class="fas fa-eye fa-xs"></i></button>
                                     </a>
                                 </td>
                             </tr>
+                            <%
+                                }
+                            } else {
+                            %>
                             <tr>
-                                <td>Danza</td>
-                                <td>Cultura</td>
-                                <td>1/05/24</td>
-                                <td>Lunes-Miercoles</td>
-                                <td>
-                                    <a href="EventoActual-Vecino.html">
-                                        <button type="button" class="btn btn-info m-2"><i class="fas fa-eye"></i></button>
-                                    </a>
-                                </td>
+                                <td colspan="8">No estás inscrito en ningún evento.</td>
                             </tr>
-                            <tr>
-                                <td>Futbol</td>
-                                <td>Deporte</td>
-                                <td>1/05/24</td>
-                                <td>Martes-Jueves</td>
-                                <td>
-                                    <a href="EventoActual-Vecino.html">
-                                        <button type="button" class="btn btn-info m-2"><i class="fas fa-eye"></i></button>
-                                    </a>
-                                </td>
-                            </tr>
+                            <%
+                                }
+                            %>
                             </tbody>
+                            <script>
+                                function viewFunction(idEvento) {
+                                    window.location.href ='<%=request.getContextPath()%>/VecinoServlet?action=verEventoInscrito&idEvento=' +idEvento;
+                                }
+
+                            </script>
                         </table>
                     </div>
                 </div>
@@ -207,7 +207,7 @@
                 <div class="bg-light rounded-top p-4">
                     <div class="row">
                         <div class="col-12 col-sm-6 text-center text-sm-start">
-                            &copy; <a href="#">TelevecinosUnidos</a>, All Right Reserved.
+                            &copy; <a>TelevecinosUnidos</a>, All Right Reserved.
                         </div>
                     </div>
                 </div>

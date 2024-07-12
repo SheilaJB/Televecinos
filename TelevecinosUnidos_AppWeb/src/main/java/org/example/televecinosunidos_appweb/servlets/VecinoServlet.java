@@ -27,7 +27,6 @@ public class VecinoServlet extends HttpServlet {
         EventoDao eventoDao = new EventoDao();
         HttpSession session = request.getSession();
         String action = request.getParameter("action") == null ? "inicioVecino" : request.getParameter("action");
-        System.out.println("Action: " + action);
         String vista;
 
         UsuarioB usuarioLogueado = (UsuarioB) session.getAttribute("usuarioLogueado");
@@ -41,7 +40,9 @@ public class VecinoServlet extends HttpServlet {
             /*------------------Página principal------------------*/
             case "inicioVecino":
                 ArrayList<IncidenciasB> listaIncidenciasRecientes = incidenciaDao.listarIncidenciaRecientes(userId);
+                ArrayList<EventoB> eventosInscritos2 = eventoDao.obtenerEventosInscritos(userId);
                 request.setAttribute("listaIncidencia", listaIncidenciasRecientes);
+                request.setAttribute("eventosInscritos", eventosInscritos2);
                 vista = "WEB-INF/Vecino/inicioVecino.jsp";
                 request.getRequestDispatcher(vista).forward(request, response);
                 break;
@@ -88,7 +89,6 @@ public class VecinoServlet extends HttpServlet {
                 break;
             case "inscribirEvento":
                 String idEv = request.getParameter("idEvento");
-                System.out.println("inscribirEvento - idEvento: " + idEv);
                 response.sendRedirect(request.getContextPath() + "/VecinoServlet?action=verEvento&idEvento=" + idEv);
                 return;
             /*----------------Incidencias----------------*/
@@ -369,28 +369,30 @@ public class VecinoServlet extends HttpServlet {
                 int idEvento = Integer.parseInt(request.getParameter("idEvento"));
                 System.out.printf("iddd :" + idEvento);
                 if (evento != null) {
-                    if (evento.getCantDisponibles() > 0) {
-                        //boolean hayTraslape = eventoDao.existeTraslapeEventos(userId, idEvento);
-                        //if (!hayTraslape) {
-                        boolean yaEstaInscrito = eventoDao.estaInscrito(userId, idEvento);
-                        if (!yaEstaInscrito) {
-                            boolean success = eventoDao.inscribirUsuarioEvento(usuarioLogueado.getIdUsuario(), evento.getIdEvento());
-                            if (success) {
-                                eventoDao.updateVacantesDisponibles(evento.getIdEvento());
-                                request.getSession().setAttribute("info", "Inscripción exitosa");
-                            } else {
-                                request.getSession().setAttribute("err", "Error al inscribirse en el evento. Intente de nuevo más tarde.");
-                            }
-                        } else {
-                            request.getSession().setAttribute("err", "Ya estás inscrito(a) en este evento");
-                        }
-                        //} else{
-                            //request.getSession().setAttribute("err", "Ya estás inscrito en un evento que se superpone con este. Revisa las fechas de los eventos a los cuales te has inscrito");
-                        //}
 
-                    } else {
-                        request.getSession().setAttribute("err", "No hay cupos disponibles para este evento");
-                    }
+                        if (evento.getCantDisponibles() > 0) {
+                            //boolean hayTraslape = eventoDao.existeTraslapeEventos(userId, idEvento);
+                            //if (!hayTraslape) {
+                            boolean yaEstaInscrito = eventoDao.estaInscrito(userId, idEvento);
+                            if (!yaEstaInscrito) {
+                                boolean success = eventoDao.inscribirUsuarioEvento(usuarioLogueado.getIdUsuario(), evento.getIdEvento());
+                                if (success) {
+                                    eventoDao.updateVacantesDisponibles(evento.getIdEvento());
+                                    request.getSession().setAttribute("info", "Inscripción exitosa");
+                                } else {
+                                    request.getSession().setAttribute("err", "Error al inscribirse en el evento. Intente de nuevo más tarde.");
+                                }
+                            } else {
+                                request.getSession().setAttribute("err", "Ya estás inscrito(a) en este evento");
+                            }
+                            //} else{
+                            //request.getSession().setAttribute("err", "Ya estás inscrito en un evento que se superpone con este. Revisa las fechas de los eventos a los cuales te has inscrito");
+                            //}
+
+                        } else {
+                            request.getSession().setAttribute("err", "No hay cupos disponibles para este evento");
+                        }
+
                 } else {
                     request.getSession().setAttribute("err", "Usuario o evento no encontrado");
                 }

@@ -1,6 +1,6 @@
 <%@ page import="org.example.televecinosunidos_appweb.model.beans.EventoB" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -150,12 +150,14 @@
                                             <%= request.getAttribute("evento") != null ?((EventoB) request.getAttribute("evento")).getCantidadVacantes() :"" %>
                                         </div>
                                     </div>
+                                    <% if ("Disponible".equals(((EventoB) request.getAttribute("evento")).getEstadoString())) {%>
                                     <div class="col-12">
                                         <label class="form-label" style="color:#023047;"><b>Cantidad de vacantes disponibles:</b></label>
                                         <div class="bar p-2 bg-light rounded" data-label="Nombre de la incidencia">
                                             <%= request.getAttribute("evento") != null ?((EventoB) request.getAttribute("evento")).getCantDisponibles() :"" %>
                                         </div>
                                     </div>
+                                    <% } %>
                                     <div class="col-12">
                                         <label class="form-label" style="color:#023047;"><b>Fecha de inicio:</b></label>
                                         <div class="bar p-2 bg-light rounded" data-label="Nombre de la incidencia">
@@ -244,8 +246,9 @@
                     <form method="post" action="<%=request.getContextPath()%>/VecinoServlet?action=inscribirEvento&idEvento=<%=request.getAttribute("evento") != null ? ((EventoB) request.getAttribute("evento")).getIdEvento() : ""%>">
                         <div class="d-flex justify-content-center mt-4">
 
-                                <button id="inscribirButton" type="button" class="btn btn-primary" <%= ((EventoB) request.getAttribute("evento")).getCantDisponibles() == 0 ? "disabled" : "" %>>Inscribirse a este evento</button>
-
+                                <% if ("Disponible".equals(((EventoB) request.getAttribute("evento")).getEstadoString())) {%>
+                                    <button id="inscribirButton" type="button" class="btn btn-primary" <%= ((EventoB) request.getAttribute("evento"))%>>Inscribirse a este evento</button>
+                                <% } %>
                         </div>
                     </form>
 

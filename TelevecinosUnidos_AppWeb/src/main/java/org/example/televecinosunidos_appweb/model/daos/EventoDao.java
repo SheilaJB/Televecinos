@@ -200,12 +200,14 @@ public class EventoDao extends BaseDao{
                 "TIME(e.hora_inicio) AS hora_inicio, " +
                 "TIME(e.hora_fin) AS hora_fin, " +
                 "e.listaMateriales AS listaMateriales, " +
+                "es.estadosEvento, " +
                 "e.diasEvento as diasEvento " + // Añadido espacio antes de FROM
                 "FROM " +
                 "Eventos e " +
                 "JOIN Usuario u ON e.Coordinador_idUsuario = u.idUsuario " +
                 "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
                 "JOIN profesoresevento pf ON e.ProfesoresEvento_idProfesoresEvento = pf.idProfesoresEvento " +
+                "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
                 "WHERE e.idEventos = ?";
 
         try (Connection conn = getConnection();
@@ -236,6 +238,7 @@ public class EventoDao extends BaseDao{
                     evento.setFoto(rs.getBinaryStream("foto"));
                     evento.setNombreFoto(rs.getString("nombreFoto"));
                     evento.setListaMateriales(rs.getString("listaMateriales"));
+                    evento.setEstadoString(rs.getString("estadosEvento"));
                     evento.setDiaEvento(rs.getString("diasEvento"));
                 }
             }
@@ -760,7 +763,7 @@ public class EventoDao extends BaseDao{
     }
     public void updateVacantesDisponibles(int idEvento) {
         try (Connection conn = this.getConnection()) {
-            // 1. Get total registered users
+            // 1. total de usuarios registrados
             String sqlCount = "SELECT COUNT(*) FROM flujo_usuario_evento WHERE Eventos_idEventos = ?";
             try (PreparedStatement pstmtCount = conn.prepareStatement(sqlCount)) {
                 pstmtCount.setInt(1, idEvento);
@@ -768,7 +771,7 @@ public class EventoDao extends BaseDao{
                     if (rsCount.next()) {
                         int inscriptos = rsCount.getInt(1);
 
-                        // 2. Get total vacancies from the event
+                        // 2. cantidad total del evento
                         String sqlGetVacantes = "SELECT cantidadVacantes FROM eventos WHERE idEventos = ?";
                         try (PreparedStatement pstmtGetVacantes = conn.prepareStatement(sqlGetVacantes)) {
                             pstmtGetVacantes.setInt(1, idEvento);
@@ -776,13 +779,14 @@ public class EventoDao extends BaseDao{
                                 if (rsGetVacantes.next()) {
                                     int totalVacantes = rsGetVacantes.getInt("cantidadVacantes");
 
-                                    // 3. Calculate and update available vacancies
+                                    // 3. calcular vacantes disponibles
                                     int nuevasVacantes = totalVacantes - inscriptos;
                                     String sqlUpdate = "UPDATE eventos SET cantDisponibles = ? WHERE idEventos = ?";
                                     try (PreparedStatement pstmtUpdate = conn.prepareStatement(sqlUpdate)) {
                                         pstmtUpdate.setInt(1, nuevasVacantes);
                                         pstmtUpdate.setInt(2, idEvento);
-                                        pstmtUpdate.executeUpdate();
+                                        int rowsUpdated = pstmtUpdate.executeUpdate();
+
                                     }
                                 }
                             }
@@ -793,7 +797,10 @@ public class EventoDao extends BaseDao{
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
     }
+
+
 
     public ArrayList<EventoB> obtenerEventosInscritos(int userId) {
         ArrayList<EventoB> eventosInscritos = new ArrayList<>();
