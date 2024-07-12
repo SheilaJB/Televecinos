@@ -14,6 +14,8 @@ import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 @WebServlet(name = "AdministradorServlet", value = "/AdministradorServlet")
@@ -406,6 +408,10 @@ public class AdministradorServlet extends HttpServlet {
 
 
                 //validamos
+                DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                LocalDate hoy = LocalDate.now();
+                LocalDate fechaNacim = LocalDate.parse(fechaNacimiento, dateFormatter);
+
                 if (nombre == null || nombre.isEmpty()) {
                     response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=registroSerenazgo&err=" + URLEncoder.encode("Ingresar el nombre es obligatorio.", StandardCharsets.UTF_8.toString()));
                     return;
@@ -459,6 +465,9 @@ public class AdministradorServlet extends HttpServlet {
                     return;
                 } else if(fechaNacimiento.isEmpty() || fechaNacimiento==null){
                     response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=registroSerenazgo&err=" + URLEncoder.encode("Es obligatorio elegir la fecha de nacimiento", StandardCharsets.UTF_8.toString()));
+                    return;
+                } else if(fechaNacim.isAfter(hoy)){
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=registroSerenazgo&err=" + URLEncoder.encode("La fecha de nacimiento no es válida", StandardCharsets.UTF_8.toString()));
                     return;
                 }else{
                     UsuarioB us = new UsuarioB();
@@ -514,6 +523,10 @@ public class AdministradorServlet extends HttpServlet {
 
 
                 //validamos
+                DateTimeFormatter dateFormatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                LocalDate hoy2 = LocalDate.now();
+                LocalDate fechaNacim2 = LocalDate.parse(fechaNacimiento2, dateFormatter2);
+
                 if (nombre2 == null || nombre2.isEmpty()) {
                     response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=editarSerenazgo&idSerenazgo=" +idSerenazgo2 + "&err=" + URLEncoder.encode("Ingresar el nombre es obligatorio.", StandardCharsets.UTF_8.toString()));
                     return;
@@ -567,6 +580,9 @@ public class AdministradorServlet extends HttpServlet {
                     return;
                 } else if(fechaNacimiento2.isEmpty() || fechaNacimiento2==null){
                     response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=editarSerenazgo&idSerenazgo="+idSerenazgo2 +"&err=" + URLEncoder.encode("Es obligatorio elegir la fecha de nacimiento", StandardCharsets.UTF_8.toString()));
+                    return;
+                } else if(fechaNacim2.isAfter(hoy2)){
+                    response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=editarSerenazgo&idSerenazgo=" + idSerenazgo2 + "&err=" + URLEncoder.encode("La fecha de nacimiento no es válida", StandardCharsets.UTF_8.toString()));
                     return;
                 }else {
                     UsuarioB us2 = new UsuarioB();

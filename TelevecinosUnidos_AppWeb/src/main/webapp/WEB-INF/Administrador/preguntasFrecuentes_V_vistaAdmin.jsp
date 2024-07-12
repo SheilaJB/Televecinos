@@ -167,7 +167,7 @@
                         <div class="d-flex w-100 justify-content-between">
                             <h6 class="mb-0">Administrador</h6>
                         </div>
-                        <span>admin.televecinos@gmail.com</span>
+                        <span>televecinos.unidos@gmail.com</span>
                     </div>
                 </div>
             </div>
