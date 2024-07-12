@@ -156,10 +156,11 @@
                             <!----Inicio de la selectiva----->
                             <label for="frecuenciaEvento" class="form-label" style="color:#023047;"><b>Frecuencia del evento:</b></label>
                             <select id="frecuenciaEvento" class="form-select mb-3" aria-label="Default select example" onchange="mostrarOpciones()" name="frecuencia" required>
-                                <option selected>Seleccione la frecuencia del evento</option>
+                                <option value="0" selected>Seleccione la frecuencia del evento</option>
                                 <option value="2" <%=evento.getFrecuenciaString().equals("Dos veces por semana") ? "selected" : ""%>>Dos veces por semana</option>
                                 <option value="1" <%=evento.getFrecuenciaString().equals("Semanal") ? "selected" : ""%>>Semanal</option>
                             </select>
+
 
 
                             <div id="opcionesInterdiarias" style="display:none;">
@@ -201,6 +202,11 @@
                                 <option value="2" <%=Integer.parseInt(frec)==2 ? "selected" : ""%>>Dos veces por semana</option>
                                 <option value="1" <%=Integer.parseInt(frec)==1 ? "selected" : ""%>>Semanal</option>
                             </select>
+                            <div>
+                                <c:if test="${not empty erroresEvento['errorFrecuencia']}">
+                                    <span class="error-message" style="color: red;">${erroresEvento['errorFrecuencia']}</span>
+                                </c:if>
+                            </div>
 
                             <div id="opcionesInterdiarias" style="display:none;">
                                 <select id="diasInterdiarios" class="form-select mb-3" aria-label="Default select example" name="opcionesDias" required>

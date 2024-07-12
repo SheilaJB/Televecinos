@@ -380,8 +380,11 @@ public class CoordinadorServlet extends HttpServlet {
                 String opcionesDias2 = null;
                 if (frecuencia2.equals("2")){
                     opcionesDias2 = request.getParameter("opcionesDias");
-                }else{
+                }else if (frecuencia2.equals("1")){
                     opcionesDias2 = request.getParameter("opcionesDias1");
+                }else{
+                    opcionesDias2="Domingo";
+                    erroresEvento2.put("errorFrecuencia", "Error: Seleccione una frecuencia");
                 }
                 //Validaciones
                 DateTimeFormatter dateFormatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
