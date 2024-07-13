@@ -11,6 +11,11 @@
 <jsp:useBean id="tabla6_tipo3" scope="request" type="java.util.ArrayList" class="java.util.ArrayList" />
 <jsp:useBean id="tabla6_tipo4" scope="request" type="java.util.ArrayList" class="java.util.ArrayList" />
 
+<jsp:useBean id="tabla6_tipo1_mes" scope="request" type="java.util.ArrayList" class="java.util.ArrayList" />
+<jsp:useBean id="tabla6_tipo2_mes" scope="request" type="java.util.ArrayList" class="java.util.ArrayList" />
+<jsp:useBean id="tabla6_tipo3_mes" scope="request" type="java.util.ArrayList" class="java.util.ArrayList" />
+<jsp:useBean id="tabla6_tipo4_mes" scope="request" type="java.util.ArrayList" class="java.util.ArrayList" />
+
 
 
 <jsp:useBean id="tabla7_tipo1" scope="request" type="java.util.ArrayList" class="java.util.ArrayList" />
@@ -118,28 +123,10 @@
                 </div>
                 <div class="col-sm-12 col-xl-8">
                     <div class="bg-light text-center rounded p-4" style="border: 1px solid black; box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);">
-                        <%if(tipoTablaFecha == null || tipoTablaFecha.equals("dia")){%>
-                            <div class="d-flex align-items-center justify-content-between mb-4">
-                                <h6 class="mb-0">Tipo de incidencias por día</h6>
-                                <button onclick="tipoIncidenciasFecha()">Tipo de fecha</button>
-                            </div>
-                            <canvas id="tipo-incidencias-dia"></canvas>
-                        <%}else if(tipoTablaFecha.equals("mes")){%>
-                            <div class="d-flex align-items-center justify-content-between mb-4">
-                                <h6 class="mb-0">Tipo de incidencias por mes</h6>
-                                <button onclick="tipoIncidenciasFecha()">Tipo de fecha</button>
-                            </div>
-                            <canvas id="tipo-incidencias-dia"></canvas>
-                        <%}else{%>
-                            <div class="d-flex align-items-center justify-content-between mb-4">
-                                <h6 class="mb-0">Tipo de incidencias por año</h6>
-                                <button onclick="tipoIncidenciasFecha()">Tipo de fecha</button>
-
-                            </div>
-                            <canvas id="tipo-incidencias-dia"></canvas>
-                        <%}%>
-
-
+                        <div class="d-flex align-items-center justify-content-between mb-4">
+                            <h6 class="mb-0">Tipo de incidencias por dia</h6>
+                        </div>
+                        <canvas id="tipo-incidencias-dia"></canvas>
                     </div>
                 </div>
             </div>
@@ -168,41 +155,22 @@
             }
         </script>
 
-        <!-- Ingresar filtro: semana/mes/año-->
-        <!--
-        <div class="filtro" style="border: 1px solid #ccc; border-radius: 5px; padding: 10px; display: flex; align-items: center; background-color:#FFB703 ;">
-            <select class = "posicionBotonFiltrar1" id="filtroFrecuencia" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 15%; margin-right: 2%;" >
-                <option selected>Frecuencia</option>
-                <option value="Día">Día</option>
-                <option value="Semana">Semana</option>
-                <option value="Mes">Mes</option>
-            </select>
-
-            <button type="button" class="btn btn-primary posicionBotonFiltrar2" onclick="filtrar()" style="padding: 10px;"><b>Filtrar</b></button>
-        </div>
-        -->
-        <!-- Tabla de tipos de incidencias
         <div class="container-fluid pt-4 px-4">
-            <div class="row g-4">
-                <div class="col-sm-12 col-xl-6">
-                    <div class="bg-light text-center rounded p-4" style="border: 1px solid black; box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);">
-                        <div class="d-flex align-items-center justify-content-between mb-4">
-                            <h6 class="mb-0">Tipo de incidencia</h6>
-                            <a href="listaIncidencias_S.html">Más detalles</a>
-                        </div>
-                        <canvas id="type-incidents-bar"></canvas>
+            <div class="col-sm-12 col-xl-6 w-100 h-100">
+                <div class="bg-light text-center rounded p-4" style="border: 1px solid black; box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <h6 class="mb-0">Tipo de incidencias por mes</h6>
                     </div>
+                    <canvas id="tipo-incidencias-mes"></canvas>
                 </div>
-
             </div>
         </div>
-        -->
-
 
         <div class="container-fluid pt-4 px-4">
             <div class="col-sm-12 col-xl-6 w-100 h-100">
                 <div class="bg-light text-center rounded p-4" style="border: 1px solid black; box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);">
                     <div class="d-flex align-items-center justify-content-between mb-4">
+                        <h6 class="mb-0">Tipo de incidencias por urbanizacion</h6>
                     </div>
                     <canvas id="type-incidents-urb-bar"></canvas>
                 </div>
@@ -360,14 +328,11 @@
             }
         });*/
         // Estados de incidencias - Chart
+
         var tabla6_tipo1 = ${tabla6_tipo1};
         var tabla6_tipo2 = ${tabla6_tipo2};
         var tabla6_tipo3 = ${tabla6_tipo3};
         var tabla6_tipo4 = ${tabla6_tipo4};
-
-
-
-
         var ctx2 = $("#tipo-incidencias-dia").get(0).getContext("2d");
         var myChart2 = new Chart(ctx2, {
             type: "bar",
@@ -404,6 +369,7 @@
                 responsive: true
             }
         });
+
         var tabla1 = ${tabla1};
         var tabla2 = ${tabla2};
         var tabla3 = ${tabla3};
@@ -523,6 +489,7 @@
         });
 
         // Tipos de incidencias - Chart
+
         var ctx7 = $("#type-incidents-urb-bar").get(0).getContext("2d");
         var myChart7 = new Chart(ctx7, {
             type: "bar",
@@ -554,7 +521,54 @@
                 responsive: true
             }
         });
+
+
+
+        var tabla6_tipo1_mes = ${tabla6_tipo1_mes};
+        var tabla6_tipo2_mes = ${tabla6_tipo2_mes};
+        var tabla6_tipo3_mes = ${tabla6_tipo3_mes};
+        var tabla6_tipo4_mes = ${tabla6_tipo4_mes};
+        var ctx9 = $("#tipo-incidencias-mes").get(0).getContext("2d");
+        var myChart9 = new Chart(ctx9, {
+            type: "bar",
+            data: {
+                labels: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio","Agosto","Setiembre", "Octubre", "Noviembre","Diciembre"],
+                datasets: [{
+                    label: "Seguridad Pública",
+                    data: tabla6_tipo1_mes,
+                    backgroundColor: "rgba(42, 157, 143, 1)",
+                    fill: false
+                },
+                    {
+                        label: "Emergencia Médica",
+                        data: tabla6_tipo2_mes,
+                        backgroundColor:"rgba(233, 196, 106, 1)",
+                        fill: false
+                    },
+                    {
+                        label: "Infraestructura y Servicios Públicos",
+                        data: tabla6_tipo3_mes,
+                        backgroundColor: "rgba(38, 70, 83, 1)",
+                        fill: false
+                    },
+                    {
+                        label: "Otro",
+                        data: tabla6_tipo4_mes,
+                        backgroundColor:"rgba(231, 111, 81, 1)",
+                        fill: false
+                    },
+
+                ]
+            },
+            options: {
+                responsive: true
+            }
+        });
+
+
+
     })(jQuery);
+
 
 
 </script>

@@ -748,4 +748,54 @@ public class IncidenciaDao extends BaseDao{
         return tabla1;
 
     }
+    public ArrayList<Integer> DashboardTabla6_mes(int i) {
+
+        ArrayList<Integer> tabla1 = new ArrayList<>(Arrays.asList(0, 0, 0, 0, 0, 0, 0,0,0,0,0,0));
+
+        String sql = "SELECT \n" +
+                "    DATE_FORMAT(fecha, '%m') AS mes,\n" +
+                "   \n" +
+                "    COUNT(*) AS cantidad_incidencias\n" +
+                "FROM \n" +
+                "    televecinosdb.incidencias\n" +
+                "WHERE \n" +
+                "    TipoIncidencia_idTipoIncidencia =" + i + "\n" +
+                "GROUP BY \n" +
+                "    mes";
+
+        Map<String, Integer> meses = new HashMap<>();
+        meses.put("01", 0);
+        meses.put("02", 1);
+        meses.put("03", 2);
+        meses.put("04", 3);
+        meses.put("05", 4);
+        meses.put("06", 5);
+        meses.put("07", 6);
+        meses.put("08", 7);
+        meses.put("09", 8);
+        meses.put("10", 9);
+        meses.put("11", 10);
+        meses.put("12", 11);
+
+
+        try (Connection connection = getConnection();
+             Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                String mes = rs.getString(1);
+                int cantidad = rs.getInt(2);
+                if (meses.containsKey(mes)) {
+                    int index = meses.get(mes);
+                    tabla1.set(index, cantidad);
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return tabla1;
+
+    }
+
 }
