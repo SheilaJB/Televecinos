@@ -405,165 +405,124 @@ public class CoordinadorServlet extends HttpServlet {
                 }
                 break;
 
-        case "editar":
-                Map<String, String> erroresEvento2 = new HashMap<>();
-                EventoB evento = eventoDao.buscarEventoPorId(request.getParameter("idEvento"));
-                int idEvento = Integer.parseInt(request.getParameter("idEvento"));
-                String nombre = request.getParameter("nombre");
-                String descripcion = request.getParameter("descripcion");
-                String lugar2 = request.getParameter("lugar");
-                // int Coordinador_idUsuario = Integer.parseInt(request.getParameter("Coordinador_idUsuario"));
-                String fecha_inicio2 = request.getParameter("fecha_inicio");
-                String fecha_fin2 = request.getParameter("fecha_fin");
-                String hora_inicio2 = request.getParameter("hora_inicio");
-                String hora_fin2 = request.getParameter("hora_fin");
-                String frecuencia2 = request.getParameter("frecuencia");
-                int cantidadVacantes2 = Integer.parseInt(request.getParameter("cantidadVacantes"));
-                Part part2 = request.getPart("foto");
-                String fileName2 = part2.getSubmittedFileName();
-                InputStream fileInputStream2 = part2.getInputStream();
-                String listaMateriales2 = request.getParameter("listaMateriales");
-                String idTipoEvento2 = request.getParameter("tipoCoordinador");
-                String idProfesor2 = request.getParameter("ProfesoresEvento_idProfesoresEvento");
+            case "editar":
+                    Map<String, String> erroresEvento2 = new HashMap<>();
+                    EventoB evento = eventoDao.buscarEventoPorId(request.getParameter("idEvento"));
+                    int idEvento = Integer.parseInt(request.getParameter("idEvento"));
+                    String nombre = request.getParameter("nombre");
+                    String descripcion = request.getParameter("descripcion");
+                    String lugar2 = request.getParameter("lugar");
+                    // int Coordinador_idUsuario = Integer.parseInt(request.getParameter("Coordinador_idUsuario"));
+                    String fecha_inicio2 = request.getParameter("fecha_inicio");
+                    String fecha_fin2 = request.getParameter("fecha_fin");
+                    String hora_inicio2 = request.getParameter("hora_inicio");
+                    String hora_fin2 = request.getParameter("hora_fin");
+                    String frecuencia2 = request.getParameter("frecuencia");
+                    int cantidadVacantes2 = Integer.parseInt(request.getParameter("cantidadVacantes"));
+                    Part part2 = request.getPart("foto");
+                    String fileName2 = part2.getSubmittedFileName();
+                    InputStream fileInputStream2 = part2.getInputStream();
+                    String listaMateriales2 = request.getParameter("listaMateriales");
+                    String idTipoEvento2 = request.getParameter("tipoCoordinador");
+                    String idProfesor2 = request.getParameter("ProfesoresEvento_idProfesoresEvento");
 
-                int ProfesoresEvento_idProfesoresEvento2 = Integer.parseInt(request.getParameter("ProfesoresEvento_idProfesoresEvento"));
-                String opcionesDias2 = null;
-                //Validaciones
-                if (frecuencia2.equals("2")){
-                    opcionesDias2 = request.getParameter("opcionesDias");
-                }else if (frecuencia2.equals("1")){
-                    opcionesDias2 = request.getParameter("opcionesDias1");
-                }else{
-                    opcionesDias2="Domingo";
-                    erroresEvento2.put("errorFrecuencia", "Error: Seleccione una frecuencia");
-                }
-
-                if (cantidadVacantes2<evento.getCantidadVacantes()){
-                    erroresEvento2.put("errorVacantes","Error: La cantidad de vacantes no debe disminuir");
-                }
-
-                DateTimeFormatter dateFormatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                DateTimeFormatter timeFormatter2 = DateTimeFormatter.ofPattern("HH:mm[:ss]");
-
-                LocalDate fechaInicio2 = LocalDate.parse(fecha_inicio2, dateFormatter2);
-                LocalDate fechaFin2 = LocalDate.parse(fecha_fin2, dateFormatter2);
-                LocalTime horaInicio2 = LocalTime.parse(hora_inicio2, timeFormatter2);
-                LocalTime horaFin2 = LocalTime.parse(hora_fin2, timeFormatter2);
-                LocalDate hoy2 = LocalDate.now();
-
-                if (fechaInicio2.isBefore(hoy2)) {
-                    erroresEvento2.put("fechaInicio", "Error: la fecha de inicio no puede ser antes de hoy");
-                    // Error: la fecha de inicio no puede ser antes de hoy
-                }
-
-                if (fechaFin2.isBefore(fechaInicio2)) {
-                    erroresEvento2.put("fechaFin", "Error: la fecha de finalización no puede ser antes de la fecha de inicio");
-                    // Error: la fecha de finalización no puede ser antes de la fecha de inicio
-                }
-
-                DayOfWeek dayOfWeekInicio2 = fechaInicio2.getDayOfWeek();
-                DayOfWeek dayOfWeekFin2 = fechaFin2.getDayOfWeek();
-
-                String diaInicioEsperado2 = opcionesDias2.split("-")[0];  // "Lunes" en "Lunes-Miércoles"
-                String diaFinEsperado2 = opcionesDias2.contains("-") ? opcionesDias2.split("-")[1] : diaInicioEsperado2; // "Miércoles" en "Lunes-Miércoles", o "Lunes" en "Lunes"
-                String diaInicio2 = null;
-                String diaFin2 = null;
-                switch (diaInicioEsperado2){
-                    case "Lunes":
-                        diaInicio2 = "MONDAY";
-                        break;
-                    case "Martes":
-                        diaInicio2 = "TUESDAY";
-                        break;
-                    case "Miércoles":
-                        diaInicio2 = "WEDNESDAY";
-                        break;
-                    case "Jueves":
-                        diaInicio2 = "THURSDAY";
-                        break;
-                    case "Viernes":
-                        diaInicio2 = "FRIDAY";
-                        break;
-                }
-                switch (diaFinEsperado2){
-                    case "Lunes":
-                        diaFin2 = "MONDAY";
-                        break;
-                    case "Martes":
-                        diaFin2 = "TUESDAY";
-                        break;
-                    case "Miércoles":
-                        diaFin2 = "WEDNESDAY";
-                        break;
-                    case "Jueves":
-                        diaFin2 = "THURSDAY";
-                        break;
-                    case "Viernes":
-                        diaFin2 = "FRIDAY";
-                        break;
-                }
-
-                if (!dayOfWeekInicio2.toString().equals(diaInicio2)) {
-                    erroresEvento2.put("errorFechaInicio", "Error: la fecha de inicio no coincide con el día esperado");
-                    // Error: la fecha de inicio no coincide con el día esperado
-                }
-
-                if (!dayOfWeekFin2.toString().equals(diaFin2)) {
-                    erroresEvento2.put("errorFechaFin", "Error: la fecha de fin no coincide con el día esperado");
-                    // Error: la fecha de fin no coincide con el día esperado
-                }
-                if (horaInicio2.isAfter(horaFin2)) {
-                    erroresEvento2.put("errorHoraFin", "Error: la hora de inicio no puede ser después de la hora de fin");
-                    // Error: la hora de inicio no puede ser después de la hora de fin
-                }
-                LocalTime treintaMinutosDespues2 = horaInicio2.plusMinutes(30);
-                if (horaFin2.isBefore(treintaMinutosDespues2)) {
-                    erroresEvento2.put("horaFin30Min", "Error: la hora de finalización debe ser al menos 30 minutos después de la hora de inicio.");
-                }
-
-                if (!erroresEvento2.isEmpty()) {
-                    request.setAttribute("eventoB", evento);
-                    ArrayList<ProfesoresEvento> listaProfesores = eventoDao.listarProfesores();
-                    request.setAttribute("lista", listaProfesores);
-                    request.setAttribute("erroresEvento", erroresEvento2);
-                    request.setAttribute("nombreEvento", nombre);
-                    request.setAttribute("descripcionEvento", descripcion);
-                    request.setAttribute("lugar", lugar2);
-                    request.setAttribute("nombreProfesor", idProfesor2);
-                    request.setAttribute("frecuencia", frecuencia2);
-                    request.setAttribute("fecha_inicio", fecha_inicio2);
-                    request.setAttribute("fecha_fin", fecha_fin2);
-                    request.setAttribute("hora_inicio", hora_inicio2);
-                    request.setAttribute("hora_fin", hora_fin2);
-                    request.setAttribute("cantVacantes", String.valueOf(cantidadVacantes2));
-                    request.setAttribute("materiales", listaMateriales2);
-
-                    String NO= "NO";
+                    int ProfesoresEvento_idProfesoresEvento2 = Integer.parseInt(request.getParameter("ProfesoresEvento_idProfesoresEvento"));
+                    String opcionesDias2 = null;
+                    //Validaciones
                     if (frecuencia2.equals("2")){
-                        request.setAttribute("opcionesDias", opcionesDias2);
-                        request.setAttribute("opcionesDias1", NO);
+                        opcionesDias2 = request.getParameter("opcionesDias");
+                    }else if (frecuencia2.equals("1")){
+                        opcionesDias2 = request.getParameter("opcionesDias1");
                     }else{
-                        request.setAttribute("opcionesDias", NO);
-                        request.setAttribute("opcionesDias1", opcionesDias2);
+                        opcionesDias2="Domingo";
+                        erroresEvento2.put("errorFrecuencia", "Error: Seleccione una frecuencia");
                     }
-                    request.getRequestDispatcher("WEB-INF/Coordinadora/editarEvento.jsp").forward(request, response);
-                    return;
-                } else{
-                    // 1. Verificar traslape de eventos ANTES de crear el evento
-                    DateTimeFormatter dateFormatter3 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                    DateTimeFormatter timeFormatter3 = DateTimeFormatter.ofPattern("HH:mm:ss");
 
-                    String fechaInicioStr2 = fechaInicio2.format(dateFormatter3);
-                    String fechaFinStr2 = fechaFin2.format(dateFormatter3);
-                    String horaInicioStr2 = horaInicio2.format(timeFormatter3);
-                    String horaFinStr2 = horaFin2.format(timeFormatter3);
+                    if (cantidadVacantes2<evento.getCantidadVacantes()){
+                        erroresEvento2.put("errorVacantes","Error: La cantidad de vacantes no debe disminuir");
+                    }
 
-                    // Verificar traslape de eventos ANTES de crear el evento
-                    int idEvento2 = 0; // No hay ID de evento existente al crear uno nuevo
-                    boolean hayTraslape2 = eventoDao.hayTraslapeCoordinador(usuarioLogged.getIdUsuario(), idEvento2, fechaInicioStr2, fechaFinStr2, horaInicioStr2, horaFinStr2, Integer.parseInt(frecuencia2));
-                    if (hayTraslape2) {
+                    DateTimeFormatter dateFormatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                    DateTimeFormatter timeFormatter2 = DateTimeFormatter.ofPattern("HH:mm[:ss]");
+
+                    LocalDate fechaInicio2 = LocalDate.parse(fecha_inicio2, dateFormatter2);
+                    LocalDate fechaFin2 = LocalDate.parse(fecha_fin2, dateFormatter2);
+                    LocalTime horaInicio2 = LocalTime.parse(hora_inicio2, timeFormatter2);
+                    LocalTime horaFin2 = LocalTime.parse(hora_fin2, timeFormatter2);
+                    LocalDate hoy2 = LocalDate.now();
+
+                    if (fechaInicio2.isBefore(hoy2)) {
+                        erroresEvento2.put("fechaInicio", "Error: la fecha de inicio no puede ser antes de hoy");
+                        // Error: la fecha de inicio no puede ser antes de hoy
+                    }
+
+                    if (fechaFin2.isBefore(fechaInicio2)) {
+                        erroresEvento2.put("fechaFin", "Error: la fecha de finalización no puede ser antes de la fecha de inicio");
+                        // Error: la fecha de finalización no puede ser antes de la fecha de inicio
+                    }
+
+                    DayOfWeek dayOfWeekInicio2 = fechaInicio2.getDayOfWeek();
+                    DayOfWeek dayOfWeekFin2 = fechaFin2.getDayOfWeek();
+
+                    String diaInicioEsperado2 = opcionesDias2.split("-")[0];  // "Lunes" en "Lunes-Miércoles"
+                    String diaFinEsperado2 = opcionesDias2.contains("-") ? opcionesDias2.split("-")[1] : diaInicioEsperado2; // "Miércoles" en "Lunes-Miércoles", o "Lunes" en "Lunes"
+                    String diaInicio2 = null;
+                    String diaFin2 = null;
+                    switch (diaInicioEsperado2){
+                        case "Lunes":
+                            diaInicio2 = "MONDAY";
+                            break;
+                        case "Martes":
+                            diaInicio2 = "TUESDAY";
+                            break;
+                        case "Miércoles":
+                            diaInicio2 = "WEDNESDAY";
+                            break;
+                        case "Jueves":
+                            diaInicio2 = "THURSDAY";
+                            break;
+                        case "Viernes":
+                            diaInicio2 = "FRIDAY";
+                            break;
+                    }
+                    switch (diaFinEsperado2){
+                        case "Lunes":
+                            diaFin2 = "MONDAY";
+                            break;
+                        case "Martes":
+                            diaFin2 = "TUESDAY";
+                            break;
+                        case "Miércoles":
+                            diaFin2 = "WEDNESDAY";
+                            break;
+                        case "Jueves":
+                            diaFin2 = "THURSDAY";
+                            break;
+                        case "Viernes":
+                            diaFin2 = "FRIDAY";
+                            break;
+                    }
+
+                    if (!dayOfWeekInicio2.toString().equals(diaInicio2)) {
+                        erroresEvento2.put("errorFechaInicio", "Error: la fecha de inicio no coincide con el día esperado");
+                        // Error: la fecha de inicio no coincide con el día esperado
+                    }
+
+                    if (!dayOfWeekFin2.toString().equals(diaFin2)) {
+                        erroresEvento2.put("errorFechaFin", "Error: la fecha de fin no coincide con el día esperado");
+                        // Error: la fecha de fin no coincide con el día esperado
+                    }
+                    if (horaInicio2.isAfter(horaFin2)) {
+                        erroresEvento2.put("errorHoraFin", "Error: la hora de inicio no puede ser después de la hora de fin");
+                        // Error: la hora de inicio no puede ser después de la hora de fin
+                    }
+                    LocalTime treintaMinutosDespues2 = horaInicio2.plusMinutes(30);
+                    if (horaFin2.isBefore(treintaMinutosDespues2)) {
+                        erroresEvento2.put("horaFin30Min", "Error: la hora de finalización debe ser al menos 30 minutos después de la hora de inicio.");
+                    }
+
+                    if (!erroresEvento2.isEmpty()) {
                         request.setAttribute("eventoB", evento);
-                        request.getSession().setAttribute("err", "Ya existe un evento con fechas y horas que se superponen.");
                         ArrayList<ProfesoresEvento> listaProfesores = eventoDao.listarProfesores();
                         request.setAttribute("lista", listaProfesores);
                         request.setAttribute("erroresEvento", erroresEvento2);
@@ -579,45 +538,86 @@ public class CoordinadorServlet extends HttpServlet {
                         request.setAttribute("cantVacantes", String.valueOf(cantidadVacantes2));
                         request.setAttribute("materiales", listaMateriales2);
 
+                        String NO= "NO";
+                        if (frecuencia2.equals("2")){
+                            request.setAttribute("opcionesDias", opcionesDias2);
+                            request.setAttribute("opcionesDias1", NO);
+                        }else{
+                            request.setAttribute("opcionesDias", NO);
+                            request.setAttribute("opcionesDias1", opcionesDias2);
+                        }
                         request.getRequestDispatcher("WEB-INF/Coordinadora/editarEvento.jsp").forward(request, response);
                         return;
                     } else{
-                        EventoB eventoB = new EventoB();
-                        eventoB.setIdEvento(idEvento);
-                        eventoB.setNombre(nombre);
-                        eventoB.setDescripcion(descripcion);
-                        eventoB.setLugar(lugar2);
-                        // eventoB.setCoordinador_idUsuario(Coordinador_idUsuario); // Comentar si no es necesario
-                        eventoB.setFecha_inicio(fecha_inicio2);
-                        eventoB.setFecha_fin(fecha_fin2);
-                        eventoB.setFrecuenciaString(frecuencia2);
-                        eventoB.setCantidadVacantes(cantidadVacantes2);
-                        if (fileName2 == null || fileName2.isEmpty()){
-                            eventoB.setFoto(evento.getFoto());
-                            eventoB.setNombreFoto(evento.getNombreFoto());
-                        }else {
-                            eventoB.setNombreFoto(fileName2);
-                            eventoB.setFoto(fileInputStream2);
+                        // 1. Verificar traslape de eventos ANTES de crear el evento
+                        DateTimeFormatter dateFormatter3 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                        DateTimeFormatter timeFormatter3 = DateTimeFormatter.ofPattern("HH:mm:ss");
+
+                        String fechaInicioStr2 = fechaInicio2.format(dateFormatter3);
+                        String fechaFinStr2 = fechaFin2.format(dateFormatter3);
+                        String horaInicioStr2 = horaInicio2.format(timeFormatter3);
+                        String horaFinStr2 = horaFin2.format(timeFormatter3);
+
+                        // Verificar traslape de eventos ANTES de crear el evento
+                        int idEvento2 = 0; // No hay ID de evento existente al crear uno nuevo
+                        boolean hayTraslape2 = eventoDao.hayTraslapeCoordinador(usuarioLogged.getIdUsuario(), idEvento2, fechaInicioStr2, fechaFinStr2, horaInicioStr2, horaFinStr2, Integer.parseInt(frecuencia2));
+                        if (hayTraslape2) {
+                            request.setAttribute("eventoB", evento);
+                            request.getSession().setAttribute("err", "Ya existe un evento con fechas y horas que se superponen.");
+                            ArrayList<ProfesoresEvento> listaProfesores = eventoDao.listarProfesores();
+                            request.setAttribute("lista", listaProfesores);
+                            request.setAttribute("erroresEvento", erroresEvento2);
+                            request.setAttribute("nombreEvento", nombre);
+                            request.setAttribute("descripcionEvento", descripcion);
+                            request.setAttribute("lugar", lugar2);
+                            request.setAttribute("nombreProfesor", idProfesor2);
+                            request.setAttribute("frecuencia", frecuencia2);
+                            request.setAttribute("fecha_inicio", fecha_inicio2);
+                            request.setAttribute("fecha_fin", fecha_fin2);
+                            request.setAttribute("hora_inicio", hora_inicio2);
+                            request.setAttribute("hora_fin", hora_fin2);
+                            request.setAttribute("cantVacantes", String.valueOf(cantidadVacantes2));
+                            request.setAttribute("materiales", listaMateriales2);
+
+                            request.getRequestDispatcher("WEB-INF/Coordinadora/editarEvento.jsp").forward(request, response);
+                            return;
+                        } else{
+                            EventoB eventoB = new EventoB();
+                            eventoB.setIdEvento(idEvento);
+                            eventoB.setNombre(nombre);
+                            eventoB.setDescripcion(descripcion);
+                            eventoB.setLugar(lugar2);
+                            // eventoB.setCoordinador_idUsuario(Coordinador_idUsuario); // Comentar si no es necesario
+                            eventoB.setFecha_inicio(fecha_inicio2);
+                            eventoB.setFecha_fin(fecha_fin2);
+                            eventoB.setFrecuenciaString(frecuencia2);
+                            eventoB.setCantidadVacantes(cantidadVacantes2);
+                            if (fileName2 == null || fileName2.isEmpty()){
+                                eventoB.setFoto(evento.getFoto());
+                                eventoB.setNombreFoto(evento.getNombreFoto());
+                            }else {
+                                eventoB.setNombreFoto(fileName2);
+                                eventoB.setFoto(fileInputStream2);
+                            }
+                            int EventFrecuencia_idEventFrecuencia2 = Integer.parseInt(request.getParameter("frecuencia"));
+                            eventoB.setListaMateriales(listaMateriales2);
+                            eventoB.setEventFrecuencia_idEventFrecuencia(EventFrecuencia_idEventFrecuencia2);
+                            eventoB.setProfesoresEvento_idProfesoresEvento(ProfesoresEvento_idProfesoresEvento2);
+                            eventoB.setDiaEvento(opcionesDias2);
+                            eventoB.setHora_inicio(hora_inicio2);
+                            eventoB.setHora_fin(hora_fin2);
+
+                            eventoDao.eliminarFechasEventoPorIdEvento(idEvento);
+                            eventoDao.eliminarFechasAsistencia(idEvento);
+                            eventoDao.actualizarEvento(eventoB);
+                            eventoDao.updateVacantesDisponibles(eventoB.getIdEvento());
+                            // Agregar mensaje a la sesión
+                            request.getSession().setAttribute("info", "Evento editado de manera exitosa");
+
+                            response.sendRedirect(request.getContextPath() + "/CoordinadorServlet?action=lista");
                         }
-                        int EventFrecuencia_idEventFrecuencia2 = Integer.parseInt(request.getParameter("frecuencia"));
-                        eventoB.setListaMateriales(listaMateriales2);
-                        eventoB.setEventFrecuencia_idEventFrecuencia(EventFrecuencia_idEventFrecuencia2);
-                        eventoB.setProfesoresEvento_idProfesoresEvento(ProfesoresEvento_idProfesoresEvento2);
-                        eventoB.setDiaEvento(opcionesDias2);
-                        eventoB.setHora_inicio(hora_inicio2);
-                        eventoB.setHora_fin(hora_fin2);
-
-                        eventoDao.eliminarFechasEventoPorIdEvento(idEvento);
-                        eventoDao.eliminarFechasAsistencia(idEvento);
-                        eventoDao.actualizarEvento(eventoB);
-                        eventoDao.updateVacantesDisponibles(eventoB.getIdEvento());
-                        // Agregar mensaje a la sesión
-                        request.getSession().setAttribute("info", "Evento editado de manera exitosa");
-
-                        response.sendRedirect(request.getContextPath() + "/CoordinadorServlet?action=lista");
                     }
-                }
-                break;
+                    break;
 
             case "buscarEventoPorNombre":
                 String textBuscar = request.getParameter("textoBuscarEvento");

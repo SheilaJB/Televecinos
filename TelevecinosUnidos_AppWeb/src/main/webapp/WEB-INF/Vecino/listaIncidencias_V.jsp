@@ -104,38 +104,37 @@
                         <!-- Busqueda por nombre de incidencia -->
                         <div class="col-md-3 mb-2">
                             <input type="text" class="form-control" id="filtroInput" placeholder="Buscar incidencia..." name="textoBuscarIncidencia"
-                                   value="<%=request.getAttribute("textoBuscarIncidencia") != null ? request.getAttribute("textoBuscarIncidencia") : ""%>">
+                                   value="<%=textoBuscarIncidencia%>">
                         </div>
                         <div class="col-md-2 mb-2">
-                            <input type="date" class="form-control" name="fecha"
-                                   value="<%=request.getAttribute("fecha") != null ? request.getAttribute("fecha") : ""%>">
+                            <input type="date" class="form-control" name="filtroFecha">
                         </div>
                         <div class="col-md-2 mb-2">
-                            <select class="form-select" name="tipo">
+                            <select class="form-select" name="filtroTipo">
                                 <option selected disabled>Tipo de Incidencia</option>
-                                <option value="1" <%= "1".equals(request.getAttribute("tipo")) ? "selected" : "" %>>Seguridad Pública</option>
-                                <option value="2" <%= "2".equals(request.getAttribute("tipo")) ? "selected" : "" %>>Emergencia Médica</option>
-                                <option value="3" <%= "3".equals(request.getAttribute("tipo")) ? "selected" : "" %>>Infraestructura y Servicios Públicos</option>
-                                <option value="4" <%= "4".equals(request.getAttribute("tipo")) ? "selected" : "" %>>Otro</option>
+                                <option value="1">Seguridad Pública</option>
+                                <option value="2">Emergencia Médica</option>
+                                <option value="3">Infraestructura y Servicios Públicos</option>
+                                <option value="4">Otro</option>
                             </select>
                         </div>
                         <div class="col-md-2 mb-2">
-                            <select class="form-select" name="estado">
+                            <select class="form-select" name="filtroEstado">
                                 <option selected disabled>Estado</option>
-                                <option value="1" <%= "1".equals(request.getAttribute("estado")) ? "selected" : "" %>>Pendiente</option>
-                                <option value="2" <%= "2".equals(request.getAttribute("estado")) ? "selected" : "" %>>En curso</option>
-                                <option value="3" <%= "3".equals(request.getAttribute("estado")) ? "selected" : "" %>>Cancelado</option>
-                                <option value="4" <%= "4".equals(request.getAttribute("estado")) ? "selected" : "" %>>Rechazado</option>
-                                <option value="5" <%= "5".equals(request.getAttribute("estado")) ? "selected" : "" %>>Procesado</option>
+                                <option value="1">Pendiente</option>
+                                <option value="2">En curso</option>
+                                <option value="3">Cancelado</option>
+                                <option value="4">Rechazado</option>
+                                <option value="5">Procesado</option>
                             </select>
                         </div>
                         <div class="col-md-1 mb-2">
-                            <button class="btn btn-primary w-100" type="submit">
+                            <button class="btn btn-primary" type="submit">
                                 <i class="fas fa-search"></i>
                             </button>
                         </div>
                         <div class="col-md-2 mb-2">
-                            <a type="reset" class="btn btn-primary w-100" href="<%=request.getContextPath()%>/VecinoServlet?action=listarIncidencia">Limpiar</a>
+                            <a type="reset" class="btn btn-primary" href="<%=request.getContextPath()%>/VecinoServlet?action=listarIncidencia">Limpiar</a>
                         </div>
                     </div>
                 </form>
@@ -150,7 +149,9 @@
                         <th scope="col">Hora</th>
                         <th scope="col">Tipo</th>
                         <th scope="col">Estado</th>
-                        <th scope="col"></th>
+                        <th scope="col">Ver</th>
+                        <th scope="col">Editar</th>
+                        <th scope="col">Borrar</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -163,24 +164,25 @@
                         <td><%= incidencia.getTipoIncidencia() %></td>
                         <td><%= incidencia.getEstadoIncidencia() %></td>
                         <td>
-                            <% if ("Pendiente".equals(incidencia.getEstadoIncidencia())) { %>
-                            <a onclick="viewFunction(<%= incidencia.getIdIncidencias() %>)">
-                                <button type="button" class="btn btn-primary btn-sm-square m-1"><i class="fas fa-eye fa-xs"></i></button>
+                            <a href="<%=request.getContextPath()%>/VecinoServlet?action=verIncidencia&idIncidencia=<%= incidencia.getIdIncidencias() %>">
+                                <button type="button" class="btn btn-primary m-2"><i class="fas fa-eye"></i></button>
                             </a>
-                            <a onclick="editFunction(<%= incidencia.getIdIncidencias() %>)">
-                                <button type="button" class="btn btn-success btn-sm-square m-1"><i class="fas fa-pencil-alt fa-xs"></i></button>
-                            </a>
-                            <a onclick="confirmDelete(<%= incidencia.getIdIncidencias() %>)">
-                                <button type="button" class="btn btn-danger btn-sm-square m-1"><i class="fas fa-trash-alt fa-xs"></i></button>
-                            </a>
-                            <% } else { %>
-                            <a onclick="viewFunction(<%= incidencia.getIdIncidencias() %>)">
-                                <button type="button" class="btn btn-primary btn-sm-square m-1"><i class="fas fa-eye fa-xs"></i></button>
-                            </a>
-                            <button type="button" class="btn btn-success btn-sm-square m-1" disabled><i class="fas fa-pencil-alt fa-xs"></i></button>
-                            <button type="button" class="btn btn-danger btn-sm-square m-1" disabled><i class="fas fa-trash-alt fa-xs"></i></button>
-                            <% } %>
                         </td>
+                        <% if ("Pendiente".equals(incidencia.getEstadoIncidencia())) { %>
+                        <td>
+                            <a href="<%=request.getContextPath()%>/VecinoServlet?action=editarIncidencia&idIncidencia=<%= incidencia.getIdIncidencias() %>">
+                                <button type="button" class="btn btn-success m-2"><i class="fas fa-pencil-alt"></i></button>
+                            </a>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger m-2" onclick="confirmDelete(<%= incidencia.getIdIncidencias() %>)">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </td>
+                        <% } else { %>
+                        <td><button type="button" class="btn btn-success m-2"><i class="fas fa-pencil-alt"></i></button></td>
+                        <td><button type="button" class="btn btn-danger m-2"><i class="fas fa-trash-alt"></i></button></td>
+                        <% } %>
                     </tr>
                     <% }
                     } else { %>

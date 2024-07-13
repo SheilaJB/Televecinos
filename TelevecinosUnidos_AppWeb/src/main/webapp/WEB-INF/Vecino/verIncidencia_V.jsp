@@ -2,6 +2,8 @@
 <%@ page import="org.example.televecinosunidos_appweb.model.beans.IncidenciasB" %>
 <%@ page import="java.util.Optional" %>
 
+<% IncidenciasB incidenciasB = (IncidenciasB) request.getAttribute("incidencia"); %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -99,7 +101,7 @@
                                         <div class="col-12">
                                             <label class="form-label" style="color:#023047;"><b>La incidencia es para:</b></label>
                                             <div class="bar p-2 bg-light rounded" data-label="La incidencia es para">
-                                                <%= request.getAttribute("incidencia") != null && ((IncidenciasB) request.getAttribute("incidencia")).getIncidenciaPersonal() == 1 ? "Personal" : "Para otra persona" %>
+                                                <%= request.getAttribute("incidencia") != null && ((IncidenciasB) request.getAttribute("incidencia")).getIncidenciaPersonal() == 1 ? "Para otra persona" : "Personal" %>
                                             </div>
                                         </div>
                                     </div>
@@ -150,7 +152,7 @@
                     <div class="col-md-6" style="margin-top: 85px;">
                         <form>
                             <label class="form-label"><b>Foto del incidente</b></label>
-                            <div class="rounded h-100 p-4"style="background-color: #ffb703;">
+                            <div class="rounded h-100 p-4" style="background-color: #ffb703;">
                                 <div class="mb-3">
                                     <img src="ImagenServlet?idImagenIncidencia=<%= request.getAttribute("incidencia") != null ? ((IncidenciasB) request.getAttribute("incidencia")).getIdIncidencias() : "" %>" class="img-responsive" alt="" style="width: 100%; height: auto;" />
                                 </div>
@@ -172,7 +174,7 @@
             <div class="bg-light rounded-top p-4">
                 <div class="row">
                     <div class="col-12 col-sm-6 text-center text-sm-start">
-                        &copy; <a href="#">TelevecinosUnidos</a>, All Right Reserved.
+                        &copy; <a>TelevecinosUnidos</a>, All Right Reserved.
                     </div>
                 </div>
             </div>
