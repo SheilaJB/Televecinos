@@ -92,6 +92,16 @@
         <!-- Navbar Start -->
         <jsp:include page="../includes/navbarCoordinador.jsp"></jsp:include>
         <!-- Navbar End -->
+        <script>
+            <% if (session.getAttribute("err") != null) { %>
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: '<%= session.getAttribute("err") %>',
+            });
+            <% session.removeAttribute("err"); %> // Remueve el atributo de error después de mostrarlo
+            <% } %>
+        </script>
 
         <h2 class="mb-2 text-center" style="padding-top: 3%; color:#023047;">Editar Evento</h2>
         <!-- Form Start -->
