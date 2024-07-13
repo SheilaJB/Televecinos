@@ -14,7 +14,12 @@
     <div class="navbar-nav align-items-center ms-auto">
         <div class="nav-item dropdown">
             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                <img class="rounded-circle me-lg-2" src="img/Icon_perfil.png" alt="" style="width: 40px; height: 40px;">
+                <%if(usuarioLogueado.getGenero()==1){%>
+                    <img class="rounded-circle me-lg-2" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                <%}else{%>
+                    <img class="rounded-circle me-lg-2" src="img/user.png" alt="" style="width: 40px; height: 40px;">
+                <%}%>
+
                 <span class="d-none d-lg-inline-flex" style="color:#023047;"><b><%= usuarioLogueado.getNombre()+" "+usuarioLogueado.getApellido()%></b></span>
             </a>
             <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">

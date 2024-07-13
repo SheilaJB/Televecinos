@@ -779,7 +779,7 @@ public class CoordinadorServlet extends HttpServlet {
                     response.sendRedirect(request.getContextPath() + "/CoordinadorServlet?action=listarIncidencia");
                 }else {
                     request.setAttribute("textoBuscarIncidencia", textBuscarI);
-                    request.setAttribute("lista", incidenciaDao.listarIncidenciasFiltro(textBuscarI, filtroFechaI, filtroTipo, filtroEstadoI,userId));
+                    //request.setAttribute("lista", incidenciaDao.listarIncidenciasFiltro(textBuscarI, filtroFechaI, filtroTipo, filtroEstadoI,userId));
                     request.getRequestDispatcher("WEB-INF/Coordinadora/listaIncidencias_C.jsp").forward(request, response);
                 }
                 break;

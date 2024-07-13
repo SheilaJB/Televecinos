@@ -5,8 +5,7 @@ import org.example.televecinosunidos_appweb.model.beans.UsuarioB;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.sql.*;
 
 
@@ -703,4 +702,100 @@ public class IncidenciaDao extends BaseDao{
         }
         return tabla1;
     }
+
+    public ArrayList<Integer> DashboardTabla6(int i) {
+
+        ArrayList<Integer> tabla1 = new ArrayList<>(Arrays.asList(0, 0, 0, 0, 0, 0, 0));
+
+        String sql = "SELECT \n" +
+                "    DAYNAME(fecha) AS dia_semana,\n" +
+                "    COUNT(*) AS cantidad_incidencias\n" +
+                "FROM \n" +
+                "    televecinosdb.incidencias\n" +
+                "WHERE \n" +
+                "    TipoIncidencia_idTipoIncidencia =" + i + "\n" +
+                "GROUP BY \n" +
+                "    dia_semana\n" +
+                "ORDER BY \n" +
+                "    FIELD(dia_semana, 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday');";
+
+        Map<String, Integer> diasSemana = new HashMap<>();
+        diasSemana.put("Monday", 0);
+        diasSemana.put("Tuesday", 1);
+        diasSemana.put("Wednesday", 2);
+        diasSemana.put("Thursday", 3);
+        diasSemana.put("Friday", 4);
+        diasSemana.put("Saturday", 5);
+        diasSemana.put("Sunday", 6);
+
+
+        try (Connection connection = getConnection();
+             Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                String dia = rs.getString(1);
+                int cantidad = rs.getInt(2);
+                if (diasSemana.containsKey(dia)) {
+                    int index = diasSemana.get(dia);
+                    tabla1.set(index, cantidad);
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return tabla1;
+
+    }
+    public ArrayList<Integer> DashboardTabla6_mes(int i) {
+
+        ArrayList<Integer> tabla1 = new ArrayList<>(Arrays.asList(0, 0, 0, 0, 0, 0, 0,0,0,0,0,0));
+
+        String sql = "SELECT \n" +
+                "    DATE_FORMAT(fecha, '%m') AS mes,\n" +
+                "   \n" +
+                "    COUNT(*) AS cantidad_incidencias\n" +
+                "FROM \n" +
+                "    televecinosdb.incidencias\n" +
+                "WHERE \n" +
+                "    TipoIncidencia_idTipoIncidencia =" + i + "\n" +
+                "GROUP BY \n" +
+                "    mes";
+
+        Map<String, Integer> meses = new HashMap<>();
+        meses.put("01", 0);
+        meses.put("02", 1);
+        meses.put("03", 2);
+        meses.put("04", 3);
+        meses.put("05", 4);
+        meses.put("06", 5);
+        meses.put("07", 6);
+        meses.put("08", 7);
+        meses.put("09", 8);
+        meses.put("10", 9);
+        meses.put("11", 10);
+        meses.put("12", 11);
+
+
+        try (Connection connection = getConnection();
+             Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                String mes = rs.getString(1);
+                int cantidad = rs.getInt(2);
+                if (meses.containsKey(mes)) {
+                    int index = meses.get(mes);
+                    tabla1.set(index, cantidad);
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return tabla1;
+
+    }
+
 }

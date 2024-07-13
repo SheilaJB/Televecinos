@@ -105,9 +105,31 @@ public class VecinoServlet extends HttpServlet {
                 return;
             /*----------------Incidencias----------------*/
             case "listarIncidencia":
+                int paginaActualI = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
+                int eventosPorPaginaI = 5; // Número de eventos por página
+
+                // Obtener la lista completa de incidencias
                 ArrayList<IncidenciasB> listaIncidencias = incidenciaDao.listarIncidencia(userId);
-                request.setAttribute("lista", listaIncidencias);
+
+                // Calcular total de páginas
+                int totalEventosI = listaIncidencias.size();
+                int totalPaginasI = (int) Math.ceil((double) totalEventosI / eventosPorPaginaI);
+
+                // Si no hay eventos, asegurarse de que la página actual sea 1
+                if (totalEventosI == 0) {
+                    paginaActualI = 1;
+                }
+
+                // Obtener las incidencias de la página actual
+                int desdeI = (paginaActualI - 1) * eventosPorPaginaI;
+                int hastaI = Math.min(desdeI + eventosPorPaginaI, totalEventosI);
+                ArrayList<IncidenciasB> incidenciaPaginados = new ArrayList<>(listaIncidencias.subList(desdeI, hastaI));
+
+                // Enviar atributos al JSP
                 vista = "WEB-INF/Vecino/listaIncidencias_V.jsp";
+                request.setAttribute("lista", incidenciaPaginados);
+                request.setAttribute("paginaActual", paginaActualI);
+                request.setAttribute("totalPaginas", totalPaginasI);
                 request.getRequestDispatcher(vista).forward(request, response);
                 break;
 
@@ -364,15 +386,34 @@ public class VecinoServlet extends HttpServlet {
                 break;
 
             case "buscarIncidenciaPorNombre":
-                String textBuscar = request.getParameter("textoBuscarIncidencia");
-                String filtroFecha = request.getParameter("fecha");
-                String filtroTipo = request.getParameter("tipo");
-                String filtroEstado = request.getParameter("estado");
-                if (textBuscar == null && filtroFecha == null && filtroTipo == null && filtroEstado == null) {
+                String textBuscarI = request.getParameter("textoBuscarIncidencia");
+                String filtroFechaI = request.getParameter("fecha");
+                String filtroTipoI = request.getParameter("tipo");
+                String filtroEstadoI = request.getParameter("estado");
+                int paginaI = request.getParameter("pagina") != null ? Integer.parseInt(request.getParameter("pagina")) : 1;
+
+                if ((textBuscarI == null || textBuscarI.isEmpty()) && (filtroFechaI == null || filtroFechaI.isEmpty())
+                        && (filtroTipoI == null || filtroTipoI.isEmpty()) && (filtroEstadoI == null || filtroEstadoI.isEmpty())) {
                     response.sendRedirect(request.getContextPath() + "/VecinoServlet?action=listarIncidencia");
                 } else {
-                    request.setAttribute("textoBuscarIncidencia", textBuscar);
-                    request.setAttribute("lista", incidenciaDao.listarIncidenciasFiltro(textBuscar, filtroFecha, filtroTipo, filtroEstado, userId));
+                    request.setAttribute("textoBuscarIncidencia", textBuscarI);
+                    request.setAttribute("fecha", filtroFechaI);
+                    request.setAttribute("tipo", filtroTipoI);
+                    request.setAttribute("estado", filtroEstadoI);
+
+                    // Obtener la lista filtrada de incidencias
+                    ArrayList<IncidenciasB> incidencias = incidenciaDao.listarIncidenciasFiltro(textBuscarI, filtroFechaI, filtroTipoI, filtroEstadoI, userId, paginaI);
+
+                    // Contar el número total de registros filtrados
+                    int totalRegistros = incidenciaDao.contarIncidenciasFiltradas(textBuscarI, filtroFechaI, filtroTipoI, filtroEstadoI, userId);
+
+                    // Calcular el número total de páginas
+                    int totalPaginas = (int) Math.ceil((double) totalRegistros / 5); // Ajustado para 5 registros por página
+
+                    // Enviar atributos al JSP
+                    request.setAttribute("lista", incidencias);
+                    request.setAttribute("paginaActual", paginaI);
+                    request.setAttribute("totalPaginas", totalPaginas);
                     request.getRequestDispatcher("WEB-INF/Vecino/listaIncidencias_V.jsp").forward(request, response);
                 }
                 break;

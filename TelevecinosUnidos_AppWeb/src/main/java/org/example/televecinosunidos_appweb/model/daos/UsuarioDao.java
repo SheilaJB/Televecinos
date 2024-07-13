@@ -276,7 +276,8 @@ public class UsuarioDao extends BaseDao{
                 "    u.Rol_idRol AS idRolUsuario,\n" +
                 "    u.isBan AS isBanUsuario,\n" +
                 "    u.primerIngreso AS primerIngresoUsuario,\n" +
-                "    urb.nombre AS nombreUrbanizacion\n" +
+                "    urb.nombre AS nombreUrbanizacion,\n" +
+                "u.genero\n" +
                 "FROM \n" +
                 "    usuario u\n" +
                 "    LEFT JOIN urbanizacion urb ON u.urbanizacion_idUrbanizacion = urb.idUrbanizacion\n" +
@@ -301,7 +302,8 @@ public class UsuarioDao extends BaseDao{
                     usuarioB.setTipoCoordinador_idTipoCoordinador(rs.getInt("idTipoCoordinadorUsuario"));
                     usuarioB.setIdRol(rs.getInt("idRolUsuario"));
                     usuarioB.setIsBan(rs.getInt("isBanUsuario"));
-
+                    usuarioB.setUrbanizacionString(rs.getString("nombreUrbanizacion"));
+                    usuarioB.setGenero(rs.getInt("genero"));
                 }
 
             }

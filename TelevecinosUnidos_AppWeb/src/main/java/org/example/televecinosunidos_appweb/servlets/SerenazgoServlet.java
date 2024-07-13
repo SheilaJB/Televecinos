@@ -89,6 +89,27 @@ public class SerenazgoServlet extends HttpServlet {
                 request.setAttribute("tabla3", tabla3);
                 request.setAttribute("tabla4", tabla4);
 
+
+
+                ArrayList<Integer> tabla6_tipo1 = incidenciaDao.DashboardTabla6(1);
+                ArrayList<Integer> tabla6_tipo2 = incidenciaDao.DashboardTabla6(2);
+                ArrayList<Integer> tabla6_tipo3 = incidenciaDao.DashboardTabla6(3);
+                ArrayList<Integer> tabla6_tipo4 = incidenciaDao.DashboardTabla6(4);
+                request.setAttribute("tabla6_tipo1", tabla6_tipo1);
+                request.setAttribute("tabla6_tipo2", tabla6_tipo2);
+                request.setAttribute("tabla6_tipo3", tabla6_tipo3);
+                request.setAttribute("tabla6_tipo4", tabla6_tipo4);
+
+                ArrayList<Integer> tabla6_tipo1_mes = incidenciaDao.DashboardTabla6_mes(1);
+                ArrayList<Integer> tabla6_tipo2_mes = incidenciaDao.DashboardTabla6_mes(2);
+                ArrayList<Integer> tabla6_tipo3_mes = incidenciaDao.DashboardTabla6_mes(3);
+                ArrayList<Integer> tabla6_tipo4_mes = incidenciaDao.DashboardTabla6_mes(4);
+                request.setAttribute("tabla6_tipo1_mes", tabla6_tipo1_mes);
+                request.setAttribute("tabla6_tipo2_mes", tabla6_tipo2_mes);
+                request.setAttribute("tabla6_tipo3_mes", tabla6_tipo3_mes);
+                request.setAttribute("tabla6_tipo4_mes", tabla6_tipo4_mes);
+
+
                 ArrayList<Integer> tabla7_tipo1 = incidenciaDao.DashboardTabla7(1);
                 ArrayList<Integer> tabla7_tipo2 = incidenciaDao.DashboardTabla7(2);
                 ArrayList<Integer> tabla7_tipo3 = incidenciaDao.DashboardTabla7(3);
@@ -100,6 +121,7 @@ public class SerenazgoServlet extends HttpServlet {
 
 
                 vista = "WEB-INF/Serenazgo/dashboard.jsp";
+
                 request.getRequestDispatcher(vista).forward(request, response);
 
                 break;

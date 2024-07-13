@@ -1,8 +1,22 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:useBean id="tipoTablaFecha" scope="request" type="java.lang.String" class="java.lang.String" />
+
 <jsp:useBean id="tabla1" scope="request" type="java.util.ArrayList" class="java.util.ArrayList" />
 <jsp:useBean id="tabla2" scope="request" type="java.util.ArrayList" class="java.util.ArrayList" />
 <jsp:useBean id="tabla3" scope="request" type="java.util.ArrayList" class="java.util.ArrayList" />
 <jsp:useBean id="tabla4" scope="request" type="java.util.ArrayList" class="java.util.ArrayList" />
+
+<jsp:useBean id="tabla6_tipo1" scope="request" type="java.util.ArrayList" class="java.util.ArrayList" />
+<jsp:useBean id="tabla6_tipo2" scope="request" type="java.util.ArrayList" class="java.util.ArrayList" />
+<jsp:useBean id="tabla6_tipo3" scope="request" type="java.util.ArrayList" class="java.util.ArrayList" />
+<jsp:useBean id="tabla6_tipo4" scope="request" type="java.util.ArrayList" class="java.util.ArrayList" />
+
+<jsp:useBean id="tabla6_tipo1_mes" scope="request" type="java.util.ArrayList" class="java.util.ArrayList" />
+<jsp:useBean id="tabla6_tipo2_mes" scope="request" type="java.util.ArrayList" class="java.util.ArrayList" />
+<jsp:useBean id="tabla6_tipo3_mes" scope="request" type="java.util.ArrayList" class="java.util.ArrayList" />
+<jsp:useBean id="tabla6_tipo4_mes" scope="request" type="java.util.ArrayList" class="java.util.ArrayList" />
+
+
 
 <jsp:useBean id="tabla7_tipo1" scope="request" type="java.util.ArrayList" class="java.util.ArrayList" />
 <jsp:useBean id="tabla7_tipo2" scope="request" type="java.util.ArrayList" class="java.util.ArrayList" />
@@ -43,7 +57,7 @@
     <link href="css/style_vec.css" rel="stylesheet">
     <link href="css/style_serenazgo.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
 <body>
@@ -110,51 +124,53 @@
                 <div class="col-sm-12 col-xl-8">
                     <div class="bg-light text-center rounded p-4" style="border: 1px solid black; box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);">
                         <div class="d-flex align-items-center justify-content-between mb-4">
-                            <h6 class="mb-0">Estado de las incidencias</h6>
-
-                            <a href="<%=request.getContextPath()%>/SerenazgoServlet?action=listaIncidencias_S">Más detalles</a>
+                            <h6 class="mb-0">Tipo de incidencias por dia</h6>
                         </div>
                         <canvas id="tipo-incidencias-dia"></canvas>
                     </div>
                 </div>
             </div>
         </div>
+        <script>
+            function tipoIncidenciasFecha() {
+                Swal.fire({
+                    title: "¿Qué tipo de tabla deseas?",
+                    showDenyButton: true,
+                    showCancelButton: true,
+                    confirmButtonText: "Día",
+                    denyButtonText: `Mes`,
+                    cancelButtonText: "año"
+                }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
+                        window.location.href = "<%=request.getContextPath()%>/SerenazgoServlet?action=dashboard&tipoTablaFecha=dia";
 
-        <!-- Ingresar filtro: semana/mes/año-->
-        <!--
-        <div class="filtro" style="border: 1px solid #ccc; border-radius: 5px; padding: 10px; display: flex; align-items: center; background-color:#FFB703 ;">
-            <select class = "posicionBotonFiltrar1" id="filtroFrecuencia" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 15%; margin-right: 2%;" >
-                <option selected>Frecuencia</option>
-                <option value="Día">Día</option>
-                <option value="Semana">Semana</option>
-                <option value="Mes">Mes</option>
-            </select>
+                    } else if (result.isDenied) {
+                        window.location.href = "<%=request.getContextPath()%>/SerenazgoServlet?action=dashboard&tipoTablaFecha=mes";
+                    } else{
+                        window.location.href = "<%=request.getContextPath()%>/SerenazgoServlet?action=dashboard&tipoTablaFecha=anio";
 
-            <button type="button" class="btn btn-primary posicionBotonFiltrar2" onclick="filtrar()" style="padding: 10px;"><b>Filtrar</b></button>
-        </div>
-        -->
-        <!-- Tabla de tipos de incidencias
-        <div class="container-fluid pt-4 px-4">
-            <div class="row g-4">
-                <div class="col-sm-12 col-xl-6">
-                    <div class="bg-light text-center rounded p-4" style="border: 1px solid black; box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);">
-                        <div class="d-flex align-items-center justify-content-between mb-4">
-                            <h6 class="mb-0">Tipo de incidencia</h6>
-                            <a href="listaIncidencias_S.html">Más detalles</a>
-                        </div>
-                        <canvas id="type-incidents-bar"></canvas>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-        -->
-
+                    }
+                });
+            }
+        </script>
 
         <div class="container-fluid pt-4 px-4">
             <div class="col-sm-12 col-xl-6 w-100 h-100">
                 <div class="bg-light text-center rounded p-4" style="border: 1px solid black; box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);">
                     <div class="d-flex align-items-center justify-content-between mb-4">
+                        <h6 class="mb-0">Tipo de incidencias por mes</h6>
+                    </div>
+                    <canvas id="tipo-incidencias-mes"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid pt-4 px-4">
+            <div class="col-sm-12 col-xl-6 w-100 h-100">
+                <div class="bg-light text-center rounded p-4" style="border: 1px solid black; box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <h6 class="mb-0">Tipo de incidencias por urbanizacion</h6>
                     </div>
                     <canvas id="type-incidents-urb-bar"></canvas>
                 </div>
@@ -176,8 +192,9 @@
             <div class="bg-light rounded-top p-4">
                 <div class="row">
                     <div class="col-12 col-sm-6 text-center text-sm-start">
-                        &copy; <a>Televecinos Unidos</a>, All Right Reserved.
+                        &copy; <a>TelevecinosUnidos</a>, All Right Reserved.
                     </div>
+
                 </div>
             </div>
         </div>
@@ -212,7 +229,7 @@
 
 
 
-<canvas id="test-chart" width="400" height="400"></canvas>
+<!-- <canvas id="test-chart" width="400" height="400"></canvas> -->
 
 
 
@@ -311,32 +328,37 @@
             }
         });*/
         // Estados de incidencias - Chart
+
+        var tabla6_tipo1 = ${tabla6_tipo1};
+        var tabla6_tipo2 = ${tabla6_tipo2};
+        var tabla6_tipo3 = ${tabla6_tipo3};
+        var tabla6_tipo4 = ${tabla6_tipo4};
         var ctx2 = $("#tipo-incidencias-dia").get(0).getContext("2d");
         var myChart2 = new Chart(ctx2, {
-            type: "line",
+            type: "bar",
             data: {
                 labels: ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sábado", "Domingo"],
                 datasets: [{
                     label: "Seguridad Pública",
-                    data: [17, 26, 14, 21, 25, 14, 18],
+                    data: tabla6_tipo1,
                     backgroundColor: "rgba(42, 157, 143, 1)",
                     fill: false
                 },
                     {
                         label: "Emergencia Médica",
-                        data: [22, 32, 18, 27, 31, 18, 23],
+                        data: tabla6_tipo2,
                         backgroundColor:"rgba(233, 196, 106, 1)",
                         fill: false
                     },
                     {
                         label: "Infraestructura y Servicios Públicos",
-                        data: [26, 39, 21, 32, 37, 22, 28],
+                        data: tabla6_tipo3,
                         backgroundColor: "rgba(38, 70, 83, 1)",
                         fill: false
                     },
                     {
                         label: "Otro",
-                        data: [13, 20, 11, 16, 18, 11, 14],
+                        data: tabla6_tipo4,
                         backgroundColor:"rgba(231, 111, 81, 1)",
                         fill: false
                     },
@@ -347,6 +369,7 @@
                 responsive: true
             }
         });
+
         var tabla1 = ${tabla1};
         var tabla2 = ${tabla2};
         var tabla3 = ${tabla3};
@@ -466,6 +489,7 @@
         });
 
         // Tipos de incidencias - Chart
+
         var ctx7 = $("#type-incidents-urb-bar").get(0).getContext("2d");
         var myChart7 = new Chart(ctx7, {
             type: "bar",
@@ -497,7 +521,54 @@
                 responsive: true
             }
         });
+
+
+
+        var tabla6_tipo1_mes = ${tabla6_tipo1_mes};
+        var tabla6_tipo2_mes = ${tabla6_tipo2_mes};
+        var tabla6_tipo3_mes = ${tabla6_tipo3_mes};
+        var tabla6_tipo4_mes = ${tabla6_tipo4_mes};
+        var ctx9 = $("#tipo-incidencias-mes").get(0).getContext("2d");
+        var myChart9 = new Chart(ctx9, {
+            type: "bar",
+            data: {
+                labels: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio","Agosto","Setiembre", "Octubre", "Noviembre","Diciembre"],
+                datasets: [{
+                    label: "Seguridad Pública",
+                    data: tabla6_tipo1_mes,
+                    backgroundColor: "rgba(42, 157, 143, 1)",
+                    fill: false
+                },
+                    {
+                        label: "Emergencia Médica",
+                        data: tabla6_tipo2_mes,
+                        backgroundColor:"rgba(233, 196, 106, 1)",
+                        fill: false
+                    },
+                    {
+                        label: "Infraestructura y Servicios Públicos",
+                        data: tabla6_tipo3_mes,
+                        backgroundColor: "rgba(38, 70, 83, 1)",
+                        fill: false
+                    },
+                    {
+                        label: "Otro",
+                        data: tabla6_tipo4_mes,
+                        backgroundColor:"rgba(231, 111, 81, 1)",
+                        fill: false
+                    },
+
+                ]
+            },
+            options: {
+                responsive: true
+            }
+        });
+
+
+
     })(jQuery);
+
 
 
 </script>

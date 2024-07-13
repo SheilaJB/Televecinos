@@ -4,6 +4,7 @@ import java.io.InputStream;
 
 public class IncidenciasB {
     private int idIncidencias;
+    private  int idPag;
     private String nombreIncidencia;
     private String lugarExacto;
     private String referencia;
@@ -19,6 +20,13 @@ public class IncidenciasB {
     private int tipoMovilidadRequerido;
     private int personalRequerido;
     private String movilidadRequeridoStr;
+    public int getIdPag() {
+        return idPag;
+    }
+
+    public void setIdPag(int idPag) {
+        this.idPag = idPag;
+    }
 
     public String getMovilidadRequeridoStr() {
         return movilidadRequeridoStr;

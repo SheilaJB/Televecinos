@@ -10,34 +10,55 @@ public class IncidenCoordDao extends BaseDao{
 
     //Lista de incidencias
     public ArrayList<IncidenciasB> listarIncidencia(int userId) {
-
         String setLocaleSql = "SET lc_time_names = 'es_ES'";
+        String sqlSetRowNumber = "SET @row_number = 0";
+        String sqlSetTotalRows = "SET @total_rows = (SELECT COUNT(*) FROM incidencias WHERE borrado = FALSE AND Usuario_idUsuario = ?)";
+        String sqlSetNumPartitions = "SET @num_partitions = FLOOR((@total_rows + 4) / 5)";
         String sql = "SELECT " +
-                "    i.idIncidencias AS 'ID Incidencia', " +
-                "    i.nombreIncidencia AS 'Nombre', " +
-                "    DATE_FORMAT(i.fecha, '%d %M') AS 'Fecha', " +
-                "    TIME_FORMAT(i.fecha, '%H:%i') AS 'Hora', " +
-                "    ti.TipoIncidencia AS 'Tipo de Incidencia', " +
-                "    ei.estado AS 'Estado Incidencia' " +
+                "(@row_number := @row_number + 1) AS row_num, " +
+                "CEILING(@row_number / 5) AS 'pag', " +
+                "i.idIncidencias AS 'ID Incidencia', " +
+                "i.nombreIncidencia AS 'Nombre', " +
+                "DATE_FORMAT(i.fecha, '%d %M %Y') AS 'Fecha', " +
+                "TIME_FORMAT(i.fecha, '%H:%i') AS 'Hora', " +
+                "ti.TipoIncidencia AS 'Tipo de Incidencia', " +
+                "ei.estado AS 'Estado Incidencia' " +
                 "FROM " +
-                "    incidencias i " +
+                "incidencias i " +
                 "JOIN tipoincidencia ti ON i.TipoIncidencia_idTipoIncidencia = ti.idTipoIncidencia " +
                 "JOIN estadosincidencia ei ON i.EstadosIncidencia_idEstadosIncidencia = ei.idEstadosIncidencia " +
                 "WHERE " +
-                "    i.borrado = FALSE AND i.Usuario_idUsuario = ? " +
+                "i.borrado = FALSE AND i.Usuario_idUsuario = ? " +
                 "ORDER BY " +
-                "    i.fecha DESC " +
-                "LIMIT 6;";
+                "i.fecha DESC";
 
         ArrayList<IncidenciasB> listaIncidencia = new ArrayList<>();
 
         try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement();
+             PreparedStatement pstmtTotalRows = conn.prepareStatement(sqlSetTotalRows);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.execute(setLocaleSql);
+
+            // Establecer el idioma de las fechas en español
+            stmt.execute(setLocaleSql);
+
+            // Inicializar la variable de sesión para el número de fila
+            stmt.execute(sqlSetRowNumber);
+
+            // Asignar el parámetro y ejecutar la sentencia para obtener el total de filas
+            pstmtTotalRows.setInt(1, userId);
+            pstmtTotalRows.execute();
+
+            // Ejecutar la sentencia para calcular el número de particiones
+            stmt.execute(sqlSetNumPartitions);
+
+            // Asignar el parámetro y ejecutar la consulta principal
             pstmt.setInt(1, userId);
+
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
                     IncidenciasB incidencia = new IncidenciasB();
+                    incidencia.setIdPag(rs.getInt("pag"));
                     incidencia.setIdIncidencias(rs.getInt("ID Incidencia"));
                     incidencia.setNombreIncidencia(rs.getString("Nombre"));
                     incidencia.setFecha(rs.getString("Fecha"));
@@ -172,35 +193,117 @@ public class IncidenCoordDao extends BaseDao{
 
 
     //Buscar incidencia por filtro
-    public ArrayList<IncidenciasB> listarIncidenciasFiltro(String nombre, String fecha, String tipo, String estado, int userId) {
+    public ArrayList<IncidenciasB> listarIncidenciasFiltro(String nombre, String fecha, String tipo, String estado, int userId, int pagina) {
+        String sqlSetLanguage = "SET lc_time_names = 'es_ES';";
+        String sqlSetTotalRows = "SET @total_rows = (SELECT COUNT(*) FROM incidencias i " +
+                "JOIN tipoincidencia ti ON i.TipoIncidencia_idTipoIncidencia = ti.idTipoIncidencia " +
+                "JOIN estadosincidencia ei ON i.EstadosIncidencia_idEstadosIncidencia = ei.idEstadosIncidencia " +
+                "WHERE i.borrado = FALSE AND i.Usuario_idUsuario = ? AND i.nombreIncidencia LIKE ? " +
+                (fecha != null && !fecha.isEmpty() ? "AND DATE(i.fecha) = ? " : "") +
+                (tipo != null && !tipo.isEmpty() ? "AND i.TipoIncidencia_idTipoIncidencia = ? " : "") +
+                (estado != null && !estado.isEmpty() ? "AND ei.idEstadosIncidencia = ? " : "") +
+                ");";
+        String sqlSetNumPartitions = "SET @num_partitions = FLOOR((@total_rows + 4) / 5);"; // Ajustado para calcular el número de particiones
+
         String sql = "SELECT " +
-                "i.idIncidencias AS 'ID Incidencia', " +
-                "i.nombreIncidencia AS 'Nombre', " +
-                "DATE_FORMAT(i.fecha, '%d %M %Y') AS 'Fecha', " +
-                "TIME_FORMAT(i.fecha, '%H:%i') AS 'Hora', " +
-                "ti.TipoIncidencia AS 'Tipo de Incidencia', " +
-                "ei.estado AS 'Estado Incidencia' " +
+                "    (@row_number := @row_number + 1) AS row_num, " +
+                "    CEILING(@row_number / 5) AS 'pag', " +
+                "    i.idIncidencias AS 'ID Incidencia', " +
+                "    i.nombreIncidencia AS 'Nombre', " +
+                "    DATE_FORMAT(i.fecha, '%d %M %Y') AS 'Fecha', " +
+                "    TIME_FORMAT(i.fecha, '%H:%i') AS 'Hora', " +
+                "    ti.TipoIncidencia AS 'Tipo de Incidencia', " +
+                "    ei.estado AS 'Estado Incidencia' " +
                 "FROM incidencias i " +
                 "JOIN tipoincidencia ti ON i.TipoIncidencia_idTipoIncidencia = ti.idTipoIncidencia " +
                 "JOIN estadosincidencia ei ON i.EstadosIncidencia_idEstadosIncidencia = ei.idEstadosIncidencia " +
-                "WHERE i.borrado = FALSE AND i.Usuario_idUsuario = ? AND i.nombreIncidencia LIKE ?";
+                "WHERE i.borrado = FALSE AND i.Usuario_idUsuario = ? AND i.nombreIncidencia LIKE ? " +
+                (fecha != null && !fecha.isEmpty() ? "AND DATE(i.fecha) = ? " : "") +
+                (tipo != null && !tipo.isEmpty() ? "AND i.TipoIncidencia_idTipoIncidencia = ? " : "") +
+                (estado != null && !estado.isEmpty() ? "AND ei.idEstadosIncidencia = ? " : "") +
+                "ORDER BY i.fecha DESC;";
 
         ArrayList<IncidenciasB> incidencias = new ArrayList<>();
         List<Object> parametros = new ArrayList<>();
         parametros.add(userId);
         parametros.add(nombre + "%");
-
-        // Agregar los filtros adicionales
         if (fecha != null && !fecha.isEmpty()) {
-            sql += " AND DATE(i.fecha) = ?";
             parametros.add(fecha);
         }
         if (tipo != null && !tipo.isEmpty()) {
-            sql += " AND i.TipoIncidencia_idTipoIncidencia = ?";
             parametros.add(tipo);
         }
         if (estado != null && !estado.isEmpty()) {
-            sql += " AND ei.idEstadosIncidencia = ?";
+            parametros.add(estado);
+        }
+
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement();
+             PreparedStatement pstmtTotalRows = conn.prepareStatement(sqlSetTotalRows);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            // Ejecutar la sentencia para establecer el idioma de las fechas en español
+            stmt.execute(sqlSetLanguage);
+
+            // Asignar los parámetros para el total de filas
+            for (int i = 0; i < parametros.size(); i++) {
+                pstmtTotalRows.setObject(i + 1, parametros.get(i));
+            }
+            pstmtTotalRows.execute();
+
+            // Ejecutar la sentencia para calcular el número de particiones
+            stmt.execute(sqlSetNumPartitions);
+
+            // Inicializar la variable de sesión para el número de fila
+            stmt.execute("SET @row_number = 0;");
+
+            // Asignar los parámetros al PreparedStatement principal
+            for (int i = 0; i < parametros.size(); i++) {
+                pstmt.setObject(i + 1, parametros.get(i));
+            }
+
+            // Ejecutar la consulta principal
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    if (rs.getInt("pag") == pagina) {
+                        IncidenciasB incidencia = new IncidenciasB();
+                        incidencia.setIdIncidencias(rs.getInt("ID Incidencia"));
+                        incidencia.setNombreIncidencia(rs.getString("Nombre"));
+                        incidencia.setFecha(rs.getString("Fecha"));
+                        incidencia.setHora(rs.getString("Hora"));
+                        incidencia.setTipoIncidencia(rs.getString("Tipo de Incidencia"));
+                        incidencia.setEstadoIncidencia(rs.getString("Estado Incidencia"));
+                        incidencias.add(incidencia);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al listar incidencias filtradas", e);
+        }
+        return incidencias;
+    }
+
+
+
+    public int contarIncidenciasFiltradas(String nombre, String fecha, String tipo, String estado, int userId) {
+        String sql = "SELECT COUNT(*) AS total FROM incidencias i " +
+                "JOIN tipoincidencia ti ON i.TipoIncidencia_idTipoIncidencia = ti.idTipoIncidencia " +
+                "JOIN estadosincidencia ei ON i.EstadosIncidencia_idEstadosIncidencia = ei.idEstadosIncidencia " +
+                "WHERE i.borrado = FALSE AND i.Usuario_idUsuario = ? AND i.nombreIncidencia LIKE ? " +
+                (fecha != null && !fecha.isEmpty() ? "AND DATE(i.fecha) = ? " : "") +
+                (tipo != null && !tipo.isEmpty() ? "AND i.TipoIncidencia_idTipoIncidencia = ? " : "") +
+                (estado != null && !estado.isEmpty() ? "AND ei.idEstadosIncidencia = ? " : "");
+
+        List<Object> parametros = new ArrayList<>();
+        parametros.add(userId);
+        parametros.add(nombre + "%");
+        if (fecha != null && !fecha.isEmpty()) {
+            parametros.add(fecha);
+        }
+        if (tipo != null && !tipo.isEmpty()) {
+            parametros.add(tipo);
+        }
+        if (estado != null && !estado.isEmpty()) {
             parametros.add(estado);
         }
 
@@ -213,22 +316,14 @@ public class IncidenCoordDao extends BaseDao{
             }
 
             try (ResultSet rs = pstmt.executeQuery()) {
-                while (rs.next()) {
-                    IncidenciasB incidencia = new IncidenciasB();
-                    incidencia.setIdIncidencias(rs.getInt("ID Incidencia"));
-                    incidencia.setNombreIncidencia(rs.getString("Nombre"));
-                    incidencia.setFecha(rs.getString("Fecha"));
-                    incidencia.setHora(rs.getString("Hora"));
-                    incidencia.setTipoIncidencia(rs.getString("Tipo de Incidencia"));
-                    incidencia.setEstadoIncidencia(rs.getString("Estado Incidencia"));
-                    incidencias.add(incidencia);
+                if (rs.next()) {
+                    return rs.getInt("total");
                 }
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Error al listar incidencias filtradas", e);
+            throw new RuntimeException("Error al contar incidencias filtradas", e);
         }
-
-        return incidencias;
+        return 0;
     }
 
 
