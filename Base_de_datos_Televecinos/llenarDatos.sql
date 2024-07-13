@@ -226,7 +226,11 @@ INSERT INTO `televecinosDB`.`Incidencias` (
 ('Accidente de Tránsito', '2024-01-03 14:00:00', 'Jirón Pescadores 123',5, 'Intersección con Av. La Marina', 'foto_3.jpg', 1, '987654323', null, 3, 3, 3, 8, 0),
 ('Incendio', '2024-01-04 15:00:00', 'Calle Bolognesi 456',7, 'Edificio Residencial', 'foto_4.jpg', 1, '987654324', 1, 4, 4, 3, 7, 0),
 ('Asalto', '2024-01-08 19:00:00', 'Av. Faucett 103',10, 'Cerca de la escuela', 'foto_8.jpg', 1, '987654328', null, 4,3, 3, 4, 0),
-('Emergencia Médica', '2024-01-10 16:00:00', 'Av. Bertolotto 789',4, 'Cerca del Hospital San José', 'foto_5.jpg', 0, '987654325', null, 1, 3, 2, 2, 1);
+('Emergencia Médica', '2024-07-11 16:00:00', 'Av. Bertolotto 789',4, 'Cerca del Hospital San José', 'foto_5.jpg', 0, '987654325', null, 1, 3, 2, 2, 1),
+('Emergencia Médica', '2024-02-14 16:00:00', 'Av. Bertolotto 789',4, 'Cerca del Hospital San José', 'foto_5.jpg', 0, '987654325', null, 1, 3, 2, 2, 1),
+('Emergencia Médica', '2024-03-12 16:00:00', 'Av. Bertolotto 789',4, 'Cerca del Hospital San José', 'foto_5.jpg', 0, '987654325', null, 2, 3, 2, 2, 1);
+
+
 
 -- Ingreso de incidencia en curso
 INSERT INTO `televecinosDB`.`Incidencias` (
@@ -276,5 +280,5 @@ INSERT INTO `televecinosDB`.`Incidencias` (
   `tipoMovilidadRequerido`,
   `nombreFoto`
 ) VALUES
-('Emergencia Médica', '2024-01-05 16:00:00', 'Av. Bertolotto 789',9, 'Cerca del Hospital San José', 'foto_5.jpg', 0, '987654325', 2, 1, 5, 2, 6, 1,'solucion',2,'María Perez',2,'');
+('Emergencia Médica', '2024-09-25 16:00:00', 'Av. Bertolotto 789',9, 'Cerca del Hospital San José', 'foto_5.jpg', 0, '987654325', 2, 1, 5, 2, 6, 1,'solucion',2,'María Perez',2,'');
 
