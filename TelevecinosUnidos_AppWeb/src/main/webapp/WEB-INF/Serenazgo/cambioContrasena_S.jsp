@@ -101,7 +101,7 @@
             opacity: 0.8;
         }
 
-        .text-muted {
+        .text-mutedd {
             font-size: 12px;
             color: #ff0000;
             font-weight: bold;
@@ -169,7 +169,7 @@
                             <input type="password" class="form-control" id="confirmarContrasena" name="confirmarContrasena" required>
                         </div>
                         <div class="mb-3">
-                            <small class="text-muted">Recuerda que tu nueva contraseña debe contener 8 caracteres como mínimo, incluir al menos un número y una letra, sin espacios vacíos ni caracteres especiales.</small>
+                            <small class="text-mutedd">Recuerda que tu nueva contraseña debe contener 8 caracteres como mínimo, incluir al menos un número y una letra, sin espacios vacíos ni caracteres especiales.</small>
                         </div>
                         <button type="submit" class="button alert-success">Guardar Cambios</button>
                     </form>

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class SolicitanteDao extends BaseDao {
     public ArrayList<UsuarioB> listarSolicitantes() {
 
-        String sql = "SELECT idUsuario,nombre,apellido,dni,direccion,correo\n" +
+        String sql = "SELECT idUsuario,nombre,apellido,dni,direccion,correo,genero\n" +
                 "FROM televecinosdb.usuario \n" +
                 "where Rol_idRol = 1 and isBan=0 \n" +
                 "ORDER BY idUsuario desc";
@@ -32,6 +32,7 @@ public class SolicitanteDao extends BaseDao {
                 usuarioB.setDni(rs.getString(4));
                 usuarioB.setDireccion(rs.getString(5));
                 usuarioB.setCorreo(rs.getString(6));
+                usuarioB.setGenero(rs.getInt("genero"));
 
 
                 listaSolicitantes.add(usuarioB);
@@ -122,6 +123,7 @@ public class SolicitanteDao extends BaseDao {
                     usuarioB.setDni(rs.getString(4));
                     usuarioB.setDireccion(rs.getString(5));
                     usuarioB.setCorreo(rs.getString(6));
+                    usuarioB.setGenero(rs.getInt("genero"));
 
                 }
 
@@ -135,7 +137,7 @@ public class SolicitanteDao extends BaseDao {
 
     public ArrayList<UsuarioB> listarSolicitantesPorNombre(String textoBuscar) {
 
-        String sql = "SELECT idUsuario,nombre,apellido,dni,direccion,correo\n" +
+        String sql = "SELECT idUsuario,nombre,apellido,dni,direccion,correo.genero\n" +
                 "FROM televecinosdb.usuario \n" +
                 "where Rol_idRol = 1 and isBan=0 and (usuario.nombre like ? or usuario.apellido like ? or usuario.dni like ?)" +
                 "ORDER BY idUsuario desc";
@@ -158,6 +160,7 @@ public class SolicitanteDao extends BaseDao {
                     usuarioB.setDni(rs.getString(4));
                     usuarioB.setDireccion(rs.getString(5));
                     usuarioB.setCorreo(rs.getString(6));
+                    usuarioB.setGenero(rs.getInt("genero"));
 
 
                     listaSolicitantes.add(usuarioB);

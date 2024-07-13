@@ -115,7 +115,12 @@
         <div class="container-fluid d-flex justify-content-center align-items-center vh-100">
 
             <div class="container text-center">
-                <img src="img/coordinadora.jpg" class="img-fluid mb-3" alt="Responsive image" width="200">
+                <%if(usuarioLogueado.getGenero()==1){%>
+                    <img src="img/coordinador.jpg" class="img-fluid mb-3" alt="Responsive image" width="200">
+                <%}else{%>
+                    <img src="img/coordinadora.jpg" class="img-fluid mb-3" alt="Responsive image" width="200">
+                <%}%>
+
                 <%if(usuarioLogueado.getTipoCoordinador_idTipoCoordinador() == 1){%>
                 <div class="bar" data-label="Tipo de cordinadora">Coordinadora de cultura</div>
                 <%}%>

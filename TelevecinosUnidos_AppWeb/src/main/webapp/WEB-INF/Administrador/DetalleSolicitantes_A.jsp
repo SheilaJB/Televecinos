@@ -139,7 +139,12 @@
 
 
             <div class="container text-center">
-                <img src="img/vecino.jpg" class="img-fluid mb-3" alt="Responsive image" width="200">
+                <%if(vecino.getGenero()==1){%>
+                    <img src="img/user.jpg" class="img-fluid mb-3" alt="Responsive image" width="200">
+                <%}else{%>
+                    <img src="img/user.png" class="img-fluid mb-3" alt="Responsive image" width="200">
+                <%}%>
+
                 <div class="bar" data-label="ID"><%=vecino.getIdUsuario()%></div>
                 <div class="bar" data-label="Nombre"><%=vecino.getNombre()%></div>
                 <div class="bar" data-label="Apellido"><%=vecino.getApellido()%></div>

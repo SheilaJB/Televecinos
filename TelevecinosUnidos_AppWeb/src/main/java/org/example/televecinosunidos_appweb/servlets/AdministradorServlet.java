@@ -250,9 +250,7 @@ public class AdministradorServlet extends HttpServlet {
                 if (solicitanteDao.obtenerSolicitante(solicitanteId) != null) {
                     try {
                         solicitanteDao.aceptarSolicitud(solicitanteId);
-                        HttpSession httpSession = request.getSession();
-                        httpSession.setAttribute("msg", "Solicitud aprobada exitosamente");
-                        response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=nuevasSolicitudes_A");
+                        response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=nuevasSolicitudes_A&success=" + URLEncoder.encode("El solicitante ha sido aceptado exitosamente",StandardCharsets.UTF_8.toString()));
                     } catch (SQLException | NoSuchAlgorithmException e) {
                         response.sendRedirect(request.getContextPath() + "/AdministradorServlet?err=Error al aprobar solicitud");
                     }
@@ -263,9 +261,7 @@ public class AdministradorServlet extends HttpServlet {
                 if (solicitanteDao.obtenerSolicitante(solicitanteId2) != null) {
                     try {
                         solicitanteDao.denegarSolicitud(solicitanteId2);
-                        HttpSession httpSession = request.getSession();
-                        httpSession.setAttribute("msg","Solicitud denegada exitosamente");
-                        response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=nuevasSolicitudes_A");
+                        response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=nuevasSolicitudes_A&successDenegacion=" + URLEncoder.encode("Solicitud denegada exitosamente",StandardCharsets.UTF_8.toString()));
                     } catch (SQLException e) {
                         response.sendRedirect(request.getContextPath() + "/AdministradorServlet?err=Error al denegadar solicitud");
                     }
@@ -342,9 +338,7 @@ public class AdministradorServlet extends HttpServlet {
                 if (usuarioDao.obtenerUsuario(vecinoId) != null) {
                     try {
                         vecinoDao.promoverACoordinadorCultura(vecinoId);
-                        HttpSession httpSession = request.getSession();
-                        httpSession.setAttribute("msg","Vecino promovido exitosomente");
-                        response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=listaVecinos_A");
+                        response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=listaVecinos_A&success=" + URLEncoder.encode("Ha sido promovido exitosamente",StandardCharsets.UTF_8.toString()));
                     } catch (SQLException e) {
                         response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=listaVecinos_A&err=Error al promover");
                     }
@@ -356,9 +350,7 @@ public class AdministradorServlet extends HttpServlet {
                 if (usuarioDao.obtenerUsuario(vecinoId) != null) {
                     try {
                         vecinoDao.promoverACoordinadorDeportes(vecinoId);
-                        HttpSession httpSession = request.getSession();
-                        httpSession.setAttribute("msg","Vecino promovido exitosomente");
-                        response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=listaVecinos_A");
+                        response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=listaVecinos_A&success=" + URLEncoder.encode("Ha sido promovido exitosamente",StandardCharsets.UTF_8.toString()));
                     } catch (SQLException e) {
                         response.sendRedirect(request.getContextPath() + "/AdministradorServlet?action=listaVecinos_A&err=Error al promover");
                     }

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class VecinoDao extends BaseDao{
     public ArrayList<UsuarioB> listarVecinos() {
 
-        String sql = "SELECT idUsuario,nombre,apellido,dni,direccion,correo,cantidadIncidenciasFalsas\n" +
+        String sql = "SELECT idUsuario,nombre,apellido,dni,direccion,correo,cantidadIncidenciasFalsas,genero\n" +
                 "FROM televecinosdb.usuario \n" +
                 "where Rol_idRol = 2 and isBan=0 \n" +
                 "order by usuario.idUsuario desc;";
@@ -31,7 +31,7 @@ public class VecinoDao extends BaseDao{
                 usuarioB.setDireccion(rs.getString(5));
                 usuarioB.setCorreo(rs.getString(6));
                 usuarioB.setCantidadIncidenciasFalsas(rs.getInt(7));
-
+                usuarioB.setGenero(rs.getInt("genero"));
                 listaVecinos.add(usuarioB);
             }
 
@@ -64,6 +64,7 @@ public class VecinoDao extends BaseDao{
                     usuarioB.setDni(rs.getString(4));
                     usuarioB.setDireccion(rs.getString(5));
                     usuarioB.setCorreo(rs.getString(6));
+                    usuarioB.setGenero(rs.getInt("genero"));
 
                 }
 
@@ -158,7 +159,7 @@ public class VecinoDao extends BaseDao{
 
 
     public ArrayList<UsuarioB> buscarVecinoPorNombre(String textoBuscar) {
-        String sql = "SELECT idUsuario, nombre, apellido, dni, direccion, correo,cantidadIncidenciasFalsas " +
+        String sql = "SELECT idUsuario, nombre, apellido, dni, direccion, correo,cantidadIncidenciasFalsas,genero " +
                 "FROM televecinosdb.usuario " +
                 "WHERE Rol_idRol = 2 AND isBan = 0 AND (nombre LIKE ? OR apellido LIKE ? OR dni LIKE ?)\n" +
                 "order by idUsuario desc;";
@@ -181,7 +182,7 @@ public class VecinoDao extends BaseDao{
                     usuarioB.setDireccion(rs.getString(5));
                     usuarioB.setCorreo(rs.getString(6));
                     usuarioB.setCantidadIncidenciasFalsas(rs.getInt(7));
-
+                    usuarioB.setGenero(rs.getInt("genero"));
 
                     listaVecinos.add(usuarioB);
                 }

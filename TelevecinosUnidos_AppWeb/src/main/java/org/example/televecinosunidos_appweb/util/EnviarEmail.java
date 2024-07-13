@@ -96,8 +96,8 @@ public class EnviarEmail {
 
 
             String contenidoCorreo  = "Estimado/a " + nombreVecino + "\n" +
-                    "Nos complace informarle que ha sido seleccionado/a para asumir el rol de Coordinador en nuestra plataforma. Esta asignación refleja nuestra confianza en sus habilidades y en su capacidad para contribuir positivamente a nuestra comunidad.\n" +
-                    "Como Coordinador, tendrá acceso a funciones adicionales que le permitirán gestionar y supervisar diversas actividades dentro de la plataforma. Su nuevo rol será fundamental para mantener el buen funcionamiento y la seguridad de nuestra comunidad.\n" +
+                    "Nos complace informarle que ha sido seleccionado/a para asumir el rol de Coordinador/a en nuestra plataforma. Esta asignación refleja nuestra confianza en sus habilidades y en su capacidad para contribuir positivamente a nuestra comunidad.\n" +
+                    "Como Coordinador/a, tendrá acceso a funciones adicionales que le permitirán gestionar y supervisar diversas actividades dentro de la plataforma. Su nuevo rol será fundamental para mantener el buen funcionamiento y la seguridad de nuestra comunidad.\n" +
                     "Si tiene alguna pregunta o necesita asistencia relacionada con sus nuevas responsabilidades, no dude en ponerse en contacto con nosotros. Estaremos encantados de ayudarle en lo que necesite.\n" +
                     "Gracias por su compromiso y dedicación continuos. Estamos seguros de que hará una contribución significativa en su nuevo rol.\n" +
                     "Atentamente,\n" +
