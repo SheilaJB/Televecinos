@@ -134,47 +134,6 @@
             </div>
         </div>
 
-        <!-- Imagen de bienvenida -->
-
-        <!--
-        <div class="text-center">
-            <img src="<%= request.getContextPath() %>/img/fondoPantalla.png" alt="Bienvenida Vecino" class="img-fluid blur-image" style="margin-bottom: 10px">
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 mb-4"> <section id="Titulo_Incidencias" class="card">
-                    <div class="card-body">
-                        <header>
-                            <h2 class="card-title">¡Puedes reportar incidencias en tu comunidad!</h2>
-                        </header>
-                        <article>
-                            <p>¿Ves algún problema en tu vecindario? Repórtalo a la Municipalidad de San Miguel para que podamos solucionarlo juntos. Tu participación es clave para mantener nuestra comunidad segura y en buen estado.</p>
-                        </article>
-                        <footer>
-                            <button class="btn btn-success btn-block" onclick="window.location.href='<%=request.getContextPath()%>/VecinoServlet?action=listarIncidencia'">Ver Incidencias</button>
-                            <h6 class="mt-2">¿Has reportado alguna incidencia? <a href="<%=request.getContextPath()%>/VecinoServlet?action=crearIncidencia">Registra tu incidencia aquí</a>.</h6>
-                        </footer>
-                    </div>
-                </section>
-                </div>
-                <div class="col-md-6 mb-4"> <section id="Titulo_Eventos" class="card">
-                    <div class="card-body">
-                        <header>
-                            <h2 class="card-title">¡No te pierdas nuestros eventos de cultura y deporte!</h2>
-                        </header>
-                        <article>
-                            <p>La Municipalidad de San Miguel te invita a participar en una variedad de eventos emocionantes. ¡Encuentra actividades para toda la familia y descubre nuevas formas de conectar con tu comunidad!</p>
-                        </article>
-                        <footer>
-                            <button class="btn btn-success btn-block" onclick="window.location.href='<%=request.getContextPath()%>/VecinoServlet?action=verEventos'">Explorar Eventos</button>
-                            <h6 class="mt-2">¿Ya te inscribiste? <a href="<%=request.getContextPath()%>/VecinoServlet?action=eventosInscritos">Revisa tus eventos aquí</a>.</h6>
-                        </footer>
-                    </div>
-                </section>
-                </div>
-            </div>
-        </div>
-        -->
         <!-- Eventos próximos-->
         <div id="Eventos Recientes">
             <!-- Recent Sales Start -->
