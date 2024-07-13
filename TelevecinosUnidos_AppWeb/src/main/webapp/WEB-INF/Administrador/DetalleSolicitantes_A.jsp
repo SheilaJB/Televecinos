@@ -145,12 +145,12 @@
                     <img src="img/user.png" class="img-fluid mb-3" alt="Responsive image" width="200">
                 <%}%>
 
-                <div class="bar" data-label="ID"><%=vecino.getIdUsuario()%></div>
                 <div class="bar" data-label="Nombre"><%=vecino.getNombre()%></div>
                 <div class="bar" data-label="Apellido"><%=vecino.getApellido()%></div>
                 <div class="bar" data-label="DNI"><%=vecino.getDni()%></div>
                 <div class="bar" data-label="Dirección"><%=vecino.getDireccion()%></div>
                 <div class="bar" data-label="Correo"><%=vecino.getCorreo()%></div>
+                <div class="bar" data-label="urbanizacion"><%=vecino.getUrbanizacionString()%></div>
                 <a href="<%=request.getContextPath()%>/AdministradorServlet?action=nuevasSolicitudes_A"><button class="button regresar">Regresar</button></a>
 
 

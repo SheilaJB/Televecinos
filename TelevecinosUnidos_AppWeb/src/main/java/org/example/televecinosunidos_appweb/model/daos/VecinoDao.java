@@ -45,9 +45,10 @@ public class VecinoDao extends BaseDao{
 
     public UsuarioB buscarVecinoPorId(String idVecino) {
         UsuarioB usuarioB = new UsuarioB();
-        String sql = "SELECT * \n" +
-                "FROM televecinosdb.usuario \n" +
-                "WHERE idUsuario=?;";
+        String sql = "SELECT u.*,ur.nombre AS 'urb'\n" +
+                "FROM televecinosdb.usuario u\n" +
+                "INNER JOIN televecinosdb.urbanizacion ur ON u.urbanizacion_idUrbanizacion = ur.idUrbanizacion\n" +
+                "WHERE u.idUsuario = ?;";
 
 
         try (Connection conn = getConnection();
@@ -65,7 +66,7 @@ public class VecinoDao extends BaseDao{
                     usuarioB.setDireccion(rs.getString(5));
                     usuarioB.setCorreo(rs.getString(6));
                     usuarioB.setGenero(rs.getInt("genero"));
-
+                    usuarioB.setUrbanizacionString(rs.getString("urb"));
                 }
 
             }

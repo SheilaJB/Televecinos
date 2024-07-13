@@ -70,9 +70,10 @@ public class CoordinadoraDao extends BaseDao{
 
     public UsuarioB buscarCoordinadoraPorId(String idCoordinadora) {
         UsuarioB usuarioB = new UsuarioB();
-        String sql = "SELECT * \n" +
-                "FROM televecinosdb.usuario \n" +
-                "WHERE idUsuario=?;";
+        String sql = "SELECT u.*,ur.nombre AS 'urb'\n" +
+                "FROM televecinosdb.usuario u\n" +
+                "INNER JOIN televecinosdb.urbanizacion ur ON u.urbanizacion_idUrbanizacion = ur.idUrbanizacion\n" +
+                "WHERE u.idUsuario = ?;";
 
 
         try (Connection conn = getConnection();
@@ -91,6 +92,7 @@ public class CoordinadoraDao extends BaseDao{
                     usuarioB.setCorreo(rs.getString(6));
                     usuarioB.setTipoCoordinador_idTipoCoordinador(rs.getInt(8));
                     usuarioB.setGenero(rs.getInt("genero"));
+                    usuarioB.setUrbanizacionString(rs.getString("urb"));
                 }
 
             }
