@@ -1,6 +1,7 @@
 package org.example.televecinosunidos_appweb.model.daos;
 
 
+import org.example.televecinosunidos_appweb.model.beans.AsistenciaCoordB;
 import org.example.televecinosunidos_appweb.model.beans.EventoB;
 import org.example.televecinosunidos_appweb.model.beans.ProfesoresEvento;
 
@@ -936,7 +937,31 @@ public class EventoDao extends BaseDao{
         }
 
     }
+    public ArrayList<AsistenciaCoordB> listarFechasEvento(int idEvento) {
+        ArrayList<AsistenciaCoordB> listaFechasEvento = new ArrayList<>();
+        String sql = "SELECT a.*, e.nombre FROM asistenciaCoordinadora AS a JOIN eventos AS e ON a.eventos_idEventos = e.idEventos WHERE a.eventos_idEventos = ?";
 
+        try (Connection conn = this.getConnection();
+             Statement stmt = conn.createStatement();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, idEvento);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    AsistenciaCoordB asistenciaCoordB = new AsistenciaCoordB();
+                    asistenciaCoordB.setIdAsistenciaCoordinadora(rs.getInt("idAsistenciaCoordinadora"));
+                    asistenciaCoordB.setIdEvento(rs.getInt("eventos_idEventos"));
+                    asistenciaCoordB.setFechaEvento(rs.getString("fecha_evento"));
+                    asistenciaCoordB.setHora_inicio(rs.getString("hora_inicio"));
+                    asistenciaCoordB.setHora_fin(rs.getString("hora_fin"));
+                    listaFechasEvento.add(asistenciaCoordB);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al obtener eventos inscritos: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return listaFechasEvento;
+    }
 
 
     public ArrayList<EventoB> obtenerEventosInscritos(int userId) {

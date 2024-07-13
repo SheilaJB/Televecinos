@@ -4,10 +4,7 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
-import org.example.televecinosunidos_appweb.model.beans.EventoB;
-import org.example.televecinosunidos_appweb.model.beans.IncidenciasB;
-import org.example.televecinosunidos_appweb.model.beans.ProfesoresEvento;
-import org.example.televecinosunidos_appweb.model.beans.UsuarioB;
+import org.example.televecinosunidos_appweb.model.beans.*;
 import org.example.televecinosunidos_appweb.model.daos.EventoDao;
 import org.example.televecinosunidos_appweb.model.daos.IncidenCoordDao;
 
@@ -178,6 +175,13 @@ public class CoordinadorServlet extends HttpServlet {
             //Preguntas Frecuentes
             case "preguntasFrecuentesC":
                 vista = "WEB-INF/Coordinadora/preguntasFrecuentes_C.jsp";
+                request.getRequestDispatcher(vista).forward(request, response);
+                break;
+            case "asistencia":
+                int idEventoX = Integer.parseInt(request.getParameter("idEventoX"));
+                ArrayList<AsistenciaCoordB> listaFechasEvento = eventoDao.listarFechasEvento(idEventoX);
+                request.setAttribute("listaFechasEvento",listaFechasEvento);
+                vista = "WEB-INF/Coordinadora/listaFechasEvento_C.jsp";
                 request.getRequestDispatcher(vista).forward(request, response);
                 break;
             default:
