@@ -59,6 +59,47 @@
             cursor: pointer;
             color: rgb(0, 0, 0);
         }
+        /* Estilos para la tabla */
+        .custom-table {
+            background-color: #ffffff;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 20px;
+        }
+        .custom-table th, .custom-table td {
+            border: 1px solid #dddddd;
+            padding: 8px 12px;
+            text-align: center;
+            vertical-align: middle;
+        }
+        .custom-table th {
+            background-color: #f8f9fa;
+            color: #333333;
+        }
+        .custom-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .custom-table tr:hover {
+            background-color: #e9ecef;
+        }
+
+        /* Estilos para los botones */
+        .btn-entrada {
+            background-color: #28a745;
+            color: white;
+        }
+        .btn-salida {
+            background-color: #dc3545;
+            color: white;
+        }
+        .btn-foto {
+            background-color: #17a2b8;
+            color: white;
+        }
+        .btn-entrada:hover, .btn-salida:hover, .btn-foto:hover {
+            opacity: 0.85;
+        }
     </style>
 </head>
 <body onload="mostrarOpciones()">
@@ -95,7 +136,7 @@
             <h3 style="text-align: left; margin-top:20px;margin-bottom:20px;padding: 20px"><%=listaFechas.get(1).getNombreEvento()%></h3>
         </div>
         <div class="table-responsive">
-            <table class="table" style="background-color: transparent;">
+            <table class="table custom-table">
                 <thead>
                 <tr>
                     <th scope="col">Fechas</th>
@@ -113,9 +154,9 @@
                     <td><%= asistenciaCoordB.getFechaEvento() %></td>
                     <td><%= asistenciaCoordB.getHora_inicio() %></td>
                     <td><%= asistenciaCoordB.getHora_fin() %></td>
-                    <td><button class="btn btn-secondary rounded-pill px-3" type="button">Hora de entrada</button></td>
-                    <td><button class="btn btn-secondary rounded-pill px-3" type="button">Hora de salida</button></td>
-                    <td><button class="btn btn-secondary rounded-pill px-3" type="button">Foto</button></td>
+                    <td><button class="btn btn-entrada rounded-pill px-3" type="button">Hora de entrada</button></td>
+                    <td><button class="btn btn-salida rounded-pill px-3" type="button">Hora de salida</button></td>
+                    <td><button class="btn btn-foto rounded-pill px-3" type="button">Foto</button></td>
                 </tr>
                 <% } %>
                 <% } %>
