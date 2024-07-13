@@ -149,11 +149,12 @@
                     <img src="img/coordinadora.jpg" class="img-fluid mb-3" alt="Responsive image" width="200">
                 <%}%>
 
-                <div class="bar" data-label="Tipo de cordinadora">Cultura</div>
+                <div class="bar" data-label="Tipo">Cultura</div>
                 <div class="bar" data-label="Nombre"><%=coordinadora.getNombre()%></div>
                 <div class="bar" data-label="Apellido"><%=coordinadora.getApellido()%></div>
                 <div class="bar" data-label="DNI"><%=coordinadora.getDni()%></div>
                 <div class="bar" data-label="Dirección"><%=coordinadora.getDireccion()%></div>
+                <div class="bar" data-label="Urbanizacion"><%=coordinadora.getUrbanizacionString()%></div>
                 <div class="bar" data-label="Correo"><%=coordinadora.getCorreo()%></div>
                 <a href="<%=request.getContextPath()%>/AdministradorServlet?action=listaCoordinadorasCultura_A"><button class="button regresar">Regresar</button></a>
                 <!--<a href="correoparaCoordA.html"><button  class="button enviar btn-success">Enviar correo</button></a>-->

@@ -37,8 +37,26 @@ public class SerenazgoServlet extends HttpServlet {
         String vista;
         switch (action) {
             case "listaIncidencias_S":
+                int paginaIncidenciasS = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
+                int incidenciasPorPaginaS = 5; // Número de incidencias por página
+
+                // Obtener la lista completa de incidencias
+                ArrayList<IncidenciasB> listaIncidenciasS = incidenciaDao.listarIncidencias();
+
+                // Calcular total de páginas
+                int totalIncidenciasS = listaIncidenciasS.size();
+                int totalPaginasIncidenciasS = (int) Math.ceil((double) totalIncidenciasS / incidenciasPorPaginaS);
+
+                // Obtener las incidencias de la página actual
+                int desdeIncidenciasS = (paginaIncidenciasS - 1) * incidenciasPorPaginaS;
+                int hastaIncidenciasS = Math.min(desdeIncidenciasS + incidenciasPorPaginaS, totalIncidenciasS);
+                ArrayList<IncidenciasB> incidenciasPaginadasS = new ArrayList<>(listaIncidenciasS.subList(desdeIncidenciasS, hastaIncidenciasS));
+
+                // Enviar atributos al JSP
                 vista = "WEB-INF/Serenazgo/listaIncidencias_S.jsp";
-                request.setAttribute("lista",incidenciaDao.listarIncidencias());
+                request.setAttribute("lista", incidenciasPaginadasS);
+                request.setAttribute("paginaActual", paginaIncidenciasS);
+                request.setAttribute("totalPaginas", totalPaginasIncidenciasS);
                 request.getRequestDispatcher(vista).forward(request, response);
                 break;
             case "gestionar_Incidencia_S":
@@ -53,8 +71,26 @@ public class SerenazgoServlet extends HttpServlet {
                 }
                 break;
             case "listaVecinos_S":
+                int paginaVecinosS = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
+                int vecinosPorPaginaS = 5; // Número de vecinos por página
+
+                // Obtener la lista completa de vecinos
+                ArrayList<UsuarioB> listaVecinosS = serenazgoDao.listarVecinosPorCantidadIncidenciasFalsas();
+
+                // Calcular total de páginas
+                int totalVecinosS = listaVecinosS.size();
+                int totalPaginasVecinosS = (int) Math.ceil((double) totalVecinosS / vecinosPorPaginaS);
+
+                // Obtener los vecinos de la página actual
+                int desdeVecinosS = (paginaVecinosS - 1) * vecinosPorPaginaS;
+                int hastaVecinosS = Math.min(desdeVecinosS + vecinosPorPaginaS, totalVecinosS);
+                ArrayList<UsuarioB> vecinosPaginadosS = new ArrayList<>(listaVecinosS.subList(desdeVecinosS, hastaVecinosS));
+
+                // Enviar atributos al JSP
                 vista = "WEB-INF/Serenazgo/listaVecinos_S.jsp";
-                request.setAttribute("lista",serenazgoDao.listarVecinosPorCantidadIncidenciasFalsas());
+                request.setAttribute("lista", vecinosPaginadosS);
+                request.setAttribute("paginaActual", paginaVecinosS);
+                request.setAttribute("totalPaginas", totalPaginasVecinosS);
                 request.getRequestDispatcher(vista).forward(request, response);
                 break;
             case "banearVecino":
@@ -158,25 +194,37 @@ public class SerenazgoServlet extends HttpServlet {
         String idUsuario;
         switch (action){
             case "buscarIncidenciaFiltro":
-                textoBuscar= request.getParameter("textoBuscarIncidencia");
-                String criticidad =  request.getParameter("criticidad");
-                String tipoIncidencia =  request.getParameter("tipoIncidencia");
-                String estadoIncidencia =  request.getParameter("estadoIncidencia");
-                String urbanizacion =  request.getParameter("urbanizacion");
+                String textoBuscarIncidenciasS = request.getParameter("textoBuscarIncidencia");
+                String criticidadS = request.getParameter("criticidad");
+                String tipoIncidenciaS = request.getParameter("tipoIncidencia");
+                String estadoIncidenciaS = request.getParameter("estadoIncidencia");
+                String urbanizacionS = request.getParameter("urbanizacion");
+                int paginaBusquedaIncidenciasS = request.getParameter("pagina") != null ? Integer.parseInt(request.getParameter("pagina")) : 1;
+                int incidenciasPorPaginaBusquedaS = 5; // Número de incidencias por página
 
-                if (textoBuscar == null && criticidad == null && tipoIncidencia == null && estadoIncidencia == null && urbanizacion == null) {
+                if (textoBuscarIncidenciasS == null && criticidadS == null && tipoIncidenciaS == null && estadoIncidenciaS == null && urbanizacionS == null) {
                     response.sendRedirect(request.getContextPath() + "/SerenazgoServlet?action=listaIncidencias_S");
                 } else {
-                    request.setAttribute("textoBusqueda",textoBuscar);
+                    ArrayList<IncidenciasB> incidenciasBuscadasS = incidenciaDao.listarIncidenciasFiltro(textoBuscarIncidenciasS, criticidadS, tipoIncidenciaS, estadoIncidenciaS, urbanizacionS);
+                    int totalRegistrosIncidenciasS = incidenciasBuscadasS.size();
+                    int totalPaginasIncidenciasBusquedaS = (int) Math.ceil((double) totalRegistrosIncidenciasS / incidenciasPorPaginaBusquedaS);
 
-                    request.setAttribute("criticidad",criticidad);
-                    request.setAttribute("tipo",tipoIncidencia);
-                    request.setAttribute("estado",estadoIncidencia);
-                    request.setAttribute("urbanizacion",urbanizacion);
+                    // Obtener las incidencias de la página actual
+                    int desdeIncidenciasBusquedaS = (paginaBusquedaIncidenciasS - 1) * incidenciasPorPaginaBusquedaS;
+                    int hastaIncidenciasBusquedaS = Math.min(desdeIncidenciasBusquedaS + incidenciasPorPaginaBusquedaS, totalRegistrosIncidenciasS);
+                    ArrayList<IncidenciasB> incidenciasPaginadasBusquedaS = new ArrayList<>(incidenciasBuscadasS.subList(desdeIncidenciasBusquedaS, hastaIncidenciasBusquedaS));
 
-                    request.setAttribute("lista", incidenciaDao.listarIncidenciasFiltro(textoBuscar,criticidad,tipoIncidencia,estadoIncidencia,urbanizacion));
-                    RequestDispatcher view = request.getRequestDispatcher("WEB-INF/Serenazgo/listaIncidencias_S.jsp");
-                    view.forward(request, response);
+                    // Enviar atributos al JSP
+                    request.setAttribute("textoBusqueda", textoBuscarIncidenciasS);
+                    request.setAttribute("criticidad", criticidadS);
+                    request.setAttribute("tipo", tipoIncidenciaS);
+                    request.setAttribute("estado", estadoIncidenciaS);
+                    request.setAttribute("urbanizacion", urbanizacionS);
+                    request.setAttribute("lista", incidenciasPaginadasBusquedaS);
+                    request.setAttribute("paginaActual", paginaBusquedaIncidenciasS);
+                    request.setAttribute("totalPaginas", totalPaginasIncidenciasBusquedaS);
+                    RequestDispatcher viewIncidenciasS = request.getRequestDispatcher("WEB-INF/Serenazgo/listaIncidencias_S.jsp");
+                    viewIncidenciasS.forward(request, response);
                 }
                 break;
             case "gestionarIncidencia":
@@ -229,14 +277,29 @@ public class SerenazgoServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/SerenazgoServlet?action=gestionar_Incidencia_S&id=" + idIncidencia+"&success=" + URLEncoder.encode("La incidencia ha sido gestionada exitosamente",StandardCharsets.UTF_8.toString()));
                 break;
             case "buscarVecinoPorNombre":
-                textoBuscar= request.getParameter("textoBuscar");
-                if (textoBuscar == null) {
+                String textoBuscarVecinosS = request.getParameter("textoBuscar");
+                int paginaBusquedaVecinosS = request.getParameter("pagina") != null ? Integer.parseInt(request.getParameter("pagina")) : 1;
+                int vecinosPorPaginaBusquedaS = 5; // Número de vecinos por página
+
+                if (textoBuscarVecinosS == null) {
                     response.sendRedirect(request.getContextPath() + "/SerenazgoServlet?action=listaVecinos_S");
                 } else {
-                    request.setAttribute("textoBusqueda",textoBuscar);
-                    request.setAttribute("lista", vecinoDao.buscarVecinoPorNombre(textoBuscar));
-                    request.getRequestDispatcher("WEB-INF/Serenazgo/listaVecinos_S.jsp").forward(request, response);
+                    ArrayList<UsuarioB> vecinosBuscadosS = vecinoDao.buscarVecinoPorNombre(textoBuscarVecinosS);
+                    int totalRegistrosVecinosS = vecinosBuscadosS.size();
+                    int totalPaginasVecinosBusquedaS = (int) Math.ceil((double) totalRegistrosVecinosS / vecinosPorPaginaBusquedaS);
 
+                    // Obtener los vecinos de la página actual
+                    int desdeVecinosBusquedaS = (paginaBusquedaVecinosS - 1) * vecinosPorPaginaBusquedaS;
+                    int hastaVecinosBusquedaS = Math.min(desdeVecinosBusquedaS + vecinosPorPaginaBusquedaS, totalRegistrosVecinosS);
+                    ArrayList<UsuarioB> vecinosPaginadosBusquedaS = new ArrayList<>(vecinosBuscadosS.subList(desdeVecinosBusquedaS, hastaVecinosBusquedaS));
+
+                    // Enviar atributos al JSP
+                    request.setAttribute("textoBusqueda", textoBuscarVecinosS);
+                    request.setAttribute("lista", vecinosPaginadosBusquedaS);
+                    request.setAttribute("paginaActual", paginaBusquedaVecinosS);
+                    request.setAttribute("totalPaginas", totalPaginasVecinosBusquedaS);
+                    RequestDispatcher viewVecinosS = request.getRequestDispatcher("WEB-INF/Serenazgo/listaVecinos_S.jsp");
+                    viewVecinosS.forward(request, response);
                 }
                 break;
             case "seleccionarInicidenciaFalsa":

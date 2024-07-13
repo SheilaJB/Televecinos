@@ -150,6 +150,7 @@
                 <div class="bar" data-label="Apellido"><%=vecino.getApellido()%></div>
                 <div class="bar" data-label="DNI"><%=vecino.getDni()%></div>
                 <div class="bar" data-label="Dirección"><%=vecino.getDireccion()%></div>
+                <div class="bar" data-label="Urbanizacion"><%=vecino.getUrbanizacionString()%></div>
                 <div class="bar" data-label="Correo"><%=vecino.getCorreo()%></div>
                 <a href="<%=request.getContextPath()%>/AdministradorServlet?action=listaVecinos_A"><button class="button regresar">Regresar</button></a>
 

@@ -59,6 +59,47 @@
             cursor: pointer;
             color: rgb(0, 0, 0);
         }
+        /* Estilos para la tabla */
+        .custom-table {
+            background-color: #ffffff;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 20px;
+        }
+        .custom-table th, .custom-table td {
+            border: 1px solid #dddddd;
+            padding: 8px 12px;
+            text-align: center;
+            vertical-align: middle;
+        }
+        .custom-table th {
+            background-color: #f8f9fa;
+            color: #333333;
+        }
+        .custom-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .custom-table tr:hover {
+            background-color: #e9ecef;
+        }
+
+        /* Estilos para los botones */
+        .btn-entrada {
+            background-color: #28a745;
+            color: white;
+        }
+        .btn-salida {
+            background-color: #dc3545;
+            color: white;
+        }
+        .btn-foto {
+            background-color: #17a2b8;
+            color: white;
+        }
+        .btn-entrada:hover, .btn-salida:hover, .btn-foto:hover {
+            opacity: 0.85;
+        }
     </style>
 </head>
 <body onload="mostrarOpciones()">
@@ -79,7 +120,49 @@
         <!-- Navbar Start -->
         <jsp:include page="../includes/navbarCoordinador.jsp"></jsp:include>
         <!-- Navbar End -->
+        <!-- Bootstrap JS dependencies -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
+        <!-- Bootstrap JS with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Bootstrap JS and dependencies (Popper.js) -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
+
+        <div id="Nombre del evento">
+            <h3 style="text-align: left; margin-top:20px;margin-bottom:20px;padding: 20px"><%=listaFechas.get(1).getNombreEvento()%></h3>
+        </div>
+        <div class="table-responsive">
+            <table class="table custom-table">
+                <thead>
+                <tr>
+                    <th scope="col">Fechas</th>
+                    <th scope="col">Hora de Inicio</th>
+                    <th scope="col">Hora de Fin</th>
+                    <th scope="col">Marcar hora de entrada</th>
+                    <th scope="col">Marcar hora de salida</th>
+                    <th scope="col">Subir foto</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% if (listaFechas != null) {
+                    for (AsistenciaCoordB asistenciaCoordB : listaFechas) { %>
+                <tr>
+                    <td><%= asistenciaCoordB.getFechaEvento() %></td>
+                    <td><%= asistenciaCoordB.getHora_inicio() %></td>
+                    <td><%= asistenciaCoordB.getHora_fin() %></td>
+                    <td><button class="btn btn-entrada rounded-pill px-3" type="button">Hora de entrada</button></td>
+                    <td><button class="btn btn-salida rounded-pill px-3" type="button">Hora de salida</button></td>
+                    <td><button class="btn btn-foto rounded-pill px-3" type="button">Foto</button></td>
+                </tr>
+                <% } %>
+                <% } %>
+                </tbody>
+            </table>
+        </div>
         <!-- Footer End -->
     </div>
     <!-- Content End -->
