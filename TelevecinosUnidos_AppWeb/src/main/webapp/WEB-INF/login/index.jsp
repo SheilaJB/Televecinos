@@ -40,6 +40,16 @@
                         <h2>Bienvenido</h2>
                         <p><b>Inicia sesión con tu cuenta</b></p>
                     </div>
+                    <%-- Código JSP para mostrar error si el usuario está baneado --%>
+                    <% if(request.getAttribute("errorBaneado") != null) { %>
+                    <script>
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'El usuario está baneado, no podrá ingresar',
+                        });
+                    </script>
+                    <% } %>
                     <%-- Código JSP para mostrar un mensaje de error si el atributo "err" está presente en la solicitud --%>
                     <% if(request.getAttribute("err") != null) { %>
                     <script>
