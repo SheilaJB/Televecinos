@@ -116,7 +116,11 @@
         <div class="container-fluid d-flex justify-content-center align-items-center vh-100">
 
             <div class="container text-center">
-                <img src="img/user.png"class="img-fluid mb-3" alt="Responsive image" width="200">
+                <%if(usuarioLogueado.getGenero()==1){%>
+                    <img src="img/user.jpg"class="img-fluid mb-3" alt="Responsive image" width="200">
+                <%}else{%>
+                    <img src="img/user.png"class="img-fluid mb-3" alt="Responsive image" width="200">
+                <%}%>
                 <div class="bar" data-label="Nombre"><%=usuarioLogueado.getNombre()%></div>
                 <div class="bar" data-label="Apellido"><%=usuarioLogueado.getApellido()%></div>
                 <div class="bar" data-label="DNI"><%=usuarioLogueado.getDni()%></div>

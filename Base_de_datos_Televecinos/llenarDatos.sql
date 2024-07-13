@@ -113,13 +113,14 @@ INSERT INTO `televecinosDB`.`Usuario` (
   `Rol_idRol`, 
   `isBan`,
   `primerIngreso`,
-  `urbanizacion_idUrbanizacion`
+  `urbanizacion_idUrbanizacion`,
+  `genero`
 ) VALUES
-('César', 'Ramírez', '22345678', 'Avenida Patriotas 234, José de La Riva Agüero', 'cesar.ramirez@example.com', SHA2('password2', 256), 1, 1, 'avatar', 2, 3, 0,0,6),
-('María', 'Fernández', '32345678', 'Jirón Amazonas 341, Juan XXIII', 'maria.fernandez@example.com', SHA2('password3', 256), 1, 1, 'avatar', 3, 3, 0,0,7),
-('Ana', 'Rodríguez', '42345678', 'Calle Arica 452, Libertad', 'ana.rodriguez@example.com', SHA2('password4', 256), 1, 1, 'avatar', 4, 3, 0,0,9),
-('Pedro', 'Martínez', '52345678', 'Avenida Ayacucho 563, Los Jardines de La Marina', 'pedro.martinez@example.com', SHA2('password5', 256), 2, 1, 'avatar', 5, 3, 0,0,1),
-('Juan', 'López', '62345678', 'Jirón Chancay 674, Las Leyendas', 'juan.lopez@example.com', SHA2('password6', 256), 2, 1, 'avatar', 6, 3, 0,0,2);
+('César', 'Ramírez', '22345678', 'Avenida Patriotas 234, José de La Riva Agüero', 'cesar.ramirez@example.com', SHA2('password2', 256), 1, 1, 'avatar', 2, 3, 0,0,6,1),
+('María', 'Fernández', '32345678', 'Jirón Amazonas 341, Juan XXIII', 'maria.fernandez@example.com', SHA2('password3', 256), 1, 1, 'avatar', 3, 3, 0,0,7,0),
+('Ana', 'Rodríguez', '42345678', 'Calle Arica 452, Libertad', 'ana.rodriguez@example.com', SHA2('password4', 256), 1, 1, 'avatar', 4, 3, 0,0,9,0),
+('Pedro', 'Martínez', '52345678', 'Avenida Ayacucho 563, Los Jardines de La Marina', 'pedro.martinez@example.com', SHA2('password5', 256), 2, 1, 'avatar', 5, 3, 0,0,1,1),
+('Juan', 'López', '62345678', 'Jirón Chancay 674, Las Leyendas', 'juan.lopez@example.com', SHA2('password6', 256), 2, 1, 'avatar', 6, 3, 0,0,2,1);
 
 -- Ingreso de vecinos
 INSERT INTO `televecinosDB`.`Usuario` (
@@ -135,15 +136,16 @@ INSERT INTO `televecinosDB`.`Usuario` (
   `isBan`,
   `primerIngreso`,
   `cantidadIncidenciasFalsas`,
-  `urbanizacion_idUrbanizacion`
+  `urbanizacion_idUrbanizacion`,
+  `genero`
 ) VALUES
-('Carlos', 'González', '72345678', 'Calle Castilla 785, Las Torres San Miguelito', 'carlos.gonzalez@example.com', SHA2('password7', 256), 'avatar', 1, 2, 0,0,3,3),
-('Sofía', 'Pérez', '82345678', 'Avenida de Los Precursores 896, Elmer Faucett', 'sofia.perez@example.com', SHA2('password8', 256), 'avatar', 1, 2, 0,0,5,4),
-('Lucía', 'Díaz', '92345678', 'Jirón Puno 907, Maranga', 'lucia.diaz@example.com', SHA2('password9', 256), 'avatar', 1, 2, 0,0,7,1),
-('Miguel', 'Hernández', '10345678', 'Calle Junín 1018, Pando', 'miguel.hernandez@example.com', SHA2('password10', 256), 'avatar', 1, 2, 0,0,8,2),
-('Elena', 'Jiménez', '11345678', 'Avenida Bertoloto 1129, Parques de La Huaca', 'elena.jimenez@example.com', SHA2('password11', 256), 'avatar', 1, 2, 0,0,2,5),
-('Valeria', 'Ruiz', '12345679', 'Jirón Tumbes 1240, Otro', 'valeria.ruiz@example.com', SHA2('password12', 256), 'avatar', 1, 1, 0,0,0,7),
-('Diego', 'Morales', '13345678', 'Calle Libertad 1351, Rafael Escardó', 'diego.morales@example.com', SHA2('password13', 256), 'avatar', 1, 1, 0,0,0,9);
+('Carlos', 'González', '72345678', 'Calle Castilla 785, Las Torres San Miguelito', 'carlos.gonzalez@example.com', SHA2('password7', 256), 'avatar', 1, 2, 0,0,3,3,1),
+('Sofía', 'Pérez', '82345678', 'Avenida de Los Precursores 896, Elmer Faucett', 'sofia.perez@example.com', SHA2('password8', 256), 'avatar', 1, 2, 0,0,5,4,0),
+('Lucía', 'Díaz', '92345678', 'Jirón Puno 907, Maranga', 'lucia.diaz@example.com', SHA2('password9', 256), 'avatar', 1, 2, 0,0,7,1,0),
+('Miguel', 'Hernández', '10345678', 'Calle Junín 1018, Pando', 'miguel.hernandez@example.com', SHA2('password10', 256), 'avatar', 1, 2, 0,0,8,2,1),
+('Elena', 'Jiménez', '11345678', 'Avenida Bertoloto 1129, Parques de La Huaca', 'elena.jimenez@example.com', SHA2('password11', 256), 'avatar', 1, 2, 0,0,2,5,0),
+('Valeria', 'Ruiz', '12345679', 'Jirón Tumbes 1240, Otro', 'valeria.ruiz@example.com', SHA2('password12', 256), 'avatar', 1, 1, 0,0,0,7,0),
+('Diego', 'Morales', '13345678', 'Calle Libertad 1351, Rafael Escardó', 'diego.morales@example.com', SHA2('password13', 256), 'avatar', 1, 1, 0,0,0,9,1);
 
 -- Ingreso adicional
 INSERT INTO `televecinosDB`.`Usuario` (
@@ -157,11 +159,12 @@ INSERT INTO `televecinosDB`.`Usuario` (
   `Rol_idRol`, 
   `isBan`,
   `primerIngreso`,
-  `urbanizacion_idUrbanizacion`
+  `urbanizacion_idUrbanizacion`,
+  `genero`
 ) VALUES
-('Juan', 'González', '12345678', 'Calle Alfonso Ugarte 127', 'juan.gonzales@example.com', SHA2('password1', 256), 1, 4, 0,0,2),
-('María', 'Pérez', '23456789', 'Avenida Patriotas 234', 'maria.perez@example.com', SHA2('password2', 256), 1, 4, 0,0,3),
-('Carlos', 'Díaz', '34567890', 'Jirón Amazonas 341', 'Carlos.Díaz@example.com', SHA2('password3', 256), 1, 4, 0,0,4);
+('Juan', 'González', '12345678', 'Calle Alfonso Ugarte 127', 'juan.gonzales@example.com', SHA2('password1', 256), 1, 4, 0,0,2,1),
+('María', 'Pérez', '23456789', 'Avenida Patriotas 234', 'maria.perez@example.com', SHA2('password2', 256), 1, 4, 0,0,3,0),
+('Carlos', 'Díaz', '34567890', 'Jirón Amazonas 341', 'Carlos.Díaz@example.com', SHA2('password3', 256), 1, 4, 0,0,4,1);
 
 
 INSERT INTO `televecinosDB`.`Serenazgo` (`numTelefono`, `fechaNacimiento`, `TurnoSerenazgo_idTurnoSerenazgo`, `TipoSerenazgo_idTipoSerenazgo`,`usuario_idUsuario`) VALUES
