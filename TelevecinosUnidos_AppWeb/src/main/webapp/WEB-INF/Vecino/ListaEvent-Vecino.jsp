@@ -44,6 +44,23 @@
             padding: 0;
             text-align: center;
         }
+        #Nombre del evento h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            color: #007bff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        #Nombre del evento p {
+            font-family: 'Arial', sans-serif;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
+        #Nombre del evento .btn {
+            background-color: #28a745; /* Color verde */
+            border-color: #28a745;
+        }
     </style>
 </head>
 
@@ -74,7 +91,11 @@
 
         <!-- Titulo -->
         <div id="Nombre del evento">
-            <h3 style="text-align: left; margin-top:20px;margin-bottom:20px;padding: 20px">Lista de eventos</h3>
+            <h1 class="display-4 text-center" style="margin-top:20px;margin-bottom:20px;padding: 20px">
+                <h1 style="text-align: center"><i class="fas fa-calendar-alt"></i>¡Tus próximos eventos!</h1>
+            </h1>
+            <p class="lead text-center">Revisa información importante de los eventos a los cuales te has inscrito</p>
+
         </div>
         <div style="background-color: #f8f9fa; padding: 20px; align-items: center;">
             <div class="bg-light rounded h-100 p-4" style="font-weight: bold;">

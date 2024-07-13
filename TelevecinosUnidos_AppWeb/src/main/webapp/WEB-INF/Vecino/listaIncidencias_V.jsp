@@ -77,10 +77,11 @@
         <!-- PARTE SUPERIOR FINAL -->
 
         <!-- LLENAR-->
-        <div class="container text-center">
-            <div id="Nombre del evento">
-                <h1 style="text-align: center; margin-top:50px;margin-bottom:50px;"><b>Lista de incidencias</b></h1>
-            </div>
+        <div id="Titulo_Incidencias">
+            <h1 class="display-4 text-center" style="margin-top:20px;margin-bottom:20px;padding: 20px">
+                <h1 style="text-align: center"><i class="fas fa-exclamation-triangle"></i> ¡Tus incidencias reportadas!</h1>
+            </h1>
+            <p class="lead text-center">Revisa el estado de las incidencias que has reportado</p>
         </div>
         <% if (session.getAttribute("info") != null) { %>
         <script>

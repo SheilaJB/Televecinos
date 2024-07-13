@@ -93,13 +93,23 @@
         <jsp:include page="../includes/navbarVecino.jsp"></jsp:include>
         <!-- PARTE SUPERIOR FINAL -->
 
-        <div id="Titulo_Eventos">
-            <h1 style="text-align: center; margin-top:70px; margin-bottom:70px;">Descubre y participa en nuestros eventos</h1>
-            <p style="text-align: center; font-size: normal; margin-top: 50px; margin-bottom: 50px;padding: 20px;">
-                ¡Únete a la acción con los eventos organizados por la Municipalidad de San Miguel! Desde vibrantes festivales comunitarios hasta emocionantes competiciones deportivas, nuestra ciudad ofrece una amplia gama de actividades para todos los gustos. Descubre eventos que promueven la participación ciudadana, el deporte, la cultura y el entretenimiento, ¡todo diseñado para enriquecer la vida de nuestros residentes y visitantes!
-            </p>
-            <h6 style="text-align: center; margin-top:70px; margin-bottom:70px;">Recuerda que puedes ver los eventos a los que ya te inscribiste en la sección de Eventos Inscritos</h6>
-        </div>
+        <section id="titulo-eventos" class="container my-5">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h1 style="text-align: center"><i class="fas fa-calendar-alt"></i>¡Eventos culturales y deportivos en San Miguel!</h1>
+                    <p class="lead">
+                        Puedes obtener más información e inscribirte a los eventos que prefieras
+                    </p>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-6" style="text-align: center">
+                    <a href="<%=request.getContextPath()%>/VecinoServlet?action=eventosInscritos" class="btn btn-outline-secondary btn-lg btn-block mt-3">
+                        Ver mis eventos inscritos
+                    </a>
+                </div>
+            </div>
+        </section>
 
         <div style="background-color: #FFB703 ; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
             <div class="row justify-content-auto align-items-auto">
