@@ -90,6 +90,17 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
+        <% if(request.getParameter("success") != null) { %>
+        <script>
+            Swal.fire({
+                icon: "success",
+                title: '<%= request.getParameter("success") %>',
+                showConfirmButton: false,
+                timer: 1700
+            })
+        </script>
+        <% } %>
+
 
         <div class="container text-center">
             <div id="Nombre del evento">

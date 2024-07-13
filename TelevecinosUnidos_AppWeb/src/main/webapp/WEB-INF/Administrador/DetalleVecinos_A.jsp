@@ -154,10 +154,12 @@
                 <a href="<%=request.getContextPath()%>/AdministradorServlet?action=listaVecinos_A"><button class="button regresar">Regresar</button></a>
 
 
-                <!--<a href="<%=request.getContextPath()%>/AdministradorServlet?action=promoverAcoordinadorCultura&idVecino=<%=vecino.getIdUsuario()%>"><button class="button convertCoordinadora btn-banear">Promover a coordinadora cultura</button></a>-->
+                <a href="<%=request.getContextPath()%>/AdministradorServlet?action=promoverAcoordinadorCultura&idVecino=<%=vecino.getIdUsuario()%>"><button class="button convertCoordinadora btn-banear">Promover a coordinadora cultura</button></a>
+                <!--
                 <button type="button" class="button convertCoordinadora btn-banear" onclick="convertirCoordinadoraCultura(<%=vecino.getIdUsuario()%>)">
                     Promover a coordinadora cultura
                 </button>
+
                 <script>
                     function convertirCoordinadoraCultura(idVecino) {
                         Swal.fire({
@@ -171,10 +173,26 @@
                         });
                     }
                 </script>
+                <% if(request.getParameter("success") != null) { %>
+
+                <script>
+                    Swal.fire({
+                        icon: "success",
+                        title: '<%= request.getParameter("success") %>',
+                        showConfirmButton: false,
+                        timer: 1700
+                    }).then(() => {
+                        window.location.href = '<%= request.getContextPath() %>/AdministradorServlet?action=DetalleVecinos_A&lista=';
+                    });
+                </script>
+                <% } %>
+                -->
 
 
 
-                <!--<a href="<%=request.getContextPath()%>/AdministradorServlet?action=promoverAcoordinadorDeporte&idVecino=<%=vecino.getIdUsuario()%>"><button class="button convertCoordinadora btn-banear">Promover a coordinadora deportes </button></a>-->
+
+                <a href="<%=request.getContextPath()%>/AdministradorServlet?action=promoverAcoordinadorDeporte&idVecino=<%=vecino.getIdUsuario()%>"><button class="button convertCoordinadora btn-banear">Promover a coordinadora deportes </button></a>
+                <!--
                 <button type="button" class="button convertCoordinadora btn-banear" onclick="convertirCoordinadoraDeporte(<%=vecino.getIdUsuario()%>)">
                     Promover a coordinadora deporte
                 </button>
@@ -192,7 +210,7 @@
                         });
                     }
                 </script>
-
+                -->
 
 
                 <!--<a href="<%=request.getContextPath()%>/AdministradorServlet?action=banearVecino&idVecino=<%=vecino.getIdUsuario()%>"><button class="button banear btn-banear">Banear</button></a>-->
