@@ -143,7 +143,11 @@
 
 
             <div class="container text-center">
+                <%if(coordinadora.getGenero()==1){%>
+                <img src="img/coordinador.jpg" class="img-fluid mb-3" alt="Responsive image" width="200">
+                <%}else{%>
                 <img src="img/coordinadora.jpg" class="img-fluid mb-3" alt="Responsive image" width="200">
+                <%}%>
                 <div class="bar" data-label="Tipo de cordinadora">Deportes</div>
                 <div class="bar" data-label="Nombre"><%=coordinadora.getNombre()%></div>
                 <div class="bar" data-label="Apellido"><%=coordinadora.getApellido()%></div>
