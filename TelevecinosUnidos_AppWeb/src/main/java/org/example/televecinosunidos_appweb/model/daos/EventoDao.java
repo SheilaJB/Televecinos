@@ -1195,5 +1195,48 @@ public class EventoDao extends BaseDao{
         return 0;
     }
 
+    public boolean hayTraslapeProfesor(int idProfesor, String fechaInicio, String fechaFin, String horaInicio, String horaFin) {
+        String sql = "SELECT COUNT(*) FROM eventos e " +
+                "JOIN dias_evento de ON e.idEventos = de.eventos_idEventos " +
+                "WHERE e.ProfesoresEvento_idProfesoresEvento = ? " +
+                "  AND ( " +
+                "       (de.dia1 BETWEEN ? AND ? OR de.dia2 BETWEEN ? AND ?) " +
+                "       AND ( " +
+                "            TIME(e.hora_inicio) BETWEEN ? AND ? " +
+                "            OR TIME(e.hora_fin) BETWEEN ? AND ? " +
+                "            OR ? BETWEEN TIME(e.hora_inicio) AND TIME(e.hora_fin) " +
+                "            OR ? BETWEEN TIME(e.hora_inicio) AND TIME(e.hora_fin) " + // Corregido: horaFin
+                "           ) " +
+                "      );";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, idProfesor);
+            pstmt.setString(2, fechaInicio);
+            pstmt.setString(3, fechaFin);
+            pstmt.setString(4, fechaInicio);
+            pstmt.setString(5, fechaFin);
+            pstmt.setString(6, horaInicio);
+            pstmt.setString(7, horaFin);
+            pstmt.setString(8, horaInicio);
+            pstmt.setString(9, horaFin);
+            pstmt.setString(10, horaInicio); // Corregido: horaFin
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    int count = rs.getInt(1);
+                    return count > 0; // Retorna true si hay traslape
+                }
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error al verificar traslape de eventos para coordinador: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
 }
 
