@@ -10,6 +10,7 @@ import java.time.LocalTime;
 import java.time.temporal.TemporalAdjusters;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -286,8 +287,8 @@ public class EventoDao extends BaseDao{
             try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     int idEvento = generatedKeys.getInt(1);
-
                     fechasEvento(idEvento, eventoB.getFecha_inicio(), eventoB.getFecha_fin(), eventoB.getEventFrecuencia_idEventFrecuencia(), eventoB.getDiaEvento(),eventoB.getHora_inicio(),eventoB.getHora_fin());
+                    asistencia_fechas_evento(idEvento, eventoB.getFecha_inicio(), eventoB.getFecha_fin(), eventoB.getEventFrecuencia_idEventFrecuencia(), eventoB.getDiaEvento(),eventoB.getHora_inicio(),eventoB.getHora_fin());
                 } else {
                     throw new SQLException("Creating event failed, no ID obtained.");
                 }
@@ -365,11 +366,106 @@ public class EventoDao extends BaseDao{
 
         }
     }
+
+    public void asistencia_fechas_evento(int idEvento, String fechaInicio, String fechaFin, int frecuencia, String diaEvento, String hora_inicio,String hora_fin) {
+        LocalDate inicio = LocalDate.parse(fechaInicio);
+        LocalDate fin = LocalDate.parse(fechaFin);
+
+
+        ArrayList<LocalDate> fechasEntre = new ArrayList<>();
+        ArrayList<LocalDate> fechasEntre2 = new ArrayList<>();
+        LocalDate fechaActual = inicio;
+        if(frecuencia == 1){
+            fechasEntre.add(inicio);
+            while (!fechaActual.isAfter(fin)) {
+                LocalDate siguienteFecha = fechaActual.with(TemporalAdjusters.next(fechaActual.getDayOfWeek()));
+                if (!siguienteFecha.isAfter(fin)) {
+                    fechasEntre.add(siguienteFecha);
+                }
+                fechaActual = siguienteFecha;
+            }
+        } else if (frecuencia == 2) {
+            while (!fechaActual.isAfter(fin)) {
+                fechasEntre.add(fechaActual);
+                LocalDate fechaDosDiasDespues = fechaActual.plusDays(2);
+                if (!fechaDosDiasDespues.isAfter(fin)) {
+                    fechasEntre2.add(fechaDosDiasDespues);
+                }else{
+                    fechasEntre2.add(null);
+                }
+                fechaActual = fechaActual.with(TemporalAdjusters.next(fechaActual.getDayOfWeek()));
+            }
+        }
+        ArrayList<LocalDate> fechasCombinadas = new ArrayList<>(fechasEntre);
+        fechasCombinadas.addAll(fechasEntre2);
+        Collections.sort(fechasCombinadas);
+        if (frecuencia == 1){
+            for (int i = 0; i < fechasEntre.size(); i++) {
+                String url = "jdbc:mysql://localhost:3306/televecinosdb";
+                String username = "root";
+                String password = "root";
+                String sql = "INSERT INTO asistenciaCoordinadora (eventos_idEventos, fecha_evento,hora_inicio,hora_fin, asistencia) VALUES (?, ?, ?, ?,?)";
+                try (Connection connection = DriverManager.getConnection(url, username, password);
+                     PreparedStatement pstmt = connection.prepareStatement(sql)) {
+                    pstmt.setInt(1, idEvento);
+                    pstmt.setString(2, fechasEntre.get(i).toString());
+                    pstmt.setString(3, hora_inicio);
+                    pstmt.setString(4, hora_fin);
+                    pstmt.setBoolean(5,false);
+                    pstmt.executeUpdate();
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    throw new RuntimeException("Error al insertar en la base de datos", e);
+                }
+
+            }
+        }else{
+            for (int i = 0; i < fechasCombinadas.size(); i++) {
+                String url = "jdbc:mysql://localhost:3306/televecinosdb";
+                String username = "root";
+                String password = "root";
+                String sql = "INSERT INTO asistenciaCoordinadora (eventos_idEventos, fecha_evento,hora_inicio,hora_fin, asistencia) VALUES (?, ?, ?, ?,?)";
+                try (Connection connection = DriverManager.getConnection(url, username, password);
+                     PreparedStatement pstmt = connection.prepareStatement(sql)) {
+                    pstmt.setInt(1, idEvento);
+                    pstmt.setString(2, fechasCombinadas.get(i).toString());
+                    pstmt.setString(3, hora_inicio);
+                    pstmt.setString(4, hora_fin);
+                    pstmt.setBoolean(5,false);
+                    pstmt.executeUpdate();
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    throw new RuntimeException("Error al insertar en la base de datos", e);
+                }
+
+            }
+        }
+    }
+
     public void eliminarFechasEventoPorIdEvento(int eventosId) {
         String url = "jdbc:mysql://localhost:3306/televecinosdb";
         String username = "root";
         String password = "root";
         String sql = "DELETE FROM dias_evento WHERE eventos_idEventos = ?";
+
+        try (Connection connection = DriverManager.getConnection(url, username, password);
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
+
+            pstmt.setInt(1, eventosId);
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error al eliminar días de evento en la base de datos", e);
+        }
+    }
+    public void eliminarFechasAsistencia(int eventosId) {
+        String url = "jdbc:mysql://localhost:3306/televecinosdb";
+        String username = "root";
+        String password = "root";
+        String sql = "DELETE FROM asistenciaCoordinadora WHERE eventos_idEventos = ?";
 
         try (Connection connection = DriverManager.getConnection(url, username, password);
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -434,7 +530,7 @@ public class EventoDao extends BaseDao{
             ps.executeUpdate();
 
             fechasEvento(evento.getIdEvento(), evento.getFecha_inicio(), evento.getFecha_fin(), evento.getEventFrecuencia_idEventFrecuencia(), evento.getDiaEvento(),evento.getHora_inicio(),evento.getHora_fin());
-
+            asistencia_fechas_evento(evento.getIdEvento(), evento.getFecha_inicio(), evento.getFecha_fin(), evento.getEventFrecuencia_idEventFrecuencia(), evento.getDiaEvento(),evento.getHora_inicio(),evento.getHora_fin());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -540,6 +540,7 @@ public class CoordinadorServlet extends HttpServlet {
                 eventoB.setHora_fin(hora_fin2);
 
                 eventoDao.eliminarFechasEventoPorIdEvento(idEvento);
+                eventoDao.eliminarFechasAsistencia(idEvento);
                 eventoDao.actualizarEvento(eventoB);
                 eventoDao.updateVacantesDisponibles(eventoB.getIdEvento());
                 // Agregar mensaje a la sesión
