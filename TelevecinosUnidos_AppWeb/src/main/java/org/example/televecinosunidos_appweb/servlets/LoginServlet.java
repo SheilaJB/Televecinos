@@ -175,17 +175,34 @@ public class LoginServlet extends HttpServlet {
                     case 2:
                         usuarioB = usuarioDao.obtenerUsuario1(correo);
                         httpSession.setAttribute("usuarioLogueado", usuarioB);
-                        response.sendRedirect(request.getContextPath() + "/VecinoServlet");
+
+                        if(usuarioB.getIsBan()==1){
+                            request.setAttribute("errorBaneado", "El usuario está baneado");
+                            request.getRequestDispatcher("WEB-INF/login/index.jsp").forward(request, response);
+                        }else{
+                            response.sendRedirect(request.getContextPath() + "/VecinoServlet");
+                        }
                         break;
                     case 3:
                         usuarioB = usuarioDao.obtenerUsuario1(correo);
                         httpSession.setAttribute("usuarioLogueado", usuarioB);
-                        response.sendRedirect(request.getContextPath() + "/CoordinadorServlet");
+                        if(usuarioB.getIsBan()==1){
+                            request.setAttribute("errorBaneado", "El usuario está baneado");
+                            request.getRequestDispatcher("WEB-INF/login/index.jsp").forward(request, response);
+                        }else{
+                            response.sendRedirect(request.getContextPath() + "/CoordinadorServlet");
+                        }
+
                         break;
                     case 4:
                         SerenazgoDTO serenazgoDTO = usuarioDao.obtenerUsuarioSerenazgo(correo);
                         httpSession.setAttribute("serenazgoLogeado", serenazgoDTO);
-                        response.sendRedirect(request.getContextPath() + "/SerenazgoServlet");
+                        if(serenazgoDTO.isBan()){
+                            request.setAttribute("errorBaneado", "El usuario está baneado");
+                            request.getRequestDispatcher("WEB-INF/login/index.jsp").forward(request, response);
+                        }else{
+                            response.sendRedirect(request.getContextPath() + "/SerenazgoServlet");
+                        }
                         break;
                     case 5:
                         usuarioB = usuarioDao.obtenerUsuario1(correo);

@@ -273,6 +273,35 @@
                     </tbody>
 
                 </table>
+                <%
+                    int paginaActual = (int) request.getAttribute("paginaActual");
+                    int totalPaginas = (int) request.getAttribute("totalPaginas");
+                %>
+                <nav>
+                    <ul class="pagination">
+                        <li class="page-item <%= paginaActual == 1 ? "disabled" : "" %>">
+                            <a class="page-link" href="<%=request.getContextPath()%>/SerenazgoServlet?action=listaIncidencias_S&page=<%= paginaActual - 1 %>">Anterior</a>
+                        </li>
+                        <% if (totalPaginas > 0) { %>
+                        <% for (int i = 1; i <= totalPaginas; i++) { %>
+                        <li class="page-item <%= i == paginaActual ? "active" : "" %>">
+                            <a class="page-link" href="<%=request.getContextPath()%>/SerenazgoServlet?action=listaIncidencias_S&page=<%= i %>"><%= i %></a>
+                        </li>
+                        <% } %>
+                        <% } else { %>
+                        <li class="page-item active">
+                            <a class="page-link" href="#">1</a>
+                        </li>
+                        <% } %>
+                        <li class="page-item <%= paginaActual == totalPaginas || totalPaginas == 0 ? "disabled" : "" %>">
+                            <% if (paginaActual < totalPaginas && totalPaginas > 0) { %>
+                            <a class="page-link" href="<%=request.getContextPath()%>/SerenazgoServlet?action=listaIncidencias_S&page=<%= paginaActual + 1 %>">Siguiente</a>
+                            <% } else { %>
+                            <span class="page-link">Siguiente</span>
+                            <% } %>
+                        </li>
+                    </ul>
+                </nav>
                 <script>
                     function incidenciaRechazada() {
                         Swal.fire({
@@ -346,21 +375,6 @@
 
 
 
-            </div>
-            <div  style="display: flex; justify-content: center; align-items: center;">
-                <section class="paginacion" >
-                    <ul style="list-style: none;padding: 0;margin: 0;display: flex;">
-                        <div style="background-color: white ; padding: 5px; margin:10px">
-                            <li style="margin: 0 5px;"><a class="link-opacity-50-hover" class="link-opacity-50-hover" href="#" class="active">1</a></li>
-                        </div>
-                        <div style="background-color:white ; padding: 5px;margin:10px">
-                            <li style="margin: 0 5px;"><a class="link-opacity-50-hover" class="link-opacity-50-hover" href="#" class="active">2</a></li>
-                        </div>
-                        <div style="background-color: white ; padding: 5px;margin:10px">
-                            <li style="margin: 0 5px;"><a class="link-opacity-50-hover" class="link-opacity-50-hover" href="#" class="active">3</a></li>
-                        </div>
-                    </ul>
-                </section>
             </div>
         </div>
         <!-- Footer Start -->
