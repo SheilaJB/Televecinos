@@ -217,7 +217,10 @@
                 </div>
             </div>
 
-            <div class="d-flex justify-content-end">
+            <div class="d-flex justify-content-between" style="margin: 30px; padding-top: 2%;">
+                <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=asistencia&idEventoX=<%=((EventoB) request.getAttribute("evento")).getIdEvento()%>">
+                    <button type="button" class="btn btn-info m-2 d-flex justify-content-between align-items-center">Marcar Asistencia</button>
+                </a>
                 <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=lista">
                     <button type="button" class="btn btn-secondary m-2 d-flex justify-content-between align-items-center">Regresar</button>
                 </a>
