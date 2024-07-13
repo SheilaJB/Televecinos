@@ -136,6 +136,33 @@
 
             <div class="bg-light rounded h-100 p-4" style="font-weight: bold;">
 
+                <% if(request.getParameter("successDenegacion") != null) { %>
+                    <script>
+                        Swal.fire({
+
+                            icon: "error",
+                            title: '<%= request.getParameter("successDenegacion") %>',
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then(() => {
+                            window.location.href = '<%= request.getContextPath() %>/AdministradorServlet?action=nuevasSolicitudes_A';
+                        });
+                    </script>
+                <%} %>
+                <% if(request.getParameter("success") != null) { %>
+                <script>
+                    Swal.fire({
+
+                        icon: "success",
+                        title: '<%= request.getParameter("success") %>',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(() => {
+                        window.location.href = '<%= request.getContextPath() %>/AdministradorServlet?action=nuevasSolicitudes_A';
+                    });
+
+                </script>
+                <%} %>
 
                 <div class="table-responsive">
                     <table id="eventosTable" class="table" style="background-color: transparent;">
@@ -156,65 +183,14 @@
                             <td><%=usuarioB.getNombre() + " " + usuarioB.getApellido()%></td>
                             <td><%=usuarioB.getDireccion() %></td>
                             <td><%=usuarioB.getDni() %></td>
-                            <!--Desplegable
                             <td>
-                                <div class="dropdown">
-                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                            <li><a class="dropdown-item"  onclick="confirmFunction(<%=usuarioB.getIdUsuario()%>)">Aceptar</a></li>
-                                            <li><a class="dropdown-item"  onclick="denyFunction(<%=usuarioB.getIdUsuario()%>)">Rechazar</a></li>
-                                            <li><a class="dropdown-item"  onclick="detallesFunction(<%=usuarioB.getIdUsuario()%>)">Ver detalles</a></li>
-                                        </ul>
-                                    </button>
-                                </div>
-                            </td>
-                            -->
-
-                            <td>
-                                <!--<a href="<%=request.getContextPath()%>/AdministradorServlet?action=solicitanteAVecinoAceptar&idSolicitante=<%=usuarioB.getIdUsuario()%>"><button type="button" class="btn btn-success m-2"><i class="fas fa-check"></i></button></a>-->
-                                <button type="button" class="btn btn-success m-2" onclick="aceptarSolicitante(<%=usuarioB.getIdUsuario()%>)">
-                                    <i class="fas fa-check"></i>
-                                </button>
-
-                                <script>
-                                    function aceptarSolicitante(idUsuario) {
-                                        Swal.fire({
-
-                                            icon: "success",
-                                            title: "El solicitante ha sido aceptado exitosamente",
-                                            showConfirmButton: false,
-                                            timer: 1500
-                                        }).then(() => {
-                                            window.location.href = '<%= request.getContextPath() %>/AdministradorServlet?action=solicitanteAVecinoAceptar&idSolicitante=' + idUsuario;
-                                        });
-                                    }
-                                </script>
-
-
+                                <a href="<%=request.getContextPath()%>/AdministradorServlet?action=solicitanteAVecinoAceptar&idSolicitante=<%=usuarioB.getIdUsuario()%>"><button type="button" class="btn btn-success m-2"><i class="fas fa-check"></i></button></a>
 
                             </td>
                             <td>
-                                <!--<a href="<%=request.getContextPath()%>/AdministradorServlet?action=solicitanteAVecinoDenegar&idSolicitante=<%=usuarioB.getIdUsuario()%>"><button type="button" class="btn btn-danger m-2" ><i class="fas fa-times"></i></button></a>-->
+                                <a href="<%=request.getContextPath()%>/AdministradorServlet?action=solicitanteAVecinoDenegar&idSolicitante=<%=usuarioB.getIdUsuario()%>"><button type="button" class="btn btn-danger m-2"><i class="fas fa-times"></i></button></a>
 
-                                <button type="button" class="btn btn-danger m-2" onclick="denegarSolicitante(<%=usuarioB.getIdUsuario()%>)">
-                                    <i class="fas fa-times"></i>
-                                </button>
-
-                                <script>
-                                    function denegarSolicitante(idUsuario) {
-                                        Swal.fire({
-
-                                            icon: "error",
-                                            title: "El solicitante ha sido denagado",
-                                            showConfirmButton: false,
-                                            timer: 1500
-                                        }).then(() => {
-                                            window.location.href = '<%= request.getContextPath() %>/AdministradorServlet?action=solicitanteAVecinoDenegar&idSolicitante=' + idUsuario;
-                                        });
-                                    }
-                                </script>
                             </td>
-
                             <td><a href="<%=request.getContextPath()%>/AdministradorServlet?action=DetalleSolicitantes_A&idVecino=<%=usuarioB.getIdUsuario()%>"><button type="button" class="btn btn-info m-2"><i class="fas fa-eye"></i></button></a></td>
                         </tr>
                         <% } %>
