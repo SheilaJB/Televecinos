@@ -1,9 +1,19 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="org.example.televecinosunidos_appweb.model.beans.EventoB" %>
 <%@ page import="java.util.ArrayList" %>
-<%ArrayList<EventoB> eventosInscritos = (ArrayList<EventoB>) request.getAttribute("eventosInscritos");%>
+<jsp:useBean id="textoBuscarEvento" scope="request" type="java.lang.String" class="java.lang.String"/>
+<%
+    ArrayList<EventoB> eventosInscritos = (ArrayList<EventoB>) request.getAttribute("eventosInscritos");
+    Integer paginaActual = (Integer) request.getAttribute("paginaActualInscritos");
+    Integer totalPaginas = (Integer) request.getAttribute("totalPaginasInscritos");
 
-
+    if (paginaActual == null) {
+        paginaActual = 1;
+    }
+    if (totalPaginas == null) {
+        totalPaginas = 1;
+    }
+%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -97,101 +107,123 @@
             <p class="lead text-center">Revisa información importante de los eventos a los cuales te has inscrito</p>
 
         </div>
-        <div style="background-color: #f8f9fa; padding: 20px; align-items: center;">
-            <div class="bg-light rounded h-100 p-4" style="font-weight: bold;">
-
-                <!--Filtro-->
-                <div class="filtro" style="border: 1px solid #ccc; border-radius: 5px; padding: 10px; display: flex; align-items: center; background-color:#FFB703 ;">
-                    <input type="text" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 20%; margin-right: 2%;" id="filtroInput" placeholder="Buscar...">
-                    <select id="filtroCategoria" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 20%; margin-right: 2%;">
-                        <option selected>Frecuencia</option>
-                        <option value="diaria">Diaria</option>
-                        <option value="interdiaria">Interdiaria</option>
-                        <option value="semanal">Semanal</option>
-
-                    </select>
-                    <select id="filtroEstado" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 30%; margin-right: 2%;">
-                        <option selected>Estado</option>
-                        <option value="disponible">Disponible</option>
-                        <option value="enCurso">En curso</option>
-                        <option value="finalizado">Finalizado</option>
-                    </select>
-                    <select id="filtroEstado" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 30%; margin-right: 2%;">
-                        <option selected>Tipo</option>
-                        <option value="disponible">Deporte</option>
-                        <option value="finalizado">Cultura</option>
-                    </select>
-                    <!-- Alineación del botón con los selects -->
-                    <button type="button" class="btn btn-primary" onclick="filtrar()" style="padding: 10px;"><b>Filtrar</b></button>
-                </div>
-
-                <div class="table-responsive">
-                    <table id="eventosTable" class="table table-striped table-hover" style="background-color: transparent;">
-                        <thead>
-                        <tr class="form-text">
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Fecha de inicio</th>
-                            <th scope="col">Estado</th>
-                            <th scope="col">Frecuencia</th>
-                            <th scope="col">Tipo de evento</th>
-                            <th scope="col"></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <%
-                            if (eventosInscritos != null && !eventosInscritos.isEmpty()) {
-                                for (EventoB evento : eventosInscritos) {
-                        %>
-                        <tr>
-                            <td><%= evento.getNombre() %></td>
-                            <td><%= evento.getFecha_inicio() %></td>
-                            <td><%= evento.getEstadoString() %></td>
-                            <td><%= evento.getFrecuenciaString() %></td>
-                            <td><%= evento.getTipoEvento() %></td>
-                            <td>
-                                <a onclick="viewFunction(<%=evento.getIdEvento()%>)">
-                                    <button type="button" class="btn btn-primary btn-sm-square m-1"><i class="fas fa-eye fa-xs"></i></button>
-                                </a>
-                            </td>
-                        </tr>
-                        <%
-                            }
-                        } else {
-                        %>
-                        <tr>
-                            <td colspan="8">No estás inscrito en ningún evento.</td>
-                        </tr>
-                        <%
-                            }
-                        %>
-                        </tbody>
-                    </table>
-
-
-                    <!--Paginación de la lista-->
-                    <div  style="display: flex; justify-content: center; align-items: center;">
-                        <section class="paginacion" >
-                            <ul style="list-style: none;padding: 0;margin: 0;display: flex;">
-                                <div style="background-color: white ; padding: 5px; margin:10px">
-                                    <li style="margin: 0 5px;"><a class="link-opacity-50-hover" class="link-opacity-50-hover" href="#" class="active">1</a></li>
-                                </div>
-                                <div style="background-color:white ; padding: 5px;margin:10px">
-                                    <li style="margin: 0 5px;"><a class="link-opacity-50-hover" class="link-opacity-50-hover" href="#" class="active">2</a></li>
-                                </div>
-                                <div style="background-color: white ; padding: 5px;margin:10px">
-                                    <li style="margin: 0 5px;"><a class="link-opacity-50-hover" class="link-opacity-50-hover" href="#" class="active">3</a></li>
-                                </div>
-                            </ul>
-                        </section>
+        <div style="background-color: #f8f9fa; padding: 10px; align-items: center;">
+            <div style="background-color: #FFB703; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
+                <!-- Filtro -->
+                <form method="post" action="<%=request.getContextPath()%>/VecinoServlet?action=buscarEventoPorNombre">
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-md-2 mb-2">
+                            <input type="text" class="form-control" id="filtroInput" placeholder="Buscar..." name="textoBuscarEvento"
+                                   value="<%=request.getAttribute("textoBuscarEvento") != null ? request.getAttribute("textoBuscarEvento") : ""%>">
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <input type="date" class="form-control" name="fecha"
+                                   value="<%=request.getAttribute("fecha") != null ? request.getAttribute("fecha") : ""%>">
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <select class="form-select" name="frecuencia">
+                                <option selected disabled>Frecuencia</option>
+                                <option value="1" <%= "1".equals(request.getAttribute("frecuencia")) ? "selected" : "" %>>Semanal</option>
+                                <option value="2" <%= "2".equals(request.getAttribute("frecuencia")) ? "selected" : "" %>>Dos veces por semana</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <select class="form-select" name="estado">
+                                <option selected disabled>Estado</option>
+                                <option value="1" <%= "1".equals(request.getAttribute("estado")) ? "selected" : "" %>>Disponible</option>
+                                <option value="2" <%= "2".equals(request.getAttribute("estado")) ? "selected" : "" %>>En curso</option>
+                                <option value="3" <%= "3".equals(request.getAttribute("estado")) ? "selected" : "" %>>Finalizado</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <select class="form-select" name="tipo">
+                                <option selected disabled>Tipo</option>
+                                <option value="1" <%= "1".equals(request.getAttribute("tipo")) ? "selected" : "" %>>Evento Cultural</option>
+                                <option value="2" <%= "2".equals(request.getAttribute("tipo")) ? "selected" : "" %>>Evento Deportivo</option>
+                            </select>
+                        </div>
+                        <div class="col-md-1 mb-2">
+                            <button class="btn btn-primary w-100" type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                        <div class="col-md-1 mb-2">
+                            <a type="reset" class="btn btn-primary w-100 d-flex align-items-center justify-content-center"
+                               href="<%=request.getContextPath()%>/VecinoServlet?action=eventosInscritos">Limpiar</a>
+                        </div>
                     </div>
-                </div>
-
-
-                <!---Falta funcionalidad---->
-                <script src="js/listaEvento_V.js"></script>
-
+                </form>
             </div>
 
+            <div class="table-responsive">
+                <table id="eventosTable" class="table table-striped table-hover" style="background-color: transparent;">
+                    <thead>
+                    <tr class="form-text">
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Fecha de inicio</th>
+                        <th scope="col">Frecuencia</th>
+                        <th scope="col">Estado</th>
+                        <th scope="col">Tipo de evento</th>
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <%
+                        if (eventosInscritos != null && !eventosInscritos.isEmpty()) {
+                            for (EventoB evento : eventosInscritos) {
+                    %>
+                    <tr>
+                        <td><%= evento.getNombre() %></td>
+                        <td><%= evento.getFecha_inicio() %></td>
+                        <td><%= evento.getFrecuenciaString() %></td>
+                        <td><%= evento.getEstadoString() %></td>
+                        <td><%= evento.getTipoEvento() %></td>
+
+                        <td>
+                            <a onclick="viewFunction(<%=evento.getIdEvento()%>)">
+                                <button type="button" class="btn btn-primary btn-sm-square m-1"><i class="fas fa-eye fa-xs"></i></button>
+                            </a>
+                        </td>
+                    </tr>
+                    <%
+                        }
+                    } else {
+                    %>
+                    <tr>
+                        <td colspan="8">No estás inscrito en ningún evento.</td>
+                    </tr>
+                    <%
+                        }
+                    %>
+                    </tbody>
+                </table>
+                <!--Paginación de la lista-->
+            </div>
+            <nav>
+                <ul class="pagination">
+                    <li class="page-item <%= paginaActual == 1 ? "disabled" : "" %>">
+                        <a class="page-link" href="<%=request.getContextPath()%>/VecinoServlet?action=eventosInscritos&page=<%= paginaActual - 1 %>">Anterior</a>
+                    </li>
+                    <% if (totalPaginas > 0) { %>
+                    <% for(int i = 1; i <= totalPaginas; i++) { %>
+                    <li class="page-item <%= i == paginaActual ? "active" : "" %>">
+                        <a class="page-link" href="<%=request.getContextPath()%>/VecinoServlet?action=eventosInscritos&page=<%= i %>"><%= i %></a>
+                    </li>
+                    <% } %>
+                    <% } else { %>
+                    <li class="page-item active">
+                        <a class="page-link" href="#">1</a>
+                    </li>
+                    <% } %>
+                    <li class="page-item <%= paginaActual == totalPaginas || totalPaginas == 0 ? "disabled" : "" %>">
+                        <% if (paginaActual < totalPaginas) { %>
+                        <a class="page-link" href="<%=request.getContextPath()%>/VecinoServlet?action=eventosInscritos&page=<%= paginaActual + 1 %>">Siguiente</a>
+                        <% } else { %>
+                        <span class="page-link">Siguiente</span>
+                        <% } %>
+                    </li>
+                </ul>
+            </nav>
         </div>
 
 
@@ -204,34 +236,6 @@
 
         <!-- Filtro-->
 
-
-        <div id="Barra-Filtro" >
-            <script>
-                function filtrar() {
-                    var input, filtro, ul, li, txtValue, categoria, estado;
-                    input = document.getElementById('filtroInput');
-                    filtro = input.value.toUpperCase();
-                    ul = document.getElementById("lista");
-                    li = ul.getElementsByTagName('li');
-                    categoria = document.getElementById('filtroCategoria').value;
-                    estado = document.getElementById('filtroEstado').value;
-                    for (var i = 0; i < li.length; i++) {
-                        txtValue = li[i].textContent || li[i].innerText;
-                        var visible = true;
-                        if (txtValue.toUpperCase().indexOf(filtro) === -1) {
-                            visible = false;
-                        }
-                        if (categoria !== 'todos' && !txtValue.includes(categoria)) {
-                            visible = false;
-                        }
-                        if (estado !== 'todos' && !txtValue.includes(estado)) {
-                            visible = false;
-                        }
-                        li[i].style.display = visible ? "" : "none";
-                    }
-                }
-            </script>
-        </div>
 
 
         <!-- Footer Start -->

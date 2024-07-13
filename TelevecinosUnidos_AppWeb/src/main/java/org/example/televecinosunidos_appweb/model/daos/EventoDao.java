@@ -36,7 +36,9 @@ public class EventoDao extends BaseDao{
                 "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados \n" +
                 "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia \n" +
                 "WHERE e.TipoEvento_idTipoEvento = ? AND e.eliminado = FALSE \n" +
-                "ORDER BY e.fecha_inicio DESC;";
+                "ORDER BY " +
+                "    CASE WHEN es.estadosEvento = 'Finalizado' THEN 1 ELSE 0 END, \n" +
+                "    e.fecha_inicio DESC;";
 
         ArrayList<EventoB> listaEventosPropios = new ArrayList<>();
 
@@ -1100,6 +1102,159 @@ public class EventoDao extends BaseDao{
 
         return false;
     }
+
+    //Filtro evento inscriptos
+    public ArrayList<EventoB> listarEventosInscriptoFiltro(String nombre, String fecha, String frecuencia, String estado, String tipo, int idUser, int pagina) {
+        String sqlSetLanguage = "SET lc_time_names = 'es_ES';";
+        String sqlSetTotalRows = "SET @total_rows = (SELECT COUNT(*) FROM Eventos e " +
+                "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
+                "JOIN TipoEvento te ON e.TipoEvento_idTipoEvento = te.idTipoEvento " +
+                "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
+                "JOIN flujo_usuario_evento fue ON e.idEventos = fue.Eventos_idEventos " +
+                "WHERE fue.Usuario_idUsuario = ? " +
+                "AND e.nombre LIKE ? " +
+                (fecha != null && !fecha.isEmpty() ? "AND DATE(e.fecha_inicio) = ? " : "") +
+                (frecuencia != null && !frecuencia.isEmpty() ? "AND ef.idEventFrecuencia = ? " : "") +
+                (estado != null && !estado.isEmpty() ? "AND es.idEventEstados = ? " : "") +
+                (tipo != null && !tipo.isEmpty() ? "AND te.idTipoEvento = ? " : "") +
+                "AND e.eliminado = FALSE);";
+        String sqlSetNumPartitions = "SET @num_partitions = FLOOR((@total_rows + 4) / 5);"; // Ajustado para calcular el número de particiones
+
+        String sql = "SELECT " +
+                "    (@row_number := @row_number + 1) AS row_num, " +
+                "    CEILING(@row_number / 5) AS 'pag', " +
+                "    e.idEventos AS 'ID Evento', " +
+                "    e.nombre AS 'Nombre', " +
+                "    DATE_FORMAT(e.fecha_inicio, '%d %M %Y') AS 'Fecha de Inicio', " +
+                "    es.estadosEvento AS 'Estado', " +
+                "    ef.tipoFrecuencia AS 'Frecuencia', " +
+                "    te.tipo AS 'Tipo' " +
+                "FROM Eventos e " +
+                "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
+                "JOIN TipoEvento te ON e.TipoEvento_idTipoEvento = te.idTipoEvento " +
+                "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
+                "JOIN flujo_usuario_evento fue ON e.idEventos = fue.Eventos_idEventos " +
+                "WHERE fue.Usuario_idUsuario = ? " +
+                "AND e.nombre LIKE ? " +
+                (fecha != null && !fecha.isEmpty() ? "AND DATE(e.fecha_inicio) = ? " : "") +
+                (frecuencia != null && !frecuencia.isEmpty() ? "AND ef.idEventFrecuencia = ? " : "") +
+                (estado != null && !estado.isEmpty() ? "AND es.idEventEstados = ? " : "") +
+                (tipo != null && !tipo.isEmpty() ? "AND te.idTipoEvento = ? " : "") +
+                "AND e.eliminado = FALSE " +
+                "ORDER BY e.fecha_inicio DESC;";
+
+        ArrayList<EventoB> evento = new ArrayList<>();
+        List<Object> parametros = new ArrayList<>();
+        parametros.add(idUser);
+        parametros.add(nombre + "%");
+        if (fecha != null && !fecha.isEmpty()) {
+            parametros.add(fecha);
+        }
+        if (frecuencia != null && !frecuencia.isEmpty()) {
+            parametros.add(frecuencia);
+        }
+        if (estado != null && !estado.isEmpty()) {
+            parametros.add(estado);
+        }
+        if (tipo != null && !tipo.isEmpty()) {
+            parametros.add(tipo);
+        }
+
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement();
+             PreparedStatement pstmtTotalRows = conn.prepareStatement(sqlSetTotalRows);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            // Ejecutar la sentencia para establecer el idioma de las fechas en español
+            stmt.execute(sqlSetLanguage);
+
+            // Asignar los parámetros para el total de filas
+            for (int i = 0; i < parametros.size(); i++) {
+                pstmtTotalRows.setObject(i + 1, parametros.get(i));
+            }
+            pstmtTotalRows.execute();
+
+            // Ejecutar la sentencia para calcular el número de particiones
+            stmt.execute(sqlSetNumPartitions);
+
+            // Inicializar la variable de sesión para el número de fila
+            stmt.execute("SET @row_number = 0;");
+
+            // Asignar los parámetros al PreparedStatement principal
+            for (int i = 0; i < parametros.size(); i++) {
+                pstmt.setObject(i + 1, parametros.get(i));
+            }
+
+            // Ejecutar la consulta principal
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    if (rs.getInt("pag") == pagina) {
+                        EventoB event = new EventoB();
+                        event.setIdPag(rs.getInt("pag"));
+                        event.setidEvento(rs.getInt("ID Evento"));
+                        event.setNombre(rs.getString("Nombre"));
+                        event.setFecha_inicio(rs.getString("Fecha de Inicio"));
+                        event.setEstadoString(rs.getString("Estado"));
+                        event.setFrecuenciaString(rs.getString("Frecuencia"));
+                        event.setTipoEvento(rs.getString("Tipo"));
+                        evento.add(event);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al listar eventos filtradas", e);
+        }
+        return evento;
+    }
+
+    public int contarEventosInscriptoFiltrados(String nombre, String fecha, String frecuencia, String estado, String tipo, int idUser) {
+        String sql = "SELECT COUNT(*) AS total FROM Eventos e " +
+                "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
+                "JOIN TipoEvento te ON e.TipoEvento_idTipoEvento = te.idTipoEvento " +
+                "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
+                "JOIN flujo_usuario_evento fue ON e.idEventos = fue.Eventos_idEventos " +
+                "WHERE fue.Usuario_idUsuario = ? " +
+                "AND e.nombre LIKE ? " +
+                (fecha != null && !fecha.isEmpty() ? "AND DATE(e.fecha_inicio) = ? " : "") +
+                (frecuencia != null && !frecuencia.isEmpty() ? "AND ef.tipoFrecuencia = ? " : "") +
+                (estado != null && !estado.isEmpty() ? "AND es.estadosEvento = ? " : "") +
+                (tipo != null && !tipo.isEmpty() ? "AND te.tipo = ? " : "") +
+                "AND e.eliminado = FALSE";
+
+        List<Object> parametros = new ArrayList<>();
+        parametros.add(idUser);
+        parametros.add(nombre + "%");
+        if (fecha != null && !fecha.isEmpty()) {
+            parametros.add(fecha);
+        }
+        if (frecuencia != null && !frecuencia.isEmpty()) {
+            parametros.add(frecuencia);
+        }
+        if (estado != null && !estado.isEmpty()) {
+            parametros.add(estado);
+        }
+        if (tipo != null && !tipo.isEmpty()) {
+            parametros.add(tipo);
+        }
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            for (int i = 0; i < parametros.size(); i++) {
+                pstmt.setObject(i + 1, parametros.get(i));
+            }
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("total");
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al contar eventos inscritos filtrados", e);
+        }
+        return 0;
+    }
+
 
 }
 
