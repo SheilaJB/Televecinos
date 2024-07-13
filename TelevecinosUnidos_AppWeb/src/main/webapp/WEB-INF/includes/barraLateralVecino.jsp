@@ -18,7 +18,12 @@
             <h4 style="color:#023047"><b>Televecinos Unidos</b></h4>
         </a>
         <div class="d-flex align-items-center ms-4 mb-4">
-            <img class="rounded-circle" src="img/Icon_perfil.png" alt="" style="width: 50px; height: 50px;">
+            <%if(usuarioLogueado.getGenero()==1){%>
+                <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 50px; height: 50px;">
+            <%}else{%>
+                <img class="rounded-circle" src="img/user.png" alt="" style="width: 50px; height: 50px;">
+            <%}%>
+
             <div class="ms-3 m-3">
                 <h6 class="mb-0" style="color:#023047;"><b><%= usuarioLogueado.getNombre()+" "+usuarioLogueado.getApellido()%></b></h6>
                 <span class="text-muted"><b>Vecino</b></span>

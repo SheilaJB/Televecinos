@@ -6,6 +6,7 @@
     ArrayList<EventoB> listaEventos = (ArrayList<EventoB>) request.getAttribute("listaEventos");
 %>
 
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -97,6 +98,7 @@
             <p style="text-align: center; font-size: normal; margin-top: 50px; margin-bottom: 50px;padding: 20px;">
                 ¡Únete a la acción con los eventos organizados por la Municipalidad de San Miguel! Desde vibrantes festivales comunitarios hasta emocionantes competiciones deportivas, nuestra ciudad ofrece una amplia gama de actividades para todos los gustos. Descubre eventos que promueven la participación ciudadana, el deporte, la cultura y el entretenimiento, ¡todo diseñado para enriquecer la vida de nuestros residentes y visitantes!
             </p>
+            <h6 style="text-align: center; margin-top:70px; margin-bottom:70px;">Recuerda que puedes ver los eventos a los que ya te inscribiste en la sección de Eventos Inscritos</h6>
         </div>
 
         <div style="background-color: #FFB703 ; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
@@ -135,11 +137,13 @@
                                 <p class="card-status" style="font-size: small; margin-bottom: 0;">Estado: <%= evento.getEstadoString() %></p>
                                 <p class="text-wrap" style="font-size: small; margin-bottom: 0;">Fecha de inicio: <%= evento.getFecha_inicio() %></p>
                                 <p class="text-wrap" style="font-size: small; margin-bottom: 0;">Fecha de fin: <%= evento.getFecha_fin() %></p>
-                                <% if ("Disponible".equals(evento.getEstadoString())){ %>
-                                    <p class="text-wrap" style="font-size: small; margin-bottom: 0;">Vacantes Disponibles: <%= evento.getCantDisponibles() %></p>
-                                    <a class="link-opacity-50-hover" style="font-size: small;" href="<%=request.getContextPath()%>/VecinoServlet?action=verEvento&idEvento=<%= evento.getIdEvento() %>">Inscribirse aquí</a>
+                                <p class="text-wrap" style="font-size: small; margin-bottom: 0;"><%= evento.getDescripcion() %></p>
+
+                                <% if (evento.getCantDisponibles() > 0 && "Disponible".equals(evento.getEstadoString())) { %>
+                                <p class="text-wrap" style="font-size: small; margin-bottom: 0;">Vacantes Disponibles: <%= evento.getCantDisponibles() %></p>
+                                <a class="link-opacity-50-hover" style="font-size: small;" href="<%=request.getContextPath()%>/VecinoServlet?action=verEvento&idEvento=<%= evento.getIdEvento() %>">Inscribirse aquí</a>
                                 <% } else { %>
-                                    <a class="link-opacity-50-hover" style="font-size: small;" href="<%=request.getContextPath()%>/VecinoServlet?action=verEvento&idEvento=<%= evento.getIdEvento() %>">Más información</a>
+                                <a class="link-opacity-50-hover" style="font-size: small;" href="<%=request.getContextPath()%>/VecinoServlet?action=verEvento&idEvento=<%= evento.getIdEvento() %>">Más información</a>
                                 <% } %>
                             </div>
                         </div>

@@ -88,6 +88,7 @@ public class LoginServlet extends HttpServlet {
             int urbanizacion_idUrbanizacion = Integer.parseInt(request.getParameter("urbanizacion"));
             String correo = request.getParameter("correo");
             int primerIngreso = 1; // Valor predeterminado para primerIngreso
+            int genero = Integer.parseInt(request.getParameter("genero"));
 
             // Validar los campos
             if (!ValidacionesInicio.validarNombre(nombre)) {
@@ -123,7 +124,7 @@ public class LoginServlet extends HttpServlet {
             }
 
             System.out.println("Intentando registrar usuario: " + nombre + " " + apellido + " con correo: " + correo);
-            boolean registrado = usuarioDao.registrarUsuario(nombre, apellido, dni, direccion, urbanizacion_idUrbanizacion, correo, primerIngreso);
+            boolean registrado = usuarioDao.registrarUsuario(nombre, apellido,dni, direccion, urbanizacion_idUrbanizacion, correo, primerIngreso,genero);
 
             if (registrado) {
                 System.out.println("Registro exitoso para el usuario: " + correo);
