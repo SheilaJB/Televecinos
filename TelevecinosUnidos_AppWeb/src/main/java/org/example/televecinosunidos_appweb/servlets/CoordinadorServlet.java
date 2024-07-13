@@ -346,35 +346,66 @@ public class CoordinadorServlet extends HttpServlet {
                     }
                     request.getRequestDispatcher("WEB-INF/Coordinadora/creacionEvento.jsp").forward(request, response);
                     return;
+
+                } else {
+                    // 1. Verificar traslape de eventos ANTES de crear el evento
+                    DateTimeFormatter dateFormatter1 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                    DateTimeFormatter timeFormatter1 = DateTimeFormatter.ofPattern("HH:mm:ss");
+
+                    String fechaInicioStr = fechaInicio.format(dateFormatter1);
+                    String fechaFinStr = fechaFin.format(dateFormatter1);
+                    String horaInicioStr = horaInicio.format(timeFormatter1);
+                    String horaFinStr = horaFin.format(timeFormatter1);
+
+                    // Verificar traslape de eventos ANTES de crear el evento
+                    int idEvento1 = 0; // No hay ID de evento existente al crear uno nuevo
+                    boolean hayTraslape = eventoDao.hayTraslapeCoordinador(usuarioLogged.getIdUsuario(), idEvento1, fechaInicioStr, fechaFinStr, horaInicioStr, horaFinStr, Integer.parseInt(idFrecuencia));
+                    if (hayTraslape) {
+                        request.getSession().setAttribute("err", "Ya existe un evento con fechas y horas que se superponen.");
+                        ArrayList<ProfesoresEvento> listaProfesores = eventoDao.listarProfesores();
+                        request.setAttribute("lista", listaProfesores);
+                        request.setAttribute("erroresEvento", erroresEvento);
+                        request.setAttribute("nombreEvento", nombreEvento);
+                        request.setAttribute("descripcionEvento", descripcionEvento);
+                        request.setAttribute("lugar", lugar);
+                        request.setAttribute("nombreProfesor", idProfesor);
+                        request.setAttribute("frecuencia", idFrecuencia);
+                        request.setAttribute("fecha_inicio", fecha_inicio);
+                        request.setAttribute("fecha_fin", fecha_fin);
+                        request.setAttribute("hora_inicio", hora_inicio);
+                        request.setAttribute("hora_fin", hora_fin);
+                        request.setAttribute("cantidadVacantes", cantidadVacantes);
+                        request.setAttribute("materiales", materiales);
+
+                        request.getRequestDispatcher("WEB-INF/Coordinadora/creacionEvento.jsp").forward(request, response);
+                        return;
+                    } else {
+                        EventoB eventoB0 = new EventoB();
+                        eventoB0.setFoto(fileInputStream);
+                        eventoB0.setNombre(nombreEvento);
+                        eventoB0.setTipoEvento_idTipoEvento(Integer.parseInt(idTipoEvento));
+                        eventoB0.setDescripcion(descripcionEvento);
+                        eventoB0.setLugar(lugar);
+                        eventoB0.setCoordinador_idUsuario(Integer.parseInt(idCoordinador));
+                        eventoB0.setProfesoresEvento_idProfesoresEvento(Integer.parseInt(idProfesor));
+                        eventoB0.setFecha_inicio(fecha_inicio);
+                        eventoB0.setFecha_fin(fecha_fin);
+                        eventoB0.setHora_inicio(hora_inicio);
+                        eventoB0.setHora_fin(hora_fin);
+                        eventoB0.setEventFrecuencia_idEventFrecuencia(Integer.parseInt(idFrecuencia));
+                        eventoB0.setDiaEvento(opcionesDias);
+                        eventoB0.setCantidadVacantes(Integer.parseInt(cantidadVacantes));
+                        eventoB0.setListaMateriales(materiales);
+                        eventoB0.setNombreFoto(fileName);
+
+                        eventoDao.crearEvento(eventoB0);
+                        request.getSession().setAttribute("success", "Evento creado de manera exitosa");
+                        response.sendRedirect(request.getContextPath() + "/CoordinadorServlet?action=lista");
+                    }
                 }
-
-                //Se establece la información en el objeto evento
-                EventoB eventoB0 = new EventoB();
-                eventoB0.setFoto(fileInputStream);
-                eventoB0.setNombre(nombreEvento);
-                eventoB0.setTipoEvento_idTipoEvento(Integer.parseInt(idTipoEvento));
-                eventoB0.setDescripcion(descripcionEvento);
-                eventoB0.setLugar(lugar);
-                eventoB0.setCoordinador_idUsuario(Integer.parseInt(idCoordinador));
-                eventoB0.setProfesoresEvento_idProfesoresEvento(Integer.parseInt(idProfesor));
-                eventoB0.setFecha_inicio(fecha_inicio);
-                eventoB0.setFecha_fin(fecha_fin);
-                eventoB0.setHora_inicio(hora_inicio);
-                eventoB0.setHora_fin(hora_fin);
-                eventoB0.setEventFrecuencia_idEventFrecuencia(Integer.parseInt(idFrecuencia));
-                eventoB0.setDiaEvento(opcionesDias);
-                eventoB0.setCantidadVacantes(Integer.parseInt(cantidadVacantes));
-                eventoB0.setListaMateriales(materiales);
-                eventoB0.setNombreFoto(fileName);
-
-
-
-                int estado = 1;
-                eventoDao.crearEvento(eventoB0);
-                response.sendRedirect(request.getContextPath() + "/CoordinadorServlet?action=lista");
                 break;
 
-            case "editar":
+        case "editar":
                 Map<String, String> erroresEvento2 = new HashMap<>();
                 EventoB evento = eventoDao.buscarEventoPorId(request.getParameter("idEvento"));
                 int idEvento = Integer.parseInt(request.getParameter("idEvento"));

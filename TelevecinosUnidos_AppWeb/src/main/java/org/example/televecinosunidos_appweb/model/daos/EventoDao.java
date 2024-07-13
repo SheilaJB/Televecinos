@@ -1003,22 +1003,102 @@ public class EventoDao extends BaseDao{
         return eventosInscritos;
     }
 
-    /*
-    public boolean existeTraslapeEventos(int userId, int nuevoEventoId) {
+    public int crearEventoTraslape(EventoB eventoB) {
+        String sql = "INSERT INTO `televecinosDB`.`eventos` \n" +
+                "(`nombre`, `descripcion`, `lugar`, `Coordinador_idUsuario`, `fecha_inicio`, `fecha_fin`, `cantidadVacantes`, `cantDisponibles`, `foto`, `nombreFoto`,`listaMateriales`, `EventEstados_idEventEstados`, `EventFrecuencia_idEventFrecuencia`, `TipoEvento_idTipoEvento`, `ProfesoresEvento_idProfesoresEvento`, `hora_inicio`, `hora_fin`, `diasEvento`) \n" +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        List<EventoB> eventosInscritos = obtenerEventosInscritos(userId);
+        int idEvento = -1; // Valor por defecto para indicar error
 
-        EventoB nuevoEvento = buscarEventoPorId(String.valueOf(nuevoEventoId));
+        try (Connection connection = getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-        for (EventoB evento : eventosInscritos) {
-            if (seSuperponenFechas(evento, nuevoEvento)) {
-                return true; // traslape
+            int estadoEvento = 1;
+
+            pstmt.setString(1, eventoB.getNombre());
+            pstmt.setString(2, eventoB.getDescripcion());
+            pstmt.setString(3, eventoB.getLugar());
+            pstmt.setInt(4, eventoB.getCoordinador_idUsuario());
+            pstmt.setString(5, eventoB.getFecha_inicio());
+            pstmt.setString(6, eventoB.getFecha_fin());
+            pstmt.setInt(7, eventoB.getCantidadVacantes());
+            pstmt.setInt(8, eventoB.getCantidadVacantes());
+            pstmt.setBlob(9, eventoB.getFoto());
+            pstmt.setString(10,eventoB.getNombreFoto());
+            pstmt.setString(11, eventoB.getListaMateriales());
+            pstmt.setInt(12, estadoEvento);
+            pstmt.setInt(13, eventoB.getEventFrecuencia_idEventFrecuencia());
+            pstmt.setInt(14, eventoB.getTipoEvento_idTipoEvento());
+            pstmt.setInt(15, eventoB.getProfesoresEvento_idProfesoresEvento());
+            pstmt.setString(16, eventoB.getHora_inicio());
+            pstmt.setString(17, eventoB.getHora_fin());
+            pstmt.setString(18, eventoB.getDiaEvento());
+
+            pstmt.executeUpdate();
+
+            try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    idEvento = generatedKeys.getInt(1);
+
+                    // Verificar traslape de eventos antes de insertar en dias_evento
+                    boolean hayTraslape = hayTraslapeCoordinador(eventoB.getCoordinador_idUsuario(), idEvento, eventoB.getFecha_inicio(), eventoB.getFecha_fin(), eventoB.getHora_inicio(), eventoB.getHora_fin(), eventoB.getEventFrecuencia_idEventFrecuencia());
+                    if (hayTraslape) {
+                        // Si hay traslape, eliminar el evento recién creado
+                        borrarEvento(idEvento);
+                        return -1; // Indicar que hubo un traslape
+                    } else {
+                        // Si no hay traslape, insertar en dias_evento y asistencia_fechas_evento
+                        fechasEvento(idEvento, eventoB.getFecha_inicio(), eventoB.getFecha_fin(), eventoB.getEventFrecuencia_idEventFrecuencia(), eventoB.getDiaEvento(),eventoB.getHora_inicio(),eventoB.getHora_fin());
+                        asistencia_fechas_evento(idEvento, eventoB.getFecha_inicio(), eventoB.getFecha_fin(), eventoB.getEventFrecuencia_idEventFrecuencia(), eventoB.getDiaEvento(),eventoB.getHora_inicio(),eventoB.getHora_fin());
+                    }
+                } else {
+                    System.err.println("Error al obtener el ID del evento creado."); // Manejar el error aquí
+                }
             }
+        } catch (SQLException e) {
+            System.err.println("Error al crear el evento: " + e.getMessage()); // Manejar la excepción aquí
         }
-        return false;
+
+        return idEvento; // Devolver el ID generado o -1 en caso de error
     }
 
-     */
+
+    public boolean hayTraslapeCoordinador(int idCoordinador, int idEvento, String fechaInicio, String fechaFin, String horaInicio, String horaFin, int frecuencia) {
+
+        String sql = "SELECT COUNT(*) FROM dias_evento de " +
+                "JOIN eventos e ON de.eventos_idEventos = e.idEventos " +
+                "WHERE e.Coordinador_idUsuario = ? " + // Filtrar por el coordinador
+                "AND e.idEventos <> ? " + // Excluir el evento actual (si se está editando)
+                "AND ( " +
+                "    (de.dia1 BETWEEN ? AND ?) OR (de.dia2 BETWEEN ? AND ?) " + // Traslape de fechas
+                "    AND (de.hora_inicio <= ? AND de.hora_fin >= ?) " +
+                ");";
+
+        try (Connection conn = this.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, idCoordinador);
+            pstmt.setInt(2, idEvento);
+            pstmt.setString(3, fechaInicio);
+            pstmt.setString(4, fechaFin);
+            pstmt.setString(5, fechaInicio);
+            pstmt.setString(6, fechaFin);
+            pstmt.setString(7, horaFin);
+            pstmt.setString(8, horaInicio);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    int count = rs.getInt(1);
+                    return count > 0; // Retorna true si hay traslape
+                }
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error al verificar traslape de eventos para coordinador: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return false;
+    }
 
 }
 
