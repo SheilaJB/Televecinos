@@ -18,6 +18,15 @@ public class UsuarioB {
     private int isBan;
     private int primerIngreso;
     private int cantidadIncidenciasFalsas;
+    private int genero;
+
+    public int getGenero() {
+        return genero;
+    }
+
+    public void setGenero(int genero) {
+        this.genero = genero;
+    }
 
     public int getCantidadIncidenciasFalsas() {
         return cantidadIncidenciasFalsas;
