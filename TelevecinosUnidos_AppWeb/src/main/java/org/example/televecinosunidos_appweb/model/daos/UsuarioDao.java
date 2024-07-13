@@ -390,9 +390,9 @@ public class UsuarioDao extends BaseDao{
 
         return id;
     }
-    public boolean registrarUsuario(String nombre, String apellido, String dni, String direccion, int urbanizacion_idUrbanizacion, String correo, int primerIngreso) {
+    public boolean registrarUsuario(String nombre, String apellido, String dni, String direccion, int urbanizacion_idUrbanizacion, String correo, int primerIngreso, int genero) {
         boolean registrado = false;
-        String sql = "INSERT INTO usuario (nombre, apellido, dni, direccion, urbanizacion_idUrbanizacion, correo, primerIngreso, Rol_idRol) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO usuario (nombre, apellido, dni, direccion, urbanizacion_idUrbanizacion, correo, primerIngreso, Rol_idRol,genero) VALUES (?, ?, ?, ?, ?, ?, ?, ?,?)";
 
         try (Connection conn = this.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -404,6 +404,7 @@ public class UsuarioDao extends BaseDao{
             ps.setString(6, correo);
             ps.setInt(7, primerIngreso);
             ps.setInt(8, 1);
+            ps.setInt(9, genero);
 
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected > 0) {
