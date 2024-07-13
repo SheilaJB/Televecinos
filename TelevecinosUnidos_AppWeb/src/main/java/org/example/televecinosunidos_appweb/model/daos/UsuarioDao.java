@@ -301,7 +301,7 @@ public class UsuarioDao extends BaseDao{
                     usuarioB.setTipoCoordinador_idTipoCoordinador(rs.getInt("idTipoCoordinadorUsuario"));
                     usuarioB.setIdRol(rs.getInt("idRolUsuario"));
                     usuarioB.setIsBan(rs.getInt("isBanUsuario"));
-
+                    usuarioB.setUrbanizacionString(rs.getString("nombreUrbanizacion"));
                 }
 
             }
