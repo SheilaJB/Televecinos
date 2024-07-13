@@ -767,6 +767,41 @@ public class EventoDao extends BaseDao{
         }
         return false;
     }
+
+    public boolean hayTraslape(int idUsuario, int idEvento) {
+        String sql = "SELECT COUNT(*) FROM flujo_usuario_evento fue " +
+                "JOIN dias_evento de ON fue.Eventos_idEventos = de.eventos_idEventos " +
+                "WHERE fue.Usuario_idUsuario = ? " +
+                "AND EXISTS ( " +
+                "  SELECT 1 FROM dias_evento de2 " +
+                "  WHERE de2.eventos_idEventos = ? " +
+                "  AND ( " +
+                "    (de.dia1 = de2.dia1 AND de.hora_inicio <= de2.hora_fin AND de.hora_fin >= de2.hora_inicio) OR " +
+                "    (de.dia2 = de2.dia1 AND de.hora_inicio <= de2.hora_fin AND de.hora_fin >= de2.hora_inicio) OR " +
+                "    (de.dia1 = de2.dia2 AND de.hora_inicio <= de2.hora_fin AND de.hora_fin >= de2.hora_inicio) OR " +
+                "    (de.dia2 = de2.dia2 AND de.hora_inicio <= de2.hora_fin AND de.hora_fin >= de2.hora_inicio) " +
+                "  )" +
+                ");";
+
+        try (Connection conn = this.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, idUsuario);
+            pstmt.setInt(2, idEvento);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    int count = rs.getInt(1);
+                    return count > 0; // Retorna true si hay traslape (count > 0)
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al verificar si está inscrito: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return false; // Retorna false si no hay traslape o hay error
+    }
+
     public void updateVacantesDisponibles(int idEvento) {
         try (Connection conn = this.getConnection()) {
             // 1. total de usuarios registrados

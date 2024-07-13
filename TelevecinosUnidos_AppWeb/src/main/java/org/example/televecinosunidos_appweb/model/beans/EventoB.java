@@ -32,6 +32,16 @@ public class EventoB {
 
     private String tipoEvento;
 
+    private String yaInscrito;
+
+    public String getYaInscrito() {
+        return yaInscrito;
+    }
+
+    public void setYaInscrito(String yaInscrito) {
+        this.yaInscrito = yaInscrito;
+    }
+
     public String getTipoEvento() {
         return tipoEvento;
     }
