@@ -68,22 +68,38 @@
             <div class="row g-4" style="padding: 10px;">
                 <div class="col-sm-12 col-md-6 bg-light">
                     <div class="p-3">
-                        <img src="img/Coordinador.png" alt="" class="img-fluid">
+                        <img src="img/imgEvent.jpg" alt="" class="img-fluid">
                     </div>
                 </div>
-                <div class="col-sm-12 col-md-6">
-                    <div class="p-4">
-                        <a><b>Bienvenido coordinador(a)</b></a>
-                        <p class="mt-3" style="text-align: justify;">
-                            En su rol como coordinador(a), su responsabilidad principal consiste en idear y ejecutar eventos que promuevan la participación y el bienestar en la comunidad, centrándose principalmente en las categorías de Deporte o Cultura. Unas de las características distintivas de su función como coordinador son:
-                        </p>
-                        <ul>
-                            <li>Creación de eventos</li>
-                            <li>Actualización de información para un evento</li>
-                            <li>Ampliación de vacantes en eventos</li>
-                            <li>Bloquear a un vecino por comportamiento inapropiado</li>
-                        </ul>
-                    </div>
+                <div class="col-md-6 mb-4">
+                    <section id="Titulo_Eventos" class="card">
+                        <div class="card-body">
+                            <header>
+                                <h2 class="card-title">¡Organiza eventos para tu comunidad!</h2>
+                            </header>
+                            <article>
+                                <p>Como coordinadora, tienes la responsabilidad de crear y gestionar eventos que promuevan la participación y el bienestar en la comunidad.</p>
+                            </article>
+                            <footer>
+                                <h6 class="mt-2"><button class="btn btn-success btn-block"  window.location.href='<%=request.getContextPath()%>/CoordinadorServlet?action=listar'>Ver Eventos Propios</button><a style="margin-left: 10px" href="<%=request.getContextPath()%>/CoordinadorServlet?action=eventoGeneralesC">Visita eventos de tu área aquí</a>.</h6>
+                                <h6 class="mt-2">¿Quieres crear un nuevo evento? <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=crearEvento">Crea tu evento aquí</a>.</h6>
+                            </footer>
+                        </div>
+                    </section>
+                    <section id="Titulo_Eventos" class="card" style="margin-top: 5px">
+                        <div class="card-body">
+                            <header>
+                                <h2 class="card-title">¡Reporta incidencias!</h2>
+                            </header>
+                            <article>
+                                <p>También puedes reportar incidencias que observes en tu comunidad</p>
+                            </article>
+                            <footer>
+                                <h6 class="mt-2"><button class="btn btn-danger btn-block"  window.location.href='<%=request.getContextPath()%>/CoordinadorServlet?action=listarIncidencia'>Ver Incidencias</button></h6>
+                                <h6 class="mt-2">¿Quieres reportar una incidencia? <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=generarIncidenciaC">Reporta tu incidencia aquí</a>.</h6>
+                            </footer>
+                        </div>
+                    </section>
                 </div>
             </div>
         </div>

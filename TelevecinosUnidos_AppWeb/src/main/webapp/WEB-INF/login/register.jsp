@@ -74,10 +74,11 @@
                     </div>
                     <div class="input-group mb-3">
                         <select id="genero" class="form-control form-control-lg bg-light fs-6" name="genero" required>
-                            <option value="" selected>Seleccione una opción</option>
+                            <option value="" selected>Seleccione su género</option>
                             <option value="0">Femenino</option>
                             <option value="1">Masculino</option>
                         </select>
+                        <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
                     </div>
                     <div class="input-group mb-3">
                         <input type="text" id="dni" class="form-control form-control-lg bg-light fs-6" name="dni" placeholder="DNI" required>
