@@ -358,9 +358,10 @@ public class CoordinadorServlet extends HttpServlet {
                     String horaFinStr = horaFin.format(timeFormatter1);
 
                     // Verificar traslape de eventos ANTES de crear el evento
-                    int idEvento1 = 0; // No hay ID de evento existente al crear uno nuevo
+                    int idEvento1 = -1; // No hay ID de evento existente al crear uno nuevo
                     boolean hayTraslape = eventoDao.hayTraslapeCoordinador(usuarioLogged.getIdUsuario(), idEvento1, fechaInicioStr, fechaFinStr, horaInicioStr, horaFinStr, Integer.parseInt(idFrecuencia));
-                    if (hayTraslape) {
+                    boolean hayTraslapeProfesor = eventoDao.hayTraslapeProfesor(Integer.parseInt(idProfesor), fechaInicioStr, fechaFinStr, horaInicioStr, horaFinStr);
+                    if (hayTraslape || hayTraslapeProfesor) {
                         request.getSession().setAttribute("err", "Ya existe un evento con fechas y horas que se superponen.");
                         ArrayList<ProfesoresEvento> listaProfesores = eventoDao.listarProfesores();
                         request.setAttribute("lista", listaProfesores);
@@ -561,7 +562,8 @@ public class CoordinadorServlet extends HttpServlet {
                         // Verificar traslape de eventos ANTES de crear el evento
                         int idEvento2 = 0; // No hay ID de evento existente al crear uno nuevo
                         boolean hayTraslape2 = eventoDao.hayTraslapeCoordinador(usuarioLogged.getIdUsuario(), idEvento2, fechaInicioStr2, fechaFinStr2, horaInicioStr2, horaFinStr2, Integer.parseInt(frecuencia2));
-                        if (hayTraslape2) {
+                        boolean hayTraslapeProfesor2 = eventoDao.hayTraslapeProfesor(Integer.parseInt(idProfesor2), fechaInicioStr2, fechaFinStr2, horaInicioStr2, horaFinStr2);
+                        if (hayTraslape2 || hayTraslapeProfesor2) {
                             request.setAttribute("eventoB", evento);
                             request.getSession().setAttribute("err", "Ya existe un evento con fechas y horas que se superponen.");
                             ArrayList<ProfesoresEvento> listaProfesores = eventoDao.listarProfesores();
