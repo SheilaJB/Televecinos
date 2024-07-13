@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class CoordinadoraDao extends BaseDao{
     public ArrayList<UsuarioB> listarCoordinadorasCultura() {
-        String sql = "SELECT idUsuario,nombre,apellido,dni,direccion,correo \n" +
+        String sql = "SELECT idUsuario,nombre,apellido,dni,direccion,correo,genero \n" +
                 "FROM televecinosdb.usuario \n" +
                 "WHERE Rol_idRol = 3 AND TipoCoordinador_idTipoCoordinador = 1 and isBan = 0 \n" +
                 "order by idUsuario desc;";
@@ -26,6 +26,8 @@ public class CoordinadoraDao extends BaseDao{
                 usuarioB.setDni(rs.getString(4));
                 usuarioB.setDireccion(rs.getString(5));
                 usuarioB.setDireccion(rs.getString(6));
+
+
                 listaCoordinadoras.add(usuarioB);
             }
 
@@ -37,7 +39,7 @@ public class CoordinadoraDao extends BaseDao{
     }
 
     public ArrayList<UsuarioB> listarCoordinadorasDeportes() {
-        String sql = "SELECT idUsuario,nombre,apellido,dni,direccion,correo \n" +
+        String sql = "SELECT idUsuario,nombre,apellido,dni,direccion,correo,genero \n" +
                 "FROM televecinosdb.usuario \n" +
                 "WHERE Rol_idRol = 3 AND TipoCoordinador_idTipoCoordinador = 2 and isBan = 0 \n" +
                 "order by idUsuario desc;";
@@ -55,6 +57,7 @@ public class CoordinadoraDao extends BaseDao{
                 usuarioB.setDni(rs.getString(4));
                 usuarioB.setDireccion(rs.getString(5));
                 usuarioB.setDireccion(rs.getString(6));
+                usuarioB.setGenero(rs.getInt("genero"));
                 listaCoordinadoras.add(usuarioB);
             }
 
@@ -87,7 +90,7 @@ public class CoordinadoraDao extends BaseDao{
                     usuarioB.setDireccion(rs.getString(5));
                     usuarioB.setCorreo(rs.getString(6));
                     usuarioB.setTipoCoordinador_idTipoCoordinador(rs.getInt(8));
-
+                    usuarioB.setGenero(rs.getInt("genero"));
                 }
 
             }
@@ -99,7 +102,7 @@ public class CoordinadoraDao extends BaseDao{
     }
 
     public ArrayList<UsuarioB> listarCoordinadorasCulturaPorNombre(String textoBuscar) {
-        String sql = "SELECT idUsuario,nombre,apellido,dni,direccion,correo \n" +
+        String sql = "SELECT idUsuario,nombre,apellido,dni,direccion,correo,genero \n" +
                 "FROM televecinosdb.usuario \n" +
                 "WHERE Rol_idRol = 3 AND TipoCoordinador_idTipoCoordinador = 1 and isBan = 0 and (usuario.nombre like ? or usuario.apellido like ? or usuario.dni like ?) \n" +
                 "order by usuario.idUsuario desc;";
@@ -119,6 +122,7 @@ public class CoordinadoraDao extends BaseDao{
                     usuarioB.setDni(rs.getString(4));
                     usuarioB.setDireccion(rs.getString(5));
                     usuarioB.setDireccion(rs.getString(6));
+                    usuarioB.setGenero(rs.getInt("genero"));
                     listaCoordinadoras.add(usuarioB);
                 }
             }
@@ -132,7 +136,7 @@ public class CoordinadoraDao extends BaseDao{
     }
 
     public ArrayList<UsuarioB> listarCoordinadorasDeportesPorNombre(String textoBuscar) {
-        String sql = "SELECT idUsuario,nombre,apellido,dni,direccion,correo \n" +
+        String sql = "SELECT idUsuario,nombre,apellido,dni,direccion,correo,genero \n" +
                 "FROM televecinosdb.usuario \n" +
                 "WHERE Rol_idRol = 3 AND TipoCoordinador_idTipoCoordinador = 2 and isBan = 0 and (usuario.nombre like ? or usuario.apellido like ? or usuario.dni like ?) \n" +
                 "order by usuario.idUsuario desc;";
@@ -152,6 +156,7 @@ public class CoordinadoraDao extends BaseDao{
                     usuarioB.setDni(rs.getString(4));
                     usuarioB.setDireccion(rs.getString(5));
                     usuarioB.setDireccion(rs.getString(6));
+                    usuarioB.setGenero(rs.getInt("genero"));
                     listaCoordinadoras.add(usuarioB);
                 }
             }
