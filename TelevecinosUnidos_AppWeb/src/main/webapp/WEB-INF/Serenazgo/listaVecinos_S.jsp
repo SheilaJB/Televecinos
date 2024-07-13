@@ -153,6 +153,35 @@
                         <% } %>
                         </tbody>
                     </table>
+                    <%
+                        int paginaActual = (int) request.getAttribute("paginaActual");
+                        int totalPaginas = (int) request.getAttribute("totalPaginas");
+                    %>
+                    <nav>
+                        <ul class="pagination">
+                            <li class="page-item <%= paginaActual == 1 ? "disabled" : "" %>">
+                                <a class="page-link" href="<%=request.getContextPath()%>/SerenazgoServlet?action=listaVecinos_S&page=<%= paginaActual - 1 %>">Anterior</a>
+                            </li>
+                            <% if (totalPaginas > 0) { %>
+                            <% for (int i = 1; i <= totalPaginas; i++) { %>
+                            <li class="page-item <%= i == paginaActual ? "active" : "" %>">
+                                <a class="page-link" href="<%=request.getContextPath()%>/SerenazgoServlet?action=listaVecinos_S&page=<%= i %>"><%= i %></a>
+                            </li>
+                            <% } %>
+                            <% } else { %>
+                            <li class="page-item active">
+                                <a class="page-link" href="#">1</a>
+                            </li>
+                            <% } %>
+                            <li class="page-item <%= paginaActual == totalPaginas || totalPaginas == 0 ? "disabled" : "" %>">
+                                <% if (paginaActual < totalPaginas && totalPaginas > 0) { %>
+                                <a class="page-link" href="<%=request.getContextPath()%>/SerenazgoServlet?action=listaVecinos_S&page=<%= paginaActual + 1 %>">Siguiente</a>
+                                <% } else { %>
+                                <span class="page-link">Siguiente</span>
+                                <% } %>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
         </div>
