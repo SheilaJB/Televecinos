@@ -953,6 +953,7 @@ public class EventoDao extends BaseDao{
                     asistenciaCoordB.setFechaEvento(rs.getString("fecha_evento"));
                     asistenciaCoordB.setHora_inicio(rs.getString("hora_inicio"));
                     asistenciaCoordB.setHora_fin(rs.getString("hora_fin"));
+                    asistenciaCoordB.setNombreEvento(rs.getString("nombreadd"));
                     listaFechasEvento.add(asistenciaCoordB);
                 }
             }

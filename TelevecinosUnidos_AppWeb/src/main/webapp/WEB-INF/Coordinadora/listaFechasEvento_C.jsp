@@ -79,7 +79,49 @@
         <!-- Navbar Start -->
         <jsp:include page="../includes/navbarCoordinador.jsp"></jsp:include>
         <!-- Navbar End -->
+        <!-- Bootstrap JS dependencies -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
+        <!-- Bootstrap JS with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Bootstrap JS and dependencies (Popper.js) -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
+
+        <div id="Nombre del evento">
+            <h3 style="text-align: left; margin-top:20px;margin-bottom:20px;padding: 20px"><%=listaFechas.get(1).getNombreEvento()%></h3>
+        </div>
+        <div class="table-responsive">
+            <table class="table" style="background-color: transparent;">
+                <thead>
+                <tr>
+                    <th scope="col">Fechas</th>
+                    <th scope="col">Hora de Inicio</th>
+                    <th scope="col">Hora de Fin</th>
+                    <th scope="col">Marcar hora de entrada</th>
+                    <th scope="col">Marcar hora de salida</th>
+                    <th scope="col">Subir foto</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% if (listaFechas != null) {
+                    for (AsistenciaCoordB asistenciaCoordB : listaFechas) { %>
+                <tr>
+                    <td><%= asistenciaCoordB.getFechaEvento() %></td>
+                    <td><%= asistenciaCoordB.getHora_inicio() %></td>
+                    <td><%= asistenciaCoordB.getHora_fin() %></td>
+                    <td><button class="btn btn-secondary rounded-pill px-3" type="button">Hora de entrada</button></td>
+                    <td><button class="btn btn-secondary rounded-pill px-3" type="button">Hora de salida</button></td>
+                    <td><button class="btn btn-secondary rounded-pill px-3" type="button">Foto</button></td>
+                </tr>
+                <% } %>
+                <% } %>
+                </tbody>
+            </table>
+        </div>
         <!-- Footer End -->
     </div>
     <!-- Content End -->
