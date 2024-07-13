@@ -173,13 +173,23 @@
                             <li class="page-item <%= paginaActual == 1 ? "disabled" : "" %>">
                                 <a class="page-link" href="<%=request.getContextPath()%>/AdministradorServlet?action=listaVecinos_A&page=<%= paginaActual - 1 %>">Anterior</a>
                             </li>
-                            <% for(int i = 1; i <= totalPaginas; i++) { %>
+                            <% if (totalPaginas > 0) { %>
+                            <% for (int i = 1; i <= totalPaginas; i++) { %>
                             <li class="page-item <%= i == paginaActual ? "active" : "" %>">
                                 <a class="page-link" href="<%=request.getContextPath()%>/AdministradorServlet?action=listaVecinos_A&page=<%= i %>"><%= i %></a>
                             </li>
                             <% } %>
-                            <li class="page-item <%= paginaActual == totalPaginas ? "disabled" : "" %>">
+                            <% } else { %>
+                            <li class="page-item active">
+                                <a class="page-link" href="#">1</a>
+                            </li>
+                            <% } %>
+                            <li class="page-item <%= paginaActual == totalPaginas || totalPaginas == 0 ? "disabled" : "" %>">
+                                <% if (paginaActual < totalPaginas && totalPaginas > 0) { %>
                                 <a class="page-link" href="<%=request.getContextPath()%>/AdministradorServlet?action=listaVecinos_A&page=<%= paginaActual + 1 %>">Siguiente</a>
+                                <% } else { %>
+                                <span class="page-link">Siguiente</span>
+                                <% } %>
                             </li>
                         </ul>
                     </nav>
