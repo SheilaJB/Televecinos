@@ -161,24 +161,25 @@
                 <% if (listaEventos != null) {
                     for (EventoB evento : listaEventos) { %>
                         <div class="col-md-3 mb-4">
+                            <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=verEvento&idEvento=<%= evento.getIdEvento() %>" style="text-decoration: none; color: inherit;">
                             <div class="card" style="max-width: 20rem; margin: auto;border-radius: 15px;">
                                 <img src="ImagenServlet?idImagenEvento=<%=evento.getIdEvento()%>" class="card-img-top rounded-top">
-                                <div class="card-header bg-transparent border-secondary align-items-center text-center"><%= evento.getTipoEvento() %></div>
+                                <a class="card-header text-secondary  align-items-center text-center"><b><%= evento.getTipoEvento() %></b></a>
                                 <div class="card-body">
                                     <h5 class="card-title" style="text-align: left;"><%= evento.getNombre() %></h5>
                                     <% if ("Disponible".equals(evento.getEstadoString())) { %>
-                                    <p class="text-success" style="font-size: small;"><%= evento.getEstadoString() %></p>
+                                    <p class="text-success" style="font-size: small;"><b><%= evento.getEstadoString() %></b></p>
                                     <% } else if ("En curso".equals(evento.getEstadoString())) { %>
-                                    <p class="text-warning" style="font-size: small; "><%= evento.getEstadoString() %></p>
+                                    <p class="text-warning" style="font-size: small; "><b><%= evento.getEstadoString() %></b></p>
                                     <% } else { %>
-                                    <p class="text-danger" style="font-size: small;"><%= evento.getEstadoString() %></p>
+                                    <p class="text-danger" style="font-size: small;"><b><%= evento.getEstadoString() %></b></p>
                                     <% } %>
                                     <p class="text-wrap" style="font-size: small; margin-bottom: 0;">Fecha de inicio: <%= evento.getFecha_inicio() %></p>
                                     <p class="text-wrap" style="font-size: small; margin-bottom: 0;">Fecha de fin: <%= evento.getFecha_fin() %></p>
                                     <p class="text-wrap" style="font-size: small; margin-bottom: 0;">Coordinador: <%= evento.getNombreCoordinador() %></p>
                                     <a class="link-opacity-50-hover" style="font-size: small;" href="<%=request.getContextPath()%>/CoordinadorServlet?action=verEvento&idEvento=<%= evento.getIdEvento() %>">Más información aquí</a>
                                 </div>
-                            </div>
+                            </div></a>
                         </div>
                 <%  }
                 } else { %>

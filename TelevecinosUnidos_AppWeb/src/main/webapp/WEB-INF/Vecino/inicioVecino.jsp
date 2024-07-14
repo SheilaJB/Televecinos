@@ -105,12 +105,12 @@
                     <section id="Titulo_Incidencia" class="card">
                         <div class="card-body card border-secondary">
                             <header>
-                                <h2 class="card-title">¡Puedes reportar incidencias en tu comunidad!</h2>
+                                <h2 class="card-title card-header bg-transparent">¡Puedes reportar incidencias en tu comunidad!</h2>
                             </header>
-                            <article>
+                            <article class="mt-2">
                                 <p>¿Ves algún problema en tu vecindario? Repórtalo a la Municipalidad de San Miguel para que podamos solucionarlo juntos. Tu participación es clave para mantener nuestra comunidad segura y en buen estado.</p>
                             </article>
-                            <footer>
+                            <footer class="mt-2">
                                 <button class="btn btn-success btn-block" onclick="window.location.href='<%=request.getContextPath()%>/VecinoServlet?action=listarIncidencia'">Ver Incidencias</button>
                                 <h6 class="mt-2">¿Has reportado alguna incidencia? <a href="<%=request.getContextPath()%>/VecinoServlet?action=crearIncidencia">Registra tu incidencia aquí</a>.</h6>
                             </footer>
@@ -119,12 +119,12 @@
                     <section id="Titulo_Eventos" class="card" style="margin-top: 5px">
                         <div class="card-body card border-secondary">
                             <header>
-                                <h2 class="card-title">¡No te pierdas nuestros eventos de cultura y deporte!</h2>
+                                <h2 class="card-title card-header bg-transparent">¡No te pierdas nuestros eventos de cultura y deporte!</h2>
                             </header>
-                            <article>
+                            <article class="mt-2">
                                 <p>La Municipalidad de San Miguel te invita a participar en una variedad de eventos emocionantes. ¡Encuentra actividades para toda la familia y descubre nuevas formas de conectar con tu comunidad!</p>
                             </article>
-                            <footer>
+                            <footer class="mt-2">
                                 <button class="btn btn-success btn-block" onclick="window.location.href='<%=request.getContextPath()%>/VecinoServlet?action=verEventos'">Explorar Eventos</button>
                                 <h6 class="mt-2">¿Ya te inscribiste? <a href="<%=request.getContextPath()%>/VecinoServlet?action=eventosInscritos">Revisa tus eventos aquí</a>.</h6>
                             </footer>
