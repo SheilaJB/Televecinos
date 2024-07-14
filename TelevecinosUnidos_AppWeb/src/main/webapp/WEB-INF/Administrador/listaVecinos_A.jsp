@@ -102,10 +102,11 @@
         <% } %>
 
 
-        <div class="container text-center">
-            <div id="Nombre del evento">
-                <h1 style="text-align: center; margin-top:50px;margin-bottom:50px;"><b></b></h1>
-            </div>
+        <div id="Titulo_Incidencias">
+            <h1 class="display-4 text-center" style="margin-top:20px;margin-bottom:20px;padding: 20px">
+                <h1 style="text-align: center"><i class="fas fa-users"></i> Lista de vecinos</h1>
+            </h1>
+            <p class="lead text-center">Revisa la información de un vecino</p>
         </div>
         <!-- Fin de iamgen estatica -->
         <div style="background-color: #f8f9fa; padding: 10px; align-items: center;">
