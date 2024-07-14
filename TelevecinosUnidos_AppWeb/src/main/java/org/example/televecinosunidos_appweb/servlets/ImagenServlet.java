@@ -15,17 +15,31 @@ public class ImagenServlet extends HttpServlet {
 
         String idImagenEvento = request.getParameter("idImagenEvento");
         String idImagenIncidencia = request.getParameter("idImagenIncidencia");
+        String action = request.getParameter("action"); // Obtener la acción de la solicitud
 
         System.out.println("idImagenIncidencia: " + idImagenIncidencia);
-        if (idImagenEvento != null) {
-            int id = Integer.parseInt(idImagenEvento);
-            String sql = "SELECT * FROM televecinosdb.eventos WHERE idEventos =";
-            imagenDao.listarImagen(sql, id, response);
-        } else if (idImagenIncidencia != null) {
-            int id = Integer.parseInt(idImagenIncidencia);
-            String sql = "SELECT * FROM televecinosdb.incidencias WHERE idIncidencias =";
 
-            imagenDao.listarImagen(sql, id, response);
+        switch (action) {
+            case "evento":
+                int id = Integer.parseInt(idImagenEvento);
+                String sqlEvento = "SELECT foto, nombreFoto FROM televecinosdb.eventos WHERE idEventos =";
+                imagenDao.listarImagen(sqlEvento, id, response);
+                break;
+            case "incidencia":
+                int id2 = Integer.parseInt(idImagenIncidencia);
+                String sqlIncidencia = "SELECT foto, nombreFoto FROM televecinosdb.incidencias WHERE idIncidencias =";
+                imagenDao.listarImagen(sqlIncidencia, id2, response);
+                break;
+            case "galeria":
+                int idEvento = Integer.parseInt(request.getParameter("idEvento"));
+                String nombreFoto = request.getParameter("nombreFoto");
+                int indiceFoto = Integer.parseInt(nombreFoto.substring("foto".length()));
+                String sqlGaleria = "SELECT foto" + indiceFoto + " AS foto, nombreFoto" + indiceFoto + " AS nombreFoto FROM galeria WHERE eventos_idEventos = ";
+                imagenDao.listarImagen(sqlGaleria, idEvento, response);
+                break;
+            default:
+                // Manejo de acción no reconocida
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Acción no válida");
         }
     }
 
