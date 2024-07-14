@@ -162,7 +162,7 @@
                     <form>
                         <div class="rounded h-100 p-4" style="background-color: #ffb703;">
                             <div class="mb-3">
-                                <img src="ImagenServlet?idImagenEvento=<%= request.getAttribute("evento") != null ? ((EventoB) request.getAttribute("evento")).getIdEvento() : "" %>" class="img-responsive" alt="" style="width: 100%; height: auto;">
+                                <img src="ImagenServlet?action=evento&idImagenEvento=<%= request.getAttribute("evento") != null ? ((EventoB) request.getAttribute("evento")).getIdEvento() : "" %>" class="img-responsive" alt="" style="width: 100%; height: auto;">
                             </div>
                         </div>
                     </form>

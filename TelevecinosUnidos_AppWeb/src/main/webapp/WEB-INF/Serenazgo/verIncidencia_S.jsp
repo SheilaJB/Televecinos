@@ -203,7 +203,7 @@
                                         No se ingresó ninguna imagen de referencia
                                     </div>
                                     <%}else{%>
-                                    <img src="ImagenServlet?idImagenIncidencia=<%=incidencia.getIdIncidencias()%>" class="img-responsive" alt="" style="width: 100%; height: auto;"  />
+                                    <img src="ImagenServlet?action=incidencia&idImagenIncidencia=<%=incidencia.getIdIncidencias()%>" class="img-responsive" alt="" style="width: 100%; height: auto;"  />
                                     <%}%>
                                 </div>
                             </div>

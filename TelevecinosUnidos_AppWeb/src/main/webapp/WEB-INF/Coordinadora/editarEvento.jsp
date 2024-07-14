@@ -353,7 +353,7 @@
                             </div>
                             <!-- Contenedor para la previsualización de la imagen -->
                             <div class="mb-3">
-                                <img id="preview" src="ImagenServlet?idImagenEvento=<%=evento.getIdEvento()%>" alt="Vista previa de la imagen" class="img-thumbnail" style="display: <%=evento.getFoto() != null ? "block" : "none"%>;">
+                                <img id="preview" src="ImagenServlet?action=evento&idImagenEvento=<%=evento.getIdEvento()%>" alt="Vista previa de la imagen" class="img-thumbnail" style="display: <%=evento.getFoto() != null ? "block" : "none"%>;">
 
                             </div>
                         </div>
@@ -373,20 +373,6 @@
                         });
                     </script>
 
-                    <!-- Galería -->
-                    <div class="col-sm-12 col-xl-6">
-                        <div class="rounded h-100 p-4" style="background-color: #8ecae6;">
-                            <h5 class="mb-4" style="color:#023047;"><b>Subir fotos para la galeria (máx 3)</b></h5>
-                            <div class="mb-3">
-                                <label for="foto" class="form-label" style="color:#023047;"><b>Formatos permitidos: .jpg .jpeg o .png</b></label>
-                                <input class="form-control" type="file" id="fotoGaleria" accept=".jpg, .jpeg, .png" name="foto">
-                            </div>
-                            <!-- Contenedor para la previsualización de la imagen -->
-                            <div class="mb-3">
-                                <img id="previewGaleria" src="<%=evento.getFoto()%>" alt="Vista previa de la imagen" class="img-thumbnail" style="display: <%=evento.getFoto() != null ? "block" : "none"%>;">
-                            </div>
-                        </div>
-                    </div>
 
                     <script>
                         document.getElementById('fotoGaleria').addEventListener('change', function(event) {

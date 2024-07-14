@@ -125,7 +125,7 @@
                             </div>
                             <!-- Contenedor para la previsualización de la imagen -->
                             <div class="mb-3">
-                                <img id="preview" src="ImagenServlet?idImagenIncidencia=<%= incidenciaB.getIdIncidencias() %>" alt="Vista previa de la imagen" class="img-thumbnail" style="display: <%= incidenciaB.getFoto() != null ? "block" : "none"%>;">
+                                <img id="preview" src="ImagenServlet?action=incidencia&idImagenIncidencia=<%= incidenciaB.getIdIncidencias() %>" alt="Vista previa de la imagen" class="img-thumbnail" style="display: <%= incidenciaB.getFoto() != null ? "block" : "none"%>;">
 
                             </div>
                             <script>

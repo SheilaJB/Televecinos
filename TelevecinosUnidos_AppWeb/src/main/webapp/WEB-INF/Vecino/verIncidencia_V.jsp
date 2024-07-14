@@ -154,7 +154,13 @@
                             <label class="form-label"><b>Foto del incidente</b></label>
                             <div class="rounded h-100 p-4" style="background-color: #ffb703;">
                                 <div class="mb-3">
-                                    <img src="ImagenServlet?idImagenIncidencia=<%= request.getAttribute("incidencia") != null ? ((IncidenciasB) request.getAttribute("incidencia")).getIdIncidencias() : "" %>" class="img-responsive" alt="" style="width: 100%; height: auto;" />
+                                    <%if(incidenciasB.getNombreFoto() == null || incidenciasB.getNombreFoto().equals("") ){%>
+                                    <div style="color: white;">
+                                        No se ingresó ninguna imagen de referencia
+                                    </div>
+                                    <%}else{%>
+                                    <img src="ImagenServlet?action=incidencia&idImagenIncidencia=<%=incidenciasB.getIdIncidencias()%>" class="img-responsive" alt="" style="width: 100%; height: auto;"  />
+                                    <%}%>
                                 </div>
                             </div>
 
