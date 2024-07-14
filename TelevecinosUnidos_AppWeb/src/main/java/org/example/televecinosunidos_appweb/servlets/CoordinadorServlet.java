@@ -456,6 +456,15 @@ public class CoordinadorServlet extends HttpServlet {
                         request.setAttribute("cantidadVacantes", cantidadVacantes);
                         request.setAttribute("materiales", materiales);
 
+                        String NO= "NO";
+                        if (idFrecuencia.equals("2")){
+                            request.setAttribute("opcionesDias", opcionesDias);
+                            request.setAttribute("opcionesDias1", NO);
+                        }else{
+                            request.setAttribute("opcionesDias", NO);
+                            request.setAttribute("opcionesDias1", opcionesDias);
+                        }
+
                         request.getRequestDispatcher("WEB-INF/Coordinadora/creacionEvento.jsp").forward(request, response);
                         return;
                     } else {
