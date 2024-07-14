@@ -227,9 +227,20 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <form action="<%=request.getContextPath()%>/CoordinadorServlet?action=cargarFotos" method="post" enctype="multipart/form-data">
+                                <form action="<%=request.getContextPath()%>/CoordinadorServlet?action=subirGaleria" method="post" enctype="multipart/form-data">
                                     <input type="hidden" name="idEvento" id="idEventoInput">
-                                    <input type="file" name="fotos" multiple accept="image/*">
+                                    <div>
+                                        <label for="foto1">Foto 1:</label>
+                                        <input type="file" name="foto1" accept="image/*" required>
+                                    </div>
+                                    <div>
+                                        <label for="foto2">Foto 2:</label>
+                                        <input type="file" name="foto2" accept="image/*" required>
+                                    </div>
+                                    <div>
+                                        <label for="foto3">Foto 3:</label>
+                                        <input type="file" name="foto3" accept="image/*" required>
+                                    </div>
                                     <button type="submit" class="btn btn-primary">Subir fotos</button>
                                 </form>
                             </div>
@@ -245,9 +256,7 @@
                         abrirModalBtn.forEach(function(btn) {
                             btn.addEventListener('click', function() {
                                 let idEvento = this.getAttribute('data-evento-id');
-
                                 document.getElementById('idEventoInput').value = idEvento;
-
                                 const subirFotosModal = new bootstrap.Modal(document.getElementById('subirFotosModal'));
                                 subirFotosModal.show();
                             });

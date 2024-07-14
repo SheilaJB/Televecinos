@@ -155,6 +155,31 @@ public class CoordinadorServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/CoordinadorServlet?action=lista");
                 return;
 
+            case "subirGaleria":
+                int idTipoEvento1 = usuarioLogged.getTipoCoordinador_idTipoCoordinador();
+                int paginaActual1 = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
+                int eventosPorPagina1 = 5; // Número de eventos por página
+
+                // Obtener la lista completa de eventos
+                ArrayList<EventoB> listaEventosPropios1 = eventoDao.listarEventosPropios(idTipoEvento1);
+
+                // Calcular total de páginas
+                int totalEventos1 = listaEventosPropios1.size();
+                int totalPaginas1 = (int) Math.ceil((double) totalEventos1 / eventosPorPagina1);
+
+                // Obtener los eventos de la página actual
+                int desde1 = (paginaActual1 - 1) * eventosPorPagina1;
+                int hasta1 = Math.min(desde1 + eventosPorPagina1, totalEventos1);
+                ArrayList<EventoB> eventosPaginados1 = new ArrayList<>(listaEventosPropios1.subList(desde1, hasta1));
+
+                // Enviar atributos al JSP
+                vista = "WEB-INF/Coordinadora/subirGaleria.jsp";
+                request.setAttribute("lista", eventosPaginados1);
+                request.setAttribute("paginaActual", paginaActual1);
+                request.setAttribute("totalPaginas", totalPaginas1);
+                request.getRequestDispatcher(vista).forward(request, response);
+                break;
+
 
             //Incidencia
             case "listarIncidencia":
@@ -937,6 +962,30 @@ public class CoordinadorServlet extends HttpServlet {
                     request.setAttribute("paginaActual", paginaI);
                     request.setAttribute("totalPaginas", totalPaginasI);
                     request.getRequestDispatcher("WEB-INF/Coordinadora/listaIncidencias_C.jsp").forward(request, response);
+                }
+                break;
+            case "subirGaleria":
+                try {
+                    int idEvento6 = Integer.parseInt(request.getParameter("idEvento"));
+                    Map<String, String> nombresFotos = new HashMap<>();
+
+                    for (int i = 1; i <= 3; i++) {
+                        Part part6 = request.getPart("foto" + i);
+                        if (part6 != null && part6.getSize() > 0) {
+                            String fileName6 = part6.getSubmittedFileName();
+                            nombresFotos.put("nombreFoto" + i, fileName6);
+                            try (InputStream fileContent6 = part6.getInputStream()) {
+                                eventoDao.guardarFoto(idEvento6, fileName6, fileContent6, i);
+                            }
+                        } else {
+                            nombresFotos.put("nombreFoto" + i, null);
+                        }
+                    }
+                    request.getSession().setAttribute("info", "Fotos cargadas exitosamente");
+                    response.sendRedirect(request.getContextPath() + "/CoordinadorServlet?action=subirGaleria");
+                } catch (Exception e) {
+                    request.getSession().setAttribute("error", "Error al cargar las fotos");
+                    response.sendRedirect(request.getContextPath() + "/CoordinadorServlet?action=subirGaleria");
                 }
                 break;
             default:

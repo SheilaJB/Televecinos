@@ -67,12 +67,26 @@
         <!-- Navbar End -->
 
         <!-- Lista de eventos -->
-        <div id="Nombre del evento">
-            <h1 class="display-4 text-center" style="margin-top:20px;margin-bottom:20px;padding: 20px">
-                <h1 style="text-align: center"><i class="fas fa-calendar-alt"> </i>¡Tus propios eventos!</h1>
-            </h1>
-            <p class="lead text-center">Crea, modifica y elimina tus propios eventos</p>
-        </div>
+        <section id="titulo-eventos" class="container my-5">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h1 style="text-align: center"><i class="fas fa-calendar-alt"></i> Gestiona tus eventos</h1>
+                    <p class="lead">
+                        Aquí puedes administrar y editar los eventos que has creado.
+                    </p>
+                    <p class="lead">
+                        **Importante** ¡No olvides subir una galería de fotos al finalizar cada evento para compartirla con la comunidad!
+                    </p>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-6" style="text-align: center">
+                    <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=subirGaleria" class="btn btn-outline-secondary btn-lg btn-block mt-3">
+                        <i class="fas fa-camera"></i> Subir fotos
+                    </a>
+                </div>
+            </div>
+        </section>
 
         <% if (session.getAttribute("info") != null) { %>
         <div class="alert alert-success" role="alert">

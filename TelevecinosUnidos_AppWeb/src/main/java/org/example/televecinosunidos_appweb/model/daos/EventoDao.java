@@ -5,18 +5,20 @@ import org.example.televecinosunidos_appweb.model.beans.AsistenciaCoordB;
 import org.example.televecinosunidos_appweb.model.beans.EventoB;
 import org.example.televecinosunidos_appweb.model.beans.ProfesoresEvento;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDate;
-import java.time.DayOfWeek;
-import java.time.LocalTime;
 import java.time.temporal.TemporalAdjusters;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
+import java.util.logging.Logger;
 
 
 public class EventoDao extends BaseDao{
+
+    public static final Logger logger = Logger.getLogger(EventoDao.class.getName());
 
     //Función lista de eventos
     public ArrayList<EventoB> listarEventosPropios(int idTipoEvento) {
@@ -1623,6 +1625,55 @@ public class EventoDao extends BaseDao{
             e.printStackTrace();
         }
 
+        return false;
+    }
+
+    public void guardarFoto(int idEvento, String nombreFoto, InputStream contenidoFoto, int indiceFoto) throws SQLException {
+        boolean galeriaExiste = verificarExistenciaGaleria(idEvento);
+
+        String sql;
+        if (galeriaExiste) {
+            sql = "UPDATE galeria SET foto" + indiceFoto + " = ?, nombreFoto" + indiceFoto + " = ? WHERE eventos_idEventos = ?";
+        } else {
+            sql = "INSERT INTO galeria (eventos_idEventos, foto" + indiceFoto + ", nombreFoto" + indiceFoto + ") VALUES (?, ?, ?)";
+        }
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            if (galeriaExiste) {
+                pstmt.setBinaryStream(1, contenidoFoto);
+                pstmt.setString(2, nombreFoto);
+                pstmt.setInt(3, idEvento);
+            } else {
+                pstmt.setInt(1, idEvento);
+                pstmt.setBinaryStream(2, contenidoFoto);
+                pstmt.setString(3, nombreFoto);
+            }
+            int rowsAffected = pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new SQLException("Error al guardar la foto en la base de datos", e);
+        } finally {
+            if (contenidoFoto != null) {
+                try {
+                    contenidoFoto.close();
+                } catch (IOException e) {
+                    logger.severe("Error al cerrar el InputStream: " + e.getMessage());
+                }
+            }
+        }
+    }
+
+    public boolean verificarExistenciaGaleria(int idEvento) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM galeria WHERE eventos_idEventos = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, idEvento);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        }
         return false;
     }
 
