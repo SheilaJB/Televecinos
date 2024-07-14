@@ -29,6 +29,7 @@
     <!-- Libraries Stylesheet -->
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
     <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Customized Bootstrap Stylesheet -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <!-- Template Stylesheet -->
@@ -202,15 +203,6 @@
             </nav>
         </div>
 
-        <script>
-            function viewFunction(idEvento) {
-                window.location.href = '<%=request.getContextPath()%>/CoordinadorServlet?action=verEvento&idEvento=' + idEvento;
-            }
-
-            function editFunction(idEvento) {
-                window.location.href = '<%=request.getContextPath()%>/CoordinadorServlet?action=editarEvento&idEvento=' + idEvento;
-            }
-        </script>
 
         <!-- Footer Start -->
         <div class="container-fluid pt-4 px-4">
@@ -228,7 +220,33 @@
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 </div>
+<script>
+    function viewFunction(idEvento) {
+        window.location.href = '<%=request.getContextPath()%>/CoordinadorServlet?action=verEvento&idEvento=' + idEvento;
+    }
+    function editFunction(idEvento) {
+        window.location.href = '<%=request.getContextPath()%>/CoordinadorServlet?action=editarEvento&idEvento=' + idEvento;
+    }
+</script>
 
+<script>
+    function confirmDelete(eventId) {
+        Swal.fire({
+            title: 'Confirmar Eliminación',
+            text: "¿Estás seguro de que deseas eliminar este incidente?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Sí, eliminarlo',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '<%=request.getContextPath()%>/CoordinadorServlet?action=borrarEvento&idEvento=' + eventId;
+            }
+        });
+    }
+</script>
 <!-- JavaScript Libraries -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
