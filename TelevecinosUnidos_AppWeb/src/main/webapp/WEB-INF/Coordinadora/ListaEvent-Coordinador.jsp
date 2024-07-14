@@ -2,9 +2,9 @@
 <%@ page import="java.io.PrintWriter" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="org.example.televecinosunidos_appweb.model.beans.EventoB" %>
-<% ArrayList<EventoB> lista = (ArrayList<EventoB>) request.getAttribute("lista"); %>
-<jsp:useBean id="textoBuscarEvento" scope="request" type="java.lang.String" class="java.lang.String"/>
+
 <%
+    ArrayList<EventoB> lista = (ArrayList<EventoB>) request.getAttribute("lista");
     int paginaActual = (int) request.getAttribute("paginaActual");
     int totalPaginas = (int) request.getAttribute("totalPaginas");
 %>
@@ -35,8 +35,6 @@
     <link href="css/style.css" rel="stylesheet">
     <link href="css/style_vec.css" rel="stylesheet">
     <style>
-
-
         .btn-sm-square {
             width: 20px;
             height: 20px;
@@ -134,7 +132,6 @@
                         </div>
                     </div>
                 </form>
-
             </div>
             <div class="table-responsive">
                 <table id="eventosTable" class="table table-striped table-hover" style="background-color: transparent;">
@@ -156,17 +153,17 @@
                         <td><%= eventoB.getFrecuenciaString() %></td>
                         <td>
                             <% if ("Disponible".equals(eventoB.getEstadoString())) { %>
-                            <a onclick="viewFunction(<%=eventoB.getidEvento()%>)">
+                            <a onclick="viewFunction(<%=eventoB.getIdEvento()%>)">
                                 <button type="button" class="btn btn-primary btn-sm-square m-1"><i class="fas fa-eye fa-xs"></i></button>
                             </a>
-                            <a onclick="editFunction(<%=eventoB.getidEvento()%>)">
+                            <a onclick="editFunction(<%=eventoB.getIdEvento()%>)">
                                 <button type="button" class="btn btn-success btn-sm-square m-1"><i class="fas fa-pencil-alt fa-xs"></i></button>
                             </a>
-                            <a onclick="confirmDelete(<%=eventoB.getidEvento()%>)">
+                            <a onclick="confirmDelete(<%=eventoB.getIdEvento()%>)">
                                 <button type="button" class="btn btn-danger btn-sm-square m-1"><i class="fas fa-trash-alt fa-xs"></i></button>
                             </a>
                             <% } else { %>
-                            <a onclick="viewFunction(<%=eventoB.getidEvento()%>)">
+                            <a onclick="viewFunction(<%=eventoB.getIdEvento()%>)">
                                 <button type="button" class="btn btn-primary btn-sm-square m-1" ><i class="fas fa-eye fa-xs"></i></button>
                             </a>
                             <button type="button" class="btn btn-success btn-sm-square m-1" disabled><i class="fas fa-pencil-alt fa-xs"></i></button>
@@ -205,14 +202,14 @@
             </nav>
         </div>
 
-
         <script>
             function viewFunction(idEvento) {
-                window.location.href ='<%=request.getContextPath()%>/CoordinadorServlet?action=verEvento&idEvento=' +idEvento;
+                window.location.href = '<%=request.getContextPath()%>/CoordinadorServlet?action=verEvento&idEvento=' + idEvento;
             }
 
             function editFunction(idEvento) {
-                window.location.href ='<%=request.getContextPath()%>/CoordinadorServlet?action=editarEvento&idEvento=' + idEvento;}
+                window.location.href = '<%=request.getContextPath()%>/CoordinadorServlet?action=editarEvento&idEvento=' + idEvento;
+            }
         </script>
 
         <!-- Footer Start -->
@@ -227,9 +224,6 @@
         </div>
         <!-- Footer End -->
     </div>
-
-
-
 
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>

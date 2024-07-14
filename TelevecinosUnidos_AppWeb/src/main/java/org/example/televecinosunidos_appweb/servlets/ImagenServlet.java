@@ -13,29 +13,25 @@ public class ImagenServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ImagenDao imagenDao = new ImagenDao();
 
-        String idImagenEvento = request.getParameter("idImagenEvento");
-        String idImagenIncidencia = request.getParameter("idImagenIncidencia");
         String action = request.getParameter("action"); // Obtener la acción de la solicitud
-
-        System.out.println("idImagenIncidencia: " + idImagenIncidencia);
 
         switch (action) {
             case "evento":
-                int id = Integer.parseInt(idImagenEvento);
+                int idEvento = Integer.parseInt(request.getParameter("idImagenEvento"));
                 String sqlEvento = "SELECT foto, nombreFoto FROM televecinosdb.eventos WHERE idEventos =";
-                imagenDao.listarImagen(sqlEvento, id, response);
+                imagenDao.listarImagen(sqlEvento, idEvento, response);
                 break;
             case "incidencia":
-                int id2 = Integer.parseInt(idImagenIncidencia);
+                int idIncidencia = Integer.parseInt(request.getParameter("idImagenIncidencia"));
                 String sqlIncidencia = "SELECT foto, nombreFoto FROM televecinosdb.incidencias WHERE idIncidencias =";
-                imagenDao.listarImagen(sqlIncidencia, id2, response);
+                imagenDao.listarImagen(sqlIncidencia, idIncidencia, response);
                 break;
             case "galeria":
-                int idEvento = Integer.parseInt(request.getParameter("idEvento"));
+                int idGaleria = Integer.parseInt(request.getParameter("idEvento"));
                 String nombreFoto = request.getParameter("nombreFoto");
-                int indiceFoto = Integer.parseInt(nombreFoto.substring("foto".length()));
+                int indiceFoto = Integer.parseInt(nombreFoto.substring(4)); // Asumiendo que 'foto' es la base del nombre
                 String sqlGaleria = "SELECT foto" + indiceFoto + " AS foto, nombreFoto" + indiceFoto + " AS nombreFoto FROM galeria WHERE eventos_idEventos = ";
-                imagenDao.listarImagen(sqlGaleria, idEvento, response);
+                imagenDao.listarImagen(sqlGaleria, idGaleria, response);
                 break;
             default:
                 // Manejo de acción no reconocida

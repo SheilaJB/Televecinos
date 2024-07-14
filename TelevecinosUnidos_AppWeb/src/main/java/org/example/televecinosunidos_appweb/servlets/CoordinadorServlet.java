@@ -981,7 +981,7 @@ public class CoordinadorServlet extends HttpServlet {
                             nombresFotos.put("nombreFoto" + i, null);
                         }
                     }
-                    request.getSession().setAttribute("info", "Fotos cargadas exitosamente");
+                    request.getSession().setAttribute("info", "Fotos cargadas exitosamente.");
                     response.sendRedirect(request.getContextPath() + "/CoordinadorServlet?action=subirGaleria");
                 } catch (Exception e) {
                     request.getSession().setAttribute("error", "Error al cargar las fotos");

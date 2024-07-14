@@ -129,6 +129,13 @@
                     </p>
                 </div>
             </div>
+            <div class="row justify-content-center">
+                <div class="col-md-6" style="text-align: center">
+                    <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=lista" class="btn btn-outline-secondary btn-lg btn-block mt-3">
+                        <i class="fas fa-calendar"></i> Regresar a lista de eventos propios
+                    </a>
+                </div>
+            </div>
         </section>
 
         <% if (session.getAttribute("info") != null) { %>
