@@ -5,6 +5,12 @@
 <%
     ArrayList<EventoB> listaEventos = (ArrayList<EventoB>) request.getAttribute("listaEventos");
 %>
+<jsp:useBean id="textoBuscarEventoG" scope="request" type="java.lang.String" class="java.lang.String"/>
+
+<%
+    int paginaActual = (int) request.getAttribute("paginaActual");
+    int totalPaginas = (int) request.getAttribute("totalPaginas");
+%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -90,67 +96,64 @@
         <!-- Mostrar eventos de deporte-->
 
 
-        <div id="Barra-Filtro" >
-
-            <script>
-                function crearEvento() {
-                    window.location.href = 'creacionEvento.html';
-                }
-            </script>
-            <script>
-                function filtrar() {
-                    var input, filtro, ul, li, txtValue, categoria, estado;
-                    input = document.getElementById('filtroInput');
-                    filtro = input.value.toUpperCase();
-                    ul = document.getElementById("lista");
-                    li = ul.getElementsByTagName('li');
-                    categoria = document.getElementById('filtroCategoria').value;
-                    estado = document.getElementById('filtroEstado').value;
-                    for (var i = 0; i < li.length; i++) {
-                        txtValue = li[i].textContent || li[i].innerText;
-                        var visible = true;
-                        if (txtValue.toUpperCase().indexOf(filtro) === -1) {
-                            visible = false;
-                        }
-                        if (categoria !== 'todos' && !txtValue.includes(categoria)) {
-                            visible = false;
-                        }
-                        if (estado !== 'todos' && !txtValue.includes(estado)) {
-                            visible = false;
-                        }
-                        li[i].style.display = visible ? "" : "none";
-                    }
-                }
-            </script>
-        </div>
-        <div id="Titulo_Eventos ">
-            <h1 style="text-align: center; margin-top:70px;margin-bottom:70px;">Descubre y Participa en Nuestros Vibrantes Eventos</h1>
-            <p style="text-align: center; font-size: normal; margin-top: 50px; margin-bottom: 50px;padding: 20px;">
-                Sumérgete en la acción con nuestros eventos deportivos. ¡Desde emocionantes partidos hasta desafiantes competiciones, tenemos algo para cada aficionado al deporte! ¡No te pierdas la diversión y únete a nosotros para vivir experiencias inolvidables!
-            </p>
-        </div>
-
-        <div style="background-color: #FFB703 ; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
-            <div class="row justify-content-auto align-items-auto">
-                <div class="col-md-6 mb-2">
-                    <input type="text" class="form-control" id="filtroInput" placeholder="Buscar...">
-                </div>
-
-                <div class="col-md-2 mb-2">
-                    <select id="filtroEstado" class="form-select">
-                        <option selected>Estado</option>
-                        <option value="disponible">Disponible</option>
-                        <option value="enCurso">En curso</option>
-                        <option value="finalizado">Finalizado</option>
-                    </select>
-                </div>
-                <div class="col-md-2 mb-2">
-                    <button type="button" class="btn btn-primary w-100" onclick="filtrar()"><b>Filtrar</b></button>
-                </div>
-                <div class="col-md-2 mb-2">
-                    <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=crearEvento" class="btn btn-primary w-100">Crear evento</a>
+        <section id="titulo-eventos" class="container my-5">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h1 style="text-align: center"><i class="fas fa-calendar-alt"></i> ¡Eventos organizados por los coordinadores de San Miguel!</h1>
+                    <p class="lead">
+                        Puedes buscar eventos de tu área y ver los eventos que has creado.
+                    </p>
                 </div>
             </div>
+            <div class="row justify-content-center">
+                <div class="col-md-6" style="text-align: center">
+                    <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=lista" class="btn btn-outline-secondary btn-lg btn-block mt-3">
+                        Ver mis propios eventos
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <div style="background-color: #FFB703; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
+            <form method="post" action="<%=request.getContextPath()%>/CoordinadorServlet?action=buscarEvento">
+                <div class="row justify-content">
+                    <!-- Busqueda por nombre de evento -->
+                    <div class="col-md-2 mb-2">
+                        <input type="text" class="form-control" id="filtroInput" placeholder="Buscar..." name="textoBuscarEventoG"
+                               value="<%=request.getAttribute("textoBuscarEventoG") != null ? request.getAttribute("textoBuscarEventoG") : ""%>">
+                    </div>
+                    <div class="col-md-2 mb-2">
+                        <input type="date" class="form-control" name="fechaG"
+                               value="<%=request.getAttribute("fechaG") != null ? request.getAttribute("fechaG") : ""%>">
+                    </div>
+                    <div class="col-md-2 mb-2">
+                        <select class="form-select" name="frecuenciaG">
+                            <option selected disabled>Frecuencia</option>
+                            <option value="1" <%= "1".equals(request.getAttribute("frecuenciaG")) ? "selected" : "" %>>Semanal</option>
+                            <option value="2" <%= "2".equals(request.getAttribute("frecuenciaG")) ? "selected" : "" %>>Dos veces por semana</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2 mb-2">
+                        <select class="form-select" name="estadoG">
+                            <option selected disabled>Estado</option>
+                            <option value="1" <%= "1".equals(request.getAttribute("estadoG")) ? "selected" : "" %>>Disponible</option>
+                            <option value="2" <%= "2".equals(request.getAttribute("estadoG")) ? "selected" : "" %>>En curso</option>
+                            <option value="3" <%= "3".equals(request.getAttribute("estadoG")) ? "selected" : "" %>>Finalizado</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1 mb-2">
+                        <button class="btn btn-primary w-100" type="submit">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    <div class="col-md-1 mb-2">
+                        <a type="reset" class="btn btn-primary w-100 d-flex align-items-center justify-content-center" href="<%=request.getContextPath()%>/CoordinadorServlet?action=eventoGeneralesC">Limpiar</a>
+                    </div>
+                    <div class="col-md-2 mb-2">
+                        <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=crearEvento" class="btn btn-primary w-100">Crear evento</a>
+                    </div>
+                </div>
+            </form>
         </div>
         <div style="background-color: #f8f9fa; padding: 20px; " >
 
@@ -162,11 +165,17 @@
                                 <img src="ImagenServlet?idImagenEvento=<%=evento.getIdEvento()%>" class="card-img-top rounded-top">
                                 <div class="card-body">
                                     <h5 class="card-title" style="text-align: left;"><%= evento.getNombre() %></h5>
-                                    <p class="card-status" style="font-size: small; margin-bottom: 0;">Estado: <%= evento.getEstadoString() %></p>
+                                    <% if ("Disponible".equals(evento.getEstadoString())) { %>
+                                    <p class="text-success" style="font-size: small;"><%= evento.getEstadoString() %></p>
+                                    <% } else if ("En curso".equals(evento.getEstadoString())) { %>
+                                    <p class="text-warning" style="font-size: small; "><%= evento.getEstadoString() %></p>
+                                    <% } else { %>
+                                    <p class="text-danger" style="font-size: small;"><%= evento.getEstadoString() %></p>
+                                    <% } %>
                                     <p class="text-wrap" style="font-size: small; margin-bottom: 0;">Fecha de inicio: <%= evento.getFecha_inicio() %></p>
                                     <p class="text-wrap" style="font-size: small; margin-bottom: 0;">Fecha de fin: <%= evento.getFecha_fin() %></p>
-                                    <p class="text-wrap" style="font-size: small; margin-bottom: 0;"><%= evento.getDescripcion() %></p>
-                                    <a class="link-opacity-50-hover" style="font-size: small;" href="<%=request.getContextPath()%>/CoordinadorServlet?action=verEvento&idEvento=<%= evento.getidEvento() %>">Más información aquí</a>
+                                    <p class="text-wrap" style="font-size: small; margin-bottom: 0;">Coordinador: <%= evento.getNombreCoordinador() %></p>
+                                    <a class="link-opacity-50-hover" style="font-size: small;" href="<%=request.getContextPath()%>/CoordinadorServlet?action=verEvento&idEvento=<%= evento.getIdEvento() %>">Más información aquí</a>
                                 </div>
                             </div>
                         </div>
@@ -175,72 +184,33 @@
                 <p>No hay eventos disponibles</p>
                 <% } %>
             </div>
-
-
-
-
-
-
-
-
-
-            <div  style="display: flex; justify-content: center; align-items: center;">
-                <!-- Paginación-->
-                <section class="paginacion" >
-                    <ul style="list-style: none;padding: 0;margin: 0;display: flex;">
-                        <div style="background-color: white ; padding: 5px; margin:10px">
-                            <li style="margin: 0 5px;"><a class="link-opacity-50-hover" class="link-opacity-50-hover" href="#" class="active">1</a></li>
-                        </div>
-                        <div style="background-color:white ; padding: 5px;margin:10px">
-                            <li style="margin: 0 5px;"><a class="link-opacity-50-hover" class="link-opacity-50-hover" href="#" class="active">2</a></li>
-                        </div>
-                        <div style="background-color: white ; padding: 5px;margin:10px">
-                            <li style="margin: 0 5px;"><a class="link-opacity-50-hover" class="link-opacity-50-hover" href="#" class="active">3</a></li>
-                        </div>
-                        <div style="background-color: white; padding: 5px;margin:10px">
-                            <li style="margin: 0 5px;"><a class="link-opacity-50-hover" class="link-opacity-50-hover" href="#" class="active">4</a></li>
-                        </div>
-                        <div style="background-color: white; padding: 5px;margin:10px">
-                            <li style="margin: 0 5px;"><a class="link-opacity-50-hover" class="link-opacity-50-hover" href="# class="active">5</a></li>
-                        </div>
-
-                    </ul>
-                </section>
-            </div>
+            <nav>
+                <ul class="pagination">
+                    <li class="page-item <%= paginaActual == 1 ? "disabled" : "" %>">
+                        <a class="page-link" href="<%=request.getContextPath()%>/CoordinadorServlet?action=eventoGeneralesC&page=<%= paginaActual - 1 %>">Anterior</a>
+                    </li>
+                    <% if (totalPaginas > 0) { %>
+                    <% for (int i = 1; i <= totalPaginas; i++) { %>
+                    <li class="page-item <%= i == paginaActual ? "active" : "" %>">
+                        <a class="page-link" href="<%=request.getContextPath()%>/CoordinadorServlet?action=eventoGeneralesC&page=<%= i %>"><%= i %></a>
+                    </li>
+                    <% } %>
+                    <% } else { %>
+                    <li class="page-item active">
+                        <a class="page-link" href="#">1</a>
+                    </li>
+                    <% } %>
+                    <li class="page-item <%= paginaActual == totalPaginas || totalPaginas == 0 ? "disabled" : "" %>">
+                        <% if (paginaActual < totalPaginas) { %>
+                        <a class="page-link" href="<%=request.getContextPath()%>/CoordinadorServlet?action=eventoGeneralesC&page=<%= paginaActual + 1 %>">Siguiente</a>
+                        <% } else { %>
+                        <span class="page-link">Siguiente</span>
+                        <% } %>
+                    </li>
+                </ul>
+            </nav>
         </div>
 
-
-        <div id="Barra-Filtro" >
-
-
-            <script>
-                function filtrar() {
-                    var input, filtro, ul, li, txtValue, categoria, estado;
-                    input = document.getElementById('filtroInput');
-                    filtro = input.value.toUpperCase();
-                    ul = document.getElementById("lista");
-                    li = ul.getElementsByTagName('li');
-                    categoria = document.getElementById('filtroCategoria').value;
-                    estado = document.getElementById('filtroEstado').value;
-                    for (var i = 0; i < li.length; i++) {
-                        txtValue = li[i].textContent || li[i].innerText;
-                        var visible = true;
-                        if (txtValue.toUpperCase().indexOf(filtro) === -1) {
-                            visible = false;
-                        }
-                        if (categoria !== 'todos' && !txtValue.includes(categoria)) {
-                            visible = false;
-                        }
-                        if (estado !== 'todos' && !txtValue.includes(estado)) {
-                            visible = false;
-                        }
-                        li[i].style.display = visible ? "" : "none";
-                    }
-                }
-            </script>
-        </div>
-
-        <!-- Eventos próximos-->
 
 
 
@@ -252,7 +222,7 @@
             <div class="bg-light rounded-top p-4">
                 <div class="row">
                     <div class="col-12 col-sm-6 text-center text-sm-start">
-                        &copy; <a href="#">TelevecinosUnidos</a>, All Right Reserved.
+                        &copy; <a >TelevecinosUnidos</a>, All Right Reserved.
                     </div>
                 </div>
             </div>

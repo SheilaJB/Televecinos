@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <% ArrayList<IncidenciasB> listaIncidencia = (ArrayList<IncidenciasB>) request.getAttribute("listaIncidencia"); %>
-<%ArrayList<EventoB> eventosInscritos = (ArrayList<EventoB>) request.getAttribute("eventosInscritos");%>
+<% ArrayList<EventoB> eventosInscritos = (ArrayList<EventoB>) request.getAttribute("eventosInscritos"); %>
 
 <head>
     <meta charset="utf-8">
@@ -60,12 +60,6 @@
         .btn-info:hover {
             background-color: #138496;
             border-color: #117a8b;
-        }
-        .custom-image {
-            width: 100%;
-            max-width: 500px;
-            margin: 20px auto;
-            display: block;
         }
         .reduced-height {
             height: 550px; /* Cambia 300px por la altura que desees */
@@ -167,7 +161,7 @@
                                 <td><%= incidencia.getEstadoIncidencia() %></td>
                                 <td>
                                     <a href="<%=request.getContextPath()%>/VecinoServlet?action=verIncidencia&idIncidencia=<%= incidencia.getIdIncidencias() %>">
-                                        <button type="button" class="btn btn-info m-2"><i class="fas fa-eye"></i></button>
+                                        <button type="button" class="btn btn-primary btn-sm-square m-1"><i class="fas fa-eye fa-xs"></i></button>
                                     </a>
                                 </td>
                             </tr>
@@ -222,7 +216,7 @@
                             } else {
                             %>
                             <tr>
-                                <td colspan="8">No estás inscrito en ningún evento.</td>
+                                <td colspan="8">No hay eventos programados en este mes.</td>
                             </tr>
                             <%
                                 }

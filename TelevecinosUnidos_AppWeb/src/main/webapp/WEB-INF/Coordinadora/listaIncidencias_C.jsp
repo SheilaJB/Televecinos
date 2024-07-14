@@ -3,7 +3,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <% ArrayList<IncidenciasB> lista = (ArrayList<IncidenciasB>) request.getAttribute("lista"); %>
 <jsp:useBean id="textoBuscarIncidencia" scope="request" type="java.lang.String" class="java.lang.String"/>
-
+<%
+    int paginaActual = (int) request.getAttribute("paginaActual");
+    int totalPaginas = (int) request.getAttribute("totalPaginas");
+%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -44,34 +47,11 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
-        .popup {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-        }
-        .popup-content {
-            background-color: white;
-            width: 50%;
-            max-width: 400px;
-            margin: 100px auto;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        .btn-sm-square {
+            width: 20px;
+            height: 20px;
+            padding: 0;
             text-align: center;
-            position: relative;
-        }
-        .close-btn {
-            position: absolute;
-            top: 5px;
-            right: 10px;
-            font-size: 24px;
-            cursor: pointer;
-            color: rgb(0, 0, 0);
         }
     </style>
     <!-- Tempus Dominus CSS (si necesario) -->
@@ -109,15 +89,11 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-        <!-- Bootstrap JS with Popper -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Bootstrap JS and dependencies (Popper.js) -->
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
-
-        <div id="Nombre del evento">
-            <h3 style="text-align: left; margin-top:20px;margin-bottom:20px;padding: 20px">Lista de incidencias</h3>
+        <div id="Titulo_Incidencias">
+            <h1 class="display-4 text-center" style="margin-top:20px;margin-bottom:20px;padding: 20px">
+                <h1 style="text-align: center"><i class="fas fa-exclamation-triangle"></i> ¡Tus incidencias reportadas!</h1>
+            </h1>
+            <p class="lead text-center">Revisa el estado de las incidencias que has reportado</p>
         </div>
         <% if (session.getAttribute("info") != null) { %>
         <script>
@@ -134,42 +110,43 @@
         <div style="background-color: #f8f9fa; padding: 20px; align-items: center;">
             <!-- Filtro -->
             <div style="background-color: #FFB703 ; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
-                <form  method="post" action="<%=request.getContextPath()%>/CoordinadorServlet?action=buscarIncidenciaPorNombre">
+                <form method="post" action="<%=request.getContextPath()%>/CoordinadorServlet?action=buscarIncidenciaPorNombre">
                     <div class="row justify-content-center align-items-center">
                         <!-- Busqueda por nombre de incidencia -->
                         <div class="col-md-3 mb-2">
                             <input type="text" class="form-control" id="filtroInput" placeholder="Buscar incidencia..." name="textoBuscarIncidencia"
-                                   value="<%=textoBuscarIncidencia%>">
+                                   value="<%=request.getAttribute("textoBuscarIncidencia") != null ? request.getAttribute("textoBuscarIncidencia") : ""%>">
                         </div>
                         <div class="col-md-2 mb-2">
-                            <input type="date" class="form-control" name="filtroFecha">
+                            <input type="date" class="form-control" name="fecha"
+                                   value="<%=request.getAttribute("fecha") != null ? request.getAttribute("fecha") : ""%>">
                         </div>
                         <div class="col-md-2 mb-2">
-                            <select class="form-select" name="filtroTipo">
+                            <select class="form-select" name="tipo">
                                 <option selected disabled>Tipo de Incidencia</option>
-                                <option value="1">Seguridad Pública</option>
-                                <option value="2">Emergencia Médica</option>
-                                <option value="3">Infraestructura y Servicios Públicos</option>
-                                <option value="4">Otro</option>
+                                <option value="1" <%= "1".equals(request.getAttribute("tipo")) ? "selected" : "" %>>Seguridad Pública</option>
+                                <option value="2" <%= "2".equals(request.getAttribute("tipo")) ? "selected" : "" %>>Emergencia Médica</option>
+                                <option value="3" <%= "3".equals(request.getAttribute("tipo")) ? "selected" : "" %>>Infraestructura y Servicios Públicos</option>
+                                <option value="4" <%= "4".equals(request.getAttribute("tipo")) ? "selected" : "" %>>Otro</option>
                             </select>
                         </div>
                         <div class="col-md-2 mb-2">
-                            <select class="form-select" name="filtroEstado">
+                            <select class="form-select" name="estado">
                                 <option selected disabled>Estado</option>
-                                <option value="1">Pendiente</option>
-                                <option value="2">En curso</option>
-                                <option value="3">Cancelado</option>
-                                <option value="4">Rechazado</option>
-                                <option value="5">Procesado</option>
+                                <option value="1" <%= "1".equals(request.getAttribute("estado")) ? "selected" : "" %>>Pendiente</option>
+                                <option value="2" <%= "2".equals(request.getAttribute("estado")) ? "selected" : "" %>>En curso</option>
+                                <option value="3" <%= "3".equals(request.getAttribute("estado")) ? "selected" : "" %>>Cancelado</option>
+                                <option value="4" <%= "4".equals(request.getAttribute("estado")) ? "selected" : "" %>>Rechazado</option>
+                                <option value="5" <%= "5".equals(request.getAttribute("estado")) ? "selected" : "" %>>Procesado</option>
                             </select>
                         </div>
                         <div class="col-md-1 mb-2">
-                            <button class="btn btn-primary" type="submit">
+                            <button class="btn btn-primary w-100" type="submit">
                                 <i class="fas fa-search"></i>
                             </button>
                         </div>
                         <div class="col-md-2 mb-2">
-                            <a type="reset" class="btn btn-primary" href="<%=request.getContextPath()%>/CoordinadorServlet?action=listarIncidencia">Limpiar</a>
+                            <a type="reset" class="btn btn-primary w-100" href="<%=request.getContextPath()%>/CoordinadorServlet?action=listarIncidencia">Limpiar</a>
                         </div>
                     </div>
                 </form>
@@ -184,14 +161,14 @@
                         <th scope="col">Hora</th>
                         <th scope="col">Tipo</th>
                         <th scope="col">Estado</th>
-                        <th scope="col">Ver</th>
-                        <th scope="col">Editar</th>
-                        <th scope="col">Borrar</th>
+                        <th scope="col"></th>
                     </tr>
                     </thead>
                     <tbody>
-                    <% if (lista != null) {
-                        for (IncidenciasB incidencia : lista) { %>
+                    <%
+                        if (lista != null) {
+                            for (IncidenciasB incidencia : lista) {
+                    %>
                     <tr>
                         <td><%= incidencia.getNombreIncidencia() %></td>
                         <td><%= incidencia.getFecha() %></td>
@@ -199,58 +176,65 @@
                         <td><%= incidencia.getTipoIncidencia() %></td>
                         <td><%= incidencia.getEstadoIncidencia() %></td>
                         <td>
-                            <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=verIncidencia&idIncidencia=<%= incidencia.getIdIncidencias() %>">
-                                <button type="button" class="btn btn-primary m-2"><i class="fas fa-eye"></i></button>
+                            <% if ("Pendiente".equals(incidencia.getEstadoIncidencia())) { %>
+                            <a onclick="viewFunction(<%= incidencia.getIdIncidencias() %>)">
+                                <button type="button" class="btn btn-primary btn-sm-square m-1"><i class="fas fa-eye fa-xs"></i></button>
                             </a>
-                        </td>
-                        <% if ("Pendiente".equals(incidencia.getEstadoIncidencia())) { %>
-                        <td>
-                            <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=editarIncidencia&idIncidencia=<%= incidencia.getIdIncidencias() %>">
-                                <button type="button" class="btn btn-success m-2"><i class="fas fa-pencil-alt"></i></button>
+                            <a onclick="editFunction(<%= incidencia.getIdIncidencias() %>)">
+                                <button type="button" class="btn btn-success btn-sm-square m-1"><i class="fas fa-pencil-alt fa-xs"></i></button>
                             </a>
+                            <a onclick="confirmDelete(<%= incidencia.getIdIncidencias() %>)">
+                                <button type="button" class="btn btn-danger btn-sm-square m-1"><i class="fas fa-trash-alt fa-xs"></i></button>
+                            </a>
+                            <% } else { %>
+                            <a onclick="viewFunction(<%= incidencia.getIdIncidencias() %>)">
+                                <button type="button" class="btn btn-primary btn-sm-square m-1"><i class="fas fa-eye fa-xs"></i></button>
+                            </a>
+                            <button type="button" class="btn btn-success btn-sm-square m-1" disabled><i class="fas fa-pencil-alt fa-xs"></i></button>
+                            <button type="button" class="btn btn-danger btn-sm-square m-1" disabled><i class="fas fa-trash-alt fa-xs"></i></button>
+                            <% } %>
                         </td>
-                        <td>
-                            <button type="button" class="btn btn-danger m-2" onclick="confirmDelete(<%= incidencia.getIdIncidencias() %>)">
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
-                        </td>
-                        <% } else { %>
-                        <td><button type="button" class="btn btn-success m-2"><i class="fas fa-pencil-alt"></i></button></td>
-                        <td><button type="button" class="btn btn-danger m-2"><i class="fas fa-trash-alt"></i></button></td>
-                        <% } %>
                     </tr>
-                    <% }
-                    } else { %>
-                    <tr>
-                        <td colspan="7" class="text-center">No hay incidencias disponibles</td>
-                    </tr>
-                    <% } %>
+                    <%
+                            }
+                        }
+                    %>
                     </tbody>
                 </table>
             </div>
+            <nav>
+                <ul class="pagination">
+                    <li class="page-item <%= paginaActual == 1 ? "disabled" : "" %>">
+                        <a class="page-link" href="<%=request.getContextPath()%>/CoordinadorServlet?action=listarIncidencia&page=<%= paginaActual - 1 %>">Anterior</a>
+                    </li>
+                    <% if (totalPaginas > 0) { %>
+                    <% for (int i = 1; i <= totalPaginas; i++) { %>
+                    <li class="page-item <%= i == paginaActual ? "active" : "" %>">
+                        <a class="page-link" href="<%=request.getContextPath()%>/CoordinadorServlet?action=listarIncidencia&page=<%= i %>"><%= i %></a>
+                    </li>
+                    <% } %>
+                    <% } else { %>
+                    <li class="page-item active">
+                        <a class="page-link" href="#">1</a>
+                    </li>
+                    <% } %>
+                    <li class="page-item <%= paginaActual == totalPaginas || totalPaginas == 0 ? "disabled" : "" %>">
+                        <% if (paginaActual < totalPaginas && totalPaginas > 0) { %>
+                        <a class="page-link" href="<%=request.getContextPath()%>/CoordinadorServlet?action=listarIncidencia&page=<%= paginaActual + 1 %>">Siguiente</a>
+                        <% } else { %>
+                        <span class="page-link">Siguiente</span>
+                        <% } %>
+                    </li>
+                </ul>
+            </nav>
 
-            <div  style="display: flex; justify-content: center; align-items: center;">
-                <section class="paginacion" >
-                    <ul style="list-style: none;padding: 0;margin: 0;display: flex;">
-                        <div style="background-color: white ; padding: 5px; margin:10px">
-                            <li style="margin: 0 5px;"><a class="link-opacity-50-hover" href="#" class="active">1</a></li>
-                        </div>
-                        <div style="background-color:white ; padding: 5px;margin:10px">
-                            <li style="margin: 0 5px;"><a class="link-opacity-50-hover" href="#" class="active">2</a></li>
-                        </div>
-                        <div style="background-color: white ; padding: 5px;margin:10px">
-                            <li style="margin: 0 5px;"><a class="link-opacity-50-hover" href="#" class="active">3</a></li>
-                        </div>
-                    </ul>
-                </section>
-            </div>
         </div>
         <!-- Footer Start -->
         <div class="container-fluid pt-4 px-4">
             <div class="bg-light rounded-top p-4">
                 <div class="row">
                     <div class="col-12 col-sm-6 text-center text-sm-start">
-                        &copy; <a href="#">TelevecinosUnidos</a>, All Right Reserved.
+                        &copy; <a >TelevecinosUnidos</a>, All Right Reserved.
                     </div>
                 </div>
             </div>
@@ -258,6 +242,15 @@
         <!-- Footer End -->
     </div>
 </div>
+
+<script>
+    function viewFunction(idIncidencia) {
+        window.location.href ='<%=request.getContextPath()%>/CoordinadorServlet?action=verIncidencia&idIncidencia=' +idIncidencia;
+    }
+
+    function editFunction(idIncidencia) {
+        window.location.href ='<%=request.getContextPath()%>/CoordinadorServlet?action=editarIncidencia&idIncidencia=' + idIncidencia;}
+</script>
 <!-- Content End -->
 <script>
     function confirmDelete(eventId) {

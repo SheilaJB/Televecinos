@@ -36,36 +36,7 @@
     <link href="css/style_vec.css" rel="stylesheet">
     <style>
 
-        .popup {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-        }
-        .popup-content {
-            background-color: white;
-            width: 50%;
-            max-width: 400px;
-            margin: 100px auto;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-            text-align: center;
-            position: relative;
-        }
-        .close-btn {
-            position: absolute;
-            top: 5px;
-            right: 10px;
-            font-size: 24px;
-            cursor: pointer;
-            color: rgb(0, 0, 0);
 
-        }
         .btn-sm-square {
             width: 20px;
             height: 20px;
@@ -96,10 +67,11 @@
         <!-- Navbar End -->
 
         <!-- Lista de eventos -->
-        <div class="container text-center">
-            <div id="Nombre del evento">
-                <h1 style="text-align: center; margin-top:50px;margin-bottom:50px;"><b>Eventos propios</b></h1>
-            </div>
+        <div id="Nombre del evento">
+            <h1 class="display-4 text-center" style="margin-top:20px;margin-bottom:20px;padding: 20px">
+                <h1 style="text-align: center"><i class="fas fa-calendar-alt"> </i>¡Tus propios eventos!</h1>
+            </h1>
+            <p class="lead text-center">Crea, modifica y elimina tus propios eventos</p>
         </div>
 
         <% if (session.getAttribute("info") != null) { %>
@@ -112,58 +84,44 @@
         <div style="background-color: #f8f9fa; padding: 10px; align-items: center;">
             <div style="background-color: #FFB703; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
                 <!-- Filtro -->
-                <form  method="post" action="<%=request.getContextPath()%>/CoordinadorServlet?action=buscarEventoPorNombre">
+                <form method="post" action="<%=request.getContextPath()%>/CoordinadorServlet?action=buscarEventoPorNombre">
                     <div class="row justify-content-center align-items-center">
                         <!-- Busqueda por nombre de evento -->
                         <div class="col-md-3 mb-2">
                             <input type="text" class="form-control" id="filtroInput" placeholder="Buscar evento..." name="textoBuscarEvento"
-                                   value="<%=textoBuscarEvento%>">
+                                   value="<%=request.getAttribute("textoBuscarEvento") != null ? request.getAttribute("textoBuscarEvento") : ""%>">
                         </div>
                         <div class="col-md-2 mb-2">
-                            <select  class="form-select" name="frecuencia">
-                                <option selected disabled>Tipo de Frecuencia</option>
-                                <option value="1" >Semanal</option>
-                                <option value="2 ">Dos veces por semana</option>
+                            <input type="date" class="form-control" name="fecha"
+                                   value="<%=request.getAttribute("fecha") != null ? request.getAttribute("fecha") : ""%>">
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <select class="form-select" name="frecuencia">
+                                <option selected disabled>Frecuencia</option>
+                                <option value="1" <%= "1".equals(request.getAttribute("frecuencia")) ? "selected" : "" %>>Semanal</option>
+                                <option value="2" <%= "2".equals(request.getAttribute("frecuencia")) ? "selected" : "" %>>Dos veces por semana</option>
                             </select>
                         </div>
                         <div class="col-md-2 mb-2">
-                            <select  class="form-select" name="estado">
-                                <option selected disabled>Estado del evento</option>
-                                <option value="1" >Disponible</option>
-                                <option value="2" >En curso</option>
-                                <option value="3" >Finalizado</option>
+                            <select class="form-select" name="estado">
+                                <option selected disabled>Estado</option>
+                                <option value="1" <%= "1".equals(request.getAttribute("estado")) ? "selected" : "" %>>Disponible</option>
+                                <option value="2" <%= "2".equals(request.getAttribute("estado")) ? "selected" : "" %>>En curso</option>
+                                <option value="3" <%= "3".equals(request.getAttribute("estado")) ? "selected" : "" %>>Finalizado</option>
                             </select>
                         </div>
                         <div class="col-md-1 mb-2">
                             <button class="btn btn-primary w-100" type="submit">
-                                <i class="fas fa-search"></i> </button>
+                                <i class="fas fa-search"></i>
+                            </button>
                         </div>
                         <div class="col-md-2 mb-2">
-                            <a type="reset" class="btn btn-primary w-100" href="<%=request.getContextPath()%>/CoordinadorServlet?action=lista" >Limpiar</a>
-                        </div>
-                        <div class="col-md-2 mb-2">
-
-                            <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=crearEvento" class="btn btn-primary w-100">
-                                Crear evento
-                            </a>
+                            <a type="reset" class="btn btn-primary w-100" href="<%=request.getContextPath()%>/CoordinadorServlet?action=lista">Limpiar</a>
                         </div>
                     </div>
                 </form>
+
             </div>
-
-            <!-- Bootstrap JS with Popper -->
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-            <!-- Bootstrap JS and dependencies (Popper.js) -->
-            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-            <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
-
-            <script>
-                function crearEvento() {
-                    window.location.href = 'creacionEvento.html';
-                }
-            </script>
-
             <div class="table-responsive">
                 <table id="eventosTable" class="table table-striped table-hover" style="background-color: transparent;">
                     <thead>
@@ -205,31 +163,35 @@
                     <% } %>
                     </tbody>
                 </table>
-                <nav>
-                    <ul class="pagination">
-                        <li class="page-item <%= paginaActual == 1 ? "disabled" : "" %>">
-                            <a class="page-link" href="<%=request.getContextPath()%>/CoordinadorServlet?action=lista&page=<%= paginaActual - 1 %>">Anterior</a>
-                        </li>
-                        <% for(int i = 1; i <= totalPaginas; i++) { %>
-                        <li class="page-item <%= i == paginaActual ? "active" : "" %>">
-                            <a class="page-link" href="<%=request.getContextPath()%>/CoordinadorServlet?action=lista&page=<%= i %>"><%= i %></a>
-                        </li>
-                        <% } %>
-                        <li class="page-item <%= paginaActual == totalPaginas ? "disabled" : "" %>">
-                            <a class="page-link" href="<%=request.getContextPath()%>/CoordinadorServlet?action=lista&page=<%= paginaActual + 1 %>">Siguiente</a>
-                        </li>
-                    </ul>
-                </nav>
             </div>
+            <nav>
+                <ul class="pagination">
+                    <li class="page-item <%= paginaActual == 1 ? "disabled" : "" %>">
+                        <a class="page-link" href="<%=request.getContextPath()%>/CoordinadorServlet?action=lista&page=<%= paginaActual - 1 %>">Anterior</a>
+                    </li>
+                    <% if (totalPaginas > 0) { %>
+                    <% for(int i = 1; i <= totalPaginas; i++) { %>
+                    <li class="page-item <%= i == paginaActual ? "active" : "" %>">
+                        <a class="page-link" href="<%=request.getContextPath()%>/CoordinadorServlet?action=lista&page=<%= i %>"><%= i %></a>
+                    </li>
+                    <% } %>
+                    <% } else { %>
+                    <li class="page-item active">
+                        <a class="page-link" href="#">1</a>
+                    </li>
+                    <% } %>
+                    <li class="page-item <%= paginaActual == totalPaginas || totalPaginas == 0 ? "disabled" : "" %>">
+                        <% if (paginaActual < totalPaginas) { %>
+                        <a class="page-link" href="<%=request.getContextPath()%>/CoordinadorServlet?action=lista&page=<%= paginaActual + 1 %>">Siguiente</a>
+                        <% } else { %>
+                        <span class="page-link">Siguiente</span>
+                        <% } %>
+                    </li>
+                </ul>
+            </nav>
         </div>
 
-        <!-- jQuery (opcional si necesitas usar funciones de jQuery específicas) -->
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <!-- Bootstrap 5 JS with Popper.js -->
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Tempus Dominus JS (si necesario) -->
-        <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
         <script>
             function viewFunction(idEvento) {
                 window.location.href ='<%=request.getContextPath()%>/CoordinadorServlet?action=verEvento&idEvento=' +idEvento;
@@ -244,69 +206,16 @@
             <div class="bg-light rounded-top p-4">
                 <div class="row">
                     <div class="col-12 col-sm-6 text-center text-sm-start">
-                        &copy; <a href="#">TelevecinosUnidos</a>, All Right Reserved.
+                        &copy; <a >TelevecinosUnidos</a>, All Right Reserved.
                     </div>
                 </div>
             </div>
         </div>
         <!-- Footer End -->
     </div>
-    <!-- Content End -->
 
-    <!-- Popup de Confirmación para Eliminar Eventos -->
-    <div id="deleteConfirmationPopup" class="popup">
-        <div class="popup-content">
-            <span class="close-btn" id="closeDeletePopupBtn">&times;</span>
-            <img src="img/warning.png" alt="check" width="48" height="48" style="margin-top: -10px;">
-            <h2 style="margin-top: 20px;">Confirmar Eliminación</h2>
-            <p>¿Estás seguro de que deseas eliminar este evento?</p>
-            <button id="confirmDeleteBtn" class="btn btn-danger">Eliminar</button>
-            <button onclick="closeDeletePopup()" class="btn btn-secondary">Cancelar</button>
-        </div>
-    </div>
 
-    <!-- JavaScript para Popup -->
-    <script>
-        const closeDeletePopupBtn = document.getElementById('closeDeletePopupBtn');
-        const deleteConfirmationPopup = document.getElementById('deleteConfirmationPopup');
-        const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
-        const mainContent = document.querySelector('.content'); // Selecciona el contenido principal que quieres deshabilitar
-        let eventIdToDelete; // Variable para almacenar el ID del evento a eliminar
 
-        // Función para deshabilitar interacciones
-        function disableInteractions() {
-            mainContent.style.pointerEvents = 'none';
-            mainContent.style.opacity = '0.4'; // Opcional: reduce la opacidad para un efecto visual de desactivado
-        }
-
-        // Función para habilitar interacciones
-        function enableInteractions() {
-            mainContent.style.pointerEvents = 'all';
-            mainContent.style.opacity = '1'; // Restaura la opacidad
-        }
-
-        // Función para cerrar el popup
-        function closeDeletePopup() {
-            deleteConfirmationPopup.style.display = 'none';
-            enableInteractions();
-        }
-
-        // Eventos para manejar el popup
-        closeDeletePopupBtn.addEventListener('click', closeDeletePopup);
-
-        // Función para confirmar eliminación
-        confirmDeleteBtn.addEventListener('click', function() {
-            window.location.href = '<%=request.getContextPath()%>/CoordinadorServlet?action=borrarEvento&idEvento=' + eventIdToDelete;
-            closeDeletePopup();
-        });
-
-        // Función para abrir el popup de confirmación
-        function confirmDelete(eventId) {
-            eventIdToDelete = eventId; // Almacenar el ID del evento a eliminar
-            deleteConfirmationPopup.style.display = 'block';
-            disableInteractions();
-        }
-    </script>
 
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>

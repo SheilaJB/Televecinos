@@ -1,12 +1,16 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="org.example.televecinosunidos_appweb.model.beans.EventoB" %>
+<jsp:useBean id="textoBuscarEventoG" scope="request" type="java.lang.String" class="java.lang.String"/>
 
 <%
     ArrayList<EventoB> listaEventos = (ArrayList<EventoB>) request.getAttribute("listaEventos");
 %>
 
-
+<%
+    int paginaActual = (int) request.getAttribute("paginaActual");
+    int totalPaginas = (int) request.getAttribute("totalPaginas");
+%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -96,7 +100,7 @@
         <section id="titulo-eventos" class="container my-5">
             <div class="row">
                 <div class="col-md-12 text-center">
-                    <h1 style="text-align: center"><i class="fas fa-calendar-alt"></i>¡Eventos culturales y deportivos en San Miguel!</h1>
+                    <h1 style="text-align: center"><i class="fas fa-calendar-alt"></i> ¡Eventos culturales y deportivos en San Miguel!</h1>
                     <p class="lead">
                         Puedes obtener más información e inscribirte a los eventos que prefieras
                     </p>
@@ -112,26 +116,49 @@
         </section>
 
         <div style="background-color: #FFB703 ; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
-            <div class="row justify-content-auto align-items-auto">
-                <div class="col-md-6 mb-2">
-                    <input type="text" class="form-control" id="filtroInput" placeholder="Buscar...">
+            <form method="post" action="<%=request.getContextPath()%>/VecinoServlet?action=buscarEvento">
+                <div class="row justify-content-auto align-items-auto">
+                    <div class="col-md-2 mb-2">
+                        <input type="text" class="form-control" id="filtroInput" placeholder="Buscar..." name="textoBuscarEventoG"
+                               value="<%=request.getAttribute("textoBuscarEventoG") != null ? request.getAttribute("textoBuscarEventoG") : ""%>">
+                    </div>
+                    <div class="col-md-2 mb-2">
+                        <input type="date" class="form-control" name="fechaG"
+                               value="<%=request.getAttribute("fechaG") != null ? request.getAttribute("fechaG") : ""%>">
+                    </div>
+                    <div class="col-md-2 mb-2">
+                        <select class="form-select" name="tipoG">
+                            <option selected disabled>Tipo</option>
+                            <option value="1" <%= "1".equals(request.getAttribute("tipoG")) ? "selected" : "" %>>Evento Cultural</option>
+                            <option value="2" <%= "2".equals(request.getAttribute("tipoG")) ? "selected" : "" %>>Evento Deportivo</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2 mb-2">
+                        <select class="form-select" name="frecuenciaG">
+                            <option selected disabled>Frecuencia</option>
+                            <option value="1" <%= "1".equals(request.getAttribute("frecuenciaG")) ? "selected" : "" %>>Semanal</option>
+                            <option value="2" <%= "2".equals(request.getAttribute("frecuenciaG")) ? "selected" : "" %>>Dos veces por semana</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2 mb-2">
+                        <select class="form-select" name="estadoG">
+                            <option selected disabled>Estado</option>
+                            <option value="1" <%= "1".equals(request.getAttribute("estadoG")) ? "selected" : "" %>>Disponible</option>
+                            <option value="2" <%= "2".equals(request.getAttribute("estadoG")) ? "selected" : "" %>>En curso</option>
+                            <option value="3" <%= "3".equals(request.getAttribute("estadoG")) ? "selected" : "" %>>Finalizado</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1 mb-2">
+                        <button class="btn btn-primary w-100" type="submit">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    <div class="col-md-1 mb-2">
+                        <a href="<%=request.getContextPath()%>/VecinoServlet?action=verEventos" type="reset" class="btn btn-primary w-100 d-flex align-items-center justify-content-center">Limpiar</a>
+                    </div>
                 </div>
+            </form>
 
-                <div class="col-md-2 mb-2">
-                    <select id="filtroEstado" class="form-select">
-                        <option selected>Estado</option>
-                        <option value="disponible">Disponible</option>
-                        <option value="enCurso">En curso</option>
-                        <option value="finalizado">Finalizado</option>
-                    </select>
-                </div>
-                <div class="col-md-2 mb-2">
-                    <button type="button" class="btn btn-primary w-100" onclick="filtrar()"><b>Filtrar</b></button>
-                </div>
-                <div class="col-md-2 mb-2">
-                    <button type="button" class="btn btn-primary w-100" onclick="crearEvento()"><b>Crear evento</b></button>
-                </div>
-            </div>
         </div>
 
         <div style="background-color: #f8f9fa; padding: 20px;">
@@ -142,17 +169,25 @@
                     <a href="<%=request.getContextPath()%>/VecinoServlet?action=verEvento&idEvento=<%= evento.getIdEvento() %>" style="text-decoration: none; color: inherit;">
                         <div class="card" style="max-width: 20rem; margin: auto; border-radius: 15px;">
                             <img src="ImagenServlet?idImagenEvento=<%=evento.getIdEvento()%>" class="card-img-top rounded-top">
+                            <div class="card-header bg-transparent border-secondary align-items-center text-center"><%= evento.getTipoEvento() %></div>
                             <div class="card-body">
                                 <h5 class="card-title" style="text-align: left;"><%= evento.getNombre() %></h5>
-                                <p class="card-status" style="font-size: small; margin-bottom: 0;">Estado: <%= evento.getEstadoString() %></p>
+                                <% if ("Disponible".equals(evento.getEstadoString())) { %>
+                                <p class="text-success" style="font-size: small;"><%= evento.getEstadoString() %></p>
+                                <% } else if ("En curso".equals(evento.getEstadoString())) { %>
+                                <p class="text-warning" style="font-size: small; "><%= evento.getEstadoString() %></p>
+                                <% } else { %>
+                                <p class="text-danger" style="font-size: small;"><%= evento.getEstadoString() %></p>
+                                <% } %>
                                 <p class="text-wrap" style="font-size: small; margin-bottom: 0;">Fecha de inicio: <%= evento.getFecha_inicio() %></p>
                                 <p class="text-wrap" style="font-size: small; margin-bottom: 0;">Fecha de fin: <%= evento.getFecha_fin() %></p>
-                                <p class="text-wrap" style="font-size: small; margin-bottom: 0;"><%= evento.getDescripcion() %></p>
-
+                                <p class="text-wrap" style="font-size: small; margin-bottom: 0;">Frecuencia: <%= evento.getFrecuenciaString()%></p>
                                 <% if (evento.getCantDisponibles() > 0 && "Disponible".equals(evento.getEstadoString())) { %>
                                 <p class="text-wrap" style="font-size: small; margin-bottom: 0;">Vacantes Disponibles: <%= evento.getCantDisponibles() %></p>
+                                <p class="text-wrap" style="font-size: small; margin-bottom: 0;">Descripción: <%= evento.getDescripcion() %></p>
                                 <a class="link-opacity-50-hover" style="font-size: small;" href="<%=request.getContextPath()%>/VecinoServlet?action=verEvento&idEvento=<%= evento.getIdEvento() %>">Inscribirse aquí</a>
                                 <% } else { %>
+                                <p class="text-wrap" style="font-size: small; margin-bottom: 0;">Descripción: <%= evento.getDescripcion() %></p>
                                 <a class="link-opacity-50-hover" style="font-size: small;" href="<%=request.getContextPath()%>/VecinoServlet?action=verEvento&idEvento=<%= evento.getIdEvento() %>">Más información</a>
                                 <% } %>
                             </div>
@@ -164,29 +199,31 @@
                 <p>No hay eventos disponibles</p>
                 <% } %>
             </div>
-
-            <div style="display: flex; justify-content: center; align-items: center;">
-                <!-- Paginación-->
-                <section class="paginacion">
-                    <ul style="list-style: none; padding: 0; margin: 0; display: flex;">
-                        <div style="background-color: white; padding: 5px; margin:10px">
-                            <li style="margin: 0 5px;"><a class="link-opacity-50-hover" href="#" class="active">1</a></li>
-                        </div>
-                        <div style="background-color:white; padding: 5px; margin:10px">
-                            <li style="margin: 0 5px;"><a class="link-opacity-50-hover" href="#" class="active">2</a></li>
-                        </div>
-                        <div style="background-color: white; padding: 5px; margin:10px">
-                            <li style="margin: 0 5px;"><a class="link-opacity-50-hover" href="#" class="active">3</a></li>
-                        </div>
-                        <div style="background-color: white; padding: 5px; margin:10px">
-                            <li style="margin: 0 5px;"><a class="link-opacity-50-hover" href="#" class="active">4</a></li>
-                        </div>
-                        <div style="background-color: white; padding: 5px; margin:10px">
-                            <li style="margin: 0 5px;"><a class="link-opacity-50-hover" href="#" class="active">5</a></li>
-                        </div>
-                    </ul>
-                </section>
-            </div>
+            <nav>
+                <ul class="pagination">
+                    <li class="page-item <%= paginaActual == 1 ? "disabled" : "" %>">
+                        <a class="page-link" href="<%=request.getContextPath()%>/VecinoServlet?action=verEventos&page=<%= paginaActual - 1 %>">Anterior</a>
+                    </li>
+                    <% if (totalPaginas > 0) { %>
+                    <% for (int i = 1; i <= totalPaginas; i++) { %>
+                    <li class="page-item <%= i == paginaActual ? "active" : "" %>">
+                        <a class="page-link" href="<%=request.getContextPath()%>/VecinoServlet?action=verEventos&page=<%= i %>"><%= i %></a>
+                    </li>
+                    <% } %>
+                    <% } else { %>
+                    <li class="page-item active">
+                        <a class="page-link" href="#">1</a>
+                    </li>
+                    <% } %>
+                    <li class="page-item <%= paginaActual == totalPaginas || totalPaginas == 0 ? "disabled" : "" %>">
+                        <% if (paginaActual < totalPaginas) { %>
+                        <a class="page-link" href="<%=request.getContextPath()%>/VecinoServlet?action=verEventos&page=<%= paginaActual + 1 %>">Siguiente</a>
+                        <% } else { %>
+                        <span class="page-link">Siguiente</span>
+                        <% } %>
+                    </li>
+                </ul>
+            </nav>
         </div>
 
         <!-- Footer Start -->
@@ -194,7 +231,7 @@
             <div class="bg-light rounded-top p-4">
                 <div class="row">
                     <div class="col-12 col-sm-6 text-center text-sm-start">
-                        &copy; <a href="#">TelevecinosUnidos</a>, All Right Reserved.
+                        &copy; <a >TelevecinosUnidos</a>, All Right Reserved.
                     </div>
                 </div>
             </div>

@@ -60,11 +60,33 @@ public class CoordinadorServlet extends HttpServlet {
                 break;
             // Eventos
             case "eventoGeneralesC":
+                int idTipoEventoG = usuarioLogged.getTipoCoordinador_idTipoCoordinador();
+                int paginaActualG = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
+                int eventosPorPaginaG = 8; // Número de eventos por página
+
+                // Obtener la lista completa de eventos
+                ArrayList<EventoB> listaEventosGenerales = eventoDao.listarTodosEventosCoordinador(idTipoEventoG);
+
+                // Calcular total de páginas
+                int totalEventosG = listaEventosGenerales.size();
+                int totalPaginasG = (int) Math.ceil((double) totalEventosG / eventosPorPaginaG);
+
+                // Verificar si la página actual está fuera del rango o si no hay eventos
+                if (totalEventosG == 0 || paginaActualG > totalPaginasG) {
+                    paginaActualG = 1;
+                }
+
+                // Obtener los eventos de la página actual
+                int desdeG = (paginaActualG - 1) * eventosPorPaginaG;
+                int hastaG = Math.min(desdeG + eventosPorPaginaG, totalEventosG);
+                ArrayList<EventoB> eventosPaginadosG = new ArrayList<>(listaEventosGenerales.subList(desdeG, hastaG));
+
+                // Enviar atributos al JSP
                 vista = "WEB-INF/Coordinadora/EventoGenerales_C.jsp";
-                ArrayList<EventoB> listaEventosGenerales = eventoDao.listarTodosEventosCoordinadorDeporte();
-                request.setAttribute("listaEventos", listaEventosGenerales);
+                request.setAttribute("listaEventos", eventosPaginadosG);
+                request.setAttribute("paginaActual", paginaActualG);
+                request.setAttribute("totalPaginas", totalPaginasG);
                 request.getRequestDispatcher(vista).forward(request, response);
-                //Falta jalar los datos desde la tabla
                 break;
             case "lista":
                 int idTipoEvento = usuarioLogged.getTipoCoordinador_idTipoCoordinador();
@@ -135,8 +157,27 @@ public class CoordinadorServlet extends HttpServlet {
 
             //Incidencia
             case "listarIncidencia":
-                ArrayList<IncidenciasB> listaIncidencias = incidenciaDao.listarIncidencia(userId);
-                request.setAttribute("lista", listaIncidencias);
+                int paginaActualI = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
+                int eventosPorPaginaI = 5; // Número de eventos por página
+                ArrayList<IncidenciasB> listarIncidencia = incidenciaDao.listarIncidencia(userId);
+
+                // Calcular total de páginas
+                int totalEventosI = listarIncidencia.size();
+                int totalPaginasI = (int) Math.ceil((double) totalEventosI / eventosPorPaginaI);
+
+                // Verificar si la página actual está fuera del rango o si no hay eventos
+                if (totalEventosI == 0 || paginaActualI > totalPaginasI) {
+                    paginaActualI = 1;
+                }
+
+                // Obtener los eventos de la página actual
+                int desdeI = (paginaActualI - 1) * eventosPorPaginaI;
+                int hastaI = Math.min(desdeI + eventosPorPaginaI, totalEventosI);
+                ArrayList<IncidenciasB> incidenciaPaginados = new ArrayList<>(listarIncidencia.subList(desdeI, hastaI));
+
+                request.setAttribute("lista", incidenciaPaginados);
+                request.setAttribute("paginaActual", paginaActualI);
+                request.setAttribute("totalPaginas", totalPaginasI);
                 vista = "WEB-INF/Coordinadora/listaIncidencias_C.jsp";
                 request.getRequestDispatcher(vista).forward(request, response);
                 break;
@@ -643,6 +684,32 @@ public class CoordinadorServlet extends HttpServlet {
                     request.getRequestDispatcher("WEB-INF/Coordinadora/ListaEvent-Coordinador.jsp").forward(request, response);
                 }
                 break;
+            case "buscarEvento":
+                String textBuscarG = request.getParameter("textoBuscarEventoG");
+                String filtroFechaG = request.getParameter("fechaG");
+                String filtroFrecuenciaG = request.getParameter("frecuenciaG");
+                String filtroEstadoG = request.getParameter("estadoG");
+                int paginaG = request.getParameter("pagina") != null ? Integer.parseInt(request.getParameter("pagina")) : 1;
+
+                if (textBuscarG == null && filtroFechaG == null && filtroFrecuenciaG == null && filtroEstadoG == null) {
+                    response.sendRedirect(request.getContextPath() + "/CoordinadorServlet?action=eventoGeneralesC");
+                } else {
+                    request.setAttribute("textoBuscarEventoG", textBuscarG);
+                    request.setAttribute("fechaG", filtroFechaG);
+                    request.setAttribute("frecuenciaG", filtroFrecuenciaG);
+                    request.setAttribute("estadoG", filtroEstadoG);
+
+                    ArrayList<EventoB> eventos = eventoDao.ListaEventoGeneralesFiltro(textBuscarG, filtroFechaG, filtroFrecuenciaG, filtroEstadoG, usuarioLogged.getTipoCoordinador_idTipoCoordinador(), paginaG);
+                    int totalRegistros = eventoDao.contarEventosGeneralesFiltrados(textBuscarG, filtroFechaG, filtroFrecuenciaG, filtroEstadoG, usuarioLogged.getTipoCoordinador_idTipoCoordinador());
+                    int totalPaginas = (int) Math.ceil((double) totalRegistros / 8);
+
+                    request.setAttribute("listaEventos", eventos);
+                    request.setAttribute("paginaActual", paginaG);
+                    request.setAttribute("totalPaginas", totalPaginas);
+                    request.getRequestDispatcher("WEB-INF/Coordinadora/EventoGenerales_C.jsp").forward(request, response);
+                }
+                break;
+
 
             //Incidencia
 
@@ -849,11 +916,23 @@ public class CoordinadorServlet extends HttpServlet {
                 String filtroFechaI = request.getParameter("fecha");
                 String filtroTipo = request.getParameter("tipo");
                 String filtroEstadoI = request.getParameter("estado");
-                if (textBuscarI == null && filtroFechaI == null && filtroTipo == null && filtroEstadoI ==null){
+                int paginaI = request.getParameter("pagina") != null ? Integer.parseInt(request.getParameter("pagina")) : 1;
+
+                if (textBuscarI == null && filtroFechaI == null && filtroTipo == null && filtroEstadoI == null) {
                     response.sendRedirect(request.getContextPath() + "/CoordinadorServlet?action=listarIncidencia");
-                }else {
+                } else {
                     request.setAttribute("textoBuscarIncidencia", textBuscarI);
-                    //request.setAttribute("lista", incidenciaDao.listarIncidenciasFiltro(textBuscarI, filtroFechaI, filtroTipo, filtroEstadoI,userId));
+                    request.setAttribute("fecha", filtroFechaI);
+                    request.setAttribute("tipo", filtroTipo);
+                    request.setAttribute("estado", filtroEstadoI);
+
+                    ArrayList<IncidenciasB> incidencias = incidenciaDao.listarIncidenciasFiltro(textBuscarI, filtroFechaI, filtroTipo, filtroEstadoI, userId, paginaI);
+                    int totalRegistrosI = incidenciaDao.contarIncidenciasFiltradas(textBuscarI, filtroFechaI, filtroTipo, filtroEstadoI, userId);
+                    int totalPaginasI = (int) Math.ceil((double) totalRegistrosI / 5); // Ajustado para 5 registros por página
+
+                    request.setAttribute("lista", incidencias);
+                    request.setAttribute("paginaActual", paginaI);
+                    request.setAttribute("totalPaginas", totalPaginasI);
                     request.getRequestDispatcher("WEB-INF/Coordinadora/listaIncidencias_C.jsp").forward(request, response);
                 }
                 break;
