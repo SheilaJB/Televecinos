@@ -93,12 +93,18 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-        <div id="Nombre del evento">
-            <h3 style="text-align: left; margin-top:20px;margin-bottom:20px;padding: 20px">Lista de incidencias</h3>
-        </div>
+
         <!-- Filtro -->
+        <div id="Titulo_Incidencias">
+            <h1 class="display-4 text-center" style="margin-top:20px;margin-bottom:20px;padding: 20px">
+                <h1 style="text-align: center"><i class="fas fa-clipboard-list"></i> Lista de incidencias por gestionar</h1>
+            </h1>
+            <p class="lead text-center">Revisa el estado de las incidencias que los usuarios han reportado</p>
+        </div>
         <div style="background-color: #f8f9fa; padding: 20px; align-items: center;">
+
             <div style="background-color: #FFB703; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
+
 
                 <form method="post" action="<%=request.getContextPath()%>/SerenazgoServlet?action=buscarIncidenciaFiltro">
                     <div class="row justify-content-center align-items-center">

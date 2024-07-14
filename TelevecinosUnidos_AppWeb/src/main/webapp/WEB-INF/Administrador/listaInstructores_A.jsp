@@ -81,6 +81,12 @@
 
 
         <!-- Fin de iamgen estatica -->
+        <div id="Titulo_Incidencias">
+            <h1 class="display-4 text-center" style="margin-top:20px;margin-bottom:20px;padding: 20px">
+                <h1 style="text-align: center"><i class="fas fa-chalkboard-teacher"></i> Lista de instructores</h1>
+            </h1>
+            <p class="lead text-center">Revisa la información de un instructor</p>
+        </div>
         <div style="background-color: #f8f9fa; padding: 10px; align-items: center;">
             <!-- Filtro -->
             <div style="background-color: #FFB703; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">

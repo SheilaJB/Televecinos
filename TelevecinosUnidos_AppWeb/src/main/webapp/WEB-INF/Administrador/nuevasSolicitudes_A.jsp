@@ -86,10 +86,11 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 
-        <div class="container text-center">
-            <div id="Nombre del evento">
-                <h1 style="text-align: center; margin-top:50px;margin-bottom:50px;"><b></b></h1>
-            </div>
+        <div id="Titulo_Incidencias">
+            <h1 class="display-4 text-center" style="margin-top:20px;margin-bottom:20px;padding: 20px">
+                <h1 style="text-align: center"><i class="fas fa-user-plus"></i> Nuevas solicitudes</h1>
+            </h1>
+            <p class="lead text-center">Revisa las nuevas solicitudes de ingreso a la página web y acepta o deniega el permiso</p>
         </div>
 
 

@@ -83,7 +83,12 @@
         <jsp:include page="../includes/navbarSerenazgo.jsp"></jsp:include>
         <!-- PARTE SUPERIOR FINAL -->
 
-
+        <div id="Titulo_Incidencias">
+            <h1 class="display-4 text-center" style="margin-top:20px;margin-bottom:20px;padding: 20px">
+                <h1 style="text-align: center"><i class="fas fa-chart-bar"></i> Dashboard</h1>
+            </h1>
+            <p class="lead text-center">Revisa los gráficos de los los diferentes tipos y estados de incidencias </p>
+        </div>
         <!-- Tabla de resumen  -->
         <div class="container-fluid pt-4 px-4 " style="padding: 20px;">
             <div class="row g-4">
