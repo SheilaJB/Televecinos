@@ -306,13 +306,51 @@ public class SerenazgoServlet extends HttpServlet {
                 incidenciaId = request.getParameter("incidenciaId");
                 idUsuario = request.getParameter("UsrID");
                 incidenciaDao.actualizarIncidenciaComoFalsa(incidenciaId,idUsuario);
-                request.setAttribute("lista",incidenciaDao.listarIncidencias());
+                int paginaIncidenciasS = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
+                int incidenciasPorPaginaS = 5; // Número de incidencias por página
+
+                // Obtener la lista completa de incidencias
+                ArrayList<IncidenciasB> listaIncidenciasS = incidenciaDao.listarIncidencias();
+
+                // Calcular total de páginas
+                int totalIncidenciasS = listaIncidenciasS.size();
+                int totalPaginasIncidenciasS = (int) Math.ceil((double) totalIncidenciasS / incidenciasPorPaginaS);
+
+                // Obtener las incidencias de la página actual
+                int desdeIncidenciasS = (paginaIncidenciasS - 1) * incidenciasPorPaginaS;
+                int hastaIncidenciasS = Math.min(desdeIncidenciasS + incidenciasPorPaginaS, totalIncidenciasS);
+                ArrayList<IncidenciasB> incidenciasPaginadasS = new ArrayList<>(listaIncidenciasS.subList(desdeIncidenciasS, hastaIncidenciasS));
+
+                // Enviar atributos al JSP
+
+                request.setAttribute("lista", incidenciasPaginadasS);
+                request.setAttribute("paginaActual", paginaIncidenciasS);
+                request.setAttribute("totalPaginas", totalPaginasIncidenciasS);
                 request.getRequestDispatcher("WEB-INF/Serenazgo/listaIncidencias_S.jsp").forward(request, response);
                 break;
             case "borrarIncidencia":
                 incidenciaId = request.getParameter("incidenciaId");
                 incidenciaDao.borradorLogicoIncidencia(incidenciaId);
-                request.setAttribute("lista",incidenciaDao.listarIncidencias());
+                int paginaIncidenciasS2 = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
+                int incidenciasPorPaginaS2 = 5; // Número de incidencias por página
+
+                // Obtener la lista completa de incidencias
+                ArrayList<IncidenciasB> listaIncidenciasS2 = incidenciaDao.listarIncidencias();
+
+                // Calcular total de páginas
+                int totalIncidenciasS2 = listaIncidenciasS2.size();
+                int totalPaginasIncidenciasS2 = (int) Math.ceil((double) totalIncidenciasS2 / incidenciasPorPaginaS2);
+
+                // Obtener las incidencias de la página actual
+                int desdeIncidenciasS2 = (paginaIncidenciasS2 - 1) * incidenciasPorPaginaS2;
+                int hastaIncidenciasS2 = Math.min(desdeIncidenciasS2 + incidenciasPorPaginaS2, totalIncidenciasS2);
+                ArrayList<IncidenciasB> incidenciasPaginadasS2 = new ArrayList<>(listaIncidenciasS2.subList(desdeIncidenciasS2, hastaIncidenciasS2));
+
+                // Enviar atributos al JSP
+
+                request.setAttribute("lista", incidenciasPaginadasS2);
+                request.setAttribute("paginaActual", paginaIncidenciasS2);
+                request.setAttribute("totalPaginas", totalPaginasIncidenciasS2);
                 request.getRequestDispatcher("WEB-INF/Serenazgo/listaIncidencias_S.jsp").forward(request, response);
                 break;
             case "cambiarTelefono":
