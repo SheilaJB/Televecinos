@@ -134,6 +134,7 @@
                 <div class="bar" data-label="Dirección"><%=usuarioLogueado.getDireccion()%></div>
                 <div class="bar" data-label="Urbanización"><%=usuarioLogueado.getUrbanizacionString()%></div>
                 <div class="bar" data-label="Correo"><%=usuarioLogueado.getCorreo()%></div>
+                <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=contrasenaActual"><button class="button alert-danger">Cambiar Contraseña</button></a>
                 <a href="<%=request.getContextPath()%>/CoordinadorServlet"><button class="button regresar">Regresar</button></a>
             </div>
         </div>

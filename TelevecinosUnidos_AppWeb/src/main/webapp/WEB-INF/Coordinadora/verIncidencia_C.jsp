@@ -157,13 +157,10 @@
                                     <img src="ImagenServlet?idImagenIncidencia=<%= request.getAttribute("incidencia") != null ? ((IncidenciasB) request.getAttribute("incidencia")).getIdIncidencias() : "" %>" class="img-responsive" alt="" style="width: 100%; height: auto;" />
                                 </div>
                             </div>
-                            <div class="d-flex justify-content-end">
-                                <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=listarIncidencia">
-                                    <button type="button" class="btn btn-secondary m-2 d-flex justify-content-between align-items-center">Regresar</button>
-                                </a>
-                            </div>
-
                         </form>
+                        <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=listarIncidencia">
+                            <button type="button" class="btn btn-secondary m-2 d-flex justify-content-between align-items-center">Regresar</button>
+                        </a>
                     </div>
                 </div>
             </div>

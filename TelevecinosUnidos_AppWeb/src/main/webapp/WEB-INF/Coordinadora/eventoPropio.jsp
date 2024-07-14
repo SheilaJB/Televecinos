@@ -50,8 +50,13 @@
         <jsp:include page="../includes/navbarCoordinador.jsp"></jsp:include>
         <!-- Navbar End -->
 
+
         <!-- Form Start -->
         <div class="container-fluid pt-4 px-4">
+            <!-- Agregar el botón de regreso en la esquina superior derecha -->
+            <div class="container-fluid pt-2">
+                <button class="btn btn-secondary float-end" onclick="goBack()">Regresar</button>
+            </div>
             <div class="campo">
                 <h2><%= request.getAttribute("evento") != null ? ((EventoB) request.getAttribute("evento")).getNombre() : "" %></h2>
                 <br>
@@ -285,6 +290,12 @@
                 materialesContainer.appendChild(newInputGroup);
             });
         });
+    </script>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
     </script>
 
 </div>

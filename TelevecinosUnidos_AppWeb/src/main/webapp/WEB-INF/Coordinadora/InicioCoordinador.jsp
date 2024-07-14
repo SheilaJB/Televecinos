@@ -101,7 +101,12 @@
                                 <p>Como coordinador, es tu deber organizar y administrar eventos que fomenten la participación y el bienestar dentro de la comunidad.</p>
                             </article>
                             <footer class="mt-4">
-                                <h6 class="mt-2"><button class="btn btn-success btn-block"  window.location.href='<%=request.getContextPath()%>/CoordinadorServlet?action=listar'>Ver Eventos Propios</button><a style="margin-left: 10px" href="<%=request.getContextPath()%>/CoordinadorServlet?action=eventoGeneralesC">Visita eventos de tu área aquí</a>.</h6>
+                                <button class="btn btn-success btn-block" onclick="window.location.href='<%=request.getContextPath()%>/CoordinadorServlet?action=lista'">
+                                    Ver Eventos Propios
+                                </button>
+                                <a style="margin-left: 10px" href="<%=request.getContextPath()%>/CoordinadorServlet?action=eventoGeneralesC">
+                                    Visita eventos de tu área aquí
+                                </a>.
                                 <h6 class="mt-2">¿Quieres crear un nuevo evento? <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=crearEvento">Crea tu evento aquí</a>.</h6>
                             </footer>
                         </div>
@@ -115,7 +120,11 @@
                                 <p>También puedes reportar incidencias que observes en tu comunidad</p>
                             </article>
                             <footer class="mt-4">
-                                <h6 class="mt-2"><button class="btn btn-success btn-block"  window.location.href='<%=request.getContextPath()%>/CoordinadorServlet?action=listarIncidencia'>Ver Incidencias</button></h6>
+                                <h6 class="mt-2">
+                                    <button class="btn btn-success btn-block" onclick="window.location.href='<%=request.getContextPath()%>/CoordinadorServlet?action=listarIncidencia'">
+                                        Ver Incidencias
+                                    </button>
+                                </h6>
                                 <h6 class="mt-2">¿Quieres reportar una incidencia? <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=generarIncidenciaC">Reporta tu incidencia aquí</a>.</h6>
                             </footer>
                         </div>

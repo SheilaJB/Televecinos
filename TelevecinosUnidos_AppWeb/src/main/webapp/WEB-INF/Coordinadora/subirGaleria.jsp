@@ -196,7 +196,7 @@
                         <th scope="col">Fecha de inicio</th>
                         <th scope="col">Estado</th>
                         <th scope="col">Frecuencia</th>
-                        <th scope="col"></th>
+                        <th scope="col">Ver SubirFotos</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -210,6 +210,9 @@
                         <td><%= eventoB.getEstadoString() %></td>
                         <td><%= eventoB.getFrecuenciaString() %></td>
                         <td>
+                            <a onclick="viewFunction(<%=eventoB.getIdEvento()%>)">
+                                <button type="button" class="btn btn-primary btn-sm-square m-1" ><i class="fas fa-eye fa-xs"></i></button>
+                            </a>
                             <button type="button" class="btn btn-success btn-sm-square m-1" id="abrirModalBtn_<%= eventoB.getidEvento() %>" data-bs-toggle="modal" data-bs-target="#subirFotosModal" data-evento-id="<%= eventoB.getidEvento() %>">
                                 <i class="fas fa-camera fa-xs"></i>
                             </button>

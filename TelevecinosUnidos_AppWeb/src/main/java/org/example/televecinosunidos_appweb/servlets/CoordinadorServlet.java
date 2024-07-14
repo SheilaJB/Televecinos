@@ -7,9 +7,12 @@ import jakarta.servlet.annotation.*;
 import org.example.televecinosunidos_appweb.model.beans.*;
 import org.example.televecinosunidos_appweb.model.daos.EventoDao;
 import org.example.televecinosunidos_appweb.model.daos.IncidenCoordDao;
+import org.example.televecinosunidos_appweb.model.daos.UsuarioDao;
+import org.example.televecinosunidos_appweb.util.GeneraContrasena;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -180,7 +183,6 @@ public class CoordinadorServlet extends HttpServlet {
                 request.getRequestDispatcher(vista).forward(request, response);
                 break;
 
-
             //Incidencia
             case "listarIncidencia":
                 int paginaActualI = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
@@ -251,6 +253,14 @@ public class CoordinadorServlet extends HttpServlet {
                 vista = "WEB-INF/Coordinadora/listaFechasEvento_C.jsp";
                 request.getRequestDispatcher(vista).forward(request, response);
                 break;
+            case "contrasenaActual":
+                vista = "WEB-INF/Coordinadora/contrasenaActual.jsp";
+                request.getRequestDispatcher(vista).forward(request, response);
+                break;
+            case "cambiarContrasena":
+                vista = "WEB-INF/Coordinadora/cambioContrasena.jsp";
+                request.getRequestDispatcher(vista).forward(request, response);
+                break;
             default:
                 throw new IllegalArgumentException("Acción no reconocida: " + action);
         }
@@ -262,6 +272,7 @@ public class CoordinadorServlet extends HttpServlet {
         response.setContentType("text/html");
         IncidenCoordDao incidenciaDao = new IncidenCoordDao();
         EventoDao eventoDao = new EventoDao();
+        UsuarioDao usuarioDao = new UsuarioDao();
         String action = request.getParameter("action") == null ? "crear" : request.getParameter("action");
         HttpSession httpSession = request.getSession();
         UsuarioB usuarioLogged = (UsuarioB) httpSession.getAttribute("usuarioLogueado");
@@ -986,6 +997,70 @@ public class CoordinadorServlet extends HttpServlet {
                 } catch (Exception e) {
                     request.getSession().setAttribute("error", "Error al cargar las fotos");
                     response.sendRedirect(request.getContextPath() + "/CoordinadorServlet?action=subirGaleria");
+                }
+                break;
+
+            case "contrasenaActual":
+                String correo = request.getParameter("correo");
+                String contrasenaActual = request.getParameter("contrasenaActual");
+                if (usuarioLogged != null) {
+                    // Verificar si se proporcionó la contraseña actual
+                    if (contrasenaActual == null || contrasenaActual.isEmpty() || correo == null || correo.isEmpty()) {
+                        request.setAttribute("err", "Por favor, ingrese sus credenciales completas");
+                        request.getRequestDispatcher("WEB-INF/Coordinadora/contrasenaActual.jsp").forward(request, response);
+                        return;
+                    } else {
+                        if (usuarioDao.validarUsuarioPassword(correo, contrasenaActual)) {
+                            httpSession.setAttribute("success", "Validación exitosa, proceda a cambiar su contraseña");
+                            //response.sendRedirect(request.getContextPath() + "/CoordinadorServlet?action=cambiarContrasena");
+                            request.getRequestDispatcher("WEB-INF/Coordinadora/contrasenaActual.jsp").forward(request, response);
+                        } else {
+                            request.setAttribute("err", "Su correo o contraseña son inválidos");
+                            request.getRequestDispatcher("WEB-INF/Coordinadora/contrasenaActual.jsp").forward(request, response);
+                        }
+                    }
+                }
+                break;
+
+            case "cambiarContrasena":
+                String nuevaContrasena = request.getParameter("nuevaContrasena");
+                String confirmarContrasena = request.getParameter("confirmarContrasena");
+
+                // Validaciones de contraseña
+                if (nuevaContrasena == null || nuevaContrasena.isEmpty() || confirmarContrasena == null || confirmarContrasena.isEmpty()) {
+                    request.setAttribute("err", "Ambos campos son obligatorios.");
+                    request.getRequestDispatcher("WEB-INF/Coordinadora/cambioContrasena.jsp").forward(request, response);
+                    return;
+                } else if (nuevaContrasena.length() < 8) {
+                    request.setAttribute("err", "La contraseña debe tener al menos 8 caracteres.");
+                    request.getRequestDispatcher("WEB-INF/Coordinadora/cambioContrasena.jsp").forward(request, response);
+                    return;
+                } else if (!nuevaContrasena.matches("^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9]+$")) {
+                    request.setAttribute("err", "La contraseña debe contener al menos un número y una letra, sin espacios ni caracteres especiales.");
+                    request.getRequestDispatcher("WEB-INF/Coordinadora/cambioContrasena.jsp").forward(request, response);
+                    return;
+                } else if (!nuevaContrasena.equals(confirmarContrasena)) {
+                    request.setAttribute("err", "Las contraseñas no coinciden.");
+                    request.getRequestDispatcher("WEB-INF/Coordinadora/cambioContrasena.jsp").forward(request, response);
+                    return;
+                } else {
+
+                    if (usuarioLogged != null) {
+                        String hashedPassword;
+                        try {
+                            hashedPassword = GeneraContrasena.hashPassword(nuevaContrasena);
+                        } catch (NoSuchAlgorithmException e) {
+                            throw new RuntimeException(e);
+                        }
+                        usuarioLogged.setContrasenia(hashedPassword);
+
+                        usuarioDao.actualizarContrasena(usuarioLogged);
+                        httpSession.setAttribute("success", "Contraseña cambiada exitosamente");
+                        response.sendRedirect(request.getContextPath() + "/CoordinadorServlet?action=cambiarContrasena");
+                    } else {
+                        request.setAttribute("err", "Usuario no encontrado en la sesión.");
+                        request.getRequestDispatcher("WEB-INF/Coordinadora/cambioContrasena.jsp").forward(request, response);
+                    }
                 }
                 break;
             default:
