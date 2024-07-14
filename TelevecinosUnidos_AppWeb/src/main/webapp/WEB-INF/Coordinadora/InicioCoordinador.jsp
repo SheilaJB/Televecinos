@@ -93,29 +93,29 @@
                 </div>
                 <div class="col-md-6 mb-4">
                     <section id="Titulo_Eventos" class="card">
-                        <div class="card-body">
+                        <div class="card-body border-secondary">
                             <header>
-                                <h2 class="card-title">¡Organiza eventos para tu comunidad!</h2>
+                                <h2 class="card-title card-header bg-transparent">¡Organiza eventos para tu comunidad!</h2>
                             </header>
-                            <article>
-                                <p>Como coordinadora, tienes la responsabilidad de crear y gestionar eventos que promuevan la participación y el bienestar en la comunidad.</p>
+                            <article class="mt-4">
+                                <p>Como coordinador, es tu deber organizar y administrar eventos que fomenten la participación y el bienestar dentro de la comunidad.</p>
                             </article>
-                            <footer>
+                            <footer class="mt-4">
                                 <h6 class="mt-2"><button class="btn btn-success btn-block"  window.location.href='<%=request.getContextPath()%>/CoordinadorServlet?action=listar'>Ver Eventos Propios</button><a style="margin-left: 10px" href="<%=request.getContextPath()%>/CoordinadorServlet?action=eventoGeneralesC">Visita eventos de tu área aquí</a>.</h6>
                                 <h6 class="mt-2">¿Quieres crear un nuevo evento? <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=crearEvento">Crea tu evento aquí</a>.</h6>
                             </footer>
                         </div>
                     </section>
                     <section id="Titulo_Incidencia" class="card" style="margin-top: 5px">
-                        <div class="card-body">
+                        <div class="card-body border-secondary">
                             <header>
-                                <h2 class="card-title">¡Reporta incidencias!</h2>
+                                <h2 class="card-title card-header bg-transparent">¡Reporta incidencias!</h2>
                             </header>
-                            <article>
+                            <article class="mt-4">
                                 <p>También puedes reportar incidencias que observes en tu comunidad</p>
                             </article>
-                            <footer>
-                                <h6 class="mt-2"><button class="btn btn-danger btn-block"  window.location.href='<%=request.getContextPath()%>/CoordinadorServlet?action=listarIncidencia'>Ver Incidencias</button></h6>
+                            <footer class="mt-4">
+                                <h6 class="mt-2"><button class="btn btn-success btn-block"  window.location.href='<%=request.getContextPath()%>/CoordinadorServlet?action=listarIncidencia'>Ver Incidencias</button></h6>
                                 <h6 class="mt-2">¿Quieres reportar una incidencia? <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=generarIncidenciaC">Reporta tu incidencia aquí</a>.</h6>
                             </footer>
                         </div>

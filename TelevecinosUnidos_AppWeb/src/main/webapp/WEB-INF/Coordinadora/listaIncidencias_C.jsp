@@ -153,15 +153,15 @@
             </div>
 
             <div class="table-responsive">
-                <table class="table" style="background-color: transparent;">
+                <table id="eventosTable" class="table table-striped table-hover" style="background-color: transparent;">
                     <thead>
-                    <tr>
+                    <tr class="form-text">
                         <th scope="col">Nombre de la incidencia</th>
                         <th scope="col">Fecha</th>
                         <th scope="col">Hora</th>
                         <th scope="col">Tipo</th>
                         <th scope="col">Estado</th>
-                        <th scope="col"></th>
+                        <th scope="col">Ver Editar Borrar</th>
                     </tr>
                     </thead>
                     <tbody>

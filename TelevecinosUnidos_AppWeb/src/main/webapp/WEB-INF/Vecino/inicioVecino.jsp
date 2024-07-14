@@ -103,7 +103,7 @@
                 </div>
                 <div class="col-md-6 mb-4">
                     <section id="Titulo_Incidencia" class="card">
-                        <div class="card-body">
+                        <div class="card-body card border-secondary">
                             <header>
                                 <h2 class="card-title">¡Puedes reportar incidencias en tu comunidad!</h2>
                             </header>
@@ -117,7 +117,7 @@
                         </div>
                     </section>
                     <section id="Titulo_Eventos" class="card" style="margin-top: 5px">
-                        <div class="card-body">
+                        <div class="card-body card border-secondary">
                             <header>
                                 <h2 class="card-title">¡No te pierdas nuestros eventos de cultura y deporte!</h2>
                             </header>
@@ -157,7 +157,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <% if (listaIncidencia != null) {
+                            <% if (listaIncidencia != null ) {
                                 for (IncidenciasB incidencia : listaIncidencia) { %>
                             <tr>
                                 <td><%= incidencia.getNombreIncidencia() %></td>

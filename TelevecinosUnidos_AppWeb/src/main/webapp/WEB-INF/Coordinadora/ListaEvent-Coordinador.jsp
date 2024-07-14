@@ -130,7 +130,7 @@
                         <th scope="col">Fecha de inicio</th>
                         <th scope="col">Estado</th>
                         <th scope="col">Frecuencia</th>
-                        <th scope="col"></th>
+                        <th scope="col">Ver Editar Borrar</th>
                     </tr>
                     </thead>
                     <tbody>

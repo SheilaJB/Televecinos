@@ -164,7 +164,7 @@
                         <th scope="col">Frecuencia</th>
                         <th scope="col">Estado</th>
                         <th scope="col">Tipo de evento</th>
-                        <th scope="col"></th>
+                        <th scope="col">Ver</th>
                     </tr>
                     </thead>
                     <tbody>
