@@ -1650,7 +1650,9 @@ public class EventoDao extends BaseDao{
                 pstmt.setString(3, nombreFoto);
             }
             int rowsAffected = pstmt.executeUpdate();
+            logger.info("Número de filas afectadas: " + rowsAffected);
         } catch (SQLException e) {
+            logger.severe("Error al guardar la foto en la base de datos: " + e.getMessage());
             throw new SQLException("Error al guardar la foto en la base de datos", e);
         } finally {
             if (contenidoFoto != null) {
@@ -1673,6 +1675,9 @@ public class EventoDao extends BaseDao{
                     return rs.getInt(1) > 0;
                 }
             }
+        } catch (SQLException e) {
+            logger.severe("Error al verificar la existencia de la galería: " + e.getMessage());
+            throw new SQLException("Error al verificar la existencia de la galería", e);
         }
         return false;
     }

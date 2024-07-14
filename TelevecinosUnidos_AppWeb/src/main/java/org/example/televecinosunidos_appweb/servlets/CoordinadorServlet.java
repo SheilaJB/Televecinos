@@ -637,13 +637,11 @@ public class CoordinadorServlet extends HttpServlet {
                         String horaInicioStr2 = horaInicio2.format(timeFormatter3);
                         String horaFinStr2 = horaFin2.format(timeFormatter3);
 
-                        // Verificar traslape de eventos ANTES de crear el evento
-                        int idEvento2 = 0; // No hay ID de evento existente al crear uno nuevo
-                        boolean hayTraslape2 = eventoDao.hayTraslapeCoordinador(usuarioLogged.getIdUsuario(), idEvento2, fechaInicioStr2, fechaFinStr2, horaInicioStr2, horaFinStr2, Integer.parseInt(frecuencia2));
+                        boolean hayTraslape2 = eventoDao.hayTraslapeCoordinador(usuarioLogged.getIdUsuario(), idEvento, fechaInicioStr2, fechaFinStr2, horaInicioStr2, horaFinStr2, Integer.parseInt(frecuencia2));
                         boolean hayTraslapeProfesor2 = eventoDao.hayTraslapeProfesor(Integer.parseInt(idProfesor2), fechaInicioStr2, fechaFinStr2, horaInicioStr2, horaFinStr2);
                         if (hayTraslape2 || hayTraslapeProfesor2) {
                             request.setAttribute("eventoB", evento);
-                            request.getSession().setAttribute("err", "Ya existe un evento con fechas y horas que se superponen.");
+                            request.setAttribute("err", "Ya existe un evento con fechas y horas que se superponen.");
                             ArrayList<ProfesoresEvento> listaProfesores = eventoDao.listarProfesores();
                             request.setAttribute("lista", listaProfesores);
                             request.setAttribute("erroresEvento", erroresEvento2);
@@ -979,6 +977,7 @@ public class CoordinadorServlet extends HttpServlet {
                 try {
                     int idEvento6 = Integer.parseInt(request.getParameter("idEvento"));
                     Map<String, String> nombresFotos = new HashMap<>();
+                    boolean galeriaExiste = eventoDao.verificarExistenciaGaleria(idEvento6);
 
                     for (int i = 1; i <= 3; i++) {
                         Part part6 = request.getPart("foto" + i);
@@ -995,7 +994,7 @@ public class CoordinadorServlet extends HttpServlet {
                     request.getSession().setAttribute("info", "Fotos cargadas exitosamente.");
                     response.sendRedirect(request.getContextPath() + "/CoordinadorServlet?action=subirGaleria");
                 } catch (Exception e) {
-                    request.getSession().setAttribute("error", "Error al cargar las fotos");
+                    request.getSession().setAttribute("error", "Error al cargar las fotos: " + e.getMessage());
                     response.sendRedirect(request.getContextPath() + "/CoordinadorServlet?action=subirGaleria");
                 }
                 break;

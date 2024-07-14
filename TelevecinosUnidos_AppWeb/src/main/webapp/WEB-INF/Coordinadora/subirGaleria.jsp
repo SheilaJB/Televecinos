@@ -213,7 +213,7 @@
                             <a onclick="viewFunction(<%=eventoB.getIdEvento()%>)">
                                 <button type="button" class="btn btn-primary btn-sm-square m-1" ><i class="fas fa-eye fa-xs"></i></button>
                             </a>
-                            <button type="button" class="btn btn-success btn-sm-square m-1" id="abrirModalBtn_<%= eventoB.getidEvento() %>" data-bs-toggle="modal" data-bs-target="#subirFotosModal" data-evento-id="<%= eventoB.getidEvento() %>">
+                            <button type="button" class="btn btn-success btn-sm-square m-1" id="abrirModalBtn_<%= eventoB.getidEvento() %>" data-bs-toggle="modal" data-bs-target="#subirFotosModal" data-evento-id="<%= eventoB.getIdEvento() %>">
                                 <i class="fas fa-camera fa-xs"></i>
                             </button>
                         </td>
@@ -237,7 +237,7 @@
                             </div>
                             <div class="modal-body">
                                 <form action="<%=request.getContextPath()%>/CoordinadorServlet?action=subirGaleria" method="post" enctype="multipart/form-data">
-                                    <input type="hidden" name="idEvento" id="idEventoInput">
+                                    <input type="hidden" name="idEvento" id="idEvento">
                                     <div>
                                         <label for="foto1">Foto 1:</label>
                                         <input type="file" name="foto1" id="foto1" accept="image/*" required>
@@ -259,33 +259,44 @@
                                     <div class="mb-3">
                                         <img id="preview3" src="#" alt="Vista previa de la imagen 3" class="img-thumbnail" style="display: none;">
                                     </div>
-                                    <script>
-                                        function previewImage(inputId, previewId) {
-                                            var inputElement = document.getElementById(inputId);
-                                            inputElement.addEventListener('change', function(event) {
-                                                var file = event.target.files[0];
-                                                if (file) {
-                                                    var reader = new FileReader();
-                                                    reader.onload = function(e) {
-                                                        var imgElement = document.getElementById(previewId);
-                                                        imgElement.src = e.target.result;
-                                                        imgElement.style.display = 'block'; // Muestra la imagen
-                                                    };
-                                                    reader.readAsDataURL(file);
-                                                }
-                                            });
-                                        }
-
-                                        for (let i = 1; i <= 3; i++) {
-                                            previewImage('foto' + i, 'preview' + i);
-                                        }
-                                    </script>
-                                    <button type="submit" class="btn btn-primary"style="margin-top: 3px">Subir fotos</button>
+                                    <button type="submit" class="btn btn-primary" style="margin-top: 3px">Subir fotos</button>
                                 </form>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        var uploadModal = document.getElementById('subirFotosModal');
+                        uploadModal.addEventListener('show.bs.modal', function (event) {
+                            var button = event.relatedTarget;
+                            var idEvento = button.getAttribute('data-evento-id');
+                            var modal = this;
+                            modal.querySelector('#idEvento').value = idEvento;
+                        });
+                    });
+
+                    function previewImage(inputId, previewId) {
+                        var inputElement = document.getElementById(inputId);
+                        inputElement.addEventListener('change', function(event) {
+                            var file = event.target.files[0];
+                            if (file) {
+                                var reader = new FileReader();
+                                reader.onload = function(e) {
+                                    var imgElement = document.getElementById(previewId);
+                                    imgElement.src = e.target.result;
+                                    imgElement.style.display = 'block'; // Muestra la imagen
+                                };
+                                reader.readAsDataURL(file);
+                            }
+                        });
+                    }
+
+                    for (let i = 1; i <= 3; i++) {
+                        previewImage('foto' + i, 'preview' + i);
+                    }
+                </script>
 
 
                 <script>
