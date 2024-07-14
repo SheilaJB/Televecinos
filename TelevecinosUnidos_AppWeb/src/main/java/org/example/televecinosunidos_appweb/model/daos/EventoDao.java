@@ -1174,8 +1174,9 @@ public class EventoDao extends BaseDao{
                 "    AND e.eliminado = FALSE \n" +
                 "    AND MONTH(e.fecha_inicio) = MONTH(CURRENT_DATE()) \n" +
                 "ORDER BY \n" +
-                "    e.fecha_inicio DESC" +
-                "limit 3;";
+                "    e.fecha_inicio DESC \n" +
+                "LIMIT 3;";
+
 
         try (Connection conn = this.getConnection();
              Statement stmt = conn.createStatement();
