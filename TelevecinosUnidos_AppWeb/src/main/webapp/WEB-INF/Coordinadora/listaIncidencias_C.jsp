@@ -89,8 +89,11 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-        <div id="Nombre del evento">
-            <h3 style="text-align: left; margin-top:20px;margin-bottom:20px;padding: 20px">Lista de incidencias</h3>
+        <div id="Titulo_Incidencias">
+            <h1 class="display-4 text-center" style="margin-top:20px;margin-bottom:20px;padding: 20px">
+                <h1 style="text-align: center"><i class="fas fa-exclamation-triangle"></i> ¡Tus incidencias reportadas!</h1>
+            </h1>
+            <p class="lead text-center">Revisa el estado de las incidencias que has reportado</p>
         </div>
         <% if (session.getAttribute("info") != null) { %>
         <script>

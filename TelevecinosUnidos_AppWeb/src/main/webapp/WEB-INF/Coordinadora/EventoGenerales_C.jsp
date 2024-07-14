@@ -96,52 +96,30 @@
         <!-- Mostrar eventos de deporte-->
 
 
-        <div id="Barra-Filtro" >
-
-            <script>
-                function crearEvento() {
-                    window.location.href = 'creacionEvento.html';
-                }
-            </script>
-            <script>
-                function filtrar() {
-                    var input, filtro, ul, li, txtValue, categoria, estado;
-                    input = document.getElementById('filtroInput');
-                    filtro = input.value.toUpperCase();
-                    ul = document.getElementById("lista");
-                    li = ul.getElementsByTagName('li');
-                    categoria = document.getElementById('filtroCategoria').value;
-                    estado = document.getElementById('filtroEstado').value;
-                    for (var i = 0; i < li.length; i++) {
-                        txtValue = li[i].textContent || li[i].innerText;
-                        var visible = true;
-                        if (txtValue.toUpperCase().indexOf(filtro) === -1) {
-                            visible = false;
-                        }
-                        if (categoria !== 'todos' && !txtValue.includes(categoria)) {
-                            visible = false;
-                        }
-                        if (estado !== 'todos' && !txtValue.includes(estado)) {
-                            visible = false;
-                        }
-                        li[i].style.display = visible ? "" : "none";
-                    }
-                }
-            </script>
-        </div>
-        <div id="Titulo_Eventos ">
-            <h1 style="text-align: center; margin-top:70px;margin-bottom:70px;">Descubre y Participa en Nuestros Vibrantes Eventos</h1>
-            <p style="text-align: center; font-size: normal; margin-top: 50px; margin-bottom: 50px;padding: 20px;">
-                Sumérgete en la acción con nuestros eventos deportivos. ¡Desde emocionantes partidos hasta desafiantes competiciones, tenemos algo para cada aficionado al deporte! ¡No te pierdas la diversión y únete a nosotros para vivir experiencias inolvidables!
-            </p>
-        </div>
+        <section id="titulo-eventos" class="container my-5">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h1 style="text-align: center"><i class="fas fa-calendar-alt"></i> ¡Eventos organizados por los coordinadores de San Miguel!</h1>
+                    <p class="lead">
+                        Puedes buscar eventos de tu área y ver los eventos que has creado.
+                    </p>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-6" style="text-align: center">
+                    <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=lista" class="btn btn-outline-secondary btn-lg btn-block mt-3">
+                        Ver mis propios eventos
+                    </a>
+                </div>
+            </div>
+        </section>
 
         <div style="background-color: #FFB703; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
             <form method="post" action="<%=request.getContextPath()%>/CoordinadorServlet?action=buscarEvento">
                 <div class="row justify-content">
                     <!-- Busqueda por nombre de evento -->
                     <div class="col-md-2 mb-2">
-                        <input type="text" class="form-control" id="filtroInput" placeholder="Buscar evento..." name="textoBuscarEventoG"
+                        <input type="text" class="form-control" id="filtroInput" placeholder="Buscar..." name="textoBuscarEventoG"
                                value="<%=request.getAttribute("textoBuscarEventoG") != null ? request.getAttribute("textoBuscarEventoG") : ""%>">
                     </div>
                     <div class="col-md-2 mb-2">

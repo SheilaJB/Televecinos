@@ -67,10 +67,11 @@
         <!-- Navbar End -->
 
         <!-- Lista de eventos -->
-        <div class="container text-center">
-            <div id="Nombre del evento">
-                <h1 style="text-align: center; margin-top:50px;margin-bottom:50px;"><b>Eventos propios</b></h1>
-            </div>
+        <div id="Nombre del evento">
+            <h1 class="display-4 text-center" style="margin-top:20px;margin-bottom:20px;padding: 20px">
+                <h1 style="text-align: center"><i class="fas fa-calendar-alt"> </i>¡Tus propios eventos!</h1>
+            </h1>
+            <p class="lead text-center">Crea, modifica y elimina tus propios eventos</p>
         </div>
 
         <% if (session.getAttribute("info") != null) { %>
