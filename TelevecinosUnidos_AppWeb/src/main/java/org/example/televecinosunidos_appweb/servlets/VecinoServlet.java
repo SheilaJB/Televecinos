@@ -40,7 +40,7 @@ public class VecinoServlet extends HttpServlet {
             /*------------------Página principal------------------*/
             case "inicioVecino":
                 ArrayList<IncidenciasB> listaIncidenciasRecientes = incidenciaDao.listarIncidenciaRecientes(userId);
-                ArrayList<EventoB> eventosInscritos2 = eventoDao.obtenerEventosInscritos(userId);
+                ArrayList<EventoB> eventosInscritos2 = eventoDao.obtenerEventosInscritosActual(userId);
                 request.setAttribute("listaIncidencia", listaIncidenciasRecientes);
                 request.setAttribute("eventosInscritos", eventosInscritos2);
                 vista = "WEB-INF/Vecino/inicioVecino.jsp";

@@ -1149,6 +1149,61 @@ public class EventoDao extends BaseDao{
         return listaFechasEvento;
     }
 
+    public ArrayList<EventoB> obtenerEventosInscritosActual(int idUser){
+        ArrayList<EventoB> eventosInscritos = new ArrayList<>();
+        String sqlSetLanguage = "SET lc_time_names = 'es_ES';";
+        String sql = "SELECT \n" +
+                "    e.idEventos, \n" +
+                "    e.nombre, \n" +
+                "    DATE_FORMAT(e.fecha_inicio, '%d %M %Y') AS 'Fecha de Inicio', \n" +
+                "    es.estadosEvento, \n" +
+                "    ef.tipoFrecuencia, \n" +
+                "    te.tipo \n" +
+                "FROM \n" +
+                "    Eventos e \n" +
+                "JOIN \n" +
+                "    EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia \n" +
+                "JOIN \n" +
+                "    TipoEvento te ON e.TipoEvento_idTipoEvento = te.idTipoEvento \n" +
+                "JOIN \n" +
+                "    EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados \n" +
+                "JOIN \n" +
+                "    flujo_usuario_evento fue ON e.idEventos = fue.Eventos_idEventos \n" +
+                "WHERE \n" +
+                "    fue.Usuario_idUsuario = ? \n" +
+                "    AND e.eliminado = FALSE \n" +
+                "    AND MONTH(e.fecha_inicio) = MONTH(CURRENT_DATE()) \n" +
+                "ORDER BY \n" +
+                "    e.fecha_inicio DESC" +
+                "limit 3;";
+
+        try (Connection conn = this.getConnection();
+             Statement stmt = conn.createStatement();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            stmt.execute(sqlSetLanguage);
+            pstmt.setInt(1, idUser);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    EventoB evento = new EventoB();
+                    evento.setIdEvento(rs.getInt("idEventos"));
+                    evento.setNombre(rs.getString("nombre"));
+                    evento.setFecha_inicio(rs.getString("Fecha de Inicio"));
+                    evento.setEstadoString(rs.getString("estadosEvento"));
+                    evento.setFrecuenciaString(rs.getString("tipoFrecuencia"));
+                    evento.setTipoEvento(rs.getString("tipo"));
+
+                    eventosInscritos.add(evento);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al obtener eventos inscritos: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return eventosInscritos;
+    }
+
 
     public ArrayList<EventoB> obtenerEventosInscritos(int userId) {
         ArrayList<EventoB> eventosInscritos = new ArrayList<>();
