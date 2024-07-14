@@ -85,7 +85,7 @@ public class EventoDao extends BaseDao{
 
 
     //Función lista de eventos disponibles
-    public ArrayList<EventoB> listarEventosDisponibles() {
+    public ArrayList<EventoB> listarEventosDisponibles() { ///Corregir
 
         String sqlSetLanguage = "SET lc_time_names = 'es_ES';";
         String sql = "SELECT \n" +
@@ -140,30 +140,37 @@ public class EventoDao extends BaseDao{
     }
 
     //Mostrar solo los 3 eventos creados recientemente
-    public ArrayList<EventoB> listarEventosPropiosRecientes() {
-
-        String sqlSetLanguage = "SET lc_time_names = 'es_ES';";
-        String sql = "SELECT e.idEventos AS 'ID Evento', e.nombre AS 'Nombre', DATE_FORMAT(e.fecha_inicio, '%d %M') AS 'Fecha de Inicio', " +
-                "es.estadosEvento AS 'Estado', ef.tipoFrecuencia AS 'Frecuencia' " +
-                "FROM Eventos e JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
-                "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
-                "WHERE e.TipoEvento_idTipoEvento = 1 AND e.eliminado = FALSE " +
-                "ORDER BY e.fecha_inicio DESC " +
-                "LIMIT 3;";
-
+    public ArrayList<EventoB> listarEventosPropiosRecientes(int idUser, int idTipoCoord) {
         ArrayList<EventoB> listaEventosPropios = new ArrayList<>();
+        String sqlSetLanguage = "SET lc_time_names = 'es_ES';";
+        String sql = "SELECT e.idEventos AS 'ID Evento', e.nombre AS 'Nombre', \n" +
+                "       DATE_FORMAT(e.fecha_inicio, '%d %M') AS 'Fecha de Inicio', \n" +
+                "       es.estadosEvento AS 'Estado', ef.tipoFrecuencia AS 'Frecuencia' \n" +
+                "FROM Eventos e \n" +
+                "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados \n" +
+                "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia \n" +
+                "JOIN flujo_usuario_evento fue ON e.idEventos = fue.Eventos_idEventos \n" +
+                "JOIN usuario u ON e.Coordinador_idUsuario = u.idUsuario \n" +
+                "WHERE e.TipoEvento_idTipoEvento = ? AND e.eliminado = FALSE AND u.idUsuario = ? \n" +
+                "      AND MONTH(e.fecha_inicio) = MONTH(CURRENT_DATE()) \n" +
+                "ORDER BY e.fecha_inicio DESC\n" +
+                "LIMIT 5;";
 
         try (Connection conn = getConnection();
-             Statement stmt = conn.createStatement()) {
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             // Ejecutar la sentencia para establecer el idioma de las fechas en español
-            stmt.execute(sqlSetLanguage);
+            pstmt.execute(sqlSetLanguage);
+
+            // Configurar los parámetros idTipoCoord e idUser
+            pstmt.setInt(1, idTipoCoord);
+            pstmt.setInt(2, idUser);
 
             // Ejecutar la consulta principal
-            try (ResultSet rs = stmt.executeQuery(sql)) {
+            try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
                     EventoB evento = new EventoB();
-                    evento.setidEvento(rs.getInt("ID Evento"));
+                    evento.setIdEvento(rs.getInt("ID Evento"));
                     evento.setNombre(rs.getString("Nombre"));
                     evento.setFecha_inicio(rs.getString("Fecha de Inicio"));
                     evento.setEstadoString(rs.getString("Estado"));
@@ -171,13 +178,14 @@ public class EventoDao extends BaseDao{
                     listaEventosPropios.add(evento);
                 }
             }
-
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Error al listar eventos propios recientes: " + e.getMessage(), e);
         }
 
         return listaEventosPropios;
     }
+
+
 
     //Function buscar un evento
     public EventoB buscarEventoPorId(String idEvento) {
@@ -553,7 +561,7 @@ public class EventoDao extends BaseDao{
         return true;
     }
     //Buscar evento por filtro
-    public ArrayList<EventoB> listarEventoFiltro(String nombre, String frecuencia, String estado, int idTipoEvento, int pagina) {
+    public ArrayList<EventoB> listarEventoFiltro(String nombre, String fecha, String frecuencia, String estado, int idTipoEvento, int pagina) {
         String sqlSetLanguage = "SET lc_time_names = 'es_ES';";
         String sqlSetTotalRows = "SET @total_rows = (SELECT COUNT(*) FROM Eventos e " +
                 "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
@@ -561,11 +569,12 @@ public class EventoDao extends BaseDao{
                 "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
                 "JOIN profesoresevento pf ON e.ProfesoresEvento_idProfesoresEvento = pf.idProfesoresEvento " +
                 "WHERE e.nombre LIKE ? " +
+                (fecha != null && !fecha.isEmpty() ? "AND e.fecha_inicio >= ? " : "") +
                 (frecuencia != null && !frecuencia.isEmpty() ? "AND ef.idEventFrecuencia = ? " : "") +
                 (estado != null && !estado.isEmpty() ? "AND es.idEventEstados = ? " : "") +
                 (idTipoEvento != 0 ? "AND e.TipoEvento_idTipoEvento = ? " : "") +
                 "AND e.eliminado = FALSE);";
-        String sqlSetNumPartitions = "SET @num_partitions = FLOOR((@total_rows + 4) / 5);"; // Ajustado para calcular el número de particiones
+        String sqlSetNumPartitions = "SET @num_partitions = FLOOR((@total_rows + 4) / 5);";
 
         String sql = "SELECT " +
                 "    (@row_number := @row_number + 1) AS row_num, " +
@@ -581,15 +590,19 @@ public class EventoDao extends BaseDao{
                 "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
                 "JOIN profesoresevento pf ON e.ProfesoresEvento_idProfesoresEvento = pf.idProfesoresEvento " +
                 "WHERE e.nombre LIKE ? " +
+                (fecha != null && !fecha.isEmpty() ? "AND e.fecha_inicio >= ? " : "") +
                 (frecuencia != null && !frecuencia.isEmpty() ? "AND ef.idEventFrecuencia = ? " : "") +
                 (estado != null && !estado.isEmpty() ? "AND es.idEventEstados = ? " : "") +
                 (idTipoEvento != 0 ? "AND e.TipoEvento_idTipoEvento = ? " : "") +
                 "AND e.eliminado = FALSE " +
                 "ORDER BY e.fecha_inicio DESC;";
 
-        ArrayList<EventoB> evento = new ArrayList<>();
+        ArrayList<EventoB> eventos = new ArrayList<>();
         List<Object> parametros = new ArrayList<>();
         parametros.add(nombre + "%");
+        if (fecha != null && !fecha.isEmpty()) {
+            parametros.add(fecha);
+        }
         if (frecuencia != null && !frecuencia.isEmpty()) {
             parametros.add(frecuencia);
         }
@@ -605,27 +618,20 @@ public class EventoDao extends BaseDao{
              PreparedStatement pstmtTotalRows = conn.prepareStatement(sqlSetTotalRows);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            // Ejecutar la sentencia para establecer el idioma de las fechas en español
             stmt.execute(sqlSetLanguage);
 
-            // Asignar los parámetros para el total de filas
             for (int i = 0; i < parametros.size(); i++) {
                 pstmtTotalRows.setObject(i + 1, parametros.get(i));
             }
             pstmtTotalRows.execute();
 
-            // Ejecutar la sentencia para calcular el número de particiones
             stmt.execute(sqlSetNumPartitions);
-
-            // Inicializar la variable de sesión para el número de fila
             stmt.execute("SET @row_number = 0;");
 
-            // Asignar los parámetros al PreparedStatement principal
             for (int i = 0; i < parametros.size(); i++) {
                 pstmt.setObject(i + 1, parametros.get(i));
             }
 
-            // Ejecutar la consulta principal
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
                     if (rs.getInt("pag") == pagina) {
@@ -636,24 +642,26 @@ public class EventoDao extends BaseDao{
                         event.setFecha_inicio(rs.getString("Fecha de Inicio"));
                         event.setEstadoString(rs.getString("Estado"));
                         event.setFrecuenciaString(rs.getString("Frecuencia"));
-                        evento.add(event);
+                        eventos.add(event);
                     }
                 }
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Error al listar eventos filtradas", e);
+            throw new RuntimeException("Error al listar eventos filtrados", e);
         }
-        return evento;
+        return eventos;
     }
 
 
-    public int contarEventosFiltrados(String nombre, String frecuencia, String estado, int idTipoEvento) {
+
+    public int contarEventosFiltrados(String nombre, String fecha, String frecuencia, String estado, int idTipoEvento) {
         String sql = "SELECT COUNT(*) AS total FROM Eventos e " +
                 "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
                 "JOIN Usuario u ON e.Coordinador_idUsuario = u.idUsuario " +
                 "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
                 "JOIN profesoresevento pf ON e.ProfesoresEvento_idProfesoresEvento = pf.idProfesoresEvento " +
                 "WHERE e.nombre LIKE ? " +
+                (fecha != null && !fecha.isEmpty() ? "AND e.fecha_inicio >= ? " : "") +
                 (frecuencia != null && !frecuencia.isEmpty() ? "AND ef.idEventFrecuencia = ? " : "") +
                 (estado != null && !estado.isEmpty() ? "AND es.idEventEstados = ? " : "") +
                 (idTipoEvento != 0 ? "AND e.TipoEvento_idTipoEvento = ? " : "") +
@@ -661,6 +669,9 @@ public class EventoDao extends BaseDao{
 
         List<Object> parametros = new ArrayList<>();
         parametros.add(nombre + "%");
+        if (fecha != null && !fecha.isEmpty()) {
+            parametros.add(fecha);
+        }
         if (frecuencia != null && !frecuencia.isEmpty()) {
             parametros.add(frecuencia);
         }
@@ -688,6 +699,7 @@ public class EventoDao extends BaseDao{
         }
         return 0;
     }
+
 
     //Función para listar todos los eventos para Vecino
     public ArrayList<EventoB> listarTodosEventos() {
@@ -776,10 +788,12 @@ public class EventoDao extends BaseDao{
                 "    DATE_FORMAT(e.fecha_fin, '%d %M %Y') AS 'Fecha de Fin', \n" +
                 "    es.estadosEvento AS 'Estado', \n" +
                 "    e.foto AS 'Foto',\n" +
-                "    ef.tipoFrecuencia AS 'Frecuencia'\n" +
+                "    ef.tipoFrecuencia AS 'Frecuencia',\n" +
+                "    te.tipo as 'Tipo'\n" +
                 "FROM Eventos e \n" +
                 "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados \n" +
                 "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia \n" +
+                "JOIN tipoevento te ON e.TipoEvento_idTipoEvento = te.idTipoEvento\n" +
                 "JOIN usuario u ON e.Coordinador_idUsuario = u.idUsuario \n" +
                 "WHERE e.TipoEvento_idTipoEvento = ? AND e.eliminado = FALSE \n" +
                 "ORDER BY \n" +
@@ -822,6 +836,7 @@ public class EventoDao extends BaseDao{
                         evento.setEstadoString(rs.getString("Estado"));
                         evento.setFoto(rs.getBinaryStream("Foto"));
                         evento.setFrecuenciaString(rs.getString("Frecuencia"));
+                        evento.setTipoEvento(rs.getString("Tipo"));
                         listaEventosPropios.add(evento);
                     }
                 }
@@ -841,6 +856,7 @@ public class EventoDao extends BaseDao{
                 "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
                 "JOIN Usuario u ON e.Coordinador_idUsuario = u.idUsuario " +
                 "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
+                "JOIN tipoevento te ON e.TipoEvento_idTipoEvento = te.idTipoEvento " +
                 "JOIN profesoresevento pf ON e.ProfesoresEvento_idProfesoresEvento = pf.idProfesoresEvento " +
                 "WHERE e.nombre LIKE ? " +
                 (fecha != null && !fecha.isEmpty() ? "AND e.fecha_inicio >= ? " : "") +
@@ -859,12 +875,14 @@ public class EventoDao extends BaseDao{
                 "    DATE_FORMAT(e.fecha_inicio, '%d %M %Y') AS 'Fecha de Inicio', " +
                 "    DATE_FORMAT(e.fecha_fin, '%d %M %Y') AS 'Fecha de Fin', " +
                 "    es.estadosEvento AS 'Estado', " +
-                "    ef.tipoFrecuencia AS 'Frecuencia' " +
+                "    ef.tipoFrecuencia AS 'Frecuencia', " +
+                "    te.tipo as 'Tipo' " +
                 "FROM Eventos e " +
                 "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
                 "JOIN Usuario u ON e.Coordinador_idUsuario = u.idUsuario " +
                 "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
                 "JOIN profesoresevento pf ON e.ProfesoresEvento_idProfesoresEvento = pf.idProfesoresEvento " +
+                "JOIN tipoevento te ON e.TipoEvento_idTipoEvento = te.idTipoEvento " +
                 "WHERE e.nombre LIKE ? " +
                 (fecha != null && !fecha.isEmpty() ? "AND e.fecha_inicio >= ? " : "") +
                 (frecuencia != null && !frecuencia.isEmpty() ? "AND ef.idEventFrecuencia = ? " : "") +
@@ -929,6 +947,7 @@ public class EventoDao extends BaseDao{
                         event.setFecha_fin(rs.getString("Fecha de Fin"));
                         event.setEstadoString(rs.getString("Estado"));
                         event.setFrecuenciaString(rs.getString("Frecuencia"));
+                        event.setTipoEvento(rs.getString("Tipo"));
                         evento.add(event);
                     }
                 }
@@ -944,6 +963,7 @@ public class EventoDao extends BaseDao{
                 "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
                 "JOIN Usuario u ON e.Coordinador_idUsuario = u.idUsuario " +
                 "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
+                "JOIN tipoevento te ON e.TipoEvento_idTipoEvento = te.idTipoEvento  " +
                 "JOIN profesoresevento pf ON e.ProfesoresEvento_idProfesoresEvento = pf.idProfesoresEvento " +
                 "WHERE e.nombre LIKE ? " +
                 "AND e.eliminado = FALSE ");
@@ -1304,7 +1324,7 @@ public class EventoDao extends BaseDao{
                 "    AND MONTH(e.fecha_inicio) = MONTH(CURRENT_DATE()) \n" +
                 "ORDER BY \n" +
                 "    e.fecha_inicio DESC \n" +
-                "LIMIT 3;";
+                "LIMIT 5;";
 
 
         try (Connection conn = this.getConnection();
@@ -1421,7 +1441,7 @@ public class EventoDao extends BaseDao{
                 "JOIN flujo_usuario_evento fue ON e.idEventos = fue.Eventos_idEventos " +
                 "WHERE fue.Usuario_idUsuario = ? " +
                 "AND e.nombre LIKE ? " +
-                (fecha != null && !fecha.isEmpty() ? "AND DATE(e.fecha_inicio) = ? " : "") +
+                (fecha != null && !fecha.isEmpty() ? "AND DATE(e.fecha_inicio) >= ? " : "") +
                 (frecuencia != null && !frecuencia.isEmpty() ? "AND ef.idEventFrecuencia = ? " : "") +
                 (estado != null && !estado.isEmpty() ? "AND es.idEventEstados = ? " : "") +
                 (tipo != null && !tipo.isEmpty() ? "AND te.idTipoEvento = ? " : "") +
@@ -1444,7 +1464,7 @@ public class EventoDao extends BaseDao{
                 "JOIN flujo_usuario_evento fue ON e.idEventos = fue.Eventos_idEventos " +
                 "WHERE fue.Usuario_idUsuario = ? " +
                 "AND e.nombre LIKE ? " +
-                (fecha != null && !fecha.isEmpty() ? "AND DATE(e.fecha_inicio) = ? " : "") +
+                (fecha != null && !fecha.isEmpty() ? "AND DATE(e.fecha_inicio) >= ? " : "") +
                 (frecuencia != null && !frecuencia.isEmpty() ? "AND ef.idEventFrecuencia = ? " : "") +
                 (estado != null && !estado.isEmpty() ? "AND es.idEventEstados = ? " : "") +
                 (tipo != null && !tipo.isEmpty() ? "AND te.idTipoEvento = ? " : "") +
@@ -1523,7 +1543,7 @@ public class EventoDao extends BaseDao{
                 "JOIN flujo_usuario_evento fue ON e.idEventos = fue.Eventos_idEventos " +
                 "WHERE fue.Usuario_idUsuario = ? " +
                 "AND e.nombre LIKE ? " +
-                (fecha != null && !fecha.isEmpty() ? "AND DATE(e.fecha_inicio) = ? " : "") +
+                (fecha != null && !fecha.isEmpty() ? "AND DATE(e.fecha_inicio) >= ? " : "") +
                 (frecuencia != null && !frecuencia.isEmpty() ? "AND ef.tipoFrecuencia = ? " : "") +
                 (estado != null && !estado.isEmpty() ? "AND es.estadosEvento = ? " : "") +
                 (tipo != null && !tipo.isEmpty() ? "AND te.tipo = ? " : "") +

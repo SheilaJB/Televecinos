@@ -64,6 +64,12 @@
         .reduced-height {
             height: 550px; /* Cambia 300px por la altura que desees */
         }
+        .btn-sm-square {
+            width: 20px;
+            height: 20px;
+            padding: 0;
+            text-align: center;
+        }
     </style>
 </head>
 
@@ -135,7 +141,7 @@
                 <!-- Mostrar mis eventos inscritos-->
                 <div class="bg-light text-center rounded p-4">
                     <div class="d-flex align-items-center justify-content-between mb-4">
-                        <h6 class="mb-0">Mis últimas incidencias</h6>
+                        <h6 class="mb-0">Mis incidencias del mes</h6>
                         <a href="<%=request.getContextPath()%>/VecinoServlet?action=listarIncidencia">Mostrar todas mis incidencias</a>
                     </div>
                     <div class="table-responsive">

@@ -36,6 +36,26 @@
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
     <link href="css/style_vec.css" rel="stylesheet">
+    <style>
+        .table-sm th, .table-sm td {
+            padding: .3rem;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        .table thead th {
+            background-color: #ffb703;
+            color: #495057;
+        }
+        .table-hover tbody tr:hover {
+            background-color: #e9ecef;
+        }
+        .btn-sm-square {
+            width: 20px;
+            height: 20px;
+            padding: 0;
+            text-align: center;
+        }
+    </style>
 
 </head>
 
@@ -86,7 +106,7 @@
                             </footer>
                         </div>
                     </section>
-                    <section id="Titulo_Eventos" class="card" style="margin-top: 5px">
+                    <section id="Titulo_Incidencia" class="card" style="margin-top: 5px">
                         <div class="card-body">
                             <header>
                                 <h2 class="card-title">¡Reporta incidencias!</h2>
@@ -108,17 +128,16 @@
 
         <div style="padding: 20px;">
             <!-- Mostrar mis eventos inscritos-->
-            <div class="bg-light text-center rounded p-4" >
-                <div class="d-flex align-items-center  justify-content-between mb-4">
-                    <h6 class="mb-0">Mis últimas incidencias </h6>
-                    <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=listarIncidencia">Más detalles</a>
+            <div class="bg-light text-center rounded p-4">
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                    <h6 class="mb-0">Mis incidencias del mes</h6>
+                    <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=listarIncidencia">Mostrar todas mis incidencias</a>
 
                 </div>
                 <div class="table-responsive">
-                    <table class="table text-start align-middle table-bordered table-hover mb-0">
+                    <table class="table table-sm table-striped table-bordered table-hover">
                         <thead>
                         <tr class="text-dark" >
-
                             <th scope="col ">Incidencia</th>
                             <th scope="col">Fecha</th>
                             <th scope="col">Hora</th>
@@ -138,7 +157,7 @@
                             <td><%= incidencia.getEstadoIncidencia() %></td>
                             <td>
                                 <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=verIncidencia&idIncidencia=<%= incidencia.getIdIncidencias() %>">
-                                    <button type="button" class="btn btn-info m-2"><i class="fas fa-eye"></i></button>
+                                    <button  type="button" class="btn btn-primary btn-sm-square m-1"><i class="fas fa-eye fa-xs"></i></button>
                                 </a>
                             </td>
                         </tr>
@@ -157,16 +176,15 @@
 
         <div style="padding: 20px;">
             <!-- Mostrar mis eventos inscritos-->
-            <div class="bg-light text-center rounded p-4" >
-                <div class="d-flex align-items-center  justify-content-between mb-4">
-                    <h6 class="mb-0">Mis eventos del mes </h6>
-                    <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=lista">Más detalles</a>
+            <div class="bg-light text-center rounded p-4">
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                    <h6 class="mb-0">Mis eventos del mes</h6>
+                    <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=lista">Mostrar todos mis eventos</a>
                 </div>
                 <div class="table-responsive">
-                    <table class="table text-start align-middle table-bordered table-hover mb-0">
+                    <table class="table table-sm table-striped table-bordered table-hover">
                         <thead>
                         <tr class="text-dark" >
-
                             <th scope="col ">Evento</th>
                             <th scope="col">Fecha de inicio</th>
                             <th scope="col">Estado</th>
@@ -175,16 +193,26 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <% for(EventoB eventoB : listaEvento){ %>
+                        <%
+                            if (listaEvento != null && !listaEvento.isEmpty()) {
+                                for(EventoB eventoB : listaEvento){ %>
                         <tr>
                             <td><%= eventoB.getNombre() %></td>
                             <td><%= eventoB.getFecha_inicio() %></td>
                             <td><%= eventoB.getEstadoString() %></td>
                             <td><%= eventoB.getFrecuenciaString() %></td>
-                            <td><a href="<%=request.getContextPath()%>/CoordinadorServlet?action=verEvento&idEvento=<%=eventoB.getidEvento()%>"><button type="button" class="btn btn-info m-2"><i class="fas fa-eye"></i></button></a></td>
+                            <td><a href="<%=request.getContextPath()%>/CoordinadorServlet?action=verEvento&idEvento=<%=eventoB.getidEvento()%>"><button type="button"  class="btn btn-primary btn-sm-square m-1"><i class="fas fa-eye fa-xs"></i></button></a></td>
                         </tr>
-                        <% } %>
-
+                        <%
+                            }
+                        } else {
+                        %>
+                        <tr>
+                            <td colspan="8">No hay eventos programados en este mes.</td>
+                        </tr>
+                        <%
+                            }
+                        %>
                         </tbody>
                     </table>
                 </div>

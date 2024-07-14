@@ -80,22 +80,23 @@ public class IncidenCoordDao extends BaseDao{
     public ArrayList<IncidenciasB> listarIncidenciaRecientes(int userId) {
 
         String setLocaleSql = "SET lc_time_names = 'es_ES'";
-        String sql = "SELECT " +
-                "    i.idIncidencias AS 'ID Incidencia', " +
-                "    i.nombreIncidencia AS 'Nombre', " +
-                "    DATE_FORMAT(i.fecha, '%d %M') AS 'Fecha', " +
-                "    TIME_FORMAT(i.fecha, '%H:%i') AS 'Hora', " +
-                "    ti.TipoIncidencia AS 'Tipo de Incidencia', " +
-                "    ei.estado AS 'Estado Incidencia' " +
-                "FROM " +
-                "    incidencias i " +
-                "JOIN tipoincidencia ti ON i.TipoIncidencia_idTipoIncidencia = ti.idTipoIncidencia " +
-                "JOIN estadosincidencia ei ON i.EstadosIncidencia_idEstadosIncidencia = ei.idEstadosIncidencia " +
-                "WHERE " +
-                "    i.borrado = FALSE AND i.Usuario_idUsuario = ? " +
-                "ORDER BY " +
-                "    i.fecha DESC " +
-                "LIMIT 3;";
+        String sql = "SELECT \n" +
+                "    i.idIncidencias AS 'ID Incidencia', \n" +
+                "    i.nombreIncidencia AS 'Nombre', \n" +
+                "    DATE_FORMAT(i.fecha, '%d %M') AS 'Fecha', \n" +
+                "    TIME_FORMAT(i.fecha, '%H:%i') AS 'Hora', \n" +
+                "    ti.TipoIncidencia AS 'Tipo de Incidencia', \n" +
+                "    ei.estado AS 'Estado Incidencia' \n" +
+                "FROM \n" +
+                "    incidencias i \n" +
+                "JOIN tipoincidencia ti ON i.TipoIncidencia_idTipoIncidencia = ti.idTipoIncidencia \n" +
+                "JOIN estadosincidencia ei ON i.EstadosIncidencia_idEstadosIncidencia = ei.idEstadosIncidencia \n" +
+                "WHERE \n" +
+                "    i.borrado = FALSE AND i.Usuario_idUsuario = ?\n" +
+                "    AND MONTH(i.fecha) = MONTH(CURRENT_DATE())\n" +
+                "ORDER BY \n" +
+                "    i.fecha DESC \n" +
+                "LIMIT 5;";
 
         ArrayList<IncidenciasB> listaIncidencia = new ArrayList<>();
 
@@ -199,7 +200,7 @@ public class IncidenCoordDao extends BaseDao{
                 "JOIN tipoincidencia ti ON i.TipoIncidencia_idTipoIncidencia = ti.idTipoIncidencia " +
                 "JOIN estadosincidencia ei ON i.EstadosIncidencia_idEstadosIncidencia = ei.idEstadosIncidencia " +
                 "WHERE i.borrado = FALSE AND i.Usuario_idUsuario = ? AND i.nombreIncidencia LIKE ? " +
-                (fecha != null && !fecha.isEmpty() ? "AND DATE(i.fecha) = ? " : "") +
+                (fecha != null && !fecha.isEmpty() ? "AND DATE(i.fecha) >= ? " : "") +
                 (tipo != null && !tipo.isEmpty() ? "AND i.TipoIncidencia_idTipoIncidencia = ? " : "") +
                 (estado != null && !estado.isEmpty() ? "AND ei.idEstadosIncidencia = ? " : "") +
                 ");";
@@ -218,7 +219,7 @@ public class IncidenCoordDao extends BaseDao{
                 "JOIN tipoincidencia ti ON i.TipoIncidencia_idTipoIncidencia = ti.idTipoIncidencia " +
                 "JOIN estadosincidencia ei ON i.EstadosIncidencia_idEstadosIncidencia = ei.idEstadosIncidencia " +
                 "WHERE i.borrado = FALSE AND i.Usuario_idUsuario = ? AND i.nombreIncidencia LIKE ? " +
-                (fecha != null && !fecha.isEmpty() ? "AND DATE(i.fecha) = ? " : "") +
+                (fecha != null && !fecha.isEmpty() ? "AND DATE(i.fecha) >= ? " : "") +
                 (tipo != null && !tipo.isEmpty() ? "AND i.TipoIncidencia_idTipoIncidencia = ? " : "") +
                 (estado != null && !estado.isEmpty() ? "AND ei.idEstadosIncidencia = ? " : "") +
                 "ORDER BY i.fecha DESC;";
@@ -290,7 +291,7 @@ public class IncidenCoordDao extends BaseDao{
                 "JOIN tipoincidencia ti ON i.TipoIncidencia_idTipoIncidencia = ti.idTipoIncidencia " +
                 "JOIN estadosincidencia ei ON i.EstadosIncidencia_idEstadosIncidencia = ei.idEstadosIncidencia " +
                 "WHERE i.borrado = FALSE AND i.Usuario_idUsuario = ? AND i.nombreIncidencia LIKE ? " +
-                (fecha != null && !fecha.isEmpty() ? "AND DATE(i.fecha) = ? " : "") +
+                (fecha != null && !fecha.isEmpty() ? "AND DATE(i.fecha) >= ? " : "") +
                 (tipo != null && !tipo.isEmpty() ? "AND i.TipoIncidencia_idTipoIncidencia = ? " : "") +
                 (estado != null && !estado.isEmpty() ? "AND ei.idEstadosIncidencia = ? " : "");
 

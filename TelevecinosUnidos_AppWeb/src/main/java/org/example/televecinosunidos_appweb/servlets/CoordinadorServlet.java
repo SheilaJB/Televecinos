@@ -39,11 +39,12 @@ public class CoordinadorServlet extends HttpServlet {
             return;
         }
         int userId = usuarioLogueado.getIdUsuario();
+        int idTipoCoord = usuarioLogueado.getTipoCoordinador_idTipoCoordinador();
         switch (action) {
             //Inicio
             case "inicioCoordinador":
                 ArrayList<IncidenciasB> listaIncidenciasRecientes = incidenciaDao.listarIncidenciaRecientes(userId);
-                ArrayList<EventoB> listaEventospRropiosRecientes = eventoDao.listarEventosPropiosRecientes();
+                ArrayList<EventoB> listaEventospRropiosRecientes = eventoDao.listarEventosPropiosRecientes(userId,idTipoCoord);
                 request.setAttribute("listaIncidencia", listaIncidenciasRecientes);
                 request.setAttribute("listaEvento", listaEventospRropiosRecientes);
                 vista = "WEB-INF/Coordinadora/InicioCoordinador.jsp";
@@ -666,16 +667,18 @@ public class CoordinadorServlet extends HttpServlet {
                 String textBuscar = request.getParameter("textoBuscarEvento");
                 String filtroFrecuencia = request.getParameter("frecuencia");
                 String filtroEstado = request.getParameter("estado");
+                String filtroFecha = request.getParameter("fecha");
                 int pagina = request.getParameter("pagina") != null ? Integer.parseInt(request.getParameter("pagina")) : 1;
 
-                if (textBuscar == null && filtroFrecuencia == null && filtroEstado == null) {
+                if (textBuscar == null && filtroFrecuencia == null && filtroEstado == null && filtroFecha==null) {
                     response.sendRedirect(request.getContextPath() + "/CoordinadorServlet?action=lista");
                 } else {
                     request.setAttribute("textoBuscarEvento", textBuscar);
                     request.setAttribute("frecuencia", filtroFrecuencia);
                     request.setAttribute("estado", filtroEstado);
-                    ArrayList<EventoB> eventos = eventoDao.listarEventoFiltro(textBuscar, filtroFrecuencia, filtroEstado, usuarioLogged.getTipoCoordinador_idTipoCoordinador(), pagina);
-                    int totalRegistros = eventoDao.contarEventosFiltrados(textBuscar, filtroFrecuencia, filtroEstado, usuarioLogged.getTipoCoordinador_idTipoCoordinador()); // Método adicional para contar total de registros
+                    request.setAttribute("fecha", filtroFecha);
+                    ArrayList<EventoB> eventos = eventoDao.listarEventoFiltro(textBuscar, filtroFecha,filtroFrecuencia, filtroEstado, usuarioLogged.getTipoCoordinador_idTipoCoordinador(), pagina);
+                    int totalRegistros = eventoDao.contarEventosFiltrados(textBuscar, filtroFecha,filtroFrecuencia, filtroEstado, usuarioLogged.getTipoCoordinador_idTipoCoordinador()); // Método adicional para contar total de registros
                     int totalPaginas = (int) Math.ceil((double) totalRegistros / 5); // Ajustado para 5 registros por página
 
                     request.setAttribute("lista", eventos);

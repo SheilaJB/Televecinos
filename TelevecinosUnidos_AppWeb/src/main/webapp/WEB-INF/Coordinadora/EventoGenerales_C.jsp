@@ -163,6 +163,7 @@
                         <div class="col-md-3 mb-4">
                             <div class="card" style="max-width: 20rem; margin: auto;border-radius: 15px;">
                                 <img src="ImagenServlet?idImagenEvento=<%=evento.getIdEvento()%>" class="card-img-top rounded-top">
+                                <div class="card-header bg-transparent border-secondary align-items-center text-center"><%= evento.getTipoEvento() %></div>
                                 <div class="card-body">
                                     <h5 class="card-title" style="text-align: left;"><%= evento.getNombre() %></h5>
                                     <% if ("Disponible".equals(evento.getEstadoString())) { %>
