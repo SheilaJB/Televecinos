@@ -112,7 +112,7 @@
                             </article>
                             <footer class="mt-2">
                                 <button class="btn btn-success btn-block" onclick="window.location.href='<%=request.getContextPath()%>/VecinoServlet?action=listarIncidencia'">Ver Incidencias</button>
-                                <h6 class="mt-2">¿Has reportado alguna incidencia? <a href="<%=request.getContextPath()%>/VecinoServlet?action=crearIncidencia">Registra tu incidencia aquí</a>.</h6>
+                                <h6 class="mt-2">¿Has reportado alguna incidencia? <a href="<%=request.getContextPath()%>/VecinoServlet?action=generarIncidencia">Registra tu incidencia aquí</a>.</h6>
                             </footer>
                         </div>
                     </section>
@@ -174,7 +174,7 @@
                             <% }
                             } else { %>
                             <tr>
-                                <td colspan="6" class="text-center">No hay incidencias disponibles</td>
+                                <td colspan="8" class="text-center">No hay incidencias reportadas en este mes</td>
                             </tr>
                             <% } %>
                             </tbody>
@@ -188,7 +188,7 @@
                 <div class="bg-light text-center rounded p-4">
                     <div class="d-flex align-items-center justify-content-between mb-4">
                         <h6 class="mb-0">Mis eventos del mes</h6>
-                        <a href="<%=request.getContextPath()%>/VecinoServlet?action=verEventos">Mostrar todos mis eventos</a>
+                        <a href="<%=request.getContextPath()%>/VecinoServlet?action=eventosInscritos">Mostrar todos mis eventos</a>
                     </div>
                     <div class="table-responsive">
                         <table class="table table-sm table-striped table-bordered table-hover">
@@ -222,7 +222,7 @@
                             } else {
                             %>
                             <tr>
-                                <td colspan="8">No hay eventos programados en este mes.</td>
+                                <td colspan="8">No hay tienes eventos programados en este mes.</td>
                             </tr>
                             <%
                                 }
