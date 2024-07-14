@@ -58,14 +58,33 @@ public class VecinoServlet extends HttpServlet {
             case "verEventos":
                 ArrayList<EventoB> listaEventosGenerales = eventoDao.listarTodosEventos();
                 ArrayList<EventoB> eventosNoInscritos = new ArrayList<>();
+                int eventosPorPaginaG = 8; // Número de eventos por página
+                int paginaActualG = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
+
                 for (EventoB evento : listaEventosGenerales) {
                     boolean estaInscrito = eventoDao.estaInscrito(userId, evento.getIdEvento());
                     if (!estaInscrito) {
                         eventosNoInscritos.add(evento);
                     }
                 }
+                //Calcular el total de páginas
+                int totalEventosG = listaEventosGenerales.size();
+                int totalPaginasG = (int) Math.ceil((double) totalEventosG / eventosPorPaginaG);
+
+                // Verificar si la página actual está fuera del rango o si no hay eventos
+                if (totalEventosG == 0 || paginaActualG > totalPaginasG) {
+                    paginaActualG = 1;
+                }
+                // Obtener los eventos de la página actual
+                int desdeG = (paginaActualG - 1) * eventosPorPaginaG;
+                int hastaG = Math.min(desdeG + eventosPorPaginaG, totalEventosG);
+                ArrayList<EventoB> eventosPaginadosG = new ArrayList<>(listaEventosGenerales.subList(desdeG, hastaG));
+
                 request.setAttribute("listaEventos", eventosNoInscritos); // Pasar la nueva lista al JSP
                 vista = "WEB-INF/Vecino/Evento-D-Vecino.jsp";
+                request.setAttribute("listaEventos", eventosPaginadosG);
+                request.setAttribute("paginaActual", paginaActualG);
+                request.setAttribute("totalPaginas", totalPaginasG);
                 request.getRequestDispatcher(vista).forward(request, response);
                 break;
             case "verEvento":
@@ -265,6 +284,32 @@ public class VecinoServlet extends HttpServlet {
                     request.setAttribute("paginaActual", paginaI);
                     request.setAttribute("totalPaginas", totalPaginas);
                     request.getRequestDispatcher("WEB-INF/Vecino/listaIncidencias_V.jsp").forward(request, response);
+                }
+                break;
+            case "buscarEvento":
+                String textBuscarV = request.getParameter("textoBuscarEventoG");
+                String filtroFechaV = request.getParameter("fechaG");
+                String filtroFrecuenciaV = request.getParameter("frecuenciaG");
+                String filtroEstadoV = request.getParameter("estadoG");
+                String filtroTipoV = request.getParameter("tipoG");
+                int paginaG = request.getParameter("pagina") != null ? Integer.parseInt(request.getParameter("pagina")) : 1;
+
+                if (textBuscarV == null && filtroFechaV == null && filtroFrecuenciaV == null && filtroEstadoV == null && filtroTipoV==null) {
+                    response.sendRedirect(request.getContextPath() + "/VecinoServlet?action=verEventos");
+                } else {
+                    request.setAttribute("textoBuscarEventoG", textBuscarV);
+                    request.setAttribute("fechaG", filtroFechaV);
+                    request.setAttribute("frecuenciaG", filtroFrecuenciaV);
+                    request.setAttribute("estadoG", filtroEstadoV);
+                    request.setAttribute("tipoG", filtroTipoV);
+
+                    ArrayList<EventoB> eventos = eventoDao.listarTodosEventosVecinoFiltro(textBuscarV, filtroFechaV,filtroFrecuenciaV,filtroEstadoV,filtroTipoV,paginaG);
+                    int totalRegistros = eventoDao.contarEventosVecinoFiltrados(textBuscarV, filtroFechaV, filtroFrecuenciaV, filtroEstadoV, filtroTipoV);
+                    int totalPaginas = (int) Math.ceil((double) totalRegistros / 8);
+                    request.setAttribute("listaEventos", eventos);
+                    request.setAttribute("paginaActual", paginaG);
+                    request.setAttribute("totalPaginas", totalPaginas);
+                    request.getRequestDispatcher("WEB-INF/Vecino/Evento-D-Vecino.jsp").forward(request, response);
                 }
                 break;
 
