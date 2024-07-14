@@ -65,7 +65,6 @@
             font-size: 24px;
             cursor: pointer;
             color: rgb(0, 0, 0);
-
         }
         .btn-sm-square {
             width: 20px;
@@ -123,7 +122,7 @@
                 <div class="col-md-12 text-center">
                     <h1 style="text-align: center"><i class="fas fa-camera"></i> Subida de fotos para galería</h1>
                     <p class="lead">
-                        Aquí puedes subir máximo tres fotos para la galería
+                        Aquí debes subir 3 fotos para cada galería por evento
                     </p>
                     <p class="lead">
                         **Importante** ¡No olvides subir una galería de fotos al finalizar cada evento para compartirla con la comunidad!
@@ -231,17 +230,47 @@
                                     <input type="hidden" name="idEvento" id="idEventoInput">
                                     <div>
                                         <label for="foto1">Foto 1:</label>
-                                        <input type="file" name="foto1" accept="image/*" required>
+                                        <input type="file" name="foto1" id="foto1" accept="image/*" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <img id="preview1" src="#" alt="Vista previa de la imagen 1" class="img-thumbnail" style="display: none;">
                                     </div>
                                     <div>
                                         <label for="foto2">Foto 2:</label>
-                                        <input type="file" name="foto2" accept="image/*" required>
+                                        <input type="file" name="foto2" id="foto2" accept="image/*" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <img id="preview2" src="#" alt="Vista previa de la imagen 2" class="img-thumbnail" style="display: none;">
                                     </div>
                                     <div>
                                         <label for="foto3">Foto 3:</label>
-                                        <input type="file" name="foto3" accept="image/*" required>
+                                        <input type="file" name="foto3" id="foto3" accept="image/*" required>
                                     </div>
-                                    <button type="submit" class="btn btn-primary">Subir fotos</button>
+                                    <div class="mb-3">
+                                        <img id="preview3" src="#" alt="Vista previa de la imagen 3" class="img-thumbnail" style="display: none;">
+                                    </div>
+                                    <script>
+                                        function previewImage(inputId, previewId) {
+                                            var inputElement = document.getElementById(inputId);
+                                            inputElement.addEventListener('change', function(event) {
+                                                var file = event.target.files[0];
+                                                if (file) {
+                                                    var reader = new FileReader();
+                                                    reader.onload = function(e) {
+                                                        var imgElement = document.getElementById(previewId);
+                                                        imgElement.src = e.target.result;
+                                                        imgElement.style.display = 'block'; // Muestra la imagen
+                                                    };
+                                                    reader.readAsDataURL(file);
+                                                }
+                                            });
+                                        }
+
+                                        for (let i = 1; i <= 3; i++) {
+                                            previewImage('foto' + i, 'preview' + i);
+                                        }
+                                    </script>
+                                    <button type="submit" class="btn btn-primary"style="margin-top: 3px">Subir fotos</button>
                                 </form>
                             </div>
                         </div>
@@ -250,20 +279,23 @@
 
 
                 <script>
-                    document.addEventListener('DOMContentLoaded', function() {
-                        const abrirModalBtn = document.querySelectorAll('[id^="abrirModalBtn_"]');
+                    // Mostrar y ocultar el spinner
+                    document.addEventListener("DOMContentLoaded", function() {
+                        document.getElementById("spinner").classList.remove("show");
+                    });
 
-                        abrirModalBtn.forEach(function(btn) {
-                            btn.addEventListener('click', function() {
-                                let idEvento = this.getAttribute('data-evento-id');
-                                document.getElementById('idEventoInput').value = idEvento;
-                                const subirFotosModal = new bootstrap.Modal(document.getElementById('subirFotosModal'));
-                                subirFotosModal.show();
-                            });
+                    // Script to close modal and clear file input
+                    document.querySelectorAll('[data-bs-dismiss="modal"]').forEach(button => {
+                        button.addEventListener('click', () => {
+                            const modal = button.closest('.modal');
+                            modal.querySelectorAll('input[type="file"]').forEach(input => input.value = '');
+                            const modalBackdrop = document.querySelector('.modal-backdrop');
+                            if (modalBackdrop) modalBackdrop.remove();
+                            document.body.classList.remove('modal-open');
+                            document.body.style.paddingRight = '';
                         });
                     });
                 </script>
-
 
                 <nav>
                     <ul class="pagination">
@@ -291,17 +323,6 @@
         <!-- Tempus Dominus JS (si necesario) -->
         <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
         <script>
-            document.getElementById('abrirModalBtn').addEventListener('click', function() {
-                // Obtener el ID del evento de alguna manera (por ejemplo, de un atributo data del botón)
-                let idEvento = this.getAttribute('data-evento-id');
-
-                // Establecer el ID del evento en el campo oculto del modal
-                document.getElementById('idEventoInput').value = idEvento;
-
-                // Mostrar el modal
-                const modal = new bootstrap.Modal(document.getElementById('subirFotosModal'));
-                modal.show();
-            });
 
             function viewFunction(idEvento) {
                 window.location.href ='<%=request.getContextPath()%>/CoordinadorServlet?action=verEvento&idEvento=' +idEvento;
@@ -331,23 +352,6 @@
 
     <!-- JavaScript para Popup -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() { // Esperar a que el DOM esté cargado
-            const abrirModalBtn = document.querySelectorAll('[id^="abrirModalBtn_"]'); // Seleccionar todos los botones
-
-            abrirModalBtn.forEach(function(btn) { // Iterar sobre los botones
-                btn.addEventListener('click', function() {
-                    let idEvento = this.getAttribute('data-evento-id');
-
-                    // Establecer el ID del evento en el campo oculto del modal
-                    document.getElementById('idEventoInput').value = idEvento;
-
-                    // Mostrar el modal
-                    const subirFotosModal = new bootstrap.Modal(document.getElementById('subirFotosModal'));
-                    subirFotosModal.show();
-                });
-            });
-        });
-
 
         const closeDeletePopupBtn = document.getElementById('closeDeletePopupBtn');
         const deleteConfirmationPopup = document.getElementById('deleteConfirmationPopup');
