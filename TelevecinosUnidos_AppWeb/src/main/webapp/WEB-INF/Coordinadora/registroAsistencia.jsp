@@ -4,7 +4,10 @@
 <%@ page import="org.example.televecinosunidos_appweb.model.beans.EventoB" %>
 <% ArrayList<EventoB> lista = (ArrayList<EventoB>) request.getAttribute("lista"); %>
 <jsp:useBean id="textoBuscarEvento" scope="request" type="java.lang.String" class="java.lang.String"/>
-
+<%
+    int paginaActual = (int) request.getAttribute("paginaActual");
+    int totalPaginas = (int) request.getAttribute("totalPaginas");
+%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -85,66 +88,104 @@
         <jsp:include page="../includes/navbarCoordinador.jsp"></jsp:include>
         <!-- Navbar End -->
 
-        <!-- Lista de eventos -->
-        <div class="container text-center">
-            <div id="Nombre del evento">
-                <h1 style="text-align: center; margin-top:50px;margin-bottom:50px;"><b>Registrar mi asistencia</b></h1>
+        <section id="titulo-eventos" class="container my-5">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h1 style="text-align: center"><i class="bi bi-calendar-check-fill"></i> Registrar mi asistencia</h1>
+                    <p class="lead">
+                        Aquí puedes marcar tu entrada y salida en cada uno de tus eventos.
+                    </p>
+                    <p class="lead text-danger">
+                        Importante: ¡Recuerda adjuntar una foto para validar tu registro!
+                    </p>
+                </div>
             </div>
-        </div>
+        </section>
         <div style="background-color: #f8f9fa; padding: 10px; align-items: center;">
+            <div style="background-color: #FFB703; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
+                <!-- Filtro -->
+                <form method="post" action="<%=request.getContextPath()%>/CoordinadorServlet?action=buscarRegistro">
+                    <div class="row justify-content-center align-items-center">
+                        <!-- Busqueda por nombre de evento -->
+                        <div class="col-md-3 mb-2">
+                            <input type="text" class="form-control" id="filtroInput" placeholder="Buscar..." name="textoBuscarEvento"
+                                   value="<%=request.getAttribute("textoBuscarEvento") != null ? request.getAttribute("textoBuscarEvento") : ""%>">
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <input type="date" class="form-control" name="fecha"
+                                   value="<%=request.getAttribute("fecha") != null ? request.getAttribute("fecha") : ""%>">
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <select class="form-select" name="frecuencia">
+                                <option selected disabled>Frecuencia</option>
+                                <option value="1" <%= "1".equals(request.getAttribute("frecuencia")) ? "selected" : "" %>>Semanal</option>
+                                <option value="2" <%= "2".equals(request.getAttribute("frecuencia")) ? "selected" : "" %>>Dos veces por semana</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <select class="form-select" name="estado">
+                                <option selected disabled>Estado</option>
+                                <option value="1" <%= "1".equals(request.getAttribute("estado")) ? "selected" : "" %>>Disponible</option>
+                                <option value="2" <%= "2".equals(request.getAttribute("estado")) ? "selected" : "" %>>En curso</option>
+                                <option value="3" <%= "3".equals(request.getAttribute("estado")) ? "selected" : "" %>>Finalizado</option>
+                            </select>
+                        </div>
+                        <div class="col-md-1 mb-2">
+                            <button class="btn btn-primary w-100" type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <a type="reset" class="btn btn-primary w-100" href="<%=request.getContextPath()%>/CoordinadorServlet?action=registrarAsistencia">Limpiar</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
             <div class="table-responsive">
                 <table id="eventosTable" class="table table-striped table-hover" style="background-color: transparent;">
                     <thead>
-                    <tr>
+                    <tr class="form-text">
                         <th scope="col">Nombre</th>
                         <th scope="col">Inicio</th>
                         <th scope="col">Fin</th>
-                        <th scope="col">Hora de inicio</th>
-                        <th scope="col">Hora de finalización</th>
-                        <th scope="col">Estado</th>
                         <th scope="col">Frecuencia</th>
-                        <th scope="col">Entrada</th>
-                        <th scope="col">Salida</th>
-
+                        <th scope="col">Estado</th>
+                        <th scope="col">Registrar</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <% for(EventoB eventoB : lista){ %>
+                    <% if (lista != null) {
+                        for(EventoB eventoB : lista){ %>
                     <tr>
                         <td><%= eventoB.getNombre() %></td>
                         <td><%= eventoB.getFecha_inicio() %></td>
-                        <td><%= eventoB.getFecha_fin() %></td>
-                        <td><%= eventoB.getHora_inicio() %></td>
-                        <td><%= eventoB.getHora_fin() %></td>
+                        <td><%=eventoB.getFecha_fin() %></td>
                         <td><%= eventoB.getFrecuenciaString() %></td>
                         <td><%= eventoB.getEstadoString() %></td>
-
-                        <% if ("En curso".equals(eventoB.getEstadoString())) { %>
                         <td>
-                            <input type="checkbox" onclick="toggleTime(this)">
-                            <span class="time-info"></span>
+                            <% if ("Finalizado".equals(eventoB.getEstadoString())) { %>
+                                <button type="button" class="btn btn-primary btn-sm-square m-1" disabled><i class="bi bi-calendar-check"></i></button>
+                            <% } else { %>
+                            <a onclick="checkFunction(<%=eventoB.getIdEvento()%>)">
+                                <button type="button" class="btn btn-primary btn-sm-square m-1" ><i class="bi bi-calendar-check"></i></button>
+                            </a>
+                            <% } %>
                         </td>
-                        <td>
-                            <input type="checkbox" onclick="toggleTime(this)">
-                            <span class="time-info"></span>
-                        </td>
-                        <% } else { %>
-                        <td>
-                            <input type="checkbox" onclick="toggleTime(this)" disabled>
-                            <span class="time-info"></span>
-                        </td>
-                        <td>
-                            <input type="checkbox" onclick="toggleTime(this)" disabled>
-                            <span class="time-info"></span>
-                        </td>
-                        <% } %>
-
                     </tr>
-                    <% } %>
+                    <%
+                        }
+                    } else {
+                    %>
+                    <tr>
+                        <td colspan="8">No hay eventos encontrado.</td>
+                    </tr>
+                    <%
+                        }
+                    %>
                     </tbody>
                 </table>
             </div>
-            <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=registrarAsistencia" class="btn btn-secondary m-2" >Guardar</a>
+
             <script>
                 function toggleTime(checkbox) {
                     var timeInfo = checkbox.nextElementSibling;
@@ -159,22 +200,38 @@
                     }
                 }
             </script>
+            <script>
+                function checkFunction(idEvento) {
+                    window.location.href = '<%=request.getContextPath()%>/CoordinadorServlet?action=verEvento&idEvento=' + idEvento;
+                }
+            </script>
 
-            <div  style="display: flex; justify-content: center; align-items: center;">
-                <section class="paginacion" >
-                    <ul style="list-style: none;padding: 0;margin: 0;display: flex;">
-                        <div style="background-color: white ; padding: 5px; margin:10px">
-                            <li style="margin: 0 5px;"><a class="link-opacity-50-hover" href="#" class="active">1</a></li>
-                        </div>
-                        <div style="background-color:white ; padding: 5px;margin:10px">
-                            <li style="margin: 0 5px;"><a class="link-opacity-50-hover" href="#" class="active">2</a></li>
-                        </div>
-                        <div style="background-color: white ; padding: 5px;margin:10px">
-                            <li style="margin: 0 5px;"><a class="link-opacity-50-hover" href="#" class="active">3</a></li>
-                        </div>
-                    </ul>
-                </section>
-            </div>
+           <!-- Paginación-->
+            <nav>
+                <ul class="pagination">
+                    <li class="page-item <%= paginaActual == 1 ? "disabled" : "" %>">
+                        <a class="page-link" href="<%=request.getContextPath()%>/CoordinadorServlet?action=registrarAsistencia&page=<%= paginaActual - 1 %>">Anterior</a>
+                    </li>
+                    <% if (totalPaginas > 0) { %>
+                    <% for(int i = 1; i <= totalPaginas; i++) { %>
+                    <li class="page-item <%= i == paginaActual ? "active" : "" %>">
+                        <a class="page-link" href="<%=request.getContextPath()%>/CoordinadorServlet?action=registrarAsistencia&page=<%= i %>"><%= i %></a>
+                    </li>
+                    <% } %>
+                    <% } else { %>
+                    <li class="page-item active">
+                        <a class="page-link" href="#">1</a>
+                    </li>
+                    <% } %>
+                    <li class="page-item <%= paginaActual == totalPaginas || totalPaginas == 0 ? "disabled" : "" %>">
+                        <% if (paginaActual < totalPaginas) { %>
+                        <a class="page-link" href="<%=request.getContextPath()%>/CoordinadorServlet?action=registrarAsistencia&page=<%= paginaActual + 1 %>">Siguiente</a>
+                        <% } else { %>
+                        <span class="page-link">Siguiente</span>
+                        <% } %>
+                    </li>
+                </ul>
+            </nav>
         </div>
 
         <div class="container-fluid pt-4 px-4">

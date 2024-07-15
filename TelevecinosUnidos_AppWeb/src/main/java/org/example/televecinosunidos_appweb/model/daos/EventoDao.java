@@ -157,18 +157,23 @@ public class EventoDao extends BaseDao{
 
 
     //Función lista de eventos disponibles
-    public ArrayList<EventoB> listarEventosDisponibles() { ///Corregir
+    public ArrayList<EventoB> ListarRegistro(int idTipoEventoR, int userId) {
 
         String sqlSetLanguage = "SET lc_time_names = 'es_ES';";
+        String sqlSetTotalRows = "SET @total_rows = (SELECT COUNT(*) FROM eventos WHERE TipoEvento_idTipoEvento = ? AND eliminado = FALSE);";
+        String sqlSetNumPartitions = "SET @num_partitions = FLOOR((@total_rows + 4) / 5);"; // Ajustado para calcular el número de particiones
+
         String sql = "SELECT \n" +
-                "e.idEventos AS 'ID Evento', \n" +
-                "e.nombre AS 'Nombre', \n" +
-                "DATE_FORMAT(e.fecha_inicio, '%d %M %Y') AS 'Fecha de Inicio', \n" +
-                "DATE_FORMAT(e.fecha_fin, '%d %M %Y') AS 'Fecha de finalizacion', \n" +
-                "es.estadosEvento AS 'Estado', \n" +
-                "ef.tipoFrecuencia AS 'Frecuencia' ,\n" +
-                "DATE_FORMAT(e.hora_inicio, '%H:%i') AS hora_inicio, \n" +
-                "DATE_FORMAT(e.hora_fin, '%H:%i') AS hora_fin \n" +
+                "    (@row_number := @row_number + 1) AS row_num, \n" +
+                "    CEILING(@row_number / 5) AS 'pag', \n" +
+                "    e.idEventos AS 'ID Evento', \n" +
+                "    e.nombre AS 'Nombre', \n" +
+                "    DATE_FORMAT(e.fecha_inicio, '%d %M %Y') AS 'Fecha de Inicio', \n" +
+                "    DATE_FORMAT(e.fecha_fin, '%d %M %Y') AS 'Fecha de finalizacion', \n" +
+                "    es.estadosEvento AS 'Estado', \n" +
+                "    ef.tipoFrecuencia AS 'Frecuencia', \n" +
+                "    DATE_FORMAT(e.hora_inicio, '%H:%i') AS hora_inicio, \n" +
+                "    DATE_FORMAT(e.hora_fin, '%H:%i') AS hora_fin \n" +
                 "FROM \n" +
                 "    eventos e \n" +
                 "JOIN \n" +
@@ -176,23 +181,39 @@ public class EventoDao extends BaseDao{
                 "JOIN \n" +
                 "    EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia \n" +
                 "WHERE \n" +
-                "    e.TipoEvento_idTipoEvento = 2 \n" +
+                "    e.TipoEvento_idTipoEvento = ? \n" +
                 "    AND e.eliminado = FALSE \n" +
-                "ORDER BY \n" +
-                "    e.fecha_inicio DESC ;";
+                "ORDER BY " +
+                "    CASE WHEN es.estadosEvento = 'Finalizado' THEN 1 ELSE 0 END, \n" +
+                "    e.fecha_inicio DESC;";
 
         ArrayList<EventoB> listaEventosDisponible = new ArrayList<>();
 
         try (Connection conn = getConnection();
-             Statement stmt = conn.createStatement()) {
+             Statement stmt = conn.createStatement();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             // Ejecutar la sentencia para establecer el idioma de las fechas en español
             stmt.execute(sqlSetLanguage);
 
+            // Ejecutar las sentencias SET para total_rows y num_partitions
+            PreparedStatement pstmtTotalRows = conn.prepareStatement(sqlSetTotalRows);
+            pstmtTotalRows.setInt(1, idTipoEventoR);
+            pstmtTotalRows.execute();
+
+            stmt.execute(sqlSetNumPartitions);
+
+            // Establecer el parámetro para el PreparedStatement
+            pstmt.setInt(1, idTipoEventoR);
+
+            // Inicializar la variable de sesión para el número de fila
+            stmt.execute("SET @row_number = 0;");
+
             // Ejecutar la consulta principal
-            try (ResultSet rs = stmt.executeQuery(sql)) {
+            try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
                     EventoB evento = new EventoB();
+                    evento.setIdPag(rs.getInt("pag"));
                     evento.setidEvento(rs.getInt("ID Evento"));
                     evento.setNombre(rs.getString("Nombre"));
                     evento.setFecha_inicio(rs.getString("Fecha de Inicio"));
@@ -210,6 +231,153 @@ public class EventoDao extends BaseDao{
 
         return listaEventosDisponible;
     }
+
+    //Filtro para tomar asistencia
+    public ArrayList<EventoB> ListarRegistroFiltro(String nombre, String fecha, String frecuencia, String estado, int idUser, int pagina) {
+        String sqlSetLanguage = "SET lc_time_names = 'es_ES';";
+        String sqlSetTotalRows = "SET @total_rows = (SELECT COUNT(*) FROM eventos e " +
+                "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
+                "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
+                "WHERE e.nombre LIKE ? " +
+                (fecha != null && !fecha.isEmpty() ? "AND e.fecha_inicio >= ? " : "") +
+                (frecuencia != null && !frecuencia.isEmpty() ? "AND ef.idEventFrecuencia = ? " : "") +
+                (estado != null && !estado.isEmpty() ? "AND es.idEventEstados = ? " : "") +
+                (idUser != 0 ? "AND e.Coordinador_idUsuario = ? " : "") +
+                "AND e.eliminado = FALSE);";
+        String sqlSetNumPartitions = "SET @num_partitions = FLOOR((@total_rows + 4) / 5);";
+
+        String sql = "SELECT " +
+                "(@row_number := @row_number + 1) AS row_num, " +
+                "CEILING(@row_number / 5) AS 'pag', " +
+                "e.idEventos AS 'ID Evento', " +
+                "e.nombre AS 'Nombre', " +
+                "DATE_FORMAT(e.fecha_inicio, '%d %M %Y') AS 'Fecha de Inicio', " +
+                "DATE_FORMAT(e.fecha_fin, '%d %M %Y') AS 'Fecha de finalizacion', " +
+                "es.estadosEvento AS 'Estado', " +
+                "ef.tipoFrecuencia AS 'Frecuencia', " +
+                "DATE_FORMAT(e.hora_inicio, '%H:%i') AS hora_inicio, " +
+                "DATE_FORMAT(e.hora_fin, '%H:%i') AS hora_fin " +
+                "FROM eventos e " +
+                "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
+                "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
+                "WHERE e.nombre LIKE ? " +
+                (fecha != null && !fecha.isEmpty() ? "AND e.fecha_inicio >= ? " : "") +
+                (frecuencia != null && !frecuencia.isEmpty() ? "AND ef.idEventFrecuencia = ? " : "") +
+                (estado != null && !estado.isEmpty() ? "AND es.idEventEstados = ? " : "") +
+                (idUser != 0 ? "AND e.Coordinador_idUsuario = ? " : "") +
+                "AND e.eliminado = FALSE " +
+                "ORDER BY CASE WHEN es.estadosEvento = 'Finalizado' THEN 1 ELSE 0 END, e.fecha_inicio DESC;";
+
+        ArrayList<EventoB> eventos = new ArrayList<>();
+        List<Object> parametros = new ArrayList<>();
+        parametros.add(nombre != null && !nombre.isEmpty() ? nombre + "%" : "%");
+        if (fecha != null && !fecha.isEmpty()) {
+            parametros.add(fecha);
+        }
+        if (frecuencia != null && !frecuencia.isEmpty()) {
+            parametros.add(frecuencia);
+        }
+        if (estado != null && !estado.isEmpty()) {
+            parametros.add(estado);
+        }
+        if (idUser != 0) {
+            parametros.add(idUser);
+        }
+
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement();
+             PreparedStatement pstmtTotalRows = conn.prepareStatement(sqlSetTotalRows);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            stmt.execute(sqlSetLanguage);
+
+            int paramIndex = 1;
+            for (Object param : parametros) {
+                pstmtTotalRows.setObject(paramIndex++, param);
+            }
+            pstmtTotalRows.execute();
+
+            stmt.execute(sqlSetNumPartitions);
+            stmt.execute("SET @row_number = 0;");
+
+            paramIndex = 1;
+            for (Object param : parametros) {
+                pstmt.setObject(paramIndex++, param);
+            }
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    if (rs.getInt("pag") == pagina) {
+                        EventoB evento = new EventoB();
+                        evento.setIdPag(rs.getInt("pag"));
+                        evento.setidEvento(rs.getInt("ID Evento"));
+                        evento.setNombre(rs.getString("Nombre"));
+                        evento.setFecha_inicio(rs.getString("Fecha de Inicio"));
+                        evento.setFecha_fin(rs.getString("Fecha de finalizacion"));
+                        evento.setEstadoString(rs.getString("Estado"));
+                        evento.setFrecuenciaString(rs.getString("Frecuencia"));
+                        evento.setHora_inicio(rs.getString("hora_inicio"));
+                        evento.setHora_fin(rs.getString("hora_fin"));
+                        eventos.add(evento);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al listar eventos filtrados", e);
+        }
+        return eventos;
+    }
+
+
+    public int contarRegistroFiltrados(String nombre, String fecha, String frecuencia, String estado, int idUser) {
+        String sql = "SELECT COUNT(*) AS total FROM eventos e " +
+                "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
+                "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
+                "WHERE e.eliminado = FALSE " +
+                (nombre != null && !nombre.isEmpty() ? "AND e.nombre LIKE ? " : "") +
+                (fecha != null && !fecha.isEmpty() ? "AND e.fecha_inicio >= ? " : "") +
+                (frecuencia != null && !frecuencia.isEmpty() ? "AND ef.idEventFrecuencia = ? " : "") +
+                (estado != null && !estado.isEmpty() ? "AND es.idEventEstados = ? " : "") +
+                (idUser != 0 ? "AND e.Coordinador_idUsuario = ? " : "");
+
+        List<Object> parametros = new ArrayList<>();
+        if (nombre != null && !nombre.isEmpty()) {
+            parametros.add(nombre + "%");
+        }
+        if (fecha != null && !fecha.isEmpty()) {
+            parametros.add(fecha);
+        }
+        if (frecuencia != null && !frecuencia.isEmpty()) {
+            parametros.add(frecuencia);
+        }
+        if (estado != null && !estado.isEmpty()) {
+            parametros.add(estado);
+        }
+        if (idUser != 0) {
+            parametros.add(idUser);
+        }
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            int paramIndex = 1;
+            for (Object param : parametros) {
+                pstmt.setObject(paramIndex++, param);
+            }
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("total");
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al contar eventos filtrados", e);
+        }
+        return 0;
+    }
+
+
+
 
     //Mostrar solo los 3 eventos creados recientemente
     public ArrayList<EventoB> listarEventosPropiosRecientes(int idUser, int idTipoCoord) {
@@ -732,8 +900,6 @@ public class EventoDao extends BaseDao{
         return eventos;
     }
 
-
-
     public int contarEventosFiltrados(String nombre, String fecha, String frecuencia, String estado, int idTipoEvento) {
         String sql = "SELECT COUNT(*) AS total FROM eventos e " +
                 "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
@@ -779,6 +945,7 @@ public class EventoDao extends BaseDao{
         }
         return 0;
     }
+
     //Filtro para los eventos finalizados
     public ArrayList<EventoB> listarEventosFinalizadosFiltro(String nombre, String fecha, String frecuencia, int userId, int pagina) {
         String sqlSetLanguage = "SET lc_time_names = 'es_ES';";

@@ -30,7 +30,6 @@ public class CoordinadorServlet extends HttpServlet {
         EventoDao eventoDao = new EventoDao();
         IncidenCoordDao incidenciaDao = new IncidenCoordDao();
 
-        ArrayList<EventoB> listarEventosDisponibles = eventoDao.listarEventosDisponibles();
         String vista ="";
         String action = request.getParameter("action") == null ? "inicioCoordinador" : request.getParameter("action");
         HttpSession httpSession = request.getSession();
@@ -117,9 +116,24 @@ public class CoordinadorServlet extends HttpServlet {
                 request.getRequestDispatcher(vista).forward(request, response);
                 break;
             case "registrarAsistencia":
-                vista = "WEB-INF/Coordinadora/registroAsistencia.jsp" ;
+                int idTipoEventoR = usuarioLogged.getTipoCoordinador_idTipoCoordinador();
+                int paginaActualR = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
+                int eventosPorPaginaR = 5; // Número de eventos por página
 
-                request.setAttribute("lista", listarEventosDisponibles);
+                ArrayList<EventoB> listaEventosPropiosR = eventoDao.ListarRegistro(idTipoEventoR,userId);
+
+                // Calcular total de páginas
+                int totalEventosR = listaEventosPropiosR.size();
+                int totalPaginasR = (int) Math.ceil((double) totalEventosR / eventosPorPaginaR);
+
+                // Obtener los eventos de la página actual
+                int desdeR = (paginaActualR - 1) * eventosPorPaginaR;
+                int hastaR = Math.min(desdeR + eventosPorPaginaR, totalEventosR);
+                ArrayList<EventoB> eventosPaginadosR = new ArrayList<>(listaEventosPropiosR.subList(desdeR, hastaR));
+                vista = "WEB-INF/Coordinadora/registroAsistencia.jsp" ;
+                request.setAttribute("lista", eventosPaginadosR);
+                request.setAttribute("paginaActual", paginaActualR);
+                request.setAttribute("totalPaginas", totalPaginasR);
                 request.getRequestDispatcher(vista).forward(request, response);
                 break;
             case "listaInscritos":
@@ -803,6 +817,30 @@ public class CoordinadorServlet extends HttpServlet {
                     request.getRequestDispatcher("WEB-INF/Coordinadora/ListaEvent-Coordinador.jsp").forward(request, response);
                 }
                 break;
+            case "buscarRegistro":
+                String textBuscarR = request.getParameter("textoBuscarEvento");
+                String filtroFrecuenciaR = request.getParameter("frecuencia");
+                String filtroEstadoR = request.getParameter("estado");
+                String filtroFechaR = request.getParameter("fecha");
+                int paginaR = request.getParameter("pagina") != null ? Integer.parseInt(request.getParameter("pagina")) : 1;
+
+                if (textBuscarR == null && filtroFrecuenciaR == null && filtroEstadoR == null && filtroFechaR==null) {
+                    response.sendRedirect(request.getContextPath() + "/CoordinadorServlet?action=lista");
+                } else {
+                    request.setAttribute("textoBuscarEvento", textBuscarR);
+                    request.setAttribute("frecuencia", filtroFrecuenciaR);
+                    request.setAttribute("estado", filtroEstadoR);
+                    request.setAttribute("fecha", filtroFechaR);
+                    ArrayList<EventoB> eventosR = eventoDao.ListarRegistroFiltro(textBuscarR, filtroFechaR,filtroFrecuenciaR, filtroEstadoR, userId, paginaR);
+                    int totalRegistros = eventoDao.contarRegistroFiltrados(textBuscarR, filtroFechaR,filtroFrecuenciaR, filtroEstadoR, userId); // Método adicional para contar total de registros
+                    int totalPaginas = (int) Math.ceil((double) totalRegistros / 5); // Ajustado para 5 registros por página
+
+                    request.setAttribute("lista", eventosR);
+                    request.setAttribute("paginaActual", paginaR);
+                    request.setAttribute("totalPaginas", totalPaginas);
+                    request.getRequestDispatcher("WEB-INF/Coordinadora/registroAsistencia.jsp").forward(request, response);
+                }
+                break;
             case "buscarEvento":
                 String textBuscarG = request.getParameter("textoBuscarEventoG");
                 String filtroFechaG = request.getParameter("fechaG");
@@ -1157,6 +1195,7 @@ public class CoordinadorServlet extends HttpServlet {
                             throw new RuntimeException(e);
                         }
                         usuarioLogged.setContrasenia(hashedPassword);
+                        usuarioDao.cambiarPrimerIngreso(String.valueOf(usuarioLogueado.getIdUsuario()));
 
                         usuarioDao.actualizarContrasena(usuarioLogged);
                         httpSession.setAttribute("success", "Contraseña cambiada exitosamente");

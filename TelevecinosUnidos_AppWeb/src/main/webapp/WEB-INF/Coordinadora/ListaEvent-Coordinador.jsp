@@ -73,8 +73,8 @@
                     <p class="lead">
                         Aquí puedes administrar y editar los eventos que has creado.
                     </p>
-                    <p class="lead">
-                        **Importante** ¡No olvides subir una galería de fotos al finalizar cada evento para compartirla con la comunidad!
+                    <p class="lead text-danger">
+                        Importante: ¡No olvides subir una galería de fotos al finalizar cada evento para compartirla con la comunidad!
                     </p>
                 </div>
             </div>
@@ -146,7 +146,8 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <% for(EventoB eventoB : lista) { %>
+                    <% if (lista != null) {
+                        for(EventoB eventoB : lista) { %>
                     <tr>
                         <td><%= eventoB.getNombre() %></td>
                         <td><%= eventoB.getFecha_inicio() %></td>
@@ -171,6 +172,11 @@
                             <button type="button" class="btn btn-danger btn-sm-square m-1" disabled><i class="fas fa-trash-alt fa-xs"></i></button>
                             <% } %>
                         </td>
+                    </tr>
+                    <% }
+                    } else { %>
+                    <tr>
+                        <td colspan="7" class="text-center">No hay eventos disponibles</td>
                     </tr>
                     <% } %>
                     </tbody>
