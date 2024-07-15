@@ -1668,7 +1668,7 @@ public class EventoDao extends BaseDao{
                         asistenciaCoordB.setHora_entrada(rs.getString("hora_entrada"));
                     }
                     if (rs.getString("hora_salida") != null){
-                        asistenciaCoordB.setHora_entrada(rs.getString("hora_salida"));
+                        asistenciaCoordB.setHora_salida(rs.getString("hora_salida"));
                     }
                     if (rs.getString("nombreFoto") != null){
                         asistenciaCoordB.setHora_entrada(rs.getString("nombreFoto"));

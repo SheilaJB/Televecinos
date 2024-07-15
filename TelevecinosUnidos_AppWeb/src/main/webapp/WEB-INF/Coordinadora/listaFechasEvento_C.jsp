@@ -138,7 +138,18 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
 
         <div id="Nombre del evento">
-            <h3 style="text-align: left; margin-top:20px;margin-bottom:20px;padding: 20px"><%=listaFechas.get(1).getNombreEvento()%></h3>
+            <h3 style="text-align: left; margin-top:20px;margin-bottom:20px;padding: 20px"><%=listaFechas.get(0).getNombreEvento()%></h3>
+        </div>
+        <div class="container-fluid pt-2 d-flex justify-content-end">
+            <form method="post" action="<%=request.getContextPath()%>/CoordinadorServlet?action=iniciarEvento&idEventoZ=<%=listaFechas.get(0).getIdEvento()%>">
+                <button type="submit" class="btn btn-primary me-2">
+                    Iniciar Evento
+                </button>
+            </form>
+            <form method="post" action="<%=request.getContextPath()%>/CoordinadorServlet?action=terminarEvento&idEventoZ=<%=listaFechas.get(0).getIdEvento()%>">
+                <button type="submit" class="btn btn-warning">Terminar Evento</button>
+            </form>
+
         </div>
         <div class="table-responsive">
             <table class="table custom-table">
@@ -160,31 +171,29 @@
                     <td><%= asistenciaCoordB.getHora_inicio() %></td>
                     <td><%= asistenciaCoordB.getHora_fin() %></td>
                     <td>
-                        <%
-                            LocalTime timeNow = LocalTime.now();
-                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-                            String formattedTime = timeNow.format(formatter);
-                        %>
+                        <%if (asistenciaCoordB.getHora_entrada()!=null){%>
+                        <button type="button" class="btn btn-secondary m-2">Enviar</button>
+                        <%}else{%>
                         <form method="post" action="<%=request.getContextPath()%>/CoordinadorServlet?action=marcarHoraEntrada&idAsistencia=<%=asistenciaCoordB.getIdAsistenciaCoordinadora()%>">
                             <button type="submit" class="btn btn-dark m-2">Enviar</button>
                         </form>
+                        <%}%>
                     </td>
                     <td>
+                        <%if (asistenciaCoordB.getHora_salida()!=null){%>
+                        <button type="button" class="btn btn-secondary m-2">Enviar</button>
+                        <%}else{%>
                         <form method="post" action="<%=request.getContextPath()%>/CoordinadorServlet?action=marcarHoraSalida&idAsistencia=<%=asistenciaCoordB.getIdAsistenciaCoordinadora()%>">
                             <button type="submit" class="btn btn-dark m-2" _msttexthash="79560" _msthash="48">Enviar</button>
                         </form>
+                        <%}%>
                     </td>
                     <td>
                         <form method="post" enctype="multipart/form-data" action="<%=request.getContextPath()%>/CoordinadorServlet?action=subirFotoAsistencia&idAsistencia=<%=asistenciaCoordB.getIdAsistenciaCoordinadora()%>">
-                            <%if(asistenciaCoordB.getHora_salida() == null){%>
-                            <button type="button" class="btn btn-foto btn-square btn-secondary m-2">
-                                <i class="fa fa-camera"></i>
-                            </button>
-                            <%}else{%>
                             <button type="button" class="btn btn-foto btn-square btn-dark m-2" data-bs-toggle="modal" data-bs-target="#uploadModal">
                                 <i class="fa fa-camera"></i>
                             </button>
-                            <%}%>
+
                             <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -193,7 +202,7 @@
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <input class="form-control" type="file" id="fileInput" accept="image/*" name="foto">
+                                            <input class="form-control" type="file" id="fileInput" accept="image/*" name="foto<%=asistenciaCoordB.getIdAsistenciaCoordinadora()%>">
                                             <img id="previewImage" src="#" alt="Image Preview" style="display: none; max-width: 100%; height: auto;"/>
                                         </div>
                                         <div class="modal-footer">

@@ -1259,11 +1259,12 @@ public class CoordinadorServlet extends HttpServlet {
                 request.getRequestDispatcher(vista2).forward(request, response);
                 break;
             case "subirFotoAsistencia":
-                Part partX = request.getPart("foto");
-                String fileNameX = partX.getSubmittedFileName();
-                InputStream fileInputStreamX = partX.getInputStream();
                 int idAsistencia3 = Integer.parseInt(request.getParameter("idAsistencia"));
                 AsistenciaCoordB asistenciaCoordB3 = eventoDao.buscarFechaEventoPorID(idAsistencia3);
+
+                Part partX = request.getPart("foto"+idAsistencia3);
+                String fileNameX = partX.getSubmittedFileName();
+                InputStream fileInputStreamX = partX.getInputStream();
                 eventoDao.subirFotoAsistencia(idAsistencia3,fileNameX,fileInputStreamX);
 
                 ArrayList<AsistenciaCoordB> listaFechasEvento3 = eventoDao.listarFechasEvento(asistenciaCoordB3.getIdEvento());
@@ -1271,6 +1272,39 @@ public class CoordinadorServlet extends HttpServlet {
                 String vista3 = "WEB-INF/Coordinadora/listaFechasEvento_C.jsp";
                 request.getRequestDispatcher(vista3).forward(request, response);
                 break;
+            case "iniciarEvento":
+                int idEventoZY = Integer.parseInt(request.getParameter("idEventoZ"));
+                eventoDao.actualizarEstadoEvento(idEventoZY,2);
+
+                ArrayList<AsistenciaCoordB> listaFechasEvento4 = eventoDao.listarFechasEvento(idEventoZY);
+                request.setAttribute("listaFechasEvento",listaFechasEvento4);
+                String vista4 = "WEB-INF/Coordinadora/listaFechasEvento_C.jsp";
+                request.getRequestDispatcher(vista4).forward(request, response);
+                break;
+            case "terminarEvento":
+                int idEventoXZY = Integer.parseInt(request.getParameter("idEventoZ"));
+                eventoDao.actualizarEstadoEvento(idEventoXZY,3);
+
+                int idTipoEventoR = usuarioLogged.getTipoCoordinador_idTipoCoordinador();
+                int paginaActualR = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
+                int eventosPorPaginaR = 5; // Número de eventos por página
+
+                ArrayList<EventoB> listaEventosPropiosR = eventoDao.ListarRegistro(idTipoEventoR,userId);
+
+                // Calcular total de páginas
+                int totalEventosR = listaEventosPropiosR.size();
+                int totalPaginasR = (int) Math.ceil((double) totalEventosR / eventosPorPaginaR);
+
+                // Obtener los eventos de la página actual
+                int desdeR = (paginaActualR - 1) * eventosPorPaginaR;
+                int hastaR = Math.min(desdeR + eventosPorPaginaR, totalEventosR);
+                ArrayList<EventoB> eventosPaginadosR = new ArrayList<>(listaEventosPropiosR.subList(desdeR, hastaR));
+                vista = "WEB-INF/Coordinadora/registroAsistencia.jsp" ;
+                request.setAttribute("lista", eventosPaginadosR);
+                request.setAttribute("paginaActual", paginaActualR);
+                request.setAttribute("totalPaginas", totalPaginasR);
+                request.getRequestDispatcher(vista).forward(request, response);
+
             default:
                 response.sendRedirect(request.getContextPath() + "/CoordinadorServlet");
                 break;
