@@ -1285,25 +1285,7 @@ public class CoordinadorServlet extends HttpServlet {
                 int idEventoXZY = Integer.parseInt(request.getParameter("idEventoZ"));
                 eventoDao.actualizarEstadoEvento(idEventoXZY,3);
 
-                int idTipoEventoR = usuarioLogged.getTipoCoordinador_idTipoCoordinador();
-                int paginaActualR = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
-                int eventosPorPaginaR = 5; // Número de eventos por página
-
-                ArrayList<EventoB> listaEventosPropiosR = eventoDao.ListarRegistro(idTipoEventoR,userId);
-
-                // Calcular total de páginas
-                int totalEventosR = listaEventosPropiosR.size();
-                int totalPaginasR = (int) Math.ceil((double) totalEventosR / eventosPorPaginaR);
-
-                // Obtener los eventos de la página actual
-                int desdeR = (paginaActualR - 1) * eventosPorPaginaR;
-                int hastaR = Math.min(desdeR + eventosPorPaginaR, totalEventosR);
-                ArrayList<EventoB> eventosPaginadosR = new ArrayList<>(listaEventosPropiosR.subList(desdeR, hastaR));
-                vista = "WEB-INF/Coordinadora/registroAsistencia.jsp" ;
-                request.setAttribute("lista", eventosPaginadosR);
-                request.setAttribute("paginaActual", paginaActualR);
-                request.setAttribute("totalPaginas", totalPaginasR);
-                request.getRequestDispatcher(vista).forward(request, response);
+                git
 
             default:
                 response.sendRedirect(request.getContextPath() + "/CoordinadorServlet");
