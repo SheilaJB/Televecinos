@@ -79,7 +79,7 @@
                         </div>
                         <input type="hidden" name="idIncidencia" value="<%= incidenciaB != null ? incidenciaB.getIdIncidencias() : "" %>">
                         <div class="campo">
-                            <label for="nombreIncidencia">Nombre de la incidencia:</label><br>
+                            <label for="nombreIncidencia">Nombre de la incidencia: (*)</label><br>
                             <input type="text" id="nombreIncidencia" name="nombreIncidencia" placeholder="Escribe aquí" value="<%= incidenciaB != null ? incidenciaB.getNombreIncidencia() : "" %>"><br>
                             <% if (errores != null && errores.containsKey("nombreIncidencia2")) { %>
                             <span class="text-danger"><%= errores.get("nombreIncidencia2") %></span>
@@ -112,7 +112,7 @@
                             </script>
                         </div>
                         <div class="campo" style="margin-bottom: -35px;">
-                            <label for="tipoIncidencia">Tipo de incidencia:</label><br>
+                            <label for="tipoIncidencia">Tipo de incidencia: (*)</label><br>
                             <select id="tipoIncidencia" name="TipoIncidencia_idTipoIncidencia">
                                 <option value="Seguridad Pública" <%= incidenciaB != null && "Seguridad Pública".equals(incidenciaB.getTipoIncidencia()) ? "selected" : "" %>>Seguridad Pública</option>
                                 <option value="Emergencia Médica" <%= incidenciaB != null && "Emergencia Médica".equals(incidenciaB.getTipoIncidencia()) ? "selected" : "" %>>Emergencia Médica</option>
@@ -125,7 +125,7 @@
                             <% } %>
                         </div>
                         <div class="campo" style="margin-bottom: -35px;">
-                            <label for="urbanizacion">Urbanización:</label><br>
+                            <label for="urbanizacion">Urbanización: (*)</label><br>
                             <select id="urbanizacion" name="urbanizacion_idUrbanizacion">
                                 <option value="Rafael Escardó" <%= incidenciaB != null && "Rafael Escardó".equals(incidenciaB.getUrbanizacion()) ? "selected" : "" %>>Rafael Escardó</option>
                                 <option value="José de La Riva Agüero" <%= incidenciaB != null && "José de La Riva Agüero".equals(incidenciaB.getUrbanizacion()) ? "selected" : "" %>>José de La Riva Agüero</option>
@@ -147,7 +147,7 @@
                             <% } %>
                         </div>
                         <div class="form-group">
-                            <label for="paraMi">La incidencia será para:</label><br>
+                            <label for="paraMi">La incidencia será para: (*)</label><br>
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="incidenciaPersonal" id="paraMi" value="1" <%= incidenciaB != null && incidenciaB.getIncidenciaPersonal() == 1 ? "checked" : "" %>>
                                 <label class="form-check-label" for="paraMi">
@@ -167,14 +167,14 @@
                     </div>
                     <div class="columna columna2" style="margin-top: 102px;">
                         <div class="campo">
-                            <label for="lugarExacto">Lugar exacto</label><br>
+                            <label for="lugarExacto">Lugar exacto (*)</label><br>
                             <input type="text" id="lugarExacto" name="lugarExacto" placeholder="Escribe aquí" value="<%= incidenciaB != null ? incidenciaB.getLugarExacto() : "" %>"><br>
                             <% if (errores != null && errores.containsKey("lugarExacto2")) { %>
                             <span class="text-danger"><%= errores.get("lugarExacto2") %></span>
                             <% } %>
                         </div>
                         <div class="campo">
-                            <label for="referencia">Referencia</label><br>
+                            <label for="referencia">Referencia (*)</label><br>
                             <input type="text" id="referencia" name="referencia" placeholder="Escribe aquí" value="<%= incidenciaB != null ? incidenciaB.getReferencia() : "" %>"><br>
                             <% if (errores != null && errores.containsKey("referencia2")) { %>
                             <span class="text-danger"><%= errores.get("referencia2") %></span>
@@ -188,7 +188,7 @@
                             <% } %>
                         </div>
                         <div class="campo">
-                            <label>¿Requiere ambulancia?</label><br>
+                            <label>¿Requiere ambulancia? (*)</label><br>
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="ambulancia" id="gridRadios1" value="1" <%= incidenciaB != null && incidenciaB.getAmbulancia() == 1 ? "checked" : "" %>>
                                 <label class="form-check-label" for="gridRadios1">

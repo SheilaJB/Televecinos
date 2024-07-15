@@ -100,7 +100,7 @@
                             <h2 style="font-size: large;">Complete los siguientes datos</h2>
                         </div>
                         <div class="campo ${not empty errores['nombreIncidencia'] ? 'error-div' : ''}">
-                            <label for="nombreIncidencia">Nombre de la incidencia:</label><br>
+                            <label for="nombreIncidencia">Nombre de la incidencia: (*)</label><br>
                             <input type="text" id="nombreIncidencia" name="nombreIncidencia" placeholder="Escribe aquí" value="${nombreIncidencia}" class="${not empty errores['nombreIncidencia'] ? 'error' : ''}"><br>
                             <c:if test="${not empty errores['nombreIncidencia']}">
                                 <span class="error-message">${errores['nombreIncidencia']}</span>
@@ -132,7 +132,7 @@
                             });
                         </script>
                         <div class="campo ${not empty errores['tipoIncidencia'] ? 'error-div' : ''}">
-                            <label for="tipoIncidencia">Tipo de incidencia:</label><br>
+                            <label for="tipoIncidencia">Tipo de incidencia: (*)</label><br>
                             <select id="tipoIncidencia" name="TipoIncidencia_idTipoIncidencia" class="${not empty errores['tipoIncidencia'] ? 'error' : ''}">
                                 <option value="" disabled selected>Seleccione una opción</option>
                                 <option value="1" ${tipoIncidencia == '1' ? 'selected' : ''}>Seguridad Pública</option>
@@ -145,7 +145,7 @@
                             </c:if>
                         </div>
                         <div class="campo ${not empty errores['urbanizacion'] ? 'error-div' : ''}">
-                            <label for="urbanizacion">Urbanización:</label><br>
+                            <label for="urbanizacion">Urbanización: (*)</label><br>
                             <select id="urbanizacion" name="urbanizacion_idUrbanizacion" class="${not empty errores['urbanizacion'] ? 'error' : ''}">
                                 <option value="" disabled selected>Seleccione una opción</option>
                                 <option value="1" ${urbanizacion == '1' ? 'selected' : ''}>Rafael Escardó</option>
@@ -166,7 +166,7 @@
                             </c:if>
                         </div>
                         <div class="campo ${not empty errores['incidenciaPersonal'] ? 'error-div' : ''}">
-                            <label for="paraMi">La incidencia será para:</label><br>
+                            <label for="paraMi">La incidencia será para: (*)</label><br>
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="incidenciaPersonal" id="paraMi" value="1" ${incidenciaPersonal == '1' ? 'checked' : ''}>
                                 <label class="form-check-label" for="paraMi">Para mi</label>
@@ -182,14 +182,14 @@
                     </div>
                     <div class="columna columna2" style="margin-top: 102px;">
                         <div class="campo ${not empty errores['lugarExacto'] ? 'error-div' : ''}">
-                            <label for="lugarExacto">Lugar exacto</label><br>
+                            <label for="lugarExacto">Lugar exacto (*)</label><br>
                             <input type="text" id="lugarExacto" name="lugarExacto" placeholder="Escribe aquí" value="${lugarExacto}" class="${not empty errores['lugarExacto'] ? 'error' : ''}"><br>
                             <c:if test="${not empty errores['lugarExacto']}">
                                 <span class="error-message">${errores['lugarExacto']}</span>
                             </c:if>
                         </div>
                         <div class="campo ${not empty errores['referencia'] ? 'error-div' : ''}">
-                            <label for="referencia">Referencia</label><br>
+                            <label for="referencia">Referencia (*)</label><br>
                             <input type="text" id="referencia" name="referencia" placeholder="Escribe aquí" value="${referencia}" class="${not empty errores['referencia'] ? 'error' : ''}"><br>
                             <c:if test="${not empty errores['referencia']}">
                                 <span class="error-message">${errores['referencia']}</span>
