@@ -139,7 +139,7 @@
                         text: '<%= session.getAttribute("success") %>',
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            window.location.href = "<%=request.getContextPath()%>/CoordinadorServlet?action=perfilC";
+                            window.location.href = "<%=request.getContextPath()%>/CoordinadorServlet?action=inicioCoordinador";
                         }
                     });
                 </script>
