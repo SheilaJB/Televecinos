@@ -68,22 +68,6 @@
         <jsp:include page="../includes/navbarSerenazgo.jsp"></jsp:include>
         <!-- PARTE SUPERIOR FINAL -->
 
-
-
-        <!-- LLENAR-->
-        <!-- Imagen estática del inicio del admin -->
-        <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="img/serenazgo2.jpg" class="d-block w-100 custom-carousel-img" alt="...">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5 class="titleCarousel">MUNICIPALIDAD DE SAN MIGUEL - Serenazgo</h5>
-                        <p>Te damos la bienvenida al panel del Serenazgo, una herramienta fundamental para garantizar la seguridad y el bienestar en nuestra comunidad.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <!-- Bootstrap JS dependencies -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -91,73 +75,80 @@
 
 
 
-        <!-- Fin de iamgen estatica -->
-        <div style="background-color: #f8f9fa; padding: 20px; align-items: center;">
-            <h3> Opciones: </h3>
+        <div class="container-fluid pt-4 px-4">
+            <div class="row g-4" style="padding: 10px;">
 
-
-
-            <div class="row row-cols-1 row-cols-md-3 g-4">
-                <a href="<%=request.getContextPath()%>/SerenazgoServlet?action=dashboard">
-                    <div class="col">
-                        <div class="card h-100 shadow-lg text-center" style="background-color: #023047; border-radius: 10px;">
-                            <div class="card-body">
-                                <p class="card-title" style="color: #FFB703; font-size: 1.5rem; font-weight: bold; margin-bottom: 10px;">Dashboard</p>
-                                <p class="card-text" style="color: #8ecae6; font-size: 1.2rem;">Podrás visualizar gráficos con información general de las incidencias</p>
-                            </div>
-                        </div>
+                <div class="col-sm-12 col-md-6 bg-light">
+                    <div class="p-3 d-flex justify-content-center align-items-center">
+                        <img src="img/serenazgo2.jpg" class="img-fluid rounded" alt="...">
                     </div>
+                </div>
 
-                </a>
-                <a href="<%=request.getContextPath()%>/SerenazgoServlet?action=listaIncidencias_S">
-                    <div class="col">
-                        <div class="card h-100 shadow-lg text-center" style="background-color: #023047; border-radius: 10px;">
-                            <div class="card-body">
-                                <p class="card-title" style="color: #FFB703; font-size: 1.5rem; font-weight: bold; margin-bottom: 10px;">Incidencias</p>
-                                <p class="card-text" style="color: #8ecae6; font-size: 1.2rem;">Podrás gestionar las incidencias y evaluarlas</p>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-                <a href="<%=request.getContextPath()%>/SerenazgoServlet?action=listaVecinos_S">
-                    <div class="col">
-                        <div class="card h-100 shadow-lg text-center" style="background-color: #023047; border-radius: 10px;">
-                            <div class="card-body">
-                                <p class="card-title" style="color: #FFB703; font-size: 1.5rem; font-weight: bold; margin-bottom: 10px;">Banear vecino</p>
-                                <p class="card-text" style="color: #8ecae6; font-size: 1.2rem;">Podrás banear un vecino al superar el máximo de alertas falsas</p>
-                            </div>
-                        </div>
-                    </div>
+                <div class="col-md-6 mb-4">
 
-                </a>
+                    <section id="Titulo_Dashboard" class="card mb-3">
+                        <div class="card-body border-secondary">
+                            <header class="card-header bg-transparent">
+                                <h2 class="card-title">Dashboard de Serenazgo</h2>
+                            </header>
+
+                            <article class="mt-4">
+                                <p>
+                                    Monitorea y analiza las estadísticas de incidencias en tiempo real para tomar decisiones informadas y mejorar la seguridad de la comunidad.
+                                </p>
+                            </article>
+
+                            <footer class="mt-4">
+                                <a href="<%=request.getContextPath()%>/SerenazgoServlet?action=dashboard" class="btn btn-success btn-block">
+                                    Ir al Dashboard
+                                </a>
+                            </footer>
+                        </div>
+                    </section>
+
+                    <section id="Titulo_Incidencias" class="card mb-3">
+                        <div class="card-body border-secondary">
+                            <header class="card-header bg-transparent">
+                                <h2 class="card-title">Gestión de Incidencias</h2>
+                            </header>
+
+                            <article class="mt-4">
+                                <p>
+                                    Gestiona y evalúa las incidencias reportadas por los vecinos. Mantén un registro detallado y toma acciones rápidas para resolver los problemas de la comunidad.
+                                </p>
+                            </article>
+
+                            <footer class="mt-4">
+                                <a href="<%=request.getContextPath()%>/SerenazgoServlet?action=listaIncidencias_S" class="btn btn-success btn-block">
+                                    Ver Incidencias
+                                </a>
+                            </footer>
+                        </div>
+                    </section>
+                    <section id="Titulo_Vecinos" class="card">
+                        <div class="card-body border-secondary">
+                            <header class="card-header bg-transparent">
+                                <h2 class="card-title">Gestión de Vecinos</h2>
+                            </header>
+
+                            <article class="mt-4">
+                                <p>
+                                    Accede a la lista de vecinos y toma medidas en caso de reportes falsos recurrentes.
+                                </p>
+                            </article>
+
+                            <footer class="mt-4">
+                                <a href="<%=request.getContextPath()%>/SerenazgoServlet?action=listaVecinos_S" class="btn btn-success btn-block">
+                                    Ver Vecinos
+                                </a>
+                            </footer>
+                        </div>
+                    </section>
+                </div>
             </div>
-
-
-
-            <script>
-                $(document).ready(function(){
-                    $('.row').slick({
-                        infinite: true,
-                        slidesToShow: 3,
-                        slidesToScroll: 1
-                    });
-                })
-                ;</script>
-            <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.css">
-            <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick-theme.css">
-            <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-            <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.min.js"></script>
         </div>
 
-
         <!-- Content End -->
-
-
-
-
-
-
-
 
 
 
