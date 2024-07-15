@@ -123,6 +123,11 @@ public class LoginServlet extends HttpServlet {
                 return;
             }
 
+            if (!usuarioDao.esCorreoUnico(correo)) {
+                response.sendRedirect(request.getContextPath() + "/LoginServlet?action=register&err=" + URLEncoder.encode("El correo ya está registrado. Por favor, use un correo diferente.", StandardCharsets.UTF_8.toString()));
+                return;
+            }
+
             System.out.println("Intentando registrar usuario: " + nombre + " " + apellido + " con correo: " + correo);
             boolean registrado = usuarioDao.registrarUsuario(nombre, apellido,dni, direccion, urbanizacion_idUrbanizacion, correo, primerIngreso,genero);
 
