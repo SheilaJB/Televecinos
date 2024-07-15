@@ -514,7 +514,7 @@ public class EventoDao extends BaseDao{
     // Function crear evento
     public void crearEvento(EventoB eventoB) {
 
-        String sql = "INSERT INTO televecinosDB.eventos \n" +
+        String sql = "INSERT INTO televecinosdb.eventos \n" +
                 "(nombre, descripcion, lugar, Coordinador_idUsuario, fecha_inicio, fecha_fin, cantidadVacantes, cantDisponibles, foto, nombreFoto,listaMateriales, EventEstados_idEventEstados, EventFrecuencia_idEventFrecuencia, TipoEvento_idTipoEvento, ProfesoresEvento_idProfesoresEvento, hora_inicio, hora_fin, diasEvento) \n" +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 

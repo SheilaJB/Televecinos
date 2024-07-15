@@ -26,7 +26,12 @@
 
             <div class="ms-3 m-3">
                 <h6 class="mb-0" style="color:#023047;"><b><%=usuarioLogueado.getNombre() + " " + usuarioLogueado.getApellido()%></b></h6>
-                <span class="text-muted"><b>Coordinador</b></span>
+                <%if(usuarioLogueado.getTipoCoordinador_idTipoCoordinador()==1){%>
+                    <span class="text-muted"><b>Coordinador de cultura</b></span>
+                <%}%>
+                <%if(usuarioLogueado.getTipoCoordinador_idTipoCoordinador()==2){%>
+                <span class="text-muted"><b>Coordinador de deportes</b></span>
+                <%}%>
             </div>
         </div>
         <div class="navbar-nav w-100">

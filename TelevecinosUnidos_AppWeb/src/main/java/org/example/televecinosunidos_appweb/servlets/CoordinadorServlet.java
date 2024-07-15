@@ -448,6 +448,9 @@ public class CoordinadorServlet extends HttpServlet {
                         erroresEvento.put("errorHoraFin", "Error: la hora de inicio no puede ser después de la hora de fin");
                         // Error: la hora de inicio no puede ser después de la hora de fin
                     }
+                    if (idProfesor.equals("0")){
+                        erroresEvento.put("errorProfesor", "Error: debe seleccionar un profesor");
+                    }
 
                     if (!erroresEvento.isEmpty()) {
                         ArrayList<ProfesoresEvento> listaProfesores = eventoDao.listarProfesores();
@@ -488,7 +491,6 @@ public class CoordinadorServlet extends HttpServlet {
                         int idEvento1 = -1;
                         boolean hayTraslape = eventoDao.hayTraslapeCoordinador(usuarioLogged.getIdUsuario(), idEvento1, fechaInicioStr, fechaFinStr, horaInicioStr, horaFinStr, Integer.parseInt(idFrecuencia));
                         if (hayTraslape) {
-                            request.getSession().setAttribute("err", "Error: Ya existe un evento propio programado en el mismo horario.");
                             ArrayList<ProfesoresEvento> listaProfesores = eventoDao.listarProfesores();
                             request.setAttribute("lista", listaProfesores);
                             request.setAttribute("erroresEvento", erroresEvento);
@@ -512,13 +514,13 @@ public class CoordinadorServlet extends HttpServlet {
                                 request.setAttribute("opcionesDias", NO);
                                 request.setAttribute("opcionesDias1", opcionesDias);
                             }
+                            request.getSession().setAttribute("err", "Error: Cruce de horarios, por favor revisa nuevamente los campos completados.");
                             request.getRequestDispatcher("WEB-INF/Coordinadora/creacionEvento.jsp").forward(request, response);
                             return;
                         }
 
                         boolean hayTraslapeProfesor = eventoDao.hayTraslapeProfesor(Integer.parseInt(idProfesor), fechaInicioStr, fechaFinStr, horaInicioStr, horaFinStr);
                         if (hayTraslapeProfesor) {
-                            request.getSession().setAttribute("err", "Error: El profesor ya tiene otro evento programado en el mismo horario.");
                             ArrayList<ProfesoresEvento> listaProfesores = eventoDao.listarProfesores();
                             request.setAttribute("lista", listaProfesores);
                             request.setAttribute("erroresEvento", erroresEvento);
@@ -542,6 +544,7 @@ public class CoordinadorServlet extends HttpServlet {
                                 request.setAttribute("opcionesDias", NO);
                                 request.setAttribute("opcionesDias1", opcionesDias);
                             }
+                            request.getSession().setAttribute("err", "Error: El profesor ya tiene otro evento programado en el mismo horario.");
                             request.getRequestDispatcher("WEB-INF/Coordinadora/creacionEvento.jsp").forward(request, response);
                             return;
                         }
@@ -572,6 +575,7 @@ public class CoordinadorServlet extends HttpServlet {
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
+
                 }
                 break;
 

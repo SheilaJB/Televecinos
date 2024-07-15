@@ -191,12 +191,13 @@
                                 <% } else{%>
                                 <%String idProf = (String) request.getAttribute("nombreProfesor");%>
                                 <select id="ProfesoresEvento_idProfesoresEvento" class="form-select mb-3" aria-label="Default select example" name="nombreProfesor" required>
-                                    <option selected disabled>Seleccione un profesor</option>
+                                    <option selected>Seleccione un profesor</option>
                                     <% for (ProfesoresEvento pEvento : lista) { %>
                                     <option value="<%=pEvento.getIdProfesoresEvento()%>" <%= pEvento.getIdProfesoresEvento() == Integer.parseInt(request.getAttribute("nombreProfesor") != null ? (String) request.getAttribute("nombreProfesor") : "0") ? "selected" : "" %>><%= pEvento.getNombre() %> <%= pEvento.getApellido() %></option>
                                     <% } %>
                                 </select>
                                 <% } %>
+
                             </div>
                             <!---Lugar del evento-->
                             <div class="mb-3" class="campo ${not empty erroresEvento ? 'error-div' : ''}">
