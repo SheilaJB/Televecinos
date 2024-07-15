@@ -154,8 +154,11 @@
                 <div class="bar" data-label="Correo"><%=vecino.getCorreo()%></div>
                 <a href="<%=request.getContextPath()%>/AdministradorServlet?action=listaVecinos_A"><button class="button regresar">Regresar</button></a>
 
-
+                <%if(vecino.getGenero()==1){%>
+                    <a href="<%=request.getContextPath()%>/AdministradorServlet?action=promoverAcoordinadorCultura&idVecino=<%=vecino.getIdUsuario()%>"><button class="button convertCoordinadora btn-banear">Promover a coordinador cultura</button></a>
+                <%}else{%>
                 <a href="<%=request.getContextPath()%>/AdministradorServlet?action=promoverAcoordinadorCultura&idVecino=<%=vecino.getIdUsuario()%>"><button class="button convertCoordinadora btn-banear">Promover a coordinadora cultura</button></a>
+                <%}%>
                 <!--
                 <button type="button" class="button convertCoordinadora btn-banear" onclick="convertirCoordinadoraCultura(<%=vecino.getIdUsuario()%>)">
                     Promover a coordinadora cultura
@@ -188,11 +191,15 @@
                 </script>
                 <% } %>
                 -->
+                <%if(vecino.getGenero()==1){%>
+                    <a href="<%=request.getContextPath()%>/AdministradorServlet?action=promoverAcoordinadorDeporte&idVecino=<%=vecino.getIdUsuario()%>"><button class="button convertCoordinadora btn-banear">Promover a coordinador deportes </button></a>
+                <%}else{%>
+                    <a href="<%=request.getContextPath()%>/AdministradorServlet?action=promoverAcoordinadorDeporte&idVecino=<%=vecino.getIdUsuario()%>"><button class="button convertCoordinadora btn-banear">Promover a coordinadora deportes </button></a>
+                <%}%>
 
 
 
 
-                <a href="<%=request.getContextPath()%>/AdministradorServlet?action=promoverAcoordinadorDeporte&idVecino=<%=vecino.getIdUsuario()%>"><button class="button convertCoordinadora btn-banear">Promover a coordinadora deportes </button></a>
                 <!--
                 <button type="button" class="button convertCoordinadora btn-banear" onclick="convertirCoordinadoraDeporte(<%=vecino.getIdUsuario()%>)">
                     Promover a coordinadora deporte
