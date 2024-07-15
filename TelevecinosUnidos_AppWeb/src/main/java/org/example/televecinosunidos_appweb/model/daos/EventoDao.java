@@ -36,8 +36,8 @@ public class EventoDao extends BaseDao{
                 "    es.estadosEvento AS 'Estado', \n" +
                 "    ef.tipoFrecuencia AS 'Frecuencia'\n" +
                 "FROM eventos e \n" +
-                "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados \n" +
-                "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia \n" +
+                "JOIN eventestados es ON e.EventEstados_idEventEstados = es.idEventEstados \n" +
+                "JOIN eventfrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia \n" +
                 "WHERE e.TipoEvento_idTipoEvento = ? AND e.eliminado = FALSE AND e.Coordinador_idUsuario = ?\n" +
                 "ORDER BY " +
                 "    CASE WHEN es.estadosEvento = 'Finalizado' THEN 1 ELSE 0 END, \n" +
@@ -103,8 +103,8 @@ public class EventoDao extends BaseDao{
                 "    es.estadosEvento AS 'Estado', \n" +
                 "    ef.tipoFrecuencia AS 'Frecuencia'\n" +
                 "FROM eventos e \n" +
-                "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados \n" +
-                "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia \n" +
+                "JOIN eventestados es ON e.EventEstados_idEventEstados = es.idEventEstados \n" +
+                "JOIN eventfrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia \n" +
                 "WHERE e.TipoEvento_idTipoEvento = ? AND e.eliminado = FALSE AND e.Coordinador_idUsuario = ? AND e.EventEstados_idEventEstados =3\n" +
                 "ORDER BY " +
                 "    CASE WHEN es.estadosEvento = 'Finalizado' THEN 1 ELSE 0 END, \n" +
@@ -177,8 +177,8 @@ public class EventoDao extends BaseDao{
                 "DATE_FORMAT(e.hora_fin, '%H:%i') AS hora_fin " +
                 "FROM " +
                 "eventos e " +
-                "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
-                "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
+                "JOIN eventestados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
+                "JOIN eventfrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
                 "JOIN usuario u ON e.Coordinador_idUsuario = u.idUsuario " +
                 "WHERE e.TipoEvento_idTipoEvento = ? AND e.eliminado = FALSE AND u.idUsuario = ? " +
                 "ORDER BY " +
@@ -237,8 +237,8 @@ public class EventoDao extends BaseDao{
     public ArrayList<EventoB> ListarRegistroFiltro(String nombre, String fecha, String frecuencia, String estado, int idUser, int pagina) {
         String sqlSetLanguage = "SET lc_time_names = 'es_ES';";
         String sqlSetTotalRows = "SET @total_rows = (SELECT COUNT(*) FROM eventos e " +
-                "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
-                "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
+                "JOIN eventestados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
+                "JOIN eventfrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
                 "WHERE e.nombre LIKE ? " +
                 (fecha != null && !fecha.isEmpty() ? "AND e.fecha_inicio >= ? " : "") +
                 (frecuencia != null && !frecuencia.isEmpty() ? "AND ef.idEventFrecuencia = ? " : "") +
@@ -259,8 +259,8 @@ public class EventoDao extends BaseDao{
                 "DATE_FORMAT(e.hora_inicio, '%H:%i') AS hora_inicio, " +
                 "DATE_FORMAT(e.hora_fin, '%H:%i') AS hora_fin " +
                 "FROM eventos e " +
-                "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
-                "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
+                "JOIN eventestados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
+                "JOIN eventfrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
                 "WHERE e.nombre LIKE ? " +
                 (fecha != null && !fecha.isEmpty() ? "AND e.fecha_inicio >= ? " : "") +
                 (frecuencia != null && !frecuencia.isEmpty() ? "AND ef.idEventFrecuencia = ? " : "") +
@@ -332,8 +332,8 @@ public class EventoDao extends BaseDao{
 
     public int contarRegistroFiltrados(String nombre, String fecha, String frecuencia, String estado, int idUser) {
         String sql = "SELECT COUNT(*) AS total FROM eventos e " +
-                "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
-                "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
+                "JOIN eventestados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
+                "JOIN eventfrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
                 "WHERE e.eliminado = FALSE " +
                 (nombre != null && !nombre.isEmpty() ? "AND e.nombre LIKE ? " : "") +
                 (fecha != null && !fecha.isEmpty() ? "AND e.fecha_inicio >= ? " : "") +
@@ -388,8 +388,8 @@ public class EventoDao extends BaseDao{
                 "       DATE_FORMAT(e.fecha_inicio, '%d %M') AS 'Fecha de Inicio', \n" +
                 "       es.estadosEvento AS 'Estado', ef.tipoFrecuencia AS 'Frecuencia' \n" +
                 "FROM eventos e \n" +
-                "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados \n" +
-                "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia \n" +
+                "JOIN eventestados es ON e.EventEstados_idEventEstados = es.idEventEstados \n" +
+                "JOIN eventfrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia \n" +
                 "JOIN flujo_usuario_evento fue ON e.idEventos = fue.Eventos_idEventos \n" +
                 "JOIN usuario u ON e.Coordinador_idUsuario = u.idUsuario \n" +
                 "WHERE e.TipoEvento_idTipoEvento = ? AND e.eliminado = FALSE AND u.idUsuario = ? \n" +
@@ -458,10 +458,10 @@ public class EventoDao extends BaseDao{
                 "e.diasEvento as diasEvento " + // Añadido espacio antes de FROM
                 "FROM " +
                 "eventos e " +
-                "JOIN Usuario u ON e.Coordinador_idUsuario = u.idUsuario " +
-                "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
+                "JOIN usuario u ON e.Coordinador_idUsuario = u.idUsuario " +
+                "JOIN eventfrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
                 "JOIN profesoresevento pf ON e.ProfesoresEvento_idProfesoresEvento = pf.idProfesoresEvento " +
-                "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
+                "JOIN eventestados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
                 "WHERE e.idEventos = ?";
 
         try (Connection conn = getConnection()) {
@@ -591,11 +591,12 @@ public class EventoDao extends BaseDao{
         }
 
         for (int i = 0; i < fechasEntre.size(); i++) {
+            /*
             String url = "jdbc:mysql://localhost:3306/televecinosdb";
             String username = "root";
-            String password = "root";
+            String password = "root";*/
             String sql = "INSERT INTO dias_evento (eventos_idEventos, dia1, dia2,hora_inicio,hora_fin, asistenciaCoordinador) VALUES (?, ?, ?, ?, ?,?)";
-            try (Connection connection = DriverManager.getConnection(url, username, password);
+            try (Connection connection = getConnection();
                  PreparedStatement pstmt = connection.prepareStatement(sql)) {
                 if (frecuencia == 1){
                     pstmt.setInt(1, idEvento);
@@ -661,11 +662,12 @@ public class EventoDao extends BaseDao{
         Collections.sort(fechasCombinadas);
         if (frecuencia == 1){
             for (int i = 0; i < fechasEntre.size(); i++) {
+                /*
                 String url = "jdbc:mysql://localhost:3306/televecinosdb";
                 String username = "root";
-                String password = "root";
-                String sql = "INSERT INTO asistenciaCoordinadora (eventos_idEventos, fecha_evento,hora_inicio,hora_fin, asistencia) VALUES (?, ?, ?, ?,?)";
-                try (Connection connection = DriverManager.getConnection(url, username, password);
+                String password = "root";*/
+                String sql = "INSERT INTO asistenciacoordinadora (eventos_idEventos, fecha_evento,hora_inicio,hora_fin, asistencia) VALUES (?, ?, ?, ?,?)";
+                try (Connection connection = getConnection();
                      PreparedStatement pstmt = connection.prepareStatement(sql)) {
                     pstmt.setInt(1, idEvento);
                     pstmt.setString(2, fechasEntre.get(i).toString());
@@ -682,11 +684,12 @@ public class EventoDao extends BaseDao{
             }
         }else{
             for (int i = 0; i < fechasCombinadas.size(); i++) {
+                /*
                 String url = "jdbc:mysql://localhost:3306/televecinosdb";
                 String username = "root";
-                String password = "root";
-                String sql = "INSERT INTO asistenciaCoordinadora (eventos_idEventos, fecha_evento,hora_inicio,hora_fin, asistencia) VALUES (?, ?, ?, ?,?)";
-                try (Connection connection = DriverManager.getConnection(url, username, password);
+                String password = "root";*/
+                String sql = "INSERT INTO asistenciacoordinadora (eventos_idEventos, fecha_evento,hora_inicio,hora_fin, asistencia) VALUES (?, ?, ?, ?,?)";
+                try (Connection connection = getConnection();
                      PreparedStatement pstmt = connection.prepareStatement(sql)) {
                     pstmt.setInt(1, idEvento);
                     pstmt.setString(2, fechasCombinadas.get(i).toString());
@@ -705,12 +708,13 @@ public class EventoDao extends BaseDao{
     }
 
     public void eliminarFechasEventoPorIdEvento(int eventosId) {
+        /*
         String url = "jdbc:mysql://localhost:3306/televecinosdb";
         String username = "root";
-        String password = "root";
+        String password = "root";*/
         String sql = "DELETE FROM dias_evento WHERE eventos_idEventos = ?";
 
-        try (Connection connection = DriverManager.getConnection(url, username, password);
+        try (Connection connection = getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
 
             pstmt.setInt(1, eventosId);
@@ -722,12 +726,12 @@ public class EventoDao extends BaseDao{
         }
     }
     public void eliminarFechasAsistencia(int eventosId) {
-        String url = "jdbc:mysql://localhost:3306/televecinosdb";
+        /*String url = "jdbc:mysql://localhost:3306/televecinosdb";
         String username = "root";
-        String password = "root";
-        String sql = "DELETE FROM asistenciaCoordinadora WHERE eventos_idEventos = ?";
+        String password = "root";*/
+        String sql = "DELETE FROM asistenciacoordinadora WHERE eventos_idEventos = ?";
 
-        try (Connection connection = DriverManager.getConnection(url, username, password);
+        try (Connection connection = getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
 
             pstmt.setInt(1, eventosId);
@@ -813,9 +817,9 @@ public class EventoDao extends BaseDao{
     public ArrayList<EventoB> listarEventoFiltro(String nombre, String fecha, String frecuencia, String estado, int idTipoEvento, int pagina) {
         String sqlSetLanguage = "SET lc_time_names = 'es_ES';";
         String sqlSetTotalRows = "SET @total_rows = (SELECT COUNT(*) FROM eventos e " +
-                "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
-                "JOIN Usuario u ON e.Coordinador_idUsuario = u.idUsuario " +
-                "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
+                "JOIN eventestados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
+                "JOIN usuario u ON e.Coordinador_idUsuario = u.idUsuario " +
+                "JOIN eventfrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
                 "JOIN profesoresevento pf ON e.ProfesoresEvento_idProfesoresEvento = pf.idProfesoresEvento " +
                 "WHERE e.nombre LIKE ? " +
                 (fecha != null && !fecha.isEmpty() ? "AND e.fecha_inicio >= ? " : "") +
@@ -834,9 +838,9 @@ public class EventoDao extends BaseDao{
                 "    es.estadosEvento AS 'Estado', " +
                 "    ef.tipoFrecuencia AS 'Frecuencia' " +
                 "FROM eventos e " +
-                "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
-                "JOIN Usuario u ON e.Coordinador_idUsuario = u.idUsuario " +
-                "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
+                "JOIN eventestados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
+                "JOIN usuario u ON e.Coordinador_idUsuario = u.idUsuario " +
+                "JOIN eventfrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
                 "JOIN profesoresevento pf ON e.ProfesoresEvento_idProfesoresEvento = pf.idProfesoresEvento " +
                 "WHERE e.nombre LIKE ? " +
                 (fecha != null && !fecha.isEmpty() ? "AND e.fecha_inicio >= ? " : "") +
@@ -903,9 +907,9 @@ public class EventoDao extends BaseDao{
 
     public int contarEventosFiltrados(String nombre, String fecha, String frecuencia, String estado, int idTipoEvento) {
         String sql = "SELECT COUNT(*) AS total FROM eventos e " +
-                "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
-                "JOIN Usuario u ON e.Coordinador_idUsuario = u.idUsuario " +
-                "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
+                "JOIN eventestados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
+                "JOIN usuario u ON e.Coordinador_idUsuario = u.idUsuario " +
+                "JOIN eventfrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
                 "JOIN profesoresevento pf ON e.ProfesoresEvento_idProfesoresEvento = pf.idProfesoresEvento " +
                 "WHERE e.nombre LIKE ? " +
                 (fecha != null && !fecha.isEmpty() ? "AND e.fecha_inicio >= ? " : "") +
@@ -951,9 +955,9 @@ public class EventoDao extends BaseDao{
     public ArrayList<EventoB> listarEventosFinalizadosFiltro(String nombre, String fecha, String frecuencia, int userId, int pagina) {
         String sqlSetLanguage = "SET lc_time_names = 'es_ES';";
         String sqlSetTotalRows = "SET @total_rows = (SELECT COUNT(*) FROM eventos e " +
-                "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
-                "JOIN Usuario u ON e.Coordinador_idUsuario = u.idUsuario " +
-                "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
+                "JOIN eventestados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
+                "JOIN usuario u ON e.Coordinador_idUsuario = u.idUsuario " +
+                "JOIN eventfrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
                 "JOIN profesoresevento pf ON e.ProfesoresEvento_idProfesoresEvento = pf.idProfesoresEvento " +
                 "WHERE e.nombre LIKE ? " +
                 (fecha != null && !fecha.isEmpty() ? "AND e.fecha_inicio >= ? " : "") +
@@ -971,9 +975,9 @@ public class EventoDao extends BaseDao{
                 "    es.estadosEvento AS 'Estado', " +
                 "    ef.tipoFrecuencia AS 'Frecuencia' " +
                 "FROM eventos e " +
-                "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
-                "JOIN Usuario u ON e.Coordinador_idUsuario = u.idUsuario " +
-                "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
+                "JOIN eventestados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
+                "JOIN usuario u ON e.Coordinador_idUsuario = u.idUsuario " +
+                "JOIN eventfrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
                 "JOIN profesoresevento pf ON e.ProfesoresEvento_idProfesoresEvento = pf.idProfesoresEvento " +
                 "WHERE e.nombre LIKE ? " +
                 (fecha != null && !fecha.isEmpty() ? "AND e.fecha_inicio >= ? " : "") +
@@ -1035,9 +1039,9 @@ public class EventoDao extends BaseDao{
     }
     public int contarEventosFinalizadosFiltrados(String nombre, String fecha, String frecuencia, int userId) {
         String sql = "SELECT COUNT(*) AS total FROM eventos e " +
-                "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
-                "JOIN Usuario u ON e.Coordinador_idUsuario = u.idUsuario " +
-                "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
+                "JOIN eventestados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
+                "JOIN usuario u ON e.Coordinador_idUsuario = u.idUsuario " +
+                "JOIN eventfrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
                 "JOIN profesoresevento pf ON e.ProfesoresEvento_idProfesoresEvento = pf.idProfesoresEvento " +
                 "WHERE e.nombre LIKE ? " +
                 (fecha != null && !fecha.isEmpty() ? "AND e.fecha_inicio >= ? " : "") +
@@ -1098,7 +1102,7 @@ public class EventoDao extends BaseDao{
                 "    te.tipo AS 'TipoEvento', \n" +
                 "    eve.tipoFrecuencia AS 'Frecuencia' \n" +
                 "FROM eventos e \n" +
-                "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados \n" +
+                "JOIN eventestados es ON e.EventEstados_idEventEstados = es.idEventEstados \n" +
                 "JOIN tipoevento te ON e.TipoEvento_idTipoEvento = te.idTipoEvento \n" +
                 "JOIN eventfrecuencia eve ON e.EventFrecuencia_idEventFrecuencia = eve.idEventFrecuencia \n" +
                 "WHERE e.eliminado = FALSE \n" +
@@ -1166,8 +1170,8 @@ public class EventoDao extends BaseDao{
                 "    ef.tipoFrecuencia AS 'Frecuencia',\n" +
                 "    te.tipo as 'Tipo'\n" +
                 "FROM eventos e \n" +
-                "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados \n" +
-                "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia \n" +
+                "JOIN eventestados es ON e.EventEstados_idEventEstados = es.idEventEstados \n" +
+                "JOIN eventfrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia \n" +
                 "JOIN tipoevento te ON e.TipoEvento_idTipoEvento = te.idTipoEvento\n" +
                 "JOIN usuario u ON e.Coordinador_idUsuario = u.idUsuario \n" +
                 "WHERE e.TipoEvento_idTipoEvento = ? AND e.eliminado = FALSE \n" +
@@ -1228,9 +1232,9 @@ public class EventoDao extends BaseDao{
     public ArrayList<EventoB> ListaEventoGeneralesFiltro(String nombre, String fecha, String frecuencia, String estado, int idTipoEvento, int pagina) {
         String sqlSetLanguage = "SET lc_time_names = 'es_ES';";
         String sqlSetTotalRows = "SET @total_rows = (SELECT COUNT(*) FROM eventos e " +
-                "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
-                "JOIN Usuario u ON e.Coordinador_idUsuario = u.idUsuario " +
-                "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
+                "JOIN eventestados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
+                "JOIN usuario u ON e.Coordinador_idUsuario = u.idUsuario " +
+                "JOIN eventfrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
                 "JOIN tipoevento te ON e.TipoEvento_idTipoEvento = te.idTipoEvento " +
                 "JOIN profesoresevento pf ON e.ProfesoresEvento_idProfesoresEvento = pf.idProfesoresEvento " +
                 "WHERE e.nombre LIKE ? " +
@@ -1253,9 +1257,9 @@ public class EventoDao extends BaseDao{
                 "    ef.tipoFrecuencia AS 'Frecuencia', " +
                 "    te.tipo as 'Tipo' " +
                 "FROM eventos e " +
-                "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
-                "JOIN Usuario u ON e.Coordinador_idUsuario = u.idUsuario " +
-                "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
+                "JOIN eventestados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
+                "JOIN usuario u ON e.Coordinador_idUsuario = u.idUsuario " +
+                "JOIN eventfrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
                 "JOIN profesoresevento pf ON e.ProfesoresEvento_idProfesoresEvento = pf.idProfesoresEvento " +
                 "JOIN tipoevento te ON e.TipoEvento_idTipoEvento = te.idTipoEvento " +
                 "WHERE e.nombre LIKE ? " +
@@ -1335,9 +1339,9 @@ public class EventoDao extends BaseDao{
 
     public int contarEventosGeneralesFiltrados(String nombre, String fecha, String frecuencia, String estado, int idTipoEvento) {
         StringBuilder sql = new StringBuilder("SELECT COUNT(*) AS total FROM eventos e " +
-                "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
-                "JOIN Usuario u ON e.Coordinador_idUsuario = u.idUsuario " +
-                "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
+                "JOIN eventestados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
+                "JOIN usuario u ON e.Coordinador_idUsuario = u.idUsuario " +
+                "JOIN eventfrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
                 "JOIN tipoevento te ON e.TipoEvento_idTipoEvento = te.idTipoEvento  " +
                 "JOIN profesoresevento pf ON e.ProfesoresEvento_idProfesoresEvento = pf.idProfesoresEvento " +
                 "WHERE e.nombre LIKE ? " +
@@ -1413,7 +1417,7 @@ public class EventoDao extends BaseDao{
                 "    te.tipo as 'TipoEvento',\n" +
                 "    eve.tipoFrecuencia AS 'Frecuencia' \n" +
                 "FROM eventos e \n" +
-                "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados \n" +
+                "JOIN eventestados es ON e.EventEstados_idEventEstados = es.idEventEstados \n" +
                 "JOIN tipoevento te ON e.TipoEvento_idTipoEvento = te.idTipoEvento \n" +
                 "JOIN eventfrecuencia eve ON e.EventFrecuencia_idEventFrecuencia = eve.idEventFrecuencia \n" +
                 "WHERE e.eliminado = FALSE " +
@@ -1696,11 +1700,11 @@ public class EventoDao extends BaseDao{
                 "FROM \n" +
                 "    eventos e \n" +
                 "JOIN \n" +
-                "    EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia \n" +
+                "    eventfrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia \n" +
                 "JOIN \n" +
-                "    TipoEvento te ON e.TipoEvento_idTipoEvento = te.idTipoEvento \n" +
+                "    tipoevento te ON e.TipoEvento_idTipoEvento = te.idTipoEvento \n" +
                 "JOIN \n" +
-                "    EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados \n" +
+                "    eventestados es ON e.EventEstados_idEventEstados = es.idEventEstados \n" +
                 "JOIN \n" +
                 "    flujo_usuario_evento fue ON e.idEventos = fue.Eventos_idEventos \n" +
                 "WHERE \n" +
@@ -1745,9 +1749,9 @@ public class EventoDao extends BaseDao{
         String sqlSetLanguage = "SET lc_time_names = 'es_ES';";
         String sql = "SELECT e.idEventos, e.nombre, DATE_FORMAT(e.fecha_inicio, '%d %M %Y') AS 'Fecha de Inicio', es.estadosEvento, ef.tipoFrecuencia, te.tipo " +
                 "FROM eventos e " +
-                "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
-                "JOIN TipoEvento te ON e.TipoEvento_idTipoEvento = te.idTipoEvento " +
-                "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
+                "JOIN eventfrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
+                "JOIN tipoevento te ON e.TipoEvento_idTipoEvento = te.idTipoEvento " +
+                "JOIN eventestados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
                 "JOIN flujo_usuario_evento fue ON e.idEventos = fue.Eventos_idEventos " +
                 "WHERE fue.Usuario_idUsuario = ? AND e.eliminado = FALSE AND fue.eliminado = 0 " +
                 "ORDER BY e.fecha_inicio DESC;";
@@ -1820,8 +1824,8 @@ public class EventoDao extends BaseDao{
     public ArrayList<EventoB> listarEventosInscriptoFiltro(String nombre, String fecha, String frecuencia, String estado, String tipo, int idUser, int pagina) {
         String sqlSetLanguage = "SET lc_time_names = 'es_ES';";
         String sqlSetTotalRows = "SET @total_rows = (SELECT COUNT(*) FROM eventos e " +
-                "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
-                "JOIN TipoEvento te ON e.TipoEvento_idTipoEvento = te.idTipoEvento " +
+                "JOIN eventfrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
+                "JOIN tipoevento te ON e.TipoEvento_idTipoEvento = te.idTipoEvento " +
                 "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
                 "JOIN flujo_usuario_evento fue ON e.idEventos = fue.Eventos_idEventos " +
                 "WHERE fue.Usuario_idUsuario = ? " +
@@ -1839,13 +1843,13 @@ public class EventoDao extends BaseDao{
                 "    e.idEventos AS 'ID Evento', " +
                 "    e.nombre AS 'Nombre', " +
                 "    DATE_FORMAT(e.fecha_inicio, '%d %M %Y') AS 'Fecha de Inicio', " +
-                "    es.estadosEvento AS 'Estado', " +
-                "    ef.tipoFrecuencia AS 'Frecuencia', " +
+                "    es.estadosevento AS 'Estado', " +
+                "    ef.tipofrecuencia AS 'Frecuencia', " +
                 "    te.tipo AS 'Tipo' " +
                 "FROM eventos e " +
-                "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
-                "JOIN TipoEvento te ON e.TipoEvento_idTipoEvento = te.idTipoEvento " +
-                "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
+                "JOIN eventfrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
+                "JOIN tipoevento te ON e.TipoEvento_idTipoEvento = te.idTipoEvento " +
+                "JOIN eventestados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
                 "JOIN flujo_usuario_evento fue ON e.idEventos = fue.Eventos_idEventos " +
                 "WHERE fue.Usuario_idUsuario = ? " +
                 "AND e.nombre LIKE ? " +
@@ -1922,9 +1926,9 @@ public class EventoDao extends BaseDao{
 
     public int contarEventosInscriptoFiltrados(String nombre, String fecha, String frecuencia, String estado, String tipo, int idUser) {
         String sql = "SELECT COUNT(*) AS total FROM eventos e " +
-                "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
-                "JOIN TipoEvento te ON e.TipoEvento_idTipoEvento = te.idTipoEvento " +
-                "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
+                "JOIN eventfrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
+                "JOIN tipoevento te ON e.TipoEvento_idTipoEvento = te.idTipoEvento " +
+                "JOIN eventestados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
                 "JOIN flujo_usuario_evento fue ON e.idEventos = fue.Eventos_idEventos " +
                 "WHERE fue.Usuario_idUsuario = ? " +
                 "AND e.nombre LIKE ? " +
