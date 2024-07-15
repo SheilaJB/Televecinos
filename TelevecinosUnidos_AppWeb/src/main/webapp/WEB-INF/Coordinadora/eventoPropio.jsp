@@ -54,9 +54,7 @@
         <!-- Form Start -->
         <div class="container-fluid pt-4 px-4">
             <!-- Agregar el botón de regreso en la esquina superior derecha -->
-            <div class="container-fluid pt-2">
-                <button class="btn btn-secondary float-end" onclick="goBack()">Regresar</button>
-            </div>
+
             <div class="campo">
                 <h2><%= request.getAttribute("evento") != null ? ((EventoB) request.getAttribute("evento")).getNombre() : "" %></h2>
                 <br>
@@ -166,6 +164,7 @@
                             </div>
                         </div>
                     </form>
+
                     <% if (request.getAttribute("evento") != null) {
                         EventoB eventoB = (EventoB) request.getAttribute("evento");
                         if ("Finalizado".equals(eventoB.getEstadoString())) {
@@ -211,6 +210,14 @@
                     <% }
                     }
                     %>
+                    <div class="container-fluid pt-2 d-flex justify-content-end">
+                        <a href="<%=request.getContextPath()%>/CoordinadorServlet?action=listarInscritos&idEvento=<%= request.getAttribute("evento") != null ? ((EventoB) request.getAttribute("evento")).getIdEvento() : "" %>">
+                            <button type="button" class="btn btn-secondary me-2">
+                                <i class="fas fa-users"></i> Ver Lista de inscritos
+                            </button>
+                        </a>
+                        <button class="btn btn-secondary" onclick="goBack()">Regresar</button>
+                    </div>
                 </div>
             </div>
         </div>

@@ -4,6 +4,7 @@ package org.example.televecinosunidos_appweb.model.daos;
 import org.example.televecinosunidos_appweb.model.beans.AsistenciaCoordB;
 import org.example.televecinosunidos_appweb.model.beans.EventoB;
 import org.example.televecinosunidos_appweb.model.beans.ProfesoresEvento;
+import org.example.televecinosunidos_appweb.model.beans.UsuarioB;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -1539,22 +1540,23 @@ public class EventoDao extends BaseDao{
 
 
     public boolean inscribirUsuarioEvento(int idUsuario, int idEvento) {
-        String sql = "INSERT INTO flujo_usuario_evento (Usuario_idUsuario, Eventos_idEventos) VALUES (?, ?)";
-        try (Connection conn = this.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = this.getConnection()) {
+            String sql = "INSERT INTO flujo_usuario_evento (Usuario_idUsuario, Eventos_idEventos, eliminado) VALUES (?, ?, 0)";
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setInt(1, idUsuario);
+                pstmt.setInt(2, idEvento);
+                pstmt.executeUpdate();
+            }
+            updateVacantesDisponibles(idEvento);
 
-            pstmt.setInt(1, idUsuario);
-            pstmt.setInt(2, idEvento);
-
-            int affectedRows = pstmt.executeUpdate();
-            return affectedRows > 0;
+            return true; // Inscripción exitosa
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
+            return false; // Error al inscribir
         }
     }
     public boolean estaInscrito(int idUsuario, int idEvento) {
-        String sql = "SELECT COUNT(*) FROM flujo_usuario_evento WHERE Usuario_idUsuario = ? AND Eventos_idEventos = ?";
+        String sql = "SELECT COUNT(*) FROM flujo_usuario_evento WHERE Usuario_idUsuario = ? AND Eventos_idEventos = ? AND eliminado = 0"; // Agregar condición eliminado = 0
         try (Connection conn = this.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
@@ -2075,6 +2077,45 @@ public class EventoDao extends BaseDao{
 
         }
     }
+
+    //listar inscritos
+    public List<UsuarioB> obtenerInscritosPorEvento(int idEvento) throws SQLException {
+        String sql = "SELECT u.* FROM usuario u " +
+                "JOIN flujo_usuario_evento fue ON u.idUsuario = fue.Usuario_idUsuario " +
+                "WHERE fue.Eventos_idEventos = ? AND fue.eliminado = 0"; // Filtrar por inscripciones no eliminadas
+
+        try (PreparedStatement pstmt = getConnection().prepareStatement(sql)) {
+            pstmt.setInt(1, idEvento);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                List<UsuarioB> inscritos = new ArrayList<>();
+                while (rs.next()) {
+                    UsuarioB usuario = new UsuarioB();
+                    usuario.setIdUsuario(rs.getInt("idUsuario"));
+                    usuario.setNombre(rs.getString("nombre"));
+                    usuario.setApellido(rs.getString("apellido"));
+                    usuario.setCorreo(rs.getString("correo"));
+                    usuario.setGenero(rs.getInt("genero"));
+                    usuario.setDireccion(rs.getString("direccion"));
+                    inscritos.add(usuario);
+                }
+                return inscritos;
+            }
+        }
+    }
+
+
+    public void desinscribirUsuarioEvento(int idUsuario, int idEvento) {
+        String sql = "UPDATE flujo_usuario_evento SET eliminado = 1 WHERE Usuario_idUsuario = ? AND Eventos_idEventos = ?";
+        try (PreparedStatement pstmt = getConnection().prepareStatement(sql)) {
+            pstmt.setInt(1, idUsuario);
+            pstmt.setInt(2, idEvento);
+            pstmt.executeUpdate();
+        }catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+    }
+
 
 }
 

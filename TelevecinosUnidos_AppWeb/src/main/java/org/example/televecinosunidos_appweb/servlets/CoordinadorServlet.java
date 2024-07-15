@@ -20,6 +20,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 @MultipartConfig
@@ -136,10 +137,29 @@ public class CoordinadorServlet extends HttpServlet {
                 request.setAttribute("totalPaginas", totalPaginasR);
                 request.getRequestDispatcher(vista).forward(request, response);
                 break;
-            case "listaInscritos":
-                vista = "WEB-INF/Coordinadora/listaInscritos.jsp";
-                request.getRequestDispatcher(vista).forward(request, response);
+
+            case "listarInscritos":
+                try {
+                    int idEvento = Integer.parseInt(request.getParameter("idEvento"));
+                    List<UsuarioB> inscritos = eventoDao.obtenerInscritosPorEvento(idEvento);
+                    request.setAttribute("evento", eventoDao.buscarEventoPorId(String.valueOf(idEvento)));
+                    request.setAttribute("inscritos", inscritos);
+                    vista = "WEB-INF/Coordinadora/listaInscritos.jsp";
+                    request.getRequestDispatcher(vista).forward(request, response);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    request.getSession().setAttribute("error", "Error al obtener la lista de inscritos");
+                    response.sendRedirect(request.getContextPath() + "/CoordinadorServlet?action=verEvento");
+                }
                 break;
+
+            case "eliminarInscrito":
+                String idEventoBorrar = request.getParameter("idEvento");
+                int idUsuarioBorrar = Integer.parseInt(request.getParameter("idUsuario")); // Obtener el ID del usuario
+                eventoDao.desinscribirUsuarioEvento(idUsuarioBorrar, Integer.parseInt(idEventoBorrar)); // Pasar ambos IDs
+                response.sendRedirect(request.getContextPath() + "/CoordinadorServlet?action=listarInscritos&idEvento=" + idEventoBorrar);
+                return;
+
             case "verEvento":
                 String idEvento = request.getParameter("idEvento");
                 vista = "WEB-INF/Coordinadora/eventoPropio.jsp";
@@ -170,7 +190,7 @@ public class CoordinadorServlet extends HttpServlet {
                 String idBorrar = request.getParameter("idEvento");
                 eventoDao.borrarEvento(Integer.parseInt(idBorrar));
                 response.sendRedirect(request.getContextPath() + "/CoordinadorServlet?action=lista");
-                return;
+                break;
 
             case "subirGaleria":
                 int idTipoEvento1 = usuarioLogged.getTipoCoordinador_idTipoCoordinador();
@@ -1195,7 +1215,7 @@ public class CoordinadorServlet extends HttpServlet {
                             throw new RuntimeException(e);
                         }
                         usuarioLogged.setContrasenia(hashedPassword);
-                        usuarioDao.cambiarPrimerIngreso(String.valueOf(usuarioLogueado.getIdUsuario()));
+                        usuarioDao.cambiarPrimerIngreso(String.valueOf(usuarioLogged.getIdUsuario()));
 
                         usuarioDao.actualizarContrasena(usuarioLogged);
                         httpSession.setAttribute("success", "Contraseña cambiada exitosamente");
