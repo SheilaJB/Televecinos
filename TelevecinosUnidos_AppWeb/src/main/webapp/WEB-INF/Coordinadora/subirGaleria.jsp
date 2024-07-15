@@ -37,35 +37,6 @@
     <link href="css/style_vec.css" rel="stylesheet">
     <style>
 
-        .popup {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-        }
-        .popup-content {
-            background-color: white;
-            width: 50%;
-            max-width: 400px;
-            margin: 100px auto;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-            text-align: center;
-            position: relative;
-        }
-        .close-btn {
-            position: absolute;
-            top: 5px;
-            right: 10px;
-            font-size: 24px;
-            cursor: pointer;
-            color: rgb(0, 0, 0);
-        }
         .btn-sm-square {
             width: 20px;
             height: 20px;
@@ -124,7 +95,7 @@
                     <p class="lead">
                         Aquí debes subir 3 fotos para cada galería por evento
                     </p>
-                    <p class="lead">
+                    <p class="lead text-danger">
                         **Importante** ¡No olvides subir una galería de fotos al finalizar cada evento para compartirla con la comunidad!
                     </p>
                 </div>
@@ -148,21 +119,24 @@
         <div style="background-color: #f8f9fa; padding: 10px; align-items: center;">
             <div style="background-color: #FFB703; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
                 <!-- Filtro -->
-                <form  method="post" action="<%=request.getContextPath()%>/CoordinadorServlet?action=buscarEventoPorNombreFinalizado">
+                <form  method="post" action="<%=request.getContextPath()%>/CoordinadorServlet?action=buscarEventoFinalizado">
                     <div class="row justify-content-center align-items-center">
                         <!-- Busqueda por nombre de evento -->
-                        <div class="col-md-3 mb-2">
-                            <input type="text" class="form-control" id="filtroInput" placeholder="Buscar evento..." name="textoBuscarEvento"
-                                   value="<%=textoBuscarEvento%>">
+                        <div class="col-md-5 mb-2">
+                            <input type="text" class="form-control" id="filtroInput" placeholder="Buscar..." name="textoBuscarEvento"
+                                   value="<%=request.getAttribute("textoBuscarEvento") != null ? request.getAttribute("textoBuscarEvento") : ""%>">
                         </div>
                         <div class="col-md-2 mb-2">
-                            <select  class="form-select" name="frecuencia">
-                                <option selected disabled>Tipo de Frecuencia</option>
-                                <option value="1" >Semanal</option>
-                                <option value="2 ">Dos veces por semana</option>
+                            <input type="date" class="form-control" name="fecha"
+                                   value="<%=request.getAttribute("fecha") != null ? request.getAttribute("fecha") : ""%>">
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <select class="form-select" name="frecuencia">
+                                <option selected disabled>Frecuencia</option>
+                                <option value="1" <%= "1".equals(request.getAttribute("frecuencia")) ? "selected" : "" %>>Semanal</option>
+                                <option value="2" <%= "2".equals(request.getAttribute("frecuencia")) ? "selected" : "" %>>Dos veces por semana</option>
                             </select>
                         </div>
-
                         <div class="col-md-1 mb-2">
                             <button class="btn btn-primary w-100" type="submit">
                                 <i class="fas fa-search"></i> </button>
@@ -182,11 +156,6 @@
             <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
 
-            <script>
-                function crearEvento() {
-                    window.location.href = 'creacionEvento.html';
-                }
-            </script>
 
             <div class="table-responsive">
                 <table id="eventosTable" class="table table-striped table-hover" style="background-color: transparent;">
@@ -317,19 +286,28 @@
                         });
                     });
                 </script>
-
                 <nav>
                     <ul class="pagination">
                         <li class="page-item <%= paginaActual == 1 ? "disabled" : "" %>">
                             <a class="page-link" href="<%=request.getContextPath()%>/CoordinadorServlet?action=subirGaleria&page=<%= paginaActual - 1 %>">Anterior</a>
                         </li>
+                        <% if (totalPaginas > 0) { %>
                         <% for(int i = 1; i <= totalPaginas; i++) { %>
                         <li class="page-item <%= i == paginaActual ? "active" : "" %>">
                             <a class="page-link" href="<%=request.getContextPath()%>/CoordinadorServlet?action=subirGaleria&page=<%= i %>"><%= i %></a>
                         </li>
                         <% } %>
-                        <li class="page-item <%= paginaActual == totalPaginas ? "disabled" : "" %>">
+                        <% } else { %>
+                        <li class="page-item active">
+                            <a class="page-link" href="#">1</a>
+                        </li>
+                        <% } %>
+                        <li class="page-item <%= paginaActual == totalPaginas || totalPaginas == 0 ? "disabled" : "" %>">
+                            <% if (paginaActual < totalPaginas) { %>
                             <a class="page-link" href="<%=request.getContextPath()%>/CoordinadorServlet?action=subirGaleria&page=<%= paginaActual + 1 %>">Siguiente</a>
+                            <% } else { %>
+                            <span class="page-link">Siguiente</span>
+                            <% } %>
                         </li>
                     </ul>
                 </nav>

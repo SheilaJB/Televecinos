@@ -101,7 +101,7 @@
                     <div class="row justify-content-center align-items-center">
                         <!-- Busqueda por nombre de evento -->
                         <div class="col-md-3 mb-2">
-                            <input type="text" class="form-control" id="filtroInput" placeholder="Buscar evento..." name="textoBuscarEvento"
+                            <input type="text" class="form-control" id="filtroInput" placeholder="Buscar..." name="textoBuscarEvento"
                                    value="<%=request.getAttribute("textoBuscarEvento") != null ? request.getAttribute("textoBuscarEvento") : ""%>">
                         </div>
                         <div class="col-md-2 mb-2">

@@ -87,6 +87,73 @@ public class EventoDao extends BaseDao{
 
         return listaEventosPropios;
     }
+    //Lista los eventos finalizados del coordiandor
+    public ArrayList<EventoB> listarEventosPropiosFinalizado(int idTipoEvento, int idCoordinador) {
+        String sqlSetLanguage = "SET lc_time_names = 'es_ES';";
+        String sqlSetTotalRows = "SET @total_rows = (SELECT COUNT(*) FROM eventos WHERE TipoEvento_idTipoEvento = ? AND eliminado = FALSE AND Coordinador_idUsuario = ?);";
+        String sqlSetNumPartitions = "SET @num_partitions = FLOOR((@total_rows + 4) / 5);"; // Ajustado para calcular el número de particiones
+
+        String sql = "SELECT \n" +
+                "    (@row_number := @row_number + 1) AS row_num,\n" +
+                "    CEILING(@row_number / 5) AS 'pag',\n" +
+                "    e.idEventos AS 'ID Evento', \n" +
+                "    e.nombre AS 'Nombre', \n" +
+                "    DATE_FORMAT(e.fecha_inicio, '%d %M %Y') AS 'Fecha de Inicio', \n" +
+                "    es.estadosEvento AS 'Estado', \n" +
+                "    ef.tipoFrecuencia AS 'Frecuencia'\n" +
+                "FROM eventos e \n" +
+                "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados \n" +
+                "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia \n" +
+                "WHERE e.TipoEvento_idTipoEvento = ? AND e.eliminado = FALSE AND e.Coordinador_idUsuario = ? AND e.EventEstados_idEventEstados =3\n" +
+                "ORDER BY " +
+                "    CASE WHEN es.estadosEvento = 'Finalizado' THEN 1 ELSE 0 END, \n" +
+                "    e.fecha_inicio DESC;";
+
+        ArrayList<EventoB> listaEventosPropios = new ArrayList<>();
+
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            // Ejecutar la sentencia para establecer el idioma de las fechas en español
+            stmt.execute(sqlSetLanguage);
+
+            // Ejecutar las sentencias SET para total_rows y num_partitions
+            PreparedStatement pstmtTotalRows = conn.prepareStatement(sqlSetTotalRows);
+            pstmtTotalRows.setInt(1, idTipoEvento);
+            pstmtTotalRows.setInt(2, idCoordinador); // Establecer el ID del coordinador
+            pstmtTotalRows.execute();
+
+            stmt.execute(sqlSetNumPartitions);
+
+            // Establecer el parámetro para el PreparedStatement
+            pstmt.setInt(1, idTipoEvento);
+            pstmt.setInt(2, idCoordinador); // Establecer el ID del coordinador
+
+
+            // Inicializar la variable de sesión para el número de fila
+            stmt.execute("SET @row_number = 0;");
+
+            // Ejecutar la consulta principal
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    EventoB evento = new EventoB();
+                    evento.setIdPag(rs.getInt("pag"));
+                    evento.setidEvento(rs.getInt("ID Evento"));
+                    evento.setNombre(rs.getString("Nombre"));
+                    evento.setFecha_inicio(rs.getString("Fecha de Inicio"));
+                    evento.setEstadoString(rs.getString("Estado"));
+                    evento.setFrecuenciaString(rs.getString("Frecuencia"));
+                    listaEventosPropios.add(evento);
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return listaEventosPropios;
+    }
 
 
     //Función lista de eventos disponibles
@@ -196,6 +263,7 @@ public class EventoDao extends BaseDao{
     public EventoB buscarEventoPorId(String idEvento) {
         EventoB evento = null;
 
+        String sqlSetLanguage = "SET lc_time_names = 'es_ES';";
         String sql = "SELECT " +
                 "e.idEventos AS id_evento, " +
                 "e.nombre AS nombre, " +
@@ -227,36 +295,42 @@ public class EventoDao extends BaseDao{
                 "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
                 "WHERE e.idEventos = ?";
 
-        try (Connection conn = getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            int idEvent = Integer.parseInt(idEvento);
-            pstmt.setInt(1, idEvent);
+        try (Connection conn = getConnection()) {
+            // Establecer el idioma de las fechas a español
+            try (Statement stmt = conn.createStatement()) {
+                stmt.execute(sqlSetLanguage);
+            }
 
-            try (ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-                    evento = new EventoB();
-                    evento.setidEvento(rs.getInt("id_evento"));
-                    evento.setNombre(rs.getString("nombre"));
-                    evento.setDescripcion(rs.getString("descripcion"));
-                    evento.setCoordinador_idUsuario(rs.getInt("id_coordinador"));  // Configurar id_coordinador
-                    evento.setLugar(rs.getString("lugar"));
-                    evento.setFrecuenciaString(rs.getString("frecuencia"));
-                    evento.setCantidadVacantes(rs.getInt("cantidad_vacantes"));
-                    evento.setCantDisponibles(rs.getInt("cantidad_disponibles"));
-                    evento.setFecha_inicio(rs.getString("fecha_inicio"));
-                    evento.setFecha_fin(rs.getString("fecha_fin"));
-                    evento.setProfesoresEvento_idProfesoresEvento(rs.getInt("id_profesor"));  // Configurar id_profesor
-                    evento.setNombreProfesor(rs.getString("nombreProfesor"));
-                    evento.setNombreCoordinador(rs.getString("nombre_coordinador"));
-                    evento.setApellidoProfesor(rs.getString("apellidoProfesor"));
-                    evento.setApellidoCoordinador(rs.getString("apellido_coordinador"));
-                    evento.setHora_inicio(rs.getString("hora_inicio"));
-                    evento.setHora_fin(rs.getString("hora_fin"));
-                    evento.setFoto(rs.getBinaryStream("foto"));
-                    evento.setNombreFoto(rs.getString("nombreFoto"));
-                    evento.setListaMateriales(rs.getString("listaMateriales"));
-                    evento.setEstadoString(rs.getString("estadosEvento"));
-                    evento.setDiaEvento(rs.getString("diasEvento"));
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                int idEvent = Integer.parseInt(idEvento);
+                pstmt.setInt(1, idEvent);
+
+                try (ResultSet rs = pstmt.executeQuery()) {
+                    if (rs.next()) {
+                        evento = new EventoB();
+                        evento.setidEvento(rs.getInt("id_evento"));
+                        evento.setNombre(rs.getString("nombre"));
+                        evento.setDescripcion(rs.getString("descripcion"));
+                        evento.setCoordinador_idUsuario(rs.getInt("id_coordinador"));  // Configurar id_coordinador
+                        evento.setLugar(rs.getString("lugar"));
+                        evento.setFrecuenciaString(rs.getString("frecuencia"));
+                        evento.setCantidadVacantes(rs.getInt("cantidad_vacantes"));
+                        evento.setCantDisponibles(rs.getInt("cantidad_disponibles"));
+                        evento.setFecha_inicio(rs.getString("fecha_inicio"));
+                        evento.setFecha_fin(rs.getString("fecha_fin"));
+                        evento.setProfesoresEvento_idProfesoresEvento(rs.getInt("id_profesor"));  // Configurar id_profesor
+                        evento.setNombreProfesor(rs.getString("nombreProfesor"));
+                        evento.setNombreCoordinador(rs.getString("nombre_coordinador"));
+                        evento.setApellidoProfesor(rs.getString("apellidoProfesor"));
+                        evento.setApellidoCoordinador(rs.getString("apellido_coordinador"));
+                        evento.setHora_inicio(rs.getString("hora_inicio"));
+                        evento.setHora_fin(rs.getString("hora_fin"));
+                        evento.setFoto(rs.getBinaryStream("foto"));
+                        evento.setNombreFoto(rs.getString("nombreFoto"));
+                        evento.setListaMateriales(rs.getString("listaMateriales"));
+                        evento.setEstadoString(rs.getString("estadosEvento"));
+                        evento.setDiaEvento(rs.getString("diasEvento"));
+                    }
                 }
             }
         } catch (SQLException e) {
@@ -265,6 +339,7 @@ public class EventoDao extends BaseDao{
 
         return evento;
     }
+
 
 
     // Function crear evento
@@ -685,6 +760,133 @@ public class EventoDao extends BaseDao{
         }
         if (idTipoEvento != 0) {
             parametros.add(idTipoEvento);
+        }
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            for (int i = 0; i < parametros.size(); i++) {
+                pstmt.setObject(i + 1, parametros.get(i));
+            }
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("total");
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al contar eventos filtrados", e);
+        }
+        return 0;
+    }
+    //Filtro para los eventos finalizados
+    public ArrayList<EventoB> listarEventosFinalizadosFiltro(String nombre, String fecha, String frecuencia, int userId, int pagina) {
+        String sqlSetLanguage = "SET lc_time_names = 'es_ES';";
+        String sqlSetTotalRows = "SET @total_rows = (SELECT COUNT(*) FROM eventos e " +
+                "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
+                "JOIN Usuario u ON e.Coordinador_idUsuario = u.idUsuario " +
+                "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
+                "JOIN profesoresevento pf ON e.ProfesoresEvento_idProfesoresEvento = pf.idProfesoresEvento " +
+                "WHERE e.nombre LIKE ? " +
+                (fecha != null && !fecha.isEmpty() ? "AND e.fecha_inicio >= ? " : "") +
+                (frecuencia != null && !frecuencia.isEmpty() ? "AND ef.idEventFrecuencia = ? " : "") +
+                (userId != 0 ? "AND e.Coordinador_idUsuario = ? " : "") +
+                "AND e.eliminado = FALSE);";
+        String sqlSetNumPartitions = "SET @num_partitions = FLOOR((@total_rows + 4) / 5);";
+
+        String sql = "SELECT " +
+                "    (@row_number := @row_number + 1) AS row_num, " +
+                "    CEILING(@row_number / 5) AS 'pag', " +
+                "    e.idEventos AS 'ID Evento', " +
+                "    e.nombre AS 'Nombre', " +
+                "    DATE_FORMAT(e.fecha_inicio, '%d %M %Y') AS 'Fecha de Inicio', " +
+                "    es.estadosEvento AS 'Estado', " +
+                "    ef.tipoFrecuencia AS 'Frecuencia' " +
+                "FROM eventos e " +
+                "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
+                "JOIN Usuario u ON e.Coordinador_idUsuario = u.idUsuario " +
+                "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
+                "JOIN profesoresevento pf ON e.ProfesoresEvento_idProfesoresEvento = pf.idProfesoresEvento " +
+                "WHERE e.nombre LIKE ? " +
+                (fecha != null && !fecha.isEmpty() ? "AND e.fecha_inicio >= ? " : "") +
+                (frecuencia != null && !frecuencia.isEmpty() ? "AND ef.idEventFrecuencia = ? " : "") +
+                (userId != 0 ? "AND e.Coordinador_idUsuario = ? " : "") +
+                "AND e.eliminado = FALSE " +
+                "ORDER BY e.fecha_inicio DESC;";
+
+        ArrayList<EventoB> eventos = new ArrayList<>();
+        List<Object> parametros = new ArrayList<>();
+        parametros.add(nombre + "%");
+        if (fecha != null && !fecha.isEmpty()) {
+            parametros.add(fecha);
+        }
+        if (frecuencia != null && !frecuencia.isEmpty()) {
+            parametros.add(frecuencia);
+        }
+        if (userId != 0) {
+            parametros.add(userId);
+        }
+
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement();
+             PreparedStatement pstmtTotalRows = conn.prepareStatement(sqlSetTotalRows);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            stmt.execute(sqlSetLanguage);
+
+            for (int i = 0; i < parametros.size(); i++) {
+                pstmtTotalRows.setObject(i + 1, parametros.get(i));
+            }
+            pstmtTotalRows.execute();
+
+            stmt.execute(sqlSetNumPartitions);
+            stmt.execute("SET @row_number = 0;");
+
+            for (int i = 0; i < parametros.size(); i++) {
+                pstmt.setObject(i + 1, parametros.get(i));
+            }
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    if (rs.getInt("pag") == pagina) {
+                        EventoB event = new EventoB();
+                        event.setIdPag(rs.getInt("pag"));
+                        event.setidEvento(rs.getInt("ID Evento"));
+                        event.setNombre(rs.getString("Nombre"));
+                        event.setFecha_inicio(rs.getString("Fecha de Inicio"));
+                        event.setEstadoString(rs.getString("Estado"));
+                        event.setFrecuenciaString(rs.getString("Frecuencia"));
+                        eventos.add(event);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al listar eventos filtrados", e);
+        }
+        return eventos;
+    }
+    public int contarEventosFinalizadosFiltrados(String nombre, String fecha, String frecuencia, int userId) {
+        String sql = "SELECT COUNT(*) AS total FROM eventos e " +
+                "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
+                "JOIN Usuario u ON e.Coordinador_idUsuario = u.idUsuario " +
+                "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
+                "JOIN profesoresevento pf ON e.ProfesoresEvento_idProfesoresEvento = pf.idProfesoresEvento " +
+                "WHERE e.nombre LIKE ? " +
+                (fecha != null && !fecha.isEmpty() ? "AND e.fecha_inicio >= ? " : "") +
+                (frecuencia != null && !frecuencia.isEmpty() ? "AND ef.idEventFrecuencia = ? " : "") +
+                (userId != 0 ? "AND e.Coordinador_idUsuario = ? " : "") +
+                "AND e.eliminado = FALSE";
+
+        List<Object> parametros = new ArrayList<>();
+        parametros.add(nombre + "%");
+        if (fecha != null && !fecha.isEmpty()) {
+            parametros.add(fecha);
+        }
+        if (frecuencia != null && !frecuencia.isEmpty()) {
+            parametros.add(frecuencia);
+        }
+        if (userId != 0) {
+            parametros.add(userId);
         }
 
         try (Connection conn = getConnection();
