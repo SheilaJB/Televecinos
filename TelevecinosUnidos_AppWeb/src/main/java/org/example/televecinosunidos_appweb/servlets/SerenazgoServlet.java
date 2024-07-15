@@ -410,7 +410,7 @@ public class SerenazgoServlet extends HttpServlet {
                     SerenazgoDTO serenazgoDTO = (SerenazgoDTO) session.getAttribute("serenazgoLogeado");
 
                     UsuarioB usuario = usuarioDao.obtenerUsuario(String.valueOf(serenazgoDTO.getIdUsuario()));
-
+                    usuarioDao.cambiarPrimerIngreso(String.valueOf(serenazgoDTO.getIdUsuario()));
                     if (usuario != null) {
                         String hashedPassword;
                         try {

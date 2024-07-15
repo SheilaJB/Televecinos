@@ -275,6 +275,7 @@ public class UsuarioDao extends BaseDao{
                 "    u.PreguntasFrecuentes_idtable2 AS idPreguntasFrecuentesUsuario,\n" +
                 "    u.Rol_idRol AS idRolUsuario,\n" +
                 "    u.isBan AS isBanUsuario,\n" +
+                "    u.primerIngreso ,\n" +
                 "    u.primerIngreso AS primerIngresoUsuario,\n" +
                 "    urb.nombre AS nombreUrbanizacion,\n" +
                 "u.genero\n" +
@@ -304,6 +305,7 @@ public class UsuarioDao extends BaseDao{
                     usuarioB.setIsBan(rs.getInt("isBanUsuario"));
                     usuarioB.setUrbanizacionString(rs.getString("nombreUrbanizacion"));
                     usuarioB.setGenero(rs.getInt("genero"));
+                    usuarioB.setPrimerIngreso(rs.getInt("primerIngreso"));
                 }
 
             }
@@ -328,6 +330,7 @@ public class UsuarioDao extends BaseDao{
                 "    u.avatar AS avatarSerenazgo,\n" +
                 "    s.fechaNacimiento AS fechaNacimientoSerenazgo,\n" +
                 "    ts.turno AS turnoSerenazgo,\n" +
+                "    u.primerIngreso,\n" +
                 "    tps.tipo AS tipoSerenazgo\n" +
                 "FROM \n" +
                 "    televecinosdb.usuario u\n" +
@@ -360,6 +363,7 @@ public class UsuarioDao extends BaseDao{
                     serenazgoDTO.setFechaNacimientoSerenazgo(rs.getString("fechaNacimientoSerenazgo"));
                     serenazgoDTO.setTurnoSerenazgo(rs.getString("turnoSerenazgo"));
                     serenazgoDTO.setTipoSerenazgo(rs.getString("tipoSerenazgo"));
+                    serenazgoDTO.setPrimerIngreso(rs.getInt("primerIngreso"));
                 }
 
             }
@@ -519,4 +523,20 @@ public class UsuarioDao extends BaseDao{
         }
     }
 
+    public void cambiarPrimerIngreso(String id) {
+        String sql = "UPDATE usuario SET primerIngreso = 0 WHERE idUsuario = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, id);
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Primer ingreso cambiado correctamente.");
+            } else {
+                System.out.println("No se pudo cambiar el primer ingreso .");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

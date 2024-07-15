@@ -640,6 +640,7 @@ public class VecinoServlet extends HttpServlet {
                         usuarioLogueado.setContrasenia(hashedPassword);
 
                         usuarioDao.actualizarContrasena(usuarioLogueado);
+                        usuarioDao.cambiarPrimerIngreso(String.valueOf(usuarioLogueado.getIdUsuario()));
                         session.setAttribute("success", "Contraseña cambiada exitosamente");
                         response.sendRedirect(request.getContextPath() + "/VecinoServlet?action=cambiarContrasena");
                     } else {

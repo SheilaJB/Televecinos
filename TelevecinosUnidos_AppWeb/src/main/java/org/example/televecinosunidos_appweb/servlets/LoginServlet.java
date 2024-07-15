@@ -180,7 +180,13 @@ public class LoginServlet extends HttpServlet {
                             request.setAttribute("errorBaneado", "El usuario está baneado");
                             request.getRequestDispatcher("WEB-INF/login/index.jsp").forward(request, response);
                         }else{
-                            response.sendRedirect(request.getContextPath() + "/VecinoServlet");
+                            if(usuarioB.getPrimerIngreso()==1){
+                                response.sendRedirect(request.getContextPath() + "/VecinoServlet?action=cambiarContrasena");
+
+                            }
+                            else{
+                                response.sendRedirect(request.getContextPath() + "/VecinoServlet");
+                            }
                         }
                         break;
                     case 3:
@@ -190,7 +196,13 @@ public class LoginServlet extends HttpServlet {
                             request.setAttribute("errorBaneado", "El usuario está baneado");
                             request.getRequestDispatcher("WEB-INF/login/index.jsp").forward(request, response);
                         }else{
-                            response.sendRedirect(request.getContextPath() + "/CoordinadorServlet");
+                            if(usuarioB.getPrimerIngreso()==1){
+                                response.sendRedirect(request.getContextPath() + "/CoordinadorServlet?action=cambiarContrasena");
+
+                            }
+                            else{
+                                response.sendRedirect(request.getContextPath() + "/CoordinadorServlet");
+                            }
                         }
 
                         break;
@@ -201,7 +213,14 @@ public class LoginServlet extends HttpServlet {
                             request.setAttribute("errorBaneado", "El usuario está baneado");
                             request.getRequestDispatcher("WEB-INF/login/index.jsp").forward(request, response);
                         }else{
-                            response.sendRedirect(request.getContextPath() + "/SerenazgoServlet");
+                            if(serenazgoDTO.getPrimerIngreso()==1){
+                                response.sendRedirect(request.getContextPath() + "/SerenazgoServlet?action=cambiarContrasena");
+
+                            }
+                            else{
+                                response.sendRedirect(request.getContextPath() + "/SerenazgoServlet");
+                            }
+
                         }
                         break;
                     case 5:
