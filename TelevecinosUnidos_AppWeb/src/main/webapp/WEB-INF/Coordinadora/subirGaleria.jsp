@@ -183,7 +183,7 @@
                                 <button type="button" class="btn btn-primary btn-sm-square m-1" ><i class="fas fa-eye fa-xs"></i></button>
                             </a>
                             <button type="button" class="btn btn-success btn-sm-square m-1" id="abrirModalBtn_<%= eventoB.getidEvento() %>" data-bs-toggle="modal" data-bs-target="#subirFotosModal" data-evento-id="<%= eventoB.getIdEvento() %>">
-                                <i class="fas fa-camera fa-xs"></i>
+                                <i class="bi bi-box-arrow-up"></i>
                             </button>
                         </td>
                     </tr>
