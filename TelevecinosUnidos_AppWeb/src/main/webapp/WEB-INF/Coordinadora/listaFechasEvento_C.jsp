@@ -1,14 +1,19 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="org.example.televecinosunidos_appweb.model.beans.AsistenciaCoordB" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.util.*" %>
+<%@ page import="java.text.SimpleDateFormat"%>
+<%@ page import ="java.time.format.DateTimeFormatter"%>
+<%@ page import="java.time.LocalTime" %>
 <%
+
     ArrayList<AsistenciaCoordB> listaFechas = (ArrayList<AsistenciaCoordB>) request.getAttribute("listaFechasEvento");
 %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Editar Evento</title>
+    <title>Marcar Asistencia Evento</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -154,8 +159,21 @@
                     <td><%= asistenciaCoordB.getFechaEvento() %></td>
                     <td><%= asistenciaCoordB.getHora_inicio() %></td>
                     <td><%= asistenciaCoordB.getHora_fin() %></td>
-                    <td><button class="btn btn-entrada rounded-pill px-3" type="button">Hora de entrada</button></td>
-                    <td><button class="btn btn-salida rounded-pill px-3" type="button">Hora de salida</button></td>
+                    <td>
+                        <%
+                            LocalTime timeNow = LocalTime.now();
+                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+                            String formattedTime = timeNow.format(formatter);
+                        %>
+                        <form method="post" action="<%=request.getContextPath()%>/CoordinadorServlet?action=marcarHoraEntrada&idAsistencia=<%=asistenciaCoordB.getIdAsistenciaCoordinadora()%>">
+                            <button type="submit" class="btn btn-dark m-2">Enviar</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form method="post" action="<%=request.getContextPath()%>/CoordinadorServlet?action=marcarHoraSalida&idAsistencia=<%=asistenciaCoordB.getIdAsistenciaCoordinadora()%>">
+                            <button type="submit" class="btn btn-dark m-2" _msttexthash="79560" _msthash="48">Enviar</button>
+                        </form>
+                    </td>
                     <td><button class="btn btn-foto rounded-pill px-3" type="button">Foto</button></td>
                 </tr>
                 <% } %>
@@ -165,6 +183,41 @@
         </div>
         <!-- Footer End -->
     </div>
+    <script>
+        // Función para obtener la hora actual en formato HH:mm:ss
+        function obtenerHoraActual() {
+            const ahora = new Date();
+            const horas = ahora.getHours().toString().padStart(2, '0');
+            const minutos = ahora.getMinutes().toString().padStart(2, '0');
+            const segundos = ahora.getSeconds().toString().padStart(2, '0');
+            return `${horas}:${minutos}:${segundos}`;
+        }
+
+        // Función para manejar el cambio en el checkbox
+        document.getElementById('horaCheckbox').addEventListener('change', function() {
+            const checkbox = this;
+            if (checkbox.checked) {
+                // Si el checkbox está marcado, guardar la hora actual
+                const horaActual = obtenerHoraActual();
+                localStorage.setItem('horaGuardada', horaActual);
+                console.log(`Hora guardada: ${horaActual}`);
+            } else {
+                // Si el checkbox se desmarca, limpiar la hora guardada
+                localStorage.removeItem('horaGuardada');
+                console.log('Hora guardada eliminada');
+            }
+        });
+
+        // Verificar si hay una hora guardada al cargar la página
+        window.onload = function() {
+            const horaGuardada = localStorage.getItem('horaGuardada');
+            if (horaGuardada) {
+                document.getElementById('horaCheckbox').checked = true;
+                console.log(`Hora previamente guardada: ${horaGuardada}`);
+            }
+        };
+    </script>
+
     <!-- Content End -->
 
     <!-- Back to Top -->

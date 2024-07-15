@@ -1886,6 +1886,28 @@ public class EventoDao extends BaseDao{
         }
         return false;
     }
+    public void marcarHoraEntrada(int idAsistenciaCoordinadora, String hora_entrada) throws SQLException {
+        String sql = "UPDATE asistenciaCoordinadora SET hora_entrada = ? WHERE idAsistenciaCoordinadora = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, hora_entrada);
+            pstmt.setInt(2, idAsistenciaCoordinadora);
+            pstmt.executeUpdate();
+        } catch (SQLException ignored) {
+
+        }
+    }
+    public void marcarHoraSalida(int idAsistenciaCoordinadora, String hora_salida) throws SQLException {
+        String sql = "UPDATE asistenciaCoordinadora SET hora_salida = ? WHERE idAsistenciaCoordinadora = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, hora_salida);
+            pstmt.setInt(2, idAsistenciaCoordinadora);
+            pstmt.executeUpdate();
+        } catch (SQLException ignored) {
+
+        }
+    }
 
 }
 
