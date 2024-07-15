@@ -1749,7 +1749,7 @@ public class EventoDao extends BaseDao{
                 "JOIN TipoEvento te ON e.TipoEvento_idTipoEvento = te.idTipoEvento " +
                 "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
                 "JOIN flujo_usuario_evento fue ON e.idEventos = fue.Eventos_idEventos " +
-                "WHERE fue.Usuario_idUsuario = ? AND e.eliminado = FALSE " +
+                "WHERE fue.Usuario_idUsuario = ? AND e.eliminado = FALSE AND fue.eliminado = 0 " +
                 "ORDER BY e.fecha_inicio DESC;";
 
         try (Connection conn = this.getConnection();

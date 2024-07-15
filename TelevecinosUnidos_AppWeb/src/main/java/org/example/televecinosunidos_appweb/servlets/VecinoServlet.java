@@ -569,7 +569,7 @@ public class VecinoServlet extends HttpServlet {
                                 request.getSession().setAttribute("err", "Ya estás inscrito(a) en este evento");
                             }
                         } else{
-                            request.getSession().setAttribute("err", "Estás inscrito en un evento que se superpone con este. Revisa las fechas de los eventos a los cuales te has inscrito");
+                            request.getSession().setAttribute("err", "Ya no puedes inscribirte a este evento");
                         }
 
                     } else {
