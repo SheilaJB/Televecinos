@@ -3,6 +3,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="org.example.televecinosunidos_appweb.model.beans.EventoB" %>
 <%@ page import="org.example.televecinosunidos_appweb.model.beans.UsuarioB" %>
+<jsp:useBean id="usuarioLogueado" scope="session" type="UsuarioB" class="org.example.televecinosunidos_appweb.model.beans.UsuarioB" />
 <%@ page import="java.util.List" %>
 
 <% List<UsuarioB> inscritos = (List<UsuarioB>) request.getAttribute("inscritos"); %>
@@ -119,6 +120,13 @@
                     <tr>
                         <td><%= usuario.getNombre() %></td>
                         <td><%= usuario.getCorreo() %></td>
+                        <% if (usuarioLogueado.getIdUsuario()!=evento.getCoordinador_idUsuario()) { %>
+                        <td>
+                            <button type="button" class="btn btn-secondary btn-sm-square m-1" data-bs-toggle="modal" data-bs-target="#eliminarInscritoModal">
+                                <i class="fas fa-trash-alt fa-xs"></i>
+                            </button>
+                        </td>
+                        <% } else{%>
                         <% if (!"Finalizado".equals(evento.getEstadoString())) { %>
                         <td>
                             <a onclick="confirmarEliminarInscrito(<%= evento.getidEvento() %>, <%= usuario.getIdUsuario() %>)">
@@ -127,6 +135,7 @@
                                 </button>
                             </a>
                         </td>
+                        <% } %>
                         <% } %>
                     </tr>
                     <% } %>
