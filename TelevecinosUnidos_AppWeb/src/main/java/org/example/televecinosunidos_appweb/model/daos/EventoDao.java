@@ -159,56 +159,55 @@ public class EventoDao extends BaseDao{
 
     //Función lista de eventos disponibles
     public ArrayList<EventoB> ListarRegistro(int idTipoEventoR, int userId) {
-
         String sqlSetLanguage = "SET lc_time_names = 'es_ES';";
         String sqlSetTotalRows = "SET @total_rows = (SELECT COUNT(*) FROM eventos WHERE TipoEvento_idTipoEvento = ? AND eliminado = FALSE);";
         String sqlSetNumPartitions = "SET @num_partitions = FLOOR((@total_rows + 4) / 5);"; // Ajustado para calcular el número de particiones
+        String sqlInitRowNumber = "SET @row_number = 0;";
 
-        String sql = "SELECT \n" +
-                "    (@row_number := @row_number + 1) AS row_num, \n" +
-                "    CEILING(@row_number / 5) AS 'pag', \n" +
-                "    e.idEventos AS 'ID Evento', \n" +
-                "    e.nombre AS 'Nombre', \n" +
-                "    DATE_FORMAT(e.fecha_inicio, '%d %M %Y') AS 'Fecha de Inicio', \n" +
-                "    DATE_FORMAT(e.fecha_fin, '%d %M %Y') AS 'Fecha de finalizacion', \n" +
-                "    es.estadosEvento AS 'Estado', \n" +
-                "    ef.tipoFrecuencia AS 'Frecuencia', \n" +
-                "    DATE_FORMAT(e.hora_inicio, '%H:%i') AS hora_inicio, \n" +
-                "    DATE_FORMAT(e.hora_fin, '%H:%i') AS hora_fin \n" +
-                "FROM \n" +
-                "    eventos e \n" +
-                "JOIN \n" +
-                "    EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados \n" +
-                "JOIN \n" +
-                "    EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia \n" +
-                "WHERE \n" +
-                "    e.TipoEvento_idTipoEvento = ? \n" +
-                "    AND e.eliminado = FALSE \n" +
+        String sql = "SELECT " +
+                "(@row_number := @row_number + 1) AS row_num, " +
+                "CEILING(@row_number / 5) AS 'pag', " +
+                "e.idEventos AS 'ID Evento', " +
+                "e.nombre AS 'Nombre', " +
+                "DATE_FORMAT(e.fecha_inicio, '%d %M %Y') AS 'Fecha de Inicio', " +
+                "DATE_FORMAT(e.fecha_fin, '%d %M %Y') AS 'Fecha de finalizacion', " +
+                "es.estadosEvento AS 'Estado', " +
+                "ef.tipoFrecuencia AS 'Frecuencia', " +
+                "DATE_FORMAT(e.hora_inicio, '%H:%i') AS hora_inicio, " +
+                "DATE_FORMAT(e.hora_fin, '%H:%i') AS hora_fin " +
+                "FROM " +
+                "eventos e " +
+                "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
+                "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia " +
+                "JOIN usuario u ON e.Coordinador_idUsuario = u.idUsuario " +
+                "WHERE e.TipoEvento_idTipoEvento = ? AND e.eliminado = FALSE AND u.idUsuario = ? " +
                 "ORDER BY " +
-                "    CASE WHEN es.estadosEvento = 'Finalizado' THEN 1 ELSE 0 END, \n" +
-                "    e.fecha_inicio DESC;";
+                "CASE WHEN es.estadosEvento = 'Finalizado' THEN 1 ELSE 0 END, " +
+                "e.fecha_inicio DESC;";
 
         ArrayList<EventoB> listaEventosDisponible = new ArrayList<>();
 
         try (Connection conn = getConnection();
              Statement stmt = conn.createStatement();
+             PreparedStatement pstmtTotalRows = conn.prepareStatement(sqlSetTotalRows);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             // Ejecutar la sentencia para establecer el idioma de las fechas en español
             stmt.execute(sqlSetLanguage);
 
-            // Ejecutar las sentencias SET para total_rows y num_partitions
-            PreparedStatement pstmtTotalRows = conn.prepareStatement(sqlSetTotalRows);
+            // Ejecutar las sentencias SET para total_rows
             pstmtTotalRows.setInt(1, idTipoEventoR);
             pstmtTotalRows.execute();
 
+            // Ejecutar la sentencia SET para num_partitions
             stmt.execute(sqlSetNumPartitions);
 
-            // Establecer el parámetro para el PreparedStatement
-            pstmt.setInt(1, idTipoEventoR);
-
             // Inicializar la variable de sesión para el número de fila
-            stmt.execute("SET @row_number = 0;");
+            stmt.execute(sqlInitRowNumber);
+
+            // Establecer los parámetros para el PreparedStatement
+            pstmt.setInt(1, idTipoEventoR);
+            pstmt.setInt(2, userId);
 
             // Ejecutar la consulta principal
             try (ResultSet rs = pstmt.executeQuery()) {
@@ -232,6 +231,7 @@ public class EventoDao extends BaseDao{
 
         return listaEventosDisponible;
     }
+
 
     //Filtro para tomar asistencia
     public ArrayList<EventoB> ListarRegistroFiltro(String nombre, String fecha, String frecuencia, String estado, int idUser, int pagina) {
