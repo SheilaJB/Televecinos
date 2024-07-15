@@ -1285,8 +1285,6 @@ public class CoordinadorServlet extends HttpServlet {
                 int idEventoXZY = Integer.parseInt(request.getParameter("idEventoZ"));
                 eventoDao.actualizarEstadoEvento(idEventoXZY,3);
 
-                git
-
             default:
                 response.sendRedirect(request.getContextPath() + "/CoordinadorServlet");
                 break;
