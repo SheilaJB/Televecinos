@@ -1237,24 +1237,39 @@ public class CoordinadorServlet extends HttpServlet {
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
+                ArrayList<AsistenciaCoordB> listaFechasEvento = eventoDao.listarFechasEvento(asistenciaCoordB.getIdEvento());
+                request.setAttribute("listaFechasEvento",listaFechasEvento);
+                String vista = "WEB-INF/Coordinadora/listaFechasEvento_C.jsp";
+                request.getRequestDispatcher(vista).forward(request, response);
                 break;
             case "marcarHoraSalida":
                 LocalTime timeNow2 = LocalTime.now();
                 DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("HH:mm:ss");
                 String formattedTime2 = timeNow2.format(formatter2);
                 int idAsistencia2 = Integer.parseInt(request.getParameter("idAsistencia"));
+                AsistenciaCoordB asistenciaCoordB2 = eventoDao.buscarFechaEventoPorID(idAsistencia2);
                 try {
                     eventoDao.marcarHoraSalida(idAsistencia2,formattedTime2);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
+                ArrayList<AsistenciaCoordB> listaFechasEvento2 = eventoDao.listarFechasEvento(asistenciaCoordB2.getIdEvento());
+                request.setAttribute("listaFechasEvento",listaFechasEvento2);
+                String vista2 = "WEB-INF/Coordinadora/listaFechasEvento_C.jsp";
+                request.getRequestDispatcher(vista2).forward(request, response);
                 break;
             case "subirFotoAsistencia":
                 Part partX = request.getPart("foto");
                 String fileNameX = partX.getSubmittedFileName();
                 InputStream fileInputStreamX = partX.getInputStream();
                 int idAsistencia3 = Integer.parseInt(request.getParameter("idAsistencia"));
+                AsistenciaCoordB asistenciaCoordB3 = eventoDao.buscarFechaEventoPorID(idAsistencia3);
                 eventoDao.subirFotoAsistencia(idAsistencia3,fileNameX,fileInputStreamX);
+
+                ArrayList<AsistenciaCoordB> listaFechasEvento3 = eventoDao.listarFechasEvento(asistenciaCoordB3.getIdEvento());
+                request.setAttribute("listaFechasEvento",listaFechasEvento3);
+                String vista3 = "WEB-INF/Coordinadora/listaFechasEvento_C.jsp";
+                request.getRequestDispatcher(vista3).forward(request, response);
                 break;
             default:
                 response.sendRedirect(request.getContextPath() + "/CoordinadorServlet");
