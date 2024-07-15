@@ -257,13 +257,13 @@
 <script>
     function confirmDelete(eventId) {
         Swal.fire({
-            title: 'Confirmar Eliminación',
-            text: "¿Estás seguro de que deseas eliminar este incidente?",
+            title: 'Confirmar Cancelación',
+            text: "¿Estás seguro de que deseas cancelar este incidente?",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#d33',
             cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Sí, eliminarlo',
+            confirmButtonText: 'Sí, cancelar',
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
