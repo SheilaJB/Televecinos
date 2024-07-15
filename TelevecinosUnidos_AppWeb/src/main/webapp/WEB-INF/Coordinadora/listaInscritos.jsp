@@ -103,26 +103,6 @@
         </section>
 
         <div style="background-color: #f8f9fa; padding: 10px; align-items: center;">
-            <div style="background-color: #FFB703; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
-                <form method="post" action="<%=request.getContextPath()%>/CoordinadorServlet?action=buscarParticipante">
-                    <input type="hidden" name="idEvento" value="<%=request.getParameter("idEvento")%>">
-                    <div class="row justify-content-center align-items-center">
-                        <!-- Busqueda por nombre de evento -->
-                        <div class="col-md-8 mb-2">
-                            <input type="text" class="form-control" id="filtroInput" placeholder="Buscar..." name="textoBuscarEvento"
-                                   value="<%=request.getAttribute("textoBuscarEvento") != null ? request.getAttribute("textoBuscarEvento") : ""%>">
-                        </div>
-                        <div class="col-md-1 mb-2">
-                            <button class="btn btn-primary w-100" type="submit">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </div>
-                        <div class="col-md-2 mb-2">
-                            <a type="reset" class="btn btn-primary w-100" href="<%=request.getContextPath()%>/CoordinadorServlet?action=listarInscritos&idEvento=<%=request.getParameter("idEvento")%>">Limpiar</a>
-                        </div>
-                    </div>
-                </form>
-            </div>
             <div class="table-responsive">
                 <table id="eventosTable" class="table table-striped table-hover" style="background-color: transparent;">
                     <thead>
