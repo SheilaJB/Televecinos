@@ -1230,8 +1230,8 @@ public class CoordinadorServlet extends HttpServlet {
                 LocalTime timeNow = LocalTime.now();
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
                 String formattedTime = timeNow.format(formatter);
-                int x = 3;
                 int idAsistencia = Integer.parseInt(request.getParameter("idAsistencia"));
+                AsistenciaCoordB asistenciaCoordB = eventoDao.buscarFechaEventoPorID(idAsistencia);
                 try {
                     eventoDao.marcarHoraEntrada(idAsistencia,formattedTime);
                 } catch (SQLException e) {

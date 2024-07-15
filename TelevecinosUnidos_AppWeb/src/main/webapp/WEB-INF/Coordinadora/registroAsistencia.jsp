@@ -202,7 +202,7 @@
             </script>
             <script>
                 function checkFunction(idEvento) {
-                    window.location.href = '<%=request.getContextPath()%>/CoordinadorServlet?action=verEvento&idEvento=' + idEvento;
+                    window.location.href = '<%=request.getContextPath()%>/CoordinadorServlet?action=asistencia&idEventoX=' + idEvento;
                 }
             </script>
 

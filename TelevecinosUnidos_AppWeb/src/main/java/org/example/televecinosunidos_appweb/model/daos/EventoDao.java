@@ -2147,6 +2147,26 @@ public class EventoDao extends BaseDao{
 
         }
     }
+    public AsistenciaCoordB buscarFechaEventoPorID(int idAsistencia){
+        AsistenciaCoordB asistenciaCoordB = new AsistenciaCoordB();
+        String sql = "SELECT * FROM televecinosdb.asistenciacoordinadora WHERE idAsistenciaCoordinadora =?;";
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, idAsistencia);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    asistenciaCoordB.setIdEvento(rs.getInt("eventos_idEventos"));
+                    asistenciaCoordB.setFechaEvento(rs.getString("fecha_evento"));
+                    asistenciaCoordB.setHora_inicio(rs.getString("hora_inicio"));
+                    asistenciaCoordB.setHora_fin(rs.getString("hora_fin"));
+                }
+            }
+
+        } catch (SQLException ignored) {
+
+        }
+        return asistenciaCoordB;
+    }
 
 
 }
