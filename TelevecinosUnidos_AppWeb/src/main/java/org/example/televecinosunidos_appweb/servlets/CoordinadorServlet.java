@@ -164,7 +164,7 @@ public class CoordinadorServlet extends HttpServlet {
                 int eventosPorPagina1 = 5; // Número de eventos por página
 
                 // Obtener la lista completa de eventos
-                ArrayList<EventoB> listaEventosPropios1 = eventoDao.listarEventosPropios(idTipoEvento1,userId);
+                ArrayList<EventoB> listaEventosPropios1 = eventoDao.listarEventosPropiosFinalizado(idTipoEvento1,userId);
 
                 // Calcular total de páginas
                 int totalEventos1 = listaEventosPropios1.size();
@@ -778,7 +778,7 @@ public class CoordinadorServlet extends HttpServlet {
                     e.printStackTrace();
                 }
                 break;
-
+            //Filtros
             case "buscarEventoPorNombre":
                 String textBuscar = request.getParameter("textoBuscarEvento");
                 String filtroFrecuencia = request.getParameter("frecuencia");
@@ -826,6 +826,29 @@ public class CoordinadorServlet extends HttpServlet {
                     request.setAttribute("paginaActual", paginaG);
                     request.setAttribute("totalPaginas", totalPaginas);
                     request.getRequestDispatcher("WEB-INF/Coordinadora/EventoGenerales_C.jsp").forward(request, response);
+                }
+                break;
+            case "buscarEventoFinalizado":
+                String textBuscarGaleria = request.getParameter("textoBuscarEvento");
+                String filtroFechaGaleria = request.getParameter("fecha");
+                String filtroFrecuenciaGaleria = request.getParameter("frecuencia");
+                int paginaGaleria = request.getParameter("pagina") != null ? Integer.parseInt(request.getParameter("pagina")) : 1;
+
+                if(textBuscarGaleria== null && filtroFechaGaleria==null && filtroFrecuenciaGaleria==null){
+                    response.sendRedirect(request.getContextPath() + "/CoordinadorServlet?action=subirGaleria");
+                }else {
+                    request.setAttribute("textoBuscarEvento", textBuscarGaleria);
+                    request.setAttribute("fecha", filtroFechaGaleria);
+                    request.setAttribute("frecuencia", filtroFrecuenciaGaleria);
+
+                    ArrayList<EventoB> eventosfinalizados = eventoDao.listarEventosFinalizadosFiltro(textBuscarGaleria,filtroFechaGaleria,filtroFrecuenciaGaleria,userId, paginaGaleria);
+                    int totalRegistros = eventoDao.contarEventosFinalizadosFiltrados(textBuscarGaleria, filtroFechaGaleria,filtroFrecuenciaGaleria, userId);
+                    int totalPaginas = (int) Math.ceil((double) totalRegistros / 5); // Ajustado para 5 registros por página
+
+                    request.setAttribute("lista", eventosfinalizados);
+                    request.setAttribute("paginaActual", paginaGaleria);
+                    request.setAttribute("totalPaginas", totalPaginas);
+                    request.getRequestDispatcher("WEB-INF/Coordinadora/subirGaleria.jsp").forward(request, response);
                 }
                 break;
 
@@ -1055,7 +1078,7 @@ public class CoordinadorServlet extends HttpServlet {
                     request.getRequestDispatcher("WEB-INF/Coordinadora/listaIncidencias_C.jsp").forward(request, response);
                 }
                 break;
-            case "subirGaleria":
+            case "subirGaleria": //Galeria para subir fotos
                 try {
                     int idEvento6 = Integer.parseInt(request.getParameter("idEvento"));
                     Map<String, String> nombresFotos = new HashMap<>();
