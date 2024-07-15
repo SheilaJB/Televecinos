@@ -1144,6 +1144,29 @@ public class CoordinadorServlet extends HttpServlet {
                     }
                 }
                 break;
+            case "marcarHoraEntrada":
+                LocalTime timeNow = LocalTime.now();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+                String formattedTime = timeNow.format(formatter);
+                int x = 3;
+                int idAsistencia = Integer.parseInt(request.getParameter("idAsistencia"));
+                try {
+                    eventoDao.marcarHoraEntrada(idAsistencia,formattedTime);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                break;
+            case "marcarHoraSalida":
+                LocalTime timeNow2 = LocalTime.now();
+                DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("HH:mm:ss");
+                String formattedTime2 = timeNow2.format(formatter2);
+                int idAsistencia2 = Integer.parseInt(request.getParameter("idAsistencia"));
+                try {
+                    eventoDao.marcarHoraSalida(idAsistencia2,formattedTime2);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                break;
             default:
                 response.sendRedirect(request.getContextPath() + "/CoordinadorServlet");
                 break;
