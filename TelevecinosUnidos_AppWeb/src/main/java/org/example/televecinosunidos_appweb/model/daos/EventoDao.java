@@ -23,7 +23,7 @@ public class EventoDao extends BaseDao{
     //Función lista de eventos
     public ArrayList<EventoB> listarEventosPropios(int idTipoEvento) {
         String sqlSetLanguage = "SET lc_time_names = 'es_ES';";
-        String sqlSetTotalRows = "SET @total_rows = (SELECT COUNT(*) FROM Eventos WHERE TipoEvento_idTipoEvento = ? AND eliminado = FALSE);";
+        String sqlSetTotalRows = "SET @total_rows = (SELECT COUNT(*) FROM eventos WHERE TipoEvento_idTipoEvento = ? AND eliminado = FALSE);";
         String sqlSetNumPartitions = "SET @num_partitions = FLOOR((@total_rows + 4) / 5);"; // Ajustado para calcular el número de particiones
 
         String sql = "SELECT \n" +
