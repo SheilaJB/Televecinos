@@ -34,6 +34,8 @@
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <!-- Libraries Stylesheet -->
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
     <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
@@ -153,6 +155,11 @@
                                     <% } %>
 
                                 </select>
+                                <div>
+                                    <% if (erroresEvento != null && erroresEvento.containsKey("errorTraslapeProfesor2")) { %>
+                                    <span class="error-message"><%= erroresEvento.get("errorTraslapeProfesor2") %></span>
+                                    <% } %>
+                                </div>
                                 <% } %>
                             </div>
                             <!---Lugar del evento-->

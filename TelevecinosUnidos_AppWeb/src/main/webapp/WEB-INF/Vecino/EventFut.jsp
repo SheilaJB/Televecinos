@@ -195,14 +195,18 @@
                     <form>
                         <div class="rounded h-100 p-4"style="background-color: #ffb703;">
                             <div class="mb-3">
-                                <img src="ImagenServlet?idImagenEvento=<%= request.getAttribute("evento") != null?((EventoB) request.getAttribute("evento")).getIdEvento() :""%>" class="img-responsive" alt="" style="width: 100%; height: auto;" />
+                                <img src="ImagenServlet?action=evento&idImagenEvento=<%= request.getAttribute("evento") != null?((EventoB) request.getAttribute("evento")).getIdEvento() :""%>" class="img-responsive" alt="" style="width: 100%; height: auto;" />
                             </div>
                         </div>
                     </form>
-                    <div id="Prox_Eventos " class="container-fluid pt-4 px-4">
-                        <h3 style="text-align: center; margin-top:20px;margin-bottom:20px;">Galeria de nuestros recuerdos</h3>
+                    <% if (request.getAttribute("evento") != null) {
+                        EventoB eventoB = (EventoB) request.getAttribute("evento");
+                        if ("Finalizado".equals(eventoB.getEstadoString())) {
+                    %>
+                    <div id="Prox_Eventos" class="container-fluid pt-4 px-4">
+                        <h3 style="text-align: center; margin-top: 20px; margin-bottom: 20px;">Galeria de nuestros recuerdos</h3>
 
-                        <div class="rounded h-100 p-4" style=" background-color: #ffb703; padding: 20px; align-items: center;">
+                        <div class="rounded h-100 p-4" style="background-color: #ffb703; padding: 20px; align-items: center;">
                             <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
                                 <div class="carousel-indicators">
                                     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -212,21 +216,18 @@
                                 <div class="carousel-inner">
                                     <div class="carousel-item active">
                                         <div class="row">
-                                            <img src="img/Deporte/ninas-jugando-voleibol.jpg" class="d-block w-100" alt="Slide 1">
+                                            <img src="<%= request.getContextPath() %>/ImagenServlet?action=galeria&idEvento=<%= request.getAttribute("evento") != null ? ((EventoB) request.getAttribute("evento")).getIdEvento() : "" %>&nombreFoto=foto1" class="img-fluid" alt="Foto 1">
                                         </div>
                                     </div>
                                     <div class="carousel-item">
                                         <div class="row">
-
-                                            <img src="img/Deporte/girl-posing-with-volley-ball.jpg" class="d-block w-100" alt="Slide 1">
-
+                                            <img src="<%= request.getContextPath() %>/ImagenServlet?action=galeria&idEvento=<%= request.getAttribute("evento") != null ? ((EventoB) request.getAttribute("evento")).getIdEvento() : "" %>&nombreFoto=foto2" class="img-fluid" alt="Foto 2">
                                         </div>
                                     </div>
                                     <div class="carousel-item">
                                         <div class="row">
-                                            <img src="img/Deporte/girls-training-volleyball-field.jpg" class="d-block w-100" alt="Slide 1">
+                                            <img src="<%= request.getContextPath() %>/ImagenServlet?action=galeria&idEvento=<%= request.getAttribute("evento") != null ? ((EventoB) request.getAttribute("evento")).getIdEvento() : "" %>&nombreFoto=foto3" class="img-fluid" alt="Foto 3">
                                         </div>
-
                                     </div>
                                 </div>
                                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
@@ -240,8 +241,9 @@
                             </div>
                         </div>
                     </div>
-
-
+                    <% }
+                    }
+                    %>
                     <div class="d-flex justify-content-center mt-4">
                         <a href="<%=request.getContextPath()%>/VecinoServlet?action=eventosInscritos">
                             <button type="button" class="btn btn-secondary">Regresar</button>

@@ -39,6 +39,7 @@
     <!-- Libraries Stylesheet -->
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
     <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -98,6 +99,10 @@
             box-sizing: border-box;
             font-size: 14px;
         }
+        .error-message {
+            color: red;
+            display: block; /* Mostrar los mensajes de error por defecto */
+        }
     </style>
 </head>
 
@@ -122,7 +127,14 @@
         <!-- Navbar End -->
 
         <script>
-            <% if (session.getAttribute("err") != null) { %>
+            <% if (session.getAttribute("info") != null) { %> // Verificar si hay mensaje de éxito
+            Swal.fire({
+                icon: 'success', // Ícono de éxito
+                title: '¡Éxito!',
+                text: '<%= session.getAttribute("info") %>' // Mostrar el mensaje de éxito
+            });
+            <% session.removeAttribute("info"); %> // Eliminar el mensaje de la sesión
+            <% } else if (session.getAttribute("err") != null) { %>
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
@@ -131,6 +143,7 @@
             <% session.removeAttribute("err"); %> // Remueve el atributo de error después de mostrarlo
             <% } %>
         </script>
+
 
         <h2 class="mb-2 text-center" style="padding-top: 3%; color:#023047;">Creación de un nuevo evento</h2>
         <div id="error-message" class="error">Por favor, complete todos los campos obligatorios.</div>
@@ -178,10 +191,10 @@
                                 <% } else{%>
                                 <%String idProf = (String) request.getAttribute("nombreProfesor");%>
                                 <select id="ProfesoresEvento_idProfesoresEvento" class="form-select mb-3" aria-label="Default select example" name="nombreProfesor" required>
+                                    <option selected disabled>Seleccione un profesor</option>
                                     <% for (ProfesoresEvento pEvento : lista) { %>
-                                    <option value="<%= pEvento.getIdProfesoresEvento() %>" <%= pEvento.getIdProfesoresEvento() == Integer.parseInt(idProf) ? "selected" : "" %>><%= pEvento.getNombre() %> <%= pEvento.getApellido() %></option>
+                                    <option value="<%=pEvento.getIdProfesoresEvento()%>" <%= pEvento.getIdProfesoresEvento() == Integer.parseInt(request.getAttribute("nombreProfesor") != null ? (String) request.getAttribute("nombreProfesor") : "0") ? "selected" : "" %>><%= pEvento.getNombre() %> <%= pEvento.getApellido() %></option>
                                     <% } %>
-
                                 </select>
                                 <% } %>
                             </div>
