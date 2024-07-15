@@ -1084,7 +1084,7 @@ public class EventoDao extends BaseDao{
     public ArrayList<EventoB> listarTodosEventos() {
 
         String sqlSetLanguage = "SET lc_time_names = 'es_ES';";
-        String sqlSetTotalRows = "SET @total_rows = (SELECT COUNT(*) FROM Eventos WHERE eliminado = FALSE);";
+        String sqlSetTotalRows = "SET @total_rows = (SELECT COUNT(*) FROM eventos WHERE eliminado = FALSE);";
         String sqlSetNumPartitions = "SET @num_partitions = FLOOR((@total_rows + 7) / 8);";
         String sqlSetRowNumber = "SET @row_number = 0;";
 
@@ -1497,7 +1497,7 @@ public class EventoDao extends BaseDao{
 
     public int contarEventosVecinoFiltrados(String nombre, String fecha, String frecuencia, String estado, String idTipoEvento) {
         StringBuilder sql = new StringBuilder("SELECT COUNT(*) AS total FROM eventos e " +
-                "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
+                "JOIN eventestados es ON e.EventEstados_idEventEstados = es.idEventEstados " +
                 "JOIN tipoevento te ON e.TipoEvento_idTipoEvento = te.idTipoEvento " +
                 "JOIN eventfrecuencia eve ON e.EventFrecuencia_idEventFrecuencia = eve.idEventFrecuencia " +
                 "WHERE e.eliminado = FALSE ");
