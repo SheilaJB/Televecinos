@@ -21,9 +21,9 @@ public class EventoDao extends BaseDao{
     public static final Logger logger = Logger.getLogger(EventoDao.class.getName());
 
     //Función lista de eventos
-    public ArrayList<EventoB> listarEventosPropios(int idTipoEvento) {
+    public ArrayList<EventoB> listarEventosPropios(int idTipoEvento, int idCoordinador) {
         String sqlSetLanguage = "SET lc_time_names = 'es_ES';";
-        String sqlSetTotalRows = "SET @total_rows = (SELECT COUNT(*) FROM eventos WHERE TipoEvento_idTipoEvento = ? AND eliminado = FALSE);";
+        String sqlSetTotalRows = "SET @total_rows = (SELECT COUNT(*) FROM eventos WHERE TipoEvento_idTipoEvento = ? AND eliminado = FALSE AND Coordinador_idUsuario = ?);";
         String sqlSetNumPartitions = "SET @num_partitions = FLOOR((@total_rows + 4) / 5);"; // Ajustado para calcular el número de particiones
 
         String sql = "SELECT \n" +
@@ -37,7 +37,7 @@ public class EventoDao extends BaseDao{
                 "FROM Eventos e \n" +
                 "JOIN EventEstados es ON e.EventEstados_idEventEstados = es.idEventEstados \n" +
                 "JOIN EventFrecuencia ef ON e.EventFrecuencia_idEventFrecuencia = ef.idEventFrecuencia \n" +
-                "WHERE e.TipoEvento_idTipoEvento = ? AND e.eliminado = FALSE \n" +
+                "WHERE e.TipoEvento_idTipoEvento = ? AND e.eliminado = FALSE AND e.Coordinador_idUsuario = ?\n" +
                 "ORDER BY " +
                 "    CASE WHEN es.estadosEvento = 'Finalizado' THEN 1 ELSE 0 END, \n" +
                 "    e.fecha_inicio DESC;";
@@ -54,12 +54,15 @@ public class EventoDao extends BaseDao{
             // Ejecutar las sentencias SET para total_rows y num_partitions
             PreparedStatement pstmtTotalRows = conn.prepareStatement(sqlSetTotalRows);
             pstmtTotalRows.setInt(1, idTipoEvento);
+            pstmtTotalRows.setInt(2, idCoordinador); // Establecer el ID del coordinador
             pstmtTotalRows.execute();
 
             stmt.execute(sqlSetNumPartitions);
 
             // Establecer el parámetro para el PreparedStatement
             pstmt.setInt(1, idTipoEvento);
+            pstmt.setInt(2, idCoordinador); // Establecer el ID del coordinador
+
 
             // Inicializar la variable de sesión para el número de fila
             stmt.execute("SET @row_number = 0;");
