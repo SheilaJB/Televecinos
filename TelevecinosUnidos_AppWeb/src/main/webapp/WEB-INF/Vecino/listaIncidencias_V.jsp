@@ -82,6 +82,7 @@
                 <h1 style="text-align: center"><i class="fas fa-exclamation-triangle"></i> ¡Tus incidencias reportadas!</h1>
             </h1>
             <p class="lead text-center">Revisa el estado de las incidencias que has reportado</p>
+            <p class="lead text-center">Mientras el serenazgo no gestione tu incidencia, esta seguirá en un estado "pendiente". Una vez haya sido gestionada, entrará en un estado "en curso" y luego en estado "procesado" una vez haya finalizado. Solo podrás colocar tu incidencia en estado "cancelado" mientras el serenazgo no la haya gestionado." </p>
         </div>
         <% if (session.getAttribute("info") != null) { %>
         <script>
@@ -246,13 +247,13 @@
 <script>
     function confirmDelete(eventId) {
         Swal.fire({
-            title: 'Confirmar Eliminación',
-            text: "¿Estás seguro de que deseas eliminar este incidente?",
+            title: 'Confirmar cancelación',
+            text: "¿Estás seguro de que deseas cancelar este incidente?",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#d33',
             cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Sí, eliminarlo',
+            confirmButtonText: 'Sí, cancelarlo',
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {

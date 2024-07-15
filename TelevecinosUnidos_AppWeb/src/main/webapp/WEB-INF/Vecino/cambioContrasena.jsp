@@ -158,7 +158,7 @@
                         text: '<%= session.getAttribute("success") %>',
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            window.location.href = "<%=request.getContextPath()%>/VecinoServlet?action=verPerfil";
+                            window.location.href = "<%=request.getContextPath()%>/VecinoServlet?action=inicioVecino";
                         }
                     });
                 </script>

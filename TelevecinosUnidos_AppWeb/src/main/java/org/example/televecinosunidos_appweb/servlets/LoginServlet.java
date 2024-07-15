@@ -123,6 +123,11 @@ public class LoginServlet extends HttpServlet {
                 return;
             }
 
+            if (!usuarioDao.esCorreoUnico(correo)) {
+                response.sendRedirect(request.getContextPath() + "/LoginServlet?action=register&err=" + URLEncoder.encode("El correo ya está registrado. Por favor, use un correo diferente.", StandardCharsets.UTF_8.toString()));
+                return;
+            }
+
             System.out.println("Intentando registrar usuario: " + nombre + " " + apellido + " con correo: " + correo);
             boolean registrado = usuarioDao.registrarUsuario(nombre, apellido,dni, direccion, urbanizacion_idUrbanizacion, correo, primerIngreso,genero);
 
@@ -180,7 +185,13 @@ public class LoginServlet extends HttpServlet {
                             request.setAttribute("errorBaneado", "El usuario está baneado");
                             request.getRequestDispatcher("WEB-INF/login/index.jsp").forward(request, response);
                         }else{
-                            response.sendRedirect(request.getContextPath() + "/VecinoServlet");
+                            if(usuarioB.getPrimerIngreso()==1){
+                                response.sendRedirect(request.getContextPath() + "/VecinoServlet?action=cambiarContrasena");
+
+                            }
+                            else{
+                                response.sendRedirect(request.getContextPath() + "/VecinoServlet");
+                            }
                         }
                         break;
                     case 3:
@@ -190,7 +201,13 @@ public class LoginServlet extends HttpServlet {
                             request.setAttribute("errorBaneado", "El usuario está baneado");
                             request.getRequestDispatcher("WEB-INF/login/index.jsp").forward(request, response);
                         }else{
-                            response.sendRedirect(request.getContextPath() + "/CoordinadorServlet");
+                            if(usuarioB.getPrimerIngreso()==1){
+                                response.sendRedirect(request.getContextPath() + "/CoordinadorServlet?action=cambiarContrasena");
+
+                            }
+                            else{
+                                response.sendRedirect(request.getContextPath() + "/CoordinadorServlet");
+                            }
                         }
 
                         break;
@@ -201,7 +218,14 @@ public class LoginServlet extends HttpServlet {
                             request.setAttribute("errorBaneado", "El usuario está baneado");
                             request.getRequestDispatcher("WEB-INF/login/index.jsp").forward(request, response);
                         }else{
-                            response.sendRedirect(request.getContextPath() + "/SerenazgoServlet");
+                            if(serenazgoDTO.getPrimerIngreso()==1){
+                                response.sendRedirect(request.getContextPath() + "/SerenazgoServlet?action=cambiarContrasena");
+
+                            }
+                            else{
+                                response.sendRedirect(request.getContextPath() + "/SerenazgoServlet");
+                            }
+
                         }
                         break;
                     case 5:

@@ -24,6 +24,7 @@ public class VecinoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         IncidenCoordDao incidenciaDao = new IncidenCoordDao();
+        IncidenciaDao incD = new IncidenciaDao();
         EventoDao eventoDao = new EventoDao();
         HttpSession session = request.getSession();
         String action = request.getParameter("action") == null ? "inicioVecino" : request.getParameter("action");
@@ -199,7 +200,37 @@ public class VecinoServlet extends HttpServlet {
                 return;
 
             case "borrarIncidencia":
-                String idBorrar = request.getParameter("idEvento");
+                String idIncidencia2 = request.getParameter("idIncidencia");
+                incD.actualizarIncidenciaComoCancelada(idIncidencia2);
+
+
+
+                //request.getRequestDispatcher("WEB-INF/Vecino/actualizarIncidencia_V.jsp").forward(request, response);
+                int paginaActualI3 = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
+                int eventosPorPaginaI3 = 5; // Número de eventos por página
+
+                // Obtener la lista completa de incidencias
+                ArrayList<IncidenciasB> listaIncidencias3 = incidenciaDao.listarIncidencia(userId);
+
+                // Calcular total de páginas
+                int totalEventosI3 = listaIncidencias3.size();
+                int totalPaginasI3 = (int) Math.ceil((double) totalEventosI3 / eventosPorPaginaI3);
+
+                // Si no hay eventos, asegurarse de que la página actual sea 1
+                if (totalEventosI3 == 0) {
+                    paginaActualI3 = 1;
+                }
+
+                // Obtener las incidencias de la página actual
+                int desdeI3 = (paginaActualI3 - 1) * eventosPorPaginaI3;
+                int hastaI3 = Math.min(desdeI3 + eventosPorPaginaI3, totalEventosI3);
+                ArrayList<IncidenciasB> incidenciaPaginados3 = new ArrayList<>(listaIncidencias3.subList(desdeI3, hastaI3));
+
+                // Enviar atributos al JSP
+
+                request.setAttribute("lista", incidenciaPaginados3);
+                request.setAttribute("paginaActual", paginaActualI3);
+                request.setAttribute("totalPaginas", totalPaginasI3);
                 response.sendRedirect(request.getContextPath() + "/VecinoServlet?action=listarIncidencia");
                 return;
 
@@ -609,6 +640,7 @@ public class VecinoServlet extends HttpServlet {
                         usuarioLogueado.setContrasenia(hashedPassword);
 
                         usuarioDao.actualizarContrasena(usuarioLogueado);
+                        usuarioDao.cambiarPrimerIngreso(String.valueOf(usuarioLogueado.getIdUsuario()));
                         session.setAttribute("success", "Contraseña cambiada exitosamente");
                         response.sendRedirect(request.getContextPath() + "/VecinoServlet?action=cambiarContrasena");
                     } else {

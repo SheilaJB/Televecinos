@@ -392,7 +392,7 @@ public class IncidenCoordDao extends BaseDao{
     //Borrar una incidencia
     public static void borrarIncidencia(String idIncidencia, int userId) throws SQLException {
 
-        String sql = "UPDATE incidencias SET borrado=TRUE WHERE idIncidencias=? AND Usuario_idUsuario = ?";
+        String sql = "UPDATE incidencias SET EstadosIncidencia_idEstadosIncidencia=3 WHERE idIncidencias=? AND Usuario_idUsuario = ?";
 
         try (Connection connection = getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)) {

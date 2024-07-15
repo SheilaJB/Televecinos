@@ -14,6 +14,15 @@ public class SerenazgoDTO {
     private String fechaNacimientoSerenazgo;
     private String turnoSerenazgo;
     private String tipoSerenazgo;
+    private int primerIngreso;
+
+    public int getPrimerIngreso() {
+        return primerIngreso;
+    }
+
+    public void setPrimerIngreso(int primerIngreso) {
+        this.primerIngreso = primerIngreso;
+    }
 
     public int getIdUsuario() {
         return idUsuario;
