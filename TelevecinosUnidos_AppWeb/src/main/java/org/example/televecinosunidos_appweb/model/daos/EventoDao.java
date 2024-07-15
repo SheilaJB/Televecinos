@@ -2093,28 +2093,71 @@ public class EventoDao extends BaseDao{
 
     //listar inscritos
     public List<UsuarioB> obtenerInscritosPorEvento(int idEvento) throws SQLException {
-        String sql = "SELECT u.* FROM usuario u " +
-                "JOIN flujo_usuario_evento fue ON u.idUsuario = fue.Usuario_idUsuario " +
-                "WHERE fue.Eventos_idEventos = ? AND fue.eliminado = 0"; // Filtrar por inscripciones no eliminadas
+        String sqlSetLanguage = "SET lc_time_names = 'es_ES';";
+        String sqlSetTotalRows = "SET @total_rows = (SELECT COUNT(*) FROM flujo_usuario_evento WHERE Eventos_idEventos = ? AND eliminado = 0);";
+        String sqlSetNumPartitions = "SET @num_partitions = FLOOR((@total_rows + 4) / 5);"; // Ajustado para calcular el número de particiones
+        String sqlInitRowNumber = "SET @row_number = 0;";
 
-        try (PreparedStatement pstmt = getConnection().prepareStatement(sql)) {
+        String sql = "SELECT \n" +
+                "    (@row_number := @row_number + 1) AS row_num,\n" +
+                "    CEILING(@row_number / 5) AS 'pag',\n" +
+                "    u.idUsuario,\n" +
+                "    CONCAT(u.nombre, ' ', u.apellido) AS 'nombre',\n" +
+                "    u.correo, \n" +
+                "    u.genero, \n" +
+                "    u.direccion\n" +
+                "FROM \n" +
+                "    usuario u\n" +
+                "JOIN \n" +
+                "    flujo_usuario_evento fue ON u.idUsuario = fue.Usuario_idUsuario\n" +
+                "WHERE \n" +
+                "    fue.Eventos_idEventos = ? AND fue.eliminado = 0\n" +
+                "ORDER BY \n" +
+                "    u.nombre;";
+
+        List<UsuarioB> inscritos = new ArrayList<>();
+
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement();
+             PreparedStatement pstmtTotalRows = conn.prepareStatement(sqlSetTotalRows);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            // Ejecutar la sentencia para establecer el idioma de las fechas en español
+            stmt.execute(sqlSetLanguage);
+
+            // Ejecutar las sentencias SET para total_rows
+            pstmtTotalRows.setInt(1, idEvento);
+            pstmtTotalRows.execute();
+
+            // Ejecutar la sentencia SET para num_partitions
+            stmt.execute(sqlSetNumPartitions);
+
+            // Inicializar la variable de sesión para el número de fila
+            stmt.execute(sqlInitRowNumber);
+
+            // Establecer el parámetro para el PreparedStatement
             pstmt.setInt(1, idEvento);
+
+            // Ejecutar la consulta principal
             try (ResultSet rs = pstmt.executeQuery()) {
-                List<UsuarioB> inscritos = new ArrayList<>();
                 while (rs.next()) {
                     UsuarioB usuario = new UsuarioB();
                     usuario.setIdUsuario(rs.getInt("idUsuario"));
                     usuario.setNombre(rs.getString("nombre"));
-                    usuario.setApellido(rs.getString("apellido"));
                     usuario.setCorreo(rs.getString("correo"));
                     usuario.setGenero(rs.getInt("genero"));
                     usuario.setDireccion(rs.getString("direccion"));
                     inscritos.add(usuario);
                 }
-                return inscritos;
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
+
+        return inscritos;
     }
+
+    //Filtro para buscar participante
 
 
     public void desinscribirUsuarioEvento(int idUsuario, int idEvento) {

@@ -74,79 +74,79 @@
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-12">
-                                        <label class="form-label" style="color:#023047;"><b>Descripción:</b></label>
+                                        <label class="form-label" style="color:#023047;"><b>Descripción:</b></label><br>
                                         <div class="bar p-2 bg-light rounded" data-label="Nombre de la incidencia">
                                             <%= request.getAttribute("evento") != null ? ((EventoB) request.getAttribute("evento")).getDescripcion() : "" %>
                                         </div>
                                     </div>
                                     <div class="col-12">
-                                        <label class="form-label" style="color:#023047;"><b>Coordinador(a):</b></label>
+                                        <label class="form-label" style="color:#023047;"><b>Coordinador(a):</b></label><br>
                                         <div class="bar p-2 bg-light rounded" data-label="Nombre de la incidencia">
                                             <%= request.getAttribute("evento") != null ? ((EventoB) request.getAttribute("evento")).getNombreCoordinador() + " " + ((EventoB) request.getAttribute("evento")).getApellidoCoordinador() : "" %>
                                         </div>
                                     </div>
                                     <div class="col-12">
-                                        <label class="form-label" style="color:#023047;"><b>Instructor(a):</b></label>
+                                        <label class="form-label" style="color:#023047;"><b>Instructor(a):</b></label><br>
                                         <div class="bar p-2 bg-light rounded" data-label="Nombre de la incidencia">
                                             <%= request.getAttribute("evento") != null ? ((EventoB) request.getAttribute("evento")).getNombreProfesor() + " " + ((EventoB) request.getAttribute("evento")).getApellidoProfesor() : "" %>
                                         </div>
                                     </div>
                                     <div class="col-12">
-                                        <label class="form-label" style="color:#023047;"><b>Lugar:</b></label>
+                                        <label class="form-label" style="color:#023047;"><b>Lugar:</b></label><br>
                                         <div class="bar p-2 bg-light rounded" data-label="Nombre de la incidencia">
                                             <%= request.getAttribute("evento") != null ? ((EventoB) request.getAttribute("evento")).getLugar() : "" %>
                                         </div>
                                     </div>
                                     <div class="col-12">
-                                        <label class="form-label" style="color:#023047;"><b>Frecuencia:</b></label>
+                                        <label class="form-label" style="color:#023047;"><b>Frecuencia:</b></label><br>
                                         <div class="bar p-2 bg-light rounded" data-label="Nombre de la incidencia">
                                             <%= request.getAttribute("evento") != null ? ((EventoB) request.getAttribute("evento")).getFrecuenciaString() : "" %>
                                         </div>
                                     </div>
                                     <div class="col-12">
-                                        <label class="form-label" style="color:#023047;"><b>Dia(s):</b></label>
+                                        <label class="form-label" style="color:#023047;"><b>Dia(s):</b></label><br>
                                         <div class="bar p-2 bg-light rounded" data-label="Nombre de la incidencia">
                                             <%= request.getAttribute("evento") != null ? ((EventoB) request.getAttribute("evento")).getDiaEvento() : "" %>
                                         </div>
                                     </div>
                                     <div class="col-12">
-                                        <label class="form-label" style="color:#023047;"><b>Cantidad de vacantes:</b></label>
+                                        <label class="form-label" style="color:#023047;"><b>Cantidad de vacantes:</b></label><br>
                                         <div class="bar p-2 bg-light rounded" data-label="Nombre de la incidencia">
                                             <%= request.getAttribute("evento") != null ? ((EventoB) request.getAttribute("evento")).getCantidadVacantes() : "" %>
                                         </div>
                                     </div>
                                     <div class="col-12">
-                                        <label class="form-label" style="color:#023047;"><b>Cantidad de vacantes disponibles:</b></label>
+                                        <label class="form-label" style="color:#023047;"><b>Cantidad de vacantes disponibles:</b></label><br>
                                         <div class="bar p-2 bg-light rounded" data-label="Nombre de la incidencia">
                                             <%= request.getAttribute("evento") != null ? ((EventoB) request.getAttribute("evento")).getCantDisponibles() : "" %>
                                         </div>
                                     </div>
                                     <div class="col-12">
-                                        <label class="form-label" style="color:#023047;"><b>Fecha de inicio:</b></label>
+                                        <label class="form-label" style="color:#023047;"><b>Fecha de inicio:</b></label><br>
                                         <div class="bar p-2 bg-light rounded" data-label="Nombre de la incidencia">
                                             <%= request.getAttribute("evento") != null ? ((EventoB) request.getAttribute("evento")).getFecha_inicio() : "" %>
                                         </div>
                                     </div>
                                     <div class="col-12">
-                                        <label class="form-label" style="color:#023047;"><b>Fecha de finalización:</b></label>
+                                        <label class="form-label" style="color:#023047;"><b>Fecha de finalización:</b></label><br>
                                         <div class="bar p-2 bg-light rounded" data-label="Nombre de la incidencia">
                                             <%= request.getAttribute("evento") != null ? ((EventoB) request.getAttribute("evento")).getFecha_fin() : "" %>
                                         </div>
                                     </div>
                                     <div class="col-12">
-                                        <label class="form-label" style="color:#023047;"><b>Hora de inicio:</b></label>
+                                        <label class="form-label" style="color:#023047;"><b>Hora de inicio:</b></label><br>
                                         <div class="bar p-2 bg-light rounded" data-label="Nombre de la incidencia">
                                             <%= request.getAttribute("evento") != null ? ((EventoB) request.getAttribute("evento")).getHora_inicio() : "" %>
                                         </div>
                                     </div>
                                     <div class="col-12">
-                                        <label class="form-label" style="color:#023047;"><b>Hora de finalización:</b></label>
+                                        <label class="form-label" style="color:#023047;"><b>Hora de finalización:</b></label><br>
                                         <div class="bar p-2 bg-light rounded" data-label="Nombre de la incidencia">
                                             <%= request.getAttribute("evento") != null ? ((EventoB) request.getAttribute("evento")).getHora_fin() : "" %>
                                         </div>
                                     </div>
                                     <div class="col-12">
-                                        <label class="form-label" style="color:#023047;"><b>Lista de materiales:</b></label>
+                                        <label class="form-label" style="color:#023047;"><b>Lista de materiales:</b></label><br>
                                         <div class="bar p-2 bg-light rounded" data-label="Nombre de la incidencia">
                                             <%= request.getAttribute("evento") != null ? ((EventoB) request.getAttribute("evento")).getListaMateriales() : "" %>
                                         </div>
@@ -156,7 +156,7 @@
                         </div>
                     </form>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6" style="margin-top: 5%">
                     <form>
                         <div class="rounded h-100 p-4" style="background-color: #ffb703;">
                             <div class="mb-3">

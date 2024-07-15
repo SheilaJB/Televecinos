@@ -142,8 +142,23 @@ public class CoordinadorServlet extends HttpServlet {
                 try {
                     int idEvento = Integer.parseInt(request.getParameter("idEvento"));
                     List<UsuarioB> inscritos = eventoDao.obtenerInscritosPorEvento(idEvento);
+
+                    int paginaActualP = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
+                    int inscritosPorPaginaP = 5; // Número de inscritos por página
+
+                    // Calcular total de páginas
+                    int totalInscritosP = inscritos.size();
+                    int totalPaginasP = (int) Math.ceil((double) totalInscritosP / inscritosPorPaginaP);
+
+                    // Obtener los inscritos de la página actual
+                    int desdeP = (paginaActualP - 1) * inscritosPorPaginaP;
+                    int hastaP = Math.min(desdeP + inscritosPorPaginaP, totalInscritosP);
+                    List<UsuarioB> inscritosPaginadosP = new ArrayList<>(inscritos.subList(desdeP, hastaP));
+
                     request.setAttribute("evento", eventoDao.buscarEventoPorId(String.valueOf(idEvento)));
-                    request.setAttribute("inscritos", inscritos);
+                    request.setAttribute("inscritos", inscritosPaginadosP);
+                    request.setAttribute("paginaActual", paginaActualP);
+                    request.setAttribute("totalPaginas", totalPaginasP);
                     vista = "WEB-INF/Coordinadora/listaInscritos.jsp";
                     request.getRequestDispatcher(vista).forward(request, response);
                 } catch (SQLException e) {
@@ -152,6 +167,7 @@ public class CoordinadorServlet extends HttpServlet {
                     response.sendRedirect(request.getContextPath() + "/CoordinadorServlet?action=verEvento");
                 }
                 break;
+
 
             case "eliminarInscrito":
                 String idEventoBorrar = request.getParameter("idEvento");
@@ -1136,6 +1152,45 @@ public class CoordinadorServlet extends HttpServlet {
                     request.getRequestDispatcher("WEB-INF/Coordinadora/listaIncidencias_C.jsp").forward(request, response);
                 }
                 break;
+            /*case "buscarParticipante":
+                int idEvento = Integer.parseInt(request.getParameter("idEvento"));
+                String textBuscarP = request.getParameter("textoBuscarEvento");
+                int paginaP = request.getParameter("pagina") != null ? Integer.parseInt(request.getParameter("pagina")) : 1;
+
+                // Redirigir si el texto de búsqueda es nulo o vacío
+                if (textBuscarP == null || textBuscarP.trim().isEmpty()) {
+                    response.sendRedirect(request.getContextPath() + "/CoordinadorServlet?action=listarInscritos");
+                    return; // Asegurarse de salir del case después de redirigir
+                }
+
+                ArrayList<UsuarioB> participantes;
+                int totalRegistrosI;
+
+                try {
+                    participantes = eventoDao.obtenerInscritosPorEventoFiltro(textBuscarP, idEvento, paginaP);
+                    totalRegistrosI = eventoDao.contarInscritosPorEventoFiltro(textBuscarP, idEvento);
+                } catch (SQLException e) {
+                    // Manejo de errores, posiblemente redirigir a una página de error o mostrar mensaje
+                    e.printStackTrace(); // Log error para depuración
+                    request.getSession().setAttribute("error", "Error al obtener los participantes.");
+                    response.sendRedirect(request.getContextPath() + "/CoordinadorServlet?action=listarInscritos");
+                    return; // Asegurarse de salir del case después de redirigir
+                }
+
+                int totalPaginasI = (int) Math.ceil((double) totalRegistrosI / 5); // Ajustado para 5 registros por página
+
+                // Establecer atributos para el JSP
+                request.setAttribute("textoBuscarEvento", textBuscarP);
+                request.setAttribute("lista", participantes);
+                request.setAttribute("paginaActual", paginaP);
+                request.setAttribute("totalPaginas", totalPaginasI);
+
+                // Redirigir a la vista
+                request.getRequestDispatcher("WEB-INF/Coordinadora/listaInscritos.jsp").forward(request, response);
+
+                break;*/
+
+
             case "subirGaleria": //Galeria para subir fotos
                 try {
                     int idEvento6 = Integer.parseInt(request.getParameter("idEvento"));

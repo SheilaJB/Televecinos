@@ -7,7 +7,21 @@
 
 <% List<UsuarioB> inscritos = (List<UsuarioB>) request.getAttribute("inscritos"); %>
 <% EventoB evento = (EventoB) request.getAttribute("evento"); %>
+<%
+    Integer paginaActualObj = (Integer) request.getAttribute("paginaActual");
+    Integer totalPaginasObj = (Integer) request.getAttribute("totalPaginas");
 
+    // Verificar si los atributos están presentes
+    if (paginaActualObj == null) {
+        paginaActualObj = 1; // Valor predeterminado
+    }
+    if (totalPaginasObj == null) {
+        totalPaginasObj = 1; // Valor predeterminado
+    }
+
+    int paginaActual = paginaActualObj;
+    int totalPaginas = totalPaginasObj;
+%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -74,8 +88,8 @@
                     <p class="lead">
                         Aquí puedes revisar a los vecinos inscritos y tienes la opción de excluirlos del evento
                     </p>
-                    <p class="lead">
-                        **Importante** Recuerda que puedes eliminarlos del evento por algún historial de mal comportamiento
+                    <p class="lead text-danger">
+                        Importante: Recuerda que puedes eliminarlos del evento por algún historial de mal comportamiento
                     </p>
                 </div>
             </div>
@@ -90,17 +104,33 @@
 
         <div style="background-color: #f8f9fa; padding: 10px; align-items: center;">
             <div style="background-color: #FFB703; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
-
+                <form method="post" action="<%=request.getContextPath()%>/CoordinadorServlet?action=buscarParticipante">
+                    <input type="hidden" name="idEvento" value="<%=request.getParameter("idEvento")%>">
+                    <div class="row justify-content-center align-items-center">
+                        <!-- Busqueda por nombre de evento -->
+                        <div class="col-md-8 mb-2">
+                            <input type="text" class="form-control" id="filtroInput" placeholder="Buscar..." name="textoBuscarEvento"
+                                   value="<%=request.getAttribute("textoBuscarEvento") != null ? request.getAttribute("textoBuscarEvento") : ""%>">
+                        </div>
+                        <div class="col-md-1 mb-2">
+                            <button class="btn btn-primary w-100" type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <a type="reset" class="btn btn-primary w-100" href="<%=request.getContextPath()%>/CoordinadorServlet?action=listarInscritos&idEvento=<%=request.getParameter("idEvento")%>">Limpiar</a>
+                        </div>
+                    </div>
+                </form>
             </div>
             <div class="table-responsive">
                 <table id="eventosTable" class="table table-striped table-hover" style="background-color: transparent;">
                     <thead>
                     <tr class="form-text">
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Apellido</th>
+                        <th scope="col">Nombre completo</th>
                         <th scope="col">Correo</th>
                         <% if (!"Finalizado".equals(evento.getEstadoString())) { %>
-                        <th scope="col">Eliminar del evento</th>
+                        <th scope="col">Eliminar</th>
                         <% } %>
                     </tr>
                     </thead>
@@ -108,7 +138,6 @@
                     <% for (UsuarioB usuario : inscritos) { %>
                     <tr>
                         <td><%= usuario.getNombre() %></td>
-                        <td><%= usuario.getApellido() %></td>
                         <td><%= usuario.getCorreo() %></td>
                         <% if (!"Finalizado".equals(evento.getEstadoString())) { %>
                         <td>
@@ -124,7 +153,31 @@
                     </tbody>
                 </table>
             </div>
-
+            <nav>
+                <ul class="pagination">
+                    <li class="page-item <%= paginaActual == 1 ? "disabled" : "" %>">
+                        <a class="page-link" href="<%=request.getContextPath()%>/CoordinadorServlet?action=listarInscritos&page=<%= paginaActual - 1 %>">Anterior</a>
+                    </li>
+                    <% if (totalPaginas > 0) { %>
+                    <% for(int i = 1; i <= totalPaginas; i++) { %>
+                    <li class="page-item <%= i == paginaActual ? "active" : "" %>">
+                        <a class="page-link" href="<%=request.getContextPath()%>/CoordinadorServlet?action=listarInscritos&page=<%= i %>"><%= i %></a>
+                    </li>
+                    <% } %>
+                    <% } else { %>
+                    <li class="page-item active">
+                        <a class="page-link" href="#">1</a>
+                    </li>
+                    <% } %>
+                    <li class="page-item <%= paginaActual == totalPaginas || totalPaginas == 0 ? "disabled" : "" %>">
+                        <% if (paginaActual < totalPaginas) { %>
+                        <a class="page-link" href="<%=request.getContextPath()%>/CoordinadorServlet?action=listarInscritos&page=<%= paginaActual + 1 %>">Siguiente</a>
+                        <% } else { %>
+                        <span class="page-link">Siguiente</span>
+                        <% } %>
+                    </li>
+                </ul>
+            </nav>
         </div>
 
 
