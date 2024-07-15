@@ -1649,7 +1649,7 @@ public class EventoDao extends BaseDao{
     }
     public ArrayList<AsistenciaCoordB> listarFechasEvento(int idEvento) {
         ArrayList<AsistenciaCoordB> listaFechasEvento = new ArrayList<>();
-        String sql = "SELECT a.*, e.nombre FROM asistenciaCoordinadora AS a JOIN eventos AS e ON a.eventos_idEventos = e.idEventos WHERE a.eventos_idEventos = ?";
+        String sql = "SELECT a.*, e.nombre FROM asistenciacoordinadora AS a JOIN eventos AS e ON a.eventos_idEventos = e.idEventos WHERE a.eventos_idEventos = ?";
 
         try (Connection conn = this.getConnection();
              Statement stmt = conn.createStatement();
@@ -1664,6 +1664,15 @@ public class EventoDao extends BaseDao{
                     asistenciaCoordB.setHora_inicio(rs.getString("hora_inicio"));
                     asistenciaCoordB.setHora_fin(rs.getString("hora_fin"));
                     asistenciaCoordB.setNombreEvento(rs.getString("nombre"));
+                    if (rs.getString("hora_entrada") != null){
+                        asistenciaCoordB.setHora_entrada(rs.getString("hora_entrada"));
+                    }
+                    if (rs.getString("hora_salida") != null){
+                        asistenciaCoordB.setHora_entrada(rs.getString("hora_salida"));
+                    }
+                    if (rs.getString("nombreFoto") != null){
+                        asistenciaCoordB.setHora_entrada(rs.getString("nombreFoto"));
+                    }
                     listaFechasEvento.add(asistenciaCoordB);
                 }
             }
@@ -2056,7 +2065,7 @@ public class EventoDao extends BaseDao{
         return false;
     }
     public void marcarHoraEntrada(int idAsistenciaCoordinadora, String hora_entrada) throws SQLException {
-        String sql = "UPDATE asistenciaCoordinadora SET hora_entrada = ? WHERE idAsistenciaCoordinadora = ?";
+        String sql = "UPDATE asistenciacoordinadora SET hora_entrada = ? WHERE idAsistenciaCoordinadora = ?";
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, hora_entrada);
@@ -2067,7 +2076,7 @@ public class EventoDao extends BaseDao{
         }
     }
     public void marcarHoraSalida(int idAsistenciaCoordinadora, String hora_salida) throws SQLException {
-        String sql = "UPDATE asistenciaCoordinadora SET hora_salida = ? WHERE idAsistenciaCoordinadora = ?";
+        String sql = "UPDATE asistenciacoordinadora SET hora_salida = ? WHERE idAsistenciaCoordinadora = ?";
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, hora_salida);
@@ -2112,6 +2121,29 @@ public class EventoDao extends BaseDao{
             pstmt.executeUpdate();
         }catch (SQLException e) {
             e.printStackTrace();
+
+        }
+    }
+    public void subirFotoAsistencia(int idAsistenciaCoordinadora, String nombreFoto, InputStream foto){
+        String sql = "UPDATE asistenciacoordinadora SET foto = ?, nombreFoto = ? WHERE idAsistenciaCoordinadora = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setBlob(1,foto);
+            pstmt.setString(2, nombreFoto);
+            pstmt.setInt(3,idAsistenciaCoordinadora);
+            pstmt.executeUpdate();
+        } catch (SQLException ignored) {
+
+        }
+    }
+    public void actualizarEstadoEvento(int idEvento, int idEstadoEvento){
+        String sql = "UPDATE eventos SET EventEstados_idEventEstados = ? WHERE idEventos = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1,idEstadoEvento);
+            pstmt.setInt(2,idEvento);
+            pstmt.executeUpdate();
+        } catch (SQLException ignored) {
 
         }
     }

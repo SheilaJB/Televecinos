@@ -1249,6 +1249,13 @@ public class CoordinadorServlet extends HttpServlet {
                     throw new RuntimeException(e);
                 }
                 break;
+            case "subirFotoAsistencia":
+                Part partX = request.getPart("foto");
+                String fileNameX = partX.getSubmittedFileName();
+                InputStream fileInputStreamX = partX.getInputStream();
+                int idAsistencia3 = Integer.parseInt(request.getParameter("idAsistencia"));
+                eventoDao.subirFotoAsistencia(idAsistencia3,fileNameX,fileInputStreamX);
+                break;
             default:
                 response.sendRedirect(request.getContextPath() + "/CoordinadorServlet");
                 break;

@@ -174,7 +174,49 @@
                             <button type="submit" class="btn btn-dark m-2" _msttexthash="79560" _msthash="48">Enviar</button>
                         </form>
                     </td>
-                    <td><button class="btn btn-foto rounded-pill px-3" type="button">Foto</button></td>
+                    <td>
+                        <form method="post" enctype="multipart/form-data" action="<%=request.getContextPath()%>/CoordinadorServlet?action=subirFotoAsistencia&idAsistencia=<%=asistenciaCoordB.getIdAsistenciaCoordinadora()%>">
+                            <%if(asistenciaCoordB.getHora_salida() == null){%>
+                            <button type="button" class="btn btn-foto btn-square btn-secondary m-2">
+                                <i class="fa fa-camera"></i>
+                            </button>
+                            <%}else{%>
+                            <button type="button" class="btn btn-foto btn-square btn-dark m-2" data-bs-toggle="modal" data-bs-target="#uploadModal">
+                                <i class="fa fa-camera"></i>
+                            </button>
+                            <%}%>
+                            <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="uploadModalLabel">Subir Foto</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <input class="form-control" type="file" id="fileInput" accept="image/*" name="foto">
+                                            <img id="previewImage" src="#" alt="Image Preview" style="display: none; max-width: 100%; height: auto;"/>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                            <button type="submit" class="btn btn-primary">Guardar Foto</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <script>
+                            document.getElementById('fileInput').addEventListener('change', function(event) {
+                                var file = event.target.files[0];
+                                var reader = new FileReader();
+                                reader.onload = function(e) {
+                                    var previewImage = document.getElementById('previewImage');
+                                    previewImage.src = e.target.result;
+                                    previewImage.style.display = 'block'; // Muestra la imagen
+                                };
+                                reader.readAsDataURL(file);
+                            });
+                        </script>
+                    </td>
                 </tr>
                 <% } %>
                 <% } %>
@@ -234,6 +276,9 @@
 <script src="lib/tempusdominus/js/moment.min.js"></script>
 <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
 <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+
 <!-- Template Javascript -->
 <script src="js/main.js"></script>
 </body>
