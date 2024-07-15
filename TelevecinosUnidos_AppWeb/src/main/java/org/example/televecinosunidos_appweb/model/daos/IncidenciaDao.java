@@ -555,6 +555,22 @@ public class IncidenciaDao extends BaseDao{
 
     }
 
+    public void actualizarIncidenciaComoCancelada(String idIncidencia) {
+        String sql = "update incidencias\n" +
+                "set EstadosIncidencia_idEstadosIncidencia = 3\n" +
+                "where idIncidencias = ?";
+
+        try (Connection connection = getConnection();
+             PreparedStatement pstmt1 = connection.prepareStatement(sql)) {
+            pstmt1.setString(1, idIncidencia);
+
+
+            pstmt1.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     public void actualizarIncidenciaComoFalsa(String idIncidencia,String idUsuario) {
         String sql = "update incidencias\n" +
