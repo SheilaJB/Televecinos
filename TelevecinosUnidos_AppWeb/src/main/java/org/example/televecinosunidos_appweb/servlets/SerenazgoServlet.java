@@ -175,6 +175,10 @@ public class SerenazgoServlet extends HttpServlet {
                 vista = "WEB-INF/Serenazgo/cambiarTelefono_S.jsp";
                 request.getRequestDispatcher(vista).forward(request, response);
                 break;
+            case "contrasenaActual":
+                vista = "WEB-INF/Serenazgo/contrasenaActual_S.jsp";
+                request.getRequestDispatcher(vista).forward(request, response);
+                break;
 
 
             default:
@@ -422,6 +426,32 @@ public class SerenazgoServlet extends HttpServlet {
                     } else {
                         request.setAttribute("err", "Usuario no encontrado en la sesión.");
                         request.getRequestDispatcher("WEB-INF/Serenazgo/cambioContrasena_S.jsp").forward(request, response);
+                    }
+                }
+                break;
+            case "contrasenaActual":
+                UsuarioDao usuarioDao = new UsuarioDao();
+
+                SerenazgoDTO serenazgoDTO = (SerenazgoDTO) session.getAttribute("serenazgoLogeado");
+
+                UsuarioB usuario = usuarioDao.obtenerUsuario(String.valueOf(serenazgoDTO.getIdUsuario()));
+                String correo = request.getParameter("correo");
+                String contrasenaActual = request.getParameter("contrasenaActual");
+                if (usuario != null) {
+                    // Verificar si se proporcionó la contraseña actual
+                    if (contrasenaActual == null || contrasenaActual.isEmpty() || correo == null || correo.isEmpty()) {
+                        request.setAttribute("err", "Por favor, ingrese sus credenciales completas");
+                        request.getRequestDispatcher("WEB-INF/Serenazgo/contrasenaActual_S.jsp").forward(request, response);
+                        return;
+                    } else {
+                        if (usuarioDao.validarUsuarioPassword(correo, contrasenaActual)) {
+                            session.setAttribute("success", "Validación exitosa, proceda a cambiar su contraseña");
+                            //response.sendRedirect(request.getContextPath() + "/VecinoServlet?action=cambiarContrasena");
+                            request.getRequestDispatcher("WEB-INF/Serenazgo/contrasenaActual_S.jsp").forward(request, response);
+                        } else {
+                            request.setAttribute("err", "Su correo o contraseña son inválidos");
+                            request.getRequestDispatcher("WEB-INF/Serenazgo/contrasenaActual_S.jsp").forward(request, response);
+                        }
                     }
                 }
                 break;
