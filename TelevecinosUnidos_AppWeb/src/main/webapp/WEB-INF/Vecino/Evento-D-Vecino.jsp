@@ -168,7 +168,7 @@
                 <div class="col-md-3 mb-4">
                     <a href="<%=request.getContextPath()%>/VecinoServlet?action=verEvento&idEvento=<%= evento.getIdEvento() %>" style="text-decoration: none; color: inherit;">
                         <div class="card" style="max-width: 20rem; margin: auto; border-radius: 15px;">
-                            <img src="ImagenServlet?idImagenEvento=<%=evento.getIdEvento()%>" class="card-img-top rounded-top">
+                            <img src="ImagenServlet?action=evento&idImagenEvento=<%=evento.getIdEvento()%>" class="card-img-top rounded-top">
                             <a class="card-header text-secondary  align-items-center text-center"><b><%= evento.getTipoEvento() %></b></a>
                             <div class="card-body">
                                 <h5 class="card-title" style="text-align: left;"><%= evento.getNombre() %></h5>

@@ -75,10 +75,6 @@
                         <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
                     </div>
                     <div class="input-group mb-5 d-flex justify-content-between">
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="formCheck">
-                            <label for="formCheck" class="form-check-label text-secondary-custom"><small><b>Recuérdame</b></small></label>
-                        </div>
                         <div class="forgot">
                             <small><a href="<%=request.getContextPath()%>/LoginServlet?action=forgotPassword" class="text-link-white" style="text-decoration: underline;"><b>¿Olvidaste tu contraseña?</b></a></small>
                         </div>
